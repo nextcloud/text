@@ -6,7 +6,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import type { Connection } from '../composables/useConnection.js'
-import type { Document, Session } from '../services/SyncService.js'
+import type { Document, GuestSession, Session } from '../services/SyncService.js'
 
 export interface OpenParams {
 	fileId?: number
@@ -58,7 +58,7 @@ export async function open(
 export async function update(
 	guestName: string,
 	connection: Connection,
-): Promise<Session> {
+): Promise<GuestSession> {
 	if (!connection.shareToken) {
 		throw new Error('Cannot set guest name without a share token!')
 	}

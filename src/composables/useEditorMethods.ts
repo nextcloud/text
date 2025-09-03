@@ -5,8 +5,10 @@
 
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
+import type { AwarenessUser } from '../extensions/CollaborationCursor.ts'
 import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
+import { isUser, type Session } from '../services/SyncService'
 
 export const useEditorMethods = (editor: Editor) => {
 	const setEditable = (val: boolean) => {
@@ -34,5 +36,13 @@ export const useEditorMethods = (editor: Editor) => {
 			.run()
 	}
 
-	return { setContent, setEditable }
+	const updateUser = (session: Session) => {
+		const user: AwarenessUser = {
+			name: isUser(session) ? session.displayName : session?.guestName || '',
+			color: session?.color,
+		}
+		editor.commands.updateUser(user)
+	}
+
+	return { setContent, setEditable, updateUser }
 }

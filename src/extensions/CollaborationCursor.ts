@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
+
+export interface AwarenessUser {
+	color: string
+	name: string
+}
 
 /**
  * @param clientId The Yjs client ID
@@ -31,26 +37,31 @@ function getTimestamp() {
 	return Math.floor(Date.now() / 1000)
 }
 
+/**
+ * Render the cursor decoration
+ *
+ * @param user the users awareness data
+ * @param clientId not part of the tiptap type signature but provided by y-prosemirror
+ */
+function render(user: AwarenessUser, clientId?: number): HTMLElement {
+	const cursor = document.createElement('span')
+	cursor.classList.add('collaboration-cursor__caret')
+	cursor.setAttribute('style', `border-color: ${user.color}`)
+	const label = document.createElement('div')
+	label.classList.add('collaboration-cursor__label')
+	label.id = `collaboration-cursor__label__${clientId}`
+	label.setAttribute('style', `background-color: ${user.color}`)
+	const text = document.createTextNode(user.name || t('text', 'Guest'))
+	label.insertBefore(text, null)
+	cursor.insertBefore(label, null)
+	return cursor
+}
+
 const CollaborationCursor = TiptapCollaborationCursor.extend({
 	addOptions() {
 		return {
 			...this.parent?.(),
-			render: (user) => {
-				const cursor = document.createElement('span')
-
-				cursor.classList.add('collaboration-cursor__caret')
-				cursor.setAttribute('style', `border-color: ${user.color}`)
-
-				const label = document.createElement('div')
-
-				label.classList.add('collaboration-cursor__label')
-				label.id = `collaboration-cursor__label__${user.clientId}`
-				label.setAttribute('style', `background-color: ${user.color}`)
-				label.insertBefore(document.createTextNode(user.name), null)
-				cursor.insertBefore(label, null)
-
-				return cursor
-			},
+			render,
 		}
 	},
 

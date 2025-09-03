@@ -20,9 +20,7 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList
-			v-if="networkOnline && !hasConnectionIssue"
-			:sessions="sessions">
+		<SessionList v-if="networkOnline && !hasConnectionIssue">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
@@ -59,11 +57,11 @@ export default {
 	props: {
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		dirty: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		document: {
 			type: Object,
@@ -72,12 +70,6 @@ export default {
 		syncError: {
 			type: Object,
 			default: null,
-		},
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
 		},
 	},
 
@@ -135,7 +127,8 @@ export default {
 			// Make this a dependent of refreshMoment, so it will be recomputed
 			/* eslint-disable-next-line no-unused-expressions */
 			this.refreshMoment
-			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
+			const timestamp = this.document?.lastSavedVersionTime
+			return timestamp ? moment(timestamp * 1000).fromNow() : ''
 		},
 	},
 
