@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
 export interface AwarenessUser {
@@ -50,7 +51,8 @@ function render(user: AwarenessUser, clientId?: number): HTMLElement {
 	label.classList.add('collaboration-cursor__label')
 	label.id = `collaboration-cursor__label__${clientId}`
 	label.setAttribute('style', `background-color: ${user.color}`)
-	label.insertBefore(document.createTextNode(user.name), null)
+	const text = document.createTextNode(user.name || t('text', 'Guest'))
+	label.insertBefore(text, null)
 	cursor.insertBefore(label, null)
 	return cursor
 }
