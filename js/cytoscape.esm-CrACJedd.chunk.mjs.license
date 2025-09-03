@@ -1,0 +1,7 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: cytoscape developers
+
+This file is generated from multiple sources. Included packages:
+- cytoscape
+	- version: 3.30.2
+	- license: MIT
