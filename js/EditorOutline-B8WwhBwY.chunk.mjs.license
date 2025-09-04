@@ -400,7 +400,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 3.2.0
 	- license: MIT
 - text
-	- version: 6.0.0-dev.0
+	- version: 7.0.0-dev.0
 	- license: AGPL-3.0-or-later
 - tippy.js
 	- version: 6.3.7
