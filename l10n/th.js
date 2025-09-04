@@ -13,6 +13,7 @@ OC.L10N.register(
     "Text" : "ข้อความ",
     "Translate" : "แปลภาษา",
     "Reload" : "โหลดใหม่",
+    "you" : "คุณ",
     "guest" : "ผู้เยี่ยมชม",
     "Offline" : "ออฟไลน์",
     "Saving …" : "กำลังบันทึก …",

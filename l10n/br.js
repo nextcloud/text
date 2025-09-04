@@ -7,9 +7,7 @@ OC.L10N.register(
     "Text" : "Testenn",
     "Translate" : "Treiñ",
     "Reload" : "Adkargañ",
-    "Edit guest name" : "Embannañ anv an hini pedet",
     "Guest" : "Kouviad",
-    "Save guest name" : "Enrollañ anv an hini pedet",
     "guest" : "kouviad",
     "Offline" : "Distaget",
     "Saving …" : "Orc'h enrolliñ",
@@ -30,6 +28,8 @@ OC.L10N.register(
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell",
     "Use current version" : "Implij stumm hiziv",
     "Use the saved version" : "Implij ",
+    "Edit guest name" : "Embannañ anv an hini pedet",
+    "Save guest name" : "Enrollañ anv an hini pedet",
     "Info" : "Titouroù",
     "Success" : "Graet",
     "Warning" : "Kemenadenn"

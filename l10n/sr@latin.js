@@ -13,6 +13,7 @@ OC.L10N.register(
     "Translate" : "Prevedi",
     "Reload" : "Ponovo učitaj",
     "Guest" : "Gost",
+    "edit" : "izmeni",
     "guest" : "gost",
     "Offline" : "Van mreže",
     "Bold" : "Podebljano",

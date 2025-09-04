@@ -17,6 +17,7 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Delete task" : "Delete task",
     "Reload" : "Reload",
+    "Enter your name" : "Enter your name",
     "Guest" : "Guest",
     "guest" : "guest",
     "Saving …" : "Saving …",

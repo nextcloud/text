@@ -15,6 +15,7 @@ OC.L10N.register(
     "Translate" : "Traducir",
     "Delete task" : "Eliminar tarea",
     "Guest" : "Invitado",
+    "you" : "tú",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",

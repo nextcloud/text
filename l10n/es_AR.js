@@ -16,6 +16,8 @@ OC.L10N.register(
     "Translate" : "Traducir",
     "Reload" : "Recargar",
     "Guest" : "Invitado",
+    "you" : "usted",
+    "edit" : "editar",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Keyboard shortcuts" : "Atajos de teclado",
