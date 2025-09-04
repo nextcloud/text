@@ -11,6 +11,7 @@ OC.L10N.register(
     "Translate" : "Traducir",
     "Reload" : "Volver a cargar",
     "Guest" : "Invitado",
+    "you" : "tú",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",

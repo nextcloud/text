@@ -10,6 +10,7 @@ OC.L10N.register(
     "Text" : "Texto",
     "Translate" : "Traducir",
     "Guest" : "Invitado",
+    "you" : "tú",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",

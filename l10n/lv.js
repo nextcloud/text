@@ -15,6 +15,8 @@ OC.L10N.register(
     "Text" : "Teksts",
     "Translate" : "Tulkot",
     "Guest" : "Viesis",
+    "you" : "Tu",
+    "edit" : "rediģēt",
     "Open in new tab" : "Atvērt jaunā cilnē",
     "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
