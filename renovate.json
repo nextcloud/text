@@ -52,6 +52,7 @@
 		{
 			"matchUpdateTypes": ["major"],
 			"matchBaseBranches": [
+				"stable32",
 				"stable31",
 				"stable30",
 				"stable29",
@@ -63,7 +64,7 @@
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchBaseBranches": ["stable29", "stable28", "stable27", "stable26"],
+			"matchBaseBranches": ["stable31", "stable30", "stable29", "stable28", "stable27", "stable26"],
 			"enabled": false
 		},
 		{
@@ -74,6 +75,7 @@
 				"@cypress/{/,}**"
 			],
 			"matchBaseBranches": [
+				"stable32",
 				"stable31",
 				"stable30",
 				"stable29",
