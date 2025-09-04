@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Translate" : "Translate",
     "Reload" : "ផ្ទុកឡើងវិញ",
+    "you" : "អ្នក​",
     "guest" : "ភ្ញៀវ",
     "Saved" : "បាន​រក្សាទុក",
     "Cancel" : "លើកលែង",

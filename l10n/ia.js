@@ -6,6 +6,8 @@ OC.L10N.register(
     "Missing a temporary folder" : "Il manca un dossier temporari",
     "Translate" : "Translate",
     "Guest" : "Invitato",
+    "you" : "Tu",
+    "edit" : "modificar",
     "guest" : "hospite",
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",
