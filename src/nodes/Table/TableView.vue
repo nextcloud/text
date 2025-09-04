@@ -21,7 +21,7 @@
 				close-after-click
 				@click="deleteNode">
 				<template #icon>
-					<Delete />
+					<TrashCan />
 				</template>
 				{{ t('text', 'Delete this table') }}
 			</NcActionButton>
@@ -58,10 +58,10 @@ import NcActions from '@nextcloud/vue/components/NcActions'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
-	Delete,
 	TableAddColumnAfter,
 	TableAddRowAfter,
 	TableSettings,
+	TrashCan,
 } from '../../components/icons.js'
 
 export default {
@@ -75,7 +75,7 @@ export default {
 		NodeViewWrapper,
 		NodeViewContent,
 		TableSettings,
-		Delete,
+		TrashCan,
 	},
 	props: {
 		editor: {

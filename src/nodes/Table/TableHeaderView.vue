@@ -74,7 +74,7 @@
 					close-after-click
 					@click="deleteColumn">
 					<template #icon>
-						<Delete />
+						<TrashCan />
 					</template>
 					{{ t('text', 'Delete this column') }}
 				</NcActionButton>
@@ -93,9 +93,9 @@ import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
 	AlignHorizontalRight,
-	Delete,
 	TableAddColumnAfter,
 	TableAddColumnBefore,
+	TrashCan,
 } from '../../components/icons.js'
 
 export default {
@@ -104,7 +104,7 @@ export default {
 		AlignHorizontalCenter,
 		AlignHorizontalLeft,
 		AlignHorizontalRight,
-		Delete,
+		TrashCan,
 		NcActionButton,
 		NcActionButtonGroup,
 		NcActions,
