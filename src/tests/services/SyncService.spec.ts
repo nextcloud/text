@@ -43,16 +43,23 @@ const openResult = { connection, data: initialData }
 
 describe('Sync service', () => {
 	it('opens a connection', async () => {
-		const { connection, openConnection, openData } = provideConnection({
-			fileId: 123,
-			relativePath: './',
-		})
+		const getBaseVersionEtag = vi.fn()
+		const setBaseVersionEtag = vi.fn()
+		const { connection, openConnection, openData } = provideConnection(
+			{
+				fileId: 123,
+				relativePath: './',
+			},
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+		)
 		vi.mock('../../apis/connect')
 		vi.mocked(connect.open).mockResolvedValue(openResult)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
 		service.bus.on('opened', openHandler)
 		await service.open()
+		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
 		expect(openHandler).toHaveBeenCalledWith(
 			expect.objectContaining({ session: initialData.session }),
 		)

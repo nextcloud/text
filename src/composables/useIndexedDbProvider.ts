@@ -23,4 +23,24 @@ export function useIndexedDbProvider(
 	indexedDbProvider.on('synced', (provider: IndexeddbPersistence) => {
 		console.info('synced from indexeddb', provider)
 	})
+
+	/**
+	 * Get the base version etag the document had when it was edited last.
+	 */
+	function getBaseVersionEtag(): Promise<string | undefined> {
+		return indexedDbProvider.get('baseVersionEtag')
+	}
+
+	/**
+	 * Set the base version etag for the current connection.
+	 * @param val the base version etag as returned by open.
+	 */
+	function setBaseVersionEtag(val: string) {
+		return indexedDbProvider.set('baseVersionEtag', val)
+	}
+
+	return {
+		getBaseVersionEtag,
+		setBaseVersionEtag,
+	}
 }

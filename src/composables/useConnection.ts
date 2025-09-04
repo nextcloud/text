@@ -41,20 +41,26 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
  * @param props.shareToken Share token of the file.
+ * @param getBaseVersionEtag Async getter function for the base version etag.
+ * @param setBaseVersionEtag Async setter function for the base version etag.
  */
-export function provideConnection(props: {
-	fileId: number
-	relativePath: string
-	initialSession?: InitialData
-	shareToken?: string
-}) {
-	let baseVersionEtag: string | undefined
+export function provideConnection(
+	props: {
+		fileId: number
+		relativePath: string
+		initialSession?: InitialData
+		shareToken?: string
+	},
+	getBaseVersionEtag: () => Promise<string | undefined>,
+	setBaseVersionEtag: (val: string) => Promise<string | undefined>,
+) {
 	const connection = shallowRef<Connection | undefined>(undefined)
 	const openData = shallowRef<OpenData | undefined>(undefined)
 	const openConnection = async () => {
+		const baseVersionEtag = await getBaseVersionEtag()
 		const guestName = localStorage.getItem('nick') ?? ''
 		const { connection: opened, data } =
-			openInitialSession(props)
+			openInitialSession(props, baseVersionEtag)
 			|| (await open({
 				fileId: props.fileId,
 				guestName,
@@ -62,7 +68,7 @@ export function provideConnection(props: {
 				filePath: props.relativePath,
 				baseVersionEtag,
 			}))
-		baseVersionEtag = data.document.baseVersionEtag
+		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
 		return data
@@ -84,14 +90,27 @@ export const useConnection = () => {
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
  * @param props.shareToken Share token of the file.
+ * @param baseVersionEtag Etag from the last editing session.
  */
-function openInitialSession(props: {
-	relativePath: string
-	initialSession?: InitialData
-	shareToken?: string
-}) {
+function openInitialSession(
+	props: {
+		relativePath: string
+		initialSession?: InitialData
+		shareToken?: string
+	},
+	baseVersionEtag: string | undefined,
+) {
 	if (props.initialSession) {
 		const { document, session } = props.initialSession
+		if (baseVersionEtag && baseVersionEtag !== document.baseVersionEtag) {
+			throw new Error(
+				'Base version etag did not match when opening initial session.',
+			)
+			// In order to handle this properly we'd need to:
+			// * fetch the file content.
+			// * throw the same exception as a 409 response.
+			// * include the file content as `outsideChange` in the error.
+		}
 		const connection = {
 			documentId: document.id,
 			sessionId: session.id,
