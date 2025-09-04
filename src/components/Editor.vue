@@ -223,7 +223,10 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		useIndexedDbProvider(props, ydoc)
+		const { getBaseVersionEtag, setBaseVersionEtag } = useIndexedDbProvider(
+			props,
+			ydoc,
+		)
 
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
@@ -233,7 +236,11 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(props)
+		const { connection, openConnection } = provideConnection(
+			props,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
