@@ -53,9 +53,9 @@ import NcActionCaption from '@nextcloud/vue/components/NcActionCaption'
 import NcActionRadio from '@nextcloud/vue/components/NcActionRadio'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
-import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
+import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 
 export default {
 	name: 'PreviewOptions',

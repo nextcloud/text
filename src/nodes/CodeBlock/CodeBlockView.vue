@@ -114,7 +114,7 @@ import Check from 'vue-material-design-icons/Check.vue'
 import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
-import Help from 'vue-material-design-icons/Help.vue'
+import Help from 'vue-material-design-icons/HelpCircleOutline.vue'
 import MarkerIcon from 'vue-material-design-icons/Marker.vue'
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
 

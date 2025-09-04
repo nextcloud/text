@@ -31,7 +31,7 @@
 					close-after-click
 					@click="deleteRow">
 					<template #icon>
-						<Delete />
+						<TrashCan />
 					</template>
 					{{ t('text', 'Delete this row') }}
 				</NcActionButton>
@@ -46,9 +46,9 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
-	Delete,
 	TableAddRowAfter,
 	TableAddRowBefore,
+	TrashCan,
 } from '../../components/icons.js'
 
 export default {
@@ -60,7 +60,7 @@ export default {
 		NodeViewContent,
 		TableAddRowBefore,
 		TableAddRowAfter,
-		Delete,
+		TrashCan,
 	},
 	props: {
 		editor: {
