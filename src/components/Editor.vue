@@ -88,6 +88,7 @@ import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
+import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
@@ -108,6 +109,7 @@ import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideFileProps } from '../composables/useFileProps.ts'
+import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -228,6 +230,8 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
+		useIndexedDbProvider(props, ydoc)
+
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
@@ -398,10 +402,6 @@ export default defineComponent({
 		exposeForDebugging(this)
 	},
 	created() {
-		this.$indexedDbProvider = new IndexeddbPersistence(this.fileId, this.ydoc)
-		this.$indexedDbProvider.on('synced', (provider) => {
-			console.info('synced from indexeddb', provider)
-		})
 		// The following can be useful for debugging ydoc updates
 		this.ydoc.on('update', function (update, origin, doc, tr) {
 			console.debug('ydoc update', update, origin, doc, tr)
