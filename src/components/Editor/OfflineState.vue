@@ -21,7 +21,7 @@
 <script>
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import CloudOffIcon from 'vue-material-design-icons/CloudOff.vue'
+import CloudOffIcon from 'vue-material-design-icons/CloudOffOutline.vue'
 import refreshMoment from '../../mixins/refreshMoment.js'
 
 export default {

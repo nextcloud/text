@@ -141,7 +141,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import { useAttachmentResolver } from '../components/Editor.provider.ts'
-import { Delete as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
+import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { logger } from '../helpers/logger.js'
 
