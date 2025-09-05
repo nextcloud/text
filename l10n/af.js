@@ -15,6 +15,8 @@ OC.L10N.register(
     "📝 Collaborative document editing" : "📝 Samewerkende dokumentredigering",
     "Reconnect" : "Herverbind",
     "Guest" : "Gas",
+    "you" : "u",
+    "edit" : "edigeer",
     "guest" : "gas",
     "Offline" : "Vanlyn",
     "Saving …" : "Bewaar tans…",
