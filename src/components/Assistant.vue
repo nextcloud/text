@@ -14,7 +14,7 @@
 			data-cy="assistantMenu">
 			<NcActions :title="t('text', 'Nextcloud Assistant')" :type="'secondary'">
 				<template #icon>
-					<CreationOutlineIcon :size="20" class="icon" />
+					<NcAssistantIcon :size="20" class="assistant-icon" />
 				</template>
 				<NcActionButton
 					v-for="type in taskTypes"
@@ -34,7 +34,7 @@
 						<TextShort
 							v-else-if="type.id == 'core:text2text:summary'"
 							:size="20" />
-						<CreationOutlineIcon v-else />
+						<NcAssistantIcon v-else />
 					</template>
 					{{ type.name }}
 				</NcActionButton>
@@ -54,7 +54,7 @@
 					close-after-click
 					@click="showTaskList = true">
 					<template #icon>
-						<CreationOutlineIcon :size="20" />
+						<NcAssistantIcon :size="20" class="assistant-icon" />
 					</template>
 					{{ t('text', 'Show assistant results') }}
 				</NcActionButton>
@@ -70,7 +70,7 @@
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
 					<span class="assistant-bubble">
-						<CreationOutlineIcon :size="16" class="icon" />
+						<NcAssistantIcon :size="20" class="assistant-icon" />
 						<span>{{ t('text', 'Nextcloud Assistant') }}</span>
 					</span>
 				</h4>
@@ -115,7 +115,9 @@
 								:title="task.output.output"
 								@click.stop="() => openResult(task)">
 								<template #icon>
-									<CreationOutlineIcon :size="20" />
+									<NcAssistantIcon
+										:size="20"
+										class="assistant-icon" />
 								</template>
 								{{ t('text', 'Show result') }}
 							</NcActionButton>
@@ -151,6 +153,7 @@ import { generateOcsUrl } from '@nextcloud/router'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcAssistantIcon from '@nextcloud/vue/components/NcAssistantIcon'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import { posToDOMRect } from '@tiptap/core'
@@ -159,7 +162,6 @@ import ErrorOutlineIcon from 'vue-material-design-icons/AlertCircleOutline.vue'
 import CheckCircleOutlineIcon from 'vue-material-design-icons/CheckCircleOutline.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
 import ClockOutline from 'vue-material-design-icons/ClockOutline.vue'
-import CreationOutlineIcon from 'vue-material-design-icons/CreationOutline.vue'
 import FormatHeader1 from 'vue-material-design-icons/FormatHeader1.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import Shuffle from 'vue-material-design-icons/Shuffle.vue'
@@ -189,7 +191,7 @@ export default {
 	components: {
 		FloatingMenu,
 		ErrorOutlineIcon,
-		CreationOutlineIcon,
+		NcAssistantIcon,
 		ClockOutline,
 		CheckCircleOutlineIcon,
 		DeleteOutlineIcon,
@@ -470,13 +472,11 @@ h4 {
 .assistant-bubble {
 	display: flex;
 	gap: 8px;
-	background-color: var(--color-primary-element-light);
-	border-radius: var(--border-radius-rounded);
 	padding: 2px 8px;
-
-	.icon {
-		color: var(--color-primary);
-	}
+	background: var(--color-main-text);
+	background-image: var(--color-element-assistant-icon);
+	color: transparent;
+	background-clip: text;
 }
 
 ul {
@@ -499,6 +499,23 @@ ul {
 		position: absolute;
 		bottom: -2px;
 		right: -2px;
+	}
+
+	:deep(button) {
+		background: #dcd6ff !important;
+		color: white !important;
+		border-color: #7398fe !important;
+
+		&:hover {
+			filter: brightness(110%);
+		}
+	}
+}
+
+:deep(.assistant-icon) {
+	svg {
+		// Temporary fix for icon size inconsistency
+		max-width: 20px;
 	}
 }
 
