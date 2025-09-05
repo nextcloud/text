@@ -37,6 +37,8 @@ OC.L10N.register(
     "Outline" : "Esquema",
     "Enter your name so other people can see who is editing" : "Introduz el to nome pa qu'otres persones puedan ver quién edita",
     "Guest" : "Convidáu",
+    "submit" : "unviar",
+    "you" : "tu",
     "Insert an attachment" : "Inxertar un axuntu",
     "Preview options" : "Opciones de la previsualización",
     "Text only" : "Namás testu",
