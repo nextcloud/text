@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "PHP uzantısı faylın yüklənməsini dayandırdı",
     "Translate" : "Translate",
     "Reload" : "Yenidən yüklə",
+    "you" : "siz",
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
     "Save changes" : "Dəyişiklikləri yaddaşa ver",
