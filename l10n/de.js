@@ -48,7 +48,7 @@ OC.L10N.register(
     "Guest" : "Gast",
     "submit" : "Übermitteln",
     "you" : "Du",
-    "edit" : "Benötigt keine Übersetzung. Für Android wird nur die formelle Übersetzung verwendet (de_DE).",
+    "edit" : "Bearbeiten",
     "Uploading multiple attachments failed." : "Das Hochladen mehrerer Anhänge ist fehlgeschlagen.",
     "Uploading attachment failed: {error}" : "Hochladen des Anhangs fehlgeschlagen: {error}",
     "Uploading attachment failed." : "Das Hochladen des Anhangs ist fehlgeschlagen.",
