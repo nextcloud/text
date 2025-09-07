@@ -48,6 +48,7 @@ OC.L10N.register(
     "Guest" : "訪客",
     "submit" : "遞交",
     "you" : "你",
+    "edit" : "編輯",
     "Uploading multiple attachments failed." : "上傳多個附件失敗。",
     "Uploading attachment failed: {error}" : "上傳附件失敗：{error}",
     "Uploading attachment failed." : "附件上傳失敗。",
