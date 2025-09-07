@@ -53,6 +53,8 @@ OC.L10N.register(
     "Copy code block" : "Copy code block",
     "Source code" : "Msimbo wa chanzo",
     "Both" : "Both",
+    "Hide outline" : "Hide outline",
+    "Show outline" : "Show outline",
     "Done" : "Imefanyika",
     "Lists" : "Lists",
     "Table" : "Jedwali",
