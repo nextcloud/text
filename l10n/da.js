@@ -56,7 +56,7 @@ OC.L10N.register(
     "Failed to insert from Files" : "Kunne ikke indsætte fra filer",
     "Failed to create attachment" : "Kunne ikke oprette vedhæftning",
     "Offline since {time}." : "Offline siden {time}.",
-    "Not connected to the cloud." : "Ikke forbundet til cloud'en.",
+    "Not connected to the cloud." : "Ikke forbundet til skyen.",
     "Preview options" : "Indstillinger for forhåndsvisning",
     "Text only" : "Kun tekst",
     "Show link preview" : "Vis forhåndsvisning af link",
