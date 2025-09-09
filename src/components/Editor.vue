@@ -83,11 +83,11 @@ import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import { defineComponent, ref, shallowRef, watch } from 'vue'
+import { defineComponent, provide, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
-import { provideEditor } from '../composables/useEditor.ts'
+import { editorKey } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
@@ -249,7 +249,7 @@ export default defineComponent({
 					isEmbedded: props.isEmbedded,
 				})
 			: createPlainEditor({ language, extensions })
-		provideEditor(editor)
+		provide(editorKey, editor)
 
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()

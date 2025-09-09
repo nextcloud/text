@@ -29,7 +29,7 @@ import Wrapper from './Wrapper.vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import History from '@tiptap/extension-history'
 import { provide, watch } from 'vue'
-import { provideEditor } from '../../composables/useEditor.ts'
+import { editorKey } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
@@ -115,7 +115,7 @@ export default {
 			},
 		)
 
-		provideEditor(editor)
+		provide(editorKey, editor)
 		provide(editorFlagsKey, {
 			isPublic: false,
 			isRichEditor: true,
