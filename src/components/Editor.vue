@@ -33,6 +33,12 @@
 								:dirty="dirty"
 								:sync-error="syncError"
 								:has-connection-issue="requireReconnect" />
+							<NcButton
+								v-if="isMobileApp"
+								type="tertiary"
+								class="icon-close"
+								:aria-label="t('text', 'Close')"
+								@click="mobileAppClose" />
 						</ReadonlyBar>
 					</slot>
 				</div>
@@ -78,6 +84,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import { getCurrentUser } from '@nextcloud/auth'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
@@ -86,6 +93,7 @@ import { useElementSize } from '@vueuse/core'
 import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 import { provideEditor } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
@@ -104,6 +112,7 @@ import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCursor } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
+import { callMobileMessage, isMobileApp } from '../helpers/mobileApp.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
@@ -145,6 +154,7 @@ export default defineComponent({
 		Assistant,
 		Translate,
 		SuggestionsBar,
+		NcButton,
 	},
 	mixins: [isMobile],
 
@@ -363,6 +373,9 @@ export default defineComponent({
 				},
 			}
 		},
+		isMobileApp() {
+			return isMobileApp()
+		},
 	},
 	watch: {
 		displayed() {
@@ -427,6 +440,7 @@ export default defineComponent({
 		removeFromDebugging(this)
 	},
 	methods: {
+		t,
 		initSession() {
 			this.listenSyncServiceEvents()
 			this.syncProvider = createSyncServiceProvider({
@@ -691,6 +705,13 @@ export default defineComponent({
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
+		},
+
+		async mobileAppClose() {
+			setTimeout(async () => {
+				await this.$destroy()
+				callMobileMessage('close')
+			}, 0)
 		},
 
 		/**

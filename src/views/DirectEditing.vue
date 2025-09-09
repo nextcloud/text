@@ -13,7 +13,7 @@
 			:mime="initial.mimetype"
 			:is-direct-editing="true"
 			@ready="loaded">
-			<template v-if="isMobile" #header>
+			<template v-if="isMobileApp" #header>
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
 			</template>
@@ -26,53 +26,12 @@ import Vue from 'vue'
 import Editor from '../components/Editor.vue'
 
 import { logger } from '../helpers/logger.js'
+import { callMobileMessage, isMobileApp } from '../helpers/mobileApp.js'
 
 const log = Vue.observable({
 	messages: [],
 	mtime: 0,
 })
-
-const callMobileMessage = (messageName, attributes) => {
-	logger.debug(`callMobileMessage ${messageName}`, { attributes })
-	let message = messageName
-	if (typeof attributes !== 'undefined') {
-		message = {
-			MessageName: messageName,
-			Values: attributes,
-		}
-	}
-	let attributesString = null
-	try {
-		attributesString = JSON.stringify(attributes)
-	} catch (e) {
-		attributesString = null
-	}
-
-	// Forward to mobile handler
-	if (
-		window.DirectEditingMobileInterface
-		&& typeof window.DirectEditingMobileInterface[messageName] === 'function'
-	) {
-		if (attributesString === null || typeof attributesString === 'undefined') {
-			window.DirectEditingMobileInterface[messageName]()
-		} else {
-			window.DirectEditingMobileInterface[messageName](attributesString)
-		}
-	}
-
-	// iOS webkit fallback
-	if (
-		window.webkit
-		&& window.webkit.messageHandlers
-		&& window.webkit.messageHandlers.DirectEditingMobileInterface
-	) {
-		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(
-			message,
-		)
-	}
-
-	window.postMessage(message)
-}
 
 window.addEventListener('message', function (message) {
 	log.messages.push(message.data)
@@ -94,13 +53,8 @@ export default {
 		initialSession() {
 			return JSON.parse(this.initial.session) || null
 		},
-		isMobile() {
-			return (
-				window.DirectEditingMobileInterface
-				|| (window.webkit
-					&& window.webkit.messageHandlers
-					&& window.webkit.messageHandlers.DirectEditingMobileInterface)
-			)
+		isMobileApp() {
+			return isMobileApp()
 		},
 	},
 	beforeMount() {
