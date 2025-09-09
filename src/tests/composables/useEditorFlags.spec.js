@@ -7,7 +7,8 @@ import { mount } from '@vue/test-utils'
 import { expect, test } from 'vitest'
 import { defineComponent } from 'vue'
 import {
-	provideEditorFlags,
+	editorFlagsKey,
+	getEditorFlags,
 	useEditorFlags,
 } from '../../composables/useEditorFlags.ts'
 
@@ -23,9 +24,25 @@ const ChildComponent = defineComponent({
 const ParentComponent = defineComponent({
 	template:
 		'<div><span id="flags">{{ { isPublic, isRichEditor, isRichWorkspace } }}</span><slot /></div>',
+
+	provide() {
+		const val = {}
+
+		Object.defineProperties(val, {
+			[editorFlagsKey]: {
+				get: () => ({
+					isPublic: this.isPublic,
+					isRichEditor: this.isRichEditor,
+					isRichWorkspace: this.isRichWorkspace,
+				}),
+			},
+		})
+
+		return val
+	},
 	props: ['isDirectEditing', 'richWorkspace', 'mime'],
 	setup(props) {
-		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
+		const { isPublic, isRichEditor, isRichWorkspace } = getEditorFlags(props)
 		return { isPublic, isRichEditor, isRichWorkspace }
 	},
 })
