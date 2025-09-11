@@ -8,5 +8,5 @@ This file is generated from multiple sources. Included packages:
 	- version: 15.0.4
 	- license: BSD-3-Clause
 - vite
-	- version: 6.3.5
+	- version: 6.3.6
 	- license: MIT

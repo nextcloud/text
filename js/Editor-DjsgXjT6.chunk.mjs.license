@@ -27,7 +27,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.0.0-dev.0
 	- license: AGPL-3.0-or-later
 - vite
-	- version: 6.3.5
+	- version: 6.3.6
 	- license: MIT
 - vue-material-design-icons
 	- version: 5.3.1
