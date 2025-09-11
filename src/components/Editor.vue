@@ -84,7 +84,7 @@ import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, ref, shallowRef, watch } from 'vue'
-import { Doc } from 'yjs'
+import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
@@ -98,6 +98,7 @@ import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
+import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -227,6 +228,11 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
+		const { getBaseVersionEtag, setBaseVersionEtag } = useIndexedDbProvider(
+			props,
+			ydoc,
+		)
+
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
@@ -234,7 +240,11 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(props)
+		const { connection, openConnection } = provideConnection(
+			props,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
@@ -400,10 +410,10 @@ export default defineComponent({
 	},
 	created() {
 		// The following can be useful for debugging ydoc updates
-		// this.ydoc.on('update', function(update, origin, doc, tr) {
-		//   console.debug('ydoc update', update, origin, doc, tr)
-		//   Y.logUpdate(update)
-		// });
+		this.ydoc.on('update', function (update, origin, doc, tr) {
+			console.debug('ydoc update', update, origin, doc, tr)
+			logUpdate(update)
+		})
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
@@ -529,7 +539,7 @@ export default defineComponent({
 			this.document = document
 
 			this.syncError = null
-			this.setEditable(this.editMode && !this.requireReconnect)
+			this.setEditable(this.editMode) // && !this.requireReconnect)
 		},
 
 		onCreate({ editor }) {
