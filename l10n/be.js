@@ -37,6 +37,7 @@ OC.L10N.register(
     "URL" : "URL-адрас",
     "Translate from {language}" : "Перакласці з {language}",
     "Translate to {language}" : "Перакласці на {language}",
+    "Translation failed" : "Не ўдалося перакласці",
     "Translate from" : "Перакласці з",
     "Select language" : "Выберыце мову",
     "Translate to" : "Перакласці на",
