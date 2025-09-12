@@ -64,7 +64,14 @@
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchBaseBranches": ["stable31", "stable30", "stable29", "stable28", "stable27", "stable26"],
+			"matchBaseBranches": [
+				"stable31",
+				"stable30",
+				"stable29",
+				"stable28",
+				"stable27",
+				"stable26"
+			],
 			"enabled": false
 		},
 		{
