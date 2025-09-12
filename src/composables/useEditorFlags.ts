@@ -18,7 +18,7 @@ interface Props {
 	mime: string
 }
 export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags>
-export const provideEditorFlags = (props: Props) => {
+export const getEditorFlags = (props: Props) => {
 	const isPublic = props.isDirectEditing || isPublicShare()
 	const isRichWorkspace = props.richWorkspace ?? false
 	const isRichEditor =

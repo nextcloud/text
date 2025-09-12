@@ -87,8 +87,8 @@ import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
-import { provideEditor } from '../composables/useEditor.ts'
-import { provideEditorFlags } from '../composables/useEditorFlags.ts'
+import { editorKey } from '../composables/useEditor.ts'
+import { editorFlagsKey, getEditorFlags } from '../composables/useEditorFlags.ts'
 import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
@@ -164,6 +164,16 @@ export default defineComponent({
 			[IS_MOBILE]: {
 				get: () => this.isMobile,
 			},
+			[editorKey]: {
+				get: () => this.editor,
+			},
+			[editorFlagsKey]: {
+				get: () => ({
+					isPublic: this.isPublic,
+					isRichEditor: this.isRichEditor,
+					isRichWorkspace: this.isRichWorkspace,
+				}),
+			},
 		})
 
 		return val
@@ -229,7 +239,7 @@ export default defineComponent({
 		const awareness = new Awareness(ydoc)
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
+		const { isPublic, isRichEditor, isRichWorkspace } = getEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
@@ -249,7 +259,6 @@ export default defineComponent({
 					isEmbedded: props.isEmbedded,
 				})
 			: createPlainEditor({ language, extensions })
-		provideEditor(editor)
 
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()

@@ -25,7 +25,7 @@
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import { inject, watch } from 'vue'
-import { provideEditor } from '../composables/useEditor.ts'
+import { editorKey } from '../composables/useEditor.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import EditorOutline from './Editor/EditorOutline.vue'
 import {
@@ -38,6 +38,16 @@ export default {
 	components: {
 		EditorContent,
 		EditorOutline,
+	},
+
+	provide() {
+		const val = {}
+		Object.defineProperties(val, {
+			[editorKey]: {
+				get: () => this.editor,
+			},
+		})
+		return val
 	},
 
 	mixins: [useOutlineStateMixin, useOutlineActions],
@@ -57,7 +67,6 @@ export default {
 			content: renderHtml(props.content),
 			extensions: extensions(),
 		})
-		provideEditor(editor)
 		watch(
 			() => props.content,
 			(content) => {

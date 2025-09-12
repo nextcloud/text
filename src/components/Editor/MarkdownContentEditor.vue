@@ -28,8 +28,8 @@ import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
 import History from '@tiptap/extension-history'
-import { provide, watch } from 'vue'
-import { provideEditor } from '../../composables/useEditor.ts'
+import { watch } from 'vue'
+import { editorKey } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
@@ -49,6 +49,14 @@ export default {
 		Object.defineProperties(val, {
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver ?? null,
+			},
+			[editorKey]: {
+				get: () => this.editor,
+			},
+			[editorFlagsKey]: {
+				isPublic: false,
+				isRichEditor: true,
+				isRichWorkspace: false,
 			},
 		})
 
@@ -115,12 +123,6 @@ export default {
 			},
 		)
 
-		provideEditor(editor)
-		provide(editorFlagsKey, {
-			isPublic: false,
-			isRichEditor: true,
-			isRichWorkspace: false,
-		})
 		return { editor }
 	},
 
