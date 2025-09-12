@@ -4,16 +4,17 @@
  */
 
 import { Editor } from '@tiptap/core'
-import { inject, type InjectionKey, provide } from 'vue'
+import { type InjectionKey } from 'vue'
+
+let globalEditor: Editor | undefined
 
 export const editorKey = Symbol('tiptap:editor') as InjectionKey<Editor>
 export const provideEditor = (editor: Editor) => {
-	provide(editorKey, editor)
+	globalEditor = editor
 }
 export const useEditor = () => {
-	const editor = inject(editorKey)
-	if (!editor) {
+	if (!globalEditor) {
 		throw new Error('Failed to inject Editor')
 	}
-	return { editor: editor as Editor }
+	return { editor: globalEditor! }
 }
