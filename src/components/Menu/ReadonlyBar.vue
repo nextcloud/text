@@ -77,4 +77,11 @@ export default defineComponent({
 	display: flex;
 	flex-grow: 1;
 }
+.text-menubar__slot {
+	display: flex;
+	align-items: center;
+}
+:deep(.icon-close) {
+	background-color: transparent;
+}
 </style>
