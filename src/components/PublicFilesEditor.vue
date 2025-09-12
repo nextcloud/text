@@ -21,7 +21,7 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		Editor: () => import(/* webpackChunkName: "editor" */ './Editor.vue'),
+		Editor: () => import('./Editor.vue'),
 	},
 	props: {
 		fileId: {

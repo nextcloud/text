@@ -48,8 +48,7 @@ export default {
 		NcButton,
 		NcSavingIndicatorIcon,
 		OfflineState,
-		SessionList: () =>
-			import(/* webpackChunkName: "editor-collab" */ './SessionList.vue'),
+		SessionList: () => import('./SessionList.vue'),
 	},
 
 	mixins: [useIsMobileMixin, refreshMoment],

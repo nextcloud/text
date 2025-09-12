@@ -140,7 +140,7 @@ export default defineComponent({
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		Reader: () => import(/* webpackChunkName: "editor" */ './Reader.vue'),
+		Reader: () => import('./Reader.vue'),
 		Status,
 		Assistant,
 		Translate,

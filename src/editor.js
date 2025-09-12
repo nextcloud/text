@@ -198,11 +198,9 @@ window.OCA.Text.createEditor = async function ({
 	onSearch = undefined,
 }) {
 	const { default: MarkdownContentEditor } = await import(
-		/* webpackChunkName: "editor" */ './components/Editor/MarkdownContentEditor.vue'
+		'./components/Editor/MarkdownContentEditor.vue'
 	)
-	const { default: Editor } = await import(
-		/* webpackChunkName: "editor" */ './components/Editor.vue'
-	)
+	const { default: Editor } = await import('./components/Editor.vue')
 
 	const data = Vue.observable({
 		showOutlineOutside: false,
