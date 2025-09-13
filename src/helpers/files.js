@@ -88,9 +88,7 @@ const registerFileActionFallback = () => {
 					const file = window.FileList.findFile(filename)
 					Promise.all([
 						import('vue'),
-						import(
-							/* webpackChunkName: "files-modal" */ './../components/PublicFilesEditor.vue'
-						),
+						import('./../components/PublicFilesEditor.vue'),
 					]).then((imports) => {
 						const path =
 							window.FileList.getCurrentDirectory() + '/' + filename

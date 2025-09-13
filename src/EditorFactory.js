@@ -22,7 +22,7 @@ const loadSyntaxHighlight = async (language) => {
 			logger.debug('Loading language', language)
 			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(
-				/* webpackChunkName: "highlight/[request]" */ `../node_modules/highlight.js/lib/languages/${language}.js`
+				`../node_modules/highlight.js/lib/languages/${language}.js`
 			)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
