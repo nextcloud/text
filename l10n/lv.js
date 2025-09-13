@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Nevarēja ierakstīt datni diskā",
     "A PHP extension stopped the file upload" : "PHP paplašinājums apturēja datnes augšupielādi",
     "text document" : "teksta dokuments",
+    "Editing session has expired. Please reload the page." : "Labošanas sesija ir beigusies. Lūgums pārlādēt lapu.",
     "{user} has mentioned you in the text document {node}" : "{user} pieminēja Tevi teksta dokumentā {node}",
     "File not found" : "Datne nav atrasta",
     "Text" : "Teksts",

@@ -45,6 +45,7 @@ OC.L10N.register(
     "Formatting help" : "Uasidizi wa uambizaji",
     "Translation failed" : "Utafsiri umeshindikana",
     "Translate from" : "Translate from",
+    "Select language" : "Chagua lugha",
     "to" : "kwa",
     "Translate to" : "Translate to",
     "Replace" : "Replace",

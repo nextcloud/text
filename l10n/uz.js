@@ -31,6 +31,7 @@ OC.L10N.register(
     "Lists" : "Ro'yxatlar",
     "Table" : "Jadval",
     "Details" : "Details",
+    "Option" : "Variant",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
     "Choose {file}" : " {file}ta tanlash",
