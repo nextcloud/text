@@ -124,7 +124,7 @@ export default {
 		// Set content after the setup function
 		// as it may render other vue components such as preview toggle
 		// which breaks the context of the setup function.
-		this.setContent(this.content)
+		this.setContent(this.content, { addToHistory: false })
 		this.editor.on('create', () => {
 			this.$emit('ready')
 			this.$parent.$emit('ready')
