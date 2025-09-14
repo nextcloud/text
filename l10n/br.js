@@ -8,6 +8,7 @@ OC.L10N.register(
     "Translate" : "Treiñ",
     "Reload" : "Adkargañ",
     "Guest" : "Kouviad",
+    "edit" : "embann",
     "guest" : "kouviad",
     "Offline" : "Distaget",
     "Saving …" : "Orc'h enrolliñ",
