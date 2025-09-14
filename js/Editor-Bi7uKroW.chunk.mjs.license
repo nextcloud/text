@@ -58,7 +58,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.0.0
 	- license: AGPL-3.0-or-later
 - vite
-	- version: 5.4.19
+	- version: 5.4.20
 	- license: MIT
 - vue-material-design-icons
 	- version: 5.3.1
