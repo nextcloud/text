@@ -7,6 +7,7 @@ OC.L10N.register(
     "File not found" : "ফাইল খুঁজে পাওয়া গেল না",
     "Translate" : "Translate",
     "Reload" : "পূনরায় লোড কর",
+    "you" : "তুমি",
     "guest" : "অতিথি",
     "Saved" : "সংরক্ষণ করা হলো",
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",
