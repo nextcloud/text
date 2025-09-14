@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import escapeHtml from 'escape-html'
 import { PlainText } from './../extensions/index.js'
 import BaseReader from './BaseReader.vue'
 
@@ -17,9 +16,6 @@ export default {
 	components: { BaseReader },
 
 	provide: {
-		renderHtml(content) {
-			return '<pre>' + escapeHtml(content) + '</pre>'
-		},
 		extensions: () => [PlainText],
 	},
 

@@ -11,7 +11,6 @@
 
 <script>
 import { RichText } from './../extensions/index.js'
-import markdownit from './../markdownit/index.js'
 import BaseReader from './BaseReader.vue'
 
 export default {
@@ -19,9 +18,6 @@ export default {
 	components: { BaseReader },
 
 	provide: {
-		renderHtml(content) {
-			return markdownit.render(content)
-		},
 		extensions() {
 			return [
 				RichText.configure({
