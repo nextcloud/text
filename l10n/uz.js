@@ -13,6 +13,7 @@ OC.L10N.register(
     "Text" : "Matn",
     "Nextcloud Assistant" : "Next bulut yordamchisi",
     "Translate" : "Tarjima",
+    "Reload" : "Qayta yuklash",
     "Offline" : "Offline",
     "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",

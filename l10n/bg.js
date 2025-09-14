@@ -32,6 +32,8 @@ OC.L10N.register(
     "Enter your name" : "Въведете вашето име",
     "Guest" : "Гост",
     "submit" : "изпращане",
+    "you" : "ти",
+    "edit" : "редактиране",
     "Insert an attachment" : "Вмъкване на прикачен файл",
     "Open in new tab" : "Отвори в нов раздел",
     "Remove link" : "Премахване на връзка",
