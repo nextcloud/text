@@ -18,6 +18,7 @@ OC.L10N.register(
     "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",
     "Unsaved changes" : "Saqlanmagan o'zgarishlar",
+    "Keyboard shortcuts" : "Klaviatura yorliqlari",
     "Link" : "Link",
     "Undo" : "Bekor qilish",
     "Save changes" : "Save changes",
