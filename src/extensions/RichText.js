@@ -67,7 +67,7 @@ export default Extension.create({
 
 	addExtensions() {
 		const defaultExtensions = [
-			this.options.editing ? Markdown : null,
+			Markdown,
 			Document,
 			Text,
 			Paragraph,

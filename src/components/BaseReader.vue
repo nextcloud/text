@@ -52,21 +52,22 @@ export default {
 	setup(props) {
 		// extensions is a factory building a list of extensions for the editor
 		const extensions = inject('extensions')
-		const renderHtml = inject('renderHtml')
-		const editor = new Editor({
-			content: renderHtml(props.content),
-			extensions: extensions(),
-		})
+		const editor = new Editor({ extensions: extensions() })
 		provideEditor(editor)
+
+		const { setContent, setEditable } = useEditorMethods(editor)
 		watch(
 			() => props.content,
 			(content) => {
 				console.warn({ content })
-				editor.commands.setContent(renderHtml(content), true)
+				setContent(content)
 			},
 		)
-		const { setEditable } = useEditorMethods(editor)
 		setEditable(false)
+
+		// Render the initial content last as it may render Vue components
+		// that break the vue context of this setup function.
+		setContent(props.content, { addToHistory: false })
 		return { editor }
 	},
 
