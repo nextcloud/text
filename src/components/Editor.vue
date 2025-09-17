@@ -23,7 +23,7 @@
 			@outline-toggled="outlineToggled">
 			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
-				 <template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
+				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
 					<slot name="readonlyBar">
 						<ReadonlyBar
 							:is-hidden="hideMenu"
