@@ -85,6 +85,16 @@ Please note the cypress tests require a nextcloud server running, the if no runn
 this requires the current user to be in the `docker` group.
 Or you might set the `CYPRESS_baseUrl` environment variable for a custom nextcloud server.
 
+##### Testing direct editing
+
+The mobile apps open the text editor via a direct editing session. To test this in a browser, do the following:
+
+```sh
+curl --silent --insecure --request POST --url 'https://admin:admin@nextcloud.local/ocs/v2.php/apps/files/api/v1/directEditing/open?editorId=text&creatorId=textdocument&format=json' --header 'Content-Type: multipart/form-data' --header 'OCS-APIRequest: true' --form path=/test.md | jq -r '.ocs.data.url'
+```
+
+The URL that's returned can be used to open the direct editing view. It contains a one-time token that expires after being opened once.
+
 #### Adding support for other mime types
 
 - The mime type needs to be known by Nextcloud server (see https://github.com/nextcloud/server/pull/24488 for how this can be added)
