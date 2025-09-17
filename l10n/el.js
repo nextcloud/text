@@ -121,6 +121,7 @@ OC.L10N.register(
     "Insert attachment" : "Εισαγωγή συνημμένου",
     "Command" : "Εντολή",
     "Ctrl" : "Ctrl",
+    "Option" : "Επιλογή",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Select file or folder to link to" : "Επιλέξτε αρχείο ή φάκελο για σύνδεση",
     "Choose" : "Επιλογή",
