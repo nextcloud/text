@@ -41,7 +41,7 @@ describe('Open test.md in viewer', function () {
 					.find('h2')
 					.should('contain', 'Hello world')
 
-				cy.get('.text-editor--readonly-bar')
+				cy.get('[data-text-el="readonly-bar"]')
 					.getActionEntry('outline')
 					.click()
 
