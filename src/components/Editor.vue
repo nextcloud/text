@@ -21,9 +21,9 @@
 			@outline-toggled="outlineToggled">
 			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
-				<div v-if="readOnly || (openReadOnlyEnabled && !editMode)" class="text-editor--readonly-bar">
+				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
 					<slot name="readonlyBar">
-						<ReadonlyBar :open-read-only="openReadOnlyEnabled">
+						<ReadonlyBar :is-hidden="hideMenu" :open-read-only="openReadOnlyEnabled">
 							<Status :document="document"
 								:dirty="dirty"
 								:sessions="filteredSessions"
@@ -31,7 +31,7 @@
 								:has-connection-issue="requireReconnect" />
 						</ReadonlyBar>
 					</slot>
-				</div>
+				</template>
 				<!-- Rich Menu -->
 				<template v-else>
 					<MenuBar v-if="renderMenus"
@@ -945,8 +945,7 @@ export default {
 	}
 }
 
-.menubar-placeholder,
-.text-editor--readonly-bar {
+.menubar-placeholder {
 	position: fixed;
 	position: -webkit-sticky;
 	position: sticky;
@@ -960,7 +959,6 @@ export default {
 	padding-block: var(--default-grid-baseline);
 }
 
-.text-editor--readonly-bar,
 .menubar-placeholder--with-slot {
 	opacity: unset;
 	visibility: unset;
