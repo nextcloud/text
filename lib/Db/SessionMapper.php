@@ -178,6 +178,46 @@ class SessionMapper extends QBMapper {
 		return $deletedCount;
 	}
 
+	public function deleteOrphanedSteps(): int {
+		$startTime = microtime(true);
+		$maxExecutionSeconds = 30;
+		$batchSize = 1000;
+		$deletedCount = 0;
+
+		do {
+			try {
+				$orphanedStepsBuilder = $this->db->getQueryBuilder();
+				$orphanedStepsBuilder->select('st.id')
+					->from('text_steps', 'st')
+					->leftJoin('st', 'text_sessions', 's', $orphanedStepsBuilder->expr()->eq('st.session_id', 's.id'))
+					->where($orphanedStepsBuilder->expr()->isNull('s.id'))
+					->setMaxResults($batchSize);
+
+				$result = $orphanedStepsBuilder->executeQuery();
+				$stepIds = array_map(function ($row) {
+					return (int)$row['id'];
+				}, $result->fetchAll());
+				$result->closeCursor();
+
+				if (empty($stepIds)) {
+					break;
+				}
+
+				$deleteBuilder = $this->db->getQueryBuilder();
+				$batchDeleted = $deleteBuilder->delete('text_steps')
+					->where($deleteBuilder->expr()->in('id', $deleteBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+					->setParameter('ids', $stepIds, IQueryBuilder::PARAM_INT_ARRAY)
+					->executeStatement();
+
+				$deletedCount += $batchDeleted;
+			} catch (\Exception) {
+				break;
+			}
+		} while ((microtime(true) - $startTime) < $maxExecutionSeconds);
+
+		return $deletedCount;
+	}
+
 	public function deleteByDocumentId(int $documentId): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
