@@ -142,6 +142,48 @@ class SessionMapper extends QBMapper {
 		return $deletedCount;
 	}
 
+	public function deleteOldSessions(int $ageInSeconds): int {
+		$startTime = microtime(true);
+		$maxExecutionSeconds = 30;
+		$batchSize = 1000;
+		$deletedCount = 0;
+		$ageThreshold = time() - $ageInSeconds;
+
+		do {
+			$oldSessionsBuilder = $this->db->getQueryBuilder();
+			$result = $oldSessionsBuilder->select('id')
+				->from('text_sessions')
+				->where($oldSessionsBuilder->expr()->lt('last_contact', $oldSessionsBuilder->createNamedParameter($ageThreshold)))
+				->setMaxResults($batchSize)
+				->executeQuery();
+			
+			$sessionIds = array_map(function ($row) {
+				return (int)$row['id'];
+			}, $result->fetchAll());
+			$result->closeCursor();
+
+			if (empty($sessionIds)) {
+				break;
+			}
+
+			$deleteStepsBuilder = $this->db->getQueryBuilder();
+			$deleteStepsBuilder->delete('text_steps')
+				->where($deleteStepsBuilder->expr()->in('session_id', $deleteStepsBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+				->setParameter('ids', $sessionIds, IQueryBuilder::PARAM_INT_ARRAY)
+				->executeStatement();
+
+			$deleteSessionsBuilder = $this->db->getQueryBuilder();
+			$batchDeleted = $deleteSessionsBuilder->delete('text_sessions')
+				->where($deleteSessionsBuilder->expr()->in('id', $deleteSessionsBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+				->setParameter('ids', $sessionIds, IQueryBuilder::PARAM_INT_ARRAY)
+				->executeStatement();
+
+			$deletedCount += $batchDeleted;
+		} while ((microtime(true) - $startTime) < $maxExecutionSeconds);
+
+		return $deletedCount;
+	}
+
 	public function deleteByDocumentId(int $documentId): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
