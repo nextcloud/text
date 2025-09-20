@@ -99,7 +99,7 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertCount(0, $this->sessionMapper->findAll(1));
 	}
 
-	public function testRemoveOldSessions() {
+	public function testDeleteOldSessions() {
 		$this->stepMapper->deleteAll(1);
 		$this->sessionMapper->deleteByDocumentId(1);
 
