@@ -155,7 +155,7 @@ class SessionMapper extends QBMapper {
 				->where($oldSessionsBuilder->expr()->lt('last_contact', $oldSessionsBuilder->createNamedParameter($ageThreshold)))
 				->setMaxResults($batchSize)
 				->executeQuery();
-			
+
 			$sessionIds = array_map(function ($row) {
 				return (int)$row['id'];
 			}, $result->fetchAll());
