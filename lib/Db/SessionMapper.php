@@ -183,16 +183,25 @@ class SessionMapper extends QBMapper {
 		$maxExecutionSeconds = 30;
 		$batchSize = 1000;
 		$deletedCount = 0;
+		$safetyBufferTime = time() - 86400;
 
 		do {
-			$orphanedStepsBuilder = $this->db->getQueryBuilder();
-			$orphanedStepsBuilder->select('st.id')
+			$orphanedStepsQb = $this->db->getQueryBuilder();
+			$orphanedStepsQb->select('st.id')
 				->from('text_steps', 'st')
-				->leftJoin('st', 'text_sessions', 's', $orphanedStepsBuilder->expr()->eq('st.session_id', 's.id'))
-				->where($orphanedStepsBuilder->expr()->isNull('s.id'))
+				->leftJoin('st', 'text_sessions', 's', $orphanedStepsQb->expr()->eq('st.session_id', 's.id'))
+				->leftJoin('st', 'text_documents', 'd', $orphanedStepsQb->expr()->eq('st.document_id', 'd.id'))
+				->where($orphanedStepsQb->expr()->isNull('s.id'))
+				->andWhere($orphanedStepsQb->expr()->lt('st.timestamp', $orphanedStepsQb->createNamedParameter($safetyBufferTime)))
+				->andWhere(
+					$orphanedStepsQb->expr()->orX(
+						$orphanedStepsQb->expr()->isNull('d.id'),
+						$orphanedStepsQb->expr()->lt('st.id', 'd.last_saved_version')
+					)
+				)
 				->setMaxResults($batchSize);
 
-			$result = $orphanedStepsBuilder->executeQuery();
+			$result = $orphanedStepsQb->executeQuery();
 			$stepIds = array_map(function ($row) {
 				return (int)$row['id'];
 			}, $result->fetchAll());
@@ -202,9 +211,9 @@ class SessionMapper extends QBMapper {
 				break;
 			}
 
-			$deleteBuilder = $this->db->getQueryBuilder();
-			$batchDeleted = $deleteBuilder->delete('text_steps')
-				->where($deleteBuilder->expr()->in('id', $deleteBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+			$deleteQb = $this->db->getQueryBuilder();
+			$batchDeleted = $deleteQb->delete('text_steps')
+				->where($deleteQb->expr()->in('id', $deleteQb->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
 				->setParameter('ids', $stepIds, IQueryBuilder::PARAM_INT_ARRAY)
 				->executeStatement();
 
