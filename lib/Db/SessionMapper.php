@@ -149,21 +149,10 @@ class SessionMapper extends QBMapper {
 		$ageThreshold = time() - $ageInSeconds;
 
 		do {
-			$oldSessionsQb = $this->db->getQueryBuilder();
-			$result = $oldSessionsQb->select('s.id')
-				->from('text_sessions', 's')
-				->leftJoin('s', 'text_documents', 'd', $oldSessionsQb->expr()->eq('s.document_id', 'd.id'))
-				->leftJoin('s', 'text_steps', 'st', $oldSessionsQb->expr()->andX(
-					$oldSessionsQb->expr()->eq('st.session_id', 's.id'),
-					$oldSessionsQb->expr()->gte('st.id', 'd.last_saved_version')
-				))
-				->where($oldSessionsQb->expr()->lt('s.last_contact', $oldSessionsQb->createNamedParameter($ageThreshold)))
-				->andWhere(
-					$oldSessionsQb->expr()->orX(
-						$oldSessionsQb->expr()->isNull('d.id'),
-						$oldSessionsQb->expr()->isNull('st.id')
-					)
-				)
+			$oldSessionsBuilder = $this->db->getQueryBuilder();
+			$result = $oldSessionsBuilder->select('id')
+				->from('text_sessions')
+				->where($oldSessionsBuilder->expr()->lt('last_contact', $oldSessionsBuilder->createNamedParameter($ageThreshold)))
 				->setMaxResults($batchSize)
 				->executeQuery();
 
@@ -176,15 +165,15 @@ class SessionMapper extends QBMapper {
 				break;
 			}
 
-			$deleteStepsQb = $this->db->getQueryBuilder();
-			$deleteStepsQb->delete('text_steps')
-				->where($deleteStepsQb->expr()->in('session_id', $deleteStepsQb->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+			$deleteStepsBuilder = $this->db->getQueryBuilder();
+			$deleteStepsBuilder->delete('text_steps')
+				->where($deleteStepsBuilder->expr()->in('session_id', $deleteStepsBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
 				->setParameter('ids', $sessionIds, IQueryBuilder::PARAM_INT_ARRAY)
 				->executeStatement();
 
-			$deleteSessionsQb = $this->db->getQueryBuilder();
-			$batchDeleted = $deleteSessionsQb->delete('text_sessions')
-				->where($deleteSessionsQb->expr()->in('id', $deleteSessionsQb->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
+			$deleteSessionsBuilder = $this->db->getQueryBuilder();
+			$batchDeleted = $deleteSessionsBuilder->delete('text_sessions')
+				->where($deleteSessionsBuilder->expr()->in('id', $deleteSessionsBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
 				->setParameter('ids', $sessionIds, IQueryBuilder::PARAM_INT_ARRAY)
 				->executeStatement();
 
