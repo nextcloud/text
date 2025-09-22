@@ -53,7 +53,7 @@
 	.text-editor {
 		height: fit-content !important;
 
-		.text-menubar {
+		.text-menubar, .text-readonly-bar {
 			// Hide menu bar
 			display: none !important;
 		}
@@ -121,8 +121,7 @@
 		}
 	}
 
-	.menubar-placeholder,
-	.text-editor--readonly-bar {
+	.menubar-placeholder {
 		display: none;
 	}
 
