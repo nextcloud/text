@@ -25,7 +25,7 @@ describe('Open read-only mode', function() {
 
 	describe('Disabled', function() {
 		const checkMenubar = function() {
-			cy.get('.text-editor--readonly-bar').should('not.exist')
+			cy.get('[data-text-el="readonly-bar"]').should('not.exist')
 			cy.get('.text-menubar', { timeout: 10000 })
 				.getActionEntry('done').should('not.exist')
 		}
@@ -52,12 +52,12 @@ describe('Open read-only mode', function() {
 
 	describe('Enabled', function() {
 		const requireReadOnlyBar = function() {
-			cy.get('.text-editor--readonly-bar').should('exist')
-			cy.get('.text-editor--readonly-bar').getActionEntry('edit').should('exist')
+			cy.get('[data-text-el="readonly-bar"]').should('exist')
+			cy.get('[data-text-el="readonly-bar"]').getActionEntry('edit').should('exist')
 		}
 
 		const requireMenubar = function() {
-			cy.get('.text-editor--readonly-bar').should('not.exist')
+			cy.get('[data-text-el="readonly-bar"]').should('not.exist')
 			cy.get('.text-menubar').getActionEntry('done').should('exist')
 		}
 
@@ -76,7 +76,7 @@ describe('Open read-only mode', function() {
 			requireReadOnlyBar()
 
 			// Switch to edit-mode
-			cy.get('.text-editor--readonly-bar').getActionEntry('edit').click()
+			cy.get('[data-text-el="readonly-bar"]').getActionEntry('edit').click()
 
 			requireMenubar()
 
@@ -92,10 +92,10 @@ describe('Open read-only mode', function() {
 			requireReadOnlyBar()
 
 			// Switch to edit-mode
-			cy.get('.text-editor--readonly-bar').getActionEntry('edit').click()
+			cy.get('[data-text-el="readonly-bar"]').getActionEntry('edit').click()
 
 			// Check that read-only bar does not exist
-			cy.get('.text-editor--readonly-bar').should('not.exist')
+			cy.get('[data-text-el="readonly-bar"]').should('not.exist')
 		})
 	})
 })
