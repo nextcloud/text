@@ -155,17 +155,17 @@ class SessionMapperTest extends \Test\TestCase {
 		// Create Orphaned step without document (delete)
 		$this->stepMapper->insert(Step::fromParams([
 			'sessionId' => 99999,
-			'documentId' => 99999, 
+			'documentId' => 99999,
 			'data' => 'ORPHANED_NO_DOC',
 			'version' => 1
-    	]));
-		
+		]));
+
 		// Orphaned "old" step with document and old version (delete)
 		$this->stepMapper->insert(Step::fromParams([
 			'id' => 1,
 			'sessionId' => 99999,
 			'documentId' => $document->getId(),
-			'data' => 'ORPHANED_OLD_VERSION', 
+			'data' => 'ORPHANED_OLD_VERSION',
 			'timestamp' => $oldTimestamp,
 			'version' => 1
 		]));
@@ -184,7 +184,7 @@ class SessionMapperTest extends \Test\TestCase {
 			'id' => 101,
 			'sessionId' => 99999,
 			'documentId' => $document->getId(),
-			'data' => 'ORPHANED_NEW_VERSION', 
+			'data' => 'ORPHANED_NEW_VERSION',
 			'timestamp' => $oldTimestamp,
 			'version' => 3
 		]));
