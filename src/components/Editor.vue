@@ -29,6 +29,7 @@
 								:sessions="filteredSessions"
 								:sync-error="syncError"
 								:has-connection-issue="requireReconnect" />
+							<slot name="header" />
 						</ReadonlyBar>
 					</slot>
 				</template>
