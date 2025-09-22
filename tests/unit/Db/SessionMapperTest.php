@@ -9,12 +9,13 @@ class SessionMapperTest extends \Test\TestCase {
 
 	private SessionMapper $sessionMapper;
 	private StepMapper $stepMapper;
+	private DocumentMapper $documentMapper;
 
 	public function setUp(): void {
 		parent::setUp();
 		$this->sessionMapper = \OCP\Server::get(SessionMapper::class);
 		$this->stepMapper = \OCP\Server::get(StepMapper::class);
-
+		$this->documentMapper = \OCP\Server::get(DocumentMapper::class);
 	}
 
 	public function testDeleteInactiveWithoutSteps() {
@@ -137,59 +138,63 @@ class SessionMapperTest extends \Test\TestCase {
 	}
 
 	public function testDeleteOrphanedSteps() {
-		$this->stepMapper->deleteAll(1);
-		$this->sessionMapper->deleteByDocumentId(1);
+		$this->documentMapper->clearAll();
+		$this->sessionMapper->clearAll();
+		$this->stepMapper->clearAll();
 
-		// Create session
-		$session = $this->sessionMapper->insert(Session::fromParams([
-			'userId' => 'admin',
-			'documentId' => 1,
-			'lastContact' => time(),
-			'token' => uniqid(),
-			'color' => '00ff00',
+		$oldTimestamp = time() - 86401;
+
+		// Create document
+		$document = $this->documentMapper->insert(Document::fromParams([
+			'id' => 1,
+			'currentVersion' => 0,
+			'lastSavedVersion' => 100,
+			'lastSavedVersionTime' => time()
 		]));
 
-		// Create steps for session
+		// Create Orphaned step without document (delete)
 		$this->stepMapper->insert(Step::fromParams([
-			'sessionId' => $session->getId(),
-			'documentId' => 1,
-			'data' => 'YJSDATA1',
-			'version' => 1,
-		]));
+			'sessionId' => 99999,
+			'documentId' => 99999, 
+			'data' => 'ORPHANED_NO_DOC',
+			'version' => 1
+    	]));
+		
+		// Orphaned "old" step with document and old version (delete)
 		$this->stepMapper->insert(Step::fromParams([
-			'sessionId' => $session->getId(),
-			'documentId' => 1,
-			'data' => 'YJSDATA2',
-			'version' => 2,
+			'id' => 1,
+			'sessionId' => 99999,
+			'documentId' => $document->getId(),
+			'data' => 'ORPHANED_OLD_VERSION', 
+			'timestamp' => $oldTimestamp,
+			'version' => 1
 		]));
 
-		// Create orphaned steps
+		// Orphaned "new" step with document and current version (keep)
 		$this->stepMapper->insert(Step::fromParams([
-			'sessionId' => 99999, // Non-existent session
-			'documentId' => 1,
-			'data' => 'ORPHANED1',
-			'version' => 3,
-		]));
-		$this->stepMapper->insert(Step::fromParams([
-			'sessionId' => 99998, // Non-existent session
-			'documentId' => 1,
-			'data' => 'ORPHANED2',
-			'version' => 4,
+			'id' => 100,
+			'sessionId' => 99999,
+			'documentId' => $document->getId(),
+			'data' => 'ORPHANED_CURRENT_VERSION',
+			'version' => 2
 		]));
 
-		// Verify 4 steps total
-		$allSteps = $this->stepMapper->find(1, 0);
-		self::assertCount(4, $allSteps);
+		// Orphaned step with document and new version (keep)
+		$this->stepMapper->insert(Step::fromParams([
+			'id' => 101,
+			'sessionId' => 99999,
+			'documentId' => $document->getId(),
+			'data' => 'ORPHANED_NEW_VERSION', 
+			'timestamp' => $oldTimestamp,
+			'version' => 3
+		]));
 
-		// Delete orphaned steps
+		// Verify steps for document 1 and 99999
+		self::assertCount(3, $this->stepMapper->find(1, 0));
+		self::assertCount(1, $this->stepMapper->find(99999, 0));
+
+		// Verify orphan delete
 		$deletedCount = $this->sessionMapper->deleteOrphanedSteps();
-
-		// Should have deleted 2 orphaned steps
 		self::assertEquals(2, $deletedCount);
-
-		// Should have 2 valid steps remaining
-		$remainingSteps = $this->stepMapper->find(1, 0);
-		self::assertCount(2, $remainingSteps);
->>>>>>> a66cd75d2 (Add test for deleteOrphanedSteps method)
 	}
 }
