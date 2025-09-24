@@ -165,12 +165,6 @@ class SessionMapper extends QBMapper {
 				break;
 			}
 
-			$deleteStepsQb = $this->db->getQueryBuilder();
-			$deleteStepsQb->delete('text_steps')
-				->where($deleteStepsQb->expr()->in('session_id', $deleteStepsQb->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
-				->setParameter('ids', $sessionIds, IQueryBuilder::PARAM_INT_ARRAY)
-				->executeStatement();
-
 			$deleteSessionsQb = $this->db->getQueryBuilder();
 			$batchDeleted = $deleteSessionsQb->delete('text_sessions')
 				->where($deleteSessionsQb->expr()->in('id', $deleteSessionsQb->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY))
