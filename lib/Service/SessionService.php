@@ -138,6 +138,10 @@ class SessionService {
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
 
+	public function removeOldSessions(int $ageInSeconds = 7776000): int {
+		return $this->sessionMapper->deleteOldSessions($ageInSeconds);
+	}
+
 	public function getSession(int $documentId, int $sessionId, string $token): ?Session {
 		if ($this->session !== null) {
 			return $this->session;
