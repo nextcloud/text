@@ -66,6 +66,7 @@ OC.L10N.register(
     "Redo" : "Напред",
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Неможе да се копира, копирајте го линкот рачно",
+    "Open link" : "Отвори линк",
     "Save changes" : "Зачувај ги промените",
     "Cancel" : "Откажи",
     "URL" : "Адреса",
