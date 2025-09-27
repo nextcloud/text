@@ -119,7 +119,7 @@ OC.L10N.register(
     "Action" : "Ågärd",
     "Undo" : "Ångra",
     "Redo" : "Gör om",
-    "Toggle outline" : "Växla kontur",
+    "Toggle outline" : "Visa/dölj översikt",
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Kan inte kopiera, länken måste kopieras manuellt",
     "Copy link to clipboard" : "Kopiera länken till urklipp",
