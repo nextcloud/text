@@ -133,7 +133,7 @@
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^2.1.4",
     "typescript": "^5.9.2",
-    "vite": "^7.1.6",
+    "vite": "^7.1.7",
     "vite-plugin-commonjs": "^0.10.4",
     "vitest": "^3.2.4",
     "vue-demi": "^0.14.10",
