@@ -131,7 +131,7 @@
     "jsdom": "^27.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prosemirror-test-builder": "^1.1.1",
-    "rollup-plugin-webpack-stats": "^2.1.4",
+    "rollup-plugin-webpack-stats": "^2.1.5",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-plugin-commonjs": "^0.10.4",
