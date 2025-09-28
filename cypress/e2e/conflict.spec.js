@@ -112,18 +112,21 @@ variants.forEach(function ({ fixture, mime }) {
 			getWrapper().should('not.exist')
 		})
 
-		it.only(prefix + ': no conflict when uploading same file content', function () {
-			cy.testName().then((testName) => {
-				cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
-				cy.visitTestFolder()
-				cy.openFile(fileName)
-				cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
-				
-				cy.get('.text-editor .document-status').should('not.exist')
-				getWrapper().should('not.exist')
-				cy.getContent().should('not.contain', 'edited')
-			})
-		})
+		it.only(
+			prefix + ': no conflict when uploading same file content',
+			function () {
+				cy.testName().then((testName) => {
+					cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
+					cy.visitTestFolder()
+					cy.openFile(fileName)
+					cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
+
+					cy.get('.text-editor .document-status').should('not.exist')
+					getWrapper().should('not.exist')
+					cy.getContent().should('not.contain', 'edited')
+				})
+			},
+		)
 	})
 })
 
