@@ -15,7 +15,7 @@ OC.L10N.register(
     "New text file" : "Ny tekstfil",
     "Create new text file" : "Opret ny tekstfil",
     "Editing session has expired. Please reload the page." : "Redningssessionen er udløbet. Genindlæs venligst siden.",
-    "{user} has mentioned you in the text document {node}" : "{user} har nævnt dig i tekstdokumentet {node}",
+    "{user} has mentioned you in the text document {node}" : "{user} har omtalt dig i tekstdokumentet {node}",
     "This file cannot be displayed as download is disabled by the share" : "Denne fil kan ikke vises da download er slået fra for delingen",
     "File not found" : "Filen blev ikke fundet",
     "Readme" : "Læs mig",
@@ -112,7 +112,7 @@ OC.L10N.register(
     "Link" : "Link",
     "Insert emoji" : "Indsæt emoji",
     "emoji" : "emoji",
-    "Mention someone" : "Nævn nogen",
+    "Mention someone" : "Omtal nogen",
     "name" : "Navn",
     "Smart picker" : "Smart Vælger",
     "something" : "noget",
@@ -237,6 +237,6 @@ OC.L10N.register(
     "Success" : "Succes",
     "Warning" : "Advarsler",
     "Danger" : "Fare",
-    "Start writing, or try '/' to add, '@' to mention…" : "Begynd at skrive, eller prøv '/' for at tilføje, '@' for at nævne.."
+    "Start writing, or try '/' to add, '@' to mention…" : "Begynd at skrive, eller prøv '/' for at tilføje, '@' for at omtale.."
 },
 "nplurals=2; plural=(n != 1);");
