@@ -230,19 +230,19 @@ class DocumentService {
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
 		}
 
-		// By default send all steps the user has not received yet.
+		// By default, send all steps the user has not received yet.
 		$getStepsSinceVersion = $version;
 		if ($stepsIncludeQuery) {
-			$this->logger->debug('Loading document state for ' . $documentId);
+			$this->logger->error('Loading document state for ' . $documentId);
 			try {
 				$stateFile = $this->getStateFile($documentId);
 				$documentState = $stateFile->getContent();
 				$this->logger->debug('Existing document, state file loaded ' . $documentId);
-				// If there were any queries in the steps send all steps since last save.
+				// If there were any queries in the steps, send all steps since last save.
 				$getStepsSinceVersion = $document->getLastSavedVersion();
 			} catch (NotFoundException $e) {
 				$this->logger->debug('Existing document, but no state file found for ' . $documentId);
-				// If there is no state file include all the steps.
+				// If there is no state file, include all the steps.
 				$getStepsSinceVersion = 0;
 			}
 		}
