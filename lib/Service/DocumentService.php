@@ -391,7 +391,7 @@ class DocumentService {
 			if ($documentState !== null) {
 				$this->writeDocumentState($file->getId(), $documentState);
 			}
-			$document->setLastSavedVersion($stepsVersion);
+			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
@@ -411,7 +411,7 @@ class DocumentService {
 					$this->writeDocumentState($file->getId(), $documentState);
 				}
 			});
-			$document->setLastSavedVersion($stepsVersion);
+			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
