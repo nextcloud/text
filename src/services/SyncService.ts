@@ -298,29 +298,14 @@ class SyncService {
 			.map((s) => {
 				return { step: s.lastAwarenessMessage }
 			})
-		const newSteps = [...awareness]
-		for (let i = 0; i < steps.length; i++) {
-			const singleSteps = steps[i].data
-			if (this.version < steps[i].version) {
-				this.version = steps[i].version
-			}
-			if (!Array.isArray(singleSteps)) {
-				logger.error('Invalid step data, skipping step', { step: steps[i] })
-				// TODO: recover
-				continue
-			}
-			singleSteps.forEach((step) => {
-				newSteps.push({
-					step,
-				})
-			})
-		}
-		this.#lastStepPush = Date.now()
+		const newSteps = [...awareness, ...steps.flatMap((s) => s.data)]
+		const version = Math.max(this.version, ...steps.map((s) => s.version))
 		this.emit('sync', {
 			steps: newSteps,
 			document,
-			version: this.version,
+			version,
 		})
+		this.#lastStepPush = Date.now()
 	}
 
 	checkIdle() {

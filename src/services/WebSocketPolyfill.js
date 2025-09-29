@@ -41,6 +41,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 							this.onmessage({ data })
 						})
 						logger.debug('synced ', { version, steps })
+						syncService.version = version
 					}
 				},
 			})
