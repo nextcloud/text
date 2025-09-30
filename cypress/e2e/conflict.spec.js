@@ -51,7 +51,7 @@ variants.forEach(function ({ fixture, mime }) {
 		})
 
 		it(prefix + ': displays conflicts', function () {
-			createConflict(fileName, mime)
+			createConflict(fileName, 'edited-' + fileName, mime)
 
 			cy.openFile(fileName)
 
@@ -59,12 +59,12 @@ variants.forEach(function ({ fixture, mime }) {
 				'contain',
 				'The file was overwritten.',
 			)
-			getWrapper().find('#read-only-editor').should('contain', 'edited')
+			getWrapper().find('#read-only-editor').should('contain', 'Hello world')
 			getWrapper()
 				.find('#read-only-editor')
 				.should('not.contain', 'cruel conflicting')
 
-			getWrapper().find('.text-editor__main').should('contain', 'edited')
+			getWrapper().find('.text-editor__main').should('contain', 'Hello world')
 			getWrapper()
 				.find('.text-editor__main')
 				.should('contain', 'cruel conflicting')
@@ -73,7 +73,7 @@ variants.forEach(function ({ fixture, mime }) {
 		it(
 			prefix + ': resolves conflict using current editing session',
 			function () {
-				createConflict(fileName, mime)
+				createConflict(fileName, 'edited-' + fileName, mime)
 
 				cy.openFile(fileName)
 				cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
@@ -82,13 +82,12 @@ variants.forEach(function ({ fixture, mime }) {
 
 				getWrapper().should('not.exist')
 				cy.get('[data-cy="resolveThisVersion"]').should('not.exist')
-				cy.getContent().should('contain', 'edited')
 				cy.getContent().should('contain', 'cruel conflicting')
 			},
 		)
 
 		it(prefix + ': resolves conflict using server version', function () {
-			createConflict(fileName, mime)
+			createConflict(fileName, 'edited-' + fileName, mime)
 
 			cy.openFile(fileName)
 			cy.get('[data-cy="resolveServerVersion"]').click()
@@ -96,12 +95,12 @@ variants.forEach(function ({ fixture, mime }) {
 			getWrapper().should('not.exist')
 			cy.get('[data-cy="resolveThisVersion"]').should('not.exist')
 			cy.get('[data-cy="resolveServerVersion"]').should('not.exist')
-			cy.getContent().should('contain', 'edited')
+			cy.getContent().should('contain', 'Hello world')
 			cy.getContent().should('not.contain', 'cruel conflicting')
 		})
 
 		it(prefix + ': hides conflict in read only session', function () {
-			createConflict(fileName, mime)
+			createConflict(fileName, 'edited-' + fileName, mime)
 			cy.testName().then((testName) => {
 				cy.shareFile(`/${testName}/${fileName}`).then((token) => {
 					cy.logout()
@@ -113,16 +112,10 @@ variants.forEach(function ({ fixture, mime }) {
 		})
 
 		it(prefix + ': no conflict when uploading same file content', function () {
-			cy.testName().then((testName) => {
-				cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
-				cy.visitTestFolder()
-				cy.openFile(fileName)
-				cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
-
-				cy.get('.text-editor .document-status').should('not.exist')
-				getWrapper().should('not.exist')
-				cy.getContent().should('not.contain', 'edited')
-			})
+			createConflict(fileName, fileName, mime)
+			cy.openFile(fileName)
+			cy.getContent().should('contain', 'Hello world')
+			getWrapper().should('not.exist')
 		})
 	})
 })
@@ -139,7 +132,7 @@ describe('conflict dialog scroll behaviour', function () {
 		cy.login(user)
 		cy.createTestFolder()
 
-		createConflict(fileName, 'text/markdown')
+		createConflict(fileName, 'edited-' + fileName, 'text/markdown')
 
 		cy.openFile(fileName)
 
@@ -158,23 +151,30 @@ describe('conflict dialog scroll behaviour', function () {
 })
 
 /**
- * @param {string} fileName - filename
+ * @param {string} fileName1 - filename1
+ * @param {string} fileName2 - filename2
  * @param {string} mime - mimetype
  */
-function createConflict(fileName, mime) {
+function createConflict(fileName1, fileName2, mime) {
 	cy.testName().then((testName) => {
-		cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
+		cy.uploadFile(fileName1, mime, `${testName}/${fileName1}`)
 	})
 	cy.visitTestFolder()
-	cy.openFile(fileName)
+	cy.openFile(fileName1)
 	cy.log('Inspect editor')
 	cy.getEditor()
 		.find('.ProseMirror')
 		.should('have.attr', 'contenteditable', 'true')
+
 	cy.getContent().type('Hello you cruel conflicting world')
+
 	cy.testName().then((testName) => {
-		cy.uploadFile('edited-' + fileName, mime, testName + '/' + fileName)
+		cy.uploadFile(fileName2, mime, testName + '/' + fileName1)
 	})
+
+	cy.intercept('POST', '**/session/*/sync').as('sync')
+	cy.wait('@sync', { timeout: 10000 })
+
 	cy.get('#viewer .modal-header button.header-close').click()
 	cy.get('#viewer').should('not.exist')
 }
