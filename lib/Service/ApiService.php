@@ -181,9 +181,6 @@ class ApiService {
 			// Session was removed in the meantime. #3875
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
-		if (empty($steps)) {
-			return new DataResponse([]);
-		}
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
 			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
