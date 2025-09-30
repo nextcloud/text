@@ -801,6 +801,10 @@ export default defineComponent({
 			this.translateModal = false
 		},
 
+		hasYjsPendingStructs() {
+			return !!this.ydoc.store.pendingStructs
+		},
+
 		saveBeforeUnload() {
 			this.saveService.saveViaSendBeacon()
 		},
