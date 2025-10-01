@@ -189,7 +189,7 @@ class SessionMapper extends QBMapper {
 			$orphanedStepsQb = $this->db->getQueryBuilder();
 			$orphanedStepsQb->select('st.id')
 				->from('text_steps', 'st')
-				->leftJoin('st', 'text_sessions', 's', $orphanedStepsQb->expr()->eq('st.session_id', 's.id'))
+				->leftJoin('st', 'text_sessions', 's', $orphanedStepsQb->expr()->eq('st.document_id', 's.document_id'))
 				->leftJoin('st', 'text_documents', 'd', $orphanedStepsQb->expr()->eq('st.document_id', 'd.id'))
 				->where($orphanedStepsQb->expr()->isNull('s.id'))
 				->andWhere($orphanedStepsQb->expr()->lt('st.timestamp', $orphanedStepsQb->createNamedParameter($safetyBufferTime)))
