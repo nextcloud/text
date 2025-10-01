@@ -108,7 +108,7 @@ OC.L10N.register(
     "Blockquote" : "Tsitaadiplokk",
     "Quoted text" : "Tsiteeritud tekst",
     "Code block" : "Koodiplokk",
-    "Some code" : "Natukena koodi",
+    "Some code" : "Natukene koodi",
     "Link" : "Link",
     "Insert emoji" : "Lisa emoji",
     "emoji" : "emoji",
