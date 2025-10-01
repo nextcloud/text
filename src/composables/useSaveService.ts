@@ -23,6 +23,7 @@ export const provideSaveService = (
 		syncService,
 		serialize,
 		getDocumentState: () => getDocumentState(ydoc),
+		hasYjsPendingStructs: () => !!ydoc.store.pendingStructs,
 	})
 	provide(saveServiceKey, saveService)
 	return { saveService }
