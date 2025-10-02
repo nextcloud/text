@@ -1,0 +1,2 @@
+import{_ as e}from"./mermaid.core-DbSdpsx7.chunk.mjs";var t=e(()=>"\n  /* Font Awesome icon styling - consolidated */\n  .label-icon {\n    display: inline-block;\n    height: 1em;\n    overflow: visible;\n    vertical-align: -0.125em;\n  }\n  \n  .node .label-icon path {\n    fill: currentColor;\n    stroke: revert;\n    stroke-width: revert;\n  }\n","getIconStyles");export{t as g};
+//# sourceMappingURL=chunk-FMBD7UC4-C6Zh8sZC.chunk.mjs.map

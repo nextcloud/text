@@ -138,8 +138,12 @@ class SessionService {
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
 
-	public function removeOrphanedSteps(): int {
-		return $this->sessionMapper->deleteOrphanedSteps();
+	public function removeOldSessions(int $ageInSeconds = 7776000): int {
+		return $this->sessionMapper->deleteOldSessions($ageInSeconds);
+	}
+
+	public function removeOrphanedSteps(int $ageInSeconds = 604800): int {
+		return $this->sessionMapper->deleteOrphanedSteps($ageInSeconds);
 	}
 
 	public function getSession(int $documentId, int $sessionId, string $token): ?Session {

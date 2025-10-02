@@ -54,6 +54,10 @@ class Cleanup extends TimedJob {
 		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps();
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 
+		$this->logger->debug('Run cleanup job for old sessions');
+		$removedOldSessions = $this->sessionService->removeOldSessions();
+		$this->logger->debug('Removed ' . $removedOldSessions . ' old sessions');
+
 		$this->logger->debug('Run cleanup job for orphaned steps');
 		$removedSteps = $this->sessionService->removeOrphanedSteps();
 		$this->logger->debug('Removed ' . $removedSteps . ' orphaned steps');

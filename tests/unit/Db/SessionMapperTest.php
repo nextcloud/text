@@ -100,12 +100,49 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertCount(0, $this->sessionMapper->findAll(1));
 	}
 
+	public function testDeleteOldSessions() {
+		$this->stepMapper->deleteAll(1);
+		$this->sessionMapper->deleteByDocumentId(1);
+
+		$fourMonthsAgo = time() - (120 * 24 * 60 * 60);
+		$oneWeekAgo = time() - (7 * 24 * 60 * 60);
+
+		// Create old and recent session
+		$oldSession = $this->sessionMapper->insert(Session::fromParams([
+			'userId' => 'admin',
+			'documentId' => 1,
+			'lastContact' => $fourMonthsAgo,
+			'token' => uniqid(),
+			'color' => '00ff00',
+		]));
+		$recentSession = $this->sessionMapper->insert(Session::fromParams([
+			'userId' => 'admin',
+			'documentId' => 1,
+			'lastContact' => $oneWeekAgo,
+			'token' => uniqid(),
+			'color' => 'ff0000',
+		]));
+
+		// Verify 2 sessions
+		self::assertCount(2, $this->sessionMapper->findAll(1));
+
+		// Delete sessions older than 90 days
+		$threeMonths = 90 * 24 * 60 * 60;
+		$deletedCount = $this->sessionMapper->deleteOldSessions($threeMonths);
+		self::assertEquals(1, $deletedCount);
+
+		// Should have 1 recent session remaining
+		$remainingSessions = $this->sessionMapper->findAll(1);
+		self::assertCount(1, $remainingSessions);
+		self::assertEquals($recentSession->getId(), $remainingSessions[0]->getId());
+	}
+
 	public function testDeleteOrphanedSteps() {
 		$this->documentMapper->clearAll();
 		$this->sessionMapper->clearAll();
 		$this->stepMapper->clearAll();
 
-		$oldTimestamp = time() - 86401;
+		$eightDaysAgo = time() - (8 * 24 * 60 * 60);
 
 		// Create document
 		$document = $this->documentMapper->insert(Document::fromParams([
@@ -129,7 +166,7 @@ class SessionMapperTest extends \Test\TestCase {
 			'sessionId' => 99999,
 			'documentId' => $document->getId(),
 			'data' => 'ORPHANED_OLD_VERSION',
-			'timestamp' => $oldTimestamp,
+			'timestamp' => $eightDaysAgo,
 			'version' => 1
 		]));
 
@@ -148,7 +185,7 @@ class SessionMapperTest extends \Test\TestCase {
 			'sessionId' => 99999,
 			'documentId' => $document->getId(),
 			'data' => 'ORPHANED_NEW_VERSION',
-			'timestamp' => $oldTimestamp,
+			'timestamp' => $eightDaysAgo,
 			'version' => 3
 		]));
 
@@ -156,8 +193,9 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertCount(3, $this->stepMapper->find(1, 0));
 		self::assertCount(1, $this->stepMapper->find(99999, 0));
 
-		// Verify orphan delete
-		$deletedCount = $this->sessionMapper->deleteOrphanedSteps();
+		// Delete orphaned steps older than 7 days
+		$sevenDays = 7 * 24 * 60 * 60;
+		$deletedCount = $this->sessionMapper->deleteOrphanedSteps($sevenDays);
 		self::assertEquals(2, $deletedCount);
 	}
 }
