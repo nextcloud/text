@@ -69,7 +69,7 @@ export interface Step {
  */
 export interface FlatStep {
 	step: string
-	version?: number
+	version: number
 }
 
 export interface UserSession {
@@ -110,13 +110,13 @@ export declare type EventTypes = {
   fetched: unknown;
 
   /* received new steps */
-  sync: { document?: object, steps: { step: string }[], version: number };
+  sync: { document?: object; steps: { step: string; version: number }[] };
 
   /* state changed (dirty) */
-  stateChange: { initialLoading?: boolean, dirty?: boolean };
+  stateChange: { initialLoading?: boolean; dirty?: boolean };
 
   /* error */
-  error: { type: ErrorType, data?: object };
+  error: { type: ErrorType; data?: object };
 
   /* Events for session and document meta data */
   change: { sessions: object[]; document: object }
@@ -181,7 +181,7 @@ class SyncService {
 			&& !this.connection.isClosed
 	}
 
-	async open({ fileId, initialSession }: { fileId: number, initialSession: Session}) {
+	async open({ fileId, initialSession }: { fileId: number, initialSession?: Session}) {
 		if (this.hasActiveConnection()) {
 			return {
 				...this.connection.state,
@@ -274,9 +274,7 @@ class SyncService {
 				if (documentState) {
 					const documentStateStep = documentStateToStep(documentState)
 					this.bus.emit('sync', {
-						version: this.version,
 						steps: [documentStateStep],
-						document: this.connection?.document,
 					})
 				}
 				this.pushError = 0
@@ -314,14 +312,18 @@ class SyncService {
 		document?: object
 		sessions?: Session[]
 	}) {
+		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
-			steps: [
-				...awarenessSteps(sessions),
-				...flatSteps(steps),
-			],
+			steps: [...awarenessSteps(sessions), ...flatSteps(steps)],
 			document,
-			version: Math.max(this.version, ...steps.map((s) => s.version)),
 		})
+		if (this.version < versionAfter) {
+			// Steps up to version where emitted but it looks like they were not processed.
+			// Otherwise the WebsocketPolyfill would have increased the version counter.
+			console.warn(
+				`Failed to process steps leading up to version ${versionAfter}.`,
+			)
+		}
 		this.lastStepPush = Date.now()
 	}
 
