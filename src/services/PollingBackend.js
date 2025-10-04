@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import { logger } from '../helpers/logger.js'
-import { SyncService, ERROR_TYPE } from './SyncService.js'
+import { SyncService, ERROR_TYPE } from './SyncService.ts'
 import { Connection } from './SessionApi.js'
 import getNotifyBus from './NotifyService.js'
 
@@ -126,7 +126,7 @@ class PollingBackend {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
-		this.#syncService.emit('change', { document, sessions })
+		this.#syncService.bus.emit('change', { document, sessions })
 		this.#syncService.receiveSteps(data)
 
 		if (data.steps.length === 0) {
@@ -145,7 +145,7 @@ class PollingBackend {
 			} else {
 				this.increaseRefetchTimer()
 			}
-			this.#syncService.emit('stateChange', { initialLoading: true })
+			this.#syncService.bus.emit('stateChange', { initialLoading: true })
 			return
 		}
 
@@ -158,7 +158,7 @@ class PollingBackend {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+				this.#syncService.bus.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 
 			} else {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
@@ -167,25 +167,25 @@ class PollingBackend {
 			// Still apply the steps to update our version of the document
 			this._handleResponse(e.response)
 			logger.error('Conflict during file save, please resolve')
-			this.#syncService.emit('error', {
+			this.#syncService.bus.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
 				data: {
 					outsideChange: e.response.data.outsideChange,
 				},
 			})
 		} else if (e.response.status === 412) {
-			this.#syncService.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: e.response })
+			this.#syncService.bus.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: e.response })
 			this.disconnect()
 		} else if ([403, 404].includes(e.response.status)) {
-			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.bus.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if ([502, 503].includes(e.response.status)) {
 			this.increaseRefetchTimer()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+			this.#syncService.bus.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 			logger.error('Failed to fetch steps due to unavailable service', { error: e })
 		} else {
 			this.disconnect()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+			this.#syncService.bus.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
 

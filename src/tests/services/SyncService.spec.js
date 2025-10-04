@@ -4,7 +4,7 @@
  */
 
 import { describe, it, vi, expect } from 'vitest'
-import { SyncService } from '../../services/SyncService.js'
+import { SyncService } from '../../services/SyncService.ts'
 
 describe('Sync service', () => {
 
