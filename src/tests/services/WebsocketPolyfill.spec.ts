@@ -4,39 +4,45 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
+import { shallowRef } from 'vue'
+import { SyncService } from '../../services/SyncService'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
 describe('Init function', () => {
-	const mockSyncService = (mocked = {}) => {
-		return {
-			on: vi.fn(),
-			open: vi.fn().mockImplementation(async () => ({})),
-			...mocked,
-		}
-	}
+	vi.mock(import('../../services/SyncService'), () => {
+		const SyncService = vi.fn()
+		SyncService.prototype.bus = { on: vi.fn() }
+		SyncService.prototype.open = vi.fn().mockImplementation(async () => ({}))
+		SyncService.prototype.hasActiveConnection = vi.fn()
+		return { SyncService }
+	})
+	const mockSyncService = () =>
+		new SyncService({
+			connection: shallowRef(undefined),
+			openConnection: vi.fn(),
+		})
 
 	it('returns a websocket polyfill class', () => {
 		const syncService = mockSyncService()
-		const Polyfill = initWebSocketPolyfill(syncService)
+		const Polyfill = initWebSocketPolyfill(syncService, 123)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 	})
 
 	it('registers handlers', () => {
 		const syncService = mockSyncService()
-		const Polyfill = initWebSocketPolyfill(syncService)
+		const Polyfill = initWebSocketPolyfill(syncService, 123)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
-		expect(syncService.on).toHaveBeenCalled()
+		expect(syncService.bus.on).toHaveBeenCalled()
 	})
 
 	it('opens sync service', () => {
 		const syncService = mockSyncService()
 		const fileId = 123
-		const initialSession = {}
-		const Polyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
+		const Polyfill = initWebSocketPolyfill(syncService, fileId)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
-		expect(syncService.open).toHaveBeenCalledWith({ fileId, initialSession })
+		expect(syncService.open).toHaveBeenCalled()
 	})
 })

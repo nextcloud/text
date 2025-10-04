@@ -11,11 +11,12 @@ import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService'
  * @param sessions to process.
  */
 export function awarenessSteps(sessions: Session[]): FlatStep[] {
-	const lastContactThreshold = Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME
+	const lastContactThreshold =
+		Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME
 	return sessions
 		.filter((s) => s.lastContact > lastContactThreshold)
 		.filter((s) => Boolean(s.lastAwarenessMessage))
-		.map((s) => ({ step: s.lastAwarenessMessage }))
+		.map((s) => ({ step: s.lastAwarenessMessage, version: 0 }))
 }
 
 /**
@@ -23,9 +24,5 @@ export function awarenessSteps(sessions: Session[]): FlatStep[] {
  * @param steps to process.
  */
 export function flatSteps(steps: Step[]): FlatStep[] {
-	return steps.flatMap(
-		(s) => s.data.map(
-			(step) => ({ step, version: s.version })
-		)
-	)
+	return steps.flatMap((s) => s.data.map((step) => ({ step, version: s.version })))
 }
