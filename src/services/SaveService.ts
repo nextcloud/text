@@ -41,7 +41,7 @@ class SaveService {
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
-		this.syncService.on('close', () => {
+		this.syncService.bus.on('close', () => {
 			this.autosave.clear()
 		})
 	}
@@ -51,7 +51,7 @@ class SaveService {
 	}
 
 	get emit() {
-		return this.syncService.emit.bind(this.syncService)
+		return this.syncService.bus.emit
 	}
 
 	_getContent() {
