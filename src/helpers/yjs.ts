@@ -42,13 +42,14 @@ export function applyDocumentState(
  * and encode it and wrap it in a step data structure.
  *
  * @param documentState - base64 encoded doc state
- * @return base64 encoded yjs sync protocol update message
+ * @return base64 encoded yjs sync protocol update message and version
  */
 export function documentStateToStep(documentState: string): {
-	step: string
+	step: string,
+	version: number,
 } {
 	const message = documentStateToUpdateMessage(documentState)
-	return { step: encodeArrayBuffer(message) }
+	return { step: encodeArrayBuffer(message), version: -1 }
 }
 
 /**

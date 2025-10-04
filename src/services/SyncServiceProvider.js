@@ -4,7 +4,7 @@
  */
 
 import { logger } from '../helpers/logger.js'
-import initWebSocketPolyfill from './WebSocketPolyfill.js'
+import initWebSocketPolyfill from './WebSocketPolyfill.ts'
 import { WebsocketProvider } from './y-websocket.js'
 
 /**
