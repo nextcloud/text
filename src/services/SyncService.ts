@@ -9,11 +9,11 @@ import mitt from 'mitt'
 import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
-import Outbox from './Outbox.js'
+import Outbox from './Outbox'
 import SessionApi, { Connection } from './SessionApi.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
-
+import { awarenessSteps, flatSteps } from '../helpers/steps'
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
@@ -62,6 +62,14 @@ export interface Step {
 	data: string[]
 	version: number
 	sessionId: number
+}
+
+/*
+ * Step as what we process it in the WebsocketPolyfill
+ */
+export interface FlatStep {
+	step: string
+	version?: number
 }
 
 export interface UserSession {
@@ -301,40 +309,20 @@ class SyncService {
 		steps,
 		document,
 		sessions = [],
-	} : {
-		steps: Step[],
-		document?: Document,
-		sessions?: Session[],
+	}: {
+		steps: Step[]
+		document?: object
+		sessions?: Session[]
 	}) {
-		const awareness = sessions
-			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
-			.filter(s => s.lastAwarenessMessage)
-			.map(s => {
-				return { step: s.lastAwarenessMessage }
-			})
-		const newSteps = [...awareness]
-		for (let i = 0; i < steps.length; i++) {
-			const singleSteps = steps[i].data
-			if (this.version < steps[i].version) {
-				this.version = steps[i].version
-			}
-			if (!Array.isArray(singleSteps)) {
-				logger.error('Invalid step data, skipping step', { step: steps[i] })
-				// TODO: recover
-				continue
-			}
-			singleSteps.forEach(step => {
-				newSteps.push({
-					step,
-				})
-			})
-		}
-		this.lastStepPush = Date.now()
 		this.bus.emit('sync', {
-			steps: newSteps,
+			steps: [
+				...awarenessSteps(sessions),
+				...flatSteps(steps),
+			],
 			document,
-			version: this.version,
+			version: Math.max(this.version, ...steps.map((s) => s.version)),
 		})
+		this.lastStepPush = Date.now()
 	}
 
 	checkIdle() {
