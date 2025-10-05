@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, expect, it } from 'vitest'
 import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 
 describe('Yjs', function () {
@@ -13,9 +14,9 @@ describe('Yjs', function () {
 		const sourceMap = source.getMap()
 		const targetMap = target.getMap()
 
-		target.on('afterTransaction', (tr, doc) => {
-			// console.log('afterTransaction', tr)
-		})
+		/* target.on('afterTransaction', (tr, doc) => {
+			console.log('afterTransaction', { tr, doc })
+		}) */
 
 		// Add keyA to source and apply to target
 		sourceMap.set('keyA', 'valueA')

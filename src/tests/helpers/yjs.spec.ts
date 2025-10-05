@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, expect, it } from 'vitest'
 import * as Y from 'yjs'
 import {
 	applyStep,
 	documentStateToStep,
 	getDocumentState,
-} from '../../../src/helpers/yjs.js'
+} from '../../helpers/yjs.js'
 
 describe('Yjs base64 wrapped with our helpers', function () {
 	it('applies step generated from document state', function () {
@@ -17,9 +18,9 @@ describe('Yjs base64 wrapped with our helpers', function () {
 		const sourceMap = source.getMap()
 		const targetMap = target.getMap()
 
-		target.on('afterTransaction', (tr, doc) => {
-			// console.log('afterTransaction', tr)
-		})
+		// target.on('afterTransaction', (tr, doc) => {
+		// console.log('afterTransaction', tr)
+		// })
 
 		// Add keyA to source and apply to target
 		sourceMap.set('keyA', 'valueA')
