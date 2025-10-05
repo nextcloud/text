@@ -36,7 +36,7 @@
     "The document could not be loaded. Please check your internet connection." : "O documento não pôde ser carregado. Verifique sua conexão com a Internet.",
     "Reconnect" : "Reconectar",
     "You've been disconnected from the server." : "Você foi desconectado do servidor.",
-    "This file is opened read-only as it is currently locked by {user}." : "Este arquivo está aberto somente para leitura, pois está atualmente bloqueado por {user}.",
+    "This file is opened read-only as it is currently locked by {user}." : "Este arquivo está aberto somente para leitura, pois está atualmente trancado por {user}.",
     "Close outline view" : "Fechar visualização de estrutura",
     "Outline" : "Estrutura",
     "Not connected. Cannot update guest name." : "Não conectado. Não é possível atualizar o nome do convidado.",
