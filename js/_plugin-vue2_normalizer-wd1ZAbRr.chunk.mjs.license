@@ -3,5 +3,5 @@ SPDX-FileCopyrightText: Evan You
 
 This file is generated from multiple sources. Included packages:
 - @vitejs/plugin-vue2
-	- version: 2.3.3
+	- version: 2.3.4
 	- license: MIT
