@@ -195,7 +195,7 @@ class SyncService {
 		}
 	}
 
-	sendStep(step: ArrayBuffer) {
+	sendStep(step: Uint8Array<ArrayBufferLike>) {
 		this.#outbox.storeStep(step)
 		this.sendSteps()
 	}
