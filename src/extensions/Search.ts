@@ -27,3 +27,22 @@ export default Extension.create({
 		return [searchQuery(), searchDecorations()]
 	},
 })
+
+declare module '@tiptap/core' {
+	interface Commands<ReturnType> {
+		Search: {
+			/**
+			 * Set the text direction attribute
+			 */
+			setSearchQuery: (query: string, matchAll?: boolean) => ReturnType
+			/**
+			 * Unset the text direction attribute
+			 */
+			nextMatch: () => ReturnType
+			/**
+			 * Unset the text direction attribute
+			 */
+			previousMatch: () => ReturnType
+		}
+	}
+}
