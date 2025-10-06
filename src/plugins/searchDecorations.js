@@ -8,6 +8,8 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import { searchQueryPluginKey } from './searchQuery.js'
 
+export const searchDecorationsPluginKey = new PluginKey('searchDecorations')
+
 /**
  * Search decorations ProseMirror plugin
  * Handles highlighting search matches for the search TipTap extension
@@ -16,7 +18,7 @@ import { searchQueryPluginKey } from './searchQuery.js'
  */
 export default function searchDecorations() {
 	return new Plugin({
-		key: new PluginKey('searchDecorations'),
+		key: searchDecorationsPluginKey,
 		state: {
 			init(_, { doc }) {
 				const search = runSearch(doc, '')
