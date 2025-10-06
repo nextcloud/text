@@ -520,10 +520,10 @@ ul {
 }
 
 .icon-status--success {
-	color: var(--color-success);
+	color: var(--color-element-success);
 }
 
 .icon-status--failed {
-	color: var(--color-error);
+	color: var(--color-element-error);
 }
 </style>
