@@ -83,7 +83,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Atallos de teclado",
     "New paragraph" : "Novo parágrafo",
     "Enter" : "Introduza",
-    "Hard line break" : "Salto de parágrafo",
+    "Hard line break" : "Salto de liña forzado",
     "followed by" : "seguido por",
     "Backspace" : "Retroceso",
     "Shift" : "Cambiar",
