@@ -17,7 +17,7 @@ import { fromBase64, toBase64 } from 'lib0/buffer'
  *
  * @param {ArrayBuffer} data - binary data to encode
  */
-export function encodeArrayBuffer(data: ArrayBuffer): string {
+export function encodeArrayBuffer(data: Uint8Array<ArrayBufferLike>): string {
 	const view = new Uint8Array(data)
 	return toBase64(view)
 }
