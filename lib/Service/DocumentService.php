@@ -143,6 +143,7 @@ class DocumentService {
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setBaseVersionEtag(uniqid());
+		$document->setChecksum($this->computeCheckSum($file->getContent()));
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
@@ -310,6 +311,8 @@ class DocumentService {
 		return $this->stepMapper->find($documentId, $lastVersion);
 	}
 
+
+
 	/**
 	 * @throws DocumentSaveConflictException
 	 * @throws InvalidPathException
@@ -317,18 +320,39 @@ class DocumentService {
 	 */
 	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
 		$documentId = $document->getId();
-		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
+		$lastEtag = $document->getLastSavedVersionEtag();
 
-		if ($lastMTime > 0
-			&& $force === false
-			&& !$this->isReadOnly($file, $shareToken)
-			&& $savedEtag !== $document->getLastSavedVersionEtag()
-			&& $lastMTime !== $file->getMtime()
-			&& !$this->cache->get('document-save-lock-' . $documentId)
-		) {
+		if ($lastMTime <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
+			return;
+		}
+
+		$fileMtime = $file->getMtime();
+		$fileEtag = $file->getEtag();
+
+		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
+			return;
+		}
+
+		$storedChecksum = $document->getChecksum();
+		$fileContent = $file->getContent();
+		$fileChecksum = $this->computeChecksum($fileContent);
+
+		if ($storedChecksum !== $fileChecksum) {
 			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
+
+		$document->setLastSavedVersionTime($fileMtime);
+		$document->setLastSavedVersionEtag($fileEtag);
+		$this->documentMapper->update($document);
+	}
+
+	/**
+	 * @param string $content
+	 * @return string
+	 */
+	private function computeCheckSum(string $content): string {
+		return hash('crc32', $content);
 	}
 
 	/**
@@ -414,6 +438,7 @@ class DocumentService {
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
+			$document->setChecksum($this->computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
