@@ -120,6 +120,8 @@ div[contenteditable='false'] {
 	left: -44px;
 	top: 50%;
 	transform: translate(0, -50%);
+	// Required to overlay the drag handler padding
+	z-index: 10000;
 }
 
 // Inside details, button needs to be shifted further
