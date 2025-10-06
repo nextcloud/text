@@ -91,22 +91,22 @@ export default {
 	// Info (default) variables
 	&,
 	&--info {
-		--callout-border: var(--color-info, #006aa3);
+		--callout-border: var(--color-element-info, #006aa3);
 	}
 
 	// Warn variables
 	&--warn {
-		--callout-border: var(--color-warning);
+		--callout-border: var(--color-element-warning);
 	}
 
 	// Error variables
 	&--error {
-		--callout-border: var(--color-error);
+		--callout-border: var(--color-element-error);
 	}
 
 	// Success variables
 	&--success {
-		--callout-border: var(--color-success);
+		--callout-border: var(--color-element-success);
 	}
 }
 </style>
