@@ -110,5 +110,6 @@ export default {
 	position: absolute;
 	left: -60px;
 	transform: translate(0, -20%);
+	padding-right: 24px;
 }
 </style>

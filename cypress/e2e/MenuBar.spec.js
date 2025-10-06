@@ -63,10 +63,7 @@ describe('Test the rich text editor menu bar', function () {
 
 		it('applys default', function () {
 			cy.openTestFile()
-			cy.get('@maxWidth').should(
-				'equal',
-				'calc(80ch + 2 * 15 * var(--default-grid-baseline))',
-			)
+			cy.get('@maxWidth').should('equal', '80ch')
 		})
 
 		it('toggles value', function () {
