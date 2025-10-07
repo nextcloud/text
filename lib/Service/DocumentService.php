@@ -239,8 +239,9 @@ class DocumentService {
 				$stateFile = $this->getStateFile($documentId);
 				$documentState = $stateFile->getContent();
 				$this->logger->debug('Existing document, state file loaded ' . $documentId);
-				// If there were any queries in the steps, send all steps since last save.
-				$getStepsSinceVersion = $document->getLastSavedVersion();
+				// If there were any queries in the steps, send all steps starting 200 steps before last save.
+				// Adding 200 previous steps to workaround race conditions where state with missing step got persisted in the document state. See #7692
+				$getStepsSinceVersion = $this->stepMapper->getBeforeVersion($documentId, $document->getLastSavedVersion(), 200);
 			} catch (NotFoundException $e) {
 				$this->logger->debug('Existing document, but no state file found for ' . $documentId);
 				// If there is no state file, include all the steps.
