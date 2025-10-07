@@ -94,21 +94,14 @@
 				th {
 					color: black!important;
 					font-weight: bold!important;
-					border-width: 0 1px 2px 0!important;
+					border-width: 1px !important;
+					border-bottom-width: 2px !important;
 					border-color: gray!important;
-					border-style: none solid solid none!important;
-				}
-				th:last-of-type {
-					border-width: 0 0 2px 0!important;
 				}
 
 				td {
-					border-style: none solid none none!important;
 					border-width: 1px!important;
 					border-color: gray!important;
-				}
-				td:last-of-type {
-					border: none!important;
 				}
 			}
 		}
