@@ -88,11 +88,11 @@
 				.image,
 				img,
 				table {
+					// make sure table content fits page width
+					overflow-wrap: anywhere;
 					// try no page breaks within tables or images
 					break-inside: avoid-page;
 					page-break-inside: avoid;
-					// Some more indention
-					max-width: 90% !important;
 				}
 
 				// Add some borders below header and between columns
