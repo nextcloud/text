@@ -57,8 +57,8 @@
 			// Hide menu bar
 			display: none !important;
 		}
-		.action-item {
-			// Hide table settings
+		.action-item, .table-add-column, .table-add-row {
+			// Hide table buttons
 			display: none !important;
 		}
 		.content-wrapper .editor__content {
@@ -93,7 +93,6 @@
 					page-break-inside: avoid;
 					// Some more indention
 					max-width: 90% !important;
-					margin: 5vw auto 5vw 5% !important;
 				}
 
 				// Add some borders below header and between columns
