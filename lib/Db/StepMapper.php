@@ -55,6 +55,25 @@ class StepMapper extends QBMapper {
 		return $data['id'];
 	}
 
+	public function getBeforeVersion(int $documentId, int $version, int $offset): int {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('id')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->andWhere($qb->expr()->lt('id', $qb->createNamedParameter($version)))
+			->setMaxResults($offset)
+			->orderBy('id', 'DESC')
+			->executeQuery();
+
+		$rows = $result->fetchAll();
+		$data = end($rows);
+		if ($data === false) {
+			return $version;
+		}
+
+		return $data['id'];
+	}
+
 	public function deleteAll(int $documentId): void {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
