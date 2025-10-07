@@ -62,6 +62,8 @@
 			display: none !important;
 		}
 		.content-wrapper .editor__content {
+			// Prevent cut lines (due to `display: grid`)
+			display: block;
 			// Margins set by page rule
 			max-width: 100%;
 		}
