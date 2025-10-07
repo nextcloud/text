@@ -32,6 +32,7 @@ OC.L10N.register(
     "Guest" : "Svečias",
     "you" : "jūs",
     "edit" : "redaguoti",
+    "Uploading attachment failed." : "Priedo įkelti nepavyko",
     "Insert an attachment" : "Įterpti priedą",
     "Preview options" : "Peržiūros parinktys",
     "Open in new tab" : "Atverti naujoje kortelėje",
