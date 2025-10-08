@@ -12,7 +12,7 @@ import { close, type OpenData } from '../apis/connect'
 import { push } from '../apis/sync'
 import type { Connection } from '../composables/useConnection.js'
 import { logger } from '../helpers/logger.js'
-import { awarenessSteps, flatSteps } from '../helpers/steps'
+import { awarenessSteps } from '../helpers/steps'
 import { documentStateToStep } from '../helpers/yjs.js'
 import Outbox from './Outbox.js'
 import PollingBackend from './PollingBackend.js'
@@ -58,14 +58,6 @@ export interface Step {
 	data: string[]
 	version: number
 	sessionId: number
-}
-
-/*
- * Step as what we process it in the WebsocketPolyfill
- */
-export interface FlatStep {
-	step: string
-	version: number
 }
 
 export interface UserSession {
@@ -118,7 +110,7 @@ export declare type EventTypes = {
 	opened: OpenData
 
 	/* received new steps */
-	sync: { document?: object; steps: { step: string; version: number }[] }
+	sync: { document?: object; steps: Step[] }
 
 	/* state changed (dirty) */
 	stateChange: { initialLoading?: boolean; dirty?: boolean }
@@ -300,7 +292,7 @@ class SyncService {
 	}) {
 		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
-			steps: [...awarenessSteps(sessions), ...flatSteps(steps)],
+			steps: [...awarenessSteps(sessions), ...steps],
 			document,
 		})
 		if (this.version < versionAfter) {
