@@ -86,7 +86,7 @@ export default function initWebSocketPolyfill(syncService: SyncService, fileId: 
 				// as we failed to process them.
 				this.#processingVersion = 0
 			}
-			syncService.sendStep(step)
+			syncService.sendRecoveryStep(step)
 		}
 
 		async close() {

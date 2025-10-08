@@ -78,8 +78,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
-		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $token);
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
+		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $token);
 	}
 
 	#[NoAdminRequired]

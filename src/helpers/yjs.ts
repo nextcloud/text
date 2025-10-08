@@ -71,7 +71,7 @@ function documentStateToUpdateMessage(documentState: string): Uint8Array {
  * Only used in tests right now.
  * @param ydoc - encode state of this doc
  * @param step - step data
- * @param step.step - base64 encoded yjs sync update message
+ * @param step.data - array of base64 encoded yjs sync update messages
  * @param origin - initiator object e.g. WebsocketProvider
  */
 export function applyStep(ydoc: Y.Doc, step: Step, origin = 'origin') {

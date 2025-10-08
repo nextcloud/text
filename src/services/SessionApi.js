@@ -147,7 +147,16 @@ export class Connection {
 		return navigator.sendBeacon(url, blob)
 	}
 
-	push({ steps, version, awareness }) {
+	/**
+	 * Send steps and/or awareness update to the server.
+	 * @param {object} data data to push to the server
+	 * @param {string[]} data.steps steps to push
+	 * @param {number} data.version version of last step processed by the client
+	 * @param {string} data.awareness local awareness state
+	 * @param {number=} data.recoveryAttempt number of recovery attempt if attempting recovery
+	 * @return {Promise<import('@nextcloud/axios').AxiosResponse<any, any>>} response
+	 */
+	push({ steps, version, awareness, recoveryAttempt = undefined }) {
 		return this.#post(this.#url(`session/${this.#document.id}/push`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
@@ -155,6 +164,7 @@ export class Connection {
 			steps,
 			version,
 			awareness,
+			recoveryAttempt,
 		})
 	}
 

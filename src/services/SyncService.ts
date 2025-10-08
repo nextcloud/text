@@ -234,6 +234,12 @@ class SyncService {
 		this.sendSteps()
 	}
 
+	sendRecoveryStep(step: Uint8Array<ArrayBufferLike>) {
+		this.#outbox.setRecoveringSync()
+		this.#outbox.storeStep(step)
+		this.sendSteps()
+	}
+
 	sendSteps() {
 		// If already waiting to send, do nothing.
 		if (this.#sendIntervalId) {
@@ -250,13 +256,13 @@ class SyncService {
 		this.sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
-		const sendable = this.#outbox.getDataToSend()
-		if (sendable.steps.length > 0) {
+		if (this.#outbox.hasUpdate) {
 			this.bus.emit('stateChange', { dirty: true })
 		}
-		if (!this.hasActiveConnection) {
+		if (!this.hasActiveConnection()) {
 			return
 		}
+		const sendable = this.#outbox.getDataToSend()
 		return this.connection?.push({ ...sendable, version: this.version })
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
@@ -394,7 +400,7 @@ class SyncService {
 		// Make sure to leave no pending requests behind.
 		this.autosave.clear()
 		this.backend?.disconnect()
-		if (!this.hasActiveConnection) {
+		if (!this.hasActiveConnection()) {
 			return
 		}
 		return this.connection?.close()

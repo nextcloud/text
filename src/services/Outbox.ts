@@ -15,6 +15,8 @@ export default class Outbox {
 	#awarenessUpdate = ''
 	#syncUpdate = ''
 	#syncQuery = ''
+	#recoveryAttemptCounter = 0
+	#isRecoveringSync = false
 
 	storeStep(step: Uint8Array<ArrayBufferLike>) {
 		const encoded = encodeArrayBuffer(step)
@@ -33,11 +35,23 @@ export default class Outbox {
 		this.#awarenessUpdate = encoded
 	}
 
+	setRecoveringSync() {
+		this.#isRecoveringSync = true
+		this.#recoveryAttemptCounter++
+	}
+
 	getDataToSend(): Sendable {
 		return {
 			steps: [this.#syncUpdate, this.#syncQuery].filter(s => s),
 			awareness: this.#awarenessUpdate,
+			...this.recoveryData,
 		}
+	}
+
+	get recoveryData(): { recoveryAttempt?: number } {
+		return this.#isRecoveringSync
+			? { recoveryAttempt: this.#recoveryAttemptCounter }
+			: {}
 	}
 
 	get hasUpdate(): boolean {
@@ -56,6 +70,7 @@ export default class Outbox {
 		}
 		if (steps.includes(this.#syncQuery)) {
 			this.#syncQuery = ''
+			this.#isRecoveringSync = false
 		}
 		if (this.#awarenessUpdate === awareness) {
 			this.#awarenessUpdate = ''
