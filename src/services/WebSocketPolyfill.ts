@@ -6,7 +6,7 @@
 import { decodeArrayBuffer } from '../helpers/base64.js'
 import { logger } from '../helpers/logger.js'
 import getNotifyBus from './NotifyService'
-import type { FlatStep, SyncService } from './SyncService.js'
+import type { Step, SyncService } from './SyncService.js'
 
 /**
  *
@@ -25,8 +25,8 @@ export default function initWebSocketPolyfill(
 		onclose?: (event: CloseEvent) => void
 		onopen?: () => void
 		#notifyPushBus
-		#processingVersion = 0
 		#onSync
+		#processingVersion = 0
 
 		constructor(url: string) {
 			this.#notifyPushBus = getNotifyBus()
@@ -34,18 +34,13 @@ export default function initWebSocketPolyfill(
 			this.#url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId })
 
-			this.#onSync = ({ steps }: { steps: FlatStep[] }) => {
+			this.#onSync = ({ steps }: { steps: Step[] }) => {
 				if (steps) {
-					steps.forEach((s) => this.#processStep(s))
-					syncService.version = Math.max(
-						syncService.version,
-						this.#processingVersion,
-					)
+					this.#processSteps(steps)
 					logger.debug('synced ', {
-						version: this.#processingVersion,
+						version: syncService.version,
 						steps,
 					})
-					this.#processingVersion = 0
 				}
 			}
 
@@ -58,14 +53,39 @@ export default function initWebSocketPolyfill(
 			})
 		}
 
-		send(step: ArrayBuffer) {
+		/**
+		 * Process the given steps, handing them to the onmessage handler
+		 *
+		 * Set this.#processingVersion for detecting and logging immediate responses in `send()`.
+		 *
+		 * @param steps steps to process
+		 */
+		#processSteps(steps: Step[]): void {
+			steps.forEach((s) => {
+				this.#processingVersion = s.version
+				s.data.forEach((singleStep) => {
+					const data = decodeArrayBuffer(singleStep)
+					this.onmessage?.(new MessageEvent('processing step', { data }))
+				})
+				syncService.version = Math.max(
+					syncService.version,
+					this.#processingVersion,
+				)
+			})
+			this.#processingVersion = 0
+		}
+
+		send(step: Uint8Array<ArrayBufferLike>) {
 			// Useful for debugging what steps are sent and how they were initiated
 			// logStep(step)
 			if (this.#processingVersion) {
 				// this is a direct response while processing the step
-				console.warn(`Failed to process step ${this.#processingVersion}.`, {
-					step,
+				console.error(`Failed to process step ${this.#processingVersion}.`, {
+					lastSuccessfullyProcessed: syncService.version,
+					sendingSyncStep1: step,
 				})
+				// Do not increase the syncService.version for the current steps
+				// as we failed to process them.
 				this.#processingVersion = 0
 			}
 			syncService.sendStep(step)
@@ -90,19 +110,6 @@ export default function initWebSocketPolyfill(
 				const data = decodeArrayBuffer(step)
 				this.onmessage?.(new MessageEvent('notify pushed', { data }))
 			})
-		}
-
-		#processStep({ step, version }: { step: string; version: number }) {
-			// done processing the previous version
-			if ((version ?? 0) > this.#processingVersion) {
-				syncService.version = Math.max(
-					syncService.version,
-					this.#processingVersion,
-				)
-			}
-			this.#processingVersion = version
-			const data = decodeArrayBuffer(step)
-			this.onmessage?.(new MessageEvent('processing step', { data }))
 		}
 	}
 }

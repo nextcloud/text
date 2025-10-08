@@ -7,6 +7,7 @@ import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
+import type { Step } from '../services/SyncService.js'
 import { messageSync } from '../services/y-websocket.js'
 import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
 
@@ -44,12 +45,9 @@ export function applyDocumentState(
  * @param documentState - base64 encoded doc state
  * @return base64 encoded yjs sync protocol update message and version
  */
-export function documentStateToStep(documentState: string): {
-	step: string,
-	version: number,
-} {
+export function documentStateToStep(documentState: string): Step {
 	const message = documentStateToUpdateMessage(documentState)
-	return { step: encodeArrayBuffer(message), version: -1 }
+	return { data: [encodeArrayBuffer(message)], sessionId: 0, version: -1 }
 }
 
 /**
@@ -76,17 +74,19 @@ function documentStateToUpdateMessage(documentState: string): Uint8Array {
  * @param step.step - base64 encoded yjs sync update message
  * @param origin - initiator object e.g. WebsocketProvider
  */
-export function applyStep(ydoc: Y.Doc, step: { step: string }, origin = 'origin') {
-	const updateMessage = decodeArrayBuffer(step.step)
-	const decoder = decoding.createDecoder(updateMessage)
-	const messageType = decoding.readVarUint(decoder)
-	if (messageType !== messageSync) {
-		console.error('y.js update message with invalid type', messageType)
-		return
+export function applyStep(ydoc: Y.Doc, step: Step, origin = 'origin') {
+	for (const encoded of step.data) {
+		const updateMessage = decodeArrayBuffer(encoded)
+		const decoder = decoding.createDecoder(updateMessage)
+		const messageType = decoding.readVarUint(decoder)
+		if (messageType !== messageSync) {
+			console.error('y.js update message with invalid type', messageType)
+			return
+		}
+		// There are no responses to updates - so this is a dummy.
+		const encoder = encoding.createEncoder()
+		syncProtocol.readSyncMessage(decoder, encoder, ydoc, origin)
 	}
-	// There are no responses to updates - so this is a dummy.
-	const encoder = encoding.createEncoder()
-	syncProtocol.readSyncMessage(decoder, encoder, ydoc, origin)
 }
 
 /**
