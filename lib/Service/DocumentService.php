@@ -234,7 +234,7 @@ class DocumentService {
 		// By default, send all steps the user has not received yet.
 		$getStepsSinceVersion = $version;
 		if ($stepsIncludeQuery) {
-			$this->logger->error('Loading document state for ' . $documentId);
+			$this->logger->debug('Loading document state for ' . $documentId);
 			try {
 				$stateFile = $this->getStateFile($documentId);
 				$documentState = $stateFile->getContent();
