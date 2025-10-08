@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
 import { logger } from '../helpers/logger.js'
-import { decodeArrayBuffer } from '../helpers/base64'
 import getNotifyBus from './NotifyService.js'
 import type { Step, Session, SyncService } from './SyncService'
 
@@ -76,16 +76,24 @@ export default function initWebSocketPolyfill(syncService: SyncService, fileId: 
 		send(step: Uint8Array<ArrayBufferLike>) {
 			// Useful for debugging what steps are sent and how they were initiated
 			// logStep(step)
-			if (this.#processingVersion) {
-				// this is a direct response while processing the step
-				console.error(`Failed to process step ${this.#processingVersion}.`, {
-					lastSuccessfullyProcessed: syncService.version,
-					sendingSyncStep1: step,
-				})
-				// Do not increase the syncService.version for the current steps
-				// as we failed to process them.
-				this.#processingVersion = 0
+
+			const encoded = encodeArrayBuffer(step)
+			const isSyncStep1 = encoded < 'AAE'
+			if (!this.#processingVersion || !isSyncStep1) {
+				syncService.sendStep(step)
+				return
 			}
+
+			// If `this.#processingVersion` is set, we're in the middle of applying steps of one version.
+			// If `isSyncStep1`, Yjs failed to integrate a message due to pending structs.
+			// Log and ask for recovery due to a not applied/missing step.
+			console.error(`Failed to process step ${this.#processingVersion}.`, {
+				lastSuccessfullyProcessed: syncService.version,
+				sendingSyncStep1: step,
+			})
+			// Do not increase the syncService.version for the current steps
+			// as we failed to process them.
+			this.#processingVersion = 0
 			syncService.sendRecoveryStep(step)
 		}
 
