@@ -13,6 +13,7 @@ interface PushData {
 	version: number
 	steps: string[]
 	awareness: string
+	recoveryAttempt?: number
 }
 
 interface PushResponse {
@@ -44,6 +45,7 @@ export function push(
 		version: data.version,
 		steps: data.steps.filter((s) => s),
 		awareness: data.awareness,
+		recoveryAttempt: data.recoveryAttempt,
 	})
 }
 

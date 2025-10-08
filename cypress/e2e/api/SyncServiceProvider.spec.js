@@ -53,7 +53,7 @@ describe('Sync service provider', function () {
 			baseVersionEtag,
 		)
 		const queue = []
-		syncService.on('opened', () => syncService.startSync())
+		syncService.bus.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({
 			ydoc,
 			syncService,

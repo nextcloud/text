@@ -455,27 +455,27 @@ export default defineComponent({
 		},
 
 		listenSyncServiceEvents() {
-			this.syncService
-				.on('opened', this.onOpened)
-				.on('change', this.onChange)
-				.on('loaded', this.onLoaded)
-				.on('sync', this.onSync)
-				.on('error', this.onError)
-				.on('stateChange', this.onStateChange)
-				.on('idle', this.onIdle)
-				.on('save', this.onSave)
+			const bus = this.syncService.bus
+			bus.on('opened', this.onOpened)
+			bus.on('change', this.onChange)
+			bus.on('loaded', this.onLoaded)
+			bus.on('sync', this.onSync)
+			bus.on('error', this.onError)
+			bus.on('stateChange', this.onStateChange)
+			bus.on('idle', this.onIdle)
+			bus.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
-			this.syncService
-				.off('opened', this.onOpened)
-				.off('change', this.onChange)
-				.off('loaded', this.onLoaded)
-				.off('sync', this.onSync)
-				.off('error', this.onError)
-				.off('stateChange', this.onStateChange)
-				.off('idle', this.onIdle)
-				.off('save', this.onSave)
+			const bus = this.syncService.bus
+			bus.off('opened', this.onOpened)
+			bus.off('change', this.onChange)
+			bus.off('loaded', this.onLoaded)
+			bus.off('sync', this.onSync)
+			bus.off('error', this.onError)
+			bus.off('stateChange', this.onStateChange)
+			bus.off('idle', this.onIdle)
+			bus.off('save', this.onSave)
 		},
 
 		reconnect() {

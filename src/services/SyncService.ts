@@ -5,13 +5,14 @@
 
 /* eslint-disable jsdoc/valid-types */
 
-import mitt, { type Handler } from 'mitt'
+import mitt from 'mitt'
 
 import type { ShallowRef } from 'vue'
 import { close, type OpenData } from '../apis/connect'
 import { push } from '../apis/sync'
 import type { Connection } from '../composables/useConnection.js'
 import { logger } from '../helpers/logger.js'
+import { awarenessSteps } from '../helpers/steps'
 import { documentStateToStep } from '../helpers/yjs.js'
 import Outbox from './Outbox.js'
 import PollingBackend from './PollingBackend.js'
@@ -46,7 +47,9 @@ const ERROR_TYPE = {
 	SOURCE_NOT_FOUND: 4,
 
 	PUSH_FORBIDDEN: 5,
-}
+} as const
+
+type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
 
 /*
  * Step as what we expect to be returned from the server right now.
@@ -106,26 +109,23 @@ export declare type EventTypes = {
 	/* Document state */
 	opened: OpenData
 
-	/* All initial steps fetched */
-	fetched: unknown
-
 	/* received new steps */
-	sync: unknown
+	sync: { document?: object; steps: Step[] }
 
 	/* state changed (dirty) */
-	stateChange: unknown
+	stateChange: { initialLoading?: boolean; dirty?: boolean }
 
 	/* error */
-	error: unknown
+	error: { type: ErrorType; data?: object }
 
 	/* Events for session and document meta data */
 	change: { sessions: Session[]; document: Document }
 
 	/* Emitted after successful save */
-	save: unknown
+	save: object
 
 	/* Emitted once a document becomes idle */
-	idle: unknown
+	idle: void
 
 	/* Emitted if the connection has been closed */
 	close: void
@@ -176,7 +176,7 @@ class SyncService {
 		this.version = data.document.lastSavedVersion
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
-		this.emit('opened', data)
+		this.bus.emit('opened', data)
 	}
 
 	startSync() {
@@ -189,13 +189,22 @@ class SyncService {
 
 	_emitError(error: { response?: object; code?: string }) {
 		if (!error.response || error.code === 'ECONNABORTED') {
-			this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+			this.bus.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 		} else {
-			this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
+			this.bus.emit('error', {
+				type: ERROR_TYPE.LOAD_ERROR,
+				data: error.response,
+			})
 		}
 	}
 
 	sendStep(step: Uint8Array<ArrayBufferLike>) {
+		this.#outbox.storeStep(step)
+		this.sendSteps()
+	}
+
+	sendRecoveryStep(step: Uint8Array<ArrayBufferLike>) {
+		this.#outbox.setRecoveringSync()
 		this.#outbox.storeStep(step)
 		this.sendSteps()
 	}
@@ -216,13 +225,13 @@ class SyncService {
 		this.#sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
-		const sendable = this.#outbox.getDataToSend()
-		if (sendable.steps.length > 0) {
-			this.emit('stateChange', { dirty: true })
+		if (this.#outbox.hasUpdate) {
+			this.bus.emit('stateChange', { dirty: true })
 		}
 		if (!this.hasActiveConnection()) {
 			return
 		}
+		const sendable = this.#outbox.getDataToSend()
 		return push(this.connection, {
 			version: this.version,
 			...sendable,
@@ -235,8 +244,7 @@ class SyncService {
 				}
 				if (documentState) {
 					const documentStateStep = documentStateToStep(documentState)
-					this.emit('sync', {
-						version: this.version,
+					this.bus.emit('sync', {
 						steps: [documentStateStep],
 					})
 				}
@@ -252,25 +260,28 @@ class SyncService {
 				this.pushError++
 				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {
-					this.emit('error', {
+					this.bus.emit('error', {
 						type: ERROR_TYPE.CONNECTION_FAILED,
 						data: {},
 					})
 				}
 				if (response?.status === 412) {
-					this.emit('error', {
+					this.bus.emit('error', {
 						type: ERROR_TYPE.LOAD_ERROR,
 						data: response,
 					})
 				} else if (response?.status === 403) {
 					// either the session is invalid or the document is read only.
 					logger.error('failed to write to document - not allowed')
-					this.emit('error', {
+					this.bus.emit('error', {
 						type: ERROR_TYPE.PUSH_FORBIDDEN,
 						data: {},
 					})
 				} else {
-					this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
+					this.bus.emit('error', {
+						type: ERROR_TYPE.PUSH_FAILURE,
+						data: {},
+					})
 				}
 				throw new Error('Failed to apply steps. Retry!', { cause: err })
 			})
@@ -281,46 +292,23 @@ class SyncService {
 		document,
 		sessions = [],
 	}: {
-		steps: { data: string[]; version: number; sessionId: number }[]
+		steps: Step[]
 		document?: object
-		sessions?: {
-			lastContact: number
-			lastAwarenessMessage: string
-		}[]
+		sessions?: Session[]
 	}) {
-		const awareness = sessions
-			.filter(
-				(s) =>
-					s.lastContact
-					> Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME,
+		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
+		this.bus.emit('sync', {
+			steps: [...awarenessSteps(sessions), ...steps],
+			document,
+		})
+		if (this.version < versionAfter) {
+			// Steps up to version where emitted but it looks like they were not processed.
+			// Otherwise the WebsocketPolyfill would have increased the version counter.
+			console.warn(
+				`Failed to process steps leading up to version ${versionAfter}.`,
 			)
-			.filter((s) => s.lastAwarenessMessage)
-			.map((s) => {
-				return { step: s.lastAwarenessMessage }
-			})
-		const newSteps = [...awareness]
-		for (let i = 0; i < steps.length; i++) {
-			const singleSteps = steps[i].data
-			if (this.version < steps[i].version) {
-				this.version = steps[i].version
-			}
-			if (!Array.isArray(singleSteps)) {
-				logger.error('Invalid step data, skipping step', { step: steps[i] })
-				// TODO: recover
-				continue
-			}
-			singleSteps.forEach((step) => {
-				newSteps.push({
-					step,
-				})
-			})
 		}
 		this.#lastStepPush = Date.now()
-		this.emit('sync', {
-			steps: newSteps,
-			document,
-			version: this.version,
-		})
 	}
 
 	checkIdle() {
@@ -329,7 +317,7 @@ class SyncService {
 			logger.debug(
 				`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`,
 			)
-			this.emit('idle')
+			this.bus.emit('idle')
 			return true
 		}
 		return false
@@ -354,22 +342,7 @@ class SyncService {
 		}
 		// Clear connection so hasActiveConnection turns false and we can reconnect.
 		this.connection.value = undefined
-		this.emit('close')
-	}
-
-	// For better typing use the bus directly: `syncService.bus.on()`.
-	on(event: keyof EventTypes, callback: Handler<unknown>) {
-		this.bus.on(event, callback)
-		return this
-	}
-
-	off(event: keyof EventTypes, callback: Handler<unknown>) {
-		this.bus.off(event, callback)
-		return this
-	}
-
-	emit(event: keyof EventTypes, data?: unknown) {
-		this.bus.emit(event, data)
+		this.bus.emit('close')
 	}
 }
 
