@@ -56,10 +56,10 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $version, array $steps, string $awareness): DataResponse {
+	public function push(int $version, array $steps, string $awareness, ?int $recoveryAttempt = null): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness);
+			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt);
 		} finally {
 			$this->restoreSessionUser();
 		}

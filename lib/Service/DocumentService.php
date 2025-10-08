@@ -205,7 +205,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws DoesNotExistException
 	 */
-	public function addStep(Document $document, Session $session, array $steps, int $version, ?string $shareToken): array {
+	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
 		$readOnly = $this->isReadOnlyCached($session, $shareToken);
 		$stepsToInsert = [];
@@ -234,6 +234,11 @@ class DocumentService {
 		// By default, send all steps the user has not received yet.
 		$getStepsSinceVersion = $version;
 		if ($stepsIncludeQuery) {
+			if ($recoveryAttempt === 1) {
+				$this->logger->error('Recovery attempt #' . $recoveryAttempt . ' from ' . $session->getId() . ' for ' . $documentId);
+			} elseif ($recoveryAttempt > 1) {
+				$this->logger->debug('Recovery attempt #' . $recoveryAttempt . ' from ' . $session->getId() . ' for ' . $documentId);
+			}
 			$this->logger->debug('Loading document state for ' . $documentId);
 			try {
 				$stateFile = $this->getStateFile($documentId);
