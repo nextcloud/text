@@ -4,7 +4,7 @@
  */
 
 import * as Y from 'yjs'
-import { getDocumentState, documentStateToStep, applyStep } from '../../../src/helpers/yjs.js'
+import { getDocumentState, documentStateToStep, applyStep } from '../../../src/helpers/yjs.ts'
 
 describe('Yjs base64 wrapped with our helpers', function() {
 	it('applies step generated from document state', function() {

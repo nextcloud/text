@@ -11,9 +11,9 @@ import debounce from 'debounce'
 import PollingBackend from './PollingBackend.js'
 import Outbox from './Outbox'
 import SessionApi, { Connection } from './SessionApi.js'
-import { documentStateToStep } from '../helpers/yjs.js'
+import { documentStateToStep } from '../helpers/yjs'
 import { logger } from '../helpers/logger.js'
-import { awarenessSteps, flatSteps } from '../helpers/steps'
+import { awarenessSteps } from '../helpers/steps'
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
@@ -64,14 +64,6 @@ export interface Step {
 	sessionId: number
 }
 
-/*
- * Step as what we process it in the WebsocketPolyfill
- */
-export interface FlatStep {
-	step: string
-	version: number
-}
-
 export interface UserSession {
 	id: number
 	userId: string
@@ -102,30 +94,28 @@ export interface Document {
 }
 
 export declare type EventTypes = {
-  /* Document state */
-  opened: { document: Document, session: Session, documentSource: string, documentState: string };
-  loaded: { document: Document, session: Session, documentSource: string, documentState: string };
+	/* Document state */
+	opened: { document: Document, session: Session, documentSource: string, documentState: string };
+	loaded: { document: Document, session: Session, documentSource: string, documentState: string };
 
-  /* All initial steps fetched */
-  fetched: unknown;
+	/* received new steps */
+	sync: { document?: object; steps: Step[] }
 
-  /* received new steps */
-  sync: { document?: object; steps: { step: string; version: number }[] };
+	/* state changed (dirty) */
+	stateChange: { initialLoading?: boolean; dirty?: boolean }
 
-  /* state changed (dirty) */
-  stateChange: { initialLoading?: boolean; dirty?: boolean };
+	/* error */
+	error: { type: ErrorType; data?: object }
 
-  /* error */
-  error: { type: ErrorType; data?: object };
+	/* Events for session and document meta data */
+	change: { sessions: Session[]; document: Document }
 
-  /* Events for session and document meta data */
-  change: { sessions: object[]; document: object }
+	/* Emitted after successful save */
+	save: object
 
-  /* Emitted after successful save */
-  save: object;
+	/* Emitted once a document becomes idle */
+	idle: void
 
-  /* Emitted once a document becomes idle */
-  idle: void;
 }
 
 class SyncService {
@@ -239,7 +229,7 @@ class SyncService {
 			})
 	}
 
-	sendStep(step: ArrayBuffer) {
+	sendStep(step: Uint8Array<ArrayBufferLike>) {
 		this.#outbox.storeStep(step)
 		this.sendSteps()
 	}
@@ -314,7 +304,7 @@ class SyncService {
 	}) {
 		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
-			steps: [...awarenessSteps(sessions), ...flatSteps(steps)],
+			steps: [...awarenessSteps(sessions), ...steps],
 			document,
 		})
 		if (this.version < versionAfter) {

@@ -16,7 +16,7 @@ export default class Outbox {
 	#syncUpdate = ''
 	#syncQuery = ''
 
-	storeStep(step: ArrayBuffer) {
+	storeStep(step: Uint8Array<ArrayBufferLike>) {
 		const encoded = encodeArrayBuffer(step)
 		if (encoded < 'AAA' || encoded > 'Ag') {
 			logger.warn('Unexpected step type:', { step, encoded })
