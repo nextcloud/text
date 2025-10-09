@@ -4,7 +4,8 @@
 -->
 <template>
 	<div contenteditable="false" class="preview-options-container">
-		<NcActions data-text-preview-options="select"
+		<NcActions
+			data-text-preview-options="select"
 			class="preview-options"
 			:open.sync="open"
 			@open="onOpen">
@@ -12,18 +13,20 @@
 				<DotsVerticalIcon :size="20" />
 			</template>
 			<NcActionCaption :name="t('text', 'Preview options')" />
-			<NcActionRadio data-text-preview-option="text-only"
+			<NcActionRadio
+				data-text-preview-option="text-only"
 				name="preview-option"
 				value="text-only"
-				:checked="type === 'text-only'"
-				@change="e => toggle(e.currentTarget.value)">
+				:model-value="type"
+				@change="(e) => toggle(e.currentTarget.value)">
 				{{ t('text', 'Text only') }}
 			</NcActionRadio>
-			<NcActionRadio data-text-preview-option="link-preview"
+			<NcActionRadio
+				data-text-preview-option="link-preview"
 				name="preview-option"
 				value="link-preview"
-				:checked="type === 'link-preview'"
-				@change="e => toggle(e.currentTarget.value)">
+				:model-value="type"
+				@change="(e) => toggle(e.currentTarget.value)">
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
 			<NcActionSeparator />
@@ -35,7 +38,7 @@
 			</NcActionButton>
 			<NcActionButton close-after-click @click="deleteNode">
 				<template #icon>
-					<DeleteIcon :size="20" />
+					<DeleteOutlineIcon :size="20" />
 				</template>
 				{{ t('text', 'Remove link') }}
 			</NcActionButton>
@@ -44,14 +47,15 @@
 </template>
 
 <script>
-import NcActions from '@nextcloud/vue/components/NcActions'
+import { t } from '@nextcloud/l10n'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import NcActionRadio from '@nextcloud/vue/components/NcActionRadio'
 import NcActionCaption from '@nextcloud/vue/components/NcActionCaption'
+import NcActionRadio from '@nextcloud/vue/components/NcActionRadio'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
-import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
+import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 
 export default {
 	name: 'PreviewOptions',
@@ -63,7 +67,7 @@ export default {
 		NcActionCaption,
 		NcActionRadio,
 		NcActionSeparator,
-		DeleteIcon,
+		DeleteOutlineIcon,
 		OpenIcon,
 	},
 
@@ -74,7 +78,6 @@ export default {
 		},
 		href: {
 			type: String,
-			required: false,
 			default: '',
 		},
 	},
@@ -100,12 +103,13 @@ export default {
 			if (!this.href) return
 			window.open(this.href, '_blank').focus()
 		},
+		t,
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-div[contenteditable=false] {
+div[contenteditable='false'] {
 	padding: 0;
 	margin: 0;
 }
@@ -116,11 +120,12 @@ div[contenteditable=false] {
 	left: -44px;
 	top: 50%;
 	transform: translate(0, -50%);
+	// Required to overlay the drag handler padding
+	z-index: 10000;
 }
 
 // Inside details, button needs to be shifted further
 .details-content .preview-options-container {
 	left: calc(-44px - 24px);
 }
-
 </style>
