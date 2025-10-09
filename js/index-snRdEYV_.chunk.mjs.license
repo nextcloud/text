@@ -9,7 +9,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 2.2.0
 	- license: MIT
 - text
-	- version: 5.0.0
+	- version: 5.0.1
 	- license: AGPL-3.0-or-later
 - vuex
 	- version: 3.6.2
