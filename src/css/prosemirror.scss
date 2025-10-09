@@ -193,7 +193,8 @@ div.ProseMirror {
 	}
 
 	pre {
-		white-space: pre-wrap;
+		white-space: pre;
+		overflow-x: auto;
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
 		padding: 1em 1.3em;
@@ -208,6 +209,12 @@ div.ProseMirror {
 			font-size: 0.6rem;
 		}
 		code {
+			// We want line wrapping in plaintext documents only
+			white-space: pre !important;
+			&.language-plaintext {
+				white-space: pre-wrap !important;
+			}
+
 			.hljs-comment,
 			.hljs-quote {
 				color: #999999;
