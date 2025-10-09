@@ -24,7 +24,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 0.3.2
 	- license: Apache-2.0
 - text
-	- version: 7.0.0-dev.0
+	- version: 7.0.0-dev.1
 	- license: AGPL-3.0-or-later
 - vite
 	- version: 7.1.9
