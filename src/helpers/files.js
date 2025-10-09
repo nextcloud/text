@@ -15,121 +15,13 @@ import {
 	Permission,
 } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
-import { imagePath } from '@nextcloud/router'
-import { getSharingToken } from '@nextcloud/sharing/public'
 
 import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 import { t } from '@nextcloud/l10n'
 import Vue from 'vue'
-import { openMimetypes } from './mime.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
-
-const registerFileCreate = () => {
-	const newFileMenuPlugin = {
-		attach(menu) {
-			const fileList = menu.fileList
-
-			// only attach to main file list, public view is not supported yet
-			if (fileList.id !== 'files' && fileList.id !== 'files.public') {
-				return
-			}
-
-			// register the new menu entry
-			menu.addMenuEntry({
-				id: 'file',
-				displayName: t('text', 'New text file'),
-				templateName:
-					t('text', 'New text file')
-					+ '.'
-					+ loadState('text', 'default_file_extension'),
-				iconClass: 'icon-filetype-text',
-				fileType: 'file',
-				actionLabel: t('text', 'Create new text file'),
-				actionHandler(name) {
-					fileList.createFile(name).then(function (status, data) {
-						const fileInfoModel = new OCA.Files.FileInfoModel(data)
-						if (typeof OCA.Viewer !== 'undefined') {
-							OCA.Files.fileActions.triggerAction(
-								'view',
-								fileInfoModel,
-								fileList,
-							)
-						} else if (typeof OCA.Viewer === 'undefined') {
-							OCA.Files.fileActions.triggerAction(
-								FILE_ACTION_IDENTIFIER,
-								fileInfoModel,
-								fileList,
-							)
-						}
-					})
-				},
-			})
-		},
-	}
-	OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
-}
-
-const registerFileActionFallback = () => {
-	const sharingToken = getSharingToken()
-	const filesTable = document.querySelector('#preview table.files-filestable')
-	if (!sharingToken || !filesTable) {
-		const ViewerRoot = document.createElement('div')
-		ViewerRoot.id = 'text-viewer-fallback'
-		document.body.appendChild(ViewerRoot)
-		const registerAction = (mime) =>
-			OCA.Files.fileActions.register(
-				mime,
-				FILE_ACTION_IDENTIFIER,
-				OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
-				imagePath('core', 'actions/rename'),
-				(filename) => {
-					const file = window.FileList.findFile(filename)
-					Promise.all([
-						import('vue'),
-						import('./../components/PublicFilesEditor.vue'),
-					]).then((imports) => {
-						const path =
-							window.FileList.getCurrentDirectory() + '/' + filename
-						const Vue = imports[0].default
-						const Editor = imports[1].default
-						const vm = new Vue({
-							render: (h) => {
-								// eslint-disable-line
-								const self = this
-								return h(Editor, {
-									props: {
-										fileId: file ? file.id : null,
-										active: true,
-										shareToken: sharingToken,
-										relativePath: path,
-										mimeType: file.mimetype,
-									},
-									on: {
-										close: () => {
-											// eslint-disable-line
-											self.$destroy()
-										},
-									},
-								})
-							},
-						})
-						vm.$mount(ViewerRoot)
-					})
-				},
-				t('text', 'Edit'),
-			)
-
-		for (let i = 0; i < openMimetypes.length; i++) {
-			registerAction(openMimetypes[i])
-			OCA.Files.fileActions.setDefault(
-				openMimetypes[i],
-				FILE_ACTION_IDENTIFIER,
-			)
-		}
-	}
-}
 
 export const addMenuRichWorkspace = () => {
 	const descriptionFile =
@@ -247,4 +139,4 @@ export const FilesWorkspaceHeader = new Header({
 	},
 })
 
-export { FILE_ACTION_IDENTIFIER, registerFileActionFallback, registerFileCreate }
+export { FILE_ACTION_IDENTIFIER }
