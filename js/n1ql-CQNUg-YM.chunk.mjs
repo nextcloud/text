@@ -1,2 +1,0 @@
-import{g as c}from"./emoji-picker-DwlFXcXb.chunk.mjs";import{r as s}from"./n1ql-eK_btDjf.chunk.mjs";function a(r,f){for(var o=0;o<f.length;o++){const e=f[o];if(typeof e!="string"&&!Array.isArray(e)){for(const t in e)if(t!=="default"&&!(t in r)){const n=Object.getOwnPropertyDescriptor(e,t);n&&Object.defineProperty(r,t,n.get?n:{enumerable:!0,get:()=>e[t]})}}}return Object.freeze(Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}))}var i=s();const l=c(i),u=a({__proto__:null,default:l},[i]);export{u as n};
-//# sourceMappingURL=n1ql-CQNUg-YM.chunk.mjs.map

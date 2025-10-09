@@ -1,0 +1,2 @@
+import{g as c}from"./emoji-picker-DwlFXcXb.chunk.mjs";import{r as s}from"./django-la5rzxnI.chunk.mjs";function a(r,f){for(var o=0;o<f.length;o++){const t=f[o];if(typeof t!="string"&&!Array.isArray(t)){for(const e in t)if(e!=="default"&&!(e in r)){const n=Object.getOwnPropertyDescriptor(t,e);n&&Object.defineProperty(r,e,n.get?n:{enumerable:!0,get:()=>t[e]})}}}return Object.freeze(Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}))}var i=s();const p=c(i),u=a({__proto__:null,default:p},[i]);export{u as d};
+//# sourceMappingURL=django-B4jfnsZy.chunk.mjs.map
