@@ -106,6 +106,7 @@ import { CollaborationCursor } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { applyDocumentState } from '../helpers/yjs.ts'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
@@ -458,7 +459,6 @@ export default defineComponent({
 			const bus = this.syncService.bus
 			bus.on('opened', this.onOpened)
 			bus.on('change', this.onChange)
-			bus.on('loaded', this.onLoaded)
 			bus.on('sync', this.onSync)
 			bus.on('error', this.onError)
 			bus.on('stateChange', this.onStateChange)
@@ -470,7 +470,6 @@ export default defineComponent({
 			const bus = this.syncService.bus
 			bus.off('opened', this.onOpened)
 			bus.off('change', this.onChange)
-			bus.off('loaded', this.onLoaded)
 			bus.off('sync', this.onSync)
 			bus.off('error', this.onError)
 			bus.off('stateChange', this.onStateChange)
@@ -517,7 +516,9 @@ export default defineComponent({
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
-				if (!documentState) {
+				if (documentState) {
+					applyDocumentState(this.ydoc, documentState, this.syncProvider)
+				} else {
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
