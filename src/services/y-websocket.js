@@ -224,11 +224,6 @@ const setupWS = (provider) => {
 			provider.emit('status', [{
 				status: 'connected',
 			}])
-			// always send sync step 1 when connected
-			const encoder = encoding.createEncoder()
-			encoding.writeVarUint(encoder, messageSync)
-			syncProtocol.writeSyncStep1(encoder, provider.doc)
-			websocket.send(encoding.toUint8Array(encoder))
 			// broadcast local awareness state
 			if (provider.awareness.getLocalState() !== null) {
 				const encoderAwarenessState = encoding.createEncoder()

@@ -96,7 +96,7 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.ts'
+import { applyDocumentState, getDocumentState } from '../helpers/yjs.ts'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.ts'
 import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
@@ -556,7 +556,9 @@ export default {
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
-			if (!documentState) {
+			if (documentState) {
+				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
+			} else {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
