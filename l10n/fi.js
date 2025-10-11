@@ -163,14 +163,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Kopioitu leikepöydälle",
     "Could not copy to the clipboard" : "Ei voitu kopioida leikepöydälle",
     "Link to this section" : "Linkki tähän osioon",
-    "Use current version" : "Käytä nykyistä versiota",
-    "Use the saved version" : "Käytä tallennettua versiota",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentti on ollut käyttämättömänä {timeout} minuuttia, klikkaa jatkaaksesi muokkausta",
     "Edit guest name" : "Muokkaa vieraan nimeä",
-    "Save guest name" : "Tallenna vieraan nimi",
-    "Detect language" : "Havaitse kieli",
-    "Info" : "Tietoa",
-    "Success" : "Onnistui",
-    "Warning" : "Varoitus"
+    "Save guest name" : "Tallenna vieraan nimi"
 },
 "nplurals=2; plural=(n != 1);");

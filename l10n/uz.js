@@ -36,7 +36,6 @@ OC.L10N.register(
     "Option" : "Variant",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
-    "Choose {file}" : " {file}ta tanlash",
-    "Success" : "Success"
+    "Choose {file}" : " {file}ta tanlash"
 },
 "nplurals=1; plural=0;");

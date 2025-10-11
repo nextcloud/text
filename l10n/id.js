@@ -44,9 +44,6 @@ OC.L10N.register(
     "Choose" : "Pilih",
     "Add folder description" : "Tambahkan deskripsi folder",
     "Edit guest name" : "Edit nama tamu",
-    "Save guest name" : "Simpan nama tamu",
-    "Info" : "Info",
-    "Success" : "Berhasil",
-    "Warning" : "Peringatan"
+    "Save guest name" : "Simpan nama tamu"
 },
 "nplurals=1; plural=0;");

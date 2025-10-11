@@ -75,13 +75,7 @@ OC.L10N.register(
     "Command" : "פקודה",
     "Formatting" : "עיצוב",
     "Choose" : "בחר",
-    "Use current version" : "להשתמש בגרסה הנוכחית",
-    "Use the saved version" : "להשתמש בגרסה השמורה",
-    "Document idle for {timeout} minutes, click to continue editing" : "מסמך אינו פעיל למשך {timeout} דקות, לחץ כדי להמשיך בעריכה",
     "Edit guest name" : "עריכת שם אורח",
-    "Save guest name" : "שמירת שם אורח",
-    "Info" : "פרטים",
-    "Success" : "הצלחה",
-    "Warning" : "אזהרה"
+    "Save guest name" : "שמירת שם אורח"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

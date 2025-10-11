@@ -216,19 +216,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Nepodarilo sa skopírovať do schránky",
     "Front matter" : "Predná strana",
     "Link to this section" : "Odkaz na túto sekciu",
-    "Use current version" : "Použiť aktuálnu verziu",
-    "Use the saved version" : "Použiť uloženú verziu",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokument bol zmenený mimo editora. Zmeny nie je možné aplikovať",
-    "Document could not be loaded. Please check your internet connection." : "Dokument sa nepodarilo nahrať. Skontrolujte pripojenie na internet.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument je nečinný {timeout} minút, kliknite pre pokračovanie v úpravách",
     "Edit guest name" : "Upraviť meno hosťa",
-    "Save guest name" : "Uložiť meno hosťa",
-    "Detect language" : "Zistiť jazyk",
-    "Callouts" : "Popisky",
-    "Info" : "Info",
-    "Success" : "Úspešné",
-    "Warning" : "Varovanie",
-    "Danger" : "Nebezpečie",
-    "Start writing, or try '/' to add, '@' to mention…" : "Začnite písať alebo zadajte „/“ pre pridanie, „@“ pre zmienku..."
+    "Save guest name" : "Uložiť meno hosťa"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

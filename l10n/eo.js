@@ -57,11 +57,7 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Choose" : "Elekti",
     "Choose {file}" : "Elekti {file}",
-    "Use current version" : "Uzi nunan version",
-    "Use the saved version" : "Uzi la konservitan version",
     "Edit guest name" : "Modifi la gastonomon",
-    "Save guest name" : "Koservi la gastonomon",
-    "Info" : "Info",
-    "Warning" : "Averto"
+    "Save guest name" : "Koservi la gastonomon"
 },
 "nplurals=2; plural=(n != 1);");

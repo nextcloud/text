@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Níorbh fhéidir cóip a dhéanamh chuig an ngearrthaisce",
     "Front matter" : "Ábhar tosaigh",
     "Link to this section" : "Nasc leis an alt seo",
-    "Use current version" : "Úsáid an leagan reatha",
-    "Use the saved version" : "Bain úsáid as an leagan sábháilte",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Athraíodh an doiciméad lasmuigh den eagarthóir. Ní féidir na hathruithe a chur i bhfeidhm",
-    "Document could not be loaded. Please check your internet connection." : "Níorbh fhéidir an doiciméad a lódáil. Seiceáil do nasc idirlín le do thoil.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Doiciméad díomhaoin ar feadh {timeout} nóiméad, cliceáil chun leanúint ar aghaidh leis an eagarthóireacht",
     "Edit guest name" : "Cuir ainm an aoi in eagar",
-    "Save guest name" : "Sábháil ainm aoi",
-    "Detect language" : "Braith teanga",
-    "Callouts" : "Glaonna",
-    "Info" : "Eolas",
-    "Success" : "Rath",
-    "Warning" : "Rabhadh",
-    "Danger" : "Contúirt",
-    "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…"
+    "Save guest name" : "Sábháil ainm aoi"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

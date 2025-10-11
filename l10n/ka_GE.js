@@ -29,9 +29,6 @@ OC.L10N.register(
     "Source code" : "კოდი",
     "Done" : "დასრულდა",
     "Details" : "დეტალები",
-    "Choose" : "აირჩიეთ",
-    "Info" : "ინფორმაცია",
-    "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება"
+    "Choose" : "აირჩიეთ"
 },
 "nplurals=2; plural=(n!=1);");

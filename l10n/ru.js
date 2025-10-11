@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Не удалось скопировать в буфер обмена",
     "Front matter" : "Передний план",
     "Link to this section" : "Ссылка на этот раздел",
-    "Use current version" : "Использовать текущую версию",
-    "Use the saved version" : "Использовать сохранённую версию",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Документ был изменен вне редактора. Изменения не могут быть применены",
-    "Document could not be loaded. Please check your internet connection." : "Документ не удалось загрузить. Пожалуйста, проверьте ваше интернет-соединение.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Документ простаивает {timeout} мин., Нажмите, чтобы продолжить редактирование",
     "Edit guest name" : "Изменить гостевое имя",
-    "Save guest name" : "Сохранить гостевое имя",
-    "Detect language" : "Определить язык",
-    "Callouts" : "Выноски",
-    "Info" : "Информация",
-    "Success" : "Выполнено",
-    "Warning" : "Предупреждение",
-    "Danger" : "Опасность",
-    "Start writing, or try '/' to add, '@' to mention…" : "Начните писать, или используйте '/', чтобы добавить объект, а '@', чтобы упомянуть..."
+    "Save guest name" : "Сохранить гостевое имя"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

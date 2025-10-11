@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Impossibile copiare negli appunti",
     "Front matter" : "Frontespizio",
     "Link to this section" : "Collegamento a questa sezione",
-    "Use current version" : "Utilizza la versione corrente",
-    "Use the saved version" : "Utilizza la versione salvata",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Il documento è stato cambiato fuori dall'editor. Le modifiche non possono essere applicate",
-    "Document could not be loaded. Please check your internet connection." : "Impossibile caricare il documento. Controlla la tua connessione a internet.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Documento inattivo per {timeout} minuti, fai clic per continuare la modifica",
     "Edit guest name" : "Modifica nome ospite",
-    "Save guest name" : "Salva nome ospite",
-    "Detect language" : "Rileva lingua",
-    "Callouts" : "Didascalie",
-    "Info" : "Informazioni",
-    "Success" : "Successo",
-    "Warning" : "Attenzione",
-    "Danger" : "Pericolo",
-    "Start writing, or try '/' to add, '@' to mention…" : "Inizia a scrivere, oppure prova '/' per aggiungere, '@' per menzionare…"
+    "Save guest name" : "Salva nome ospite"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

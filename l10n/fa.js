@@ -171,16 +171,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copied to the clipboard",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
-    "Use current version" : "از نسخه فعلی استفاده کنید",
-    "Use the saved version" : "Use the saved version",
-    "Document idle for {timeout} minutes, click to continue editing" : "Document idle for {timeout} minutes, click to continue editing",
     "Edit guest name" : "ویرایش نام مهمان",
-    "Save guest name" : "ذخیره نام مهمان",
-    "Detect language" : "Detect language",
-    "Callouts" : "Callouts",
-    "Info" : "اطلاعات",
-    "Success" : "موفقیت",
-    "Warning" : "هشدار",
-    "Danger" : "Danger"
+    "Save guest name" : "ذخیره نام مهمان"
 },
 "nplurals=2; plural=(n > 1);");

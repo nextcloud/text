@@ -24,8 +24,6 @@ OC.L10N.register(
     "Done" : "Edildi",
     "Details" : "Detallar",
     "Choose" : "Seç",
-    "Choose {file}" : "{file} seçin",
-    "Info" : "Info",
-    "Warning" : "Xəbərdarlıq"
+    "Choose {file}" : "{file} seçin"
 },
 "nplurals=2; plural=(n != 1);");

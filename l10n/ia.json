@@ -17,8 +17,6 @@
     "Upload" : "Incargar",
     "Edit" : "Modificar",
     "Done" : "Preste",
-    "Details" : "Detalios",
-    "Info" : "Info",
-    "Warning" : "Aviso"
+    "Details" : "Detalios"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

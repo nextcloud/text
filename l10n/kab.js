@@ -38,7 +38,6 @@ OC.L10N.register(
     "Option" : "Taxtiṛt",
     "Choose" : "Fren",
     "Choose {file}" : "Fren {file}",
-    "Add folder description" : "Rnu aglam i ukaram",
-    "Warning" : "Alɣu"
+    "Add folder description" : "Rnu aglam i ukaram"
 },
 "nplurals=2; plural=(n != 1);");

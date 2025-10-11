@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Panoya kopyalanamadı",
     "Front matter" : "Açılış bölümleri ",
     "Link to this section" : "Bu bölüm bağlantısı",
-    "Use current version" : "Geçerli sürüm kullanılsın",
-    "Use the saved version" : "Kaydedilmiş sürüm kullanılsın",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Belge, düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
-    "Document could not be loaded. Please check your internet connection." : "Belge, yüklenemedi. Lütfen İnternet bağlantınızı denetleyin.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Belge {timeout} dakika süreyle boşta bekledi. Düzenleme işlemini sürdürmek için tıklayın",
     "Edit guest name" : "Konuk adını düzenle",
-    "Save guest name" : "Konuk adını kaydet",
-    "Detect language" : "Dili algıla",
-    "Callouts" : "Yazı notları",
-    "Info" : "Bilgiler",
-    "Success" : "Başarılı",
-    "Warning" : "Uyarı",
-    "Danger" : "Tehlikeli",
-    "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…"
+    "Save guest name" : "Konuk adını kaydet"
 },
 "nplurals=2; plural=(n > 1);");

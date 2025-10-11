@@ -13,8 +13,6 @@ OC.L10N.register(
     "Edit" : "កែប្រែ",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
-    "Choose" : "ជ្រើស",
-    "Info" : "Info",
-    "Warning" : "បម្រាម"
+    "Choose" : "ជ្រើស"
 },
 "nplurals=1; plural=0;");

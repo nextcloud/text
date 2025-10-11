@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Could not copy to the clipboard",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
-    "Use current version" : "Use current version",
-    "Use the saved version" : "Use the saved version",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Document has been changed outside of the editor. The changes cannot be applied",
-    "Document could not be loaded. Please check your internet connection." : "Document could not be loaded. Please check your internet connection.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Document idle for {timeout} minutes, click to continue editing",
     "Edit guest name" : "Edit guest name",
-    "Save guest name" : "Save guest name",
-    "Detect language" : "Detect language",
-    "Callouts" : "Callouts",
-    "Info" : "Info",
-    "Success" : "Success",
-    "Warning" : "Warning",
-    "Danger" : "Danger",
-    "Start writing, or try '/' to add, '@' to mention…" : "Start writing, or try '/' to add, '@' to mention…"
+    "Save guest name" : "Save guest name"
 },
 "nplurals=2; plural=(n != 1);");

@@ -66,10 +66,6 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
-    "Add folder description" : "Add folder description",
-    "Detect language" : "Lugha iliyotambuliwa",
-    "Info" : "Info",
-    "Success" : "Mafanikio",
-    "Warning" : "Onyo"
+    "Add folder description" : "Add folder description"
 },
 "nplurals=2; plural=(n != 1);");

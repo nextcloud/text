@@ -11,8 +11,6 @@ OC.L10N.register(
     "to" : "kepada",
     "Upload" : "Muat naik",
     "Edit" : "Sunting",
-    "Done" : "Selesai",
-    "Info" : "Info",
-    "Warning" : "Amaran"
+    "Done" : "Selesai"
 },
 "nplurals=1; plural=0;");

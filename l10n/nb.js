@@ -200,18 +200,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kunne ikke kopiere til utklippstavlen",
     "Front matter" : "Innledning",
     "Link to this section" : "Kobling til denne seksjonen",
-    "Use current version" : "Bruk siste versjon",
-    "Use the saved version" : "Bruk lagret versjon",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet har blitt endret utenfor programmet. Endringene kan ikke benyttes.",
-    "Document could not be loaded. Please check your internet connection." : "Dokumentet kan ikke lastes inn. Kontroller internettforbindelsen din.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter, klikk for å fortsette redigeringen",
     "Edit guest name" : "Rediger gjestenavn",
-    "Save guest name" : "Lagre gjestenavn",
-    "Detect language" : "Oppdag språk",
-    "Callouts" : "Bildeforklaringer",
-    "Info" : "Info",
-    "Success" : "Vellykket",
-    "Warning" : "Advarsel",
-    "Danger" : "Fare"
+    "Save guest name" : "Lagre gjestenavn"
 },
 "nplurals=2; plural=(n != 1);");
