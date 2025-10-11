@@ -220,19 +220,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kunde inte kopiera till urklipp",
     "Front matter" : "Förtexter",
     "Link to this section" : "Länk till detta avsnitt",
-    "Use current version" : "Använd nuvarande version",
-    "Use the saved version" : "Använd den sparade versionen",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
-    "Document could not be loaded. Please check your internet connection." : "Dokumentet kunde inte laddas. Kontrollera din internetanslutning.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentet inaktivt {timeout} minuter, klicka för att fortsätta redigera",
     "Edit guest name" : "Ändra gästnamn",
-    "Save guest name" : "Spara gästnamn",
-    "Detect language" : "Upptäck språk",
-    "Callouts" : "Status",
-    "Info" : "Info",
-    "Success" : "Lyckades",
-    "Warning" : "Varning",
-    "Danger" : "Fara",
-    "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna..."
+    "Save guest name" : "Spara gästnamn"
 },
 "nplurals=2; plural=(n != 1);");

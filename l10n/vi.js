@@ -95,13 +95,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chọn tập tin hoặc thư mục để liên kết đến",
     "Choose" : "Chọn",
     "Choose {file}" : "Chọn {file}",
-    "Use current version" : "Sử dụng phiên bản hiện tại",
-    "Use the saved version" : "Sử dụng phiên bản đã lưu",
-    "Document idle for {timeout} minutes, click to continue editing" : "Tài liệu không hoạt động trong {timeout} phút, nhấp để tiếp tục chỉnh sửa",
     "Edit guest name" : "Chỉnh sửa tên khách",
-    "Save guest name" : "Lưu tên khách",
-    "Info" : "Thông tin",
-    "Success" : "Thành công",
-    "Warning" : "Cảnh báo"
+    "Save guest name" : "Lưu tên khách"
 },
 "nplurals=1; plural=0;");

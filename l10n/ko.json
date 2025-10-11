@@ -209,19 +209,7 @@
     "Could not copy to the clipboard" : "클립보드에 복사할 수 없음",
     "Front matter" : "머리말",
     "Link to this section" : "이 부분으로 링크",
-    "Use current version" : "최근 버젼을 사용하십시오.",
-    "Use the saved version" : "이전 버전 사용하기",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "문서가 에디터 밖에서 변경되었습니다. 변경사항이 적용되지 않습니다.",
-    "Document could not be loaded. Please check your internet connection." : "문서를 가져올 수 없습니다. 인터넷 연결을 확인해주십시오.",
-    "Document idle for {timeout} minutes, click to continue editing" : "문서가 {timeout}분동안 유휴 상태입니다. 클릭하여 편집을 계속하세요.",
     "Edit guest name" : "손님 이름 편집하기",
-    "Save guest name" : "손님 이름 저장하기",
-    "Detect language" : "언어 감지",
-    "Callouts" : "설명선",
-    "Info" : "정보",
-    "Success" : "성공",
-    "Warning" : "경고",
-    "Danger" : "위험",
-    "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요..."
+    "Save guest name" : "손님 이름 저장하기"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

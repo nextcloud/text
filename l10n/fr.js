@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Impossible de copier dans le presse-papiers",
     "Front matter" : "Avant-propos",
     "Link to this section" : "Lier vers cette section",
-    "Use current version" : "Utiliser la version actuelle",
-    "Use the saved version" : "Utiliser la version enregistrée",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Le document a été modifié hors de l'éditeur. Les modifications ne peuvent être appliquées",
-    "Document could not be loaded. Please check your internet connection." : "Le document n'a pu être chargé. Vérifiez votre connexion Internet.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Document sans activité depuis {timeout} minutes, cliquez pour continuer les modifications",
     "Edit guest name" : "Modifier le nom de l'invité",
-    "Save guest name" : "Enregistrer le nom de l'invité",
-    "Detect language" : "Détecter la langue",
-    "Callouts" : "Légendes",
-    "Info" : "Info",
-    "Success" : "Succès",
-    "Warning" : "Avertissement",
-    "Danger" : "Danger",
-    "Start writing, or try '/' to add, '@' to mention…" : "Commencez à écrire, ou essayez '/' pour ajouter, '@' pour mentionner..."
+    "Save guest name" : "Enregistrer le nom de l'invité"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

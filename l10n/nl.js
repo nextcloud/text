@@ -222,18 +222,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kon niet kopiëren naar het klembord",
     "Front matter" : "Voorwerk",
     "Link to this section" : "Link naar dit gedeelte",
-    "Use current version" : "Gebruik huidige versie",
-    "Use the saved version" : "Gebruik opgeslagen versie",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Document is gewijzigd buiten de editor. De wijzigingen kunnen niet worden toegepast",
-    "Document could not be loaded. Please check your internet connection." : "Document kon niet worden geladen. Controleer de internetverbinding.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Document inactief voor {timeout} minuten, klik om door te gaan met bewerken",
     "Edit guest name" : "Bewerk gast naam",
-    "Save guest name" : "Bewaar gast naam",
-    "Detect language" : "Detecteer taal",
-    "Info" : "Info",
-    "Success" : "Geslaagd",
-    "Warning" : "Waarschuwing",
-    "Danger" : "Gevaar",
-    "Start writing, or try '/' to add, '@' to mention…" : "Begin met schrijven, of probeer '/' om toe te voegen, '@' om te vermelden..."
+    "Save guest name" : "Bewaar gast naam"
 },
 "nplurals=2; plural=(n != 1);");

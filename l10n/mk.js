@@ -106,13 +106,7 @@ OC.L10N.register(
     "Choose" : "Избери",
     "Choose {file}" : "Избери {file}",
     "Add folder description" : "Додади опис на папката",
-    "Use current version" : "Користи ја моменталната верзија",
-    "Use the saved version" : "Користи ја зачуваната верзија",
-    "Document idle for {timeout} minutes, click to continue editing" : "Документот е неактивен {timeout} минути, кликни за да продолжиш со уредување",
     "Edit guest name" : "Промени име на гостин",
-    "Save guest name" : "Зачувај име на гостин",
-    "Info" : "Инфо",
-    "Success" : "Успешно",
-    "Warning" : "Предупредување"
+    "Save guest name" : "Зачувај име на гостин"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

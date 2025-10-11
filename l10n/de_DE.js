@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Konnte nicht in die Zwischenablage kopieren",
     "Front matter" : "Titelei",
     "Link to this section" : "Link zu diesem Abschnitt",
-    "Use current version" : "Verwende aktuelle Version",
-    "Use the saved version" : "Die gespeicherte Version verwenden",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Das Dokument wurde außerhalb des Editors geändert. Die Änderungen können nicht angewandt werden.",
-    "Document could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument für {timeout} Minuten ruhend. Klicken, um die Bearbeitung fortzusetzen.",
     "Edit guest name" : "Gast-Namen bearbeiten",
-    "Save guest name" : "Gast-Namen speichern",
-    "Detect language" : "Sprache erkennen",
-    "Callouts" : "Beschriftungen",
-    "Info" : "Info",
-    "Success" : "Erfolgreich",
-    "Warning" : "Warnung",
-    "Danger" : "Achtung",
-    "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …"
+    "Save guest name" : "Gast-Namen speichern"
 },
 "nplurals=2; plural=(n != 1);");

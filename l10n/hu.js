@@ -178,16 +178,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Vágólapra másolva",
     "Front matter" : "Előlap",
     "Link to this section" : "Hivatkozás erre a szakaszra",
-    "Use current version" : "Jelenlegi verzió használata",
-    "Use the saved version" : "A mentett verzió használata",
-    "Document idle for {timeout} minutes, click to continue editing" : "A dokumentum {timeout} percig tétlen volt, kattintson a szerkesztés folytatásához ",
     "Edit guest name" : "Vendégnév szerkesztése",
-    "Save guest name" : "Vendégnév mentése",
-    "Detect language" : "Nyelv észlelése",
-    "Callouts" : "Kiemelések",
-    "Info" : "Információ",
-    "Success" : "Siker",
-    "Warning" : "Figyelmeztetés",
-    "Danger" : "Veszély"
+    "Save guest name" : "Vendégnév mentése"
 },
 "nplurals=2; plural=(n != 1);");

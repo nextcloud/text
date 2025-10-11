@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "無法複製到剪貼簿",
     "Front matter" : "前言",
     "Link to this section" : "連結到本節",
-    "Use current version" : "使用目前版本",
-    "Use the saved version" : "使用儲存版本",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "文件已在編輯器外變更。無法套用變更。",
-    "Document could not be loaded. Please check your internet connection." : "無法載入文件。請檢查您的網路連線。",
-    "Document idle for {timeout} minutes, click to continue editing" : "文件已閒置 {timeout} 分鐘。點選以繼續編輯",
     "Edit guest name" : "編輯訪客名稱",
-    "Save guest name" : "儲存訪客名稱",
-    "Detect language" : "檢測語言",
-    "Callouts" : "標記",
-    "Info" : "資訊",
-    "Success" : "成功",
-    "Warning" : "警告",
-    "Danger" : "危險",
-    "Start writing, or try '/' to add, '@' to mention…" : "開始撰寫，或試試看「/」新增、「@」提及……"
+    "Save guest name" : "儲存訪客名稱"
 },
 "nplurals=1; plural=0;");

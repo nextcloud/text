@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "クリップボードにコピーできませんでした",
     "Front matter" : "Front matter",
     "Link to this section" : "このセクションへのリンク",
-    "Use current version" : "現在のバージョンを使用",
-    "Use the saved version" : "保存済みのバージョンを使用",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "ドキュメントがエディター外で変更されました。変更を適用できません",
-    "Document could not be loaded. Please check your internet connection." : "ドキュメントを読み込めませんでした。インターネット接続を確認してください。",
-    "Document idle for {timeout} minutes, click to continue editing" : "ドキュメントが{timeout}分間アイドル状態です。クリックして編集を続行します",
     "Edit guest name" : "ゲスト名を編集",
-    "Save guest name" : "ゲスト名を保存",
-    "Detect language" : "言語を検出する",
-    "Callouts" : "コールアウト",
-    "Info" : "情報",
-    "Success" : "完了",
-    "Warning" : "警告",
-    "Danger" : "危険",
-    "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。"
+    "Save guest name" : "ゲスト名を保存"
 },
 "nplurals=1; plural=0;");

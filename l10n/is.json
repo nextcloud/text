@@ -205,19 +205,7 @@
     "Could not copy to the clipboard" : "Gat ekki afritað á klippispjaldið",
     "Front matter" : "Forsíðuefni",
     "Link to this section" : "Tengja í þennan hluta",
-    "Use current version" : "Nota fyrirliggjandi útgáfu",
-    "Use the saved version" : "Nota vistuðu útgáfuna",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Skjalinu hefur verið breytt utan ritilsins. Ekki var hægt að framkvæma breytingarnar",
-    "Document could not be loaded. Please check your internet connection." : "Ekki var hægt að hlaða inn skjalinu. Athugaðu nettenginguna þína.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Skjal aðgerðalaust í {timeout} mínútur, smelltu til að halda áfram með breytingar",
     "Edit guest name" : "Breyta nafni gests",
-    "Save guest name" : "Vista nafn gests",
-    "Detect language" : "Greina tungumál",
-    "Callouts" : "Talblöðrur",
-    "Info" : "Upplýsingar",
-    "Success" : "Tókst",
-    "Warning" : "Aðvörun",
-    "Danger" : "Hættulegt",
-    "Start writing, or try '/' to add, '@' to mention…" : "Byrja að skrifa eða prófaðu'/' til að bæta við, '@' til að minnast á…"
+    "Save guest name" : "Vista nafn gests"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

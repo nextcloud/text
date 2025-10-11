@@ -33,9 +33,6 @@ OC.L10N.register(
     "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ",
     "Choose" : "เลือก",
-    "Choose {file}" : "เลือก {file}",
-    "Info" : "ข้อมูล",
-    "Success" : "สำเร็จ",
-    "Warning" : "คำเตือน"
+    "Choose {file}" : "เลือก {file}"
 },
 "nplurals=1; plural=0;");

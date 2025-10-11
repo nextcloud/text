@@ -34,7 +34,6 @@
     "Option" : "Variant",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
-    "Choose {file}" : " {file}ta tanlash",
-    "Success" : "Success"
+    "Choose {file}" : " {file}ta tanlash"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

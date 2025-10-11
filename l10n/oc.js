@@ -65,12 +65,7 @@ OC.L10N.register(
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
     "Choose" : "Causir",
-    "Use current version" : "Utilizar la version actuala",
-    "Use the saved version" : "Utilizar la version salvada",
     "Edit guest name" : "Modificar lo nom de convidat",
-    "Save guest name" : "Enregistrar lo nom de convidat",
-    "Info" : "Info",
-    "Success" : "Succès",
-    "Warning" : "Avertiment"
+    "Save guest name" : "Enregistrar lo nom de convidat"
 },
 "nplurals=2; plural=(n > 1);");

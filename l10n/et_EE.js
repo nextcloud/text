@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kopeerimine lõikelauale ei õnnestunud:",
     "Front matter" : "Kokkuvõte",
     "Link to this section" : "Lisa link sellele lõigule",
-    "Use current version" : "Kasuta praegust versiooni",
-    "Use the saved version" : "Kasuta salvestatud versiooni",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokument on muutunud väljaspool seda rakendust. Muudatusi ei saa salvestada",
-    "Document could not be loaded. Please check your internet connection." : "Dokumenti ei õnnestunud laadida. Palun kontrolli oma seadme internetiühenduse toimivust.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument on olnud jõude {timeout} minutit, töö jätkamiseks klõpsi",
     "Edit guest name" : "Muuda külalise nime",
-    "Save guest name" : "Salvesta külalise nimi",
-    "Detect language" : "Tuvasta keel",
-    "Callouts" : "Viiktekstid (esiletõstmised)",
-    "Info" : "Info",
-    "Success" : "Valmis",
-    "Warning" : "Hoiatus",
-    "Danger" : "Ohtlik",
-    "Start writing, or try '/' to add, '@' to mention…" : "Alusta kirjutamist või kasuta lisamiseks „/“ ning mainimiseks „@“…"
+    "Save guest name" : "Salvesta külalise nimi"
 },
 "nplurals=2; plural=(n != 1);");

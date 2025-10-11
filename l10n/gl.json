@@ -222,19 +222,7 @@
     "Could not copy to the clipboard" : "Non foi posíbel copiar ao portapapeis",
     "Front matter" : "Preliminar ",
     "Link to this section" : "Ligazón a esta sección",
-    "Use current version" : "Empregar a versión actual",
-    "Use the saved version" : "Empregar a versión gardada",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "O documento foi modificado fora do editor. Non é posíbel aplicar os cambios.",
-    "Document could not be loaded. Please check your internet connection." : "Non foi posíbel cargar o documento. Comprobe a súa conexión a Internet.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Documento inactivo durante {timeout} minutos; prema para continuar coa edición",
     "Edit guest name" : "Editar o nome do convidado",
-    "Save guest name" : "Gardar o nome do convidado",
-    "Detect language" : "Detectar o idioma",
-    "Callouts" : "Lendas",
-    "Info" : "Información",
-    "Success" : "Correcto",
-    "Warning" : "Advertencia",
-    "Danger" : "Perigo",
-    "Start writing, or try '/' to add, '@' to mention…" : "Comece a escribir, ou probe con «/» para engadir, «@» para mencionar…"
+    "Save guest name" : "Gardar o nome do convidado"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -18,8 +18,6 @@ OC.L10N.register(
     "Edit" : "সম্পাদনা",
     "Done" : "শেষ হলো",
     "Details" : "বিসতারিত",
-    "Choose" : "বেছে নিন",
-    "Info" : "Info",
-    "Warning" : "সতর্কবাণী"
+    "Choose" : "বেছে নিন"
 },
 "nplurals=2; plural=(n != 1);");

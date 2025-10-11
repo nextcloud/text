@@ -18,8 +18,6 @@ OC.L10N.register(
     "Upload" : "Last opp",
     "Edit" : "Endra",
     "Details" : "Detaljar",
-    "Choose" : "Vel",
-    "Info" : "Info",
-    "Warning" : "Åtvaring"
+    "Choose" : "Vel"
 },
 "nplurals=2; plural=(n != 1);");

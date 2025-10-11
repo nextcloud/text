@@ -222,19 +222,7 @@
     "Could not copy to the clipboard" : "Ezin izan da arbelera kopiatu",
     "Front matter" : "Aurreko gaia",
     "Link to this section" : "Estekatu atal honetara",
-    "Use current version" : "Erabili uneko bertsioa",
-    "Use the saved version" : "Erabili gordetako bertsioa",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu",
-    "Document could not be loaded. Please check your internet connection." : "Ezin izan da dokumentua kargatu. Egiaztatu zure internet konexioa.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentu inaktiboa {timeout} minutuz, egin klik editatzen jarraitzeko",
     "Edit guest name" : "Editatu gonbidatuaren izena",
-    "Save guest name" : "Gorde gonbidatuaren izena",
-    "Detect language" : "Detektatu hizkuntza",
-    "Callouts" : "Deialdiak",
-    "Info" : "Informazioa",
-    "Success" : "Arrakasta",
-    "Warning" : "Oharra",
-    "Danger" : "Arriskua",
-    "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko..."
+    "Save guest name" : "Gorde gonbidatuaren izena"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

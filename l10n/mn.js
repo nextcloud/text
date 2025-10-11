@@ -17,8 +17,6 @@ OC.L10N.register(
     "Edit" : "засварлах",
     "Source code" : "эх үүсвэр талын код",
     "Details" : "Дэлгэрэнгүй",
-    "Choose" : "Сонгох",
-    "Info" : "Info",
-    "Warning" : "Warning"
+    "Choose" : "Сонгох"
 },
 "nplurals=2; plural=(n != 1);");
