@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1a32f392afdd5ebf6046300c331d62c",
+    "content-hash": "aa7ad7998a3e919c3af9edf2f92eaa22",
     "packages": [],
     "packages-dev": [
         {
@@ -935,20 +935,20 @@
         },
         {
             "name": "psalm/phar",
-            "version": "6.5.1",
+            "version": "6.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "f7ecaf8740f32d58695cee5ac11663e02b44b223"
+                "reference": "e143bcacd037f1cbc5a738b76d846841e787a62f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/f7ecaf8740f32d58695cee5ac11663e02b44b223",
-                "reference": "f7ecaf8740f32d58695cee5ac11663e02b44b223",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/e143bcacd037f1cbc5a738b76d846841e787a62f",
+                "reference": "e143bcacd037f1cbc5a738b76d846841e787a62f",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^8.2"
             },
             "conflict": {
                 "vimeo/psalm": "*"
@@ -964,9 +964,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/6.5.1"
+                "source": "https://github.com/psalm/phar/tree/6.13.1"
             },
-            "time": "2025-02-10T10:05:10+00:00"
+            "time": "2025-08-07T12:36:48+00:00"
         },
         {
             "name": "psr/clock",
@@ -3006,7 +3006,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "platform-dev": {
         "ext-mbstring": "*"
