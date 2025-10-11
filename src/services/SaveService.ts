@@ -23,6 +23,7 @@ class SaveService {
 	syncService
 	serialize
 	getDocumentState
+	hasYjsPendingStructs
 	autosave
 
 	constructor({
@@ -30,16 +31,19 @@ class SaveService {
 		syncService,
 		serialize,
 		getDocumentState,
+		hasYjsPendingStructs,
 	}: {
 		connection: ShallowRef<Connection | undefined>
 		syncService: SyncService
 		serialize: () => string
 		getDocumentState: () => string
+		hasYjsPendingStructs: () => boolean
 	}) {
 		this.connection = connection
 		this.syncService = syncService
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
+		this.hasYjsPendingStructs = hasYjsPendingStructs
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
 		this.syncService.bus.on('close', () => {
 			this.autosave.clear()
@@ -64,6 +68,11 @@ class SaveService {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
+		// Don't save if we have pendingStructs (i.e. document state misses a step)
+		if (this.hasYjsPendingStructs()) {
+			logger.debug('[SaveService] not saving due to inconsistent yjs state')
+			return
+		}
 		try {
 			const response = await save(this.connection.value, {
 				version: this.version,
@@ -84,6 +93,10 @@ class SaveService {
 
 	saveViaSendBeacon() {
 		if (!this.connection.value) {
+			return
+		}
+		// Don't save if we have pendingStructs (i.e. document state misses a step)
+		if (this.hasYjsPendingStructs()) {
 			return
 		}
 		saveViaSendBeacon(this.connection.value, {

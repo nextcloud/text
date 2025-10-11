@@ -11,7 +11,9 @@
 			:class="saveStatusClass">
 			<NcButton
 				type="tertiary"
-				:aria-label="t('text', 'Save document')"
+				:disabled="saveService.hasYjsPendingStructs()"
+				:title="saveTitle"
+				:aria-label="saveAriaLabel"
 				@click="onClickSave">
 				<template #icon>
 					<NcSavingIndicatorIcon
@@ -121,6 +123,16 @@ export default {
 				return 'error'
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
+		},
+		saveTitle() {
+			return this.saveService.hasYjsPendingStructs()
+				? ('text', 'Cannot save due to inconsistent sync state')
+				: ''
+		},
+		saveAriaLabel() {
+			return this.saveService.hasYjsPendingStructs()
+				? ('text', 'Cannot save due to inconsistent sync state')
+				: ('text', 'Save document')
 		},
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
