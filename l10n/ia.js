@@ -19,8 +19,6 @@ OC.L10N.register(
     "Upload" : "Incargar",
     "Edit" : "Modificar",
     "Done" : "Preste",
-    "Details" : "Detalios",
-    "Info" : "Info",
-    "Warning" : "Aviso"
+    "Details" : "Detalios"
 },
 "nplurals=2; plural=(n != 1);");

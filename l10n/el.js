@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Αδυναμία αντιγραφής στο πρόχειρο",
     "Front matter" : "Εισαγωγικά στοιχεία",
     "Link to this section" : "Σύνδεσμος προς αυτήν την ενότητα",
-    "Use current version" : "Χρήση τρέχουσας έκδοσης",
-    "Use the saved version" : "Χρήση αποθηκευμένης έκδοσης",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Το έγγραφο έχει τροποποιηθεί εκτός επεξεργαστή. Οι αλλαγές δεν μπορούν να εφαρμοστούν",
-    "Document could not be loaded. Please check your internet connection." : "Αδυναμία φόρτωσης εγγράφου. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Έγγραφο σε αναμονή για {timeout} λεπτά, κάντε κλικ για να συνεχίσετε την επεξεργασία",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέπτη",
-    "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
-    "Detect language" : "Ανίχνευση γλώσσας",
-    "Callouts" : "Επεξηγήσεις (Callouts)",
-    "Info" : "Πληροφόρηση",
-    "Success" : "Επιτυχία",
-    "Warning" : "Προειδοποίηση",
-    "Danger" : "Κίνδυνος",
-    "Start writing, or try '/' to add, '@' to mention…" : "Ξεκινήστε να γράφετε, ή δοκιμάστε '/' για προσθήκη, '@' για αναφορά…"
+    "Save guest name" : "Αποθήκευση ονόματος επισκέπτη"
 },
 "nplurals=2; plural=(n != 1);");

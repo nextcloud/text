@@ -12,8 +12,6 @@ OC.L10N.register(
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Upload" : "ವರ್ಗಾಯಿಸಿ",
     "Edit" : "ಸಂಪಾದಿಸು",
-    "Choose" : "﻿ಆಯ್ಕೆ",
-    "Info" : "Info",
-    "Warning" : "﻿ಎಚ್ಚರಿಕೆ"
+    "Choose" : "﻿ಆಯ್ಕೆ"
 },
 "nplurals=2; plural=(n > 1);");

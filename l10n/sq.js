@@ -40,12 +40,7 @@ OC.L10N.register(
     "Done" : "U bë",
     "Details" : "Detajet",
     "Choose" : "Zgjidhni",
-    "Use current version" : "Përdor versionin aktual",
-    "Use the saved version" : "Përdor versionin e ruajtur",
     "Edit guest name" : "Ndryshoni emrin e të ftuarit",
-    "Save guest name" : "Ruaj emrin e të ftuarit",
-    "Info" : "Info",
-    "Success" : "Sukses",
-    "Warning" : "Kujdes"
+    "Save guest name" : "Ruaj emrin e të ftuarit"
 },
 "nplurals=2; plural=(n != 1);");

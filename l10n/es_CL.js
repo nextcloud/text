@@ -32,9 +32,6 @@ OC.L10N.register(
     "Upload" : "Cargar",
     "Edit" : "Editar",
     "Source code" : "Código fuente",
-    "Choose" : "Seleccionar",
-    "Info" : "Info",
-    "Success" : "Éxito",
-    "Warning" : "Advertencia"
+    "Choose" : "Seleccionar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

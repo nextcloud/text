@@ -41,11 +41,6 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "Details" : "Besonderhede",
-    "Choose" : "Kies",
-    "Use current version" : "Gebruik huidige weergawe",
-    "Use the saved version" : "Gebruik die bewaarde weergawe",
-    "Info" : "Inligting",
-    "Success" : "Sukses",
-    "Warning" : "Waarskuwing"
+    "Choose" : "Kies"
 },
 "nplurals=2; plural=(n != 1);");

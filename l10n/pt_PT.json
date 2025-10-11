@@ -60,12 +60,7 @@
     "Choose" : "Escolher",
     "Choose {file}" : "Escolher {file}",
     "Add folder description" : "Adicionar descrição da pasta",
-    "Use current version" : "Usar esta versão",
-    "Use the saved version" : "Usar a versão guardada",
     "Edit guest name" : "Inserir o nome do convidado",
-    "Save guest name" : "Guardar o nome do convidado",
-    "Info" : "Informação",
-    "Success" : "Sucesso",
-    "Warning" : "Aviso"
+    "Save guest name" : "Guardar o nome do convidado"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

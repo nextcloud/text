@@ -156,16 +156,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Копирано в клипборда",
     "Front matter" : "Предно съдържание",
     "Link to this section" : "Връзка към този раздел",
-    "Use current version" : "Използване на текуща версия",
-    "Use the saved version" : "Използване на запазената версия",
-    "Document idle for {timeout} minutes, click to continue editing" : "Документът е неактивен за {timeout} минути, щракнете, за да продължите да редактирате",
     "Edit guest name" : "Редактиране на името на госта",
-    "Save guest name" : "Запис на името на госта",
-    "Detect language" : "Разпознаване на език",
-    "Callouts" : "Изнесени означения",
-    "Info" : "Информация",
-    "Success" : "Успех",
-    "Warning" : "Внимание",
-    "Danger" : "Опасност"
+    "Save guest name" : "Запис на името на госта"
 },
 "nplurals=2; plural=(n != 1);");

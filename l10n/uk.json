@@ -222,19 +222,7 @@
     "Could not copy to the clipboard" : "Не вдалося скопіювати до буферу обміну",
     "Front matter" : "Передня справа",
     "Link to this section" : "Посилання на цей розділ",
-    "Use current version" : "Використовувати поточну версію",
-    "Use the saved version" : "Використовувати збережену версію",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Документ було змінено ззовні. Неможливо зберегти зміни.",
-    "Document could not be loaded. Please check your internet connection." : "Неможливо завантажити документ. Перевірте ваше з'єднання з мережею.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Документ неактивний протягом {timeout} хвилин, натисніть, щоб продовжити редагування",
     "Edit guest name" : "Редагувати ім'я гостя",
-    "Save guest name" : "Зберегти ім'я гостя",
-    "Detect language" : "Визначити мову",
-    "Callouts" : "Виноска",
-    "Info" : "Info",
-    "Success" : "Успіх",
-    "Warning" : "Увага",
-    "Danger" : "Небезпека",
-    "Start writing, or try '/' to add, '@' to mention…" : "Почніть вводити текст або введіть '/' для додавання, '@' для згадки..."
+    "Save guest name" : "Зберегти ім'я гостя"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

@@ -53,8 +53,6 @@ OC.L10N.register(
     "Formatting" : "Formatting",
     "Select file or folder to link to" : "Select file or folder to link to",
     "Choose" : "Choose",
-    "Choose {file}" : "Choose {file}",
-    "Info" : "Info",
-    "Warning" : "Warning"
+    "Choose {file}" : "Choose {file}"
 },
 "nplurals=2; plural=(n!=1);");

@@ -72,13 +72,7 @@
     "Command" : "Naredba",
     "Formatting" : "Oblikovanje",
     "Choose" : "Odaberite",
-    "Use current version" : "Koristi trenutnu verziju",
-    "Use the saved version" : "Koristi spremljenu verziju",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument ne reagira {timeout} minuta, kliknite za nastavak uređivanja",
     "Edit guest name" : "Uredi ime gosta",
-    "Save guest name" : "Spremi ime gosta",
-    "Info" : "Informacije",
-    "Success" : "Uspjeh",
-    "Warning" : "Upozorenje"
+    "Save guest name" : "Spremi ime gosta"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

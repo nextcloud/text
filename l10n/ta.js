@@ -12,8 +12,6 @@ OC.L10N.register(
     "Edit" : "தொகுக்க",
     "Done" : "Done",
     "Details" : "விவரங்கள்",
-    "Choose" : "தெரிவுசெய்க ",
-    "Info" : "Info",
-    "Warning" : "எச்சரிக்கை"
+    "Choose" : "தெரிவுசெய்க "
 },
 "nplurals=2; plural=(n != 1);");

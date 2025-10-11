@@ -224,19 +224,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kunne ikke kopiere til udklipsholderen",
     "Front matter" : "Metadata",
     "Link to this section" : "Link til dette afsnit",
-    "Use current version" : "Brug aktuel version",
-    "Use the saved version" : "Brug den gemte version",
-    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet er blevet ændret uden for editoren. Ændringerne kan ikke anvendes.",
-    "Document could not be loaded. Please check your internet connection." : "Dokumentet kunne ikke indlæses. Tjek din internetforbindelse.",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter. Klik for at fortsætte med at redigere",
     "Edit guest name" : "Redigér gæstens navn",
-    "Save guest name" : "Gem gæstens navn",
-    "Detect language" : "Detekter sprog",
-    "Callouts" : "Bokse",
-    "Info" : "Info",
-    "Success" : "Succes",
-    "Warning" : "Advarsler",
-    "Danger" : "Fare",
-    "Start writing, or try '/' to add, '@' to mention…" : "Begynd at skrive, eller prøv '/' for at tilføje, '@' for at omtale.."
+    "Save guest name" : "Gem gæstens navn"
 },
 "nplurals=2; plural=(n != 1);");
