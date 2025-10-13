@@ -7,7 +7,7 @@ import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
-import type { Step } from '../services/SyncService.js'
+import type { Step } from '../services/SyncService'
 import { messageSync } from '../services/y-websocket.js'
 import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
 

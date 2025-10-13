@@ -6,7 +6,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { shallowRef } from 'vue'
 import { SyncService } from '../../services/SyncService'
-import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
+import initWebSocketPolyfill from '../../services/WebSocketPolyfill'
 import SessionApi from '../../services/SessionApi.js'
 
 describe('Init function', () => {
