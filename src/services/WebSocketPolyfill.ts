@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.js'
+import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
 import { logger } from '../helpers/logger.js'
 import getNotifyBus from './NotifyService'
-import type { Step, SyncService } from './SyncService.js'
+import type { Step, SyncService } from './SyncService'
 
 /**
  *

@@ -5,8 +5,8 @@
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import type { Connection } from '../composables/useConnection.js'
-import type { Document, GuestSession, Session } from '../services/SyncService.js'
+import type { Connection } from '../composables/useConnection'
+import type { Document, GuestSession, Session } from '../services/SyncService'
 
 export interface OpenParams {
 	fileId?: number

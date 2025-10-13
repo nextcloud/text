@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { encodeArrayBuffer } from '../helpers/base64.js'
+import { encodeArrayBuffer } from '../helpers/base64'
 import { logger } from '../helpers/logger.js'
 
 type Sendable = {

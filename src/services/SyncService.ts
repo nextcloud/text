@@ -10,12 +10,12 @@ import mitt from 'mitt'
 import type { ShallowRef } from 'vue'
 import { close, type OpenData } from '../apis/connect'
 import { push } from '../apis/sync'
-import type { Connection } from '../composables/useConnection.js'
+import type { Connection } from '../composables/useConnection'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps'
-import { documentStateToStep } from '../helpers/yjs.js'
-import Outbox from './Outbox.js'
-import PollingBackend from './PollingBackend.js'
+import { documentStateToStep } from '../helpers/yjs'
+import Outbox from './Outbox'
+import PollingBackend from './PollingBackend'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle

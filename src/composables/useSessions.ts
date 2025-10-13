@@ -13,14 +13,14 @@ import {
 	watch,
 	type ShallowRef,
 } from 'vue'
-import type { OpenData } from '../apis/connect.js'
+import type { OpenData } from '../apis/connect'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
 	isGuest,
 	SyncService,
 	type Session,
-} from '../services/SyncService.js'
-import { useConnection } from './useConnection.js'
+} from '../services/SyncService'
+import { useConnection } from './useConnection'
 
 /**
  * Get the sessions from the sync service.

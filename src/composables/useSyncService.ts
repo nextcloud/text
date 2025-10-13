@@ -5,7 +5,7 @@
 
 import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
 import { SyncService } from '../services/SyncService'
-import type { Connection, InitialData } from './useConnection.js'
+import type { Connection, InitialData } from './useConnection'
 
 const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
 
