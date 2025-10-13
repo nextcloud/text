@@ -7,8 +7,8 @@ import { getRequestToken } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection.js'
-import type { Document } from '../services/SyncService.js'
+import type { Connection } from '../composables/useConnection'
+import type { Document } from '../services/SyncService'
 
 interface SaveData {
 	version: number
