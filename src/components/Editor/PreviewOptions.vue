@@ -17,7 +17,7 @@
 				data-text-preview-option="text-only"
 				name="preview-option"
 				value="text-only"
-				:checked="type === 'text-only'"
+				:model-value="type"
 				@change="(e) => toggle(e.currentTarget.value)">
 				{{ t('text', 'Text only') }}
 			</NcActionRadio>
@@ -25,7 +25,7 @@
 				data-text-preview-option="link-preview"
 				name="preview-option"
 				value="link-preview"
-				:checked="type === 'link-preview'"
+				:model-value="type"
 				@change="(e) => toggle(e.currentTarget.value)">
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
