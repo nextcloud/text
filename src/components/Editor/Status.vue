@@ -27,7 +27,7 @@
 
 <script>
 
-import { ERROR_TYPE } from '../../services/SyncService.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
