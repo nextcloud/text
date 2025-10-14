@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { ref, watch } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import type { Doc } from 'yjs'
 
@@ -23,6 +24,14 @@ export function useIndexedDbProvider(
 	indexedDbProvider.on('synced', (provider: IndexeddbPersistence) => {
 		console.info('synced from indexeddb', provider)
 	})
+	const dirty = ref(false)
+	indexedDbProvider.get('dirty').then((val) => {
+		dirty.value = Boolean(val)
+	})
+
+	watch(dirty, (val) => {
+		indexedDbProvider.set('dirty', val ? 1 : 0)
+	})
 
 	/**
 	 * Get the base version etag the document had when it was edited last.
@@ -40,6 +49,7 @@ export function useIndexedDbProvider(
 	}
 
 	return {
+		dirty,
 		getBaseVersionEtag,
 		setBaseVersionEtag,
 	}
