@@ -37,6 +37,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './../css/prosemirror';
-@import './../css/print';
+@use './../css/prosemirror';
+@use './../css/print';
 </style>

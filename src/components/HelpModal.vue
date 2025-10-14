@@ -315,6 +315,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../css/prosemirror';
+
 table {
 	margin-top: 24px;
 	border-collapse: collapse;
@@ -372,8 +374,6 @@ table {
 		border-radius: 6px;
 	}
 }
-
-@import '../css/prosemirror';
 
 div.ProseMirror {
 	display: inline;
