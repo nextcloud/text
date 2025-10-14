@@ -230,10 +230,8 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		const { getBaseVersionEtag, setBaseVersionEtag } = useIndexedDbProvider(
-			props,
-			ydoc,
-		)
+		const { dirty, getBaseVersionEtag, setBaseVersionEtag } =
+			useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
@@ -294,6 +292,7 @@ export default defineComponent({
 		return {
 			awareness,
 			connection,
+			dirty,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -322,7 +321,6 @@ export default defineComponent({
 			fileNode: null,
 
 			idle: false,
-			dirty: false,
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
