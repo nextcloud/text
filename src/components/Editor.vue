@@ -887,12 +887,11 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import './../css/style';
-@import './../css/print';
+@use './../css/style';
+@use './../css/print';
+@use './../css/prosemirror';
 
 .text-editor__wrapper {
-	@import './../css/prosemirror';
-
 	// relative position for the alignment of the menububble
 	.text-editor__main {
 		&.draggedOver {
