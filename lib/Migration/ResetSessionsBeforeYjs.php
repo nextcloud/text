@@ -29,7 +29,7 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 	public function run(IOutput $output): void {
 		$appVersion = $this->config->getValueString('text', 'installed_version');
 
-		if (!$appVersion || version_compare($appVersion, '4.0.1') !== -1) {
+		if (!$appVersion || version_compare($appVersion, '5.0.2') !== -1) {
 			return;
 		}
 
