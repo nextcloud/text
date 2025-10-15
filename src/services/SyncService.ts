@@ -173,13 +173,15 @@ class SyncService {
 			console.error('Opened the connection but now it is undefined')
 			return
 		}
-		this.version = data.document.lastSavedVersion
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
 		this.bus.emit('opened', data)
 		// Emit sync after opened, so websocket onmessage comes after onopen.
 		if (data.documentState) {
-			this._emitDocumentStateStep(data.documentState)
+			this._emitDocumentStateStep(
+				data.documentState,
+				data.document.lastSavedVersion,
+			)
 		}
 	}
 
@@ -202,8 +204,8 @@ class SyncService {
 		}
 	}
 
-	_emitDocumentStateStep(documentState: string) {
-		const documentStateStep = documentStateToStep(documentState)
+	_emitDocumentStateStep(documentState: string, version: number) {
+		const documentStateStep = documentStateToStep(documentState, version)
 		this.bus.emit('sync', {
 			steps: [documentStateStep],
 		})
@@ -249,12 +251,13 @@ class SyncService {
 		})
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
-				const { steps, documentState } = response.data as {
+				const { steps, documentState, version } = response.data as {
 					steps: Step[]
 					documentState: string
+					version: number
 				}
 				if (documentState) {
-					this._emitDocumentStateStep(documentState)
+					this._emitDocumentStateStep(documentState, version)
 				}
 				this.pushError = 0
 				this.#sending = false
