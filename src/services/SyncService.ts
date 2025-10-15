@@ -201,7 +201,10 @@ class SyncService {
 		this.bus.emit('loaded', connectionState)
 		// Emit sync after opened, so websocket onmessage comes after onopen.
 		if (connectionState.documentState) {
-			this._emitDocumentStateStep(connectionState.documentState)
+			this._emitDocumentStateStep(
+				connectionState.documentState,
+				connectionState.document.lastSavedVersion,
+			)
 		}
 		return connectionState
 	}
@@ -222,8 +225,8 @@ class SyncService {
 		}
 	}
 
-	_emitDocumentStateStep(documentState: string) {
-		const documentStateStep = documentStateToStep(documentState)
+	_emitDocumentStateStep(documentState: string, version: number) {
+		const documentStateStep = documentStateToStep(documentState, version)
 		this.bus.emit('sync', {
 			steps: [documentStateStep],
 		})
@@ -277,9 +280,13 @@ class SyncService {
 		return this.connection?.push({ ...sendable, version: this.version })
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
-				const { steps, documentState } = response.data
+				const { steps, documentState, version } = response.data as {
+					steps: Step[]
+					documentState: string
+					version: number
+				}
 				if (documentState) {
-					this._emitDocumentStateStep(documentState)
+					this._emitDocumentStateStep(documentState, version)
 				}
 				this.pushError = 0
 				this.sending = false
