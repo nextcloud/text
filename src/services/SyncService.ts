@@ -199,6 +199,10 @@ class SyncService {
 		}
 		this.bus.emit('opened', connectionState)
 		this.bus.emit('loaded', connectionState)
+		// Emit sync after opened, so websocket onmessage comes after onopen.
+		if (connectionState.documentState) {
+			this._emitDocumentStateStep(connectionState.documentState)
+		}
 		return connectionState
 	}
 
@@ -216,6 +220,13 @@ class SyncService {
 		} else {
 			this.bus.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
 		}
+	}
+
+	_emitDocumentStateStep(documentState: string) {
+		const documentStateStep = documentStateToStep(documentState)
+		this.bus.emit('sync', {
+			steps: [documentStateStep],
+		})
 	}
 
 	updateSession(guestName: string) {
@@ -268,10 +279,7 @@ class SyncService {
 				this.#outbox.clearSentData(sendable)
 				const { steps, documentState } = response.data
 				if (documentState) {
-					const documentStateStep = documentStateToStep(documentState)
-					this.bus.emit('sync', {
-						steps: [documentStateStep],
-					})
+					this._emitDocumentStateStep(documentState)
 				}
 				this.pushError = 0
 				this.sending = false
