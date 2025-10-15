@@ -20,7 +20,7 @@ interface PushResponse {
 	data: {
 		steps: Step[]
 		documentState: string
-		awareness: Record<string, string>
+		version: number
 	}
 }
 

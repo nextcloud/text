@@ -265,7 +265,7 @@ class DocumentService {
 
 		return [
 			'steps' => $stepsToReturn,
-			'version' => $newVersion,
+			'version' => isset($documentState) ? $document->getLastSavedVersion() : 0,
 			'documentState' => $documentState
 		];
 	}

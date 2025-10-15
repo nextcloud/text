@@ -26,14 +26,14 @@ describe('Yjs base64 wrapped with our helpers', function () {
 		sourceMap.set('keyA', 'valueA')
 
 		const stateA = getDocumentState(source)
-		const step0A = documentStateToStep(stateA)
+		const step0A = documentStateToStep(stateA, 123)
 		applyStep(target, step0A)
 		expect(targetMap.get('keyA')).to.be.eq('valueA')
 
 		// Add keyB to source, don't apply to target yet
 		sourceMap.set('keyB', 'valueB')
 		const stateB = getDocumentState(source)
-		const step0B = documentStateToStep(stateB)
+		const step0B = documentStateToStep(stateB, 124)
 
 		// Add keyC to source, apply to target
 		sourceMap.set('keyC', 'valueC')
