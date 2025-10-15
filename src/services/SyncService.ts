@@ -177,6 +177,10 @@ class SyncService {
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
 		this.bus.emit('opened', data)
+		// Emit sync after opened, so websocket onmessage comes after onopen.
+		if (data.documentState) {
+			this._emitDocumentStateStep(data.documentState)
+		}
 	}
 
 	startSync() {
@@ -196,6 +200,13 @@ class SyncService {
 				data: error.response,
 			})
 		}
+	}
+
+	_emitDocumentStateStep(documentState: string) {
+		const documentStateStep = documentStateToStep(documentState)
+		this.bus.emit('sync', {
+			steps: [documentStateStep],
+		})
 	}
 
 	sendStep(step: Uint8Array<ArrayBufferLike>) {
@@ -243,10 +254,7 @@ class SyncService {
 					documentState: string
 				}
 				if (documentState) {
-					const documentStateStep = documentStateToStep(documentState)
-					this.bus.emit('sync', {
-						steps: [documentStateStep],
-					})
+					this._emitDocumentStateStep(documentState)
 				}
 				this.pushError = 0
 				this.#sending = false
