@@ -106,7 +106,6 @@ import { CollaborationCursor } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
-import { applyDocumentState } from '../helpers/yjs.ts'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
@@ -516,9 +515,7 @@ export default defineComponent({
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
-				if (documentState) {
-					applyDocumentState(this.ydoc, documentState, this.syncProvider)
-				} else {
+				if (!documentState) {
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
