@@ -25,6 +25,7 @@ export default function initWebSocketPolyfill(syncService: SyncService, fileId: 
 		onopen?: () => void
 		#notifyPushBus
 		#onSync
+		#onOpened
 		#processingVersion = 0
 
 		constructor(url: string) {
@@ -32,6 +33,14 @@ export default function initWebSocketPolyfill(syncService: SyncService, fileId: 
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
 			this.#url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
+
+			this.#onOpened = () => {
+				if (syncService.hasActiveConnection()) {
+					this.onopen?.()
+				}
+			}
+			syncService.bus.on('opened', this.#onOpened)
+
 			this.#onSync = ({ steps }: { steps: Step[] }) => {
 				if (steps) {
 					this.#processSteps(steps)
@@ -41,14 +50,9 @@ export default function initWebSocketPolyfill(syncService: SyncService, fileId: 
 					})
 				}
 			}
-
 			syncService.bus.on('sync', this.#onSync)
 
-			syncService.open({ fileId, initialSession }).then((_data) => {
-				if (syncService.hasActiveConnection()) {
-					this.onopen?.()
-				}
-			})
+			syncService.open({ fileId, initialSession })
 		}
 
 		/**
