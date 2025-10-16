@@ -9,6 +9,14 @@
 		as="div"
 		contenteditable="false">
 		<NodeViewContent />
+		<div class="link-preview-header">
+			<PreviewOptions
+				v-if="isEditable"
+				:href="node.attrs.href"
+				type="link-preview"
+				@toggle="unsetPreview"
+				@delete="deleteNode" />
+		</div>
 		<NcReferenceList
 			:text="node.attrs.href"
 			:limit="1"
@@ -20,22 +28,48 @@
 <script>
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import PreviewOptions from '../components/Editor/PreviewOptions.vue'
 
 export default {
 	name: 'Preview',
+
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,
 		NcReferenceList,
+		PreviewOptions,
 	},
+
 	props: nodeViewProps,
+
+	data() {
+		return {
+			isEditable: false,
+		}
+	},
+
+	beforeMount() {
+		this.isEditable = this.editor.isEditable
+		this.editor.on('update', ({ editor }) => {
+			this.isEditable = editor.isEditable
+		})
+	},
+
+	methods: {
+		unsetPreview() {
+			this.editor
+				.chain()
+				.focus()
+				.setTextSelection(this.getPos() + 1)
+				.unsetPreview()
+				.run()
+		},
+	},
 }
 </script>
 
 <style lang="scss" scoped>
-// Hide the link element inside previews. We cannot hide full node view content
-// as the preview options (prosemirror decorations) are inside it.
-[data-text-el='preview'] [data-node-view-content] :deep(a) {
+[data-text-el='preview'] [data-node-view-content] {
 	display: none;
 }
 
@@ -57,13 +91,14 @@ export default {
 	}
 }
 
-/* Top align with preview image:
- * - unset center alignment
- * - margin-top of widget-default
- */
-:deep(.preview-options-container) {
-	top: unset;
-	transform: unset;
-	margin-top: calc(var(--default-grid-baseline, 4px) * 3) !important;
+// Align in upper right corner of preview image
+.link-preview-header {
+	position: absolute;
+	right: 12px;
+	// margin-top and border of preview a.widget-default container + 8px
+	top: calc((var(--default-grid-baseline, 4px) * 3) + 2px + 10px);
+
+	background-color: var(--color-main-background);
+	z-index: 1;
 }
 </style>
