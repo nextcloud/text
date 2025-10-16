@@ -211,7 +211,6 @@ class DocumentService {
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
 		$documentState = null;
-		$newVersion = $version;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
 			if ($readOnly && $message->isUpdate()) {
@@ -228,7 +227,7 @@ class DocumentService {
 			if ($readOnly) {
 				throw new NotPermittedException('Read-only client tries to push steps with changes');
 			}
-			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
+			$this->insertSteps($document, $session, $stepsToInsert);
 		}
 
 		// By default, send all steps the user has not received yet.
@@ -275,14 +274,12 @@ class DocumentService {
 	 * @param Session $session
 	 * @param Step[] $steps
 	 *
-	 * @return int
-	 *
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
 	 *
 	 * @psalm-param non-empty-list<mixed> $steps
 	 */
-	private function insertSteps(Document $document, Session $session, array $steps): int {
+	private function insertSteps(Document $document, Session $session, array $steps): void {
 		$stepsVersion = null;
 		try {
 			$stepsJson = json_encode($steps, JSON_THROW_ON_ERROR);
@@ -298,7 +295,6 @@ class DocumentService {
 			$this->logger->debug('Adding steps to ' . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			// TODO write steps to cache for quicker reading
-			return $newVersion;
 		} catch (\Throwable $e) {
 			if ($stepsVersion !== null) {
 				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
