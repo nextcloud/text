@@ -21,7 +21,9 @@ describe('Preview Options', function () {
 			'nextcloud.com',
 		)
 		cy.get('[data-text-action-entry="insert-link-input"] button').click()
-		cy.get('.preview-options').click()
+
+		cy.getContent().find(`a[href*="https://nextcloud.com"]`).click()
+		cy.get('.link-options').click()
 	})
 
 	it('should render previewOptions correctly', function () {
