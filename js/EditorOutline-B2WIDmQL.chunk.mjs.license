@@ -402,7 +402,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.0.0
 	- license: MIT
 - slug
-	- version: 11.0.0
+	- version: 11.0.1
 	- license: MIT
 - striptags
 	- version: 3.2.0
