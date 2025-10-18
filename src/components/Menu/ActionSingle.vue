@@ -13,7 +13,7 @@
 		:aria-label="label"
 		:title="tooltip"
 		variant="tertiary"
-		:pressed="state.type !== 'button' ? state.active : undefined"
+		:pressed="actionType !== 'button' ? state.active : undefined"
 		v-on="$listeners"
 		@click="runAction">
 		<template #icon>

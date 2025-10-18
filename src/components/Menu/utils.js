@@ -61,7 +61,7 @@ const getIsActive = ({ isActive }, editor) => {
 	return false
 }
 
-const getType = (actionEntry) => {
+const getActionType = (actionEntry) => {
 	// isActive stores the value changing on active state change (on click)
 
 	// If it is an array, the button is a submenu button.
@@ -92,12 +92,12 @@ const getActionState = (actionEntry, editor) => {
 		disabled: isDisabled(actionEntry, editor),
 		class: getEntryClasses(actionEntry, active),
 		active,
-		type: getType(actionEntry),
 	}
 }
 
 export {
 	getActionState,
+	getActionType,
 	getEntryClasses,
 	getIsActive,
 	getKeys,
