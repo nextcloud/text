@@ -12,7 +12,7 @@
 			:should-show="floatingShow"
 			class="floating-menu"
 			data-cy="assistantMenu">
-			<NcActions :title="t('text', 'Nextcloud Assistant')" :type="'secondary'">
+			<NcActions :title="t('text', 'Nextcloud Assistant')" variant="secondary">
 				<template #icon>
 					<NcAssistantIcon :size="20" class="assistant-icon" />
 				</template>
@@ -330,7 +330,7 @@ export default {
 				closeOnResult: false,
 				actionButtons: [
 					{
-						type: 'primary',
+						variant: 'primary',
 						title: t('text', 'Insert result'),
 						label: t('text', 'Insert result'),
 						onClick: (lastTask) => {
@@ -353,7 +353,7 @@ export default {
 				isInsideViewer: true,
 				actionButtons: [
 					{
-						type: 'primary',
+						variant: 'primary',
 						title: t('text', 'Insert result'),
 						label: t('text', 'Insert result'),
 						onClick: (lastTask) => {

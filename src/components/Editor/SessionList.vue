@@ -13,7 +13,7 @@
 				<NcButton
 					:title="label"
 					:aria-label="label"
-					type="tertiary"
+					variant="tertiary"
 					class="avatar-list"
 					v-bind="attrs">
 					<template #icon>

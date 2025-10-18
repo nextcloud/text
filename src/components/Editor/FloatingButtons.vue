@@ -10,7 +10,7 @@
 		:class="{ heading: isHeadingNode }"
 		:on-node-change="onNodeChange">
 		<NcButton
-			type="tertiary-no-background"
+			variant="tertiary-no-background"
 			size="small"
 			:title="t('text', 'Insert below')"
 			@click="onOpenSmartPicker">
@@ -19,7 +19,7 @@
 			</template>
 		</NcButton>
 		<NcButton
-			type="tertiary-no-background"
+			variant="tertiary-no-background"
 			size="small"
 			class="drag-button"
 			:title="t('text', 'Click for options, hold to drag')">

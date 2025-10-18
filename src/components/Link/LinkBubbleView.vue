@@ -14,7 +14,7 @@
 			<NcButton
 				:title="t('text', 'Open link')"
 				:aria-label="t('text', 'Open link')"
-				type="tertiary"
+				variant="tertiary"
 				@click="openLink(href)">
 				<template #icon>
 					<OpenInNewIcon :size="20" />
@@ -27,7 +27,7 @@
 					v-if="!edit"
 					:title="t('text', 'Edit link')"
 					:aria-label="t('text', 'Edit link')"
-					type="tertiary"
+					variant="tertiary"
 					@click="startEdit">
 					<template #icon>
 						<PencilOutlineIcon :size="20" />
@@ -37,7 +37,7 @@
 					v-else
 					:title="t('text', 'Save changes')"
 					:aria-label="t('text', 'Save changes')"
-					type="tertiary"
+					variant="tertiary"
 					@click="updateLink">
 					<template #icon>
 						<CheckIcon :size="20" />
@@ -56,7 +56,7 @@
 				v-else
 				:title="t('text', 'Cancel')"
 				:aria-label="t('text', 'Cancel')"
-				type="tertiary"
+				variant="tertiary"
 				@click="stopEdit">
 				<template #icon>
 					<CloseIcon :size="20" />

@@ -10,7 +10,7 @@
 			class="save-status"
 			:class="saveStatusClass">
 			<NcButton
-				type="tertiary"
+				variant="tertiary"
 				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
 				<template #icon>

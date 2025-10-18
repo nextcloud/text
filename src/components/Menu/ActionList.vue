@@ -10,7 +10,7 @@
 		v-bind="state"
 		:container="menuIDSelector"
 		:aria-label="labelWithSelected"
-		:type="state.active ? 'primary' : 'tertiary'"
+		:variant="state.active ? 'primary' : 'tertiary'"
 		:force-menu="true"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"

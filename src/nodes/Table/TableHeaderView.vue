@@ -14,7 +14,7 @@
 			<NcActions
 				v-if="isEditable"
 				ref="menu"
-				type="tertiary-no-background"
+				variant="tertiary-no-background"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
 					<NcActionButton

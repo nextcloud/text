@@ -8,7 +8,7 @@
 		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
 			<NcButton
 				ref="linkFileOrFolder"
-				type="secondary"
+				variant="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="linkFile">
@@ -19,7 +19,7 @@
 			</NcButton>
 
 			<NcButton
-				type="secondary"
+				variant="secondary"
 				size="normal"
 				class="suggestions--button"
 				:disabled="isUploadDisabled"
@@ -32,7 +32,7 @@
 			</NcButton>
 
 			<NcButton
-				type="secondary"
+				variant="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="insertTable">
@@ -43,7 +43,7 @@
 			</NcButton>
 
 			<NcButton
-				type="secondary"
+				variant="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="linkPicker">

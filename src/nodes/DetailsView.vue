@@ -5,7 +5,7 @@
 
 <template>
 	<NodeViewWrapper data-text-el="details" class="details" as="div">
-		<NcButton type="tertiary" size="small">
+		<NcButton variant="tertiary" size="small">
 			<template #icon>
 				<TriangleSmallDownIcon
 					:size="20"

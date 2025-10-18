@@ -11,7 +11,7 @@
 		<header class="editor--outline__header">
 			<NcButton
 				class="editor--outline__btn-close"
-				type="tertiary"
+				variant="tertiary"
 				:aria-label="t('text', 'Close outline view')"
 				@click="$outlineActions.toggle">
 				<template #icon>
