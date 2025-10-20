@@ -31,6 +31,9 @@ export const addMenuRichWorkspace = () => {
 		displayName: t('text', 'Add folder description'),
 		category: NewMenuEntryCategory.Other,
 		enabled(context) {
+			if (!window?.OCA?.Text?.RichWorkspaceEnabled) {
+				return false
+			}
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
 			}
