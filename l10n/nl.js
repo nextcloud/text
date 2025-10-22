@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Alleen tekst",
     "Show link preview" : "Toon link voorbeeld",
     "Open in new tab" : "Open in nieuwe tab",
+    "Copy link" : "Link kopiëren",
     "Remove link" : "Link verwijderen",
     "Active people" : "Actieve personen",
     "guest" : "gast",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Opnieuw doen",
     "Toggle outline" : "Omschakelen overzicht",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Kopiëren niet mogelijk, kopieer de link handmatig",
-    "Copy link to clipboard" : "Kopieer link naar klembord",
     "Open link" : "Open link",
     "Edit link" : "Bewerk link",
     "Save changes" : "Wijzigingen opslaan",
@@ -223,6 +222,8 @@ OC.L10N.register(
     "Front matter" : "Voorwerk",
     "Link to this section" : "Link naar dit gedeelte",
     "Edit guest name" : "Bewerk gast naam",
-    "Save guest name" : "Bewaar gast naam"
+    "Save guest name" : "Bewaar gast naam",
+    "Cannot copy, please copy the link manually" : "Kopiëren niet mogelijk, kopieer de link handmatig",
+    "Copy link to clipboard" : "Kopieer link naar klembord"
 },
 "nplurals=2; plural=(n != 1);");

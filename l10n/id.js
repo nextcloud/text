@@ -19,6 +19,7 @@ OC.L10N.register(
     "Guest" : "Tamu",
     "you" : "Anda",
     "edit" : "ubah",
+    "Copy link" : "Salin tautan",
     "guest" : "pengunjung",
     "Saving …" : "Menyimpan ...",
     "Saved" : "Disimpan",

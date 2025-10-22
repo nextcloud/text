@@ -35,6 +35,7 @@ OC.L10N.register(
     "you" : "vi",
     "edit" : "uredi",
     "Insert an attachment" : "Vstavi prilogo",
+    "Copy link" : "Kopiraj povezavo",
     "Remove link" : "Odstrani povezavo",
     "Active people" : "Dejavni posamezniki",
     "guest" : "gost",
@@ -89,8 +90,6 @@ OC.L10N.register(
     "Undo" : "Razveljavi",
     "Redo" : "Ponovi",
     "Alt" : "ALT",
-    "Cannot copy, please copy the link manually" : "Povezave ni mogoče kopirati. Storite to ročno.",
-    "Copy link to clipboard" : "Kopiraj povezavo v odložišče",
     "Save changes" : "Shrani spremembe",
     "Cancel" : "Prekliči",
     "URL" : "Naslov URL",
@@ -157,6 +156,8 @@ OC.L10N.register(
     "Front matter" : "Uvodne strani",
     "Link to this section" : "Poveži s tem odsekom",
     "Edit guest name" : "Uredi ime gosta",
-    "Save guest name" : "Shrani ime gosta"
+    "Save guest name" : "Shrani ime gosta",
+    "Cannot copy, please copy the link manually" : "Povezave ni mogoče kopirati. Storite to ročno.",
+    "Copy link to clipboard" : "Kopiraj povezavo v odložišče"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

@@ -22,6 +22,7 @@ OC.L10N.register(
     "Guest" : "Convidat",
     "you" : "vos",
     "Insert an attachment" : "Inserir una pèça junta",
+    "Copy link" : "Copiar lo ligam",
     "guest" : "convidat",
     "Offline" : "Fòra linha",
     "Saving …" : "Enregistrament...",

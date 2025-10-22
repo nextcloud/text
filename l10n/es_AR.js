@@ -18,6 +18,7 @@ OC.L10N.register(
     "Guest" : "Invitado",
     "you" : "usted",
     "edit" : "editar",
+    "Copy link" : "Copiar link",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Keyboard shortcuts" : "Atajos de teclado",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "name" : "nombre",
     "Action" : "Acción",
     "Undo" : "Deshacer",
-    "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente",
     "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Ayuda de formato",
@@ -40,6 +40,7 @@ OC.L10N.register(
     "Table" : "Tabla",
     "Details" : "Detalles",
     "Choose" : "Elige",
-    "Add folder description" : "Agregar una descripción a la carpeta"
+    "Add folder description" : "Agregar una descripción a la carpeta",
+    "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

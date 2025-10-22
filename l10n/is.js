@@ -49,6 +49,7 @@ OC.L10N.register(
     "Preview options" : "Valkostir forskoðunar",
     "Text only" : "Einungis texti",
     "Show link preview" : "Birta forskoðun tengils",
+    "Copy link" : "Afrita tengil",
     "Remove link" : "Fjarlægja tengil",
     "Active people" : "Virkt fólk",
     "guest" : "gestanotandi",
@@ -109,8 +110,6 @@ OC.L10N.register(
     "Redo" : "Endurtaka",
     "Toggle outline" : "Víxla efnisskipan af/á",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Mistókst að afrita, afritaðu tengilinn handvirkt",
-    "Copy link to clipboard" : "Afrita tengil á klippispjald",
     "Open link" : "Opna tengil",
     "Edit link" : "Breyta tengli",
     "Save changes" : "Vista breytingar",
@@ -208,6 +207,8 @@ OC.L10N.register(
     "Front matter" : "Forsíðuefni",
     "Link to this section" : "Tengja í þennan hluta",
     "Edit guest name" : "Breyta nafni gests",
-    "Save guest name" : "Vista nafn gests"
+    "Save guest name" : "Vista nafn gests",
+    "Cannot copy, please copy the link manually" : "Mistókst að afrita, afritaðu tengilinn handvirkt",
+    "Copy link to clipboard" : "Afrita tengil á klippispjald"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

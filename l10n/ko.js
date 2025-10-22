@@ -54,6 +54,7 @@ OC.L10N.register(
     "Text only" : "텍스트만",
     "Show link preview" : "링크 미리 보기 표시",
     "Open in new tab" : "새 탭으로 열기",
+    "Copy link" : "링크 주소 복사",
     "Remove link" : "링크 제거",
     "Active people" : "활동 중인 사용자",
     "guest" : "손님",
@@ -114,8 +115,6 @@ OC.L10N.register(
     "Redo" : "다시 실행",
     "Toggle outline" : "외곽선 켜고 끄기",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "복사할 수 없습니다, 링크를 수동으로 복사하세요.",
-    "Copy link to clipboard" : "링크를 클립보드에 복사",
     "Edit link" : "링크 수정",
     "Save changes" : "설정 저장",
     "Cancel" : "취소",
@@ -212,6 +211,8 @@ OC.L10N.register(
     "Front matter" : "머리말",
     "Link to this section" : "이 부분으로 링크",
     "Edit guest name" : "손님 이름 편집하기",
-    "Save guest name" : "손님 이름 저장하기"
+    "Save guest name" : "손님 이름 저장하기",
+    "Cannot copy, please copy the link manually" : "복사할 수 없습니다, 링크를 수동으로 복사하세요.",
+    "Copy link to clipboard" : "링크를 클립보드에 복사"
 },
 "nplurals=1; plural=0;");

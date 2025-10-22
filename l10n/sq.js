@@ -15,6 +15,7 @@ OC.L10N.register(
     "Guest" : "I ftuar",
     "you" : "ju",
     "edit" : "redakto",
+    "Copy link" : "Kopjoje lidhjen",
     "guest" : "vizitor",
     "Offline" : "Jashtë linje",
     "Saved" : "Ruajtur",

@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Yalnızca yazı",
     "Show link preview" : "Bağlantı ön izlemesini görüntüle",
     "Open in new tab" : "Yeni sekmede aç",
+    "Copy link" : "Bağlantıyı kopyala",
     "Remove link" : "Bağlantıyı kaldır",
     "Active people" : "Etkin kişiler",
     "guest" : "konuk",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Yinele",
     "Toggle outline" : "Özeti aç/kapat",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Kopyalanamadı. Lütfen bağlantıyı el ile kopyalayın",
-    "Copy link to clipboard" : "Bağlantıyı panoya kopyala",
     "Open link" : "Bağlantıyı aç",
     "Edit link" : "Bağlantıyı düzenle",
     "Save changes" : "Değişiklikleri kaydet",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Açılış bölümleri ",
     "Link to this section" : "Bu bölüm bağlantısı",
     "Edit guest name" : "Konuk adını düzenle",
-    "Save guest name" : "Konuk adını kaydet"
+    "Save guest name" : "Konuk adını kaydet",
+    "Cannot copy, please copy the link manually" : "Kopyalanamadı. Lütfen bağlantıyı el ile kopyalayın",
+    "Copy link to clipboard" : "Bağlantıyı panoya kopyala"
 },
 "nplurals=2; plural=(n > 1);");

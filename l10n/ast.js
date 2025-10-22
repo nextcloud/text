@@ -85,8 +85,6 @@ OC.L10N.register(
     "Action" : "Aición",
     "Undo" : "Desfacer",
     "Redo" : "Refacer",
-    "Cannot copy, please copy the link manually" : "Nun se pue copiar. Copia l'enllaz manualmente",
-    "Copy link to clipboard" : "Copiar l'enllaz nel cartafueyu",
     "Edit link" : "Editar l'enllaz",
     "Save changes" : "Guardar los cambeos",
     "Cancel" : "Encaboxar",
@@ -146,6 +144,8 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copióse nel cartafueyu",
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
     "Edit guest name" : "Editar el nome de convidáu",
-    "Save guest name" : "Guardar el nome de convidáu"
+    "Save guest name" : "Guardar el nome de convidáu",
+    "Cannot copy, please copy the link manually" : "Nun se pue copiar. Copia l'enllaz manualmente",
+    "Copy link to clipboard" : "Copiar l'enllaz nel cartafueyu"
 },
 "nplurals=2; plural=(n != 1);");

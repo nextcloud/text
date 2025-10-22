@@ -26,6 +26,7 @@ OC.L10N.register(
     "Guest" : "Gost",
     "you" : "vi",
     "edit" : "uredi",
+    "Copy link" : "Kopiraj poveznicu",
     "guest" : "gost",
     "Offline" : "Izvanmrežno",
     "Saving …" : "Spremanje…",
@@ -50,8 +51,6 @@ OC.L10N.register(
     "Action" : "Radnja",
     "Undo" : "Poništi",
     "Redo" : "Ponovno",
-    "Cannot copy, please copy the link manually" : "Kopiranje nije moguće, ručno kopirajte poveznicu",
-    "Copy link to clipboard" : "Kopiraj poveznicu u međuspremnik",
     "Save changes" : "Spremi promjene",
     "Cancel" : "Odustani",
     "URL" : "URL",
@@ -75,6 +74,8 @@ OC.L10N.register(
     "Formatting" : "Oblikovanje",
     "Choose" : "Odaberite",
     "Edit guest name" : "Uredi ime gosta",
-    "Save guest name" : "Spremi ime gosta"
+    "Save guest name" : "Spremi ime gosta",
+    "Cannot copy, please copy the link manually" : "Kopiranje nije moguće, ručno kopirajte poveznicu",
+    "Copy link to clipboard" : "Kopiraj poveznicu u međuspremnik"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

@@ -51,8 +51,6 @@ OC.L10N.register(
     "Action" : "Atzione",
     "Undo" : "Iscontza",
     "Redo" : "Torra a fàghere",
-    "Cannot copy, please copy the link manually" : "No at fatu a copiare, copia su ligòngiu a manu",
-    "Copy link to clipboard" : "Còpia su ligòngiu in punta de billete",
     "Save changes" : "Sarva càmbios",
     "Cancel" : "Annulla",
     "URL" : "URL",
@@ -78,6 +76,8 @@ OC.L10N.register(
     "Choose {file}" : "Sèbera {file}",
     "Add folder description" : "Agiunghe una descritzione de sa cartella",
     "Edit guest name" : "Modìfica nùmene de sa persone invitada",
-    "Save guest name" : "Sarva nùmene de sa persone invitada"
+    "Save guest name" : "Sarva nùmene de sa persone invitada",
+    "Cannot copy, please copy the link manually" : "No at fatu a copiare, copia su ligòngiu a manu",
+    "Copy link to clipboard" : "Còpia su ligòngiu in punta de billete"
 },
 "nplurals=2; plural=(n != 1);");

@@ -20,6 +20,7 @@ OC.L10N.register(
     "Guest" : "Gasto",
     "you" : "vi",
     "edit" : "modifi",
+    "Copy link" : "Kopii ligilon",
     "guest" : "gasto",
     "Saving …" : "Konservado...",
     "Saved" : "Konservita",
@@ -38,7 +39,6 @@ OC.L10N.register(
     "Link" : "Ligilo",
     "Undo" : "Malfari",
     "Redo" : "Refari",
-    "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane.",
     "Save changes" : "Konservi ŝanĝojn",
     "Cancel" : "Cancel",
     "URL" : "Retadreso",
@@ -58,6 +58,7 @@ OC.L10N.register(
     "Choose" : "Elekti",
     "Choose {file}" : "Elekti {file}",
     "Edit guest name" : "Modifi la gastonomon",
-    "Save guest name" : "Koservi la gastonomon"
+    "Save guest name" : "Koservi la gastonomon",
+    "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane."
 },
 "nplurals=2; plural=(n != 1);");

@@ -41,6 +41,7 @@ OC.L10N.register(
     "you" : "شما",
     "edit" : "ویرایش کردن",
     "Insert an attachment" : "Insert an attachment",
+    "Copy link" : "کپی کردن لینک",
     "Remove link" : "حذف پیوند",
     "Active people" : "Active people",
     "guest" : "میهمان",
@@ -95,8 +96,6 @@ OC.L10N.register(
     "Action" : "عمل",
     "Undo" : "برگرداندن",
     "Redo" : "Redo",
-    "Cannot copy, please copy the link manually" : "کپی کردن امکان پذیر نیست ، لطفا پیوند را به صورت دستی کپی کنید",
-    "Copy link to clipboard" : "Copy link to clipboard",
     "Edit link" : "Edit link",
     "Save changes" : "ذخیرهٔ تغییرات",
     "Cancel" : "منصرف شدن",
@@ -172,6 +171,8 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
     "Edit guest name" : "ویرایش نام مهمان",
-    "Save guest name" : "ذخیره نام مهمان"
+    "Save guest name" : "ذخیره نام مهمان",
+    "Cannot copy, please copy the link manually" : "کپی کردن امکان پذیر نیست ، لطفا پیوند را به صورت دستی کپی کنید",
+    "Copy link to clipboard" : "Copy link to clipboard"
 },
 "nplurals=2; plural=(n > 1);");

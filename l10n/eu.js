@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Testua soilik",
     "Show link preview" : "Erakutsi esteka aurreikuspenak",
     "Open in new tab" : "Ireki fitxa berrian",
+    "Copy link" : "Kopiatu esteka",
     "Remove link" : "Kendu esteka",
     "Active people" : "Pertsona aktiboak",
     "guest" : "gonbidatua",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Berregin",
     "Toggle outline" : "Txandakatu eskema",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Ezin izan da kopiatu. Kopiatu esteka eskuz",
-    "Copy link to clipboard" : "Kopiatu esteka arbelera",
     "Open link" : "Ireki esteka",
     "Edit link" : "Editatu esteka",
     "Save changes" : "Gorde aldaketak",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Aurreko gaia",
     "Link to this section" : "Estekatu atal honetara",
     "Edit guest name" : "Editatu gonbidatuaren izena",
-    "Save guest name" : "Gorde gonbidatuaren izena"
+    "Save guest name" : "Gorde gonbidatuaren izena",
+    "Cannot copy, please copy the link manually" : "Ezin izan da kopiatu. Kopiatu esteka eskuz",
+    "Copy link to clipboard" : "Kopiatu esteka arbelera"
 },
 "nplurals=2; plural=(n != 1);");

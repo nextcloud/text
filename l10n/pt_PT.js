@@ -22,6 +22,7 @@ OC.L10N.register(
     "submit" : "submeter",
     "you" : "Você",
     "edit" : "editar",
+    "Copy link" : "Copiar hiperligação",
     "guest" : "convidado",
     "Offline" : "Offline",
     "Saving …" : "A guardar...",
@@ -41,7 +42,6 @@ OC.L10N.register(
     "name" : "nome",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",
-    "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente",
     "Save changes" : "Save changes",
     "Cancel" : "Cancelar",
     "URL" : "URL",
@@ -63,6 +63,7 @@ OC.L10N.register(
     "Choose {file}" : "Escolher {file}",
     "Add folder description" : "Adicionar descrição da pasta",
     "Edit guest name" : "Inserir o nome do convidado",
-    "Save guest name" : "Guardar o nome do convidado"
+    "Save guest name" : "Guardar o nome do convidado",
+    "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

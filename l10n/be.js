@@ -121,8 +121,6 @@ OC.L10N.register(
     "Redo" : "Узнавіць",
     "Toggle outline" : "Пераключыць структуру",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Немагчыма скапіяваць, скапіюйце спасылку ўручную",
-    "Copy link to clipboard" : "Скапіяваць спасылку ў буфер абмену",
     "Open link" : "Адкрыць спасылку",
     "Edit link" : "Рэдагаваць спасылку",
     "Save changes" : "Захаваць змены",
@@ -225,6 +223,8 @@ OC.L10N.register(
     "Front matter" : "Уступная частка",
     "Link to this section" : "Спасылка на гэты раздзел",
     "Edit guest name" : "Рэдагаваць імя госця",
-    "Save guest name" : "Захаваць імя госця"
+    "Save guest name" : "Захаваць імя госця",
+    "Cannot copy, please copy the link manually" : "Немагчыма скапіяваць, скапіюйце спасылку ўручную",
+    "Copy link to clipboard" : "Скапіяваць спасылку ў буфер абмену"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
