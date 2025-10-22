@@ -79,6 +79,7 @@ export default {
 
 :deep(div.widgets--list a.widget-default) {
 	color: var(--color-main-text);
+	margin: 0;
 	padding: 0;
 	text-decoration: none;
 	max-width: calc(100vw - 156px);
