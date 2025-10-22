@@ -14,13 +14,7 @@
 			<EditorOutline />
 		</div>
 		<slot />
-		<DragHandle :editor="editor" class="drag-handle--button">
-			<NcButton type="tertiary-no-background" size="normal">
-				<template #icon>
-					<DragVerticalIcon :size="20" />
-				</template>
-			</NcButton>
-		</DragHandle>
+		<FloatingButtons v-if="!isMobile && !isFullWidth" />
 		<EditorContent
 			role="document"
 			class="editor__content text-editor__content"
@@ -30,12 +24,12 @@
 </template>
 
 <script>
-import NcButton from '@nextcloud/vue/components/NcButton'
-import { DragHandle } from '@tiptap/extension-drag-handle-vue-2'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
-import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorWidth } from '../../composables/useEditorWidth.ts'
 import EditorOutline from './EditorOutline.vue'
+import FloatingButtons from './FloatingButtons.vue'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
 
 export default {
@@ -43,14 +37,14 @@ export default {
 	components: {
 		EditorContent,
 		EditorOutline,
-		NcButton,
-		DragHandle,
-		DragVerticalIcon,
+		FloatingButtons,
 	},
 	mixins: [useOutlineStateMixin],
 	setup() {
+		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		return { editor }
+		const { isFullWidth } = useEditorWidth()
+		return { editor, isMobile, isFullWidth }
 	},
 	computed: {
 		showOutline() {
@@ -69,12 +63,6 @@ export default {
 	:deep([contenteditable]) {
 		// drop off obsolete server styles
 		margin: 0 !important;
-	}
-}
-
-.ie {
-	.editor__content:deep(.ProseMirror) {
-		padding-top: 50px;
 	}
 }
 
@@ -103,13 +91,5 @@ export default {
 			display: none;
 		}
 	}
-}
-
-.drag-handle--button {
-	color: var(--color-maxcontrast);
-	position: absolute;
-	left: -60px;
-	transform: translate(0, -20%);
-	padding-right: 24px;
 }
 </style>
