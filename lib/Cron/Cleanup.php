@@ -42,11 +42,6 @@ class Cleanup extends TimedJob {
 				// Inactive sessions will get removed further down and will trigger a reset next time
 				continue;
 			}
-
-			try {
-				$this->documentService->resetDocument($document->getId());
-			} catch (DocumentHasUnsavedChangesException) {
-			}
 			$this->attachmentService->cleanupAttachments($document->getId());
 		}
 
