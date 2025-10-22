@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "僅文字",
     "Show link preview" : "顯示連結預覽",
     "Open in new tab" : "以新分頁打開",
+    "Copy link" : "複製連結",
     "Remove link" : "移除連結",
     "Active people" : "活躍的人",
     "guest" : "訪客",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "重作",
     "Toggle outline" : "切換大綱",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "無法複製，請手動複製連結",
-    "Copy link to clipboard" : "複製連結到剪貼板",
     "Open link" : "打開連結",
     "Edit link" : "編輯連結",
     "Save changes" : "保存更改",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "前言",
     "Link to this section" : "連結到本節",
     "Edit guest name" : "編輯訪客名稱",
-    "Save guest name" : "儲存訪客名稱"
+    "Save guest name" : "儲存訪客名稱",
+    "Cannot copy, please copy the link manually" : "無法複製，請手動複製連結",
+    "Copy link to clipboard" : "複製連結到剪貼板"
 },
 "nplurals=1; plural=0;");

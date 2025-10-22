@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Ainult tekst",
     "Show link preview" : "Näita lingi eelvaadet",
     "Open in new tab" : "Ava uuel vahekaardil",
+    "Copy link" : "Kopeeri link",
     "Remove link" : "Eemalda link",
     "Active people" : "Aktiivsed osalejad",
     "guest" : "külaline",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Tee uuesti",
     "Toggle outline" : "Lülita struktuuri vaade sisse/välja",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Ei saa kopeerida, palun kopeeri link käsitsi",
-    "Copy link to clipboard" : "Kopeeri link lõikelauale",
     "Open link" : "Ava link",
     "Edit link" : "Muuda linki",
     "Save changes" : "Salvesta muudatused",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Kokkuvõte",
     "Link to this section" : "Lisa link sellele lõigule",
     "Edit guest name" : "Muuda külalise nime",
-    "Save guest name" : "Salvesta külalise nimi"
+    "Save guest name" : "Salvesta külalise nimi",
+    "Cannot copy, please copy the link manually" : "Ei saa kopeerida, palun kopeeri link käsitsi",
+    "Copy link to clipboard" : "Kopeeri link lõikelauale"
 },
 "nplurals=2; plural=(n != 1);");

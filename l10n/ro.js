@@ -18,6 +18,7 @@ OC.L10N.register(
     "Guest" : "Invitat",
     "you" : "tu",
     "edit" : "editare",
+    "Copy link" : "Copiază link",
     "Remove link" : "Șterge link-ul",
     "guest" : "invitat",
     "Offline" : "Offline",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Link" : "Legătură",
     "Undo" : "Anulează ultima acțiune",
     "Redo" : "Repetă",
-    "Cannot copy, please copy the link manually" : "Nu s-a putut copia, vă rugăm să copiați link-ul manual",
     "Edit link" : "Editare link",
     "Cancel" : "Anulare",
     "URL" : "URL",
@@ -46,6 +46,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
     "Choose" : "Alege",
     "Choose {file}" : "Selectați {file}",
-    "Add folder description" : "Adăugați descrierea directorului"
+    "Add folder description" : "Adăugați descrierea directorului",
+    "Cannot copy, please copy the link manually" : "Nu s-a putut copia, vă rugăm să copiați link-ul manual"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

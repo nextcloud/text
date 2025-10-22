@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "PHP֊ի ընդլայնումն կանգնեցրեց նիշքի վերբեռնումը",
     "File not found" : "Նիշքը չգտնվեց",
     "Translate" : "Թարգմանել",
+    "Copy link" : "Պատճենել հղումը",
     "guest" : "հյուր",
     "Saved" : "Պահված",
     "Link" : "Հղում",

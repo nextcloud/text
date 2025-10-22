@@ -32,6 +32,7 @@ OC.L10N.register(
     "you" : "ти",
     "edit" : "уреди",
     "Insert an attachment" : "Вметни прилог",
+    "Copy link" : "Копирај линк",
     "Active people" : "Активни луѓе",
     "guest" : "гостин",
     "Offline" : "Исклучен",
@@ -67,7 +68,6 @@ OC.L10N.register(
     "Undo" : "Назад",
     "Redo" : "Напред",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Неможе да се копира, копирајте го линкот рачно",
     "Open link" : "Отвори линк",
     "Save changes" : "Зачувај ги промените",
     "Cancel" : "Откажи",
@@ -107,6 +107,7 @@ OC.L10N.register(
     "Choose {file}" : "Избери {file}",
     "Add folder description" : "Додади опис на папката",
     "Edit guest name" : "Промени име на гостин",
-    "Save guest name" : "Зачувај име на гостин"
+    "Save guest name" : "Зачувај име на гостин",
+    "Cannot copy, please copy the link manually" : "Неможе да се копира, копирајте го линкот рачно"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

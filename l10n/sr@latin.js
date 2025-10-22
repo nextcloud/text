@@ -14,6 +14,7 @@ OC.L10N.register(
     "Reload" : "Ponovo učitaj",
     "Guest" : "Gost",
     "edit" : "izmeni",
+    "Copy link" : "Kopiraj vezu",
     "guest" : "gost",
     "Offline" : "Van mreže",
     "Bold" : "Podebljano",

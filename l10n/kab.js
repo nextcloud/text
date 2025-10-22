@@ -12,6 +12,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Amallal n Nextcloud",
     "Translate" : "Suqel",
     "Guest" : "Inebgi",
+    "Copy link" : "Nɣel aseɣwen",
     "Offline" : "D aruqqin",
     "Saving …" : "Asekles ...",
     "Keyboard shortcuts" : "Inegzumen n unasiw",

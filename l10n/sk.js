@@ -56,6 +56,7 @@ OC.L10N.register(
     "Text only" : "Iba text",
     "Show link preview" : "Zobraziť náhľad odkazu",
     "Open in new tab" : "Otvoriť na novej karte",
+    "Copy link" : "Kopírovať odkaz",
     "Remove link" : "Odstrániť odkaz",
     "Active people" : "Aktívni ľudia",
     "guest" : "hosť",
@@ -116,8 +117,6 @@ OC.L10N.register(
     "Redo" : "Obnoviť",
     "Toggle outline" : "Prepnúť prehľad",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Nedarí sa skopírovať, skopírujte prosím ručne.",
-    "Copy link to clipboard" : "Skopírovať odkaz do schránky",
     "Open link" : "Otvoriť odkaz",
     "Edit link" : "Upraviť odkaz",
     "Save changes" : "Uložiť zmeny",
@@ -217,6 +216,8 @@ OC.L10N.register(
     "Front matter" : "Predná strana",
     "Link to this section" : "Odkaz na túto sekciu",
     "Edit guest name" : "Upraviť meno hosťa",
-    "Save guest name" : "Uložiť meno hosťa"
+    "Save guest name" : "Uložiť meno hosťa",
+    "Cannot copy, please copy the link manually" : "Nedarí sa skopírovať, skopírujte prosím ručne.",
+    "Copy link to clipboard" : "Skopírovať odkaz do schránky"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

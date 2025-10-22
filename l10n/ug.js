@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "ئالدىن تاللاش تاللانمىلىرى",
     "Text only" : "پەقەت تېكىست",
     "Show link preview" : "ئۇلىنىش ئالدىن كۆرۈش",
+    "Copy link" : "ئۇلانمىنى كۆچۈرۈڭ",
     "Remove link" : "ئۇلىنىشنى ئۆچۈرۈڭ",
     "Active people" : "ئاكتىپ كىشىلەر",
     "guest" : "مېھمان",
@@ -108,8 +109,6 @@ OC.L10N.register(
     "Redo" : "Redo",
     "Toggle outline" : "Toggle outline",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "كۆچۈرگىلى بولمايدۇ ، ئۇلىنىشنى قولدا كۆچۈرۈڭ",
-    "Copy link to clipboard" : "ئۇلىنىشنى چاپلاش تاختىسىغا كۆچۈرۈڭ",
     "Open link" : "ئۇلانمىنى ئېچىڭ",
     "Edit link" : "ئۇلىنىشنى تەھرىرلەڭ",
     "Save changes" : "ئۆزگەرتىشلەرنى ساقلاڭ",
@@ -203,6 +202,8 @@ OC.L10N.register(
     "Front matter" : "ئالدى مەسىلە",
     "Link to this section" : "بۇ بۆلەككە ئۇلىنىش",
     "Edit guest name" : "مېھمان نامىنى تەھرىرلەڭ",
-    "Save guest name" : "مېھمان نامىنى ساقلاڭ"
+    "Save guest name" : "مېھمان نامىنى ساقلاڭ",
+    "Cannot copy, please copy the link manually" : "كۆچۈرگىلى بولمايدۇ ، ئۇلىنىشنى قولدا كۆچۈرۈڭ",
+    "Copy link to clipboard" : "ئۇلىنىشنى چاپلاش تاختىسىغا كۆچۈرۈڭ"
 },
 "nplurals=2; plural=(n != 1);");

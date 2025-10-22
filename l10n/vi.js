@@ -37,6 +37,7 @@ OC.L10N.register(
     "Guest" : "Khách",
     "edit" : "chỉnh sửa",
     "Insert an attachment" : "Chèn phần đính kèm",
+    "Copy link" : "Sao chép liên kết",
     "Active people" : "Những người đang hoạt động",
     "guest" : "khách",
     "Offline" : "Ngoại tuyến",
@@ -68,7 +69,6 @@ OC.L10N.register(
     "Action" : "Hành động",
     "Undo" : "Hoàn tác",
     "Redo" : "Làm lại",
-    "Cannot copy, please copy the link manually" : "Không thể sao chép, vui lòng sao chép liên kết bằng tay",
     "Open link" : "Mở liên kết",
     "Save changes" : "Lưu thay đổi",
     "Cancel" : "Hủy",
@@ -96,6 +96,7 @@ OC.L10N.register(
     "Choose" : "Chọn",
     "Choose {file}" : "Chọn {file}",
     "Edit guest name" : "Chỉnh sửa tên khách",
-    "Save guest name" : "Lưu tên khách"
+    "Save guest name" : "Lưu tên khách",
+    "Cannot copy, please copy the link manually" : "Không thể sao chép, vui lòng sao chép liên kết bằng tay"
 },
 "nplurals=1; plural=0;");

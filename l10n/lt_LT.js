@@ -36,6 +36,7 @@ OC.L10N.register(
     "Insert an attachment" : "Įterpti priedą",
     "Preview options" : "Peržiūros parinktys",
     "Open in new tab" : "Atverti naujoje kortelėje",
+    "Copy link" : "Kopijuoti nuorodą",
     "Remove link" : "Šalinti nuorodą",
     "guest" : "svečias",
     "Offline" : "Atsijungęs",
@@ -79,8 +80,6 @@ OC.L10N.register(
     "Undo" : "Atšaukti",
     "Redo" : "Grąžinti",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Nepavyksta nukopijuoti, nukopijuokite nuorodą rankiniu būdu",
-    "Copy link to clipboard" : "Kopijuoti nuorodą į iškarpinę",
     "Open link" : "Atverti nuorodą",
     "Edit link" : "Taisyti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
@@ -139,6 +138,8 @@ OC.L10N.register(
     "Copied to the clipboard" : "Nukopijuota į iškarpinę",
     "Could not copy to the clipboard" : "Nepavyko nukopijuoti į iškarpinę",
     "Edit guest name" : "Taisyti svečio vardą",
-    "Save guest name" : "Įrašyti svečio vardą"
+    "Save guest name" : "Įrašyti svečio vardą",
+    "Cannot copy, please copy the link manually" : "Nepavyksta nukopijuoti, nukopijuokite nuorodą rankiniu būdu",
+    "Copy link to clipboard" : "Kopijuoti nuorodą į iškarpinę"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "仅文字",
     "Show link preview" : "显示链接预览",
     "Open in new tab" : "在新标签页中打开",
+    "Copy link" : "复制链接",
     "Remove link" : "删除链接",
     "Active people" : "活动用户",
     "guest" : "访客",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "重做",
     "Toggle outline" : "切换大纲",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "无法复制，请手动复制链接",
-    "Copy link to clipboard" : "复制链接到剪贴板",
     "Open link" : "打开链接",
     "Edit link" : "编辑链接",
     "Save changes" : "保存更改",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "前言",
     "Link to this section" : "链接至本节",
     "Edit guest name" : "编辑访客姓名",
-    "Save guest name" : "保存访客姓名"
+    "Save guest name" : "保存访客姓名",
+    "Cannot copy, please copy the link manually" : "无法复制，请手动复制链接",
+    "Copy link to clipboard" : "复制链接到剪贴板"
 },
 "nplurals=1; plural=0;");

@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Téacs amháin",
     "Show link preview" : "Taispeáin réamhamharc ar an nasc",
     "Open in new tab" : "Oscail i gcluaisín nua",
+    "Copy link" : "Cóipeáil an nasc",
     "Remove link" : "Bain nasc",
     "Active people" : "Daoine gníomhacha",
     "guest" : "aoi",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Athdhéan",
     "Toggle outline" : "Scoránaigh imlíne",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Ní féidir cóip a dhéanamh, cóipeáil an nasc de láimh le do thoil",
-    "Copy link to clipboard" : "Cóipeáil an nasc chuig an ngearrthaisce",
     "Open link" : "Oscail nasc",
     "Edit link" : "Cuir nasc in eagar",
     "Save changes" : "Sabháil na hathruithe",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Ábhar tosaigh",
     "Link to this section" : "Nasc leis an alt seo",
     "Edit guest name" : "Cuir ainm an aoi in eagar",
-    "Save guest name" : "Sábháil ainm aoi"
+    "Save guest name" : "Sábháil ainm aoi",
+    "Cannot copy, please copy the link manually" : "Ní féidir cóip a dhéanamh, cóipeáil an nasc de láimh le do thoil",
+    "Copy link to clipboard" : "Cóipeáil an nasc chuig an ngearrthaisce"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

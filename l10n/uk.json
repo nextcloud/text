@@ -59,6 +59,7 @@
     "Text only" : "Лише текст",
     "Show link preview" : "Посилання попереднього перегляду",
     "Open in new tab" : "Відкрити у новій вкладці",
+    "Copy link" : "Копіювати посилання",
     "Remove link" : "Вилучити посилання",
     "Active people" : "Зараз редагують",
     "guest" : "гість",
@@ -119,8 +120,6 @@
     "Redo" : "Повторити",
     "Toggle outline" : "Перемкнути подання",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Неможливо скопіювати, скопіюйте посилання вручну",
-    "Copy link to clipboard" : "Копіювати посилання",
     "Open link" : "Відкрити посилання",
     "Edit link" : "Редагувати ярлик",
     "Save changes" : "Зберегти зміни",
@@ -223,6 +222,8 @@
     "Front matter" : "Передня справа",
     "Link to this section" : "Посилання на цей розділ",
     "Edit guest name" : "Редагувати ім'я гостя",
-    "Save guest name" : "Зберегти ім'я гостя"
+    "Save guest name" : "Зберегти ім'я гостя",
+    "Cannot copy, please copy the link manually" : "Неможливо скопіювати, скопіюйте посилання вручну",
+    "Copy link to clipboard" : "Копіювати посилання"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }
