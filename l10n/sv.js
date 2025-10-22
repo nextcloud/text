@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Endast text",
     "Show link preview" : "Visa förhandsgranskning för länk",
     "Open in new tab" : "Öppna i ny flik",
+    "Copy link" : "Kopiera länk",
     "Remove link" : "Ta bort länk",
     "Active people" : "Aktiva användare",
     "guest" : "gäst",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Gör om",
     "Toggle outline" : "Visa/dölj översikt",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Kan inte kopiera, länken måste kopieras manuellt",
-    "Copy link to clipboard" : "Kopiera länken till urklipp",
     "Open link" : "Öppna länken",
     "Edit link" : "Redigera länk",
     "Save changes" : "Spara ändringar",
@@ -221,6 +220,8 @@ OC.L10N.register(
     "Front matter" : "Förtexter",
     "Link to this section" : "Länk till detta avsnitt",
     "Edit guest name" : "Ändra gästnamn",
-    "Save guest name" : "Spara gästnamn"
+    "Save guest name" : "Spara gästnamn",
+    "Cannot copy, please copy the link manually" : "Kan inte kopiera, länken måste kopieras manuellt",
+    "Copy link to clipboard" : "Kopiera länken till urklipp"
 },
 "nplurals=2; plural=(n != 1);");

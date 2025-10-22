@@ -19,6 +19,7 @@ OC.L10N.register(
     "you" : "Tu",
     "edit" : "rediģēt",
     "Open in new tab" : "Atvērt jaunā cilnē",
+    "Copy link" : "Ievietot saiti starpliktuvē",
     "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
     "Offline" : "Bezsaistē",
@@ -33,7 +34,6 @@ OC.L10N.register(
     "Action" : "Darbība",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
-    "Copy link to clipboard" : "Ievietot saiti starpliktuvē",
     "Open link" : "Atvērt saiti",
     "Save changes" : "Saglabāt izmaiņas",
     "Cancel" : "Atcelt",
@@ -51,6 +51,7 @@ OC.L10N.register(
     "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",
     "Choose" : "Izvēlēties",
-    "Add folder description" : "Pievienot mapes aprakstu"
+    "Add folder description" : "Pievienot mapes aprakstu",
+    "Copy link to clipboard" : "Ievietot saiti starpliktuvē"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

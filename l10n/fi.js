@@ -39,6 +39,7 @@ OC.L10N.register(
     "Insert an attachment" : "Lisää liite",
     "Show link preview" : "Näytä linkin esikatselu",
     "Open in new tab" : "Avaa uudessa välilehdessä",
+    "Copy link" : "Kopioi linkki",
     "Remove link" : "Poista linkki",
     "Active people" : "Aktiiviset ihmiset",
     "guest" : "vieras",
@@ -87,8 +88,6 @@ OC.L10N.register(
     "Action" : "Toiminto",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",
-    "Cannot copy, please copy the link manually" : "Kopioiminen ei onnistu. Kopioi linkki manuaalisesti",
-    "Copy link to clipboard" : "Kopioi linkki leikepöydälle",
     "Open link" : "Avaa linkki",
     "Edit link" : "Muokkaa linkkiä",
     "Save changes" : "Tallenna muutokset",
@@ -164,6 +163,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Ei voitu kopioida leikepöydälle",
     "Link to this section" : "Linkki tähän osioon",
     "Edit guest name" : "Muokkaa vieraan nimeä",
-    "Save guest name" : "Tallenna vieraan nimi"
+    "Save guest name" : "Tallenna vieraan nimi",
+    "Cannot copy, please copy the link manually" : "Kopioiminen ei onnistu. Kopioi linkki manuaalisesti",
+    "Copy link to clipboard" : "Kopioi linkki leikepöydälle"
 },
 "nplurals=2; plural=(n != 1);");

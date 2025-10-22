@@ -116,8 +116,6 @@ OC.L10N.register(
     "Redo" : "إعادة",
     "Toggle outline" : "تبديل المخطط التفصيلي",
     "Alt" : "مفتاح Alt",
-    "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
-    "Copy link to clipboard" : "انسخ الرابط إلى الحافظة",
     "Open link" : "إفتَح الرابط",
     "Edit link" : "أكتب الرابط ",
     "Save changes" : "حفظ التعديلات",
@@ -217,6 +215,8 @@ OC.L10N.register(
     "Front matter" : "المادة التقديمية front matter",
     "Link to this section" : "رابط إلى القسم section",
     "Edit guest name" : "تعديل اسم الضيف",
-    "Save guest name" : "حفظ اسم الضيف"
+    "Save guest name" : "حفظ اسم الضيف",
+    "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
+    "Copy link to clipboard" : "انسخ الرابط إلى الحافظة"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

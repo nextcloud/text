@@ -5,6 +5,7 @@ OC.L10N.register(
     "No file was uploaded" : "Et ass kee Fichier ropgeluede ginn",
     "Missing a temporary folder" : "Et feelt en temporären Dossier",
     "Translate" : "Iwwersetzen",
+    "Copy link" : "Link kopéieren",
     "guest" : "Gaascht",
     "Saved" : "Gespäichert",
     "Save changes" : "Ännerunge späicheren",

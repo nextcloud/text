@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Только текст",
     "Show link preview" : "Показать предварительный просмотр ссылок",
     "Open in new tab" : "Открыть в новой вкладке",
+    "Copy link" : "Копировать ссылку",
     "Remove link" : "Удалить ссылку",
     "Active people" : "Активные пользователи",
     "guest" : "гость",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Повторить",
     "Toggle outline" : "Переключить контур",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Не удалось скопировать, выполните копирование вручную",
-    "Copy link to clipboard" : "Скопировать ссылку в буфер обмена",
     "Open link" : "Открыть ссылку",
     "Edit link" : "Редактировать ссылку",
     "Save changes" : "Сохранить изменения",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Передний план",
     "Link to this section" : "Ссылка на этот раздел",
     "Edit guest name" : "Изменить гостевое имя",
-    "Save guest name" : "Сохранить гостевое имя"
+    "Save guest name" : "Сохранить гостевое имя",
+    "Cannot copy, please copy the link manually" : "Не удалось скопировать, выполните копирование вручную",
+    "Copy link to clipboard" : "Скопировать ссылку в буфер обмена"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

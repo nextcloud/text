@@ -8,6 +8,7 @@ OC.L10N.register(
     "Guest" : "Invitato",
     "you" : "Tu",
     "edit" : "modificar",
+    "Copy link" : "Copiar ligamine",
     "guest" : "hospite",
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Next bulut yordamchisi",
     "Translate" : "Tarjima",
     "Reload" : "Qayta yuklash",
+    "Copy link" : "Havolani nusxalash",
     "Offline" : "Offline",
     "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Guest" : "Mgeni",
     "submit" : "wasilisha",
     "you" : "wewe",
+    "Copy link" : "Nakili kiungio",
     "Remove link" : "Ondoa kiungio",
     "guest" : "mgeni",
     "Offline" : "Nje ya mtandao",
@@ -35,8 +36,6 @@ OC.L10N.register(
     "Action" : "Vitendo",
     "Undo" : "Tendua",
     "Redo" : "Redo",
-    "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
-    "Copy link to clipboard" : "Copy link to clipboard",
     "Open link" : "Fungua kiungio",
     "Edit link" : "Hariri kiungo",
     "Save changes" : "Save changes",
@@ -66,6 +65,8 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
-    "Add folder description" : "Add folder description"
+    "Add folder description" : "Add folder description",
+    "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
+    "Copy link to clipboard" : "Copy link to clipboard"
 },
 "nplurals=2; plural=(n != 1);");

@@ -28,6 +28,7 @@ OC.L10N.register(
     "you" : "את/ה",
     "edit" : "עריכה",
     "Open in new tab" : "פתיחה בלשונית חדשה",
+    "Copy link" : "העתקת קישור",
     "guest" : "אורח",
     "Offline" : "בלתי מקוון",
     "Saving …" : "מתבצעת שמירה…",
@@ -50,8 +51,6 @@ OC.L10N.register(
     "Action" : "פעולה",
     "Undo" : "ביטול",
     "Redo" : "שחזור",
-    "Cannot copy, please copy the link manually" : "לא ניתן להעתיק, נא להעתיק את הקישור ידנית",
-    "Copy link to clipboard" : "העתקת קישור ללוח הגזירים",
     "Save changes" : "שמירת השינויים",
     "Cancel" : "ביטול",
     "URL" : "כתובת",
@@ -76,6 +75,8 @@ OC.L10N.register(
     "Formatting" : "עיצוב",
     "Choose" : "בחר",
     "Edit guest name" : "עריכת שם אורח",
-    "Save guest name" : "שמירת שם אורח"
+    "Save guest name" : "שמירת שם אורח",
+    "Cannot copy, please copy the link manually" : "לא ניתן להעתיק, נא להעתיק את הקישור ידנית",
+    "Copy link to clipboard" : "העתקת קישור ללוח הגזירים"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

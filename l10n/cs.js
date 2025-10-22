@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Pouze text",
     "Show link preview" : "Zobrazit náhled odkazu",
     "Open in new tab" : "Otevřít v nové kartě",
+    "Copy link" : "Zkopírovat odkaz",
     "Remove link" : "Odebrat odkaz",
     "Active people" : "Aktivní lidé",
     "guest" : "host",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Zopakovat",
     "Toggle outline" : "Přepnout osnovu",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Nedaří se zkopírovat, zkopírujte odkaz ručně",
-    "Copy link to clipboard" : "Zkopírovat odkaz do schránky",
     "Open link" : "Otevřít okaz",
     "Edit link" : "Upravit odkaz",
     "Save changes" : "Uložit změny",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Link to this section" : "Odkázat na tuto sekci",
     "Edit guest name" : "Upravit jméno hosta",
-    "Save guest name" : "Uložit jméno hosta"
+    "Save guest name" : "Uložit jméno hosta",
+    "Cannot copy, please copy the link manually" : "Nedaří se zkopírovat, zkopírujte odkaz ručně",
+    "Copy link to clipboard" : "Zkopírovat odkaz do schránky"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

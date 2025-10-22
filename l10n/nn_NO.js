@@ -7,6 +7,7 @@ OC.L10N.register(
     "File not found" : "Fann ikkje fila",
     "Translate" : "Translate",
     "Guest" : "Gjest",
+    "Copy link" : "Kopier lenkje",
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Link" : "Lenkje",

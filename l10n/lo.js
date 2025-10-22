@@ -4,6 +4,7 @@ OC.L10N.register(
     "The file was uploaded" : "ຟາຍຖຶກອັບໂຫລດສຳເລັດ",
     "No file was uploaded" : "ບໍ່ມີການອັບໂຫລດຟາຍ",
     "Translate" : "ແປ",
+    "Copy link" : "ສຳເນົາລິງ",
     "Offline" : "ອັອບລາຍ",
     "Saving …" : "ກຳລັງບັນທຶກ",
     "Link" : "ລິງ",

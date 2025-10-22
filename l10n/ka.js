@@ -19,6 +19,7 @@ OC.L10N.register(
     "Reload" : "Reload",
     "Enter your name" : "Enter your name",
     "Guest" : "Guest",
+    "Copy link" : "Copy link",
     "guest" : "guest",
     "Saving …" : "Saving …",
     "Saved" : "Saved",
@@ -30,7 +31,6 @@ OC.L10N.register(
     "Smart picker" : "Smart picker",
     "Action" : "Action",
     "Undo" : "Undo",
-    "Cannot copy, please copy the link manually" : "Cannot copy, please copy the link manually",
     "Save changes" : "Save changes",
     "Cancel" : "Cancel",
     "URL" : "URL",
@@ -53,6 +53,7 @@ OC.L10N.register(
     "Formatting" : "Formatting",
     "Select file or folder to link to" : "Select file or folder to link to",
     "Choose" : "Choose",
-    "Choose {file}" : "Choose {file}"
+    "Choose {file}" : "Choose {file}",
+    "Cannot copy, please copy the link manually" : "Cannot copy, please copy the link manually"
 },
 "nplurals=2; plural=(n!=1);");

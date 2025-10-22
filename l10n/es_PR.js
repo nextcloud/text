@@ -11,6 +11,7 @@ OC.L10N.register(
     "Translate" : "Traducir",
     "Guest" : "Invitado",
     "you" : "tú",
+    "Copy link" : "Copiar liga",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",

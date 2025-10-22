@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Somente texto",
     "Show link preview" : "Mostrar visualização do link",
     "Open in new tab" : "Abrir em uma nova aba",
+    "Copy link" : "Copiar link",
     "Remove link" : "Remover link",
     "Active people" : "Pessoas ativas",
     "guest" : "convidado",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Refazer",
     "Toggle outline" : "Alternar estrutura",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Não é possível copiar, copie o link manualmente",
-    "Copy link to clipboard" : "Copiar link para a área de transferência",
     "Open link" : "Abrir link",
     "Edit link" : "Editar link",
     "Save changes" : "Salvar alterações",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Capa",
     "Link to this section" : "Criar um link para esta seção!",
     "Edit guest name" : "Editar nome de convidado",
-    "Save guest name" : "Salvar nome de convidado"
+    "Save guest name" : "Salvar nome de convidado",
+    "Cannot copy, please copy the link manually" : "Não é possível copiar, copie o link manualmente",
+    "Copy link to clipboard" : "Copiar link para a área de transferência"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

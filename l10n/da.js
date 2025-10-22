@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Kun tekst",
     "Show link preview" : "Vis forhåndsvisning af link",
     "Open in new tab" : "Åben i ny fane",
+    "Copy link" : "Kopiér link",
     "Remove link" : "Fjern link",
     "Active people" : "Aktive mennesker",
     "guest" : "Gæst",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Annuller fortryd",
     "Toggle outline" : "Slå omrids til/fra",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier venligst linket manuelt",
-    "Copy link to clipboard" : "Kopiér link til udklipsholderen",
     "Open link" : "Åbn link",
     "Edit link" : "Redigér link",
     "Save changes" : "Gem ændringer",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Metadata",
     "Link to this section" : "Link til dette afsnit",
     "Edit guest name" : "Redigér gæstens navn",
-    "Save guest name" : "Gem gæstens navn"
+    "Save guest name" : "Gem gæstens navn",
+    "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier venligst linket manuelt",
+    "Copy link to clipboard" : "Kopiér link til udklipsholderen"
 },
 "nplurals=2; plural=(n != 1);");

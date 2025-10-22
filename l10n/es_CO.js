@@ -16,6 +16,7 @@ OC.L10N.register(
     "Delete task" : "Eliminar tarea",
     "Guest" : "Invitado",
     "you" : "tú",
+    "Copy link" : "Copiar enlace",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",

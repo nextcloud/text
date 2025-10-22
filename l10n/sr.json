@@ -59,6 +59,7 @@
     "Text only" : "Само текст",
     "Show link preview" : "Прикажи преглед линка",
     "Open in new tab" : "Отвори у новој картици",
+    "Copy link" : "Копирај везу",
     "Remove link" : "Уклони линк",
     "Active people" : "Активне особе",
     "guest" : "гост",
@@ -119,8 +120,6 @@
     "Redo" : "Понови",
     "Toggle outline" : "Укључи/искључи приказ структуре",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Не могу да копирам, копирајте везу ручно",
-    "Copy link to clipboard" : "Копирај везу у оставу",
     "Open link" : "Отвори линк",
     "Edit link" : "Уреди линк",
     "Save changes" : "Сачувај измене",
@@ -223,6 +222,8 @@
     "Front matter" : "Уводни део",
     "Link to this section" : "Линк на овај одељак",
     "Edit guest name" : "Измени име госта",
-    "Save guest name" : "Сачувај име госта"
+    "Save guest name" : "Сачувај име госта",
+    "Cannot copy, please copy the link manually" : "Не могу да копирам, копирајте везу ручно",
+    "Copy link to clipboard" : "Копирај везу у оставу"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

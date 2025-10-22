@@ -14,6 +14,7 @@ OC.L10N.register(
     "Translate" : "แปลภาษา",
     "Reload" : "โหลดใหม่",
     "you" : "คุณ",
+    "Copy link" : "คัดลอกลิงก์",
     "guest" : "ผู้เยี่ยมชม",
     "Offline" : "ออฟไลน์",
     "Saving …" : "กำลังบันทึก …",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
     "Link" : "ลิงก์",
     "Undo" : "เลิกทำ",
-    "Cannot copy, please copy the link manually" : "ไม่สามารถคัดลอก กรุณาคัดลอกลิงก์เอง",
     "Save changes" : "บันทึกการเปลี่ยนแปลง",
     "Cancel" : "ยกเลิก",
     "URL" : "URL",
@@ -33,6 +33,7 @@ OC.L10N.register(
     "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ",
     "Choose" : "เลือก",
-    "Choose {file}" : "เลือก {file}"
+    "Choose {file}" : "เลือก {file}",
+    "Cannot copy, please copy the link manually" : "ไม่สามารถคัดลอก กรุณาคัดลอกลิงก์เอง"
 },
 "nplurals=1; plural=0;");

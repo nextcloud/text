@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "テキストのみ",
     "Show link preview" : "リンクのプレビューを表示",
     "Open in new tab" : "新しいタブで開く",
+    "Copy link" : "リンクをコピー",
     "Remove link" : "リンクを削除",
     "Active people" : "ファイルを開いているユーザー",
     "guest" : "ゲスト",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "やり直し",
     "Toggle outline" : "アウトラインを切り替える",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "コピーできませんでした。手動でリンクをコピーしてください。",
-    "Copy link to clipboard" : "リンクをクリップボードにコピーする",
     "Open link" : "リンクを開く",
     "Edit link" : "リンクを編集",
     "Save changes" : "変更を保存",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Link to this section" : "このセクションへのリンク",
     "Edit guest name" : "ゲスト名を編集",
-    "Save guest name" : "ゲスト名を保存"
+    "Save guest name" : "ゲスト名を保存",
+    "Cannot copy, please copy the link manually" : "コピーできませんでした。手動でリンクをコピーしてください。",
+    "Copy link to clipboard" : "リンクをクリップボードにコピーする"
 },
 "nplurals=1; plural=0;");

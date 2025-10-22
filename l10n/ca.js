@@ -50,6 +50,7 @@ OC.L10N.register(
     "Text only" : "Només text",
     "Show link preview" : "Mostra la previsualització dels enllaços",
     "Open in new tab" : "Obre en una pestanya nova",
+    "Copy link" : "Copia l'enllaç",
     "Remove link" : "Suprimeix l'enllaç",
     "Active people" : "Persones actives",
     "guest" : "convidat",
@@ -110,8 +111,6 @@ OC.L10N.register(
     "Redo" : "Refés",
     "Toggle outline" : "Activa o desactiva la vora",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "No es pot copiar; copieu l'enllaç manualment",
-    "Copy link to clipboard" : "Copia l'enllaç al porta-retalls",
     "Open link" : "Obre l'enllaç",
     "Edit link" : "Edita l'enllaç",
     "Save changes" : "Desa els canvis",
@@ -210,6 +209,8 @@ OC.L10N.register(
     "Front matter" : "Text preliminar",
     "Link to this section" : "Enllaç a aquesta secció",
     "Edit guest name" : "Edita el nom de convidat",
-    "Save guest name" : "Desa el nom de convidat"
+    "Save guest name" : "Desa el nom de convidat",
+    "Cannot copy, please copy the link manually" : "No es pot copiar; copieu l'enllaç manualment",
+    "Copy link to clipboard" : "Copia l'enllaç al porta-retalls"
 },
 "nplurals=2; plural=(n != 1);");

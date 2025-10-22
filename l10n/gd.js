@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
     "File not found" : "Cha deach am faidhle a lorg",
     "Translate" : "Eadar-theangaich",
+    "Copy link" : "Dèan lethbhreac dhen cheangal",
     "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",
     "Cancel" : "Sguir dheth",

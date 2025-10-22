@@ -61,6 +61,7 @@ OC.L10N.register(
     "Text only" : "Μόνο κείμενο",
     "Show link preview" : "Εμφάνιση προεπισκόπησης συνδέσμου",
     "Open in new tab" : "Άνοιγμα σε νέα καρτέλα",
+    "Copy link" : "Αντιγραφή συνδέσμου",
     "Remove link" : "Αφαίρεση συνδέσμου",
     "Active people" : "Ενεργοί χρήστες",
     "guest" : "επισκέπτης",
@@ -121,8 +122,6 @@ OC.L10N.register(
     "Redo" : "Επανάληψη",
     "Toggle outline" : "Εναλλαγή περιγράμματος",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "Δεν μπορεί να αντιγραφεί, παρακαλώ αντιγράψτε χειροκίνητα",
-    "Copy link to clipboard" : "Αντιγραφή συνδέσμου στο πρόχειρο",
     "Open link" : "Άνοιγμα συνδέσμου",
     "Edit link" : "Επεξεργασία συνδέσμου",
     "Save changes" : "Αποθήκευσε τις αλλαγές",
@@ -225,6 +224,8 @@ OC.L10N.register(
     "Front matter" : "Εισαγωγικά στοιχεία",
     "Link to this section" : "Σύνδεσμος προς αυτήν την ενότητα",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέπτη",
-    "Save guest name" : "Αποθήκευση ονόματος επισκέπτη"
+    "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
+    "Cannot copy, please copy the link manually" : "Δεν μπορεί να αντιγραφεί, παρακαλώ αντιγράψτε χειροκίνητα",
+    "Copy link to clipboard" : "Αντιγραφή συνδέσμου στο πρόχειρο"
 },
 "nplurals=2; plural=(n != 1);");

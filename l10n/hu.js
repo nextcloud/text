@@ -42,6 +42,7 @@ OC.L10N.register(
     "edit" : "szerkesztés",
     "Insert an attachment" : "Melléklet beszúrása",
     "Open in new tab" : "Megnyitás új fülön",
+    "Copy link" : "Hivatkozás másolása",
     "Remove link" : "Hivatkozás eltávolítása",
     "Active people" : "Aktív emberek",
     "guest" : "vendég",
@@ -97,8 +98,6 @@ OC.L10N.register(
     "Undo" : "Visszavonás",
     "Redo" : "Újra",
     "Alt" : "Alt",
-    "Cannot copy, please copy the link manually" : "A másolás sikertelen, másolja kézzel a hivatkozást",
-    "Copy link to clipboard" : "Hivatkozás vágólapra másolása",
     "Open link" : "Hivatkozás megnyitása",
     "Edit link" : "Hivatkozás szerkesztése",
     "Save changes" : "Változások mentése",
@@ -179,6 +178,8 @@ OC.L10N.register(
     "Front matter" : "Előlap",
     "Link to this section" : "Hivatkozás erre a szakaszra",
     "Edit guest name" : "Vendégnév szerkesztése",
-    "Save guest name" : "Vendégnév mentése"
+    "Save guest name" : "Vendégnév mentése",
+    "Cannot copy, please copy the link manually" : "A másolás sikertelen, másolja kézzel a hivatkozást",
+    "Copy link to clipboard" : "Hivatkozás vágólapra másolása"
 },
 "nplurals=2; plural=(n != 1);");
