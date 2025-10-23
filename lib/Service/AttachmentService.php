@@ -575,7 +575,7 @@ final class AttachmentService {
 		} catch (ShareNotFound $e) {
 			// same as below
 		}
-		throw new NotFoundException('Text file with id=' . $documentId . ' and shareToken ' . $shareToken . ' was not found.');
+		throw new NotFoundException('Text file with id=' . (string)$documentId . ' and shareToken ' . $shareToken . ' was not found.');
 	}
 
 	/**
