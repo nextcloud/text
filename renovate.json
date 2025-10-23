@@ -30,7 +30,12 @@
 		},
 		{
 			"groupName": "yjs",
-			"matchPackageNames": ["yjs", "y-websocket", "@hocuspocus/provider", "lib0"]
+			"matchPackageNames": [
+				"yjs",
+				"y-websocket",
+				"@hocuspocus/provider",
+				"lib0"
+			]
 		},
 		{
 			"groupName": "highlight",
@@ -71,7 +76,11 @@
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchPackageNames": ["cypress", "@nextcloud/cypress", "@cypress/{/,}**"],
+			"matchPackageNames": [
+				"cypress",
+				"@nextcloud/cypress",
+				"@cypress/{/,}**"
+			],
 			"matchBaseBranches": [
 				"stable32",
 				"stable31",
