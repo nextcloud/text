@@ -8,7 +8,7 @@
 	"rangeStrategy": "bump",
 	"rebaseWhen": "conflicted",
 	"ignoreUnstable": false,
-	"baseBranches": ["main", "stable31", "stable30"],
+	"baseBranches": ["main", "stable32", "stable31"],
 	"enabledManagers": ["npm"],
 	"ignoreDeps": ["node", "npm"],
 	"packageRules": [
