@@ -8,7 +8,7 @@
 	"rangeStrategy": "bump",
 	"rebaseWhen": "conflicted",
 	"ignoreUnstable": false,
-	"baseBranches": ["main", "stable32", "stable31"],
+	"baseBranchPatterns": ["main", "stable32", "stable31"],
 	"enabledManagers": ["npm"],
 	"ignoreDeps": ["node", "npm"],
 	"packageRules": [
@@ -30,12 +30,7 @@
 		},
 		{
 			"groupName": "yjs",
-			"matchPackageNames": [
-				"yjs",
-				"y-websocket",
-				"@hocuspocus/provider",
-				"lib0"
-			]
+			"matchPackageNames": ["yjs", "y-websocket", "@hocuspocus/provider", "lib0"]
 		},
 		{
 			"groupName": "highlight",
@@ -76,11 +71,7 @@
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchPackageNames": [
-				"cypress",
-				"@nextcloud/cypress",
-				"@cypress/{/,}**"
-			],
+			"matchPackageNames": ["cypress", "@nextcloud/cypress", "@cypress/{/,}**"],
 			"matchBaseBranches": [
 				"stable32",
 				"stable31",
