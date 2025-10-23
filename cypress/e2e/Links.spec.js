@@ -104,7 +104,8 @@ describe('test link marks', function () {
 			cy.insertLine(link)
 			clickLink(link)
 
-			cy.get('.link-view-bubble button[title="Remove link"]').click()
+			cy.get('.link-view-bubble .link-options').click()
+			cy.get('button').contains('Remove').click()
 
 			cy.getContent().find(`a[href*="${link}"]`).should('not.exist')
 		})

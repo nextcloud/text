@@ -20,18 +20,6 @@
 					<OpenInNewIcon :size="20" />
 				</template>
 			</NcButton>
-			<!-- copy link -->
-			<NcButton
-				:title="copyLinkTooltip"
-				:aria-label="copyLinkTooltip"
-				type="tertiary"
-				@click="copyLink">
-				<template #icon>
-					<CheckIcon v-if="copySuccess" :size="20" />
-					<NcLoadingIcon v-else-if="copyLoading" :size="20" />
-					<ContentCopyIcon v-else :size="20" />
-				</template>
-			</NcButton>
 
 			<!-- edit/save -->
 			<div v-if="isEditable" class="edit-buttons">
@@ -55,29 +43,25 @@
 						<CheckIcon :size="20" />
 					</template>
 				</NcButton>
-
-				<!-- remove link / dismiss changes -->
-				<NcButton
-					v-if="!edit"
-					:title="t('text', 'Remove link')"
-					:aria-label="t('text', 'Remove link')"
-					type="tertiary"
-					@click="removeLink">
-					<template #icon>
-						<LinkOffIcon :size="20" />
-					</template>
-				</NcButton>
-				<NcButton
-					v-else
-					:title="t('text', 'Cancel')"
-					:aria-label="t('text', 'Cancel')"
-					type="tertiary"
-					@click="stopEdit">
-					<template #icon>
-						<CloseIcon :size="20" />
-					</template>
-				</NcButton>
 			</div>
+
+			<!-- preview options / dismiss changes -->
+			<PreviewOptions
+				v-if="isEditable && !edit"
+				:href="href"
+				type="text-only"
+				@toggle="setPreview"
+				@delete="removeLink" />
+			<NcButton
+				v-else
+				:title="t('text', 'Cancel')"
+				:aria-label="t('text', 'Cancel')"
+				type="tertiary"
+				@click="stopEdit">
+				<template #icon>
+					<CloseIcon :size="20" />
+				</template>
+			</NcButton>
 		</div>
 
 		<!-- link edit form -->
@@ -106,18 +90,15 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
-import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
-import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
-import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 import { useOpenLinkHandler } from '../Editor.provider.ts'
+import PreviewOptions from '../Editor/PreviewOptions.vue'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -125,19 +106,17 @@ export default {
 	name: 'LinkBubbleView',
 
 	components: {
+		PreviewOptions,
 		CheckIcon,
 		CloseIcon,
-		ContentCopyIcon,
 		NcButton,
-		NcLoadingIcon,
 		NcReferenceList,
 		NcTextField,
-		LinkOffIcon,
 		OpenInNewIcon,
 		PencilOutlineIcon,
 	},
 
-	mixins: [CopyToClipboardMixin, useOpenLinkHandler],
+	mixins: [useOpenLinkHandler],
 
 	props: {
 		editor: {
@@ -162,16 +141,6 @@ export default {
 	computed: {
 		key() {
 			return this.href || 'no-href'
-		},
-
-		copyLinkTooltip() {
-			if (this.copied) {
-				if (this.copySuccess) {
-					return ''
-				}
-				return t('text', 'Cannot copy, please copy the link manually')
-			}
-			return t('text', 'Copy link to clipboard')
 		},
 
 		/**
@@ -217,14 +186,14 @@ export default {
 			this.$openLinkHandler.openLink(href)
 		},
 
-		async copyLink() {
-			await this.copyToClipboard(this.href)
-		},
-
 		onReferenceListLoaded() {
 			this.referenceTitle =
 				this.$refs.referencelist.firstReference?.openGraphObject?.name
 				?? null
+		},
+
+		setPreview() {
+			this.editor.chain().hideLinkBubble().setPreview().run()
 		},
 
 		startEdit() {
