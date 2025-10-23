@@ -8,6 +8,7 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Reload" : "পূনরায় লোড কর",
     "you" : "তুমি",
+    "Copy link" : "লিঙ্ক কপি করো",
     "guest" : "অতিথি",
     "Saved" : "সংরক্ষণ করা হলো",
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",
