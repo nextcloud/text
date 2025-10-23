@@ -11,7 +11,7 @@ namespace OCA\Text\Exception;
 
 use OCP\AppFramework\Http;
 
-class VersionMismatchException extends \Exception {
+final class VersionMismatchException extends \Exception {
 	public function getStatus(): int {
 		return Http::STATUS_PRECONDITION_FAILED;
 	}

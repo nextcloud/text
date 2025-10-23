@@ -32,7 +32,7 @@ use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
 use OCP\Util;
 
-class AttachmentService {
+final class AttachmentService {
 	public function __construct(
 		private IRootFolder $rootFolder,
 		private ShareManager $shareManager,

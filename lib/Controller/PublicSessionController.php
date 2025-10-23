@@ -21,7 +21,7 @@ use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
 
-class PublicSessionController extends PublicShareController implements ISessionAwareController {
+final class PublicSessionController extends PublicShareController implements ISessionAwareController {
 	use TSessionAwareController;
 
 	private ?IShare $share = null;
@@ -44,10 +44,12 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		return $this->share;
 	}
 
+	#[\Override]
 	protected function getPasswordHash(): ?string {
 		return $this->getShare()->getPassword();
 	}
 
+	#[\Override]
 	public function isValidToken(): bool {
 		try {
 			$this->share = $this->shareManager->getShareByToken($this->getToken());
@@ -57,6 +59,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		}
 	}
 
+	#[\Override]
 	protected function isPasswordProtected(): bool {
 		/** @psalm-suppress RedundantConditionGivenDocblockType */
 		return $this->getShare()->getPassword() !== null;

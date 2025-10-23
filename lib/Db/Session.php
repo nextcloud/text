@@ -26,7 +26,7 @@ use OCP\AppFramework\Db\Entity;
  * @method int getDocumentId()
  * @method void setDocumentId(int $documentId)
  */
-class Session extends Entity implements JsonSerializable {
+final class Session extends Entity implements JsonSerializable {
 	public $id;
 	protected ?string $userId = null;
 	protected string $token = '';
@@ -53,6 +53,7 @@ class Session extends Entity implements JsonSerializable {
 		return $this->userId;
 	}
 
+	#[\Override]
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,

@@ -10,5 +10,5 @@ namespace OCA\Text\Middleware\Attribute;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-class RequireDocumentBaseVersionEtag {
+final class RequireDocumentBaseVersionEtag {
 }

@@ -10,7 +10,7 @@ namespace OCA\Text\Service;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\TaskProcessing\IManager;
 
-class InitialStateProvider {
+final class InitialStateProvider {
 	private const ASSISTANT_TASK_TYPES = [
 		'core:text2text',
 		'core:text2text:formalization',

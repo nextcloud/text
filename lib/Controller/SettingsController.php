@@ -15,7 +15,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 
-class SettingsController extends Controller {
+final class SettingsController extends Controller {
 	public const ACCEPTED_KEYS = [
 		'workspace_enabled',
 		'is_full_width_editor'

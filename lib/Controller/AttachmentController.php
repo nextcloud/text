@@ -29,7 +29,7 @@ use OCP\IRequest;
 use OCP\Util;
 use Psr\Log\LoggerInterface;
 
-class AttachmentController extends ApiController implements ISessionAwareController {
+final class AttachmentController extends ApiController implements ISessionAwareController {
 	use TSessionAwareController;
 	public const IMAGE_MIME_TYPES = [
 		'image/png',

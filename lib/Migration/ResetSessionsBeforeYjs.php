@@ -12,7 +12,7 @@ use OCP\IAppConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
-class ResetSessionsBeforeYjs implements IRepairStep {
+final class ResetSessionsBeforeYjs implements IRepairStep {
 	public function __construct(
 		private IAppConfig $config,
 		private DocumentService $documentService,
@@ -22,10 +22,12 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 	/**
 	 * @return string
 	 */
+	#[\Override]
 	public function getName(): string {
 		return 'Force-reset all Text document sessions';
 	}
 
+	#[\Override]
 	public function run(IOutput $output): void {
 		$appVersion = $this->config->getValueString('text', 'installed_version');
 

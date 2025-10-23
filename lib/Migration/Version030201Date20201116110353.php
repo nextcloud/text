@@ -15,7 +15,7 @@ use OCP\IConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
-class Version030201Date20201116110353 extends SimpleMigrationStep {
+final class Version030201Date20201116110353 extends SimpleMigrationStep {
 
 	/** @var bool */
 	private $isOracle;
@@ -24,6 +24,7 @@ class Version030201Date20201116110353 extends SimpleMigrationStep {
 		$this->isOracle = $config->getSystemValue('dbtype', 'sqlite') === 'oci';
 	}
 
+	#[\Override]
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();

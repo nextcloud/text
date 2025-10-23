@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ResetDocument extends Command {
+final class ResetDocument extends Command {
 	protected DocumentService $documentService;
 
 	public function __construct(DocumentService $documentService) {

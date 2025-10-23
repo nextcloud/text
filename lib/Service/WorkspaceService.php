@@ -14,7 +14,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
-class WorkspaceService {
+final class WorkspaceService {
 	private IL10N $l10n;
 
 	private const SUPPORTED_STATIC_FILENAMES = [

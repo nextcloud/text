@@ -32,7 +32,7 @@ use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use ReflectionException;
 
-class SessionMiddleware extends Middleware {
+final class SessionMiddleware extends Middleware {
 
 	public function __construct(
 		private IRequest $request,
@@ -51,6 +51,7 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidDocumentBaseVersionEtagException
 	 * @throws InvalidSessionException
 	 */
+	#[\Override]
 	public function beforeController(Controller $controller, string $methodName): void {
 		if (!$controller instanceof ISessionAwareController) {
 			return;
@@ -165,6 +166,7 @@ class SessionMiddleware extends Middleware {
 		throw new InvalidSessionException();
 	}
 
+	#[\Override]
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
 		if ($exception instanceof InvalidDocumentBaseVersionEtagException) {
 			return new JSONResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);

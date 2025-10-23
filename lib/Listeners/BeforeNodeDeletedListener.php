@@ -18,7 +18,7 @@ use OCP\Files\File;
 /**
  * @template-implements IEventListener<Event|BeforeNodeDeletedEvent>
  */
-class BeforeNodeDeletedListener implements IEventListener {
+final class BeforeNodeDeletedListener implements IEventListener {
 	private AttachmentService $attachmentService;
 	private DocumentService $documentService;
 
@@ -28,6 +28,7 @@ class BeforeNodeDeletedListener implements IEventListener {
 		$this->documentService = $documentService;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforeNodeDeletedEvent) {
 			return;

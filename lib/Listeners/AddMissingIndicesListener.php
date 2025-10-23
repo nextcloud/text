@@ -15,7 +15,8 @@ use OCP\EventDispatcher\IEventListener;
 /**
  * @template-implements IEventListener<Event|AddMissingIndicesEvent>
  */
-class AddMissingIndicesListener implements IEventListener {
+final class AddMissingIndicesListener implements IEventListener {
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof AddMissingIndicesEvent) {
 			return;

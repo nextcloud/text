@@ -19,13 +19,14 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
 /** @template-implements IEventListener<Event|LoadEditor> */
-class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
+final class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
 	public function __construct(
 		private InitialStateProvider $initialStateProvider,
 		private IEventDispatcher $eventDispatcher,
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof LoadEditor) {
 			return;

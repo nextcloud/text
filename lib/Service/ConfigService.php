@@ -11,7 +11,7 @@ use OCA\Text\AppInfo\Application;
 use OCP\IAppConfig;
 use OCP\IConfig;
 
-class ConfigService {
+final class ConfigService {
 	public function __construct(
 		private IAppConfig $appConfig,
 		private IConfig $config,

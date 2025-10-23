@@ -9,5 +9,5 @@ declare(strict_types=1);
 
 namespace OCA\Text\Exception;
 
-class DocumentSaveConflictException extends \Exception {
+final class DocumentSaveConflictException extends \Exception {
 }

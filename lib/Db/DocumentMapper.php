@@ -14,7 +14,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 /** @extends QBMapper<Document> */
-class DocumentMapper extends QBMapper {
+final class DocumentMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'text_documents', Document::class);
 	}

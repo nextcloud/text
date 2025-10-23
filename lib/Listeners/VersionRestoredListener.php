@@ -19,12 +19,13 @@ use OCP\Files\NotFoundException;
 /**
  * @implements IEventListener<Event|VersionRestoredEvent>
  */
-class VersionRestoredListener implements IEventListener {
+final class VersionRestoredListener implements IEventListener {
 	public function __construct(
 		private DocumentService $documentService,
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!($event instanceof VersionRestoredEvent)) {
 			return;

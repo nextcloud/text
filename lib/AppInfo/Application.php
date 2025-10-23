@@ -41,13 +41,14 @@ use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\Template\RegisterTemplateCreatorEvent;
 
-class Application extends App implements IBootstrap {
+final class Application extends App implements IBootstrap {
 	public const APP_NAME = 'text';
 
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);
 	}
 
+	#[\Override]
 	public function register(IRegistrationContext $context): void {
 		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);
 		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
@@ -69,6 +70,7 @@ class Application extends App implements IBootstrap {
 		$context->registerMiddleware(SessionMiddleware::class);
 	}
 
+	#[\Override]
 	public function boot(IBootContext $context): void {
 	}
 }

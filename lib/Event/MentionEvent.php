@@ -14,7 +14,7 @@ use OCP\EventDispatcher\Event;
 use OCP\Files\File;
 use OCP\Notification\INotification;
 
-class MentionEvent extends Event {
+final class MentionEvent extends Event {
 	public function __construct(
 		private INotification $notification,
 		private File $file,

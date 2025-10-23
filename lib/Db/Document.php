@@ -26,7 +26,7 @@ use OCP\AppFramework\Db\Entity;
  * @method getChecksum(): ?string
  * @method setChecksum(?string $checksum): void
  */
-class Document extends Entity implements \JsonSerializable {
+final class Document extends Entity implements \JsonSerializable {
 	public $id = null;
 	// TODO: Remove obsolete field `currentVersion`
 	protected int $currentVersion = 0;
@@ -46,6 +46,7 @@ class Document extends Entity implements \JsonSerializable {
 		$this->addType('checksum', 'string');
 	}
 
+	#[\Override]
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,

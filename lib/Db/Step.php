@@ -22,7 +22,7 @@ use OCP\AppFramework\Db\Entity;
  * @method getTimestamp(): int
  * @method setTimestamp(int $timestam): void
  */
-class Step extends Entity implements JsonSerializable {
+final class Step extends Entity implements JsonSerializable {
 
 	/*
 	 * Transition: We now use the auto-incrementing id as the version.
@@ -46,6 +46,7 @@ class Step extends Entity implements JsonSerializable {
 		$this->addType('timestamp', 'integer');
 	}
 
+	#[\Override]
 	public function jsonSerialize(): array {
 		$jsonData = \json_decode($this->data, false);
 		if (\json_last_error() !== JSON_ERROR_NONE) {

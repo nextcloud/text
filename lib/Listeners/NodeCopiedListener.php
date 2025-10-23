@@ -18,13 +18,14 @@ use OCP\Lock\ILockingProvider;
 /**
  * @template-implements IEventListener<Event|NodeCopiedEvent>
  */
-class NodeCopiedListener implements IEventListener {
+final class NodeCopiedListener implements IEventListener {
 	private $attachmentService;
 
 	public function __construct(AttachmentService $attachmentService) {
 		$this->attachmentService = $attachmentService;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof NodeCopiedEvent) {
 			return;

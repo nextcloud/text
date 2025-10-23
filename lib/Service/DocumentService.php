@@ -51,7 +51,7 @@ use OCP\Share\IManager as ShareManager;
 use Psr\Log\LoggerInterface;
 use function json_encode;
 
-class DocumentService {
+final class DocumentService {
 
 	/**
 	 * Delay to wait for between autosave versions

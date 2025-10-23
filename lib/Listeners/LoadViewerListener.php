@@ -17,7 +17,7 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
 /** @implements IEventListener<Event|LoadViewer> */
-class LoadViewerListener implements IEventListener {
+final class LoadViewerListener implements IEventListener {
 	private InitialStateProvider $initialStateProvider;
 	private IEventDispatcher $eventDispatcher;
 
@@ -27,6 +27,7 @@ class LoadViewerListener implements IEventListener {
 		$this->eventDispatcher = $eventDispatcher;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof LoadViewer) {
 			return;

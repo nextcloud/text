@@ -20,13 +20,14 @@ use Psr\Log\LoggerInterface;
 /**
  * @template-implements IEventListener<Event|BeforeNodeWrittenEvent>
  */
-class BeforeNodeWrittenListener implements IEventListener {
+final class BeforeNodeWrittenListener implements IEventListener {
 	public function __construct(
 		private LoggerInterface $logger,
 		private DocumentService $documentService,
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforeNodeWrittenEvent) {
 			return;

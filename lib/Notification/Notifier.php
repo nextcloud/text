@@ -23,7 +23,7 @@ use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
 use OCP\Notification\UnknownNotificationException;
 
-class Notifier implements INotifier {
+final class Notifier implements INotifier {
 	public const TYPE_MENTIONED = 'mentioned';
 	public const SUBJECT_MENTIONED_SOURCE_USER = 'sourceUser';
 	public const SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
@@ -37,14 +37,17 @@ class Notifier implements INotifier {
 	) {
 	}
 
+	#[\Override]
 	public function getID(): string {
 		return 'text';
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return 'Text';
 	}
 
+	#[\Override]
 	public function prepare(INotification $notification, string $languageCode): INotification {
 		if ($notification->getApp() !== 'text') {
 			throw new UnknownNotificationException('Application should be text instead of ' . $notification->getApp());

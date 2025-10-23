@@ -9,5 +9,5 @@ declare(strict_types=1);
 
 namespace OCA\Text\Exception;
 
-class DocumentHasUnsavedChangesException extends \Exception {
+final class DocumentHasUnsavedChangesException extends \Exception {
 }

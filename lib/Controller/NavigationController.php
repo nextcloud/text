@@ -12,7 +12,7 @@ use OCA\Text\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 
-class NavigationController extends Controller {
+final class NavigationController extends Controller {
 
 	/**
 	 *

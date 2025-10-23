@@ -20,7 +20,7 @@ use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Share\IShare;
 
-class UserApiController extends ApiController implements ISessionAwareController {
+final class UserApiController extends ApiController implements ISessionAwareController {
 	use TSessionAwareController;
 
 	public function __construct(

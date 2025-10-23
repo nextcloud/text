@@ -32,7 +32,7 @@ use OCP\Lock\LockedException;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
-class ApiService {
+final class ApiService {
 	public function __construct(
 		private IRequest $request,
 		private ConfigService $configService,

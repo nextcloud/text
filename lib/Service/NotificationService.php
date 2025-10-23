@@ -11,7 +11,7 @@ use OCA\Text\Notification\Notifier;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Notification\IManager;
 
-class NotificationService {
+final class NotificationService {
 	private IManager $manager;
 	private ITimeFactory $timeFactory;
 	private ?string $userId;

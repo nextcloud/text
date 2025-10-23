@@ -16,13 +16,14 @@ use OCP\IConfig;
 use OCP\Util;
 
 /** @implements IEventListener<Event|BeforeTemplateRenderedEvent> */
-class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
+final class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	protected InitialStateProvider $initialStateProvider;
 
 	public function __construct(IConfig $config, InitialStateProvider $initialStateProvider) {
 		$this->initialStateProvider = $initialStateProvider;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforeTemplateRenderedEvent) {
 			return;

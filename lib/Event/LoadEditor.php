@@ -12,5 +12,5 @@ namespace OCA\Text\Event;
 
 use OCP\EventDispatcher\Event;
 
-class LoadEditor extends Event {
+final class LoadEditor extends Event {
 }

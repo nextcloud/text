@@ -14,7 +14,7 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
 /** @implements IEventListener<Event|RegisterDirectEditorEvent> */
-class RegisterDirectEditorEventListener implements IEventListener {
+final class RegisterDirectEditorEventListener implements IEventListener {
 	/** @var TextDirectEditor */
 	protected $editor;
 
@@ -22,6 +22,7 @@ class RegisterDirectEditorEventListener implements IEventListener {
 		$this->editor = $editor;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof RegisterDirectEditorEvent) {
 			return;

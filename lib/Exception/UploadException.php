@@ -9,5 +9,5 @@ declare(strict_types=1);
 
 namespace OCA\Text\Exception;
 
-class UploadException extends \Exception {
+final class UploadException extends \Exception {
 }

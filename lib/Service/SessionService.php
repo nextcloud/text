@@ -22,7 +22,7 @@ use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Security\ISecureRandom;
 
-class SessionService {
+final class SessionService {
 	public const SESSION_VALID_TIME = 5 * 60;
 
 	private SessionMapper $sessionMapper;

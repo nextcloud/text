@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 namespace OCA\Text\Service;
 
-class EncodingService {
+final class EncodingService {
 	public const COMMON_ENCODINGS = [ 'UTF-8', 'GB2312', 'GBK', 'BIG-5', 'SJIS-win', 'EUC-JP', 'Windows-1252', 'ISO-8859-15', 'ISO-8859-1', 'ASCII'];
 
 	public const UTF_BOMs = [

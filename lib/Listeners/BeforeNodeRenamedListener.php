@@ -20,7 +20,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @template-implements IEventListener<Event|BeforeNodeRenamedEvent>
  */
-class BeforeNodeRenamedListener implements IEventListener {
+final class BeforeNodeRenamedListener implements IEventListener {
 	public function __construct(
 		private readonly AttachmentService $attachmentService,
 		private readonly DocumentService $documentService,
@@ -28,6 +28,7 @@ class BeforeNodeRenamedListener implements IEventListener {
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforeNodeRenamedEvent) {
 			return;

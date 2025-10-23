@@ -18,7 +18,8 @@ use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
 #[AddColumn(table: 'text_steps', name: 'timestamp', type: ColumnType::BIGINT, description: 'Tracking the timestamp of a document editing step')]
-class Version040100Date20240611165300 extends SimpleMigrationStep {
+final class Version040100Date20240611165300 extends SimpleMigrationStep {
+	#[\Override]
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();

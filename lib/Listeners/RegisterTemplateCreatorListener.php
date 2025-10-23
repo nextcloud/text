@@ -19,7 +19,7 @@ use OCP\Files\Template\TemplateFileCreator;
 use OCP\IL10N;
 
 /** @implements IEventListener<Event|RegisterTemplateCreatorEvent> */
-class RegisterTemplateCreatorListener implements IEventListener {
+final class RegisterTemplateCreatorListener implements IEventListener {
 	public function __construct(
 		private IL10N $l10n,
 		private ConfigService $configService,
@@ -27,6 +27,7 @@ class RegisterTemplateCreatorListener implements IEventListener {
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof RegisterTemplateCreatorEvent) {
 			return;

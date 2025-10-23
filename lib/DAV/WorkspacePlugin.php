@@ -26,7 +26,7 @@ use Sabre\DAV\PropFind;
 use Sabre\DAV\Server;
 use Sabre\DAV\ServerPlugin;
 
-class WorkspacePlugin extends ServerPlugin {
+final class WorkspacePlugin extends ServerPlugin {
 	public const WORKSPACE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace';
 	public const WORKSPACE_FILE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace-file';
 

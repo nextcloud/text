@@ -55,7 +55,7 @@ use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use Psr\Log\LoggerInterface;
 
-class WorkspaceController extends OCSController {
+final class WorkspaceController extends OCSController {
 	public function __construct(
 		string $appName,
 		IRequest $request,

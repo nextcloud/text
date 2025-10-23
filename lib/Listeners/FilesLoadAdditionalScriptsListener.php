@@ -16,13 +16,14 @@ use OCP\EventDispatcher\IEventListener;
 /**
  * @implements IEventListener<Event>
  */
-class FilesLoadAdditionalScriptsListener implements IEventListener {
+final class FilesLoadAdditionalScriptsListener implements IEventListener {
 	private InitialStateProvider $initialStateProvider;
 
 	public function __construct(InitialStateProvider $initialStateProvider) {
 		$this->initialStateProvider = $initialStateProvider;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof LoadAdditionalScriptsEvent) {
 			return;

@@ -11,7 +11,7 @@ use OCP\DirectEditing\ACreateEmpty;
 use OCP\IAppConfig;
 use OCP\IL10N;
 
-class TextDocumentCreator extends ACreateEmpty {
+final class TextDocumentCreator extends ACreateEmpty {
 	public const CREATOR_ID = 'textdocument';
 
 	/**
@@ -29,18 +29,22 @@ class TextDocumentCreator extends ACreateEmpty {
 		$this->appConfig = $appConfig;
 	}
 
+	#[\Override]
 	public function getId(): string {
 		return self::CREATOR_ID;
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return $this->l10n->t('text document');
 	}
 
+	#[\Override]
 	public function getExtension(): string {
 		return $this->appConfig->getValueString('text', 'default_file_extension', 'md');
 	}
 
+	#[\Override]
 	public function getMimetype(): string {
 		switch ($this->getExtension()) {
 			case 'txt':

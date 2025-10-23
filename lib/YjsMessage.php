@@ -22,7 +22,7 @@ use InvalidArgumentException;
  * https://github.com/yjs/y-protocols/blob/master/sync.js#L38-L40
  * https://github.com/dmonad/lib0/blob/master/decoding.js
  */
-class YjsMessage {
+final class YjsMessage {
 
 	public const YJS_MESSAGE_SYNC = 0;
 	public const YJS_MESSAGE_AWARENESS = 1;

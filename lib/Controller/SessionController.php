@@ -23,7 +23,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
 
-class SessionController extends ApiController implements ISessionAwareController {
+final class SessionController extends ApiController implements ISessionAwareController {
 	use TSessionAwareController;
 
 	private bool $restoreUser = false;

@@ -18,7 +18,8 @@ use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
 #[AddColumn(table: 'text_documents', name: 'checksum', type: ColumnType::STRING, description: 'CRC32 checksum of document content')]
-class Version070000Date20250925110024 extends SimpleMigrationStep {
+final class Version070000Date20250925110024 extends SimpleMigrationStep {
+	#[\Override]
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();

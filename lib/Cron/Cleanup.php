@@ -19,7 +19,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use Psr\Log\LoggerInterface;
 
-class Cleanup extends TimedJob {
+final class Cleanup extends TimedJob {
 	public function __construct(
 		ITimeFactory $time,
 		private readonly SessionService $sessionService,
@@ -34,6 +34,7 @@ class Cleanup extends TimedJob {
 	/**
 	 * @param array $argument
 	 */
+	#[\Override]
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAll() as $document) {

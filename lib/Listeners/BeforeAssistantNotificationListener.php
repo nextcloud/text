@@ -14,7 +14,7 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\IURLGenerator;
 
 /** @template-implements IEventListener<BeforeAssistantNotificationEvent|Event> */
-class BeforeAssistantNotificationListener implements \OCP\EventDispatcher\IEventListener {
+final class BeforeAssistantNotificationListener implements \OCP\EventDispatcher\IEventListener {
 
 	public function __construct(
 		private IURLGenerator $urlGenerator,
@@ -24,6 +24,7 @@ class BeforeAssistantNotificationListener implements \OCP\EventDispatcher\IEvent
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforeAssistantNotificationEvent) {
 			return;

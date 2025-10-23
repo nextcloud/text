@@ -14,7 +14,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 /** @extends QBMapper<Session> */
-class SessionMapper extends QBMapper {
+final class SessionMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'text_sessions', Session::class);
 	}

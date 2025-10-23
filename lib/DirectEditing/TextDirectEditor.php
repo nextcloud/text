@@ -22,7 +22,7 @@ use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\Util;
 
-class TextDirectEditor implements IEditor {
+final class TextDirectEditor implements IEditor {
 
 	/** @var IL10N */
 	private $l10n;
@@ -52,6 +52,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return string
 	 */
+	#[\Override]
 	public function getId(): string {
 		return Application::APP_NAME;
 	}
@@ -63,6 +64,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return string
 	 */
+	#[\Override]
 	public function getName(): string {
 		return $this->l10n->t('Nextcloud Text');
 	}
@@ -72,6 +74,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return string[]
 	 */
+	#[\Override]
 	public function getMimetypes(): array {
 		return [
 			'text/markdown',
@@ -106,6 +109,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return string[]
 	 */
+	#[\Override]
 	public function getMimetypesOptional(): array {
 		return [];
 	}
@@ -115,6 +119,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return TextDocumentCreator[]
 	 */
+	#[\Override]
 	public function getCreators(): array {
 		return [
 			new TextDocumentCreator($this->l10n, $this->appConfig),
@@ -126,6 +131,7 @@ class TextDirectEditor implements IEditor {
 	 *
 	 * @return bool
 	 */
+	#[\Override]
 	public function isSecure(): bool {
 		return false;
 	}
@@ -141,6 +147,7 @@ class TextDirectEditor implements IEditor {
 	 * @param IToken $token
 	 * @return Response
 	 */
+	#[\Override]
 	public function open(IToken $token): Response {
 		$token->useTokenScope();
 		try {

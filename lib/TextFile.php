@@ -16,7 +16,7 @@ use OCP\Files\SimpleFS\ISimpleFile;
 /**
  * Wrapper around a ISimpleFile object to ensure that it is correctly encoded (UTF-8) for the text app.
  */
-class TextFile implements ISimpleFile {
+final class TextFile implements ISimpleFile {
 	private ISimpleFile $file;
 	private EncodingService $encodingService;
 
@@ -25,22 +25,27 @@ class TextFile implements ISimpleFile {
 		$this->encodingService = $encodingService;
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return $this->file->getName();
 	}
 
+	#[\Override]
 	public function getSize(): float|int {
 		return $this->file->getSize();
 	}
 
+	#[\Override]
 	public function getETag(): string {
 		return $this->file->getETag();
 	}
 
+	#[\Override]
 	public function getMTime(): int {
 		return $this->file->getMTime();
 	}
 
+	#[\Override]
 	public function getContent(): string {
 		$content = $this->encodingService->encodeToUtf8($this->file->getContent());
 		if ($content === null) {
@@ -50,26 +55,32 @@ class TextFile implements ISimpleFile {
 		return $content;
 	}
 
+	#[\Override]
 	public function putContent($data): void {
 		$this->file->putContent($data);
 	}
 
+	#[\Override]
 	public function delete(): void {
 		$this->file->delete();
 	}
 
+	#[\Override]
 	public function getMimeType(): string {
 		return 'text/plain;encoding=utf-8';
 	}
 
+	#[\Override]
 	public function getExtension(): string {
 		return $this->file->getExtension();
 	}
 
+	#[\Override]
 	public function read() {
 		return $this->file->read();
 	}
 
+	#[\Override]
 	public function write() {
 		return $this->file->write();
 	}
