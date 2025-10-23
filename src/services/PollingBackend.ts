@@ -43,7 +43,7 @@ const FETCH_INTERVAL_READ_ONLY = 30000
  * when a browser window is considered invisible by the page visibility API
  * https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
  */
-const FETCH_INTERVAL_INVISIBLE = 30000
+const FETCH_INTERVAL_INVISIBLE = 20000
 
 const FETCH_INTERVAL_NOTIFY = 30000
 
