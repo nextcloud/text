@@ -12,6 +12,7 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Reload" : "Yenidən yüklə",
     "you" : "siz",
+    "Copy link" : "linki nüsxələ",
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
     "Save changes" : "Dəyişiklikləri yaddaşa ver",
