@@ -54,7 +54,10 @@
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
 				</template>
-				<ContentContainer v-show="contentLoaded" ref="contentWrapper" />
+				<ContentContainer
+					v-show="contentLoaded"
+					ref="contentWrapper"
+					:read-only="!editMode" />
 				<SuggestionsBar v-if="isRichEditor && contentLoaded" />
 			</MainContainer>
 			<Reader
