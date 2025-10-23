@@ -14,7 +14,7 @@
 			<EditorOutline />
 		</div>
 		<slot />
-		<FloatingButtons v-if="!isMobile && !isFullWidth" />
+		<FloatingButtons v-if="showFloatingButtons" />
 		<EditorContent
 			role="document"
 			class="editor__content text-editor__content"
@@ -27,6 +27,7 @@
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useEditorWidth } from '../../composables/useEditorWidth.ts'
 import EditorOutline from './EditorOutline.vue'
 import FloatingButtons from './FloatingButtons.vue'
@@ -40,15 +41,31 @@ export default {
 		FloatingButtons,
 	},
 	mixins: [useOutlineStateMixin],
+	props: {
+		readOnly: {
+			type: Boolean,
+			required: true,
+		},
+	},
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
+		const { isRichEditor, isRichWorkspace } = useEditorFlags()
 		const { isFullWidth } = useEditorWidth()
-		return { editor, isMobile, isFullWidth }
+		return { editor, isMobile, isFullWidth, isRichEditor, isRichWorkspace }
 	},
 	computed: {
 		showOutline() {
 			return this.$outlineState.visible
+		},
+		showFloatingButtons() {
+			return (
+				!this.readOnly
+				&& !this.isMobile
+				&& !this.isFullWidth
+				&& this.isRichEditor
+				&& !this.isRichWorkspace
+			)
 		},
 	},
 }
