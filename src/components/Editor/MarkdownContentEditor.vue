@@ -15,7 +15,7 @@
 					<ReadonlyBar />
 				</slot>
 			</template>
-			<ContentContainer />
+			<ContentContainer :read-only="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
