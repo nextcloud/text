@@ -4,7 +4,6 @@
  */
 
 import TiptapParagraph from '@tiptap/extension-paragraph'
-import currentLineMenu from '../plugins/currentLineMenu.js'
 
 const Paragraph = TiptapParagraph.extend({
 	parseHTML() {
@@ -41,10 +40,6 @@ const Paragraph = TiptapParagraph.extend({
 				return false
 			},
 		}
-	},
-
-	addProseMirrorPlugins() {
-		return [currentLineMenu({ editor: this.editor })]
 	},
 })
 
