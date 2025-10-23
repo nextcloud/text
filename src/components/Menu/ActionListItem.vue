@@ -11,8 +11,7 @@
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:type="state.type"
-		:model-value="state.type !== 'button' ? state.active : undefined"
+		:model-value="actionType !== 'button' ? state.active : undefined"
 		close-after-click
 		v-on="$listeners"
 		@click="runAction">

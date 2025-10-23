@@ -9,7 +9,7 @@
 			:title="label"
 			:aria-label="label"
 			:disabled="true"
-			type="tertiary"
+			variant="tertiary"
 			class="offline-button">
 			<template #icon>
 				<CloudOffIcon :size="20" />

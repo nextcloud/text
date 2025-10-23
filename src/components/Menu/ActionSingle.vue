@@ -12,8 +12,8 @@
 		:data-text-action-entry="actionEntry.key"
 		:aria-label="label"
 		:title="tooltip"
-		type="tertiary"
-		:pressed="state.type !== 'button' ? state.active : undefined"
+		variant="tertiary"
+		:pressed="actionType !== 'button' ? state.active : undefined"
 		v-on="$listeners"
 		@click="runAction">
 		<template #icon>

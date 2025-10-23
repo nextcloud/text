@@ -14,7 +14,7 @@ import {
 	useOutlineStateMixin,
 	useReadOnlyActions,
 } from '../Editor/Wrapper.provider.js'
-import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
+import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
 
@@ -45,6 +45,7 @@ const BaseActionEntry = {
 	data() {
 		return {
 			state: getActionState(this.actionEntry, this.editor),
+			actionType: getActionType(this.actionEntry),
 		}
 	},
 	computed: {

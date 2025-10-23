@@ -23,7 +23,7 @@ export const buildFilePicker = (startPath) => {
 
 			buttons.push({
 				callback: () => {},
-				type: 'primary',
+				variant: 'primary',
 				label,
 				disabled: isRoot,
 			})

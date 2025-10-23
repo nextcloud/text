@@ -68,18 +68,18 @@
 				<NcLoadingIcon v-if="loading" />
 				<NcButton
 					v-if="!result"
-					type="primary"
+					variant="primary"
 					:disabled="loading"
 					@click="translate">
 					{{ t('text', 'Translate') }}
 				</NcButton>
 				<NcButton
 					v-if="result && content"
-					type="secondary"
+					variant="secondary"
 					@click="contentReplace">
 					{{ t('text', 'Replace') }}
 				</NcButton>
-				<NcButton v-if="result" type="primary" @click="contentInsert">
+				<NcButton v-if="result" variant="primary" @click="contentInsert">
 					{{ t('text', 'Insert') }}
 				</NcButton>
 			</div>
