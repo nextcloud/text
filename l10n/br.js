@@ -9,6 +9,7 @@ OC.L10N.register(
     "Reload" : "Adkargañ",
     "Guest" : "Kouviad",
     "edit" : "embann",
+    "Copy link" : "Eilañ al liamm",
     "guest" : "kouviad",
     "Offline" : "Distaget",
     "Saving …" : "Orc'h enrolliñ",
