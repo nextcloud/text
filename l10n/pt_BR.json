@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "Este arquivo está aberto somente para leitura, pois está atualmente trancado por {user}.",
     "Close outline view" : "Fechar visualização de estrutura",
     "Outline" : "Estrutura",
+    "Insert below" : "Insira abaixo",
+    "Click for options, hold to drag" : "Clique para ver as opções, mantenha pressionado para arrastar",
     "Not connected. Cannot update guest name." : "Não conectado. Não é possível atualizar o nome do convidado.",
     "Failed to update the guest name." : "Falha ao atualizar o nome do convidado.",
     "Enter your name so other people can see who is editing" : "Digite seu nome para que outras pessoas possam ver quem está editando",
