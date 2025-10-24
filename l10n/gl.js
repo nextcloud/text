@@ -41,6 +41,8 @@ OC.L10N.register(
     "This file is opened read-only as it is currently locked by {user}." : "Este ficheiro só se pode abrir para lectura por estar bloqueado por {user}.",
     "Close outline view" : "Pechar a vista de esquema",
     "Outline" : "Esquema",
+    "Insert below" : "Inserir embaixo",
+    "Click for options, hold to drag" : "Prema para as opcións, manteña premido para arrastrar",
     "Not connected. Cannot update guest name." : "Non conectado. Non foi posíbel actualizar o nome do convidado.",
     "Failed to update the guest name." : "Produciuse un fallo ao actualizar o nome do convidado.",
     "Enter your name so other people can see who is editing" : "Introduza o seu nome para que outras persoas poidan ver quen está a editar",

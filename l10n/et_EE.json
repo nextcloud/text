@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "See fail on avatud vaid lugemiseks, sest kasutaja {user} on ta lukustanud.",
     "Close outline view" : "Sulge struktuuri vaade",
     "Outline" : "Teksti struktuur",
+    "Insert below" : "Lisa allapoole",
+    "Click for options, hold to drag" : "Valikuid näed klõpsates, lohistamiseks hoia all",
     "Not connected. Cannot update guest name." : "Võrguühendus puudub. Külalise nime ei saa uuendada.",
     "Failed to update the guest name." : "Külalise nime uuendamine ei õnnestunud.",
     "Enter your name so other people can see who is editing" : "Sisesta oma nimi ja muud kasutajad näevad, kes on faili hetkel muutmas",

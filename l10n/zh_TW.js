@@ -41,6 +41,8 @@ OC.L10N.register(
     "This file is opened read-only as it is currently locked by {user}." : "此檔案以唯讀模式開啟，因為其目前被 {user} 鎖定。",
     "Close outline view" : "關閉大綱檢視",
     "Outline" : "大綱",
+    "Insert below" : "下方插入",
+    "Click for options, hold to drag" : "點選以檢視選項，按住以拖曳",
     "Not connected. Cannot update guest name." : "未連線。無法更新訪客名稱。",
     "Failed to update the guest name." : "更新訪客名稱失敗。",
     "Enter your name so other people can see who is editing" : "輸入您的姓名，如此其他人就可以看到是誰在編輯",
