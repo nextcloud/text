@@ -7,7 +7,7 @@ SPDX-FileCopyrightText: text developers
 
 This file is generated from multiple sources. Included packages:
 - @tiptap/extension-history
-	- version: 2.26.3
+	- version: 2.26.4
 	- license: MIT
 - prosemirror-history
 	- version: 1.4.1
