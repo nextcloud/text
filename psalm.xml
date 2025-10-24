@@ -21,6 +21,8 @@
         <directory name="vendor/nextcloud/ocp" />
     </extraFiles>
 	<issueHandlers>
+		<MissingOverrideAttribute errorLevel="suppress" />
+		<ClassMustBeFinal errorLevel="suppress" />
 		<UndefinedClass>
 			<errorLevel type="suppress">
 				<referencedClass name="OC" />
