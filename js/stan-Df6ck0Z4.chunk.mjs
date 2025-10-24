@@ -1,0 +1,2 @@
+import{g as s}from"./emoji-picker-BuOFovvE.chunk.mjs";import{r as c}from"./stan-1kxlC_Si.chunk.mjs";function a(r,f){for(var o=0;o<f.length;o++){const t=f[o];if(typeof t!="string"&&!Array.isArray(t)){for(const e in t)if(e!=="default"&&!(e in r)){const n=Object.getOwnPropertyDescriptor(t,e);n&&Object.defineProperty(r,e,n.get?n:{enumerable:!0,get:()=>t[e]})}}}return Object.freeze(Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}))}var i=c();const l=s(i),u=a({__proto__:null,default:l},[i]);export{u as s};
+//# sourceMappingURL=stan-Df6ck0Z4.chunk.mjs.map
