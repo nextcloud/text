@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "Den här filen öppnas skrivskyddad eftersom den för närvarande är låst av {user}.",
     "Close outline view" : "Stäng översiktsvy",
     "Outline" : "Översikt",
+    "Insert below" : "Infoga nedanför",
+    "Click for options, hold to drag" : "Klicka för alternativ, håll ned för att dra",
     "Not connected. Cannot update guest name." : "Inte ansluten. Kan inte uppdatera gästnamn.",
     "Failed to update the guest name." : "Kunde inte uppdatera gästnamn.",
     "Enter your name so other people can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
