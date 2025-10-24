@@ -1,5 +1,7 @@
-// SPDX-FileCopyrightText: Ferdinand Thiessen <opensource@fthiessen.de>
-// SPDX-License-Identifier: AGPL-3.0-or-later
+/**
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 
 import type { Connect, ViteDevServer } from 'vite'
 
@@ -71,16 +73,6 @@ const config = createAppConfig(
 								return 'emoji-picker'
 							}
 						},
-					},
-				},
-			},
-			test: {
-				setupFiles: ['src/tests/setup.mjs'],
-				environment: 'jsdom',
-				globals: true,
-				server: {
-					deps: {
-						inline: [/@nextcloud.*/],
 					},
 				},
 			},
