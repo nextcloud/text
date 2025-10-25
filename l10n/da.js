@@ -61,7 +61,7 @@ OC.L10N.register(
     "Text only" : "Kun tekst",
     "Show link preview" : "Vis forhåndsvisning af link",
     "Open in new tab" : "Åben i ny fane",
-    "Copy link" : "Kopiér link",
+    "Copy link" : "Kopier link",
     "Remove link" : "Fjern link",
     "Active people" : "Aktive mennesker",
     "guest" : "Gæst",
