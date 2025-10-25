@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "此檔案以唯讀模式打開，因為它目前被 {user} 鎖上。",
     "Close outline view" : "關閉大綱檢視",
     "Outline" : "大綱",
+    "Insert below" : "下方插入",
+    "Click for options, hold to drag" : "點選以檢視選項，按住以拖曳",
     "Not connected. Cannot update guest name." : "未連接。無法更新訪客名字。",
     "Failed to update the guest name." : "更新訪客名字失敗",
     "Enter your name so other people can see who is editing" : "輸入您的姓名，以便其他人可以看到誰在編輯",
