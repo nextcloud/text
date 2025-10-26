@@ -208,8 +208,12 @@ class DocumentService {
 			if ($readOnly && $message->isUpdate()) {
 				continue;
 			}
+			// Only accept sync protocol
+			if ($message->getYjsMessageType() !== YjsMessage::YJS_MESSAGE_SYNC) {
+				continue;
+			}
 			// Filter out query steps as they would just trigger clients to send their steps again
-			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
+			if ($message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
 				$stepsIncludeQuery = true;
 			} else {
 				$stepsToInsert[] = $step;
@@ -249,7 +253,7 @@ class DocumentService {
 		$stepsToReturn = [];
 		foreach ($allSteps as $step) {
 			$message = YjsMessage::fromBase64($step->getData());
-			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_UPDATE) {
+			if ($message->isUpdate()) {
 				$stepsToReturn[] = $step;
 			}
 		}
