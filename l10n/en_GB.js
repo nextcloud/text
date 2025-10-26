@@ -41,6 +41,8 @@ OC.L10N.register(
     "This file is opened read-only as it is currently locked by {user}." : "This file is opened read-only as it is currently locked by {user}.",
     "Close outline view" : "Close outline view",
     "Outline" : "Outline",
+    "Insert below" : "Insert below",
+    "Click for options, hold to drag" : "Click for options, hold to drag",
     "Not connected. Cannot update guest name." : "Not connected. Cannot update guest name.",
     "Failed to update the guest name." : "Failed to update the guest name.",
     "Enter your name so other people can see who is editing" : "Enter your name so other people can see who is editing",
