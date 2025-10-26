@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "Osclaítear an comhad seo inléite amháin toisc go bhfuil sé glasáilte faoi láthair ag {user}.",
     "Close outline view" : "Amharc imlíne gar",
     "Outline" : "Imlíne",
+    "Insert below" : "Cuir isteach thíos",
+    "Click for options, hold to drag" : "Cliceáil le haghaidh roghanna, coinnigh síos chun tarraingt",
     "Not connected. Cannot update guest name." : "Gan cheangal. Ní féidir ainm an aoi a nuashonrú.",
     "Failed to update the guest name." : "Theip ar ainm an aoi a nuashonrú.",
     "Enter your name so other people can see who is editing" : "Cuir isteach d'ainm le go bhfeicfidh daoine eile cé atá i mbun eagarthóireachta",

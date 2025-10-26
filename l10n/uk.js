@@ -41,6 +41,8 @@ OC.L10N.register(
     "This file is opened read-only as it is currently locked by {user}." : "Цей файл відкрито лише для читання, оскільки він наразі заблокований {user}.",
     "Close outline view" : "Закрити вивід змісту",
     "Outline" : "Зміст",
+    "Insert below" : "Вставити нижче",
+    "Click for options, hold to drag" : "Клацніть для опцій, утримайте для переміщення",
     "Not connected. Cannot update guest name." : "Відсутнє з'єднання. Неможливо оновити ім'я гостя.",
     "Failed to update the guest name." : "Не вдалося оновити ім'я гостя.",
     "Enter your name so other people can see who is editing" : "Зазначте ваше ім’я, щоби інші користувачі могли бачити, хто редагує",
