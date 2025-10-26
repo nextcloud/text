@@ -73,23 +73,19 @@ describe('The session Api', function () {
 			cy.closeConnection(connection)
 		})
 
-		// Echoes all message types but queries
-		Object.entries(messages)
-			.filter(([key, _value]) => key !== 'query')
-			.forEach(([type, sample]) => {
-				it(`echos ${type} messages`, function () {
-					const steps = [sample]
-					const version = 0
-					cy.pushSteps({ connection, steps, version })
-						.its('version')
-						.should('eql', 0)
-					cy.syncSteps(connection)
-						.its('steps[0].data')
-						.should('eql', steps)
-				})
+		// Echoes updates and responses
+		;['update', 'response'].forEach((type) => {
+			it(`echos ${type} messages`, function () {
+				const steps = [messages[type]]
+				const version = 0
+				cy.pushSteps({ connection, steps, version })
+					.its('version')
+					.should('eql', 0)
+				cy.syncSteps(connection).its('steps[0].data').should('eql', steps)
 			})
+		})
 
-		it('responds to queries', function () {
+		it('responds to queries with updates and responses', function () {
 			const version = 0
 			Object.entries(messages).forEach(([type, sample]) => {
 				cy.pushSteps({ connection, steps: [sample], version })
@@ -97,10 +93,13 @@ describe('The session Api', function () {
 			cy.pushSteps({ connection, steps: [messages.query], version }).then(
 				(response) => {
 					cy.wrap(response).its('version').should('eql', 0)
-					cy.wrap(response).its('steps.length').should('eql', 1)
+					cy.wrap(response).its('steps.length').should('eql', 2)
 					cy.wrap(response)
 						.its('steps[0].data')
 						.should('eql', [messages.update])
+					cy.wrap(response)
+						.its('steps[1].data')
+						.should('eql', [messages.response])
 				},
 			)
 		})
@@ -111,7 +110,6 @@ describe('The session Api', function () {
 		let connection
 		let fileId
 		let filePath
-		let joining
 
 		beforeEach(function () {
 			cy.testName().then((name) => {
@@ -156,13 +154,10 @@ describe('The session Api', function () {
 				manualSave: true,
 			})
 			cy.openConnection({ fileId, filePath })
-				.then(({ connection: con, data }) => {
-					joining = con
-					return data
-				})
-				.its('documentState')
+				.as('joining')
+				.its('data.documentState')
 				.should('eql', documentState)
-			cy.closeConnection(joining)
+			cy.get('@joining').its('connection').then(cy.closeConnection)
 		})
 
 		afterEach(function () {
@@ -175,7 +170,6 @@ describe('The session Api', function () {
 		let connection
 		let filePath
 		let shareToken
-		let joining
 
 		beforeEach(function () {
 			cy.testName().then((name) => {
@@ -232,13 +226,10 @@ describe('The session Api', function () {
 				manualSave: true,
 			})
 			cy.openConnection({ filePath: '', token: shareToken })
-				.then(({ connection: con, data }) => {
-					joining = con
-					return data
-				})
-				.its('documentState')
+				.as('joining')
+				.its('data.documentState')
 				.should('eql', documentState)
-			cy.closeConnection(joining)
+			cy.get('@joining').its('connection').then(cy.closeConnection)
 		})
 	})
 
