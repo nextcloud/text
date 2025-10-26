@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { OpenData } from '../apis/connect'
 import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
 import { logger } from '../helpers/logger.js'
+import { stepsFromOpenData } from '../helpers/yjs'
 import getNotifyBus from './NotifyService'
 import type { Step, SyncService } from './SyncService'
 
@@ -35,10 +37,11 @@ export default function initWebSocketPolyfill(
 			this.#url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId })
 
-			this.#onOpened = () => {
+			this.#onOpened = (data: OpenData) => {
 				if (syncService.hasActiveConnection()) {
 					this.onopen?.()
 				}
+				this.#processSteps(stepsFromOpenData(data))
 			}
 			syncService.bus.on('opened', this.#onOpened)
 
@@ -104,6 +107,7 @@ export default function initWebSocketPolyfill(
 
 		async close() {
 			syncService.bus.off('sync', this.#onSync)
+			syncService.bus.off('opened', this.#onOpened)
 			this.#notifyPushBus?.off('notify_push', this.#onNotifyPush.bind(this))
 			this.onclose?.(new CloseEvent('closing'))
 			logger.debug('Websocket closed')

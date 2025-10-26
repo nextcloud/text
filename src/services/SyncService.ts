@@ -176,13 +176,6 @@ class SyncService {
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
 		this.bus.emit('opened', data)
-		// Emit sync after opened, so websocket onmessage comes after onopen.
-		if (data.documentState) {
-			this.#emitDocumentStateStep(
-				data.documentState,
-				data.document.lastSavedVersion,
-			)
-		}
 	}
 
 	startSync() {

@@ -7,6 +7,7 @@ import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
+import type { OpenData } from '../apis/connect'
 import type { Step } from '../services/SyncService'
 import { messageSync } from '../services/y-websocket.js'
 import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
@@ -35,6 +36,21 @@ export function applyDocumentState(
 ) {
 	const update = decodeArrayBuffer(documentState)
 	Y.applyUpdate(ydoc, update, origin)
+}
+
+/**
+ * Create a steps from the open response
+ * i.e. create a sync protocol update message from the document state
+ * and encode it and wrap it in a step data structure.
+ *
+ * @param data - data returned by the open request
+ * @return steps extracted from the open data.
+ */
+export function stepsFromOpenData(data: OpenData): Step[] {
+	if (!data.documentState) {
+		return []
+	}
+	return [documentStateToStep(data.documentState, data.document.lastSavedVersion)]
 }
 
 /**
