@@ -54,10 +54,6 @@ class SaveService {
 		return this.syncService.bus.emit
 	}
 
-	_getContent() {
-		return this.serialize()
-	}
-
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
 		if (!this.connection.value) {
@@ -67,7 +63,7 @@ class SaveService {
 		try {
 			const response = await save(this.connection.value, {
 				version: this.version,
-				autosaveContent: this._getContent(),
+				autosaveContent: this.serialize(),
 				documentState: this.getDocumentState(),
 				force,
 				manualSave,
@@ -88,7 +84,7 @@ class SaveService {
 		}
 		saveViaSendBeacon(this.connection.value, {
 			version: this.version,
-			autosaveContent: this._getContent(),
+			autosaveContent: this.serialize(),
 			documentState: this.getDocumentState(),
 		}) && logger.debug('[SaveService] saved using sendBeacon')
 	}
