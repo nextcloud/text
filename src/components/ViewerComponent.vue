@@ -5,14 +5,15 @@
 
 <template>
 	<Editor
-		v-if="!useSourceView"
+		v-if="!useSourceView && !reloading"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
-		:mime="mime" />
+		:mime="mime"
+		@reload="reloading = true" />
 	<SourceView
 		v-else
 		:fileid="fileid"
@@ -80,6 +81,7 @@ export default defineComponent({
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
+			reloading: false,
 		}
 	},
 	computed: {
@@ -97,6 +99,16 @@ export default defineComponent({
 
 		isEncrypted() {
 			return this.$attrs.e2EeIsEncrypted || false
+		},
+	},
+
+	watch: {
+		reloading(val) {
+			if (val) {
+				this.$nextTick(() => {
+					this.reloading = false
+				})
+			}
 		},
 	},
 
