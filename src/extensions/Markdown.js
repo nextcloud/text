@@ -94,13 +94,20 @@ const Markdown = Extension.create({
 					},
 					clipboardTextSerializer: (slice) => {
 						const traverseNodes = (slice) => {
-							if (slice.content.childCount > 1) {
+							if (
+								slice.content.childCount > 1
+								|| slice.content.firstChild?.childCount > 1
+							) {
+								// Selected several nodes or several children of one block node
 								return clipboardSerializer(
 									this.editor.schema,
 								).serialize(slice.content)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
+								// Only one block node selected, copy it's child content
+								// Required to not copy wrapping block node when selecting e.g. one table
+								// cell, one list item or the content of block quotes/callouts.
 								return traverseNodes(slice.content.firstChild)
 							}
 						}
