@@ -5,7 +5,7 @@
 
 <template>
 	<Editor
-		v-if="!useSourceView"
+		v-if="!useSourceView && !reloading"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
@@ -13,7 +13,8 @@
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
-		:show-outline-outside="showOutlineOutside" />
+		:show-outline-outside="showOutlineOutside"
+		@reload="reloading = true" />
 	<div
 		v-else
 		id="editor-container"
@@ -107,6 +108,7 @@ export default {
 		return {
 			content: '',
 			hasToggledInteractiveEmbedding: false,
+			reloading: false,
 		}
 	},
 	computed: {
@@ -141,6 +143,13 @@ export default {
 	watch: {
 		source() {
 			this.loadFileContent()
+		},
+		reloading(val) {
+			if (val) {
+				this.$nextTick(() => {
+					this.reloading = false
+				})
+			}
 		},
 	},
 
