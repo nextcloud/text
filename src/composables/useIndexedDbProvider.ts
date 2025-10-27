@@ -48,7 +48,16 @@ export function useIndexedDbProvider(
 		return indexedDbProvider.set('baseVersionEtag', val)
 	}
 
+	/**
+	 * Clear the current document from indexed db.
+	 * Used to reset the browser state to load a new editing session.
+	 */
+	function clearIndexedDb() {
+		return indexedDbProvider.clearData()
+	}
+
 	return {
+		clearIndexedDb,
 		dirty,
 		getBaseVersionEtag,
 		setBaseVersionEtag,

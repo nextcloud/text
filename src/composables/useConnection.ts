@@ -106,7 +106,11 @@ function openInitialSession(
 			throw new Error(
 				'Base version etag did not match when opening initial session.',
 			)
-			// In order to handle this properly we'd need to:
+			// We need to handle dirty documents differently from 'clean' ones.
+			// For clean ones we need to
+			// * call .clearData() on the provider
+			// * reinitialize the editing session - maybe by reloading the component.
+			// In order to handle the dirty state - i.e. a conflict properly we'd need to:
 			// * fetch the file content.
 			// * throw the same exception as a 409 response.
 			// * include the file content as `outsideChange` in the error.
