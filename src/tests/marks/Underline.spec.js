@@ -23,10 +23,12 @@ describe('Underline extension integrated in the editor', () => {
 	it('is not active by default', () => {
 		const editor = createCustomEditor('<p>Test</p>', [Underline])
 		expect(editor.isActive('underline')).toBe(false)
+		editor.destroy()
 	})
 
 	it('is active within <u> tags', () => {
 		const editor = createCustomEditor('<p><u>Test</u></p>', [Underline])
 		expect(editor.isActive('underline')).toBe(true)
+		editor.destroy()
 	})
 })

@@ -23,6 +23,7 @@ describe('TaskItem extension', () => {
 		const editor = createCustomEditor('', [Markdown, TaskList, TaskItem])
 		const taskItem = editor.schema.nodes.taskItem
 		expect(taskItem.spec.toMarkdown).toBeDefined()
+		editor.destroy()
 	})
 
 	it('markdown syntax is preserved through editor', () => {

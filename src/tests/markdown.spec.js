@@ -334,5 +334,6 @@ describe('Trailing nodes', () => {
 		const serializer = createMarkdownSerializer(tiptap.schema)
 		const md = serializer.serialize(tiptap.state.doc)
 		expect(md).toBe(source)
+		tiptap.destroy()
 	})
 })

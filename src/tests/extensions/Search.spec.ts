@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it } from 'vitest'
 import Search from '../../extensions/Search'
 import HardBreak from '../../nodes/HardBreak.js'
 import { searchDecorationsPluginKey } from '../../plugins/searchDecorations.js'
@@ -12,6 +12,10 @@ import createCustomEditor from '../testHelpers/createCustomEditor'
 
 describe('editor search highlighting', () => {
 	const editor = createCustomEditor(lorem, [Search, HardBreak])
+
+	afterAll(() => {
+		editor.destroy()
+	})
 
 	it('can highlight a match', () => {
 		const searchQuery = 'Lorem'

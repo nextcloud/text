@@ -17,7 +17,9 @@ export function markdownThroughEditor(markdown) {
 	const tiptap = createRichEditor()
 	tiptap.commands.setContent(markdownit.render(markdown))
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const serializedMarkdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return serializedMarkdown
 }
 
 /**
@@ -30,7 +32,9 @@ export function markdownThroughEditorHtml(html) {
 	const tiptap = createRichEditor()
 	tiptap.commands.setContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const markdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return markdown
 }
 
 /**
@@ -43,5 +47,7 @@ export function markdownFromPaste(html) {
 	const tiptap = createRichEditor()
 	tiptap.commands.insertContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const markdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return markdown
 }
