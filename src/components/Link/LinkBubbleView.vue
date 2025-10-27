@@ -173,8 +173,12 @@ export default {
 		 * NcReferenceList only accepts full URLs with origin.
 		 */
 		sanitizedHref() {
-			const url = new URL(this.href, window.location)
-			return url.href
+			try {
+				const url = new URL(this.href, window.location)
+				return url.href
+			} catch {
+				return this.href
+			}
 		},
 
 		title() {
@@ -182,8 +186,12 @@ export default {
 		},
 
 		showPreview() {
-			const url = new URL(this.href, window.location)
-			return this.href && PROTOCOLS_WITH_PREVIEW.includes(url.protocol)
+			try {
+				const url = new URL(this.href, window.location)
+				return this.href && PROTOCOLS_WITH_PREVIEW.includes(url.protocol)
+			} catch {
+				return false
+			}
 		},
 	},
 
