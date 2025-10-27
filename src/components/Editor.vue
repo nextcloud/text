@@ -225,7 +225,7 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		const { dirty, getBaseVersionEtag, setBaseVersionEtag } =
+		const { dirty, getBaseVersionEtag, setBaseVersionEtag, clearIndexedDb } =
 			useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
@@ -282,6 +282,7 @@ export default defineComponent({
 
 		return {
 			awareness,
+			clearIndexedDb,
 			connection,
 			dirty,
 			editor,
@@ -337,6 +338,13 @@ export default defineComponent({
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
 		},
+		hasOutdatedDocument() {
+			return (
+				this.syncError
+				&& this.syncError.type === ERROR_TYPE.LOAD_ERROR
+				&& this.syncError.data.status === 412
+			)
+		},
 		currentDirectory() {
 			return this.relativePath
 				? this.relativePath.split('/').slice(0, -1).join('/')
@@ -390,6 +398,18 @@ export default defineComponent({
 				this.emit('sync-service:error')
 			}
 			this.setEditable(!val)
+		},
+		hasOutdatedDocument(val) {
+			if (!val) {
+				return
+			}
+			if (this.dirty) {
+				// handle conflict between active editing session and offline content
+			} else {
+				// clear the outdated cached content and reload without it.
+				this.clearIndexedDb()
+				this.emit('reload')
+			}
 		},
 	},
 	mounted() {
