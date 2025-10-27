@@ -64,5 +64,7 @@ describe('extractHeadings', () => {
 
 const prepareDoc = (content) => {
 	const editor = createCustomEditor(content, [Heading])
-	return editor.state.doc
+	const doc = editor.state.doc
+	editor.destroy()
+	return doc
 }

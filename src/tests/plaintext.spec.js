@@ -21,7 +21,9 @@ const plaintextThroughEditor = (markdown) => {
 	const content = '<pre>' + escapeHTML(markdown) + '</pre>'
 	const tiptap = createPlainEditor()
 	tiptap.commands.setContent(content)
-	return serializePlainText(tiptap.state.doc) || 'failed'
+	const plaintext = serializePlainText(tiptap.state.doc) || 'failed'
+	tiptap.destroy()
+	return plaintext
 }
 
 describe('commonmark as plaintext', () => {
@@ -93,5 +95,6 @@ describe('regression tests', () => {
 		tiptap.commands.enter()
 		tiptap.commands.enter()
 		expect(serializePlainText(tiptap.state.doc)).toEqual('\n\n\n')
+		tiptap.destroy()
 	})
 })

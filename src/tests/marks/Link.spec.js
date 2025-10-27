@@ -13,6 +13,7 @@ describe('Link extension integrated in the editor', () => {
 			[Link],
 		)
 		expect(editor.commands).toHaveProperty('insertOrSetLink')
+		editor.destroy()
 	})
 
 	it('should update link if anchor has mark', () => {
@@ -23,6 +24,7 @@ describe('Link extension integrated in the editor', () => {
 		editor.commands.setTextSelection(3)
 		editor.commands.insertOrSetLink('updated.de', { href: 'updated.de' })
 		expect(editor.getJSON()).toMatchSnapshot()
+		editor.destroy()
 	})
 
 	it('Should only update link the anchor is on', () => {
@@ -33,6 +35,7 @@ describe('Link extension integrated in the editor', () => {
 		editor.commands.setTextSelection(3)
 		editor.commands.insertOrSetLink('updated.de', { href: 'updated.de' })
 		expect(editor.getJSON()).toMatchSnapshot()
+		editor.destroy()
 	})
 
 	it('should insert new link if none at anchor', () => {
@@ -45,5 +48,6 @@ describe('Link extension integrated in the editor', () => {
 			href: 'https://nextcloud.com',
 		})
 		expect(editor.getJSON()).toMatchSnapshot()
+		editor.destroy()
 	})
 })

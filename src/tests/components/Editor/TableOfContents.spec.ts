@@ -30,6 +30,7 @@ test('renders nothing for editor without headings', () => {
 	const wrapper = mountWithEditor(editor)
 	expect(wrapper.text()).toEqual('')
 	expect(wrapper.vm.$data.headings).toEqual([])
+	editor.destroy()
 })
 
 test('renders initial heading', async () => {
@@ -38,6 +39,7 @@ test('renders initial heading', async () => {
 	await nextTick()
 	expect(wrapper.text()).toEqual(text)
 	expect(wrapper.vm.$data.headings).toEqual(headingsForContent)
+	editor.destroy()
 })
 
 test('updates according to editor changes', async () => {
@@ -48,6 +50,7 @@ test('updates according to editor changes', async () => {
 	await nextTick()
 	expect(wrapper.text()).toEqual(text)
 	expect(wrapper.vm.$data.headings).toEqual(headingsForContent)
+	editor.destroy()
 })
 
 test('disconnects on destroy', async () => {
@@ -58,4 +61,5 @@ test('disconnects on destroy', async () => {
 	expect(on).toHaveBeenCalledWith('update', expect.any(Function))
 	wrapper.destroy()
 	expect(off).toHaveBeenCalledWith('update', expect.any(Function))
+	editor.destroy()
 })

@@ -36,6 +36,7 @@ test('does not render without state', async () => {
 	const wrapper = mountWithEditor(editor)
 	await nextTick()
 	expect(wrapper.find('button').exists()).toBe(false)
+	editor.destroy()
 })
 
 test('does render with translations', async () => {
@@ -44,6 +45,7 @@ test('does render with translations', async () => {
 	const wrapper = mountWithEditor(editor)
 	await nextTick()
 	expect(wrapper.find('button').exists()).toBe(true)
+	editor.destroy()
 })
 
 test('emits the full content when clicked', async () => {
@@ -56,4 +58,5 @@ test('emits the full content when clicked', async () => {
 	wrapper.find('button').trigger('click')
 	await nextTick()
 	expect(listen).toHaveBeenCalledWith({ content: text })
+	editor.destroy()
 })

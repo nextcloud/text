@@ -14,7 +14,7 @@ import { createRichEditor } from '../../EditorFactory.js'
  */
 export function getBuilders() {
 	const editor = createRichEditor()
-	return builders(editor.schema, {
+	const nodeBuilders = builders(editor.schema, {
 		tr: { nodeType: 'tableRow' },
 		td: { nodeType: 'tableCell' },
 		th: { nodeType: 'tableHeader' },
@@ -23,6 +23,8 @@ export function getBuilders() {
 		br: { nodeType: 'hardBreak' },
 		p: { nodeType: 'paragraph' },
 	})
+	editor.destroy()
+	return nodeBuilders
 }
 
 export const p = getBuilders().p

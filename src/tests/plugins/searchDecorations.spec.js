@@ -79,10 +79,12 @@ describe('search plugin', () => {
 })
 
 const testSearch = (content, query, expectedSearchResults) => {
-	const doc = createCustomEditor(content).state.doc
+	const editor = createCustomEditor(content)
+	const doc = editor.state.doc
 	const searched = runSearch(doc, query)
 	expect(searched).toHaveProperty('results', expectedSearchResults.results)
 	expect(highlightResults(doc, searched.results)).toEqual(
 		highlightResults(doc, expectedSearchResults.results),
 	)
+	editor.destroy()
 }
