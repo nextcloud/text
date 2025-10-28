@@ -39,6 +39,8 @@
     "This file is opened read-only as it is currently locked by {user}." : "Bu dosya {user} tarafından kilitlenmiş olduğundan salt okunur olarak açıldı.",
     "Close outline view" : "Özet görünümünü kapat",
     "Outline" : "Özet",
+    "Insert below" : "Aşağıya ekle",
+    "Click for options, hold to drag" : "Seçenekler için tıklayın, sürüklemek için basılı tutun",
     "Not connected. Cannot update guest name." : "Bağlı değil. Konuk adı güncellenemedi.",
     "Failed to update the guest name." : "Konuk adı güncellenemedi.",
     "Enter your name so other people can see who is editing" : "Adınızı yazın. Böylece diğer kişiler kimin düzenleme yaptığını görebilir",
