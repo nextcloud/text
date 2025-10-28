@@ -8,7 +8,9 @@ cypress/snapshots/actual
 cypress/snapshots/diff
 cypress/videos/
 cypress/downloads/
+/playwright-report/
 .php-cs-fixer.cache
+/test-results/
 /tests/clover.xml
 /tests/.phpunit.result.cache
 dist/
