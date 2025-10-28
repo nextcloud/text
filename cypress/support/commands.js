@@ -38,6 +38,46 @@ Cypress.Commands.overwrite('login', (login, user) => {
 	cy.wrap(user, silent).as('currentUser')
 })
 
+// Switch network state
+Cypress.Commands.add('goOffline', () => {
+	cy.log('**go offline**')
+		.then(() => {
+			return Cypress.automation('remote:debugger:protocol', {
+				command: 'Network.enable',
+			})
+		})
+		.then(() => {
+			return Cypress.automation('remote:debugger:protocol', {
+				command: 'Network.emulateNetworkConditions',
+				params: {
+					offline: true,
+					latency: -1,
+					downloadThroughput: -1,
+					uploadThroughput: -1,
+				},
+			})
+		})
+})
+Cypress.Commands.add('goOnline', () => {
+	cy.log('**go online**')
+		.then(() => {
+			return Cypress.automation('remote:debugger:protocol', {
+				command: 'Network.emulateNetworkConditions',
+				params: {
+					offline: false,
+					latency: -1,
+					downloadThroughput: -1,
+					uploadThroughput: -1,
+				},
+			})
+		})
+		.then(() => {
+			return Cypress.automation('remote:debugger:protocol', {
+				command: 'Network.disable',
+			})
+		})
+})
+
 Cypress.Commands.add('openDirectEditingToken', (token) => {
 	const visitHooks = {
 		onBeforeLoad(win) {

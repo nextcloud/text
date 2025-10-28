@@ -36,6 +36,7 @@
 		<NcActionButton
 			v-if="!isUsingDirectEditing"
 			ref="buttonFile"
+			:disabled="!networkOnline"
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
 			<template #icon>
@@ -89,6 +90,7 @@ import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { t } from '@nextcloud/l10n'
+import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { buildFilePicker } from '../../helpers/filePicker.js'
 import { useFileMixin } from '../Editor.provider.ts'
 import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
@@ -109,6 +111,10 @@ export default {
 	},
 	extends: BaseActionEntry,
 	mixins: [useFileMixin, useMenuIDMixin],
+	setup() {
+		const { networkOnline } = useNetworkState()
+		return { ...BaseActionEntry.setup(), networkOnline }
+	},
 	data: () => {
 		return {
 			href: '',
