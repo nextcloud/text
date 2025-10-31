@@ -30,7 +30,7 @@ OC.L10N.register(
     "Edit" : "Tahrirlash",
     "Source code" : "Manba kodi",
     "Delete this attachment" : "Ushbu biriktirmani oʻchirib tashlang",
-    "Done" : "Done",
+    "Done" : "Bajarildi",
     "Lists" : "Ro'yxatlar",
     "Table" : "Jadval",
     "Details" : "Details",
