@@ -27,22 +27,13 @@ describe('Assistant', () => {
 
 		cy.getContent().click({ force: true })
 
-		cy.get('[data-cy="assistantMenu"]').should('be.visible')
+		cy.getActionEntry('assistant').should('be.visible')
 
-		cy.get('[data-cy="assistantMenu"]').click()
+		cy.getActionEntry('assistant').click()
 
-		cy.get('.action-item__popper ul')
-			.children()
-			.should(($children) => {
-				const entries = $children
-					.find('button')
-					.map((i, el) => el.innerText)
-					.get()
-				expect(entries.length).to.be.greaterThan(0)
-				expect('Free text to text prompt').to.be.oneOf(entries)
-				expect('Translate').to.be.oneOf(entries)
-				expect('Show assistant results').to.be.oneOf(entries)
-			})
+		cy.get('.action-button').contains('Free text to text prompt')
+		cy.get('.action-button').contains('Translate')
+		cy.get('.action-button').contains('Show assistant results')
 	})
 
 	it('Send free prompt request', () => {
@@ -52,10 +43,8 @@ describe('Assistant', () => {
 		cy.openFile(fileName, { force: true })
 
 		cy.getContent().click({ force: true })
-		cy.get('[data-cy="assistantMenu"]').click()
-		cy.get('.action-item__popper li')
-			.contains('Free text to text prompt')
-			.click()
+		cy.getActionEntry('assistant').click()
+		cy.get('.action-button').contains('Free text to text prompt').click()
 
 		cy.get('.assistant-modal--content #input-input').should('be.visible')
 
@@ -72,8 +61,8 @@ describe('Assistant', () => {
 		)
 
 		cy.get('.assistant-modal--content .close-button').click()
-		cy.get('[data-cy="assistantMenu"]').click()
-		cy.get('.action-item__popper ul li').last().click()
+		cy.getActionEntry('assistant').click()
+		cy.get('.action-button').contains('Show assistant results').click()
 
 		cy.get('.modal-container__content .task-list')
 			.should('be.visible')
@@ -86,9 +75,8 @@ describe('Assistant', () => {
 		})
 		cy.openFile(fileName, { force: true })
 
-		cy.getContent().click({ force: true })
-		cy.get('[data-cy="assistantMenu"]').click()
-		cy.get('[data-cy="open-translate"]').should('be.visible').click()
+		cy.getActionEntry('assistant').click()
+		cy.get('.action-button').contains('Translate').click()
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
