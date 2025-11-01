@@ -97,7 +97,7 @@
     "markdown-it-image-figures": "^2.1.1",
     "mermaid": "^11.12.1",
     "mitt": "^3.0.1",
-    "path-normalize": "^7.0.0",
+    "path-normalize": "^8.0.0",
     "proxy-polyfill": "^0.3.2",
     "slug": "^11.0.1",
     "tippy.js": "^6.3.7",
