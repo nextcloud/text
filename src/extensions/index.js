@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import CollaborationCursor from './CollaborationCursor.ts'
+import CollaborationCaret from './CollaborationCaret.ts'
 import Emoji from './Emoji.js'
 import FocusTrap from './FocusTrap.js'
 import KeepSyntax from './KeepSyntax.js'
@@ -14,7 +14,7 @@ import RichText from './RichText.js'
 import UserColor from './UserColor.js'
 
 export {
-	CollaborationCursor,
+	CollaborationCaret,
 	Emoji,
 	FocusTrap,
 	KeepSyntax,

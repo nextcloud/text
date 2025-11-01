@@ -4,7 +4,7 @@
  */
 
 import { t } from '@nextcloud/l10n'
-import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
+import { CollaborationCaret as TiptapCollaborationCaret } from '@tiptap/extension-collaboration-caret'
 
 export interface AwarenessUser {
 	color: string
@@ -14,18 +14,18 @@ export interface AwarenessUser {
 /**
  * @param clientId The Yjs client ID
  */
-function showCursorLabel(clientId: number) {
+function showCaretLabel(clientId: number) {
 	setTimeout(() => {
 		const el = document.getElementById(
-			`collaboration-cursor__label__${clientId}`,
+			`collaboration-carets__label__${clientId}`,
 		)
 		if (!el) {
 			return
 		}
 
-		el.classList.add('collaboration-cursor__label__active')
+		el.classList.add('collaboration-carets__label__active')
 		setTimeout(() => {
-			el?.classList.remove('collaboration-cursor__label__active')
+			el?.classList.remove('collaboration-carets__label__active')
 		}, 50)
 	}, 50)
 }
@@ -38,26 +38,30 @@ function getTimestamp() {
 }
 
 /**
- * Render the cursor decoration
+ * Render the caret decoration
  *
  * @param user the users awareness data
  * @param clientId not part of the tiptap type signature but provided by y-prosemirror
  */
 function render(user: AwarenessUser, clientId?: number): HTMLElement {
 	const cursor = document.createElement('span')
-	cursor.classList.add('collaboration-cursor__caret')
+
+	cursor.classList.add('collaboration-carets__caret')
 	cursor.setAttribute('style', `border-color: ${user.color}`)
+
 	const label = document.createElement('div')
-	label.classList.add('collaboration-cursor__label')
-	label.id = `collaboration-cursor__label__${clientId}`
+	label.id = `collaboration-carets__label__${clientId}`
+
+	label.classList.add('collaboration-carets__label')
 	label.setAttribute('style', `background-color: ${user.color}`)
 	const text = document.createTextNode(user.name || t('text', 'Guest'))
 	label.insertBefore(text, null)
 	cursor.insertBefore(label, null)
+
 	return cursor
 }
 
-const CollaborationCursor = TiptapCollaborationCursor.extend({
+const CollaborationCaret = TiptapCollaborationCaret.extend({
 	addOptions() {
 		return {
 			...this.parent?.(),
@@ -74,8 +78,8 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 			) => {
 				if (origin !== 'local') {
 					for (const clientId of [...added, ...updated]) {
-						if (clientId !== this.options.user.clientId) {
-							showCursorLabel(clientId)
+						if (clientId !== this.options.user.clientID) {
+							showCaretLabel(clientId)
 						}
 					}
 				}
@@ -83,7 +87,7 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 		)
 	},
 
-	// Flag own cursor as active on undoable changes to the document state
+	// Flag own caret as active on undoable changes to the document state
 	onTransaction({ transaction, editor }) {
 		const addToHistory = transaction.getMeta('addToHistory') ?? true
 		const pointer = transaction.getMeta('pointer')
@@ -97,4 +101,4 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 	},
 })
 
-export default CollaborationCursor
+export default CollaborationCaret
