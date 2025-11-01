@@ -28,7 +28,7 @@ export const useEditorMethods = (editor: Editor) => {
 			: `<pre>${escapeHtml(content)}</pre>`
 		editor
 			.chain()
-			.setContent(html, addToHistory)
+			.setContent(html, { emitUpdate: addToHistory })
 			.command(({ tr }) => {
 				tr.setMeta('addToHistory', addToHistory)
 				return true
