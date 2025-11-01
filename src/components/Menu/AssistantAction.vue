@@ -1,70 +1,75 @@
 <!--
-  - SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div v-if="showAssistant" class="text-assistant">
-		<FloatingMenu
-			v-if="editor"
-			plugin-key="assistantMenu"
-			:editor="editor"
-			:tippy-options="floatingOptions()"
-			:should-show="floatingShow"
-			class="floating-menu"
-			data-cy="assistantMenu">
-			<NcActions :title="t('text', 'Nextcloud Assistant')" variant="secondary">
+	<div class="assistant-action">
+		<NcActions
+			class="entry-action entry-action__assistant"
+			:title="actionEntry.label"
+			:aria-label="actionEntry.label"
+			:container="menuIDSelector"
+			:data-text-action-entry="actionEntry.key"
+			:name="actionEntry.label"
+			:open="menuOpen"
+			force-menu
+			@update:open="
+				(open) => {
+					menuOpen = menuOpen || open
+				}
+			">
+			<template #icon>
+				<NcAssistantIcon :size="20" class="assistant-icon" />
+			</template>
+			<NcActionButton
+				v-for="type in taskTypes"
+				:key="type.id"
+				close-after-click
+				@click="openAssistantForm(type.id)">
+				<template #icon>
+					<PencilOutlineIcon
+						v-if="type.id == 'core:text2text'"
+						:size="20" />
+					<FormatHeader1
+						v-else-if="type.id == 'core:text2text:headline'"
+						:size="20" />
+					<Shuffle
+						v-else-if="type.id == 'core:text2text:reformulation'"
+						:size="20" />
+					<TextShort
+						v-else-if="type.id == 'core:text2text:summary'"
+						:size="20" />
+					<NcAssistantIcon v-else />
+				</template>
+				{{ type.name }}
+			</NcActionButton>
+			<NcActionButton
+				v-if="canTranslate"
+				data-cy="open-translate"
+				close-after-click
+				@click="openTranslateDialog">
+				<template #icon>
+					<TranslateVariant :size="20" />
+				</template>
+				{{ t('text', 'Translate') }}
+			</NcActionButton>
+			<NcActionSeparator />
+			<NcActionButton
+				:disabled="tasks.length < 1"
+				close-after-click
+				@click="showTaskList = true">
 				<template #icon>
 					<NcAssistantIcon :size="20" class="assistant-icon" />
 				</template>
-				<NcActionButton
-					v-for="type in taskTypes"
-					:key="type.id"
-					close-after-click
-					@click="openAssistantForm(type.id)">
-					<template #icon>
-						<PencilOutlineIcon
-							v-if="type.id == 'core:text2text'"
-							:size="20" />
-						<FormatHeader1
-							v-else-if="type.id == 'core:text2text:headline'"
-							:size="20" />
-						<Shuffle
-							v-else-if="type.id == 'core:text2text:reformulation'"
-							:size="20" />
-						<TextShort
-							v-else-if="type.id == 'core:text2text:summary'"
-							:size="20" />
-						<NcAssistantIcon v-else />
-					</template>
-					{{ type.name }}
-				</NcActionButton>
-				<NcActionButton
-					v-if="canTranslate"
-					data-cy="open-translate"
-					close-after-click
-					@click="openTranslateDialog">
-					<template #icon>
-						<TranslateVariant :size="20" />
-					</template>
-					{{ t('text', 'Translate') }}
-				</NcActionButton>
-				<NcActionSeparator />
-				<NcActionButton
-					:disabled="tasks.length < 1"
-					close-after-click
-					@click="showTaskList = true">
-					<template #icon>
-						<NcAssistantIcon :size="20" class="assistant-icon" />
-					</template>
-					{{ t('text', 'Show assistant results') }}
-				</NcActionButton>
-			</NcActions>
-			<component
-				:is="badgeStateIcon"
-				v-if="badgeStateIcon"
-				:size="16"
-				class="floating-menu--badge" />
-		</FloatingMenu>
+				{{ t('text', 'Show assistant results') }}
+			</NcActionButton>
+		</NcActions>
+		<component
+			:is="badgeStateIcon"
+			v-if="badgeStateIcon"
+			fill-color="var(--color-text-maxcontrast)"
+			:size="16"
+			class="assistant-action--badge" />
 
 		<NcModal :show.sync="showTaskList" :name="t('text', 'Assistant results')">
 			<div class="task-list">
@@ -143,6 +148,7 @@
 		</NcModal>
 	</div>
 </template>
+
 <script>
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -156,8 +162,6 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcAssistantIcon from '@nextcloud/vue/components/NcAssistantIcon'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import NcModal from '@nextcloud/vue/components/NcModal'
-import { posToDOMRect } from '@tiptap/core'
-import { FloatingMenu } from '@tiptap/vue-2'
 import ErrorOutlineIcon from 'vue-material-design-icons/AlertCircleOutline.vue'
 import CheckCircleOutlineIcon from 'vue-material-design-icons/CheckCircleOutline.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
@@ -169,15 +173,12 @@ import TextBoxPlusOutlineIcon from 'vue-material-design-icons/TextBoxPlusOutline
 import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
-import { useEditor } from '../composables/useEditor.ts'
-import { useEditorFlags } from '../composables/useEditorFlags.ts'
-import markdownit from '../markdownit/index.js'
-import shouldInterpretAsMarkdown from '../markdownit/shouldInterpretAsMarkdown.js'
-import { useFileMixin } from './Editor.provider.ts'
-
-const limitInRange = (num, min, max) => {
-	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
-}
+import { useEditor } from '../../composables/useEditor.ts'
+import markdownit from '../../markdownit/index.js'
+import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
+import { useFileMixin } from '../Editor.provider.ts'
+import { BaseActionEntry } from './BaseActionEntry.js'
+import { useMenuIDMixin } from './MenuBar.provider.js'
 
 // https://github.com/nextcloud/server/blob/master/lib/public/TaskProcessing/Task.php#L366-L371
 const STATUS_FAILED = 'STATUS_FAILED'
@@ -187,9 +188,8 @@ const STATUS_SCHEDULED = 'STATUS_SCHEDULED'
 const STATUS_UNKNOWN = 'STATUS_UNKNOWN'
 
 export default {
-	name: 'Assistant',
+	name: 'AssistantAction',
 	components: {
-		FloatingMenu,
 		ErrorOutlineIcon,
 		NcAssistantIcon,
 		ClockOutline,
@@ -208,14 +208,15 @@ export default {
 		NcListItem,
 		NcModal,
 	},
-	mixins: [useFileMixin],
+	extends: BaseActionEntry,
+	mixins: [useFileMixin, useMenuIDMixin],
 	setup() {
 		const { editor } = useEditor()
-		const { isPublic, isRichWorkspace } = useEditorFlags()
-		return { editor, isPublic, isRichWorkspace }
+		return { editor }
 	},
 	data() {
 		return {
+			menuOpen: false,
 			taskTypes: OCP.InitialState.loadState('text', 'taskprocessing'),
 			selection: '',
 			tasks: [],
@@ -232,13 +233,6 @@ export default {
 		}
 	},
 	computed: {
-		showAssistant() {
-			return (
-				!this.isRichWorkspace
-				&& !this.isPublic
-				&& window.OCA.Assistant?.openAssistantForm
-			)
-		},
 		identifier() {
 			return 'text-file:' + this.$file.fileId
 		},
@@ -269,19 +263,11 @@ export default {
 		},
 	},
 	beforeMount() {
-		if (!this.showAssistant) {
-			return
-		}
-
 		this.editor.on('selectionUpdate', this.onSelection)
 		this.fetchTasks()
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
 	beforeDestroy() {
-		if (!this.showAssistant) {
-			return
-		}
-
 		this.editor.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
@@ -343,10 +329,15 @@ export default {
 			})
 		},
 		openTranslateDialog() {
+			let selectAll = false
 			if (!this.selection.trim().length) {
 				this.editor.commands.selectAll()
+				selectAll = true
 			}
 			emit('text:translate-modal:show', { content: this.selection || '' })
+			if (selectAll) {
+				this.editor.commands.setTextSelection(0)
+			}
 		},
 		async openResult(task) {
 			window.OCA.Assistant.openAssistantTask(task, {
@@ -392,69 +383,14 @@ export default {
 				this.$delete(this.tasks, taskIndex)
 			}
 		},
-		floatingOptions() {
-			const buttonSize = 34
-			const topSpacing = 0
-			const bottomSpacing = 50 + 22
-			return {
-				placement: 'right',
-				getReferenceClientRect: () => {
-					const editorRect = this.$parent.$el
-						.querySelector('.ProseMirror')
-						.getBoundingClientRect()
-					const pos = posToDOMRect(
-						this.editor.view,
-						this.editor.state.selection.from,
-						this.editor.state.selection.to,
-					)
-					let rightSpacing = 0
-
-					if (editorRect.width < 890) {
-						rightSpacing = 66
-					}
-
-					return {
-						...pos,
-						width: editorRect.width - rightSpacing,
-						height: limitInRange(
-							pos.height,
-							buttonSize,
-							window.innerHeight,
-						),
-						top: limitInRange(
-							pos.top,
-							topSpacing,
-							window.innerHeight - bottomSpacing,
-						),
-						left: editorRect.left,
-						right: editorRect.right,
-						bottom:
-							limitInRange(
-								pos.top + buttonSize,
-								bottomSpacing,
-								window.innerHeight - topSpacing,
-							) + 22,
-					}
-				},
-			}
-		},
-		floatingShow() {
-			return true
-		},
 		t,
 	},
 }
 </script>
 
 <style scoped lang="scss">
-.text-assistant {
-	position: fixed;
-	top: calc(2 * var(--header-height));
-	right: 0;
-	margin: calc(var(--default-grid-baseline) * 3);
-	overflow: auto;
-	width: 250px;
-	max-height: 200px;
+.assistant-action {
+	position: relative;
 }
 
 .task-list {
@@ -492,24 +428,10 @@ ul {
 	}
 }
 
-.floating-menu {
-	position: relative;
-
-	&--badge {
-		position: absolute;
-		bottom: -2px;
-		right: -2px;
-	}
-
-	:deep(button) {
-		background: #dcd6ff !important;
-		color: white !important;
-		border-color: #7398fe !important;
-
-		&:hover {
-			filter: brightness(110%);
-		}
-	}
+.assistant-action--badge {
+	position: absolute;
+	bottom: -2px;
+	right: -2px;
 }
 
 :deep(.assistant-icon) {
