@@ -86,7 +86,7 @@
     "@tiptap/suggestion": "^2.27.1",
     "@tiptap/vue-2": "^2.27.1",
     "@vueuse/shared": "^11.3.0",
-    "debounce": "^2.2.0",
+    "debounce": "^3.0.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
     "lib0": "^0.2.114",
