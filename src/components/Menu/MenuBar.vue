@@ -141,18 +141,23 @@ export default {
 		}
 	},
 	computed: {
+		visibleEntryKeys() {
+			// if entry has no priority, we assume it always will be visible (priority: 0)
+			return this.entries
+				.toSorted((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
+				.map((e) => e.key)
+				.slice(0, this.iconsLimit)
+		},
 		visibleEntries() {
-			const list = this.entries.filter(({ priority }) => {
-				// if entry has no priority, we assume it always will be visible
-				return priority === undefined || priority <= this.iconsLimit
+			// only entries from `visibleEntryKeys but in original order
+			return this.entries.filter((entry) => {
+				return this.visibleEntryKeys.includes(entry.key)
 			})
-
-			return list
 		},
 		hiddenEntries() {
-			const remainingEntries = this.entries.filter(({ priority }) => {
+			const remainingEntries = this.entries.filter((entry) => {
 				// reverse logic from visibleEntries
-				return priority !== undefined && priority > this.iconsLimit
+				return !this.visibleEntryKeys.includes(entry.key)
 			})
 			const entries = remainingEntries.reduce((acc, entry, index) => {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
