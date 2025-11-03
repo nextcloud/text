@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 import { test as base } from './request-token'
 
 interface UploadMdFixture {
@@ -16,9 +16,9 @@ interface UploadMdFixture {
  */
 export const test = base.extend<UploadMdFixture>({
 	file: async ({ page, requestToken }, use) => {
-		const file = new File('empty.md', page)
+		const file = new File('empty.md', page, requestToken)
 		const fileContent = ''
-		await file.upload(fileContent, requestToken)
+		await file.upload(fileContent)
 		await use(file)
 	},
 })
@@ -26,14 +26,16 @@ export const test = base.extend<UploadMdFixture>({
 class File {
 	name: string
 	page: Page
+	requestToken: string
 	id?: number
 
-	constructor(name: string, page: Page) {
+	constructor(name: string, page: Page, requestToken: string) {
 		this.name = name
 		this.page = page
+		this.requestToken = requestToken
 	}
 
-	async upload(fileContent: string, requestToken: string) {
+	async upload(fileContent: string) {
 
 		// Upload file via WebDAV using page.request with requesttoken header
 		const response = await this.page.request.put(
@@ -42,7 +44,7 @@ class File {
 				data: fileContent,
 				headers: {
 					'Content-Type': 'text/markdown',
-					'requesttoken': requestToken,
+					'requesttoken': this.requestToken,
 				},
 			},
 		)
@@ -58,6 +60,27 @@ class File {
 	}
 
 	async open() {
-		return this.page.goto(`f/${this.id}`)
+		await this.page.goto(`f/${this.id}`)
+		await expect(this.page.getByLabel(this.name, { exact: true }))
+			.toBeVisible()
+	}
+
+	async close() {
+		await this.page.getByRole('button', { name: 'Close', exact: true }).click()
+		await expect(this.page.getByLabel(this.name, { exact: true }))
+			.not.toBeVisible()
+	}
+
+	async move(newName: string) {
+		await this.page.request.fetch(
+			`/remote.php/webdav/${this.name}`,
+			{
+			headers: {
+				Destination: `/remote.php/webdav/${newName}`,
+				'requesttoken': this.requestToken,
+			},
+			method: 'MOVE',
+		})
+		this.name = newName
 	}
 }

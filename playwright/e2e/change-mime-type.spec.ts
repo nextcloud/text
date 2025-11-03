@@ -23,15 +23,7 @@ test.describe('Changing mimetype from/to markdown resets document session', () =
 		await expect(page.getByRole('button', { name: 'Close', exact: true }))
 			.not.toBeVisible()
 		const destinationPath = 'test1.txt'
-		await page.request.fetch(
-			`/remote.php/webdav/${file.name}`,
-			{
-			headers: {
-				Destination: `/remote.php/webdav/${destinationPath}`,
-				'requesttoken': requestToken,
-			},
-			method: 'MOVE',
-		})
+		await file.move(destinationPath)
 		await file.open()
 		await expect(editor.contentLocator)
 			.toHaveText('## Hello world')
