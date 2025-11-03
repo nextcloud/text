@@ -16,14 +16,17 @@ export class EditorSection {
 		this.contentLocator = this.locator.getByRole('textbox')
 	}
 
-	public async typeHeading(name: string): Promise<void> {
-		await this.contentLocator.pressSequentially('## ')
-		await this.contentLocator.pressSequentially(name)
-		await expect(this.getHeading({ name }))
-			.toBeVisible()
+	public async type(keys: string): Promise<void> {
+		await this.contentLocator.pressSequentially(keys)
 	}
 
-	public getHeading(options: {} = {}): Locator {
+	public async typeHeading(name: string): Promise<void> {
+		await this.type('## ')
+		await this.type(name)
+		await expect(this.getHeading({ name })).toBeVisible()
+	}
+
+	public getHeading(options: object = {}): Locator {
 		return this.contentLocator.getByRole('heading', options)
 	}
 }
