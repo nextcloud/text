@@ -21,15 +21,11 @@ export const test = base.extend<RandomUserFixture>({
 		const user = await createRandomUser()
 		await use(user)
 	},
-	requestToken: async ({ page }, use) => {
-		// Navigate to get the page context and extract request token
-		await page.goto('/')
-
-		// Get the request token from the page context
-		const token = await page.evaluate(() => {
-			// @ts-expect-error - OC is a global variable
-			return window.OC?.requestToken || ''
+	requestToken: async ({ page, request }, use) => {
+		const tokenResponse = await page.request.get('./csrftoken', {
+			failOnStatusCode: true,
 		})
+		const token = (await tokenResponse.json()).token
 
 		await use(token)
 	},
