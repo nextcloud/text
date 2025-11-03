@@ -10,8 +10,8 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
 const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 
-test.beforeEach(async ({ page, file }) => {
-	await page.goto(`f/${file.id}`)
+test.beforeEach(async ({ file }) => {
+	await file.open()
 })
 
 test.describe('Changing mimetype from/to markdown resets document session', () => {
@@ -32,7 +32,7 @@ test.describe('Changing mimetype from/to markdown resets document session', () =
 			},
 			method: 'MOVE',
 		})
-		await page.goto(`f/${file.id}`)
+		await file.open()
 		await expect(editor.contentLocator)
 			.toHaveText('## Hello world')
 		await expect(editor.getHeading())

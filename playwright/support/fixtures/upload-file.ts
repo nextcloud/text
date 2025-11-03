@@ -57,4 +57,7 @@ class File {
 		this.id = fileId
 	}
 
+	async open() {
+		return this.page.goto(`f/${this.id}`)
+	}
 }

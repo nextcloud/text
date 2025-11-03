@@ -10,8 +10,8 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
 const test = mergeTests(offlineTest, randomUserTest, uploadFileTest)
 
-test.beforeEach(async ({ page, file }) => {
-	await page.goto(`f/${file.id}`)
+test.beforeEach(async ({ file }) => {
+	await file.open()
 })
 
 test.describe('Offline', () => {
@@ -25,7 +25,10 @@ test.describe('Offline', () => {
 		await expect(page.locator('.offline-state')).toBeVisible()
 	})
 
-	test('Disabled upload and link file when offline', async ({ page, setOffline }) => {
+	test('Disabled upload and link file when offline', async ({
+		page,
+		setOffline,
+	}) => {
 		await page.locator('[data-text-action-entry="insert-link"]').click()
 		await expect(
 			page.locator('[data-text-action-entry="insert-link-file"] button'),
