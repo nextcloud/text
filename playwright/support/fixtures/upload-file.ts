@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from '@playwright/test'
+import { test as base } from './request-token'
 
 interface UploadMdFixture {
-	requestToken?: string
 	file: {
 		fileName: string
 		fileId: number
@@ -21,10 +20,6 @@ export const test = base.extend<UploadMdFixture>({
 	file: async ({ page, requestToken }, use) => {
 		const fileName = 'empty.md'
 		const fileContent = ''
-
-		if (!requestToken) {
-			throw new Error('requestToken is required. Make sure to merge with random-user fixture.')
-		}
 
 		// Upload file via WebDAV using page.request with requesttoken header
 		const response = await page.request.put(
