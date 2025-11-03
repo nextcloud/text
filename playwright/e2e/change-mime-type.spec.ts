@@ -11,7 +11,7 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 
 test.beforeEach(async ({ page, file }) => {
-	await page.goto(`f/${file.fileId}`)
+	await page.goto(`f/${file.id}`)
 })
 
 test.describe('Changing mimetype from/to markdown resets document session', () => {
@@ -24,7 +24,7 @@ test.describe('Changing mimetype from/to markdown resets document session', () =
 			.not.toBeVisible()
 		const destinationPath = 'test1.txt'
 		await page.request.fetch(
-			`/remote.php/webdav/${file.fileName}`,
+			`/remote.php/webdav/${file.name}`,
 			{
 			headers: {
 				Destination: `/remote.php/webdav/${destinationPath}`,
@@ -32,7 +32,7 @@ test.describe('Changing mimetype from/to markdown resets document session', () =
 			},
 			method: 'MOVE',
 		})
-		await page.goto(`f/${file.fileId}`)
+		await page.goto(`f/${file.id}`)
 		await expect(editor.contentLocator)
 			.toHaveText('## Hello world')
 		await expect(editor.getHeading())
