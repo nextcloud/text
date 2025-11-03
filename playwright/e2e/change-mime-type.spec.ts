@@ -4,19 +4,20 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
+import { test as editorTest } from '../support/fixtures/editor'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(randomUserTest, uploadFileTest)
+const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 
 test.beforeEach(async ({ page, file }) => {
 	await page.goto(`f/${file.fileId}`)
 })
 
 test.describe('Changing mimetype from/to markdown resets document session', () => {
-	test('Rename from md to txt', async ({ page, file, requestToken }) => {
-		await page.getByRole('textbox').pressSequentially('## Hello world')
-		await expect(page.getByRole('heading', { name: 'Hello world' }))
+	test('Rename from md to txt', async ({ editor, page, file, requestToken }) => {
+		await editor.type('## Hello world')
+		await expect(editor.getHeading({ name: 'Hello world' }))
 			.toBeVisible()
 		await page.getByRole('button', { name: 'Close', exact: true }).click()
 		await expect(page.getByRole('button', { name: 'Close', exact: true }))
@@ -32,10 +33,9 @@ test.describe('Changing mimetype from/to markdown resets document session', () =
 			method: 'MOVE',
 		})
 		await page.goto(`f/${file.fileId}`)
-		await expect(page.getByRole('textbox'))
-			.toBeVisible()
-		await expect(page.getByText('## Hello world'))
-			.toBeVisible()
-
+		await expect(editor.contentLocator)
+			.toHaveText('## Hello world')
+		await expect(editor.getHeading())
+			.not.toBeVisible()
 	})
 })
