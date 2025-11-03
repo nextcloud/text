@@ -9,7 +9,6 @@ import { type User } from '@nextcloud/e2e-test-server'
 
 interface RandomUserFixture {
 	user: User
-	requestToken: string
 }
 
 /**
@@ -20,14 +19,6 @@ export const test = base.extend<RandomUserFixture>({
 	user: async ({ }, use) => {
 		const user = await createRandomUser()
 		await use(user)
-	},
-	requestToken: async ({ page, request }, use) => {
-		const tokenResponse = await page.request.get('./csrftoken', {
-			failOnStatusCode: true,
-		})
-		const token = (await tokenResponse.json()).token
-
-		await use(token)
 	},
 	page: async ({ browser, baseURL, user }, use) => {
 		// Important: make sure we authenticate in a clean environment by unsetting storage state.
