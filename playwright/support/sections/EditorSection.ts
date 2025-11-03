@@ -4,6 +4,7 @@
  */
 
 import type { Locator, Page } from '@playwright/test'
+import { expect } from '@playwright/test'
 
 export class EditorSection {
 	public readonly locator: Locator
@@ -15,8 +16,11 @@ export class EditorSection {
 		this.contentLocator = this.locator.getByRole('textbox')
 	}
 
-	public async type(keys: string): Promise<void> {
-		await this.contentLocator.pressSequentially(keys)
+	public async typeHeading(name: string): Promise<void> {
+		await this.contentLocator.pressSequentially('## ')
+		await this.contentLocator.pressSequentially(name)
+		await expect(this.getHeading({ name }))
+			.toBeVisible()
 	}
 
 	public getHeading(options: {} = {}): Locator {

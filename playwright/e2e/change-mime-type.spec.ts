@@ -15,19 +15,12 @@ test.beforeEach(async ({ file }) => {
 })
 
 test.describe('Changing mimetype from/to markdown resets document session', () => {
-	test('Rename from md to txt', async ({ editor, page, file, requestToken }) => {
-		await editor.type('## Hello world')
-		await expect(editor.getHeading({ name: 'Hello world' }))
-			.toBeVisible()
-		await page.getByRole('button', { name: 'Close', exact: true }).click()
-		await expect(page.getByRole('button', { name: 'Close', exact: true }))
-			.not.toBeVisible()
-		const destinationPath = 'test1.txt'
-		await file.move(destinationPath)
+	test('Rename from md to txt', async ({ editor, file }) => {
+		await editor.typeHeading('Hello world')
+		await file.close()
+		await file.move('test1.txt')
 		await file.open()
-		await expect(editor.contentLocator)
-			.toHaveText('## Hello world')
-		await expect(editor.getHeading())
-			.not.toBeVisible()
+		await expect(editor.contentLocator).toHaveText('## Hello world')
+		await expect(editor.getHeading()).not.toBeVisible()
 	})
 })
