@@ -11,7 +11,7 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 const test = mergeTests(offlineTest, randomUserTest, uploadFileTest)
 
 test.beforeEach(async ({ page, file }) => {
-	await page.goto(`f/${file.fileId}`)
+	await page.goto(`f/${file.id}`)
 })
 
 test.describe('Offline', () => {
