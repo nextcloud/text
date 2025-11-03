@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type CDPSession, expect, mergeTests } from '@playwright/test'
+import { expect, mergeTests } from '@playwright/test'
 import { test as offlineTest } from '../support/fixtures/offline'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
@@ -15,7 +15,7 @@ test.beforeEach(async ({ page, file }) => {
 })
 
 test.describe('Offline', () => {
-	test('Offline state indicator', async ({ context, page, setOffline }) => {
+	test('Offline state indicator', async ({ page, setOffline }) => {
 		await expect(page.locator('.session-list')).toBeVisible()
 		await expect(page.locator('.offline-state')).not.toBeVisible()
 
@@ -25,7 +25,7 @@ test.describe('Offline', () => {
 		await expect(page.locator('.offline-state')).toBeVisible()
 	})
 
-	test('Disabled upload and link file when offline', async ({ context, page, setOffline }) => {
+	test('Disabled upload and link file when offline', async ({ page, setOffline }) => {
 		await page.locator('[data-text-action-entry="insert-link"]').click()
 		await expect(
 			page.locator('[data-text-action-entry="insert-link-file"] button'),
