@@ -8,20 +8,8 @@ import { test as base } from './request-token'
 
 interface UploadMdFixture {
 	file: File
+	fileName: string
 }
-
-/**
- * This test fixture uploads the empty.md file to the user's root directory
- * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
- */
-export const test = base.extend<UploadMdFixture>({
-	file: async ({ page, requestToken }, use) => {
-		const file = new File('empty.md', page, requestToken)
-		const fileContent = ''
-		await file.upload(fileContent)
-		await use(file)
-	},
-})
 
 class File {
 	name: string
@@ -84,3 +72,18 @@ class File {
 		this.name = newName
 	}
 }
+
+/**
+ * This test fixture uploads the empty.md file to the user's root directory
+ * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
+ */
+export const test = base.extend<UploadMdFixture>({
+	file: async ({ page, requestToken, fileName }, use) => {
+		const file = new File(fileName, page, requestToken)
+		const fileContent = ''
+		await file.upload(fileContent)
+		await use(file)
+	},
+	fileName: ['empty.md', {option: true}],
+})
+
