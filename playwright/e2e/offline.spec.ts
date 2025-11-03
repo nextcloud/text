@@ -9,24 +9,24 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
 const test = mergeTests(randomUserTest, uploadFileTest)
 
-const setOnline = async (client: CDPSession, online: boolean): Promise<void> => {
-	if (online) {
-		await client.send('Network.emulateNetworkConditions', {
-			offline: false,
-			latency: 0,
-			downloadThroughput: -1,
-			uploadThroughput: -1,
-		})
-		await client.send('Network.disable')
-	} else {
-		await client.send('Network.enable')
-		await client.send('Network.emulateNetworkConditions', {
-			offline: true,
-			latency: 0,
-			downloadThroughput: 0,
-			uploadThroughput: 0,
-		})
-	}
+const setOnline = async (client: CDPSession): Promise<void> => {
+	await client.send('Network.emulateNetworkConditions', {
+		offline: false,
+		latency: 0,
+		downloadThroughput: -1,
+		uploadThroughput: -1,
+	})
+	await client.send('Network.disable')
+}
+
+const setOffline = async (client: CDPSession): Promise<void> => {
+	await client.send('Network.enable')
+	await client.send('Network.emulateNetworkConditions', {
+		offline: true,
+		latency: 0,
+		downloadThroughput: 0,
+		uploadThroughput: 0,
+	})
 }
 
 test.beforeEach(async ({ page, file }) => {
@@ -39,12 +39,12 @@ test.describe('Offline', () => {
 		await expect(page.locator('.offline-state')).not.toBeVisible()
 
 		const client = await context.newCDPSession(page)
-		await setOnline(client, false)
+		await setOffline(client)
 
 		await expect(page.locator('.session-list')).not.toBeVisible()
 		await expect(page.locator('.offline-state')).toBeVisible()
 
-		await setOnline(client, true)
+		await setOnline(client)
 	})
 
 	test('Disabled upload and link file when offline', async ({ context, page }) => {
@@ -58,7 +58,7 @@ test.describe('Offline', () => {
 		).toBeEnabled()
 
 		const client = await context.newCDPSession(page)
-		await setOnline(client, false)
+		await setOffline(client)
 
 		await page.locator('[data-text-action-entry="insert-link"]').click()
 		await expect(
@@ -69,6 +69,6 @@ test.describe('Offline', () => {
 			page.locator('[data-text-action-entry="insert-attachment"] button'),
 		).toBeDisabled()
 
-		await setOnline(client, true)
+		await setOnline(client)
 	})
 })
