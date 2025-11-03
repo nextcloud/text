@@ -4,50 +4,28 @@
  */
 
 import { type CDPSession, expect, mergeTests } from '@playwright/test'
+import { test as offlineTest } from '../support/fixtures/offline'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(randomUserTest, uploadFileTest)
-
-const setOnline = async (client: CDPSession): Promise<void> => {
-	await client.send('Network.emulateNetworkConditions', {
-		offline: false,
-		latency: 0,
-		downloadThroughput: -1,
-		uploadThroughput: -1,
-	})
-	await client.send('Network.disable')
-}
-
-const setOffline = async (client: CDPSession): Promise<void> => {
-	await client.send('Network.enable')
-	await client.send('Network.emulateNetworkConditions', {
-		offline: true,
-		latency: 0,
-		downloadThroughput: 0,
-		uploadThroughput: 0,
-	})
-}
+const test = mergeTests(offlineTest, randomUserTest, uploadFileTest)
 
 test.beforeEach(async ({ page, file }) => {
 	await page.goto(`f/${file.fileId}`)
 })
 
 test.describe('Offline', () => {
-	test('Offline state indicator', async ({ context, page }) => {
+	test('Offline state indicator', async ({ context, page, setOffline }) => {
 		await expect(page.locator('.session-list')).toBeVisible()
 		await expect(page.locator('.offline-state')).not.toBeVisible()
 
-		const client = await context.newCDPSession(page)
-		await setOffline(client)
+		await setOffline()
 
 		await expect(page.locator('.session-list')).not.toBeVisible()
 		await expect(page.locator('.offline-state')).toBeVisible()
-
-		await setOnline(client)
 	})
 
-	test('Disabled upload and link file when offline', async ({ context, page }) => {
+	test('Disabled upload and link file when offline', async ({ context, page, setOffline }) => {
 		await page.locator('[data-text-action-entry="insert-link"]').click()
 		await expect(
 			page.locator('[data-text-action-entry="insert-link-file"] button'),
@@ -57,8 +35,7 @@ test.describe('Offline', () => {
 			page.locator('[data-text-action-entry="insert-attachment"] button'),
 		).toBeEnabled()
 
-		const client = await context.newCDPSession(page)
-		await setOffline(client)
+		await setOffline()
 
 		await page.locator('[data-text-action-entry="insert-link"]').click()
 		await expect(
@@ -68,7 +45,5 @@ test.describe('Offline', () => {
 		await expect(
 			page.locator('[data-text-action-entry="insert-attachment"] button'),
 		).toBeDisabled()
-
-		await setOnline(client)
 	})
 })
