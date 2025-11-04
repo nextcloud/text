@@ -16,7 +16,7 @@
 		:show-outline-outside="showOutlineOutside"
 		@reload="reloading = true" />
 	<div
-		v-else
+		v-else-if="!reloading"
 		id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor source-viewer">

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { ref, watch } from 'vue'
+import { readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import type { Doc } from 'yjs'
 
@@ -29,9 +29,14 @@ export function useIndexedDbProvider(
 		dirty.value = Boolean(val)
 	})
 
-	watch(dirty, (val) => {
+	/**
+	 * Set the dirty flag to indicate (no) unsaved changes.
+	 * @param val truethy if there are unsaved changes.
+	 */
+	function setDirty(val: boolean) {
+		dirty.value = Boolean(val)
 		indexedDbProvider.set('dirty', val ? 1 : 0)
-	})
+	}
 
 	/**
 	 * Get the base version etag the document had when it was edited last.
@@ -58,8 +63,9 @@ export function useIndexedDbProvider(
 
 	return {
 		clearIndexedDb,
-		dirty,
+		dirty: readonly(dirty),
 		getBaseVersionEtag,
 		setBaseVersionEtag,
+		setDirty,
 	}
 }
