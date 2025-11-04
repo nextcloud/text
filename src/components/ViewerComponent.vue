@@ -15,7 +15,7 @@
 		:mime="mime"
 		@reload="reloading = true" />
 	<SourceView
-		v-else
+		v-else-if="!reloading"
 		:fileid="fileid"
 		:filename="filename"
 		:mime="mime"

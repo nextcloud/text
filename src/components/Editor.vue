@@ -225,8 +225,13 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		const { dirty, getBaseVersionEtag, setBaseVersionEtag, clearIndexedDb } =
-			useIndexedDbProvider(props, ydoc)
+		const {
+			clearIndexedDb,
+			dirty,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+			setDirty,
+		} = useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
@@ -296,6 +301,7 @@ export default defineComponent({
 			requireReconnect,
 			saveService,
 			serialize,
+			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -403,12 +409,18 @@ export default defineComponent({
 			if (!val) {
 				return
 			}
+			console.debug('Document is outdated')
 			if (this.dirty) {
+				console.debug('There are local edits, need to resolve conflict')
 				// handle conflict between active editing session and offline content
 			} else {
 				// clear the outdated cached content and reload without it.
-				this.clearIndexedDb()
-				this.emit('reload')
+				console.debug(
+					'No local edits... clearing storage and reloading the editor',
+				)
+				this.clearIndexedDb().then(() => {
+					this.$emit('reload')
+				})
 			}
 		},
 	},
@@ -638,7 +650,8 @@ export default defineComponent({
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
 				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.dirty = state.dirty
+					console.debug('Setting dirty to', state.dirty)
+					this.setDirty(state.dirty)
 					if (this.dirty) {
 						this.saveService.autosave()
 					}
