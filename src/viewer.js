@@ -28,5 +28,18 @@ if (typeof OCA.Viewer === 'undefined') {
 		group: null,
 		theme: 'default',
 		canCompare: true,
+		downloadCallback: async (fileInfo) => {
+			// Save any unsaved changes before download
+			const editors = window.OCA?.Text?.editorComponents
+			if (editors instanceof Set) {
+				for (const editor of editors) {
+					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
+						logger.debug('Saving file before download', { fileId: fileInfo.fileid })
+						await editor.save()
+						return
+					}
+				}
+			}
+		},
 	})
 }
