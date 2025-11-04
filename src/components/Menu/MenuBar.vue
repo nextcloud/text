@@ -51,7 +51,6 @@
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<TranslateButton />
 					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
@@ -80,10 +79,9 @@ import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
-import { MenuEntries, ReadOnlyDoneEntries } from './entries.js'
+import { AssistantMenuEntries, MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
-import TranslateButton from './TranslateButton.vue'
 import WidthToggle from './WidthToggle.vue'
 
 export default {
@@ -95,7 +93,6 @@ export default {
 		HelpModal,
 		NcActionSeparator,
 		CharacterCount,
-		TranslateButton,
 		WidthToggle,
 	},
 	extends: ToolBarLogic,
@@ -124,17 +121,19 @@ export default {
 
 	setup() {
 		const editor = useEditor()
-		const { isRichEditor, isRichWorkspace } = useEditorFlags()
+		const { isPublic, isRichEditor, isRichWorkspace } = useEditorFlags()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { editor, isRichEditor, isRichWorkspace, menubar, width }
+		return { editor, isPublic, isRichEditor, isRichWorkspace, menubar, width }
 	},
 
 	data() {
 		return {
 			entries: this.openReadOnly
 				? [...ReadOnlyDoneEntries, ...MenuEntries]
-				: [...MenuEntries],
+				: this.isPublic || this.isRichWorkspace
+					? [...MenuEntries]
+					: [...MenuEntries, ...AssistantMenuEntries],
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
@@ -142,18 +141,23 @@ export default {
 		}
 	},
 	computed: {
+		visibleEntryKeys() {
+			// if entry has no priority, we assume it always will be visible (priority: 0)
+			return this.entries
+				.toSorted((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
+				.map((e) => e.key)
+				.slice(0, this.iconsLimit)
+		},
 		visibleEntries() {
-			const list = this.entries.filter(({ priority }) => {
-				// if entry has no priority, we assume it always will be visible
-				return priority === undefined || priority <= this.iconsLimit
+			// only entries from `visibleEntryKeys but in original order
+			return this.entries.filter((entry) => {
+				return this.visibleEntryKeys.includes(entry.key)
 			})
-
-			return list
 		},
 		hiddenEntries() {
-			const remainingEntries = this.entries.filter(({ priority }) => {
+			const remainingEntries = this.entries.filter((entry) => {
 				// reverse logic from visibleEntries
-				return priority !== undefined && priority > this.iconsLimit
+				return !this.visibleEntryKeys.includes(entry.key)
 			})
 			const entries = remainingEntries.reduce((acc, entry, index) => {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
