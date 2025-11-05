@@ -483,7 +483,7 @@ export default defineComponent({
 				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
-				disableBC: true,
+				disableBc: true,
 				awareness: this.awareness,
 			})
 		},
