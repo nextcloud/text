@@ -234,7 +234,7 @@ export default {
 	--background-blur: blur(10px);
 	position: sticky;
 	top: 0;
-	bottom: var(--default-grid-baseline);
+	bottom: 0;
 	width: 100%;
 	z-index: 10021; // above modal-header so menubar is always on top
 	background-color: var(--color-main-background-translucent);
