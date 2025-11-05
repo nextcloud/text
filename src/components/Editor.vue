@@ -71,7 +71,6 @@
 			:sync-error="syncError"
 			:has-connection-issue="requireReconnect"
 			@reconnect="reconnect" />
-		<Assistant v-if="editor" />
 		<Translate
 			:show="translateModal"
 			:content="translateContent"
@@ -121,7 +120,6 @@ import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
-import Assistant from './Assistant.vue'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
@@ -146,7 +144,6 @@ export default defineComponent({
 		MenuBar,
 		Reader: () => import(/* webpackChunkName: "editor" */ './Reader.vue'),
 		Status,
-		Assistant,
 		Translate,
 		SuggestionsBar,
 	},

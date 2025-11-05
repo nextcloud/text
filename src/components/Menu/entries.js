@@ -39,6 +39,7 @@ import {
 } from '../icons.js'
 import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
+import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
 
 import { t } from '@nextcloud/l10n'
@@ -86,7 +87,7 @@ export const MenuEntries = [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Undo,
 		action: (command) => command.undo(),
-		priority: 7,
+		priority: 8,
 	},
 	{
 		key: 'redo',
@@ -95,7 +96,7 @@ export const MenuEntries = [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Redo,
 		action: (command) => command.redo(),
-		priority: 10,
+		priority: 11,
 	},
 	{
 		key: 'headings',
@@ -204,7 +205,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.toggleBold()
 		},
-		priority: 8,
+		priority: 9,
 	},
 	{
 		key: 'italic',
@@ -216,7 +217,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.toggleItalic()
 		},
-		priority: 9,
+		priority: 10,
 	},
 	{
 		key: 'underline',
@@ -228,7 +229,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.toggleUnderline()
 		},
-		priority: 11,
+		priority: 12,
 	},
 	{
 		key: 'strikethrough',
@@ -240,7 +241,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.toggleStrike()
 		},
-		priority: 12,
+		priority: 13,
 	},
 	{
 		key: 'lists',
@@ -393,7 +394,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.insertTable()
 		},
-		priority: 13,
+		priority: 14,
 	},
 	{
 		key: 'details',
@@ -403,7 +404,7 @@ export const MenuEntries = [
 		action: (command) => {
 			return command.toggleDetails()
 		},
-		priority: 14,
+		priority: 15,
 	},
 	{
 		key: 'insert-link',
@@ -436,3 +437,12 @@ if (!isMobileDevice) {
 		priority: 6,
 	})
 }
+
+export const AssistantMenuEntries = [
+	{
+		key: 'assistant',
+		label: t('text', 'Nextcloud Assistant'),
+		component: AssistantAction,
+		priority: 7,
+	},
+]
