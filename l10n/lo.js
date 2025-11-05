@@ -3,12 +3,12 @@ OC.L10N.register(
     {
     "The file was uploaded" : "ຟາຍຖຶກອັບໂຫລດສຳເລັດ",
     "No file was uploaded" : "ບໍ່ມີການອັບໂຫລດຟາຍ",
-    "Translate" : "ແປ",
     "Copy link" : "ສຳເນົາລິງ",
     "Offline" : "ອັອບລາຍ",
     "Saving …" : "ກຳລັງບັນທຶກ",
     "Link" : "ລິງ",
     "Cancel" : "ຍົກເລີກ",
+    "Translate" : "ແປ",
     "Replace" : "ປ່ຽນແທນ",
     "Upload" : "ອັບໂຫຼດ",
     "Edit" : "ແກ້ໄຂ",

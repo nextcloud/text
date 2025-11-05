@@ -1,6 +1,5 @@
 { "translations": {
     "File not found" : "Файл олдсонгүй",
-    "Translate" : "Орчуулга",
     "Guest" : "Зочин",
     "you" : "та",
     "edit" : "Засварлах",
@@ -9,6 +8,7 @@
     "Undo" : "буцах",
     "Cancel" : "Цуцлах",
     "URL" : "URL",
+    "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
     "Upload" : "байршуулах",
