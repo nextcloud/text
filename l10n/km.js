@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "Translate" : "Translate",
     "Reload" : "ផ្ទុកឡើងវិញ",
     "you" : "អ្នក​",
     "Copy link" : "ចម្លងតំណ",
@@ -9,6 +8,7 @@ OC.L10N.register(
     "Saved" : "បាន​រក្សាទុក",
     "Cancel" : "លើកលែង",
     "URL" : "URL",
+    "Translate" : "Translate",
     "to" : "ទៅ",
     "Upload" : "ផ្ទុក​ឡើង",
     "Edit" : "កែប្រែ",
