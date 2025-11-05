@@ -11,6 +11,11 @@ if (!window.OCA.Text) {
 	window.OCA.Text = {}
 }
 
+// These can be changed in the browser console for more verbose logging.
+window.OCA.Text.logEditorUpdates = false
+window.OCA.Text.logWebSocketPolyfill = false
+window.OCA.Text.logYjsUpdates = false
+
 const editorComponents = window.OCA.Text.editorComponents ?? new Set()
 window.OCA.Text.editorComponents = editorComponents
 

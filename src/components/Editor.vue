@@ -409,13 +409,13 @@ export default defineComponent({
 			if (!val) {
 				return
 			}
-			console.debug('Document is outdated')
+			logger.debug('Document is outdated')
 			if (this.dirty) {
-				console.debug('There are local edits, need to resolve conflict')
+				logger.debug('There are local edits, need to resolve conflict')
 				// handle conflict between active editing session and offline content
 			} else {
 				// clear the outdated cached content and reload without it.
-				console.debug(
+				logger.debug(
 					'No local edits... clearing storage and reloading the editor',
 				)
 				this.clearIndexedDb().then(() => {
@@ -441,8 +441,16 @@ export default defineComponent({
 	created() {
 		// The following can be useful for debugging ydoc updates
 		this.ydoc.on('update', function (update, origin, doc, tr) {
-			console.debug('ydoc update', update, origin, doc, tr)
-			logUpdate(update)
+			if (window.OCA.Text.logYjsUpdates) {
+				logger.debug('ydoc update', {
+					update,
+					origin,
+					doc,
+					tr,
+					content: doc.getXmlFragment('default').toJSON(),
+				})
+				logUpdate(update)
+			}
 		})
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
@@ -451,6 +459,7 @@ export default defineComponent({
 		}
 	},
 	async beforeDestroy() {
+		logger.debug('beforeDestroy')
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
@@ -555,6 +564,10 @@ export default defineComponent({
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
 				if (!documentState) {
+					logger.debug('loading initial content', {
+						content,
+						isRichEditor: this.isRichEditor,
+					})
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
@@ -578,7 +591,9 @@ export default defineComponent({
 		},
 
 		onUpdate({ editor }) {
-			// this.debugContent(editor)
+			if (window.OCA.Text.logEditorUpdates) {
+				this.debugContent(editor)
+			}
 			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
@@ -650,7 +665,6 @@ export default defineComponent({
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
 				if (this.editor.can().undo() || this.editor.can().redo()) {
-					console.debug('Setting dirty to', state.dirty)
 					this.setDirty(state.dirty)
 					if (this.dirty) {
 						this.saveService.autosave()
@@ -706,6 +720,7 @@ export default defineComponent({
 		},
 
 		async disconnect() {
+			logger.debug('disconnecting')
 			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
 			this.syncProvider?.destroy()
@@ -714,11 +729,13 @@ export default defineComponent({
 		},
 
 		async close() {
+			logger.debug('closing')
 			await this.syncService
 				.sendRemainingSteps()
 				.catch((err) =>
 					logger.warn('Failed to send remaining steps', { err }),
 				)
+			logger.debug('sent remaining steps')
 			await this.disconnect().catch((err) =>
 				logger.warn('Failed to disconnect', { err }),
 			)
@@ -766,17 +783,18 @@ export default defineComponent({
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
+			// markdown, serialized from editor state by prosemirror-markdown
 			const proseMirrorMarkdown = this.serialize()
+			// HTML, serialized from markdown by markdown-it
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+			// HTML, as rendered in the browser by Tiptap
+			const tiptapHtml = editor.getHTML()
 
-			logger.debug(
-				'markdown, serialized from editor state by prosemirror-markdown',
-			)
-			console.debug(proseMirrorMarkdown)
-			logger.debug('HTML, serialized from markdown by markdown-it')
-			console.debug(markdownItHtml)
-			logger.debug('HTML, as rendered in the browser by Tiptap')
-			console.debug(editor.getHTML())
+			logger.debug('editor update', {
+				proseMirrorMarkdown,
+				markdownItHtml,
+				tiptapHtml,
+			})
 		},
 
 		/**
