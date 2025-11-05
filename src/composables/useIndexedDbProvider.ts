@@ -39,7 +39,7 @@ export function useIndexedDbProvider(
 	 */
 	function setDirty(val: boolean) {
 		dirty.value = Boolean(val)
-		indexedDbProvider.set('dirty', val ? 1 : 0)
+		return indexedDbProvider.set('dirty', val ? 1 : 0)
 	}
 
 	/**

@@ -37,7 +37,6 @@ export default function createSyncServiceProvider({
 		initialSession,
 		queue,
 	)
-	disableBc = disableBc ?? !!window?._oc_debug
 	const websocketProvider = new WebsocketProvider(
 		'ws://localhost:1234',
 		'file:' + fileId,
