@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "File not found" : "Файл олдсонгүй",
-    "Translate" : "Орчуулга",
     "Guest" : "Зочин",
     "you" : "та",
     "edit" : "Засварлах",
@@ -11,6 +10,7 @@ OC.L10N.register(
     "Undo" : "буцах",
     "Cancel" : "Цуцлах",
     "URL" : "URL",
+    "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
     "Upload" : "байршуулах",
