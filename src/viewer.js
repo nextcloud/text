@@ -34,7 +34,9 @@ if (typeof OCA.Viewer === 'undefined') {
 			if (editors instanceof Set) {
 				for (const editor of editors) {
 					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
-						logger.debug('Saving file before download', { fileId: fileInfo.fileid })
+						logger.debug('Saving file before download', {
+							fileId: fileInfo.fileid,
+						})
 						await editor.save()
 						return
 					}
