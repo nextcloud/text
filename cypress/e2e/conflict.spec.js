@@ -36,14 +36,9 @@ variants.forEach(function ({ fixture, mime }) {
 				cy.getContent().should('contain', 'Heading')
 
 				cy.uploadFile(fileName, mime, testName + '/' + fileName)
-				cy.get('#editor-container .document-status', {
-					timeout: 40000,
-				}).should('contain', 'session has expired')
-
-				// Reload button works
-				cy.get('#editor-container .document-status a.button')
-					.contains('Reload')
-					.click()
+				cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
+				cy.wait('@push', { timeout: 20_000 })
+				// Autoreload works
 				getWrapper().should('not.exist')
 				cy.getContent().should('contain', 'Hello world')
 				cy.getContent().should('not.contain', 'Heading')
