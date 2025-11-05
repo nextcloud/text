@@ -6,6 +6,7 @@
 import { readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import type { Doc } from 'yjs'
+import { logger } from '../helpers/logger.js'
 
 /**
  * Initialize a indexed db provider for the given ydoc
@@ -21,8 +22,11 @@ export function useIndexedDbProvider(
 ) {
 	const name = `${props.fileId}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
-	indexedDbProvider.on('synced', (provider: IndexeddbPersistence) => {
-		console.info('synced from indexeddb', provider)
+	indexedDbProvider.on('synced', async (provider: IndexeddbPersistence) => {
+		logger.info('synced from indexeddb', {
+			dirty: await provider.get('dirty'),
+			baseVersionEtag: await provider.get('baseVersionEtag'),
+		})
 	})
 	const dirty = ref(false)
 	indexedDbProvider.get('dirty').then((val) => {
@@ -58,6 +62,7 @@ export function useIndexedDbProvider(
 	 * Used to reset the browser state to load a new editing session.
 	 */
 	function clearIndexedDb() {
+		logger.info('clearing indexeddb')
 		return indexedDbProvider.clearData()
 	}
 
