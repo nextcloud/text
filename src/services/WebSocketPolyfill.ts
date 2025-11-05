@@ -10,6 +10,13 @@ import { stepsFromOpenData } from '../helpers/yjs'
 import getNotifyBus from './NotifyService'
 import type { Step, SyncService } from './SyncService'
 
+// Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
+const debug = (message: string, context?: Record<string, any>) => {
+	if (window.OCA?.Text?.logWebSocketPolyfill) {
+		logger.debug(message, context)
+	}
+}
+
 /**
  *
  * @param syncService - the sync service to build upon
@@ -35,9 +42,10 @@ export default function initWebSocketPolyfill(
 			this.#notifyPushBus = getNotifyBus()
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
 			this.#url = url
-			logger.debug('WebSocketPolyfill#constructor', { url, fileId })
+			debug('WebSocketPolyfill#constructor', { url, fileId })
 
 			this.#onOpened = (data: OpenData) => {
+				debug('WebSocketPolyfill#onOpen', { data })
 				if (syncService.hasActiveConnection()) {
 					this.onopen?.()
 				}
@@ -46,9 +54,10 @@ export default function initWebSocketPolyfill(
 			syncService.bus.on('opened', this.#onOpened)
 
 			this.#onSync = ({ steps }: { steps: Step[] }) => {
+				debug('WebSocketPolyfill#onSync', { steps })
 				if (steps) {
 					this.#processSteps(steps)
-					logger.debug('synced ', {
+					debug('synced ', {
 						version: syncService.version,
 						steps,
 					})
@@ -95,7 +104,7 @@ export default function initWebSocketPolyfill(
 			// If `this.#processingVersion` is set, we're in the middle of applying steps of one version.
 			// If `isSyncStep1`, Yjs failed to integrate a message due to pending structs.
 			// Log and ask for recovery due to a not applied/missing step.
-			console.error(`Failed to process step ${this.#processingVersion}.`, {
+			logger.error(`Failed to process step ${this.#processingVersion}.`, {
 				lastSuccessfullyProcessed: syncService.version,
 				sendingSyncStep1: step,
 			})
@@ -110,7 +119,7 @@ export default function initWebSocketPolyfill(
 			syncService.bus.off('opened', this.#onOpened)
 			this.#notifyPushBus?.off('notify_push', this.#onNotifyPush.bind(this))
 			this.onclose?.(new CloseEvent('closing'))
-			logger.debug('Websocket closed')
+			debug('Websocket closed')
 		}
 
 		#onNotifyPush({
@@ -118,6 +127,7 @@ export default function initWebSocketPolyfill(
 		}: {
 			messageBody: { documentId: number; steps: string[] }
 		}) {
+			debug('WebSocketPolyfill#onNotifyPush', messageBody)
 			if (messageBody.documentId !== fileId) {
 				return
 			}
