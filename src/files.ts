@@ -4,16 +4,17 @@
  */
 
 import { loadState } from '@nextcloud/initial-state'
+import { initialize } from './oca.text'
 
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
+initialize()
+
 const workspaceAvailable = loadState('text', 'workspace_available')
-const workspaceEnabled = loadState('text', 'workspace_enabled')
-const openReadOnlyEnabled = loadState('text', 'open_read_only_enabled')
 
 document.addEventListener('DOMContentLoaded', async () => {
-	if (workspaceAvailable && window.OCA.Files?.Settings) {
+	if (workspaceAvailable && window.OCA && window.OCA.Files?.Settings) {
 		const { default: Vue } = await import('vue')
 		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
 
@@ -30,8 +31,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 		)
 	}
 })
-
-OCA.Text = {
-	RichWorkspaceEnabled: workspaceEnabled,
-	OpenReadOnlyEnabled: openReadOnlyEnabled,
-}

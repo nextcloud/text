@@ -10,7 +10,7 @@ import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
 
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
-import { logger } from './helpers/logger.js'
+import { logger } from './helpers/logger.ts'
 
 const lowlight = createLowlight()
 
