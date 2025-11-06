@@ -11,7 +11,7 @@ import getNotifyBus from './NotifyService'
 import type { Step, SyncService } from './SyncService'
 
 // Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
-const debug = (message: string, context?: Record<string, any>) => {
+const debug = (message: string, context?: Record<string, unknown>) => {
 	if (window.OCA?.Text?.logWebSocketPolyfill) {
 		logger.debug(message, context)
 	}

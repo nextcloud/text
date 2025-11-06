@@ -51,16 +51,16 @@ if (!window.OCA.Text.debugYjs) {
 
 /**
  * Expose editor component in OCA.Text.editorComponents
- * @param {object} component - the editor component to include in debug output
+ * @param component - the editor component to include in debug output
  */
-export function exposeForDebugging(component) {
+export function exposeForDebugging(component: object) {
 	editorComponents.add(component)
 }
 
 /**
  * Drop editor component from OCA.Text.editorComponents
- * @param {object} component - the editor component to remove from debug output
+ * @param component - the editor component to remove from debug output
  */
-export function removeFromDebugging(component) {
+export function removeFromDebugging(component: object) {
 	editorComponents.delete(component)
 }

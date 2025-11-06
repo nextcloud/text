@@ -143,7 +143,7 @@ import ClickOutside from 'vue-click-outside'
 import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
-import { logger } from '../helpers/logger.js'
+import { logger } from '../helpers/logger.ts'
 
 class LoadImageError extends Error {
 	constructor(reason, imageUrl) {
