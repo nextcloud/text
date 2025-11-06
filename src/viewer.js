@@ -5,7 +5,7 @@
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-import { logger } from './helpers/logger.js'
+import { logger } from './helpers/logger.ts'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
 /**
