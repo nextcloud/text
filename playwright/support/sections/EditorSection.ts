@@ -11,6 +11,7 @@ export class EditorSection {
 	public readonly content: Locator
 	public readonly sessionList: Locator
 	public readonly offlineState: Locator
+	public readonly saveIndicator: Locator
 
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
@@ -18,6 +19,7 @@ export class EditorSection {
 		this.content = this.locator.getByRole('textbox')
 		this.sessionList = this.locator.locator('.session-list')
 		this.offlineState = this.locator.locator('.offline-state')
+		this.saveIndicator = this.locator.locator('.save-status')
 	}
 
 	public async type(keys: string): Promise<void> {
