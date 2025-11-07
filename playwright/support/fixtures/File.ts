@@ -49,6 +49,7 @@ export class File {
 
 	async close() {
 		await this.page.getByRole('button', { name: 'Close', exact: true }).click()
+		await this.page.waitForRequest(/close/)
 		await expect(this.page.getByLabel(this.name, { exact: true }))
 			.not.toBeVisible()
 	}
