@@ -30,16 +30,17 @@ test.describe('Offline', () => {
 		editor,
 		setOffline,
 	}) => {
-		await editor.getMenu('insert-link').click()
-		await expect(editor.getMenu('insert-link-file')).toBeEnabled()
-		await editor.getMenu('insert-link').click()
+		const linkToFile = editor.getMenu('insert-link-file')
+		await editor.withOpenMenu('insert-link',
+			() => expect(linkToFile).toBeEnabled()
+		)
 		await expect(editor.getMenu('insert-attachment')).toBeEnabled()
 
 		await setOffline()
 
-		await editor.getMenu('insert-link').click()
-		await expect(editor.getMenu('insert-link-file')).toBeDisabled()
-		await editor.getMenu('insert-link').click()
+		await editor.withOpenMenu('insert-link',
+			() => expect(linkToFile).toBeDisabled()
+		)
 		await expect(editor.getMenu('insert-attachment')).toBeDisabled()
 	})
 })
