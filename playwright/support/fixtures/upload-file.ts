@@ -39,5 +39,6 @@ export const test = base.extend<UploadFileFixture>({
 
 	open: ({ file }, use) => use(() => file.open()),
 	viewer: ({ fileName, page }, use) => use(new ViewerSection(fileName, page)),
+	close: ({ viewer }, use) => use(() => viewer.close()),
 
 })
