@@ -4,49 +4,42 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
+import { test as editorTest } from '../support/fixtures/editor'
 import { test as offlineTest } from '../support/fixtures/offline'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(offlineTest, randomUserTest, uploadFileTest)
+const test = mergeTests(editorTest, offlineTest, randomUserTest, uploadFileTest)
 
 test.beforeEach(async ({ file }) => {
 	await file.open()
 })
 
 test.describe('Offline', () => {
-	test('Offline state indicator', async ({ page, setOffline }) => {
-		await expect(page.locator('.session-list')).toBeVisible()
-		await expect(page.locator('.offline-state')).not.toBeVisible()
+	test('Offline state indicator', async ({ editor, setOffline }) => {
+		await expect(editor.sessionList).toBeVisible()
+		await expect(editor.offlineState).not.toBeVisible()
 
 		await setOffline()
 
-		await expect(page.locator('.session-list')).not.toBeVisible()
-		await expect(page.locator('.offline-state')).toBeVisible()
+		await expect(editor.sessionList).not.toBeVisible()
+		await expect(editor.offlineState).toBeVisible()
 	})
 
 	test('Disabled upload and link file when offline', async ({
-		page,
+		editor,
 		setOffline,
 	}) => {
-		await page.locator('[data-text-action-entry="insert-link"]').click()
-		await expect(
-			page.locator('[data-text-action-entry="insert-link-file"] button'),
-		).toBeEnabled()
-		await page.locator('[data-text-action-entry="insert-link"]').click()
-		await expect(
-			page.locator('[data-text-action-entry="insert-attachment"] button'),
-		).toBeEnabled()
+		await editor.getMenu('insert-link').click()
+		await expect(editor.getMenu('insert-link-file')).toBeEnabled()
+		await editor.getMenu('insert-link').click()
+		await expect(editor.getMenu('insert-attachment')).toBeEnabled()
 
 		await setOffline()
 
-		await page.locator('[data-text-action-entry="insert-link"]').click()
-		await expect(
-			page.locator('[data-text-action-entry="insert-link-file"] button'),
-		).toBeDisabled()
-		await page.locator('[data-text-action-entry="insert-link"]').click()
-		await expect(
-			page.locator('[data-text-action-entry="insert-attachment"] button'),
-		).toBeDisabled()
+		await editor.getMenu('insert-link').click()
+		await expect(editor.getMenu('insert-link-file')).toBeDisabled()
+		await editor.getMenu('insert-link').click()
+		await expect(editor.getMenu('insert-attachment')).toBeDisabled()
 	})
 })
