@@ -7,6 +7,7 @@ import { test as base, type CDPSession } from '@playwright/test'
 
 interface OfflineFixture {
 	setOffline: () => Promise<void>
+	setOnline: () => Promise<void>
 }
 
 const setClientOnline = async (client: CDPSession): Promise<void> => {
@@ -33,10 +34,13 @@ const setClientOffline = async (client: CDPSession): Promise<void> => {
  * setOffline will turn the network off for the rest of the test and then on again.
  */
 export const test = base.extend<OfflineFixture>({
-	// eslint-disable-next-line no-empty-pattern
 	setOffline: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
 		await use (() => setClientOffline(client))
 		await setClientOnline(client)
+	},
+	setOnline: async ({ context, page }, use) => {
+		const client = await context.newCDPSession(page)
+		await use (() => setClientOnline(client))
 	},
 })

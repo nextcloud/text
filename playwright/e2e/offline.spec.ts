@@ -11,6 +11,10 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
 const test = mergeTests(editorTest, offlineTest, randomUserTest, uploadFileTest)
 
+// As we switch on and off the network
+// we cannot run tests in parallel.
+test.describe.configure({ mode: 'serial' })
+
 test.beforeEach(async ({ file }) => {
 	await file.open()
 })
@@ -43,4 +47,18 @@ test.describe('Offline', () => {
 		)
 		await expect(editor.getMenu('insert-attachment')).toBeDisabled()
 	})
+
+	test('typing offline and coming back online', async ({
+		editor,
+		setOffline,
+		setOnline,
+	}) => {
+		await expect(editor.locator).toBeVisible()
+		await setOffline()
+		await editor.typeHeading('Hello world')
+		await setOnline()
+		await expect(editor.offlineState).not.toBeVisible()
+		await expect(editor.saveIndicator).toHaveAttribute('title', /Unsaved changes/)
+	})
+
 })
