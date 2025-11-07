@@ -8,16 +8,20 @@ import { expect } from '@playwright/test'
 
 export class EditorSection {
 	public readonly locator: Locator
-	public readonly contentLocator: Locator
+	public readonly content: Locator
+	public readonly sessionList: Locator
+	public readonly offlineState: Locator
 
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
 		this.locator = this.page.locator('.editor').first()
-		this.contentLocator = this.locator.getByRole('textbox')
+		this.content = this.locator.getByRole('textbox')
+		this.sessionList = this.locator.locator('.session-list')
+		this.offlineState = this.locator.locator('.offline-state')
 	}
 
 	public async type(keys: string): Promise<void> {
-		await this.contentLocator.pressSequentially(keys)
+		await this.content.pressSequentially(keys)
 	}
 
 	public async typeHeading(name: string): Promise<void> {
@@ -26,7 +30,11 @@ export class EditorSection {
 		await expect(this.getHeading({ name })).toBeVisible()
 	}
 
+	public getMenu(name: string): Locator {
+		return this.locator.locator(`[data-text-action-entry="${name}"] button`)
+	}
+
 	public getHeading(options: object = {}): Locator {
-		return this.contentLocator.getByRole('heading', options)
+		return this.content.getByRole('heading', options)
 	}
 }
