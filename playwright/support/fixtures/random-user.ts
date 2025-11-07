@@ -9,7 +9,6 @@ import { type User } from '@nextcloud/e2e-test-server'
 
 interface RandomUserFixture {
 	user: User
-	requestToken: string
 }
 
 /**
@@ -20,18 +19,6 @@ export const test = base.extend<RandomUserFixture>({
 	user: async ({ }, use) => {
 		const user = await createRandomUser()
 		await use(user)
-	},
-	requestToken: async ({ page }, use) => {
-		// Navigate to get the page context and extract request token
-		await page.goto('/')
-
-		// Get the request token from the page context
-		const token = await page.evaluate(() => {
-			// @ts-expect-error - OC is a global variable
-			return window.OC?.requestToken || ''
-		})
-
-		await use(token)
 	},
 	page: async ({ browser, baseURL, user }, use) => {
 		// Important: make sure we authenticate in a clean environment by unsetting storage state.

@@ -40,12 +40,12 @@ class BeforeNodeWrittenListener implements IEventListener {
 		}
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
-			$this->documentService->resetDocument($node->getId());
+			$this->documentService->resetDocument($node->getId(), true);
 		} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
 			// Do not throw during event handling in this is expected to happen
 			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
 			// NotFoundException: The event was called oin a file that was just created so a NonExistingFile object is used that has no id yet
-			$this->logger->debug('Reset document skipped in BeforeNodeWrittenEvent', ['exception' => $e]);
+			$this->logger->warning('Reset document skipped in BeforeNodeWrittenEvent', ['exception' => $e]);
 		}
 	}
 }

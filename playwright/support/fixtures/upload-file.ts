@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from '@playwright/test'
+import { test as base } from './request-token'
+import { File } from './File'
 
 interface UploadMdFixture {
-	requestToken?: string
-	file: {
-		fileName: string
-		fileId: number
-	}
+	file: File
+	fileName: string
 }
 
 /**
@@ -18,34 +16,12 @@ interface UploadMdFixture {
  * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
  */
 export const test = base.extend<UploadMdFixture>({
-	file: async ({ page, requestToken }, use) => {
-		const fileName = 'empty.md'
+	file: async ({ page, requestToken, fileName }, use) => {
+		const file = new File(fileName, page, requestToken)
 		const fileContent = ''
-
-		if (!requestToken) {
-			throw new Error('requestToken is required. Make sure to merge with random-user fixture.')
-		}
-
-		// Upload file via WebDAV using page.request with requesttoken header
-		const response = await page.request.put(
-			`/remote.php/webdav/${fileName}`,
-			{
-				data: fileContent,
-				headers: {
-					'Content-Type': 'text/markdown',
-					'requesttoken': requestToken,
-				},
-			},
-		)
-
-		if (!response.ok()) {
-			throw new Error(`Failed to upload file: ${response.status()} ${response.statusText()}`)
-		}
-
-		// Extract file ID from response headers
-		const ocFileId = response.headers()['oc-fileid']
-		const fileId = ocFileId ? Number(ocFileId.split('oc')?.[0]) : 0
-
-		await use({ fileName, fileId })
+		await file.upload(fileContent)
+		await use(file)
 	},
+	fileName: ['empty.md', {option: true}],
 })
+

@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
@@ -41,11 +40,6 @@ class Cleanup extends TimedJob {
 				// Do not reset if there are any sessions left
 				// Inactive sessions will get removed further down and will trigger a reset next time
 				continue;
-			}
-
-			try {
-				$this->documentService->resetDocument($document->getId());
-			} catch (DocumentHasUnsavedChangesException) {
 			}
 			$this->attachmentService->cleanupAttachments($document->getId());
 		}
