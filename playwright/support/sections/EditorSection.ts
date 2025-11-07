@@ -34,6 +34,15 @@ export class EditorSection {
 		return this.locator.locator(`[data-text-action-entry="${name}"] button`)
 	}
 
+	public async withOpenMenu(
+		name: string,
+		fn: () => Promise<unknown>,
+	): Promise<void> {
+		await this.getMenu(name).click() // open the menu
+		await fn()
+		await this.getMenu(name).click() // close the menu
+	}
+
 	public getHeading(options: object = {}): Locator {
 		return this.content.getByRole('heading', options)
 	}
