@@ -32,6 +32,8 @@ OC.L10N.register(
     "This file is opened read-only as it is currently locked by {user}." : "Овај фајл је отворен у режиму само-за-читање, и тренутно га је закључао {user}.",
     "Close outline view" : "Затвори контурни приказ",
     "Outline" : "Контура",
+    "Insert below" : "Уметни испод",
+    "Click for options, hold to drag" : "Клик за опције, задржите за превлачење",
     "Not connected. Cannot update guest name." : "Нема везе. Не може да се ажурира име госта.",
     "Failed to update the guest name." : "Није успело ажурирање имена госта.",
     "Enter your name so other people can see who is editing" : "Унесите своје име тако да остали могу видети ко уређује",
