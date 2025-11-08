@@ -111,7 +111,7 @@
   },
   "devDependencies": {
     "@nextcloud/babel-config": "^1.2.0",
-    "@nextcloud/browserslist-config": "^3.1.1",
+    "@nextcloud/browserslist-config": "^3.1.2",
     "@nextcloud/e2e-test-server": "^0.4.0",
     "@nextcloud/eslint-config": "^8.4.2",
     "@nextcloud/prettier-config": "^1.2.0",
