@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes } from '@tiptap/core'
-import TiptapTaskList from '@tiptap/extension-task-list'
+import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
 
 const TaskList = TiptapTaskList.extend({
 	parseHTML: [

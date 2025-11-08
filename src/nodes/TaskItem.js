@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes, wrappingInputRule } from '@tiptap/core'
-import TipTapTaskItem from '@tiptap/extension-task-item'
+import { TaskItem as TipTapTaskItem } from '@tiptap/extension-list'
 import { Plugin } from '@tiptap/pm/state'
 import { findParentNodeClosestToPos } from './../helpers/prosemirrorUtils.js'
 

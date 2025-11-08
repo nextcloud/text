@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes } from '@tiptap/core'
-import { TableHeader } from '@tiptap/extension-table-header'
+import { TableHeader } from '@tiptap/extension-table'
 
 export default TableHeader.extend({
 	content: 'inline*',

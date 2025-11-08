@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable import/no-named-as-default */
-import ListItem from '@tiptap/extension-list-item'
-import OrderedList from '@tiptap/extension-ordered-list'
+import { ListItem, OrderedList } from '@tiptap/extension-list'
 /* eslint-enable import/no-named-as-default */
 import Markdown from './../../../src/extensions/Markdown.js'
 import BulletList from './../../../src/nodes/BulletList.js'
