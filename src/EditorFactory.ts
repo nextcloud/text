@@ -5,21 +5,23 @@
 
 import 'proxy-polyfill'
 
-import { Editor } from '@tiptap/core'
+import { Editor, Extension } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
 
+import type { Node } from '@tiptap/pm/model'
+import type { Connection } from './composables/useConnection'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
-import { logger } from './helpers/logger.ts'
+import { logger } from './helpers/logger'
 
 const lowlight = createLowlight()
 
-const loadSyntaxHighlight = async (language) => {
+const loadSyntaxHighlight = async (language: string) => {
 	const list = hljs.listLanguages()
 	logger.debug('Supported languages', { list })
 	if (!lowlight.listLanguages().includes(language)) {
 		try {
-			logger.debug('Loading language', language)
+			logger.debug('Loading language ' + language)
 			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(
 				`../node_modules/highlight.js/lib/languages/${language}.js`
@@ -42,6 +44,11 @@ const createRichEditor = ({
 	connection,
 	relativePath,
 	isEmbedded = false,
+}: {
+	extensions?: Extension[]
+	connection?: Connection
+	relativePath?: string
+	isEmbedded?: boolean
 } = {}) => {
 	return new Editor({
 		editorProps,
@@ -53,7 +60,10 @@ const createRichEditor = ({
 	})
 }
 
-const createPlainEditor = ({ language = 'plaintext', extensions = [] } = {}) => {
+const createPlainEditor = ({
+	language = 'plaintext',
+	extensions = [],
+}: { language?: string; extensions?: Extension[] } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -68,7 +78,7 @@ const createPlainEditor = ({ language = 'plaintext', extensions = [] } = {}) => 
 	})
 }
 
-const serializePlainText = (doc) => {
+const serializePlainText = (doc: Node) => {
 	return doc.textContent
 }
 
