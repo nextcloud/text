@@ -108,14 +108,14 @@ import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
 import { logger } from '../helpers/logger.ts'
-import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
 	createPlainEditor,
 	createRichEditor,
 	serializePlainText,
-} from './../EditorFactory.js'
+} from './../EditorFactory.ts'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'

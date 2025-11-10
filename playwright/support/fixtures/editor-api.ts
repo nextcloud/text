@@ -49,7 +49,6 @@ export const test = base.extend<EditorApiFixture>({
 					document.body.appendChild(container)
 
 					const method = type === 'editor' ? 'createEditor' : 'createTable'
-					// @ts-expect-error - OCA.Text is a global
 					await window.OCA.Text[method]({
 						el: container,
 						...(fileId != null ? { fileId } : { content }),

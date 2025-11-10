@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createPlainEditor, serializePlainText } from './../EditorFactory.js'
+import { createPlainEditor, serializePlainText } from './../EditorFactory.ts'
 import spec from './fixtures/spec.js'
 import xssFuzzVectors from './fixtures/xssFuzzVectors.js'
 
