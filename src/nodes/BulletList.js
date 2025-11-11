@@ -28,7 +28,6 @@ const BulletList = TiptapBulletList.extend({
 			bullet: {
 				default: '-',
 				rendered: false,
-				isRequired: true,
 				parseHTML: (el) => el.getAttribute('data-bullet'),
 			},
 		}
