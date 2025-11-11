@@ -14,7 +14,11 @@ const test = baseTest.extend({
 		const wrapper = mount(RichTextReader, { propsData: { content } })
 		await nextTick()
 		await use(wrapper)
-		wrapper.destroy()
+		try {
+			wrapper.destroy()
+		} catch {
+			// Might throw "The editor view is not available. Cannot access view['dom']. The editor may not be mounted yet."
+		}
 	},
 })
 
