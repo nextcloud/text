@@ -27,6 +27,14 @@ export default TableRow.extend({
 	},
 
 	parseHTML() {
-		return [{ tag: 'tr:first-of-type', priority: 80 }]
+		return [
+			{ tag: 'table thead:empty ~ tbody tr:first-of-type', priority: 80 },
+			{ tag: 'table thead tr:first-of-type', priority: 80 },
+			{
+				tag: 'table:not(:has(> thead:not(:empty))) tbody tr:first-of-type',
+				priority: 80,
+			},
+			{ tag: 'table > tr:first-of-type', priority: 80 },
+		]
 	},
 })
