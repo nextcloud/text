@@ -18,7 +18,7 @@ export default Extension.create({
 		return {
 			...this.parent?.(),
 			lowlight: undefined,
-			defaultLanguage: undefined,
+			defaultLanguage: 'plaintext',
 		}
 	},
 
