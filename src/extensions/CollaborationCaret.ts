@@ -78,7 +78,7 @@ const CollaborationCaret = TiptapCollaborationCaret.extend({
 			) => {
 				if (origin !== 'local') {
 					for (const clientId of [...added, ...updated]) {
-						if (clientId !== this.options.user.clientID) {
+						if (clientId !== this.options.provider.awareness.clientID) {
 							showCaretLabel(clientId)
 						}
 					}
@@ -94,7 +94,7 @@ const CollaborationCaret = TiptapCollaborationCaret.extend({
 		const updated = transaction.docChanged
 		if (updated && addToHistory && !pointer) {
 			editor.commands.updateUser({
-				...this.options.user,
+				...this.options.provider.awareness.getLocalState().user,
 				lastUpdate: getTimestamp(),
 			})
 		}
