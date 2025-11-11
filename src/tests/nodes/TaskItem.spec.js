@@ -60,11 +60,13 @@ describe('TaskItem extension', () => {
 				'<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>',
 			),
 		).toBe('- [ ] test')
+		// First text node becomes first paragraph in taskItem
 		expect(
 			markdownThroughEditorHtml(
-				'<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>',
+				'<ul class="contains-task-list"><li><input type="checkbox" checked />test<h2>Headline</h2><p><strong>content</strong></p></li></ul>',
 			),
-		).toBe('- [x] Test\n\n  **content**')
+		).toBe('- [x] test\n\n  ## Headline\n\n  **content**')
+		// Second block element stays indented (stays part of taskItem)
 		expect(
 			markdownThroughEditorHtml(
 				'<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>',
