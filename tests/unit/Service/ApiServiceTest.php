@@ -36,8 +36,11 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$document = new Document();
 		$document->setId(123);
-		$this->documentService->method('getDocument')->willReturn($document);
+		$this->documentService->method('getOrCreateDocument')->willReturn($document);
 		$this->documentService->method('isReadOnly')->willReturn(false);
+		$this->encodingService->method('encodeToUtf8')->willReturnCallback(function ($str) {
+			return $str;
+		});
 
 		$this->apiService = new ApiService(
 			$this->request,
@@ -57,6 +60,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->method('getFileById')->willReturn($file);
 		$actual = $this->apiService->create(1234);
 		self::assertTrue($actual->getData()['hasOwner']);
+		self::assertEquals('file content', $actual->getData()['content']);
 	}
 
 	public function testCreateNewSessionWithoutOwner() {
@@ -72,6 +76,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$file->method('getStorage')->willReturn($storage);
 		$file->method('getId')->willReturn($id);
 		$file->method('getOwner')->willReturn($owner);
+		$file->method('getContent')->willReturn('file content');
 		return $file;
 	}
 

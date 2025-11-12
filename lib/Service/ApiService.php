@@ -21,7 +21,6 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Constants;
-use OCP\Files\AlreadyExistsException;
 use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
@@ -90,23 +89,11 @@ class ApiService {
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$document = $this->documentService->getDocument($file->getId());
-			$freshSession = $document === null;
-			if ($baseVersionEtag !== null && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
+			$document = $this->documentService->getOrCreateDocument($file);
+			if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
 				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 			}
 
-			if ($freshSession) {
-				$this->logger->info('Create new document of ' . $file->getId());
-				try {
-					$document = $this->documentService->createDocument($file);
-				} catch (AlreadyExistsException) {
-					$freshSession = false;
-					$document = $this->documentService->getDocument($file->getId());
-				}
-			} else {
-				$this->logger->info('Keep previous document of ' . $file->getId());
-			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
@@ -118,17 +105,16 @@ class ApiService {
 
 		$documentState = null;
 		$content = null;
-		if ($freshSession) {
-			$this->logger->debug('Starting a fresh editing session for ' . $file->getId());
+		if ($document->getLastSavedVersion() === 0) {
+			$this->logger->debug('Sending content for unsaved file ' . $file->getId());
 			$content = $this->loadContent($file);
 		} else {
-			$this->logger->debug('Loading existing session for ' . $file->getId());
+			$this->logger->debug('Loading saved document state for ' . $file->getId());
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
-				$this->logger->debug('Existing document, state file loaded ' . $file->getId());
 			} catch (NotFoundException $e) {
-				$this->logger->debug('Existing document, but state file not found for ' . $file->getId());
+				$this->logger->debug('Saved document, but state file not found for ' . $file->getId());
 
 				// If we have no state file we need to load the content from the file
 				// On the client side we use this to initialize a idempotent initial y.js document
