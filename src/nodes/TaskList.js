@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes } from '@tiptap/core'
-import TiptapTaskList from '@tiptap/extension-task-list'
+import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
 
 const TaskList = TiptapTaskList.extend({
 	parseHTML: [
@@ -34,7 +34,6 @@ const TaskList = TiptapTaskList.extend({
 			bullet: {
 				default: '-',
 				rendered: false,
-				isRequired: true,
 				parseHTML: (el) => el.getAttribute('data-bullet'),
 			},
 		}

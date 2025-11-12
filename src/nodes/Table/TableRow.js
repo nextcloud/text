@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { TableRow } from '@tiptap/extension-table-row'
+import { TableRow } from '@tiptap/extension-table'
 
 export default TableRow.extend({
 	content: 'tableCell*',

@@ -103,6 +103,56 @@ describe('Table', () => {
 
 		expect(serializer.serialize(editor.state.doc)).toBe(input)
 	})
+
+	test('serialize from editor without thead and tbody', ({ editor }) => {
+		const markdownitHtml = output.replaceAll(/<\/?t(head|body)>\n/g, '')
+		editor.commands.setContent(markdownitHtml)
+		const serializer = createMarkdownSerializer(editor.schema)
+
+		expect(serializer.serialize(editor.state.doc)).toBe(input)
+	})
+
+	test('parse from HTML: only one row always regarded as header row (required in markdown tables)', ({
+		editor,
+	}) => {
+		const editorHtml =
+			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></table></div><p></p>'
+		const tables = [
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead></table>',
+			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead></table>',
+			'<table><tbody><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></tbody></table>',
+			'<table><tbody><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></tbody></table>',
+			'<table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></table>',
+			'<table><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></table>',
+		]
+		for (const tableHtml of tables) {
+			editor.commands.setContent(tableHtml)
+			expect(editor.getHTML()).toBe(editorHtml)
+		}
+	})
+
+	// Make sure
+	test('parse from HTML: first row is header, second is body row with several thead/tbody and th/td combinations', ({
+		editor,
+	}) => {
+		const editorHtml =
+			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td dir="ltr">a</td><td dir="ltr">b</td></tr></table></div><p></p>'
+		const tables = [
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tbody><tr><td>a</td><td>b</td></tr></tbody></table>',
+			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead><tbody><tr><td>a</td><td>b</td></tr></tbody></table>',
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tr><td>a</td><td>b</td></tr></table>',
+			'<table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></table>',
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></thead></table>',
+			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></thead></table>',
+			'<table><tbody><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></tbody></table>',
+			'<table><tbody><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></tbody></table>',
+			'<table><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></table>',
+		]
+		for (const tableHtml of tables) {
+			editor.commands.setContent(tableHtml)
+			expect(editor.getHTML()).toBe(editorHtml)
+		}
+	})
 })
 
 const formatHTML = (html) => {

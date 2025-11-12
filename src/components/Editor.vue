@@ -104,7 +104,7 @@ import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
-import { CollaborationCursor } from '../extensions/index.js'
+import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
@@ -240,7 +240,7 @@ export default defineComponent({
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
-			CollaborationCursor.configure({ provider: { awareness } }),
+			CollaborationCaret.configure({ provider: { awareness } }),
 		]
 		const editor = isRichEditor
 			? createRichEditor({
@@ -929,7 +929,7 @@ export default defineComponent({
 }
 
 /* Give a remote user a caret */
-.collaboration-cursor__caret {
+.collaboration-carets__caret {
 	position: relative;
 	margin-left: -1px;
 	margin-right: -1px;
@@ -940,7 +940,7 @@ export default defineComponent({
 }
 
 /* Render the username above the caret */
-.collaboration-cursor__label {
+.collaboration-carets__label {
 	position: absolute;
 	top: -1.4em;
 	left: -1px;
@@ -955,11 +955,11 @@ export default defineComponent({
 	white-space: nowrap;
 	opacity: 0;
 
-	&.collaboration-cursor__label__active {
+	&.collaboration-carets__label__active {
 		opacity: 1;
 	}
 
-	&:not(.collaboration-cursor__label__active) {
+	&:not(.collaboration-carets__label__active) {
 		transition: opacity 0.2s 5s;
 	}
 }

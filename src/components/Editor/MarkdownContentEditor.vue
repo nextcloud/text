@@ -27,7 +27,7 @@ import MainContainer from './MainContainer.vue'
 import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
-import History from '@tiptap/extension-history'
+import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
@@ -89,7 +89,7 @@ export default {
 	setup(props) {
 		const extensions = [
 			RichText.configure({
-				extensions: [History],
+				extensions: [UndoRedo],
 			}),
 			FocusTrap,
 		]

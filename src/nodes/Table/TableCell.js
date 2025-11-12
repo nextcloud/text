@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes } from '@tiptap/core'
-import { TableCell } from '@tiptap/extension-table-cell'
+import { TableCell } from '@tiptap/extension-table'
 import { Fragment } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
 

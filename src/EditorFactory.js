@@ -53,7 +53,7 @@ const createRichEditor = ({
 	})
 }
 
-const createPlainEditor = ({ language, extensions = [] } = {}) => {
+const createPlainEditor = ({ language = 'plaintext', extensions = [] } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [

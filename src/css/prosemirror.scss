@@ -37,7 +37,7 @@ div.ProseMirror {
 		user-select: text;
 		font-size: var(--default-font-size);
 
-		&:not(.collaboration-cursor__caret) {
+		&:not(.collaboration-carets__caret) {
 			border: none !important;
 		}
 
