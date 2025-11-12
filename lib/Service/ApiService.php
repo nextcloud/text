@@ -235,7 +235,7 @@ class ApiService {
 		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
 	}
 
-	public function save(Session $session, Document $document, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 		} catch (NotPermittedException|NotFoundException $e) {

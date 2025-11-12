@@ -138,6 +138,7 @@ describe('The session Api', function () {
 			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
+				documentState: 'state',
 				manualSave: true,
 			})
 			cy.downloadFile(filePath).its('data').should('eql', '# Heading 1')
@@ -212,6 +213,7 @@ describe('The session Api', function () {
 			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
+				documentState: 'state',
 				manualSave: true,
 			})
 			cy.login(user)

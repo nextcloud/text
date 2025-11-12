@@ -357,11 +357,8 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+	public function autosave(Document $document, File $file, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
-		if ($file === null) {
-			throw new NotFoundException();
-		}
 
 		if ($this->isReadOnly($file, $shareToken)) {
 			return $document;
@@ -369,9 +366,6 @@ class DocumentService {
 
 		$this->assertNoOutsideConflict($document, $file, $force);
 
-		if ($autoSaveDocument === null) {
-			return $document;
-		}
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
@@ -406,9 +400,7 @@ class DocumentService {
 
 		// Version changed but the content remains the same
 		if ($autoSaveDocument === $file->getContent()) {
-			if ($documentState !== null) {
-				$this->writeDocumentState($file->getId(), $documentState);
-			}
+			$this->writeDocumentState($file->getId(), $documentState);
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
@@ -425,9 +417,7 @@ class DocumentService {
 			), function () use ($file, $autoSaveDocument, $documentState) {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
-				if ($documentState !== null) {
-					$this->writeDocumentState($file->getId(), $documentState);
-				}
+				$this->writeDocumentState($file->getId(), $documentState);
 			});
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
