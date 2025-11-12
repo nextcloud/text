@@ -12,6 +12,7 @@ export class EditorSection {
 	public readonly sessionList: Locator
 	public readonly offlineState: Locator
 	public readonly saveIndicator: Locator
+	public readonly formattingHelp: Locator
 
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
@@ -20,6 +21,9 @@ export class EditorSection {
 		this.sessionList = this.locator.locator('.session-list')
 		this.offlineState = this.locator.locator('.offline-state')
 		this.saveIndicator = this.locator.locator('.save-status')
+		this.formattingHelp = this.page.getByRole('dialog', {
+			name: 'Formatting and shortcuts',
+		})
 	}
 
 	public async type(keys: string): Promise<void> {
@@ -34,6 +38,12 @@ export class EditorSection {
 
 	public getMenu(name: string): Locator {
 		return this.locator.locator(`[data-text-action-entry="${name}"] button`)
+	}
+
+	public async clickMenu(...names: string[]): Promise<void> {
+		names.forEach(async (name) => {
+			await this.getMenu(name).click()
+		})
 	}
 
 	public async withOpenMenu(
