@@ -114,7 +114,7 @@ class ApiService {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException $e) {
-				$this->logger->debug('Saved document, but state file not found for ' . $file->getId());
+				$this->logger->warning('State file not found for saved document' . $file->getId());
 
 				// If we have no state file we need to load the content from the file
 				// On the client side we use this to initialize a idempotent initial y.js document
