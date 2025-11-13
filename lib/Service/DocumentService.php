@@ -24,7 +24,6 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Constants;
 use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
-use OCP\Files\AlreadyExistsException;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -116,27 +115,18 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function createDocument(File $file): Document {
-		try {
-			$document = $this->documentMapper->find($file->getId());
-
-			// Do not hard reset if changed from outside since this will throw away possible steps
-			// This way the user can still resolve conflicts in the editor view
-			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
-			if ($stepsVersion !== null && ($document->getLastSavedVersion() !== $stepsVersion)) {
-				$this->logger->debug('Unsaved steps, continue collaborative editing');
-				return $document;
-			}
+	public function getOrCreateDocument(File $file): Document {
+		$document = $this->getDocument($file->getId());
+		if ($document !== null) {
+			$this->logger->info('Keep previous document of ' . $file->getId());
 			return $document;
-		} catch (DoesNotExistException $e) {
-		} catch (InvalidPathException $e) {
-		} catch (NotFoundException $e) {
 		}
 
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
+		$this->logger->info('Create new document of ' . $file->getId());
 		$document = new Document();
 		$document->setId($file->getId());
 		$document->setLastSavedVersion(0);
@@ -149,12 +139,14 @@ class DocumentService {
 			$document = $this->documentMapper->insert($document);
 			$this->cache->set('document-version-' . $document->getId(), 0);
 		} catch (Exception $e) {
-			if ($e->getReason() === Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
-				// Document might have been created in the meantime
-				throw new AlreadyExistsException();
+			if ($e->getReason() !== Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
+				throw $e;
 			}
-
-			throw $e;
+			// Document might have been created in the meantime
+			$document = $this->getDocument($file->getId());
+			if ($document === null) {
+				throw $e;
+			}
 		}
 		return $document;
 	}
@@ -365,11 +357,8 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+	public function autosave(Document $document, File $file, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
-		if ($file === null) {
-			throw new NotFoundException();
-		}
 
 		if ($this->isReadOnly($file, $shareToken)) {
 			return $document;
@@ -377,9 +366,6 @@ class DocumentService {
 
 		$this->assertNoOutsideConflict($document, $file, $force);
 
-		if ($autoSaveDocument === null) {
-			return $document;
-		}
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
@@ -414,9 +400,7 @@ class DocumentService {
 
 		// Version changed but the content remains the same
 		if ($autoSaveDocument === $file->getContent()) {
-			if ($documentState !== null) {
-				$this->writeDocumentState($file->getId(), $documentState);
-			}
+			$this->writeDocumentState($file->getId(), $documentState);
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
@@ -433,9 +417,7 @@ class DocumentService {
 			), function () use ($file, $autoSaveDocument, $documentState) {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
-				if ($documentState !== null) {
-					$this->writeDocumentState($file->getId(), $documentState);
-				}
+				$this->writeDocumentState($file->getId(), $documentState);
 			});
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
