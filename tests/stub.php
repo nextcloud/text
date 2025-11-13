@@ -72,3 +72,9 @@ namespace OCA\Files_Versions\Versions {
 		abstract public function getSourceFile(): \OCP\Files\File;
 	}
 }
+
+namespace OCA\DAV\Connector\Sabre {
+	class PublicAuth {
+		public const DAV_AUTHENTICATED = '';
+	}
+}
