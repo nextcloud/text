@@ -1,0 +1,25 @@
+SPDX-License-Identifier: BSD-3-Clause
+SPDX-License-Identifier: ISC
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: Mike Bostock
+
+This file is generated from multiple sources. Included packages:
+- d3-array
+	- version: 2.12.1
+	- license: BSD-3-Clause
+- d3-path
+	- version: 1.0.9
+	- license: BSD-3-Clause
+- d3-sankey
+	- version: 0.12.3
+	- license: BSD-3-Clause
+- d3-scale-chromatic
+	- version: 3.0.0
+	- license: ISC
+- d3-shape
+	- version: 1.3.7
+	- license: BSD-3-Clause
+- mermaid
+	- version: 11.10.1
+	- license: MIT
