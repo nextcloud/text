@@ -141,7 +141,7 @@ OC.L10N.register(
     "Remaining actions" : "Actions restantes",
     "Editor actions" : "Actions de l'éditeur",
     "Formatting menu bar" : "Barre de menu de formatage",
-    "Full width editor" : "Editeur pleine largeur",
+    "Full width editor" : "Éditeur pleine largeur",
     "Translate from {language}" : "Traduire depuis {language}",
     "Translate to {language}" : "Traduire vers {language}",
     "Translation failed" : "Échec de la traduction",
