@@ -61,3 +61,21 @@ namespace OCA\NotifyPush\Queue {
 		public function push(string $channel, $message);
 	}
 }
+
+namespace OCA\Files_Versions\Events {
+	abstract class VersionRestoredEvent extends \OCP\EventDispatcher\Event {
+		abstract public function getVersion(): \OCA\Files_Versions\Versions\IVersion;
+	}
+}
+
+namespace OCA\Files_Versions\Versions {
+	abstract class IVersion {
+		abstract public function getSourceFile(): \OCP\Files\File;
+	}
+}
+
+namespace OCA\DAV\Connector\Sabre {
+	class PublicAuth {
+		public const DAV_AUTHENTICATED = '';
+	}
+}
