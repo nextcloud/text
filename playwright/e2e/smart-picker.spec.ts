@@ -5,10 +5,9 @@
 
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
-import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
+const test = mergeTests(editorTest, uploadFileTest)
 
 test.beforeEach(async ({ open }) => {
 	await open()

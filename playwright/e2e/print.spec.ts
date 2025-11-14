@@ -6,12 +6,11 @@
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
 import { loadFixture } from '../support/fixtures/loadFixture'
-import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as sharedFileTest } from '../support/fixtures/shared-file'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const fileTest = mergeTests(editorTest, randomUserTest, uploadFileTest)
-const shareTest = mergeTests(editorTest, randomUserTest, sharedFileTest)
+const fileTest = mergeTests(editorTest, uploadFileTest)
+const shareTest = mergeTests(editorTest, sharedFileTest)
 
 new Map([
 	['Own file', fileTest],
