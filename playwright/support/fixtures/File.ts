@@ -11,7 +11,7 @@ export class File {
 	requestToken: string
 	id?: number
 
-	constructor(name: string, page: Page, requestToken: string) {
+	constructor({ name, page, requestToken }: { name: string, page: Page, requestToken: string }) {
 		this.name = name
 		this.page = page
 		this.requestToken = requestToken
