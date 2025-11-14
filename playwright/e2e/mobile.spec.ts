@@ -14,8 +14,8 @@ test.use({
 	...devices['Moto G4'],
 })
 
-test.beforeEach(async ({ file }) => {
-	await file.open()
+test.beforeEach(async ({ open }) => {
+	await open()
 })
 
 test('Formatting help', async ({ editor }) => {
