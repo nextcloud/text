@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from '@playwright/test'
+import { test as base } from './random-user'
 import { File } from './File'
 
-interface UploadMdFixture {
+interface UploadFileFixture {
 	file: File
 	fileName: string
 	fileContent: string
@@ -17,10 +17,9 @@ interface UploadMdFixture {
  * This test fixture uploads the empty.md file to the user's root directory
  * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
  */
-export const test = base.extend<UploadMdFixture>({
-	file: async ({ fileContent, fileName, page }, use) => {
-		const file = new File({ name: fileName, page })
-		await file.upload(fileContent)
+export const test = base.extend<UploadFileFixture>({
+	file: async ({ fileContent, fileName, user }, use) => {
+		const file = await user.uploadFile(fileName, fileContent)
 		await use(file)
 	},
 	fileContent: ['', {option: true}],
