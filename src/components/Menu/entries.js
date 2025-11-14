@@ -334,17 +334,6 @@ export const MenuEntries = [
 				},
 			},
 			{
-				key: 'math-block',
-				label: t('text', 'Math block'),
-				keyChar: 'c',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
-				isActive: 'mathBlock',
-				icon: Sigma,
-				action: (command) => {
-					return command.toggleCodeBlock()
-				},
-			},
-			{
 				key: 'code-block',
 				label: t('text', 'Code block'),
 				keyChar: 'c',
@@ -369,7 +358,7 @@ export const MenuEntries = [
 			{
 				key: 'math-block',
 				label: t('text', 'Display formula'),
-				icon: Sigma,  // Or use a different variant if you have one
+				icon: Sigma,
 				isActive: 'math_block',
 				action: (command) => command.insertMathBlock(),
 			},
