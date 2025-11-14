@@ -1,0 +1,109 @@
+.avatar-wrapper[data-v-46b5e95c] {
+  overflow: hidden;
+}
+.avatar[data-v-46b5e95c],
+.avatar-wrapper[data-v-46b5e95c] {
+  --size: var(--default-clickable-area);
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  text-align: center;
+  color: var(--color-text-maxcontrast);
+  line-height: var(--size);
+  font-size: calc(var(--size) / 2);
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: 2px;
+  border-style: solid;
+  box-sizing: border-box;
+}form.guest-name-dialog[data-v-d22a5b2e] {
+  display: flex;
+  width: calc(var(--session-max-width) - 12px);
+}
+form.guest-name-dialog[data-v-d22a5b2e] img {
+  margin: 0 !important;
+}
+form.guest-name-dialog button[data-v-d22a5b2e] {
+  margin-inline-start: 3px;
+}
+ul li[data-v-d22a5b2e] {
+  align-items: center;
+  display: flex;
+  /* to match the form */
+  width: calc(var(--session-max-width) - 12px);
+  /* match the input in the form */
+}
+ul li .avatar-wrapper[data-v-d22a5b2e],
+ul li button[data-v-d22a5b2e],
+ul li .session-label[data-v-d22a5b2e] {
+  margin-block-start: 6px;
+}
+ul li .avatar-wrapper[data-v-d22a5b2e] {
+  margin-inline-end: 6px;
+}
+ul li .session-label[data-v-d22a5b2e] {
+  padding-inline-end: 3px;
+  /* keep some room for the avatar and edit button */
+  max-width: calc(var(--session-max-width) - 100px);
+  overflow-wrap: break-word;
+}
+ul li .guest[data-v-d22a5b2e] {
+  color: var(--color-text-maxcontrast);
+}
+ul li button[data-v-d22a5b2e] {
+  margin-inline-start: auto;
+}.session-list[data-v-9e0a2a34] {
+  height: var(--default-clickable-area);
+}
+
+/* Needs to be more specific than 0,2,0 (NcButton) */
+.button-vue--icon-only.avatar-list[data-v-9e0a2a34] {
+  width: min-content !important;
+  padding-inline: var(--default-grid-baseline);
+}
+.button-vue--icon-only.avatar-list[data-v-9e0a2a34] .button-vue__icon {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  width: min-content;
+}
+.button-vue--icon-only.avatar-list[data-v-9e0a2a34] .button-vue__icon .avatar-wrapper {
+  margin: 3px -12px 3px 0;
+  z-index: 1;
+}
+.session-menu[data-v-9e0a2a34] {
+  --session-max-width: 280px;
+  max-width: var(--session-max-width);
+  padding-block-start: 6px;
+  padding-block-end: 6px;
+}
+.session-menu ul li[data-v-9e0a2a34] {
+  align-items: center;
+  display: flex;
+  padding: 6px;
+}
+.session-menu ul li .avatar-wrapper[data-v-9e0a2a34] {
+  margin-inline-end: 6px;
+}
+.session-menu ul li .session-label[data-v-9e0a2a34] {
+  padding-inline-end: 3px;
+  /* keep some room for the avatar and edit button */
+  max-width: calc(var(--session-max-width) - 60px);
+  overflow-wrap: break-word;
+}
+.session-menu ul li .guest-label[data-v-9e0a2a34],
+.session-menu ul li .guest[data-v-9e0a2a34] {
+  color: var(--color-text-maxcontrast);
+}
+.session-menu ul li .guest-label[data-v-9e0a2a34] {
+  padding-inline-start: 3px;
+}
+label[data-v-9e0a2a34] {
+  display: block;
+  margin: 8px;
+}
+.hint[data-v-9e0a2a34] {
+  margin: 8px;
+  color: var(--color-text-maxcontrast);
+}

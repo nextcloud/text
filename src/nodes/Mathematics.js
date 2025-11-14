@@ -23,7 +23,7 @@ function createMathNode(isBlock = false) {
         atom: true,
 
         addNodeView() {
-            return VueNodeViewRenderer(MathematicsView)
+            return VueNodeViewRenderer(Mathematics)
         },
         
         addAttributes() {
@@ -45,7 +45,7 @@ function createMathNode(isBlock = false) {
                 [isBlock ? 'insertMathBlock' : 'insertMathInline']: (latex = '') => ({ commands }) => {
                     return commands.insertContent({
                         type: isBlock ? 'math_block' : 'math_inline',
-                        attrs: { latex: latex || (isBlock ? '\\sum_{i=1}^{n} x_i' : 'x^2') }
+                        attrs: { latex }
                     })
                 }
             }

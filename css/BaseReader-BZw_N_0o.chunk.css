@@ -1,0 +1,19 @@
+.editor__content[data-v-beddd503] {
+  max-width: var(--text-editor-max-width);
+  margin: auto;
+  position: relative;
+  width: 100%;
+}
+.text-editor__content-wrapper[data-v-beddd503] {
+  --side-width: calc((100% - var(--text-editor-max-width)) / 2);
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.text-editor__content-wrapper.--show-outline[data-v-beddd503] {
+  grid-template-columns: var(--side-width) auto var(--side-width);
+}
+.text-editor__content-wrapper .text-editor__content-wrapper__left[data-v-beddd503],
+.text-editor__content-wrapper .text-editor__content-wrapper__right[data-v-beddd503] {
+  height: 100%;
+  position: relative;
+}

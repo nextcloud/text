@@ -1,0 +1,10 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=[window.OC.filePath('text', '', 'js/FilePicker-lO8J1a0C-_09bRwvL.chunk.mjs'),window.OC.filePath('text', '', 'js/vue.runtime.esm-DtAgfqM0.chunk.mjs'),window.OC.filePath('text', '', 'js/NcNoteCard-Dz5-u2BY-B3JST-Lk.chunk.mjs'),window.OC.filePath('text', '', 'js/index-Djlbe-Du.chunk.mjs'),window.OC.filePath('text', '', 'js/emoji-picker-Bacg5hGL.chunk.mjs'),window.OC.filePath('text', '', 'js/NcLoadingIcon-D2qSC7Ri.chunk.mjs'),window.OC.filePath('text', '', 'js/index--FnIx9_y.chunk.mjs'),window.OC.filePath('text', '', 'css/NcLoadingIcon-C7S2_wmi.chunk.css'),window.OC.filePath('text', '', 'js/index-2mjY3Y47.chunk.mjs'),window.OC.filePath('text', '', 'css/NcNoteCard-Dz5-u2BY-BmcDQAa3.chunk.css'),window.OC.filePath('text', '', 'js/index-BWUOE9Nk.chunk.mjs'),window.OC.filePath('text', '', 'js/dav-CQDyL7M_-LXi2qAGJ.chunk.mjs'),window.OC.filePath('text', '', 'js/NcCheckboxRadioSwitch-DAPHFb0L-mGx4ajL2.chunk.mjs'),window.OC.filePath('text', '', 'css/NcCheckboxRadioSwitch-DAPHFb0L-BcHKt-lf.chunk.css'),window.OC.filePath('text', '', 'js/index-D5dRV40B.chunk.mjs'),window.OC.filePath('text', '', 'js/EditorOutline-lqEd_HRF.chunk.mjs'),window.OC.filePath('text', '', 'js/logger-DdFapB9C.chunk.mjs'),window.OC.filePath('text', '', 'js/preload-helper-wZpS7d4i.chunk.mjs'),window.OC.filePath('text', '', 'js/MediaHandler.provider-DkXa_6IX.chunk.mjs'),window.OC.filePath('text', '', 'css/EditorOutline-BNLBBJ1H.chunk.css')])))=>i.map(i=>d[i]);
+const appName = "text";
+const appVersion = "7.0.0-dev.2";
+import { _ as __vitePreload } from "./preload-helper-wZpS7d4i.chunk.mjs";
+import { d as defineAsyncComponent } from "./vue.runtime.esm-DtAgfqM0.chunk.mjs";
+const FilePickerVue = defineAsyncComponent(() => __vitePreload(() => import("./FilePicker-lO8J1a0C-_09bRwvL.chunk.mjs"), true ? __vite__mapDeps([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]) : void 0, import.meta.url));
+export {
+  FilePickerVue
+};
+//# sourceMappingURL=index-hTwX2gcC-CKFgw75D.chunk.mjs.map
