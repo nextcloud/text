@@ -10,6 +10,7 @@ interface UploadMdFixture {
 	file: File
 	fileName: string
 	fileContent: string
+	source: string
 }
 
 /**
@@ -18,7 +19,7 @@ interface UploadMdFixture {
  */
 export const test = base.extend<UploadMdFixture>({
 	file: async ({ fileContent, fileName, page, requestToken }, use) => {
-		const file = new File(fileName, page, requestToken)
+		const file = new File({ name: fileName, page, requestToken })
 		await file.upload(fileContent)
 		await use(file)
 	},
