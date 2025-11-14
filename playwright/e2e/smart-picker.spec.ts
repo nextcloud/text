@@ -10,8 +10,8 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
 const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 
-test.beforeEach(async ({ file }) => {
-	await file.open()
+test.beforeEach(async ({ open }) => {
+	await open()
 })
 
 test('See top options', async ({ editor }) => {
