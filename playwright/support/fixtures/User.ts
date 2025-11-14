@@ -23,4 +23,5 @@ export class User {
 	uploadFile(name: string, content: string) {
 		return uploadFile(name, content, this)
 	}
+
 }

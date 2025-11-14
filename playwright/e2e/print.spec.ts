@@ -7,14 +7,20 @@ import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
 import { loadFixture } from '../support/fixtures/loadFixture'
 import { test as randomUserTest } from '../support/fixtures/random-user'
+import { test as sharedFileTest } from '../support/fixtures/shared-file'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
+const fileTest = mergeTests(editorTest, randomUserTest, uploadFileTest)
+const shareTest = mergeTests(editorTest, randomUserTest, sharedFileTest)
 
-test.use({ fileContent: loadFixture('print.md') })
-
-test('From viewer', async ({ file, page }) => {
-	await file.open()
-	await page.emulateMedia({ media: 'print' })
-	await expect(page).toHaveScreenshot({ fullPage: true })
+new Map([
+	['Own file', fileTest],
+	['Shared file', shareTest],
+]).forEach((test, name) => {
+	test.use({ fileContent: loadFixture('print.md') })
+	test(name, async ({ open, page }) => {
+		await open()
+		await page.emulateMedia({ media: 'print' })
+		await expect(page).toHaveScreenshot({ fullPage: true })
+	})
 })
