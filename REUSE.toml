@@ -30,7 +30,7 @@ SPDX-FileCopyrightText = "Nils Adermann, Jordi Boggiano"
 SPDX-License-Identifier = "MIT"
 
 [[annotations]]
-path = ["cypress/fixtures/**", "cypress/snapshots/**", "src/tests/fixtures/**", "src/tests/**/__snapshots__/**"]
+path = ["cypress/fixtures/**", "cypress/snapshots/**", "playwright/support/fixtures/files/**", "playwright/e2e/*-snapshots/**", "src/tests/fixtures/**", "src/tests/**/__snapshots__/**"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2019-2025 Nextcloud GmbH and Nextcloud contributors"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
