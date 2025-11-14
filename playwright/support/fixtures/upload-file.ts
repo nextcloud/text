@@ -9,6 +9,7 @@ import { File } from './File'
 interface UploadMdFixture {
 	file: File
 	fileName: string
+	fileContent: string
 }
 
 /**
@@ -16,12 +17,11 @@ interface UploadMdFixture {
  * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
  */
 export const test = base.extend<UploadMdFixture>({
-	file: async ({ page, requestToken, fileName }, use) => {
+	file: async ({ fileContent, fileName, page, requestToken }, use) => {
 		const file = new File(fileName, page, requestToken)
-		const fileContent = ''
 		await file.upload(fileContent)
 		await use(file)
 	},
+	fileContent: ['', {option: true}],
 	fileName: ['empty.md', {option: true}],
 })
-
