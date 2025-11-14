@@ -28,6 +28,11 @@ export const test = base.extend<RandomUserFixture>({
 		})
 
 		await login(page.request, user)
+		const tokenResponse = await page.request.get('./csrftoken', {
+			failOnStatusCode: true,
+		})
+		const { token } = (await tokenResponse.json()) as { token: string }
+		page.context().setExtraHTTPHeaders({ requesttoken: token })
 
 		await use(page)
 		await page.close()

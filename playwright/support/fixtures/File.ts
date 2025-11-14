@@ -8,13 +8,11 @@ import { expect, type Page } from '@playwright/test'
 export class File {
 	name: string
 	page: Page
-	requestToken: string
 	id?: number
 
-	constructor({ name, page, requestToken }: { name: string, page: Page, requestToken: string }) {
+	constructor({ name, page }: { name: string, page: Page }) {
 		this.name = name
 		this.page = page
-		this.requestToken = requestToken
 	}
 
 	async upload(fileContent: string) {
@@ -26,7 +24,6 @@ export class File {
 				data: fileContent,
 				headers: {
 					'Content-Type': 'text/markdown',
-					'requesttoken': this.requestToken,
 				},
 			},
 		)
@@ -60,7 +57,6 @@ export class File {
 			{
 			headers: {
 				Destination: `/remote.php/webdav/${newName}`,
-				'requesttoken': this.requestToken,
 			},
 			method: 'MOVE',
 		})

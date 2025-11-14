@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from './request-token'
+import { test as base } from '@playwright/test'
 import { File } from './File'
 
 interface UploadMdFixture {
@@ -18,8 +18,8 @@ interface UploadMdFixture {
  * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
  */
 export const test = base.extend<UploadMdFixture>({
-	file: async ({ fileContent, fileName, page, requestToken }, use) => {
-		const file = new File({ name: fileName, page, requestToken })
+	file: async ({ fileContent, fileName, page }, use) => {
+		const file = new File({ name: fileName, page })
 		await file.upload(fileContent)
 		await use(file)
 	},
