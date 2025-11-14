@@ -33,6 +33,7 @@ import FrontMatter from './../nodes/FrontMatter.js'
 import HardBreak from './../nodes/HardBreak.js'
 import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
+import { MathInline, MathBlock } from './../nodes/Mathematics.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
 import Preview from './../nodes/Preview.js'
@@ -135,6 +136,8 @@ export default Extension.create({
 				],
 			}),
 			Typography,
+			MathInline,
+			MathBlock,
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
