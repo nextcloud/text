@@ -32,6 +32,7 @@ import {
 	PencilOff,
 	Positive,
 	Redo,
+	Sigma,
 	Table,
 	Undo,
 	UnfoldMoreHorizontal,
@@ -319,7 +320,7 @@ export const MenuEntries = [
 		label: t('text', 'Blocks'),
 		visible: false,
 		icon: CodeBrackets,
-		isActive: ['blockquote', 'codeBlock', 'callout'],
+		isActive: ['blockquote', 'codeBlock', 'callout', 'math_inline', 'math_block'],
 		children: [
 			{
 				key: 'blockquote',
@@ -330,6 +331,17 @@ export const MenuEntries = [
 				icon: FormatQuote,
 				action: (command) => {
 					return command.toggleBlockquote()
+				},
+			},
+			{
+				key: 'math-block',
+				label: t('text', 'Math block'),
+				keyChar: 'c',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
+				isActive: 'mathBlock',
+				icon: Sigma,
+				action: (command) => {
+					return command.toggleCodeBlock()
 				},
 			},
 			{
@@ -345,6 +357,24 @@ export const MenuEntries = [
 			},
 			{
 				key: 'blocks-separator',
+				isSeparator: true,
+			},
+			{
+				key: 'math-inline',
+				label: t('text', 'Inline formula'),
+				icon: Sigma,
+				isActive: 'math_inline',
+				action: (command) => command.insertMathInline(),
+			},
+			{
+				key: 'math-block',
+				label: t('text', 'Display formula'),
+				icon: Sigma,  // Or use a different variant if you have one
+				isActive: 'math_block',
+				action: (command) => command.insertMathBlock(),
+			},
+			{
+				key: 'math-separator',
 				isSeparator: true,
 			},
 			{
