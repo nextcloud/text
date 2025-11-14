@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, type Page } from '@playwright/test'
+import { type Page } from '@playwright/test'
 import type { User } from './User'
 
 /**
@@ -44,19 +44,6 @@ export class File {
 		this.page = page
 	}
 
-	async open() {
-		await this.page.goto(`f/${this.id}`)
-		await expect(this.page.getByLabel(this.name, { exact: true }))
-			.toBeVisible()
-	}
-
-	async close() {
-		await this.page.getByRole('button', { name: 'Close', exact: true }).click()
-		await this.page.waitForRequest(/close/)
-		await expect(this.page.getByLabel(this.name, { exact: true }))
-			.not.toBeVisible()
-	}
-
 	async move(newName: string) {
 		await this.page.request.fetch(
 			`/remote.php/webdav/${this.name}`,
@@ -67,5 +54,23 @@ export class File {
 			method: 'MOVE',
 		})
 		this.name = newName
+	}
+
+	async shareLink() {
+		// const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
+		const shareType = 3
+		const response = await this.page.request.post(
+			'/ocs/v2.php/apps/files_sharing/api/v1/shares',
+			{
+				data: {
+					shareType,
+					path: `/${this.name}`,
+				},
+				headers: {
+					Accept: 'application/json, text/plain, */*'
+				},
+			})
+		const { ocs } = await response.json() as { ocs: { data: { token: string } } }
+		return ocs.data.token
 	}
 }

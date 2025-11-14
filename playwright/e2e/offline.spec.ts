@@ -15,8 +15,8 @@ const test = mergeTests(editorTest, offlineTest, randomUserTest, uploadFileTest)
 // we cannot run tests in parallel.
 test.describe.configure({ mode: 'serial' })
 
-test.beforeEach(async ({ file }) => {
-	await file.open()
+test.beforeEach(async ({ open }) => {
+	await open()
 })
 
 test('Offline state indicator', async ({ editor, setOffline }) => {
