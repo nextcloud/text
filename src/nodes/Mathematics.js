@@ -4,12 +4,15 @@
  */
 
 import { Node, mergeAttributes } from '@tiptap/core'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import Mathematics from './Mathematics.vue'
 
 /*
 *   Create a math node (inline or block)
 *   Factory to avoid code duplication
 */
 function createMathNode(isBlock = false) {
+
     return {
         name: isBlock ? 'math_block' : 'math_inline',
 
@@ -19,6 +22,10 @@ function createMathNode(isBlock = false) {
 
         atom: true,
 
+        addNodeView() {
+            return VueNodeViewRenderer(MathematicsView)
+        },
+        
         addAttributes() {
             return {
                 latex: {
@@ -33,10 +40,21 @@ function createMathNode(isBlock = false) {
             }
         },
 
+        addCommands() {
+            return {
+                [isBlock ? 'insertMathBlock' : 'insertMathInline']: (latex = '') => ({ commands }) => {
+                    return commands.insertContent({
+                        type: isBlock ? 'math_block' : 'math_inline',
+                        attrs: { latex: latex || (isBlock ? '\\sum_{i=1}^{n} x_i' : 'x^2') }
+                    })
+                }
+            }
+        },
+
         parseHTML() {
             return [
                 {
-                    tag: isBlock ? 'div.katex-block' : 'span.katex',
+                    tag: isBlock ? 'div.katex-display' : 'span.katex',
                     getAttrs: element => ({
                         latex: element.textContent,
                     }),
@@ -54,7 +72,7 @@ function createMathNode(isBlock = false) {
             return [
                 isBlock ? 'div' : 'span',
                 mergeAttributes(HTMLAttributes, {
-                    class: isBlock ? 'katex-block' : 'katex',
+                    class: isBlock ? 'katex-display' : 'katex',
                     'data-latex': node.attrs.latex,
                 }),
                 node.attrs.latex,
