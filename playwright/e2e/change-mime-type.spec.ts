@@ -18,12 +18,11 @@ test.describe('Changing mimetype from markdown to plaintext', () => {
 		close,
 		editor,
 		file,
-		open,
 	}) => {
 		await editor.typeHeading('Hello world')
 		await close()
-		await file.move('test.txt')
-		await open()
+		const plaintext = await file.move('test.txt')
+		await plaintext.open()
 		await expect(editor.content).toHaveText('## Hello world')
 		await expect(editor.getHeading()).not.toBeVisible()
 	})
@@ -36,13 +35,12 @@ test.describe('Changing mimetype from plain to markdown', () => {
 		close,
 		editor,
 		file,
-		open,
 	}) => {
 		await editor.type('## Hello world')
 		await expect(editor.content).toHaveText('## Hello world')
 		await close()
-		await file.move('test.md')
-		await open()
+		const markdown = await file.move('test.md')
+		await markdown.open()
 		await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 	})
 })

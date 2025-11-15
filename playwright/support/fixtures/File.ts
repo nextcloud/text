@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 import type { User } from './User'
 
 /**
@@ -34,14 +34,20 @@ export async function uploadFile(name: string, content: string, user: User) {
 }
 
 export class File {
-	name: string
-	page: Page
-	id: number
+	public readonly id: number
+	public readonly name: string
+	public readonly page: Page
 
 	constructor({ id, name, page }: { id: number, name: string, page: Page }) {
 		this.id = id
 		this.name = name
 		this.page = page
+	}
+
+	async open() {
+		await this.page.goto(`f/${this.id}`)
+		await expect(this.page.getByLabel(this.name, { exact: true }))
+			.toBeVisible()
 	}
 
 	async move(newName: string) {
@@ -53,7 +59,7 @@ export class File {
 			},
 			method: 'MOVE',
 		})
-		this.name = newName
+		return new File({ ...this, name: newName })
 	}
 
 	async shareLink() {
