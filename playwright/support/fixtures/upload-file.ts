@@ -25,14 +25,7 @@ export const test = base.extend<UploadFileFixture>({
 		await use(file)
 	},
 
-	open: async ({ file, page }, use) => {
-		const open = async () => {
-			await page.goto(`f/${file.id}`)
-			await expect(page.getByLabel(file.name, { exact: true }))
-				.toBeVisible()
-		}
-		await use(open)
-	},
+	open: ({ file }, use) => use(() => file.open()),
 
 	close: async ({ file, page }, use) => {
 		const close = async () => {
