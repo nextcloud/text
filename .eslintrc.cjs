@@ -13,6 +13,14 @@ module.exports = {
 				'vue/first-attribute-linebreak': 'off',
 			},
 		},
+		{
+			files: ['**/*.ts'],
+			rules: {
+				// Do not err out on constructors with parameter properties only.
+				'no-useless-constructor': 'off',
+				'@typescript-eslint/no-useless-constructor': 'error',
+			},
+		},
 	],
 	rules: {
 		'import/no-unresolved': [1, { ignore: ['\\.svg\\?raw$'] }],
