@@ -8,12 +8,11 @@ import type { User as Account } from '@nextcloud/e2e-test-server'
 import { uploadFile } from './File'
 
 export class User {
-	account: Account
-	page: Page
 
-	constructor(account: Account, page: Page) {
-		this.account = account
-		this.page = page
+	constructor(
+		public readonly account: Account,
+		public readonly page: Page,
+	) {
 	}
 
 	get request() {
