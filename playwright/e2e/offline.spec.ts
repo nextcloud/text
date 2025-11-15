@@ -47,7 +47,7 @@ test('typing offline and coming back online', async ({
 	setOffline,
 	setOnline,
 }) => {
-	await expect(editor.locator).toBeVisible()
+	await expect(editor.el).toBeVisible()
 	await setOffline()
 	await editor.typeHeading('Hello world')
 	await setOnline()
