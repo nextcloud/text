@@ -5,17 +5,16 @@
 
 import { devices, expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
-import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
+const test = mergeTests(editorTest, uploadFileTest)
 
 test.use({
 	...devices['Moto G4'],
 })
 
-test.beforeEach(async ({ file }) => {
-	await file.open()
+test.beforeEach(async ({ open }) => {
+	await open()
 })
 
 test('Formatting help', async ({ editor }) => {

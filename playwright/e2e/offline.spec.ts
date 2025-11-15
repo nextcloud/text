@@ -6,17 +6,16 @@
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
 import { test as offlineTest } from '../support/fixtures/offline'
-import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
 
-const test = mergeTests(editorTest, offlineTest, randomUserTest, uploadFileTest)
+const test = mergeTests(editorTest, offlineTest, uploadFileTest)
 
 // As we switch on and off the network
 // we cannot run tests in parallel.
 test.describe.configure({ mode: 'serial' })
 
-test.beforeEach(async ({ file }) => {
-	await file.open()
+test.beforeEach(async ({ open }) => {
+	await open()
 })
 
 test('Offline state indicator', async ({ editor, setOffline }) => {
