@@ -128,7 +128,7 @@ OC.L10N.register(
     "No user found" : "Nem található felhasználó",
     "No suggestion found" : "Nem található javaslat",
     "Upload" : "Feltöltés",
-    "Insert Table" : "Táblázat beszúrás",
+    "Insert Table" : "Táblázat beszúrása",
     "Edit" : "Szerkesztés",
     "Copy code block" : "Kódrészlet másolása",
     "Code block options" : "Kódrészlet opciók",
