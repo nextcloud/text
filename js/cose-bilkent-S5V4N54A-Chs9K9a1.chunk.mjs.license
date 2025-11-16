@@ -1,0 +1,18 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: cytoscape-cose-bilkent developers
+
+This file is generated from multiple sources. Included packages:
+- cose-base
+	- version: 1.0.3
+	- license: MIT
+- cytoscape-cose-bilkent
+	- version: 4.1.0
+	- license: MIT
+- layout-base
+	- version: 1.0.2
+	- license: MIT
+- mermaid
+	- version: 11.12.1
+	- license: MIT
