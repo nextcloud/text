@@ -27,7 +27,20 @@ export default {
         NcTextArea,
         NcButton,
     },
-    props: ['show', 'latex', 'isBlock'],
+    props: {
+        show: {
+            type: Boolean,
+            required: true,
+        },
+        latex: {
+            type: String,
+            required: true,
+        },
+        isBlock: {
+            type: Boolean,
+            required: true,
+        },
+    },
     emits: ['close', 'save'],
     data() {
         return {
