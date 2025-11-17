@@ -7,7 +7,7 @@ import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class EditorSection {
-	public readonly locator: Locator
+	public readonly el: Locator
 	public readonly content: Locator
 	public readonly formattingHelp: Locator
 	public readonly offlineState: Locator
@@ -19,16 +19,16 @@ export class EditorSection {
 
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
-		this.locator = this.page.locator('.editor').first()
-		this.content = this.locator.getByRole('textbox')
+		this.el = this.page.locator('.editor').first()
+		this.content = this.el.getByRole('textbox')
 		this.formattingHelp = this.page.getByRole('dialog', {
 			name: 'Formatting and shortcuts',
 		})
-		this.offlineState = this.locator.locator('.offline-state')
+		this.offlineState = this.el.locator('.offline-state')
 		this.referencePicker = this.page.locator('.reference-picker input')
 		this.referenceWidget = this.page.locator('.reference-widget')
-		this.saveIndicator = this.locator.locator('.save-status')
-		this.sessionList = this.locator.locator('.session-list')
+		this.saveIndicator = this.el.locator('.save-status')
+		this.sessionList = this.el.locator('.session-list')
 		this.suggestions = this.page.locator('.tippy-box .suggestion-list')
 	}
 
@@ -43,7 +43,7 @@ export class EditorSection {
 	}
 
 	public getMenu(name: string): Locator {
-		return this.locator.locator(`[data-text-action-entry="${name}"] button`)
+		return this.el.locator(`[data-text-action-entry="${name}"] button`)
 	}
 
 	public async clickMenu(...names: string[]): Promise<void> {

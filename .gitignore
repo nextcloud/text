@@ -18,3 +18,7 @@ webpack-stats.json
 
 # js folder, to be updated wth --force
 /js
+
+# Playwright snapshots - only keep the ci version in git
+playwright/e2e/*-snapshots/**
+!playwright/e2e/*-snapshots/*-on-ci-**
