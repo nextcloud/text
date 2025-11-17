@@ -1,6 +1,6 @@
 <template>
     <NcDialog v-if="show" :name="isBlock ? t('text', 'Edit display formula') : t('text', 'Edit inline formula')"
-        size="normal"
+        size="large"
         @closing="$emit('close')">
         <NcTextArea v-model="localLatex" :label="t('text', 'LaTeX formula')" :rows="isBlock ? 8 : 4" resize="both" />
         <template #actions>
