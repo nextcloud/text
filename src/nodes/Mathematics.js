@@ -30,7 +30,15 @@ function createMathNode(isBlock = false) {
             return {
                 latex: {
                     default: '',
-                    parseHTML: element => element.textContent,
+                    parseHTML: element => {
+                        // Extract clean LaTeX from annotation tag if this is KaTeX HTML
+                        const annotation = element.querySelector ? element.querySelector('annotation') : null
+                        if (annotation) {
+                            return annotation.textContent.trim()
+                        }
+                        // Fallback to data attribute or text content
+                        return element.getAttribute('data-latex') || element.textContent
+                    },
                     renderHTML: attributes => {
                         return {
                             'data-latex': attributes.latex,
@@ -64,17 +72,6 @@ function createMathNode(isBlock = false) {
                     {
                         tag: 'p.katex-block',
                         priority: 100,
-                        getAttrs: element => {
-                            // For block math, the actual katex content is in a child span
-                            const katexSpan = element.querySelector('span.katex-display')
-                            if (!katexSpan) return false
-
-                            // Extract LaTeX from the annotation tag if available
-                            const annotation = katexSpan.querySelector('annotation')
-                            const latex = annotation ? annotation.textContent : katexSpan.textContent
-
-                            return { latex: latex.trim() }
-                        },
                         // Consume all child content to prevent nested parsing
                         contentMatch: null,
                     },
@@ -86,21 +83,15 @@ function createMathNode(isBlock = false) {
                         priority: 50,
                         getAttrs: element => {
                             // ONLY match top-level inline katex (not nested inside block math)
-                            // Check if parent is a paragraph (not katex-display or katex-block)
                             const parent = element.parentElement
                             if (!parent || parent.tagName !== 'P') {
                                 return false
                             }
                             // Make sure parent is not katex-block
-                            if (parent.classList.contains('katex-block')) {
+                            if (parent.classList && parent.classList.contains('katex-block')) {
                                 return false
                             }
-
-                            // Extract LaTeX from the annotation tag if available
-                            const annotation = element.querySelector('annotation')
-                            const latex = annotation ? annotation.textContent : element.textContent
-
-                            return { latex: latex.trim() }
+                            return {}
                         },
                         // Consume all child content to prevent nested parsing
                         contentMatch: null,
