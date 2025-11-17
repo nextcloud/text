@@ -7,10 +7,13 @@ import { Node, mergeAttributes, InputRule } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Mathematics from './Mathematics.vue'
 
-/*
-*   Create a math node (inline or block)
-*   Factory to avoid code duplication
-*/
+/**
+ * Create a math node (inline or block)
+ * Factory to avoid code duplication
+ *
+ * @param {boolean} isBlock - Whether this is a block-level math node
+ * @return {object} Node configuration object
+ */
 function createMathNode(isBlock = false) {
 
     return {
