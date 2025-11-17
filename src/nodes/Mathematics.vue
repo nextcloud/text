@@ -1,54 +1,66 @@
 <template>
     <NodeViewWrapper :as="isBlock ? 'div' : 'span'" :class="wrapperClass">
-      <span
-        ref="mathEl"
-        :contenteditable="false"
-        @click="onMathClick">
-      </span>
+        <span ref="mathEl" @click="onMathClick">
+        </span>
+        <div class="math__modal">
+            <ShowMathModal :show="showModal" :latex="node.attrs.latex" :is-block="isBlock" @close="showModal = false"
+                @save="onSave" />
+        </div>
     </NodeViewWrapper>
-  </template>
+</template>
 
-  <script>
-  import katex from 'katex'
-  import { NodeViewWrapper } from '@tiptap/vue-2'
+<script>
+import katex from 'katex'
+import ShowMathModal from '../components/Math/ShowMathModal.vue'
+import { NodeViewWrapper } from '@tiptap/vue-2'
 
-  export default {
+export default {
     name: 'MathematicsView',
-    components: { NodeViewWrapper },
+    components: { NodeViewWrapper, ShowMathModal },
     props: ['node', 'editor', 'updateAttributes', 'deleteNode'],
 
-    computed: {
-      isBlock() {
-        return this.node.type.name === 'math_block'
-      },
-      wrapperClass() {
-        return this.isBlock ? 'katex-display' : 'katex'
+    data() {
+      return {
+        showModal: false
       }
+    },
+
+    computed: {
+        isBlock() {
+            return this.node.type.name === 'math_block'
+        },
+        wrapperClass() {
+            return this.isBlock ? 'katex-display' : 'katex'
+        }
     },
 
     mounted() {
-      this.renderMath()
+        this.renderMath()
     },
 
     updated() {
-      this.renderMath()
+        this.renderMath()
     },
 
     methods: {
-      renderMath() {
-        if (this.$refs.mathEl) {
-          katex.render(this.node.attrs.latex, this.$refs.mathEl, {
-            displayMode: this.isBlock,
-            throwOnError: false
-          })
-        }
-      },
+        renderMath() {
+            if (this.$refs.mathEl) {
+                katex.render(this.node.attrs.latex, this.$refs.mathEl, {
+                    displayMode: this.isBlock,
+                    throwOnError: false
+                })
+            }
+        },
 
-      onMathClick() {
-        // TODO: Add editing functionality later
-        console.log('Math clicked:', this.node.attrs.latex)
-      }
+        onMathClick() {
+            if (!this.editor.isEditable) return
+            this.showModal = true
+        },
+
+        onSave(newLatex) {
+            this.updateAttributes({ latex: newLatex })
+            this.showModal = false
+        }
     }
-  }
-  </script>
-  
+}
+</script>

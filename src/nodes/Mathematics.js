@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node, mergeAttributes, InputRule } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Mathematics from './Mathematics.vue'
 
@@ -42,30 +42,71 @@ function createMathNode(isBlock = false) {
 
         addCommands() {
             return {
-                [isBlock ? 'insertMathBlock' : 'insertMathInline']: (latex = '') => ({ commands }) => {
+                [isBlock ? 'insertMathBlock' : 'insertMathInline']: (latex = '') => ({ state, commands }) => {
+                    // Get selected text if any
+                    const { from, to } = state.selection
+                    const selectedText = state.doc.textBetween(from, to, ' ')
+
+                    // Use selected text as latex if no latex provided
+                    const mathLatex = latex || selectedText || ''
+
                     return commands.insertContent({
                         type: isBlock ? 'math_block' : 'math_inline',
-                        attrs: { latex }
+                        attrs: { latex: mathLatex }
                     })
                 }
             }
         },
 
         parseHTML() {
-            return [
-                {
-                    tag: isBlock ? 'div.katex-display' : 'span.katex',
-                    getAttrs: element => ({
-                        latex: element.textContent,
-                    }),
-                },
-                {
-                    tag: isBlock ? 'div[class*="katex"]' : 'span[class*="katex"]',
-                    getAttrs: element => ({
-                        latex: element.textContent,
-                    }),
-                },
-            ]
+            if (isBlock) {
+                return [
+                    {
+                        tag: 'p.katex-block',
+                        priority: 100,
+                        getAttrs: element => {
+                            // For block math, the actual katex content is in a child span
+                            const katexSpan = element.querySelector('span.katex-display')
+                            if (!katexSpan) return false
+
+                            // Extract LaTeX from the annotation tag if available
+                            const annotation = katexSpan.querySelector('annotation')
+                            const latex = annotation ? annotation.textContent : katexSpan.textContent
+
+                            return { latex: latex.trim() }
+                        },
+                        // Consume all child content to prevent nested parsing
+                        contentMatch: null,
+                    },
+                ]
+            } else {
+                return [
+                    {
+                        tag: 'span.katex',
+                        priority: 50,
+                        getAttrs: element => {
+                            // ONLY match top-level inline katex (not nested inside block math)
+                            // Check if parent is a paragraph (not katex-display or katex-block)
+                            const parent = element.parentElement
+                            if (!parent || parent.tagName !== 'P') {
+                                return false
+                            }
+                            // Make sure parent is not katex-block
+                            if (parent.classList.contains('katex-block')) {
+                                return false
+                            }
+
+                            // Extract LaTeX from the annotation tag if available
+                            const annotation = element.querySelector('annotation')
+                            const latex = annotation ? annotation.textContent : element.textContent
+
+                            return { latex: latex.trim() }
+                        },
+                        // Consume all child content to prevent nested parsing
+                        contentMatch: null,
+                    },
+                ]
+            }
         },
 
         renderHTML({ node, HTMLAttributes }) {
@@ -89,6 +130,30 @@ function createMathNode(isBlock = false) {
             } else {
                 state.write('$' + node.attrs.latex + '$')
             }
+        },
+
+        addInputRules() {
+            return [
+                new InputRule({
+                    find: isBlock
+                        ? /\$\$([^$]+)\$\$$/
+                        : /(?<!\$)\$([^\s$](?:[^$]*[^\s$])?)\$$/,
+                    handler: ({ state, range, match }) => {
+                        const { tr } = state
+                        const start = range.from
+                        const end = range.to
+                        const latex = match[1].trim()
+
+                        if (latex) {
+                            tr.replaceWith(
+                                start,
+                                end,
+                                this.type.create({ latex })
+                            )
+                        }
+                    },
+                }),
+            ]
         },
     }
 }
