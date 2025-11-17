@@ -3,7 +3,7 @@
         <span ref="mathEl" @click="onMathClick">
         </span>
         <div class="math__modal">
-            <ShowMathModal :show="showModal" :latex="node.attrs.latex" :is-block="isBlock" @close="showModal = false"
+            <ShowMathModal :show="showModal" :latex="node.attrs.latex" :is-block="isBlock" @close="onClose"
                 @save="onSave" />
         </div>
     </NodeViewWrapper>
@@ -36,6 +36,10 @@ export default {
 
     mounted() {
         this.renderMath()
+        // Auto-open modal for empty formulas (when inserted from menu)
+        if (!this.node.attrs.latex && this.editor.isEditable) {
+            this.showModal = true
+        }
     },
 
     updated() {
@@ -55,6 +59,14 @@ export default {
         onMathClick() {
             if (!this.editor.isEditable) return
             this.showModal = true
+        },
+
+        onClose() {
+            // Delete the node if it's empty (user cancelled without entering anything)
+            if (!this.node.attrs.latex) {
+                this.deleteNode()
+            }
+            this.showModal = false
         },
 
         onSave(newLatex) {
