@@ -29,14 +29,15 @@ You can insert mathematical formulas using LaTeX syntax:
 
 - **Inline math:** Wrap your formula with single dollar signs: `$E=mc^2$`
 - **Display math (block):** Wrap your formula with double dollar signs on separate lines:
-  ```
-  $$
-  \sum_{i=1}^n i = \frac{n(n+1)}{2}
-  $$
-  ```
-  **Note:** When typing in the editor, create a soft line break (`Shift+Return`) to add lines within the formula block.
+    ```
+    $$
+    \sum_{i=1}^n i = \frac{n(n+1)}{2}
+    $$
+    ```
+    **Note:** When typing in the editor, create a soft line break (`Shift+Return`) to add lines within the formula block.
 
 You can also:
+
 - Select text and use the math buttons in the toolbar to convert it to a formula
 - Click on existing formulas to edit them in a dialog
 - Paste markdown with math formulas to have them automatically rendered
