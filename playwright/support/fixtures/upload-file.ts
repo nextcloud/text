@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect } from '@playwright/test'
 import { test as base } from './random-user'
 import { File } from './File'
 import { ViewerSection } from '../sections/ViewerSection'
