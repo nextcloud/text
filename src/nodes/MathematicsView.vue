@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NodeViewWrapper :as="isBlock ? 'div' : 'span'" :class="wrapperClass">
 		<span ref="mathEl" @click="onMathClick"> </span>
