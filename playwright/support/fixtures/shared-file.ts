@@ -39,7 +39,7 @@ export const test = base.extend<SharedFileFixture>({
 	},
 
 	file: async ({ fileContent, fileName, owner }, use) => {
-		const file = await owner.uploadFile(fileName, fileContent)
+		const file = await owner.uploadFile({ name: fileName, content: fileContent })
 		await use(file)
 	},
 

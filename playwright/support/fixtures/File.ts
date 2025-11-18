@@ -6,23 +6,30 @@
 import { expect, type Page } from '@playwright/test'
 import type { User } from './User'
 
+
 /**
  * Upload a file to the cloud.
- * @param name Name of the file
- * @param content File content
- * @param user User who uploads the file
+ * @param options options for the file upload
+ * @param options.name Name of the file
+ * @param options.content File content
+ * @param options.owner User who uploads the file
+ * @param options.mtime Last modified time of the file
  * @return the file
  */
-export async function uploadFile(name: string, content: string, user: User) {
-	// Upload file via WebDAV using page.request with requesttoken header
-	const response = await user.request.put(
+export async function uploadFile({ name, content = '', owner, mtime }: {
+	content?: string
+	name: string
+	owner: User
+	mtime?: number
+}) {
+// Upload file via WebDAV using page.request with requesttoken header
+	const headers = {
+		'Content-Type': 'text/markdown',
+		...(mtime ? { 'x-oc-mtime': mtime.toString() } : {}),
+	}
+	const response = await owner.request.put(
 		`/remote.php/webdav/${name}`,
-		{
-			data: content,
-			headers: {
-				'Content-Type': 'text/markdown',
-			},
-		},
+		{ data: content, headers },
 	)
 	if (!response.ok()) {
 		throw new Error(`Failed to upload file: ${response.status()} ${response.statusText()}`)
@@ -30,7 +37,7 @@ export async function uploadFile(name: string, content: string, user: User) {
 	// Extract file ID from response headers
 	const ocFileId = response.headers()['oc-fileid']
 	const id = ocFileId ? Number(ocFileId.split('oc')?.[0]) : 0
-	return new File({ id, name, page: user.page })
+	return new File({ id, name, page: owner.page })
 }
 
 export class File {

@@ -19,8 +19,8 @@ export class User {
 		return this.page.request
 	}
 
-	uploadFile(name: string, content: string) {
-		return uploadFile(name, content, this)
+	uploadFile(upload: Omit<Parameters<typeof uploadFile>[0], 'owner'>) {
+		return uploadFile({ ...upload, owner: this })
 	}
 
 }
