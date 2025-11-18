@@ -5,7 +5,7 @@
 
 import { Node, mergeAttributes, InputRule } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import Mathematics from './Mathematics.vue'
+import MathematicsView from './MathematicsView.vue'
 
 /**
  * Create a math node (inline or block)
@@ -26,7 +26,7 @@ function createMathNode(isBlock = false) {
         atom: true,
 
         addNodeView() {
-            return VueNodeViewRenderer(Mathematics)
+            return VueNodeViewRenderer(MathematicsView)
         },
         
         addAttributes() {

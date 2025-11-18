@@ -15,7 +15,7 @@ import ShowMathModal from '../components/Math/ShowMathModal.vue'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
-    name: 'Mathematics',
+    name: 'MathematicsView',
     components: { NodeViewWrapper, ShowMathModal },
     props: {
         node: {
