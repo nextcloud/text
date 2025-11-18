@@ -12,11 +12,11 @@ import callouts from './callouts.js'
 import details from './details.ts'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
+import mathematics from './mathematics.js'
 import preview from './preview.js'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
 import underline from './underline.js'
-import mathematics from './mathematics.js'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')

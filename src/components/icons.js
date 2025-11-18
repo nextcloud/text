@@ -53,6 +53,7 @@ import MDI_PencilOff from 'vue-material-design-icons/PencilOffOutline.vue'
 import MDI_Pencil from 'vue-material-design-icons/PencilOutline.vue'
 import MDI_Plus from 'vue-material-design-icons/Plus.vue'
 import MDI_Shape from 'vue-material-design-icons/ShapeOutline.vue'
+import MDI_Sigma from 'vue-material-design-icons/Sigma.vue'
 import MDI_Table from 'vue-material-design-icons/Table.vue'
 import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
 import MDI_TableAddColumnAfter from 'vue-material-design-icons/TableColumnPlusAfter.vue'
@@ -64,7 +65,6 @@ import MDI_TrashCan from 'vue-material-design-icons/TrashCanOutline.vue'
 import MDI_Upload from 'vue-material-design-icons/TrayArrowUp.vue'
 import MDI_UnfoldMoreHorizontal from 'vue-material-design-icons/UnfoldMoreHorizontal.vue'
 import MDI_Web from 'vue-material-design-icons/Web.vue'
-import MDI_Sigma from 'vue-material-design-icons/Sigma.vue'
 
 const DEFAULT_ICON_SIZE = 20
 

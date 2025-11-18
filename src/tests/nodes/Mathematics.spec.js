@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as baseTest } from 'vitest'
 import { getExtensionField } from '@tiptap/core'
+import { test as baseTest } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import markdownit from '../../markdownit/index.js'
+import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
 import {
 	markdownThroughEditor,
 	markdownThroughEditorHtml,
 } from '../testHelpers/markdown.js'
-import { MathInline, MathBlock } from '../../nodes/Mathematics.js'
-import markdownit from '../../markdownit/index.js'
 
 const test = baseTest.extend({
 	editor: async ({ task: _ }, use) => {
@@ -25,7 +25,11 @@ const test = baseTest.extend({
 describe('Mathematics nodes', () => {
 	describe('Node structure', () => {
 		test('MathInline exposes toMarkdown function', () => {
-			const toMarkdown = getExtensionField(MathInline, 'toMarkdown', MathInline)
+			const toMarkdown = getExtensionField(
+				MathInline,
+				'toMarkdown',
+				MathInline,
+			)
 			expect(typeof toMarkdown).toEqual('function')
 		})
 
@@ -41,7 +45,9 @@ describe('Mathematics nodes', () => {
 		})
 
 		test('inline formula with complex LaTeX', () => {
-			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe('$\\sum_{i=1}^n i$')
+			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe(
+				'$\\sum_{i=1}^n i$',
+			)
 		})
 
 		test('inline formula with fractions', () => {
@@ -53,7 +59,9 @@ describe('Mathematics nodes', () => {
 		})
 
 		test('inline formula in text', () => {
-			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe('The formula $E=mc^2$ is famous.')
+			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe(
+				'The formula $E=mc^2$ is famous.',
+			)
 		})
 	})
 
@@ -75,12 +83,14 @@ describe('Mathematics nodes', () => {
 
 	describe('HTML parsing - Pasted KaTeX content', () => {
 		test('inline katex HTML to markdown', () => {
-			const html = '<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2</annotation></semantics></math></span></span></p>'
+			const html =
+				'<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2</annotation></semantics></math></span></span></p>'
 			expect(markdownThroughEditorHtml(html)).toBe('$E=mc^2$')
 		})
 
 		test('block katex HTML to markdown', () => {
-			const html = '<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2\n</annotation></semantics></math></span></span></span></p>'
+			const html =
+				'<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2\n</annotation></semantics></math></span></span></span></p>'
 			expect(markdownThroughEditorHtml(html)).toBe('$$\nE=mc^2\n$$')
 		})
 	})
