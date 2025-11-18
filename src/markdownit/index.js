@@ -16,6 +16,7 @@ import preview from './preview.js'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
 import underline from './underline.js'
+import mathematics from './mathematics.js'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
@@ -31,6 +32,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(keepSyntax)
 	.use(markdownitMentions)
 	.use(implicitFigures)
+	.use(mathematics)
 
 // Render front matter tokens
 markdownit.renderer.rules.front_matter = (tokens, idx, options) =>

@@ -64,6 +64,7 @@ import MDI_TrashCan from 'vue-material-design-icons/TrashCanOutline.vue'
 import MDI_Upload from 'vue-material-design-icons/TrayArrowUp.vue'
 import MDI_UnfoldMoreHorizontal from 'vue-material-design-icons/UnfoldMoreHorizontal.vue'
 import MDI_Web from 'vue-material-design-icons/Web.vue'
+import MDI_Sigma from 'vue-material-design-icons/Sigma.vue'
 
 const DEFAULT_ICON_SIZE = 20
 
@@ -148,3 +149,4 @@ export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
 export const Web = makeIcon(MDI_Web)
 export const Plus = makeIcon(MDI_Plus)
+export const Sigma = makeIcon(MDI_Sigma)

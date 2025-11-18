@@ -19,8 +19,27 @@
 - **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.dev) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
+- **🧮 Math support:** Write mathematical formulas using LaTeX syntax with inline (`$E=mc^2$`) and display (`$$...$$`) math rendering powered by KaTeX.
 
 Nextcloud Text is the default text editor since Nextcloud 17. To start editing just open an existing markdown or plaintext file or create a new one.
+
+### Mathematical formulas
+
+You can insert mathematical formulas using LaTeX syntax:
+
+- **Inline math:** Wrap your formula with single dollar signs: `$E=mc^2$`
+- **Display math (block):** Wrap your formula with double dollar signs on separate lines:
+  ```
+  $$
+  \sum_{i=1}^n i = \frac{n(n+1)}{2}
+  $$
+  ```
+  **Note:** When typing in the editor, create a soft line break (`Shift+Return`) to add lines within the formula block.
+
+You can also:
+- Select text and use the math buttons in the toolbar to convert it to a formula
+- Click on existing formulas to edit them in a dialog
+- Paste markdown with math formulas to have them automatically rendered
 
 ## Configuration
 
