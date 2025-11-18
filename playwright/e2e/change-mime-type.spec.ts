@@ -15,12 +15,12 @@ test.beforeEach(async ({ open }) => {
 
 test.describe('Changing mimetype from markdown to plaintext', () => {
 	test('resets the document session and indexed db', async ({
-		close,
 		editor,
 		file,
+		viewer,
 	}) => {
 		await editor.typeHeading('Hello world')
-		await close()
+		await viewer.close()
 		const plaintext = await file.move('test.txt')
 		await plaintext.open()
 		await expect(editor.content).toHaveText('## Hello world')
@@ -32,13 +32,13 @@ test.describe('Changing mimetype from plain to markdown', () => {
 	test.use({ fileName: 'empty.txt' })
 
 	test('resets the document session and indexed db', async ({
-		close,
 		editor,
 		file,
+		viewer,
 	}) => {
 		await editor.type('## Hello world')
 		await expect(editor.content).toHaveText('## Hello world')
-		await close()
+		await viewer.close()
 		const markdown = await file.move('test.md')
 		await markdown.open()
 		await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()

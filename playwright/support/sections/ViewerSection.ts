@@ -4,6 +4,7 @@
  */
 
 import type { Locator, Page } from '@playwright/test'
+import { expect } from '@playwright/test'
 
 export class ViewerSection {
 	public readonly el: Locator
@@ -24,5 +25,11 @@ export class ViewerSection {
 	public async clickAction(name: string): Promise<void> {
 		await this.el.getByLabel('Actions', { exact: true }).click()
 		await this.page.getByRole('menuitem', { name }).click()
+	}
+
+	public async close(): Promise<void> {
+		await this.page.getByRole('button', { name: 'Close', exact: true }).click()
+		await this.page.waitForRequest(/close/)
+		await expect(this.el).not.toBeVisible()
 	}
 }
