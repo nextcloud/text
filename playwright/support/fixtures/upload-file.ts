@@ -11,6 +11,7 @@ export interface UploadFileFixture {
 	file: File
 	fileName: string
 	fileContent: string
+	oldVersions: { content?: string, mtime: number }[]
 	open: () => Promise<void>
 	close: () => Promise<void>
 }
@@ -20,8 +21,18 @@ export interface UploadFileFixture {
  * Note: This fixture requires the page to be authenticated (e.g., by merging with random-user fixture)
  */
 export const test = base.extend<UploadFileFixture>({
-	file: async ({ fileContent, fileName, user }, use) => {
-		const file = await user.uploadFile(fileName, fileContent)
+	fileContent: ['', { option: true }],
+	fileName: ['empty.md', { option: true }],
+	oldVersions: [[], {option: true }],
+
+	file: async ({ fileContent, fileName, oldVersions, user }, use) => {
+		const uploadVersion =
+			(opts: { content?: string, mtime?: number }) =>
+				user.uploadFile({ name: fileName, ...opts })
+		for (const version of oldVersions) {
+			await uploadVersion(version)
+		}
+		const file = await uploadVersion({ content: fileContent })
 		await use(file)
 	},
 
@@ -36,7 +47,4 @@ export const test = base.extend<UploadFileFixture>({
 		}
 		await use(close)
 	},
-
-	fileContent: ['', {option: true}],
-	fileName: ['empty.md', {option: true}],
 })
