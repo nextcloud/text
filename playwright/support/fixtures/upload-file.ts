@@ -41,14 +41,4 @@ export const test = base.extend<UploadFileFixture>({
 	open: ({ file }, use) => use(() => file.open()),
 	viewer: ({ fileName, page }, use) => use(new ViewerSection(fileName, page)),
 
-	close: async ({ file, page }, use) => {
-		const close = async () => {
-			await page.getByRole('button', { name: 'Close', exact: true }).click()
-			await page.waitForRequest(/close/)
-			await expect(page.getByLabel(file.name, { exact: true }))
-				.not.toBeVisible()
-		}
-		await use(close)
-	},
-
 })
