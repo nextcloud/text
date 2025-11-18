@@ -22,22 +22,9 @@ test.use({
 	fileContent: '# V3',
 })
 
-test('View versions with close timestamps', async ({
-	editor,
-	fileName,
-	page,
-	open,
-}) => {
+test('View versions with close timestamps', async ({ editor, open, viewer }) => {
 	await open()
-	await expect(editor.getHeading({ name: 'V3' })).toBeVisible()
-	await page
-		.getByRole('dialog', { name: fileName })
-		.getByLabel('Actions', { exact: true })
-		.click()
-	await page.getByRole('menuitem', { name: 'Open sidebar' }).click()
-	await page.getByRole('tab', { name: 'Versions' }).click()
-	const versions = page.getByRole('tabpanel', { name: 'Versions' })
-	await expect(versions).toBeVisible()
+	const versions = await viewer.openSidebarTab('Versions')
 	await expect(await versions.getByRole('link').count()).toBe(3)
 	// the oldest version is at the end of the versions list
 	await versions.getByRole('link').nth(2).click()

@@ -9,9 +9,11 @@ import type { User } from './User'
 
 /**
  * Upload a file to the cloud.
- * @param name Name of the file
- * @param content File content
- * @param user User who uploads the file
+ * @param options options for the file upload
+ * @param options.name Name of the file
+ * @param options.content File content
+ * @param options.owner User who uploads the file
+ * @param options.mtime Last modified time of the file
  * @return the file
  */
 export async function uploadFile({ name, content = '', owner, mtime }: {

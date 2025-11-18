@@ -6,6 +6,7 @@
 import { expect } from '@playwright/test'
 import { test as base } from './random-user'
 import { File } from './File'
+import { ViewerSection } from '../sections/ViewerSection'
 
 export interface UploadFileFixture {
 	file: File
@@ -14,6 +15,7 @@ export interface UploadFileFixture {
 	oldVersions: { content?: string, mtime: number }[]
 	open: () => Promise<void>
 	close: () => Promise<void>
+	viewer: ViewerSection
 }
 
 /**
@@ -23,7 +25,7 @@ export interface UploadFileFixture {
 export const test = base.extend<UploadFileFixture>({
 	fileContent: ['', { option: true }],
 	fileName: ['empty.md', { option: true }],
-	oldVersions: [[], {option: true }],
+	oldVersions: [[], { option: true }],
 
 	file: async ({ fileContent, fileName, oldVersions, user }, use) => {
 		const uploadVersion =
@@ -37,6 +39,7 @@ export const test = base.extend<UploadFileFixture>({
 	},
 
 	open: ({ file }, use) => use(() => file.open()),
+	viewer: ({ fileName, page }, use) => use(new ViewerSection(fileName, page)),
 
 	close: async ({ file, page }, use) => {
 		const close = async () => {
@@ -47,4 +50,5 @@ export const test = base.extend<UploadFileFixture>({
 		}
 		await use(close)
 	},
+
 })
