@@ -53,6 +53,7 @@ import MDI_PencilOff from 'vue-material-design-icons/PencilOffOutline.vue'
 import MDI_Pencil from 'vue-material-design-icons/PencilOutline.vue'
 import MDI_Plus from 'vue-material-design-icons/Plus.vue'
 import MDI_Shape from 'vue-material-design-icons/ShapeOutline.vue'
+import MDI_Sigma from 'vue-material-design-icons/Sigma.vue'
 import MDI_Table from 'vue-material-design-icons/Table.vue'
 import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
 import MDI_TableAddColumnAfter from 'vue-material-design-icons/TableColumnPlusAfter.vue'
@@ -148,3 +149,4 @@ export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
 export const Web = makeIcon(MDI_Web)
 export const Plus = makeIcon(MDI_Plus)
+export const Sigma = makeIcon(MDI_Sigma)

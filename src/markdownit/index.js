@@ -12,6 +12,7 @@ import callouts from './callouts.js'
 import details from './details.ts'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
+import mathematics from './mathematics.js'
 import preview from './preview.js'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
@@ -31,6 +32,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(keepSyntax)
 	.use(markdownitMentions)
 	.use(implicitFigures)
+	.use(mathematics)
 
 // Render front matter tokens
 markdownit.renderer.rules.front_matter = (tokens, idx, options) =>

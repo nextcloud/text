@@ -4,6 +4,7 @@
  */
 
 @use 'sass:math';
+@use './extensions.scss';
 
 .ProseMirror-hideselection {
 	caret-color: transparent;
