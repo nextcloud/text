@@ -152,6 +152,7 @@ OC.L10N.register(
     "Formatting" : "Форматиране",
     "Select file or folder to link to" : "Избор на файл или папка, към които да поставите връзка",
     "Choose" : "Изберете",
+    "Choose {file}" : "Изберете {file}",
     "Copied to the clipboard" : "Копирано в клипборда",
     "Front matter" : "Предно съдържание",
     "Link to this section" : "Връзка към този раздел",
