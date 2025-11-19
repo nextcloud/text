@@ -485,6 +485,28 @@ export default defineComponent({
 			this.idle = false
 		},
 
+		initUndoManagerForEmptyDocument() {
+			if (
+				this.editor.state.doc.textContent.length > 0
+				|| !this.editor.isEditable
+			) {
+				return
+			}
+
+			if (!this.editor.commands.insertContent(' ')) {
+				return
+			}
+
+			this.editor.commands.deleteRange({ from: 0, to: 1 })
+
+			const undoManager = this.editor.state.plugins
+				.map((p) => p.getState?.(this.editor.state)?.undoManager)
+				.find((um) => um?.clear)
+			undoManager?.clear()
+
+			this.dirty = false
+		},
+
 		onOpened({ document, session, content, documentState, readOnly }) {
 			this.document = document
 			this.readOnly = readOnly
@@ -520,6 +542,7 @@ export default defineComponent({
 						isRichEditor: this.isRichEditor,
 					})
 				}
+				this.initUndoManagerForEmptyDocument()
 			})
 			this.updateUser(session)
 		},
