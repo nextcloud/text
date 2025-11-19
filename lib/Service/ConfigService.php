@@ -45,7 +45,7 @@ class ConfigService {
 	}
 
 	public function isNotifyPushSyncEnabled(): bool {
-		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push', true);
 
 	}
 
