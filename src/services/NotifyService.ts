@@ -21,7 +21,7 @@ declare global {
 }
 
 if (!window._nc_text_notify) {
-	const isPushEnabled = loadState('text', 'notify_push', false)
+	const isPushEnabled = loadState('text', 'notify_push', true)
 	const useNotifyPush = isPushEnabled
 		? listen(
 				'text_steps',
