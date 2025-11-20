@@ -37,6 +37,7 @@ OC.L10N.register(
     "Save changes" : "Saglabāt izmaiņas",
     "Cancel" : "Atcelt",
     "URL" : "URL",
+    "Save" : "Saglabāt",
     "Update link" : "Atjaunināt saiti",
     "Translate" : "Tulkot",
     "Select language" : "Atlasīt valodu",

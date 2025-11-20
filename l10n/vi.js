@@ -66,6 +66,7 @@ OC.L10N.register(
     "Save changes" : "Lưu thay đổi",
     "Cancel" : "Hủy",
     "URL" : "URL",
+    "Save" : "Lưu",
     "Formatting help" : "Định dạng trợ giúp",
     "Insert result" : "Chèn kết quả",
     "Could not copy result to clipboard" : "Không thể sao chép kết quả vào bộ nhớ tạm",

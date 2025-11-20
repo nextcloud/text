@@ -91,6 +91,7 @@ OC.L10N.register(
     "Save changes" : "ذخیرهٔ تغییرات",
     "Cancel" : "منصرف شدن",
     "URL" : "آدرس",
+    "Save" : "ذخیره",
     "Upload from computer" : "Upload from computer",
     "Insert from Files" : "Insert from Files",
     "Formatting help" : "راهنمای قالب‌بندی",

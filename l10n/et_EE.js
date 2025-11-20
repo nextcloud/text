@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "Salvesta muudatused",
     "Cancel" : "Tühista",
     "URL" : "Võrguaadress",
+    "Save" : "Salvesta",
     "Disabled because you are currently offline." : "Kuna sa pole hetkel võrgus, siis pole see võimalus kasutusel.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Kuna see fail on jagatud muust pilveteenusest, siis manuseid ei saa luua ega laadida üles.",
     "Upload from computer" : "Laadi üles arvutist",

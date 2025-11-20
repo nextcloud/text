@@ -109,6 +109,7 @@ OC.L10N.register(
     "Save changes" : "설정 저장",
     "Cancel" : "취소",
     "URL" : "URL",
+    "Save" : "저장",
     "Upload from computer" : "컴퓨터에서 업로드",
     "Insert from Files" : "파일로부터 삽입",
     "Formatting help" : "서식 도움말",

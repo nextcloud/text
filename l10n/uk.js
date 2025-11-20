@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "Зберегти зміни",
     "Cancel" : "Скасувати",
     "URL" : "URL",
+    "Save" : "Зберегти",
     "Disabled because you are currently offline." : "Вимкнено, оскільки ви поза мережею.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Неможливо створити або завантажити вкладення, оскільки цим файлом поділився користувачі  іншої хмари.",
     "Upload from computer" : "Завантажити з комп'ютера",

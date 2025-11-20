@@ -100,6 +100,7 @@ OC.L10N.register(
     "Save changes" : "Guardar cambios",
     "Cancel" : "Cancelar",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Upload from computer" : "Cargar desde la computadora",
     "Insert from Files" : "Insertar desde Archivos",
     "Formatting help" : "Ayuda de formato",

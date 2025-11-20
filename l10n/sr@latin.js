@@ -21,6 +21,7 @@ OC.L10N.register(
     "Link" : "Veza",
     "Undo" : "Opozovi",
     "Cancel" : "Poništi",
+    "Save" : "Sačuvaj",
     "Translate" : "Prevedi",
     "Replace" : "Zameni postojeću",
     "Upload" : "Otpremi",

@@ -16,6 +16,7 @@ OC.L10N.register(
     "Link" : "Հղում",
     "Cancel" : "չեղարկել",
     "URL" : "URL",
+    "Save" : "Պահպանել",
     "Translate" : "Թարգմանել",
     "Upload" : "Բեռնել",
     "Edit" : "մշակել",

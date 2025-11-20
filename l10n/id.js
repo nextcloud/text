@@ -28,6 +28,7 @@ OC.L10N.register(
     "Redo" : "Ulang lagi",
     "Cancel" : "Batal",
     "URL" : "URL",
+    "Save" : "Simpan",
     "Formatting help" : "Bantuan pemformatan",
     "Translate" : "Terjemahkan",
     "Delete task" : "Hapus tugas",

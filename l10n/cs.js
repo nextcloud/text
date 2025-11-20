@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "Uložit změny",
     "Cancel" : "Storno",
     "URL" : "URL",
+    "Save" : "Uložit",
     "Disabled because you are currently offline." : "Vypnuto, protože jste v tuto chvíli bez spojení.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Přílohy není možné vytvářet nebo nahrávat protože tento soubor je sdílen z jiného cloudu.",
     "Upload from computer" : "Nahrát z počítače",

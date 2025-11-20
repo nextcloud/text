@@ -12,6 +12,7 @@ OC.L10N.register(
     "Undo" : "Dadwneud",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Cadw",
     "Translate" : "Cyfieithu",
     "to" : "at",
     "Upload" : "Llwytho i fyny",

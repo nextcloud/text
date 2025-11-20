@@ -47,6 +47,7 @@ OC.L10N.register(
     "Save changes" : "Salvar modificacions",
     "Cancel" : "Anullar",
     "URL" : "URL",
+    "Save" : "Enregistrar",
     "Translate" : "Translate",
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",

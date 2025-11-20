@@ -117,6 +117,7 @@ OC.L10N.register(
     "Save changes" : "Wijzigingen opslaan",
     "Cancel" : "Annuleren",
     "URL" : "URL",
+    "Save" : "Opslaan",
     "Disabled because you are currently offline." : "Uitgeschakeld omdat je momenteel offline bent.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Bijlagen kunnen niet gemaakt of uploaded worden omdat dit bestand gedeeld is vanaf een andere cloud.",
     "Upload from computer" : "Uploaden vanaf computer",

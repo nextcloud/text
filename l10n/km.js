@@ -8,6 +8,7 @@ OC.L10N.register(
     "Saved" : "បាន​រក្សាទុក",
     "Cancel" : "លើកលែង",
     "URL" : "URL",
+    "Save" : "រក្សាទុក",
     "Translate" : "Translate",
     "to" : "ទៅ",
     "Upload" : "ផ្ទុក​ឡើង",

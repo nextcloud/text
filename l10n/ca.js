@@ -106,6 +106,7 @@ OC.L10N.register(
     "Save changes" : "Desa els canvis",
     "Cancel" : "Cancel·la",
     "URL" : "URL",
+    "Save" : "Desar",
     "Upload from computer" : "Pujar des de l'ordinador",
     "Insert from Files" : "Insereix des de Fitxers",
     "Formatting help" : "Ajuda de format",

@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "Сачувај измене",
     "Cancel" : "Откажи",
     "URL" : "URL",
+    "Save" : "Сачувај",
     "Disabled because you are currently offline." : "Искључено јер сте тренутно ван мреже.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Прилози не могу да се креирају или отпреме јер је овај фајл подељен са другог облака.",
     "Upload from computer" : "Отпреми са компјутера",

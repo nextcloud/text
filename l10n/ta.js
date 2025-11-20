@@ -7,6 +7,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "விசைப்பலகை குறுக்குவழிகள்",
     "Link" : "Link",
     "Cancel" : "ரத்து செய்",
+    "Save" : "சேமிக்க ",
     "Translate" : "Translate",
     "Upload" : "பதிவேற்றுக",
     "Edit" : "தொகுக்க",

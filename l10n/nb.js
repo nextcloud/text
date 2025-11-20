@@ -107,6 +107,7 @@ OC.L10N.register(
     "Save changes" : "Lagre endringer",
     "Cancel" : "Avbryt",
     "URL" : "URL",
+    "Save" : "Lagre",
     "Upload from computer" : "Last opp fra datamaskin",
     "Insert from Files" : "Sett inn fra Filer",
     "Formatting help" : "Formateringshjelp",
