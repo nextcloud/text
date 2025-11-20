@@ -4,11 +4,11 @@
  */
 
 import { test as base } from './random-user'
-import { File } from './File'
+import { Node } from './Node'
 import { ViewerSection } from '../sections/ViewerSection'
 
 export interface UploadFileFixture {
-	file: File
+	file: Node
 	fileName: string
 	fileContent: string
 	oldVersions: { content?: string, mtime: number }[]
