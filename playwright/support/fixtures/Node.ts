@@ -37,13 +37,34 @@ export async function uploadFile({ name, content = '', owner, mtime }: {
 	// Extract file ID from response headers
 	const ocFileId = response.headers()['oc-fileid']
 	const id = ocFileId ? Number(ocFileId.split('oc')?.[0]) : 0
-	return new File({ id, name, page: owner.page })
+	return new Node({ id, name, page: owner.page })
 }
 
-export class File {
+/**
+ * Create a folder in the cloud.
+ * @param options options for the file upload
+ * @param options.name Name of the file
+ * @param options.owner User who uploads the file
+ * @return the folder
+ */
+export async function createFolder({ name, owner }: {
+	name: string
+	owner: User
+}) {
+	const rootPath = `/remote.php/dav/files/${encodeURIComponent(owner.account.userId)}`
+	const dirPath = name.split('/').map(encodeURIComponent).join('/')
+	const response = await owner.request.fetch(
+		`${rootPath}/${dirPath}`,
+		{ method: 'MKCOL' },
+	)
+	const id = parseInt(response.headers()['oc-fileid'])
+	return new Node({ id, name, page: owner.page })
+}
+
+export class Node {
 	public readonly id: number
 	public readonly name: string
-	public readonly page: Page
+	private readonly page: Page
 
 	constructor({ id, name, page }: { id: number, name: string, page: Page }) {
 		this.id = id
@@ -66,7 +87,7 @@ export class File {
 			},
 			method: 'MOVE',
 		})
-		return new File({ ...this, name: newName })
+		return new Node({ ...this, page: this.page, name: newName })
 	}
 
 	async shareLink() {
