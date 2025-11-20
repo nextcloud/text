@@ -23,6 +23,7 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "Cancel" : "Bekor qilish",
     "URL" : "URL",
+    "Save" : "Saqlash",
     "Translate" : "Tarjima",
     "Nextcloud Assistant" : "Next bulut yordamchisi",
     "to" : "пф",

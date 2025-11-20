@@ -15,6 +15,7 @@ OC.L10N.register(
     "Undo" : "Disfacer",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Salveguardar",
     "Translate" : "Translate",
     "to" : "a",
     "Upload" : "Incargar",

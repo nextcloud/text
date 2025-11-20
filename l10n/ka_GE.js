@@ -19,6 +19,7 @@ OC.L10N.register(
     "Save changes" : "ცვილებების შენახვა",
     "Cancel" : "გაუქმება",
     "URL" : "URL",
+    "Save" : "შენახვა",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Translate" : "გადათარგმნეთ",
     "Select language" : "აირჩიეთ ენა",

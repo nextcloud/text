@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "変更を保存",
     "Cancel" : "キャンセル",
     "URL" : "URL",
+    "Save" : "保存する",
     "Disabled because you are currently offline." : "現在オフラインのため無効です。",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "このファイルは別のクラウドから共有されているため、添付ファイルの作成やアップロードはできません。",
     "Upload from computer" : "コンピュータからアップロード",

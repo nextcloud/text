@@ -85,6 +85,7 @@ OC.L10N.register(
     "Save changes" : "Tallenna muutokset",
     "Cancel" : "Peruuta",
     "URL" : "URL-osoite",
+    "Save" : "Tallenna",
     "Upload from computer" : "Lähetä tietokoneelta",
     "Insert from Files" : "Syötä Tiedostot-sovelluksesta",
     "Formatting help" : "Muotoiluohje",

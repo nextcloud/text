@@ -45,6 +45,7 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "Cancel" : "Cancel",
     "URL" : "Url",
+    "Save" : "Hifadhi",
     "Formatting help" : "Uasidizi wa uambizaji",
     "Translate" : "Tafsiri",
     "Nextcloud Assistant" : "Msaidizi wa Nextcloud",

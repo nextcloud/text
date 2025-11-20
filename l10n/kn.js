@@ -9,6 +9,7 @@ OC.L10N.register(
     "Link" : "ಸಂಪರ್ಕ ಕೊಂಡಿ",
     "Cancel" : "Cancel",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
+    "Save" : "﻿ಉಳಿಸಿ",
     "Translate" : "Translate",
     "Upload" : "ವರ್ಗಾಯಿಸಿ",
     "Edit" : "ಸಂಪಾದಿಸು",

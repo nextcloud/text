@@ -43,6 +43,7 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "Cancel" : "Cancelar",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Translate" : "Traduzir",
     "Delete task" : "Eliminar tarefa",
     "to" : "Para",

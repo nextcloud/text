@@ -14,6 +14,7 @@ OC.L10N.register(
     "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",
     "Cancel" : "Sguir dheth",
+    "Save" : "Sàbhail",
     "Translate" : "Eadar-theangaich",
     "Replace" : "Cuir ’na àite",
     "Upload" : "Luchdaich suas",

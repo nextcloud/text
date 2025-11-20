@@ -105,6 +105,7 @@ OC.L10N.register(
     "Save changes" : "Vista breytingar",
     "Cancel" : "Hætta við",
     "URL" : "Slóð",
+    "Save" : "Vista",
     "Upload from computer" : "Senda inn úr tölvunni",
     "Insert from Files" : "Setja inn úr skrám",
     "Formatting help" : "Hjálp við að sníða",

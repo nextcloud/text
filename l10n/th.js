@@ -24,6 +24,7 @@ OC.L10N.register(
     "Save changes" : "บันทึกการเปลี่ยนแปลง",
     "Cancel" : "ยกเลิก",
     "URL" : "URL",
+    "Save" : "บันทึก",
     "Translate" : "แปลภาษา",
     "to" : "ถึง",
     "Replace" : "แทนที่",

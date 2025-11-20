@@ -90,6 +90,7 @@ OC.L10N.register(
     "Save changes" : "Shrani spremembe",
     "Cancel" : "Prekliči",
     "URL" : "Naslov URL",
+    "Save" : "Shrani",
     "Upload from computer" : "Pošlji z naprave",
     "Insert from Files" : "Vstavi iz oblaka",
     "Formatting help" : "Pomoč pri oblikovanju",

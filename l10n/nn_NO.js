@@ -12,6 +12,7 @@ OC.L10N.register(
     "Link" : "Lenkje",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Lagre",
     "Translate" : "Translate",
     "Select language" : "Vel språk",
     "to" : "til",

@@ -112,6 +112,7 @@ OC.L10N.register(
     "Save changes" : "Uložiť zmeny",
     "Cancel" : "Zrušiť",
     "URL" : "URL",
+    "Save" : "Uložiť",
     "Upload from computer" : "Nahrať z počítača",
     "Insert from Files" : "Vložiť zo Súborov",
     "Formatting help" : "Pomoc pri formátovaní",
