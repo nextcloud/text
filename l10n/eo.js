@@ -41,6 +41,7 @@ OC.L10N.register(
     "Save changes" : "Konservi ŝanĝojn",
     "Cancel" : "Cancel",
     "URL" : "Retadreso",
+    "Save" : "Konservi",
     "Formatting help" : "Helpo pri tekstaranĝo",
     "Translate" : "Traduku",
     "to" : "al",

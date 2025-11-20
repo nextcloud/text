@@ -29,6 +29,7 @@ OC.L10N.register(
     "Redo" : "Ribëj",
     "Cancel" : "Anuloje",
     "URL" : "URL",
+    "Save" : "Ruaje",
     "Formatting help" : "Ndihmë formatimi",
     "Translate" : "Përkthe",
     "Select language" : "Zgjidh gjuhën",

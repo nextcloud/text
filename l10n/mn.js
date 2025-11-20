@@ -10,6 +10,7 @@ OC.L10N.register(
     "Undo" : "буцах",
     "Cancel" : "Цуцлах",
     "URL" : "URL",
+    "Save" : "Хадгалах",
     "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",

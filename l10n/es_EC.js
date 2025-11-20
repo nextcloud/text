@@ -85,6 +85,7 @@ OC.L10N.register(
     "Redo" : "Rehacer",
     "Edit link" : "Editar enlace",
     "Cancel" : "Cancelar",
+    "Save" : "Guardar",
     "Upload from computer" : "Cargar desde el ordenador",
     "Insert from Files" : "Insertar desde Archivos",
     "Formatting help" : "Ayuda de formato",

@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "保存更改",
     "Cancel" : "取消",
     "URL" : "URL",
+    "Save" : "保存",
     "Disabled because you are currently offline." : "因為您目前離線，所以已停用。",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "無法創建或上傳附件，因為此檔案來自另一個雲端分享。",
     "Upload from computer" : "從電腦上傳",

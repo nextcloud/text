@@ -22,6 +22,7 @@ OC.L10N.register(
     "Save changes" : "Guardar Cambios",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
     "Select language" : "Seleccionar idioma",

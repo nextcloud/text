@@ -52,6 +52,7 @@ OC.L10N.register(
     "Save changes" : "Sarva càmbios",
     "Cancel" : "Annulla",
     "URL" : "URL",
+    "Save" : "Sarva",
     "Formatting help" : "Ghia pro sa formatatzione",
     "Translate" : "Borta",
     "Delete task" : "Cantzella faina",

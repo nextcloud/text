@@ -19,6 +19,7 @@ OC.L10N.register(
     "Save changes" : "Sekles asnifel",
     "Cancel" : "Semmet",
     "URL" : "URL",
+    "Save" : "Sekles",
     "Translate" : "Suqel",
     "Nextcloud Assistant" : "Amallal n Nextcloud",
     "_%n word_::_%n words_" : ["%n n wawal","%n n wawalen"],

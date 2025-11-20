@@ -81,6 +81,7 @@ OC.L10N.register(
     "Save changes" : "Įrašyti pakeitimus",
     "Cancel" : "Atsisakyti",
     "URL" : "URL",
+    "Save" : "Įrašyti",
     "Insert from Files" : "Įterpti iš failų",
     "Formatting help" : "Formatavimo pagalba",
     "Link to file or folder" : "Nuoroda į failą ar aplanką",

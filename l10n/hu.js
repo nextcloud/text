@@ -94,6 +94,7 @@ OC.L10N.register(
     "Save changes" : "Változások mentése",
     "Cancel" : "Mégse",
     "URL" : "URL",
+    "Save" : "Mentés",
     "Upload from computer" : "Feltöltés a számítógépről",
     "Insert from Files" : "Beillesztés a Fájlokból",
     "Formatting help" : "Formázási súgó",

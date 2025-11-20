@@ -70,6 +70,7 @@ OC.L10N.register(
     "Save changes" : "Зачувај ги промените",
     "Cancel" : "Откажи",
     "URL" : "Адреса",
+    "Save" : "Сними",
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
     "Formatting help" : "Помош за форматирање",

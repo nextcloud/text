@@ -31,6 +31,7 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "დამახსოვრება",
     "Formatting help" : "Formatting help",
     "Translate" : "Translate",
     "Nextcloud Assistant" : "Nextcloud-ის ასისტენტი",

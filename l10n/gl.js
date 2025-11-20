@@ -119,6 +119,7 @@ OC.L10N.register(
     "Save changes" : "Gardar os cambios",
     "Cancel" : "Cancelar",
     "URL" : "URL",
+    "Save" : "Gardar",
     "Disabled because you are currently offline." : "Desactivado porque actualmente está sen conexión.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Non é posíbel crear nin enviar anexos porque este ficheiro está compartido desde outra nube.",
     "Upload from computer" : "Enviar desde o computador",

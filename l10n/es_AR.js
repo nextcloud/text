@@ -27,6 +27,7 @@ OC.L10N.register(
     "Undo" : "Deshacer",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
     "Nextcloud Assistant" : "Asistente de Nextcloud",

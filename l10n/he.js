@@ -52,6 +52,7 @@ OC.L10N.register(
     "Save changes" : "שמירת השינויים",
     "Cancel" : "ביטול",
     "URL" : "כתובת",
+    "Save" : "שמירה",
     "Formatting help" : "עזרה בסידור בתבנית",
     "Update link" : "עדכן את הקישור",
     "Translate" : "תרגום",

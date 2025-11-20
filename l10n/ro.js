@@ -32,6 +32,7 @@ OC.L10N.register(
     "Edit link" : "Editare link",
     "Cancel" : "Anulare",
     "URL" : "URL",
+    "Save" : "Salvează",
     "Formatting help" : "Ajutor pentru formatare",
     "Translate" : "Tradu",
     "to" : "către",

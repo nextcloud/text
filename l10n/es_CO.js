@@ -25,6 +25,7 @@ OC.L10N.register(
     "Undo" : "Deshacer",
     "Save changes" : "Guardar cambios",
     "Cancel" : "Cancel",
+    "Save" : "Guardar",
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
     "Delete task" : "Eliminar tarea",
