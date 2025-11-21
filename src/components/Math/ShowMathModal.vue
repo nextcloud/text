@@ -4,17 +4,9 @@
 -->
 
 <template>
-	<!-- TRANSLATORS LaTeX formula, LaTeX is a system to display complex maths and scientific notation/formulae -->
-	<!-- TRANSLATORS There are two ways to show these formulae, Inline, or Display -->
-	<!-- TRANSLATORS Inline means it appears with other content, eg "something [the formula] something" -->
-	<!-- TRANSLATORS This is the title of a modal dialog to edit a LaTeX formula -->
 	<NcDialog
 		v-if="show"
-		:name="
-			isBlock
-				? t('text', 'Edit display formula')
-				: t('text', 'Edit inline formula')
-		"
+		:name="dialogTitle"
 		size="large"
 		@closing="$emit('close')">
 		<NcTextArea
@@ -65,6 +57,18 @@ export default {
 		return {
 			localLatex: this.latex,
 		}
+	},
+	computed: {
+		dialogTitle() {
+			// TRANSLATORS LaTeX formula, LaTeX is a system to display complex maths and scientific notation/formulae
+			// TRANSLATORS There are two ways to show these formulae, Inline, or Display
+			// TRANSLATORS Inline means it appears with other content, eg "something [the formula] something"
+			// TRANSLATORS Display means it appears on its own, akin to a paragraph
+			// TRANSLATORS This is the title of a modal dialog to edit a LaTeX formula
+			return this.isBlock
+				? t('text', 'Edit display formula')
+				: t('text', 'Edit inline formula')
+		},
 	},
 	methods: {
 		save() {
