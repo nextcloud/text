@@ -112,6 +112,7 @@ OC.L10N.register(
     "Save changes" : "حفظ التعديلات",
     "Cancel" : "إلغاء",
     "URL" : "رابط URL",
+    "Save" : "حفظ",
     "Upload from computer" : "رفع من حاسوبك",
     "Insert from Files" : "إدخال من \"الملفات\" Files",
     "Formatting help" : "مساعد التنسيق",

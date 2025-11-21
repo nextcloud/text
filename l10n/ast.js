@@ -81,6 +81,7 @@ OC.L10N.register(
     "Save changes" : "Guardar los cambeos",
     "Cancel" : "Encaboxar",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Upload from computer" : "Xubir del ordenador",
     "Formatting help" : "Ayuda del formatu",
     "Update link" : "Anovar l'enllaz",
