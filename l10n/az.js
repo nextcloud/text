@@ -17,6 +17,7 @@ OC.L10N.register(
     "Save changes" : "Dəyişiklikləri yaddaşa ver",
     "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Saxla",
     "Translate" : "Translate",
     "to" : "doğru",
     "Replace" : "Əvəz edin",
