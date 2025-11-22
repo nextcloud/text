@@ -112,7 +112,7 @@ OC.L10N.register(
     "Action" : "ھەرىكەت",
     "Undo" : "ئەمەلدىن قالدۇرۇش",
     "Redo" : "قايتىلا",
-    "Toggle outline" : "Toggle outline",
+    "Toggle outline" : "قىسقىچە مەزمۇن ئالماشتۇر",
     "Alt" : "Alt",
     "Open link" : "ئۇلانمىنى ئېچىڭ",
     "Edit link" : "ئۇلىنىشنى تەھرىرلەڭ",
