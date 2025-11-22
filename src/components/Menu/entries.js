@@ -365,7 +365,7 @@ export const MenuEntries = [
 			{
 				key: 'math-block',
 				// TRANSLATORS Block level math/science formula menu item, appears on its own, akin to a paragraph
-				label: t('text', 'Display formula'),
+				label: t('text', 'Block formula'),
 				icon: Sigma,
 				isActive: 'math_block',
 				action: (command) => command.insertMathBlock(),
