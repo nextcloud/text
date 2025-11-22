@@ -356,6 +356,7 @@ export const MenuEntries = [
 			},
 			{
 				key: 'math-inline',
+				// TRANSLATORS Inline level math/science formula menu item, eg "something [the formula] something"
 				label: t('text', 'Inline formula'),
 				icon: Sigma,
 				isActive: 'math_inline',
@@ -363,6 +364,7 @@ export const MenuEntries = [
 			},
 			{
 				key: 'math-block',
+				// TRANSLATORS Block level math/science formula menu item, appears on its own, akin to a paragraph
 				label: t('text', 'Display formula'),
 				icon: Sigma,
 				isActive: 'math_block',
