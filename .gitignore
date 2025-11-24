@@ -4,8 +4,7 @@ node_modules/
 vendor/
 img/twemoji/
 cypress/screenshots/
-cypress/snapshots/actual
-cypress/snapshots/diff
+cypress/snapshots/
 cypress/videos/
 cypress/downloads/
 /playwright-report/
