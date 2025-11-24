@@ -52,7 +52,7 @@ export default {
 
 	computed: {
 		isBlock() {
-			return this.node.type.name === 'math_block'
+			return this.node.type.name === 'blockMath'
 		},
 		wrapperClass() {
 			return this.isBlock ? 'katex-display' : 'katex'
