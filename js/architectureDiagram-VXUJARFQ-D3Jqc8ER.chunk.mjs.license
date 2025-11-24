@@ -1,0 +1,18 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: iVis-at-Bilkent
+
+This file is generated from multiple sources. Included packages:
+- cose-base
+	- version: 2.2.0
+	- license: MIT
+- cytoscape-fcose
+	- version: 2.2.0
+	- license: MIT
+- layout-base
+	- version: 2.0.1
+	- license: MIT
+- mermaid
+	- version: 11.12.1
+	- license: MIT
