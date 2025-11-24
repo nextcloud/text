@@ -204,6 +204,7 @@ OC.L10N.register(
     "Increase indentation" : "Збільшити відступ",
     "Decrease indentation" : "Зменшити відступ",
     "Blocks" : "Блоки",
+    "Display formula" : "Показувати формули",
     "Info callout" : "Інформаційна виноска",
     "Success callout" : "Виноска про успішність",
     "Warning callout" : "Виноска з увагою",
