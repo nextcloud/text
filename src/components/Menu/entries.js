@@ -361,9 +361,9 @@ export const MenuEntries = [
 				label: t('text', 'Inline math'),
 				icon: Sigma,
 				isActive: 'inlineMath',
-				action: (command) => {
-					const { from, to, empty } = command.view.state.selection
-					const latex = empty ? '' : command.view.state.doc.textBetween(from, to)
+				action: (command, editor) => {
+					const { from, to, empty } = editor.state.selection
+					const latex = empty ? '' : editor.state.doc.textBetween(from, to)
 					return command.insertInlineMath({ latex })
 				},
 			},
@@ -373,9 +373,9 @@ export const MenuEntries = [
 				label: t('text', 'Block math'),
 				icon: Sigma,
 				isActive: 'blockMath',
-				action: (command) => {
-					const { from, to, empty } = command.view.state.selection
-					const latex = empty ? '' : command.view.state.doc.textBetween(from, to)
+				action: (command, editor) => {
+					const { from, to, empty } = editor.state.selection
+					const latex = empty ? '' : editor.state.doc.textBetween(from, to)
 					return command.insertBlockMath({ latex })
 				},
 			},
