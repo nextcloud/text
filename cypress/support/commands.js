@@ -6,11 +6,6 @@
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/e2e-test-server/cypress'
 import { emit } from '@nextcloud/event-bus'
-import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command'
-
-// eslint-disable-next-line no-unused-vars,n/no-extraneous-import
-
-addCompareSnapshotCommand({ capture: 'fullPage' })
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)

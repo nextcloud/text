@@ -6,7 +6,6 @@
 import vue from '@vitejs/plugin-vue2'
 import { defineConfig } from 'cypress'
 import cypressSplit from 'cypress-split'
-import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin'
 import vitePreprocessor from 'cypress-vite'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
@@ -14,16 +13,12 @@ export default defineConfig({
 	projectId: 'hx9gqy',
 	viewportWidth: 1280,
 	viewportHeight: 900,
-	screenshotsFolder: './cypress/snapshots/actual',
 	trashAssetsBeforeRuns: true,
 	env: {
 		failSilently: false,
 		type: 'actual',
 	},
 	e2e: {
-		env: {
-			visualRegressionType: 'regression',
-		},
 		setupNodeEvents(on, config) {
 			on(
 				'file:preprocessor',
@@ -33,7 +28,6 @@ export default defineConfig({
 				}),
 			)
 			cypressSplit(on, config)
-			configureVisualRegression(on)
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
