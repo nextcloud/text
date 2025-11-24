@@ -5,16 +5,16 @@
 
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
+import { createFolder } from '../support/fixtures/Node'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'
-import { createFolder } from '../support/fixtures/Node'
 
 const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 
 test.describe('Existing folder description', () => {
 	test.use({
 		fileName: 'Readme.md',
-		fileContent: '# Folder description'
+		fileContent: '# Folder description',
 	})
 
 	test.beforeEach(async ({ file, page, user }) => {
@@ -25,19 +25,20 @@ test.describe('Existing folder description', () => {
 	})
 
 	test('Shows Readme.md', async ({ editor }) => {
-		await expect(editor.getHeading({ name: 'Folder description' }))
-			.toBeVisible()
+		await expect(editor.getHeading({ name: 'Folder description' })).toBeVisible()
 	})
 
 	test('Hides in a different folder', async ({ editor, page }) => {
 		await page.getByRole('button', { name: 'Other folder' }).click()
-		await expect(editor.getHeading({ name: 'Folder description' }))
-			.not.toBeVisible()
+		await expect(
+			editor.getHeading({ name: 'Folder description' }),
+		).not.toBeVisible()
 	})
 
 	test('Hides in a different view', async ({ editor, page }) => {
 		await page.getByRole('link', { name: 'Recent' }).click()
-		await expect(editor.getHeading({ name: 'Folder description' }))
-			.not.toBeVisible()
+		await expect(
+			editor.getHeading({ name: 'Folder description' }),
+		).not.toBeVisible()
 	})
 })
