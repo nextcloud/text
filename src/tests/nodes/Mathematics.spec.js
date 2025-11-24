@@ -98,12 +98,12 @@ describe('Mathematics nodes', () => {
 	describe('Menu commands', () => {
 		test('insertMathInline with empty selection', ({ editor }) => {
 			// Insert empty inline math
-			editor.commands.insertMathInline()
+			editor.commands.insertInlineMath({ latex: '' })
 
 			// Inline nodes are inside paragraphs
 			const paragraph = editor.state.doc.firstChild
 			const mathNode = paragraph.firstChild
-			expect(mathNode.type.name).toBe('math_inline')
+			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('')
 		})
 
@@ -112,23 +112,27 @@ describe('Mathematics nodes', () => {
 			editor.commands.setContent('<p>E=mc^2</p>')
 			editor.commands.selectAll()
 
+			// Get selected text
+			const { from, to } = editor.state.selection
+			const latex = editor.state.doc.textBetween(from, to)
+
 			// Insert math - should wrap the selection
-			editor.commands.insertMathInline()
+			editor.commands.insertInlineMath({ latex })
 
 			// Inline nodes are inside paragraphs
 			const paragraph = editor.state.doc.firstChild
 			const mathNode = paragraph.firstChild
-			expect(mathNode.type.name).toBe('math_inline')
+			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('E=mc^2')
 		})
 
 		test('insertMathBlock with empty selection', ({ editor }) => {
 			// Insert empty block math
-			editor.commands.insertMathBlock()
+			editor.commands.insertBlockMath({ latex: '' })
 
-			// Should have a math_block node
+			// Should have a blockMath node
 			const node = editor.state.doc.firstChild
-			expect(node.type.name).toBe('math_block')
+			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('')
 		})
 
@@ -137,12 +141,16 @@ describe('Mathematics nodes', () => {
 			editor.commands.setContent('<p>E=mc^2</p>')
 			editor.commands.selectAll()
 
-			// Insert math - should wrap the selection
-			editor.commands.insertMathBlock()
+			// Get selected text
+			const { from, to } = editor.state.selection
+			const latex = editor.state.doc.textBetween(from, to)
 
-			// Should have a math_block node with the selected text
+			// Insert math - should wrap the selection
+			editor.commands.insertBlockMath({ latex })
+
+			// Should have a blockMath node with the selected text
 			const node = editor.state.doc.firstChild
-			expect(node.type.name).toBe('math_block')
+			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('E=mc^2')
 		})
 	})
@@ -164,7 +172,7 @@ describe('Mathematics nodes', () => {
 
 	describe('Serialization to markdown', () => {
 		test('serializes inline math node', ({ editor }) => {
-			editor.commands.insertMathInline('E=mc^2')
+			editor.commands.insertInlineMath({ latex: 'E=mc^2' })
 
 			const serializer = createMarkdownSerializer(editor.schema)
 			const markdown = serializer.serialize(editor.state.doc)
@@ -173,7 +181,7 @@ describe('Mathematics nodes', () => {
 		})
 
 		test('serializes block math node', ({ editor }) => {
-			editor.commands.insertMathBlock('E=mc^2')
+			editor.commands.insertBlockMath({ latex: 'E=mc^2' })
 
 			const serializer = createMarkdownSerializer(editor.schema)
 			const markdown = serializer.serialize(editor.state.doc)
