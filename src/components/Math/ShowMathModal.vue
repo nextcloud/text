@@ -4,11 +4,7 @@
 -->
 
 <template>
-	<NcDialog
-		v-if="show"
-		:name="dialogTitle"
-		size="large"
-		@closing="$emit('close')">
+	<NcDialog v-if="show" :name="dialogTitle" size="large" @closing="$emit('close')">
 		<NcTextArea
 			v-model="localLatex"
 			:label="t('text', 'LaTeX formula')"
@@ -60,14 +56,16 @@ export default {
 	},
 	computed: {
 		dialogTitle() {
+			if (this.isBlock) {
+				// TRANSLATORS LaTeX formula, LaTeX is a system to display complex maths and scientific notation/formulae
+				// TRANSLATORS Block means it appears on its own, akin to a paragraph
+				// TRANSLATORS This is the title of a modal dialog to edit a LaTeX formula in Block mode
+				return t('text', 'Edit block formula')
+			}
 			// TRANSLATORS LaTeX formula, LaTeX is a system to display complex maths and scientific notation/formulae
-			// TRANSLATORS There are two ways to show these formulae, Inline, or Block
 			// TRANSLATORS Inline means it appears with other content, eg "something [the formula] something"
-			// TRANSLATORS Block means it appears on its own, akin to a paragraph
-			// TRANSLATORS This is the title of a modal dialog to edit a LaTeX formula
-			return this.isBlock
-				? t('text', 'Edit block formula')
-				: t('text', 'Edit inline formula')
+			// TRANSLATORS This is the title of a modal dialog to edit a LaTeX formula in Inline mode
+			return t('text', 'Edit inline formula')
 		},
 	},
 	methods: {
