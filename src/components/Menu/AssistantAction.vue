@@ -59,7 +59,8 @@
 				close-after-click
 				@click="showTaskList = true">
 				<template #icon>
-					<NcAssistantIcon :size="20" class="assistant-icon" />
+					<NcLoadingIcon v-if="loading" :size="20" />
+					<NcAssistantIcon v-else :size="20" class="assistant-icon" />
 				</template>
 				{{ t('text', 'Show assistant results') }}
 			</NcActionButton>
@@ -161,6 +162,7 @@ import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcAssistantIcon from '@nextcloud/vue/components/NcAssistantIcon'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
+import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import ErrorOutlineIcon from 'vue-material-design-icons/AlertCircleOutline.vue'
 import CheckCircleOutlineIcon from 'vue-material-design-icons/CheckCircleOutline.vue'
@@ -206,6 +208,7 @@ export default {
 		NcActionButton,
 		NcActionSeparator,
 		NcListItem,
+		NcLoadingIcon,
 		NcModal,
 	},
 	extends: BaseActionEntry,
@@ -217,9 +220,10 @@ export default {
 	data() {
 		return {
 			menuOpen: false,
-			taskTypes: OCP.InitialState.loadState('text', 'taskprocessing'),
+			taskTypes: loadState('text', 'taskprocessing', []),
 			selection: '',
 			tasks: [],
+			loading: false,
 
 			STATUS_FAILED,
 			STATUS_RUNNING,
@@ -262,9 +266,17 @@ export default {
 			return this.taskTypes.map((type) => type.id)
 		},
 	},
+	watch: {
+		async menuOpen(isOpen) {
+			if (isOpen && this.tasks.length === 0) {
+				this.loading = true
+				await this.fetchTasks()
+				this.loading = false
+			}
+		},
+	},
 	beforeMount() {
 		this.editor.on('selectionUpdate', this.onSelection)
-		this.fetchTasks()
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
 	beforeDestroy() {
