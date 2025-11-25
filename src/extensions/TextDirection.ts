@@ -51,8 +51,8 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 	return new Plugin({
 		key: new PluginKey('textDirection'),
 		appendTransaction: (transactions, oldState, newState) => {
-			const isCollabTransaction = transactions.some((tr) =>
-				tr.getMeta('y-sync$'),
+			const isCollabOrCompositionTransaction = transactions.some(
+				(tr) => tr.getMeta('y-sync$') || tr.getMeta('composition'),
 			)
 			const inputRulePlugin = newState.plugins.find(
 				(plugin) => plugin.spec.isInputRules,
@@ -60,7 +60,7 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 			const isInputRuleTransaction =
 				inputRulePlugin
 				&& transactions.some((tr) => tr.getMeta(inputRulePlugin))
-			if (isCollabTransaction || isInputRuleTransaction) {
+			if (isCollabOrCompositionTransaction || isInputRuleTransaction) {
 				return
 			}
 			const docChanges = transactions.some(
