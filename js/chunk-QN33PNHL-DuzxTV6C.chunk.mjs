@@ -1,0 +1,2 @@
+import{_ as s,e as x,l as c}from"./mermaid.core-DrJfu-9d.chunk.mjs";var B=s((t,i,e,h)=>{t.attr("class",e);const{width:o,height:a,x:n,y:r}=w(t,i);x(t,a,o,h);const d=g(n,r,o,a,i);t.attr("viewBox",d),c.debug(`viewBox configured: ${d} with padding: ${i}`)},"setupViewPortForSVG"),w=s((t,i)=>{const e=t.node()?.getBBox()||{width:0,height:0,x:0,y:0};return{width:e.width+i*2,height:e.height+i*2,x:e.x,y:e.y}},"calculateDimensionsWithPadding"),g=s((t,i,e,h,o)=>`${t-o} ${i-o} ${e} ${h}`,"createViewBox");export{B as s};
+//# sourceMappingURL=chunk-QN33PNHL-DuzxTV6C.chunk.mjs.map
