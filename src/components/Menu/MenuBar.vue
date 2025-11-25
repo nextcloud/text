@@ -129,11 +129,12 @@ export default {
 
 	data() {
 		return {
-			entries: this.openReadOnly
+			entries: (this.openReadOnly
 				? [...ReadOnlyDoneEntries, ...MenuEntries]
 				: this.isPublic || this.isRichWorkSpace
 					? [...MenuEntries]
-					: [...MenuEntries, ...AssistantMenuEntries],
+					: [...MenuEntries, ...AssistantMenuEntries]
+			).filter((entry) => !!entry),
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
