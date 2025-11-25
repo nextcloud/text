@@ -212,42 +212,6 @@ export default Table.extend({
 			Tab: () =>
 				this.editor.commands.goToNextCell()
 				|| this.editor.commands.leaveTable(),
-
-			/**
-			 * <Enter> inside a table
-			 * Insert newline or jump to next row if already in new line
-			 *
-			 * @param {object} object - object
-			 * @param {object} object.editor - the editor
-			 */
-			Enter: ({ editor }) => {
-				const { selection } = editor.state
-				if (!selection.$from.parent.type.name.startsWith('table'))
-					return false
-
-				if (selection.$from.nodeBefore?.type.name === 'hardBreak') {
-					if (editor.can().goToNextRow() || editor.can().addRowAfter()) {
-						// Remove previous hard break and move to next row instead
-						editor
-							.chain()
-							.setTextSelection({
-								from: selection.from - 1,
-								to: selection.from,
-							})
-							.deleteSelection()
-							.run()
-						if (editor.commands.goToNextRow()) return true
-						return editor.chain().addRowAfter().goToNextRow().run()
-					}
-					return false
-				} else {
-					return editor
-						.chain()
-						.insertContent('<br data-syntax="html" />')
-						.focus()
-						.run()
-				}
-			},
 		}
 	},
 })
