@@ -10,6 +10,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Tipkovni prečaci",
     "Link" : "Veza",
     "Cancel" : "Odustani",
+    "Save" : "Spremi",
     "Translate" : "Translate",
     "to" : "do",
     "Upload" : "Učitaj",

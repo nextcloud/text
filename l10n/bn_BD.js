@@ -13,6 +13,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",
     "Cancel" : "বাতিল করুন",
     "URL" : "URL",
+    "Save" : "সংরক্ষণ",
     "Translate" : "Translate",
     "to" : "প্রতি",
     "Upload" : "আপলোড",
