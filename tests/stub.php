@@ -61,3 +61,9 @@ namespace OCA\NotifyPush\Queue {
 		public function push(string $channel, $message);
 	}
 }
+
+namespace OCA\DAV\Connector\Sabre {
+	class PublicAuth {
+		public const DAV_AUTHENTICATED = '';
+	}
+}
