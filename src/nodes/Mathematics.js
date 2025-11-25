@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { BlockMath as TiptapBlockMath, InlineMath as TiptapInlineMath } from '@tiptap/extension-mathematics'
+import {
+	BlockMath as TiptapBlockMath,
+	InlineMath as TiptapInlineMath,
+} from '@tiptap/extension-mathematics'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import MathematicsView from './MathematicsView.vue'
 
@@ -99,5 +102,5 @@ const MathBlock = TiptapBlockMath.extend({
 	},
 })
 
-export { MathInline, MathBlock }
+export { MathBlock, MathInline }
 export default MathInline

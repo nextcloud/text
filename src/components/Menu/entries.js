@@ -321,13 +321,7 @@ export const MenuEntries = [
 		label: t('text', 'Blocks'),
 		visible: false,
 		icon: CodeBrackets,
-		isActive: [
-			'blockquote',
-			'codeBlock',
-			'callout',
-			'inlineMath',
-			'blockMath',
-		],
+		isActive: ['blockquote', 'codeBlock', 'callout', 'inlineMath', 'blockMath'],
 		children: [
 			{
 				key: 'blockquote',
