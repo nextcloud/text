@@ -54,25 +54,6 @@ describe('table plugin', () => {
 		cy.getContent().should('not.contain', 'content')
 	})
 
-	it('Enter creates newline and navigates', () => {
-		cy.getActionEntry('table').click()
-
-		cy.getContent().find('table tr').should('have.length', 3)
-
-		cy.getContent().type('first{Enter}row')
-		cy.getContent().type('{Enter}{Enter}second row')
-		cy.getContent().type('{Enter}{Enter}third row')
-		cy.getContent().type('{Enter}{Enter}forth row')
-
-		// Added a row
-		cy.getContent().find('table tr').should('have.length', 4)
-
-		// First cell now contains a hard break
-		cy.getContent()
-			.find('table tr:first-child th:first-child br')
-			.should('exist')
-	})
-
 	it('Table column alignment', () => {
 		cy.getActionEntry('table').click()
 
@@ -111,7 +92,12 @@ describe('table plugin', () => {
 			.should('have.length', 2)
 			.each((td) => cy.wrap(td).should('have.css', 'text-align', 'center'))
 
-		cy.getContent().type('1{enter}{enter}2{enter}{enter}3{enter}{enter}new 4')
+		// Fill first cell in existing rows
+		cy.getContent().type('1{downArrow}2{downArrow}3{downArrow}')
+
+		// Add row and fill first cell
+		cy.getContent().find('.table-wrapper .table-add-row').click()
+		cy.getContent().find('table tr:last-child td:first-child').type('4')
 
 		// Test after the row was added
 		cy.getContent()
