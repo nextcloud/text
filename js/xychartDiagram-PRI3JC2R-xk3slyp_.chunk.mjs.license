@@ -1,0 +1,15 @@
+SPDX-License-Identifier: ISC
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: Mike Bostock
+
+This file is generated from multiple sources. Included packages:
+- d3-array
+	- version: 3.2.4
+	- license: ISC
+- d3-scale
+	- version: 4.0.2
+	- license: ISC
+- mermaid
+	- version: 11.12.1
+	- license: MIT
