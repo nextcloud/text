@@ -91,6 +91,7 @@ OC.L10N.register(
     "Save changes" : "Запиши промените",
     "Cancel" : "Отказ",
     "URL" : "URL адрес",
+    "Save" : "Запиши",
     "Upload from computer" : "Качване от компютър",
     "Insert from Files" : "Вмъкване от Файлове",
     "Formatting help" : "Помощ за форматиране",

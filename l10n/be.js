@@ -117,6 +117,7 @@ OC.L10N.register(
     "Save changes" : "Захаваць змены",
     "Cancel" : "Скасаваць",
     "URL" : "URL-адрас",
+    "Save" : "Захаваць",
     "Disabled because you are currently offline." : "Адключана, бо вы зараз па-за сеткай.",
     "Attachments cannot be created or uploaded because this file is shared from another cloud." : "Нельга ствараць або запампоўваць далучэнні, бо гэты файл абагулены з іншага воблака.",
     "Upload from computer" : "Запампаваць з камп'ютара",
