@@ -43,6 +43,7 @@ import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
 
+import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { MODIFIERS } from './keys.js'
@@ -465,12 +466,15 @@ if (!isMobileDevice) {
 	})
 }
 
-// TODO: Disable in rich workspace
+const hasAssistantTaskTypes = loadState('text', 'taskprocessing', []).length > 0
+
 export const AssistantMenuEntries = [
-	{
-		key: 'assistant',
-		label: t('text', 'Nextcloud Assistant'),
-		component: AssistantAction,
-		priority: 7,
-	},
+	hasAssistantTaskTypes
+		? {
+				key: 'assistant',
+				label: t('text', 'Nextcloud Assistant'),
+				component: AssistantAction,
+				priority: 7,
+			}
+		: undefined,
 ]
