@@ -49,7 +49,7 @@ type Direction = (typeof validDirections)[number]
  */
 function TextDirectionPlugin({ types }: { types: string[] }) {
 	return new Plugin({
-		key: new PluginKey('textDirection'),
+		key: new PluginKey('customTextDirection'),
 		appendTransaction: (transactions, oldState, newState) => {
 			const isCollabOrCompositionTransaction = transactions.some(
 				(tr) => tr.getMeta('y-sync$') || tr.getMeta('composition'),
@@ -130,7 +130,7 @@ export interface TextDirectionOptions {
 }
 
 export const TextDirection = Extension.create<TextDirectionOptions>({
-	name: 'textDirection',
+	name: 'customTextDirection',
 
 	addOptions() {
 		return {
