@@ -43,13 +43,16 @@ export class EditorSection {
 	}
 
 	public getMenu(name: string): Locator {
-		return this.el.locator(`[data-text-action-entry="${name}"] button`)
+		return this.el.getByRole('button', { name })
 	}
 
-	public async clickMenu(...names: string[]): Promise<void> {
-		names.forEach(async (name) => {
-			await this.getMenu(name).click()
-		})
+	public getMenuItem(name: string): Locator {
+		return this.el.getByRole('menuitem', { name })
+	}
+
+	public async clickMenu(menu: string, item: string): Promise<void> {
+		await this.getMenu(menu).click()
+		await this.getMenuItem(item).click()
 	}
 
 	public async withOpenMenu(

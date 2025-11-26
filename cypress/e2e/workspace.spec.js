@@ -29,53 +29,6 @@ describe('Workspace', function () {
 		})
 	})
 
-	it('Hides the workspace when switching to another folder', function () {
-		cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/README.md`)
-		cy.createFolder(`${this.testFolder}/subdirectory`)
-		cy.visitTestFolder()
-		cy.getFile('README.md')
-		cy.get('#rich-workspace .ProseMirror').should('contain', 'Hello world')
-		cy.openFolder('subdirectory')
-		cy.get('#rich-workspace').should('not.exist')
-	})
-
-	it('Hides the workspace when switching to another view', function () {
-		cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/README.md`)
-		cy.visitTestFolder()
-		cy.getFile('README.md')
-		cy.get('#rich-workspace .ProseMirror').should('contain', 'Hello world')
-		cy.get('a[href*="/apps/files/recent"]').click()
-		cy.get('#rich-workspace').should('not.exist')
-	})
-
-	it('adds a Readme.md', function () {
-		cy.visitTestFolder()
-		cy.createDescription()
-		openSidebar('Readme.md')
-		cy.get('#rich-workspace .text-editor .text-editor__wrapper').should(
-			'be.visible',
-		)
-	})
-
-	it('formats text', function () {
-		cy.visitTestFolder()
-		cy.openWorkspace()
-		const buttons = [
-			['bold', 'strong'],
-			['italic', 'em'],
-			['underline', 'u'],
-			['strikethrough', 's'],
-		]
-		cy.getContent().click()
-		buttons.forEach(([button, tag]) => testButtonUnselected(button, tag))
-		// format is gone when text is gone
-		cy.getContent().type('Format me')
-		cy.getContent().find('s').should('not.exist')
-		cy.getContent().should('contain', 'Format me')
-		cy.getContent().type('{selectall}')
-		buttons.forEach(([button, tag]) => testButton(button, tag, 'Format me'))
-	})
-
 	it('creates headings via submenu', function () {
 		cy.visitTestFolder()
 		cy.openWorkspace().type('Heading')
@@ -278,11 +231,6 @@ describe('Workspace', function () {
 	})
 })
 
-const openSidebar = (filename) => {
-	cy.getFile(filename).find('.files-list__row-mtime').click()
-	cy.get('.app-sidebar-header').should('contain', filename)
-}
-
 /**
  * @param {string} button Name of the button to click.
  * @param {string} tag Html tag expected to be toggled.
@@ -292,27 +240,4 @@ function testListButton(button, tag, content) {
 	cy.getSubmenuEntry('lists', button).should('not.have.class', 'is-active').click()
 	cy.getContent().find(`${tag}`).should('contain', content)
 	cy.getSubmenuEntry('lists', button).should('have.class', 'is-active').click()
-}
-
-/**
- * @param {string} button Name of the button to click.
- * @param {string} tag Html tag expected to be toggled.
- * @param {string} content Content expected in the element.
- */
-function testButton(button, tag, content) {
-	cy.getMenuEntry(button).should('not.have.class', 'is-active').click()
-	cy.getContent().find(`${tag}`).should('contain', content)
-	cy.getMenuEntry(button).should('have.class', 'is-active').click()
-}
-
-/**
- *
- * @param {string} button Name of the button to click.
- * @param {string} tag Html tag expected to be toggled.
- */
-function testButtonUnselected(button, tag) {
-	cy.getMenuEntry(button).should('not.have.class', 'is-active').click()
-	cy.getContent().type('Format me')
-	cy.getContent().find(`${tag}`).should('contain', 'Format me')
-	cy.getContent().type('{selectall}{del}')
 }
