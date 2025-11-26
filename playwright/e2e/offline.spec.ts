@@ -32,14 +32,14 @@ test('Disabled upload and link file when offline', async ({
 	editor,
 	setOffline,
 }) => {
-	const linkToFile = editor.getMenu('insert-link-file')
-	await editor.withOpenMenu('insert-link', () => expect(linkToFile).toBeEnabled())
-	await expect(editor.getMenu('insert-attachment')).toBeEnabled()
+	const linkToFile = editor.getMenuItem('Link to file or folder')
+	await editor.withOpenMenu('Insert link', () => expect(linkToFile).toBeEnabled())
+	await expect(editor.getMenu('Insert attachment')).toBeEnabled()
 
 	await setOffline()
 
-	await editor.withOpenMenu('insert-link', () => expect(linkToFile).toBeDisabled())
-	await expect(editor.getMenu('insert-attachment')).toBeDisabled()
+	await editor.withOpenMenu('Insert link', () => expect(linkToFile).toBeDisabled())
+	await expect(editor.getMenu('Insert attachment')).toBeDisabled()
 })
 
 test('typing offline and coming back online', async ({

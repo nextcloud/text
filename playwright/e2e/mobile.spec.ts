@@ -18,7 +18,7 @@ test.beforeEach(async ({ open }) => {
 })
 
 test('Formatting help', async ({ editor }) => {
-	await editor.clickMenu('remain', 'formatting-help')
+	await editor.clickMenu('Remain', 'Formatting help')
 	await expect(editor.formattingHelp).toBeVisible()
 	await editor.formattingHelp.getByLabel('Close').click()
 	await expect(editor.formattingHelp).not.toBeVisible()
