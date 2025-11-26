@@ -50,6 +50,17 @@ describe('Table extension', () => {
 		)
 	})
 
+	it('md table with single-line block node in body cell is preserved through editor', () => {
+		const table = `
+| header 1 | header 2 |
+|----------|----------|
+| > quote  | - list   | \\
+|          |          |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
 	it('complex md table with alignment, nested list, image and code block is preserved through editor', () => {
 		const table = `
 | # |           header1 | header2       |

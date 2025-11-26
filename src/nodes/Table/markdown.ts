@@ -25,6 +25,15 @@ type Row = {
 // enforced left alignment to not break markdown parsing.
 const alignNodeTypes = new Set(['text', 'paragraph', 'image'])
 
+// Block node types that may span only a single line.
+const singleLineBlockNodeTypes = new Set([
+	'blockquote',
+	'bulletList',
+	'heading',
+	'orderedList',
+	'taskList',
+])
+
 /**
  * Serialize a table row to markdown line by line
  *
@@ -38,6 +47,15 @@ function rowToMarkdown(
 	columnWidths: number[],
 ) {
 	const normalizedCells = row.cells.map((cell, cellIdx) => {
+		// Append newline to single-line cells with a block node
+		if (
+			cell.lines.length === 1
+			&& [...cell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
+		) {
+			cell.lines.push('')
+			row.length = Math.max(row.length, 2)
+		}
+
 		// Normalize cells to have the same number of lines
 		while (cell.lines.length < row.length) cell.lines.push('')
 		// Normalize lines in cell to have the same length
