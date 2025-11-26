@@ -364,6 +364,10 @@ div.ProseMirror {
 		td {
 			border-top: 0;
 			color: var(--color-main-text);
+
+			p:last-child {
+				margin-bottom: 0;
+			}
 		}
 		th {
 			font-weight: normal;
