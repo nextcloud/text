@@ -49,3 +49,9 @@ namespace OCA\TPAssistant\Event {
 		abstract public function setNotificationTarget(?string $notificationTarget): void;
 	}
 }
+
+namespace OCA\DAV\Connector\Sabre {
+	class PublicAuth {
+		public const DAV_AUTHENTICATED = '';
+	}
+}
