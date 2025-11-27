@@ -25,7 +25,7 @@ jobs:
       server-max: ${{ steps.versions.outputs.branches-max-list }}
     steps:
       - name: Checkout app
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
 
@@ -70,28 +70,27 @@ jobs:
       matrix:
         php-versions: ${{ fromJson(needs.matrix.outputs.php-version) }}
         server-versions: ${{ fromJson(needs.matrix.outputs.server-max) }}
+        oci-versions: ['11', '18', '21', '23']
 
-    name: OCI PHP ${{ matrix.php-versions }} Nextcloud ${{ matrix.server-versions }}
+    name: OCI ${{ matrix.oci-versions }} PHP ${{ matrix.php-versions }} Nextcloud ${{ matrix.server-versions }}
 
     services:
       oracle:
-        image: ghcr.io/gvenzl/oracle-xe:11
+        image: ghcr.io/gvenzl/oracle-${{ matrix.oci-versions < 23 && 'xe' || 'free'  }}:${{ matrix.oci-versions }}
 
         # Provide passwords and other environment variables to container
         env:
-          ORACLE_RANDOM_PASSWORD: true
-          APP_USER: autotest
-          APP_USER_PASSWORD: owncloud
+          ORACLE_PASSWORD: oracle
 
         # Forward Oracle port
         ports:
-          - 1521:1521/tcp
+          - 1521:1521
 
         # Provide healthcheck script options for startup
         options: >-
           --health-cmd healthcheck.sh
-          --health-interval 10s
-          --health-timeout 5s
+          --health-interval 20s
+          --health-timeout 10s
           --health-retries 10
 
     steps:
@@ -102,7 +101,7 @@ jobs:
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
 
       - name: Checkout server
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
           submodules: true
@@ -110,13 +109,13 @@ jobs:
           ref: ${{ matrix.server-versions }}
 
       - name: Checkout app
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
           path: apps/${{ env.APP_NAME }}
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@cf4cade2721270509d5b1c766ab3549210a39a2a # v2.33.0
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
         with:
           php-version: ${{ matrix.php-versions }}
           # https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html#prerequisites-for-manual-installation
@@ -147,7 +146,7 @@ jobs:
           DB_PORT: 1521
         run: |
           mkdir data
-          ./occ maintenance:install --verbose --database=oci --database-name=XE --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=autotest --database-pass=owncloud --admin-user admin --admin-pass admin
+          ./occ maintenance:install --verbose --database=oci --database-name=${{ matrix.oci-versions < 23 && 'XE' || 'FREE'  }} --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=system --database-pass=oracle --admin-user admin --admin-pass admin
           ./occ app:enable --force ${{ env.APP_NAME }}
 
       - name: Check PHPUnit script is defined
