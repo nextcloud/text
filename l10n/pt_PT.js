@@ -51,6 +51,7 @@ OC.L10N.register(
     "Upload" : "Enviar",
     "Edit" : "Editar",
     "Source code" : "Código fonte",
+    "Show folder description" : "Mostrar descrição da pasta",
     "Done" : "Concluído",
     "Headings" : "Títulos",
     "Heading 2" : "Título 2",
