@@ -3,160 +3,104 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { InputRule, Node, mergeAttributes } from '@tiptap/core'
+import {
+	BlockMath as TiptapBlockMath,
+	InlineMath as TiptapInlineMath,
+} from '@tiptap/extension-mathematics'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import MathematicsView from './MathematicsView.vue'
 
-/**
- * Create a math node (inline or block)
- * Factory to avoid code duplication
- *
- * @param {boolean} isBlock - Whether this is a block-level math node
- * @return {object} Node configuration object
- */
-function createMathNode(isBlock = false) {
-	return {
-		name: isBlock ? 'math_block' : 'math_inline',
+const MathInline = TiptapInlineMath.extend({
+	addNodeView() {
+		return VueNodeViewRenderer(MathematicsView)
+	},
 
-		group: isBlock ? 'block' : 'inline',
-
-		inline: !isBlock,
-
-		atom: true,
-
-		addNodeView() {
-			return VueNodeViewRenderer(MathematicsView)
-		},
-
-		addAttributes() {
-			return {
-				latex: {
-					default: '',
-					parseHTML: (element) => {
-						// Extract clean LaTeX from annotation tag if this is KaTeX HTML
-						const annotation = element.querySelector
-							? element.querySelector('annotation')
-							: null
-						if (annotation) {
-							return annotation.textContent.trim()
-						}
-						// Fallback to data attribute or text content
-						return (
-							element.getAttribute('data-latex') || element.textContent
-						)
-					},
-					renderHTML: (attributes) => {
-						return {
-							'data-latex': attributes.latex,
-						}
-					},
+	parseHTML() {
+		return [
+			// Tiptap's default format
+			{ tag: 'span[data-type="inline-math"]' },
+			// KaTeX HTML from markdown-it
+			{
+				tag: 'span.katex',
+				priority: 50,
+				getAttrs: (element) => {
+					// Extract LaTeX from annotation tag
+					const annotation = element.querySelector('annotation')
+					if (annotation) {
+						return { latex: annotation.textContent.trim() }
+					}
+					return false
 				},
-			}
-		},
+			},
+		]
+	},
 
-		addCommands() {
-			return {
-				[isBlock ? 'insertMathBlock' : 'insertMathInline']:
-					(latex = '') =>
-					({ state, commands }) => {
-						// Get selected text if any
-						const { from, to } = state.selection
-						const selectedText = state.doc.textBetween(from, to, ' ')
+	addCommands() {
+		return {
+			insertInlineMath:
+				(options) =>
+				({ commands }) => {
+					const latex = options?.latex || ''
+					return commands.insertContent({
+						type: this.name,
+						attrs: { latex },
+					})
+				},
+		}
+	},
 
-						// Use selected text as latex if no latex provided
-						const mathLatex = latex || selectedText || ''
+	toMarkdown(state, node) {
+		state.write('$' + node.attrs.latex + '$')
+	},
+})
 
-						return commands.insertContent({
-							type: isBlock ? 'math_block' : 'math_inline',
-							attrs: { latex: mathLatex },
-						})
-					},
-			}
-		},
+const MathBlock = TiptapBlockMath.extend({
+	addNodeView() {
+		return VueNodeViewRenderer(MathematicsView)
+	},
 
-		parseHTML() {
-			if (isBlock) {
-				return [
-					{
-						tag: 'p.katex-block',
-						priority: 100,
-						// Consume all child content to prevent nested parsing
-						contentMatch: null,
-					},
-				]
-			} else {
-				return [
-					{
-						tag: 'span.katex',
-						priority: 50,
-						getAttrs: (element) => {
-							// ONLY match top-level inline katex (not nested inside block math)
-							const parent = element.parentElement
-							if (!parent || parent.tagName !== 'P') {
-								return false
-							}
-							// Make sure parent is not katex-block
-							if (
-								parent.classList
-								&& parent.classList.contains('katex-block')
-							) {
-								return false
-							}
-							return {}
-						},
-						// Consume all child content to prevent nested parsing
-						contentMatch: null,
-					},
-				]
-			}
-		},
+	parseHTML() {
+		return [
+			// Tiptap's default format
+			{ tag: 'div[data-type="block-math"]' },
+			// KaTeX HTML from markdown-it
+			{
+				tag: 'p.katex-block',
+				priority: 100,
+				getAttrs: (element) => {
+					// Extract LaTeX from annotation tag
+					const annotation = element.querySelector('annotation')
+					if (annotation) {
+						return { latex: annotation.textContent.trim() }
+					}
+					return false
+				},
+			},
+		]
+	},
 
-		renderHTML({ node, HTMLAttributes }) {
-			return [
-				isBlock ? 'div' : 'span',
-				mergeAttributes(HTMLAttributes, {
-					class: isBlock ? 'katex-display' : 'katex',
-					'data-latex': node.attrs.latex,
-				}),
-				node.attrs.latex,
-			]
-		},
+	addCommands() {
+		return {
+			insertBlockMath:
+				(options) =>
+				({ commands }) => {
+					const latex = options?.latex || ''
+					return commands.insertContent({
+						type: this.name,
+						attrs: { latex },
+					})
+				},
+		}
+	},
 
-		toMarkdown(state, node) {
-			if (isBlock) {
-				state.write('$$\n')
-				state.text(node.attrs.latex, false)
-				state.ensureNewLine()
-				state.write('$$')
-				state.closeBlock(node)
-			} else {
-				state.write('$' + node.attrs.latex + '$')
-			}
-		},
+	toMarkdown(state, node) {
+		state.write('$$\n')
+		state.text(node.attrs.latex, false)
+		state.ensureNewLine()
+		state.write('$$')
+		state.closeBlock(node)
+	},
+})
 
-		addInputRules() {
-			return [
-				new InputRule({
-					find: isBlock
-						? /\$\$([^$]+)\$\$$/
-						: /(?<!\$)\$([^\s$](?:[^$]*[^\s$])?)\$$/,
-					handler: ({ state, range, match }) => {
-						const { tr } = state
-						const start = range.from
-						const end = range.to
-						const latex = match[1].trim()
-
-						if (latex) {
-							tr.replaceWith(start, end, this.type.create({ latex }))
-						}
-					},
-				}),
-			]
-		},
-	}
-}
-
-export const MathInline = Node.create(createMathNode(false))
-export const MathBlock = Node.create(createMathNode(true))
-
+export { MathBlock, MathInline }
 export default MathInline

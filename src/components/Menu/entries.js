@@ -321,13 +321,7 @@ export const MenuEntries = [
 		label: t('text', 'Blocks'),
 		visible: false,
 		icon: CodeBrackets,
-		isActive: [
-			'blockquote',
-			'codeBlock',
-			'callout',
-			'math_inline',
-			'math_block',
-		],
+		isActive: ['blockquote', 'codeBlock', 'callout', 'inlineMath', 'blockMath'],
 		children: [
 			{
 				key: 'blockquote',
@@ -358,18 +352,32 @@ export const MenuEntries = [
 			{
 				key: 'math-inline',
 				// TRANSLATORS Inline level math/science formula menu item, eg "something [the formula] something"
-				label: t('text', 'Inline formula'),
+				label: t('text', 'Inline math'),
 				icon: Sigma,
-				isActive: 'math_inline',
-				action: (command) => command.insertMathInline(),
+				isActive: 'inlineMath',
+				action: (command, editor = null) => {
+					let latex = ''
+					if (editor) {
+						const { from, to, empty } = editor.state.selection
+						latex = empty ? '' : editor.state.doc.textBetween(from, to)
+					}
+					return command.insertInlineMath({ latex })
+				},
 			},
 			{
 				key: 'math-block',
 				// TRANSLATORS Block level math/science formula menu item, appears on its own, akin to a paragraph
-				label: t('text', 'Block formula'),
+				label: t('text', 'Block math'),
 				icon: Sigma,
-				isActive: 'math_block',
-				action: (command) => command.insertMathBlock(),
+				isActive: 'blockMath',
+				action: (command, editor = null) => {
+					let latex = ''
+					if (editor) {
+						const { from, to, empty } = editor.state.selection
+						latex = empty ? '' : editor.state.doc.textBetween(from, to)
+					}
+					return command.insertBlockMath({ latex })
+				},
 			},
 			{
 				key: 'math-separator',
