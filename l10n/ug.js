@@ -206,7 +206,6 @@ OC.L10N.register(
     "Increase indentation" : "تەۋەككۈلچىلىكنى ئاشۇرۇش",
     "Decrease indentation" : "تەۋەككۈلچىلىكنى ئازايتىش",
     "Blocks" : "قىسىم",
-    "Inline formula" : "قۇر ئىچىدىكى فورمۇلا",
     "Info callout" : "ئۇچۇر چاقىرىش",
     "Success callout" : "مۇۋەپپەقىيەتلىك چاقىرىش",
     "Warning callout" : "ئاگاھلاندۇرۇش تېلېفونى",

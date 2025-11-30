@@ -207,8 +207,6 @@ OC.L10N.register(
     "Increase indentation" : "Incrementar a sangría",
     "Decrease indentation" : "Diminuír a sangría",
     "Blocks" : "Bloques",
-    "Inline formula" : "Fórmula en líña",
-    "Block formula" : "Fórmula de bloqueo",
     "Info callout" : "Chamada de información",
     "Success callout" : "Chamada de correcto",
     "Warning callout" : "Chamada de advertencia",

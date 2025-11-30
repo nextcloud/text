@@ -207,8 +207,6 @@ OC.L10N.register(
     "Increase indentation" : "Einrückung vergrößern",
     "Decrease indentation" : "Einrückung verkleinern",
     "Blocks" : "Blöcke",
-    "Inline formula" : "Inline-Formel",
-    "Block formula" : "Block-Formel",
     "Info callout" : "Info-Hinweis",
     "Success callout" : "Erfolg-Textbox",
     "Warning callout" : "Warnung-Textbox",
