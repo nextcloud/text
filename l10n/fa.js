@@ -204,8 +204,6 @@ OC.L10N.register(
     "Increase indentation" : "افزایش تورفتگی",
     "Decrease indentation" : "کاهش تورفتگی",
     "Blocks" : "بلوک‌ها",
-    "Inline formula" : "فرمول درون خطی",
-    "Block formula" : "فرمول بلوک",
     "Info callout" : "اطلاعات تماس",
     "Success callout" : "فراخوان موفقیت",
     "Warning callout" : "هشدار صوتی",
