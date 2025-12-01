@@ -5,15 +5,14 @@
 
 <template>
 	<NodeViewWrapper :as="isBlock ? 'div' : 'span'" :class="wrapperClass">
-		<span ref="mathEl" @click="onMathClick"> </span>
-		<div class="math__modal">
-			<ShowMathModal
-				:show="showModal"
-				:latex="node.attrs.latex"
-				:is-block="isBlock"
-				@close="onClose"
-				@save="onSave" />
-		</div>
+		<span ref="mathEl" @click="onMathClick"></span>
+		<ShowMathModal
+			v-if="showModal"
+			:show="showModal"
+			:latex="node.attrs.latex"
+			:is-block="isBlock"
+			@close="onClose"
+			@save="onSave" />
 	</NodeViewWrapper>
 </template>
 
@@ -52,7 +51,7 @@ export default {
 
 	computed: {
 		isBlock() {
-			return this.node.type.name === 'math_block'
+			return this.node.type.name === 'blockMath'
 		},
 		wrapperClass() {
 			return this.isBlock ? 'katex-display' : 'katex'

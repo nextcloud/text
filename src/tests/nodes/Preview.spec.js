@@ -36,22 +36,22 @@ describe('Preview extension', () => {
 	})
 
 	test('markdown syntax is preserved through editor', () => {
-		const markdown = '[link](https://nextcloud.com (preview))'
+		const markdown = '[link](https://example.org (preview))'
 		expect(markdownThroughEditor(markdown)).toBe(markdown)
 	})
 
 	test('serializes HTML to markdown', () => {
-		const markdown = '[link](https://nextcloud.com (preview))'
-		const link = '<a href="https://nextcloud.com" title="preview">link</a>'
+		const markdown = '[link](https://example.org (preview))'
+		const link = '<a href="https://example.org" title="preview">link</a>'
 		expect(markdownThroughEditorHtml(link)).toBe(markdown)
 	})
 
 	test('detects links', ({ editor }) => {
-		const link = '<a href="https://nextcloud.com" title="preview">link</a>'
+		const link = '<a href="https://example.org" title="preview">link</a>'
 		editor.commands.setContent(`${link}<p>hello></p>`)
 		const node = editor.state.doc.content.firstChild
 		expect(node.type.name).toBe('preview')
 		expect(node.attrs.title).toBe('preview')
-		expect(node.attrs.href).toBe('https://nextcloud.com')
+		expect(node.attrs.href).toBe('https://example.org')
 	})
 })

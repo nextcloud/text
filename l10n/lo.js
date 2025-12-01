@@ -206,7 +206,6 @@ OC.L10N.register(
     "Increase indentation" : "ເພີ່ມການຫຍໍ້ໜ້າ",
     "Decrease indentation" : "ຫຼຸດການຫຍໍ້ໜ້າ",
     "Blocks" : "ບລັອກ",
-    "Inline formula" : "ສູດໃນແຖວ",
     "Info callout" : "ກ່ອງຂໍ້ມູນ",
     "Success callout" : "ກ່ອງສຳເລັດ",
     "Warning callout" : "ກ່ອງຄຳເຕືອນ",
