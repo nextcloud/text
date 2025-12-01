@@ -62,7 +62,7 @@ describe('input rules', () => {
 	})
 
 	it('link', () => {
-		cy.getContent().type('[link](https://nextcloud.com/)')
+		cy.getContent().type('[link](https://example.org/)')
 		cy.getContent().find('a').should('contain', 'link')
 		cy.closeFile()
 	})

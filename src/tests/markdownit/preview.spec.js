@@ -7,17 +7,17 @@ import markdownit from '../../markdownit/index.js'
 
 describe('Preview extension', () => {
 	const link = {
-		md: '[link](https://nextcloud.com)',
-		html: '<a href="https://nextcloud.com">link</a>',
+		md: '[link](https://example.org)',
+		html: '<a href="https://example.org">link</a>',
 	}
 	const preview = {
-		md: '[link](https://nextcloud.com (preview))',
-		html: '<a href="https://nextcloud.com" title="preview">link</a>',
+		md: '[link](https://example.org (preview))',
+		html: '<a href="https://example.org" title="preview">link</a>',
 	}
 
 	it('wraps', () => {
-		expect(markdownit.render('[link](https://nextcloud.com)')).toBe(
-			'<p><a href="https://nextcloud.com">link</a></p>\n',
+		expect(markdownit.render('[link](https://example.org)')).toBe(
+			'<p><a href="https://example.org">link</a></p>\n',
 		)
 	})
 
