@@ -32,7 +32,7 @@ const rewriteMiddlewarePlugin = {
 const config = createAppConfig(
 	{
 		text: path.join(__dirname, 'src', 'main.js'),
-		files: path.join(__dirname, 'src', 'files.js'),
+		files: path.join(__dirname, 'src', 'files.ts'),
 		public: path.join(__dirname, 'src', 'public.js'),
 		viewer: path.join(__dirname, 'src', 'viewer.js'),
 		editor: path.join(__dirname, 'src', 'editor.js'),

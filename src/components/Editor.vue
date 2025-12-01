@@ -99,6 +99,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
+import { useEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
@@ -116,6 +117,7 @@ import {
 	serializePlainText,
 } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
+import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -273,6 +275,8 @@ export default defineComponent({
 
 		const syncProvider = shallowRef(null)
 
+		const { updateHeadings } = useEditorHeadings()
+
 		return {
 			awareness,
 			connection,
@@ -291,6 +295,7 @@ export default defineComponent({
 			syncProvider,
 			syncService,
 			updateUser,
+			updateHeadings,
 			width,
 			ydoc,
 		}
@@ -522,6 +527,9 @@ export default defineComponent({
 				}
 			})
 			this.updateUser(session)
+			this.updateHeadings(
+				[...headingAnchorPluginKey.getState(this.editor.state)?.headings] ?? []
+			)
 		},
 
 		onChange({ document }) {
@@ -544,6 +552,9 @@ export default defineComponent({
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
+			this.updateHeadings(
+				[...headingAnchorPluginKey.getState(this.editor.state)?.headings] ?? []
+			)
 		},
 
 		onSync({ steps, document }) {
