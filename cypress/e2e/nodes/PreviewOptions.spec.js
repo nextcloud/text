@@ -18,11 +18,11 @@ describe('Preview Options', function () {
 		cy.get('.entry-action__insert-link').click()
 		cy.get('li').get('[data-text-action-entry="insert-link-website"]').click()
 		cy.get('[data-text-action-entry="insert-link-input"] input').type(
-			'nextcloud.com',
+			'example.org',
 		)
 		cy.get('[data-text-action-entry="insert-link-input"] button').click()
 
-		cy.getContent().find(`a[href*="https://nextcloud.com"]`).click()
+		cy.getContent().find(`a[href*="https://example.org"]`).click()
 		cy.get('.link-options').click()
 	})
 
@@ -53,7 +53,7 @@ describe('Preview Options', function () {
 	})
 
 	it('should Remove link', function () {
-		cy.get('p > a').should('have.text', 'nextcloud.com')
+		cy.get('p > a').should('have.text', 'example.org')
 		cy.get('.action-button__text').contains('Remove link').click()
 		cy.get('p > a').should('not.exist')
 	})

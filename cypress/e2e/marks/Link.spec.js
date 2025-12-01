@@ -26,10 +26,10 @@ describe('Link marks', { retries: 0 }, () => {
 
 		it('will insert a link in a normal paragraph', () => {
 			prepareEditor('hello\n', 3)
-			editor.commands.insertOrSetLink('https://nextcloud.com', {
-				href: 'https://nextcloud.com',
+			editor.commands.insertOrSetLink('https://example.org', {
+				href: 'https://example.org',
 			})
-			expectMarkdown(editor, 'he\n\n<https://nextcloud.com>\n\nllo')
+			expectMarkdown(editor, 'he\n\n<https://example.org>\n\nllo')
 		})
 	})
 
