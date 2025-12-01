@@ -40,18 +40,18 @@ describe('test link marks', function() {
 		}
 
 		it('shows a link preview in the bubble after clicking link', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(link)
 			clickLink(link)
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
-				.contains('Nextcloud')
+				.contains('Example Domain')
 				.click()
 		})
 
 		it('shows a link preview in the bubble after browsing to link', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(link)
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
@@ -61,11 +61,11 @@ describe('test link marks', function() {
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
-				.contains('Nextcloud')
+				.contains('Example Domain')
 		})
 
 		it('open button opens a new tab', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(link)
 			clickLink(link)
 
@@ -75,13 +75,13 @@ describe('test link marks', function() {
 		})
 
 		it('closes the link bubble when clicking elsewhere', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(link)
 			clickLink(link)
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
-				.contains('Nextcloud')
+				.contains('Example Domain')
 
 			cy.get('[role="dialog"] h2.modal-header__name')
 				.contains(fileName)
@@ -99,18 +99,18 @@ describe('test link marks', function() {
 				.click()
 
 			cy.get('.link-view-bubble input')
-				.type('{selectAll}https://nextcloud.com')
+				.type('{selectAll}https://example.org')
 
 			cy.get('.link-view-bubble button[title="Save changes"]')
 				.click()
 
 			cy.getContent()
-				.find('a[href*="https://nextcloud.com"]')
+				.find('a[href*="https://example.org"]')
 
 		})
 
 		it('allows to remove a link in the bubble', () => {
-			const link = 'https://nextcloud.com'
+			const link = 'https://example.org'
 			cy.insertLine(link)
 			clickLink(link)
 
@@ -124,7 +124,7 @@ describe('test link marks', function() {
 		})
 
 		it('Ctrl-click on a link opens a new tab', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(link)
 
 			clickLink(link, { ctrlKey: true })
@@ -135,12 +135,12 @@ describe('test link marks', function() {
 		})
 
 		it('Handles typed in markdown links with text', () => {
-			const link = 'https://nextcloud.com/'
+			const link = 'https://example.org/'
 			cy.insertLine(`[text](${link})`)
 			clickLink(link)
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
-				.contains('Nextcloud')
+				.contains('Example Domain')
 			cy.get('.link-view-bubble a')
 				.should('have.attr', 'href', link)
 		})
@@ -184,10 +184,10 @@ describe('test link marks', function() {
 		})
 
 		it('with protocol but without space', () => {
-			cy.getContent().type('https://nextcloud.com')
+			cy.getContent().type('https://example.org')
 
 			cy.getContent()
-				.find('a[href*="nextcloud.com"]')
+				.find('a[href*="example.org"]')
 				.should('not.exist')
 		})
 	})
@@ -197,7 +197,7 @@ describe('test link marks', function() {
 		const text = 'some text'
 
 		describe('link to website', function() {
-			const url = 'https://nextcloud.com/'
+			const url = 'https://example.org/'
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkWebsite = (url, text) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-website').click()
