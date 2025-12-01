@@ -9,7 +9,7 @@ import Preview from '../../nodes/Preview.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractLinkParagraphs', () => {
-	const href = 'https://nextcloud.com'
+	const href = 'https://example.org'
 	const link = `<a href="${href}">Link</a>`
 	const preview = `<a href="${href}" title="preview">Link</a>`
 

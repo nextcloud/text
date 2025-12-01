@@ -109,12 +109,12 @@ describe('Markdown though editor', () => {
 	})
 
 	test('preview with url only', () => {
-		const entry = '[https://nextcloud.com](https://nextcloud.com (preview))'
+		const entry = '[https://example.org](https://example.org (preview))'
 		expect(markdownThroughEditor(entry)).toBe(entry)
 	})
 
 	test('preview with text', () => {
-		const entry = '[some other text](https://nextcloud.com (preview))'
+		const entry = '[some other text](https://example.org (preview))'
 		expect(markdownThroughEditor(entry)).toBe(entry)
 	})
 

@@ -66,8 +66,8 @@ describe('Image resolver', () => {
 
 	it('leaves urls unchanged if they can be loaded directly', async () => {
 		const sources = [
-			'http://nextcloud.com/pic.jpg',
-			'https://nextcloud.com/pic.jpg',
+			'http://example.org/pic.jpg',
+			'https://example.org/pic.jpg',
 			'data:4173456789ASDF',
 		]
 		const resolver = initAttachmentResolver({ fileId })
