@@ -18,10 +18,10 @@ const test = baseTest.extend({
 	},
 })
 
-test.scoped({ content: '# Hello world\n\n[this is a link](https://nextcloud.com)' })
+test.scoped({ content: '# Hello world\n\n[this is a link](https://example.org)' })
 test('renders markdown', async ({ wrapper }) => {
 	expect(wrapper.get('h1').text()).toBe('#Hello world') // # is the heading anchor
-	expect(wrapper.get('a[href="https://nextcloud.com"]').text()).toBe(
+	expect(wrapper.get('a[href="https://example.org"]').text()).toBe(
 		'this is a link',
 	)
 })
@@ -29,5 +29,5 @@ test('renders markdown', async ({ wrapper }) => {
 test('updates markdown', async ({ wrapper }) => {
 	await wrapper.setProps({ content: '## Hello world' })
 	expect(wrapper.get('h2').text()).toBe('#Hello world') // # is the heading anchor
-	expect(wrapper.find('a[href="https://nextcloud.com"]').exists()).toBeFalsy()
+	expect(wrapper.find('a[href="https://example.org"]').exists()).toBeFalsy()
 })
