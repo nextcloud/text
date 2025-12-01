@@ -207,6 +207,8 @@ OC.L10N.register(
     "Increase indentation" : "Suurenda taandrida",
     "Decrease indentation" : "Vähenda taandrida",
     "Blocks" : "Plokid",
+    "Inline math" : "Sisus kuvatavat matemaatika",
+    "Block math" : "Matemaatikaplokk",
     "Info callout" : "Viiktekst: info",
     "Success callout" : "Viiktekst: õnnestumine",
     "Warning callout" : "Viiktekst: hoiatus",
