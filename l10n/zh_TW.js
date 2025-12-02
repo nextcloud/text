@@ -207,6 +207,8 @@ OC.L10N.register(
     "Increase indentation" : "增加縮排",
     "Decrease indentation" : "減少縮排",
     "Blocks" : "區塊",
+    "Inline math" : "行內數學",
+    "Block math" : "區塊數學",
     "Info callout" : "資訊標記",
     "Success callout" : "成功標記",
     "Warning callout" : "警告標記",
