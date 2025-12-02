@@ -44,7 +44,7 @@ export const test = base.extend<SharedFileFixture>({
 	},
 
 	share: async ({ file }, use) => {
-		const token = await file.shareLink()
+		const { token } = await file.shareEditableLink()
 		await use({ token })
 	},
 
@@ -60,7 +60,7 @@ export const test = base.extend<SharedFileFixture>({
 	open: async ({ page, share }, use) => {
 		const open = async () => {
 			await page.goto(`s/${share.token}`)
-			await expect(page.getByRole('toolbar', { name: 'Editor actions' }))
+			await expect(page.getByRole('toolbar', { name: 'Formatting menu bar' }))
 				.toBeVisible()
 		}
 		await use(open)
@@ -70,7 +70,7 @@ export const test = base.extend<SharedFileFixture>({
 		const close = async () => {
 			await page.getByRole('button', { name: 'Close', exact: true }).click()
 			await page.waitForRequest(/close/)
-			await expect(page.getByRole('toolbar', { name: 'Editor actions' }))
+			await expect(page.getByRole('toolbar', { name: 'Formatting menu bar' }))
 				.not.toBeVisible()
 		}
 		await use(close)
