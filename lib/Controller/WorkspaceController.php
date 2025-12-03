@@ -131,8 +131,8 @@ class WorkspaceController extends OCSController {
 			}
 			/** @psalm-suppress RedundantConditionGivenDocblockType */
 			if ($share->getPassword() !== null) {
-				$shareId = $this->session->get('public_link_authenticated');
-				if ($share->getId() !== $shareId) {
+				$shareIds = $this->session->get('public_link_authenticated');
+				if ($share->getId() !== $shareIds && (is_array($shareIds) && !in_array($share->getId(), $shareIds, true))) {
 					throw new ShareNotFound();
 				}
 			}
