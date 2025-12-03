@@ -37,7 +37,6 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(multimdTable, {
 		multiline: true,
 		rowspan: false,
-		headerless: true,
 		multibody: false,
 	})
 
