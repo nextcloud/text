@@ -207,6 +207,8 @@ OC.L10N.register(
     "Increase indentation" : "Increase indentation",
     "Decrease indentation" : "Decrease indentation",
     "Blocks" : "Blocks",
+    "Inline math" : "Inline math",
+    "Block math" : "Block math",
     "Info callout" : "Info callout",
     "Success callout" : "Success callout",
     "Warning callout" : "Warning callout",
