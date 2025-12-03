@@ -35,6 +35,60 @@ const singleLineBlockNodeTypes = new Set([
 ])
 
 /**
+ * Pad all cells in a row to same height, width and content alignment.
+ * Also make sure that cells with block node contents span at least two lines.
+ *
+ * @param row - Table row to normalize
+ * @param columnWidths - Array of column widths
+ */
+function normalizeCells(row: Row, columnWidths: number[]): Cell[] {
+	return row.cells.map((cell, cellIdx) => {
+		const normalizedCell = { ...cell }
+		// Append newline to single-line cells with a block node
+		if (
+			normalizedCell.lines.length === 1
+			&& [...normalizedCell.nodeTypes].some((type) =>
+				singleLineBlockNodeTypes.has(type),
+			)
+		) {
+			normalizedCell.lines.push('')
+			row.length = Math.max(row.length, 2)
+		}
+
+		// Normalize cells to have the same number of lines
+		while (normalizedCell.lines.length < row.length)
+			normalizedCell.lines.push('')
+		// Normalize lines in cell to have the same length
+		normalizedCell.lines.forEach((line, lineIdx) => {
+			if (
+				[...normalizedCell.nodeTypes].some(
+					(type) => !alignNodeTypes.has(type),
+				)
+			) {
+				// Enforced left alignment.
+				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+				return
+			}
+
+			// Pad according to alignment
+			if (normalizedCell.align === 'center') {
+				const spaces = Math.max(columnWidths[cellIdx] - line.length, 0)
+				const spacesStart = line.length + Math.floor(spaces / 2)
+				const spacesEnd = line.length + Math.ceil(spaces / 2)
+				normalizedCell.lines[lineIdx] = line
+					.padStart(spacesStart)
+					.padEnd(spacesEnd)
+			} else if (normalizedCell.align === 'right') {
+				normalizedCell.lines[lineIdx] = line.padStart(columnWidths[cellIdx])
+			} else {
+				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+			}
+		})
+		return normalizedCell
+	})
+}
+
+/**
  * Serialize a table row to markdown line by line
  *
  * @param state - Markdown serializer state
@@ -46,45 +100,10 @@ function rowToMarkdown(
 	row: Row,
 	columnWidths: number[],
 ) {
-	const normalizedCells = row.cells.map((cell, cellIdx) => {
-		const normalizedCell = {...cell}
-		// Append newline to single-line cells with a block node
-		if (
-			normalizedCell.lines.length === 1
-			&& [...normalizedCell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
-		) {
-			normalizedCell.lines.push('')
-			row.length = Math.max(row.length, 2)
-		}
-
-		// Normalize cells to have the same number of lines
-		while (normalizedCell.lines.length < row.length) normalizedCell.lines.push('')
-		// Normalize lines in cell to have the same length
-		normalizedCell.lines.forEach((line, lineIdx) => {
-			if ([...normalizedCell.nodeTypes].some((type) => !alignNodeTypes.has(type))) {
-				// Enforced left alignment.
-				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
-				return
-			}
-
-			// Pad according to alignment
-			if (normalizedCell.align === 'center') {
-				const spaces = Math.max(columnWidths[cellIdx] - line.length, 0)
-				const spacesStart = line.length + Math.floor(spaces / 2)
-				const spacesEnd = line.length + Math.ceil(spaces / 2)
-				normalizedCell.lines[lineIdx] = line.padStart(spacesStart).padEnd(spacesEnd)
-			} else if (normalizedCell.align === 'right') {
-				normalizedCell.lines[lineIdx] = line.padStart(columnWidths[cellIdx])
-			} else {
-				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
-			}
-		})
-		return normalizedCell
-	})
-
 	// Write row line by line
 	for (let lineIdx = 0; lineIdx < row.length; lineIdx++) {
 		state.write('| ')
+		const normalizedCells = normalizeCells(row, columnWidths)
 		normalizedCells.forEach((cell, cellIdx) => {
 			state.write(cell.lines[lineIdx])
 			if (cellIdx < normalizedCells.length - 1) {
