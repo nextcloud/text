@@ -47,38 +47,39 @@ function rowToMarkdown(
 	columnWidths: number[],
 ) {
 	const normalizedCells = row.cells.map((cell, cellIdx) => {
+		const normalizedCell = {...cell}
 		// Append newline to single-line cells with a block node
 		if (
-			cell.lines.length === 1
-			&& [...cell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
+			normalizedCell.lines.length === 1
+			&& [...normalizedCell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
 		) {
-			cell.lines.push('')
+			normalizedCell.lines.push('')
 			row.length = Math.max(row.length, 2)
 		}
 
 		// Normalize cells to have the same number of lines
-		while (cell.lines.length < row.length) cell.lines.push('')
+		while (normalizedCell.lines.length < row.length) normalizedCell.lines.push('')
 		// Normalize lines in cell to have the same length
-		cell.lines.forEach((line, lineIdx) => {
-			if ([...cell.nodeTypes].some((type) => !alignNodeTypes.has(type))) {
+		normalizedCell.lines.forEach((line, lineIdx) => {
+			if ([...normalizedCell.nodeTypes].some((type) => !alignNodeTypes.has(type))) {
 				// Enforced left alignment.
-				cell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
 				return
 			}
 
 			// Pad according to alignment
-			if (cell.align === 'center') {
+			if (normalizedCell.align === 'center') {
 				const spaces = Math.max(columnWidths[cellIdx] - line.length, 0)
 				const spacesStart = line.length + Math.floor(spaces / 2)
 				const spacesEnd = line.length + Math.ceil(spaces / 2)
-				cell.lines[lineIdx] = line.padStart(spacesStart).padEnd(spacesEnd)
-			} else if (cell.align === 'right') {
-				cell.lines[lineIdx] = line.padStart(columnWidths[cellIdx])
+				normalizedCell.lines[lineIdx] = line.padStart(spacesStart).padEnd(spacesEnd)
+			} else if (normalizedCell.align === 'right') {
+				normalizedCell.lines[lineIdx] = line.padStart(columnWidths[cellIdx])
 			} else {
-				cell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
 			}
 		})
-		return cell
+		return normalizedCell
 	})
 
 	// Write row line by line
