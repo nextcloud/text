@@ -22,7 +22,9 @@ import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { EDITOR_UPLOAD } from '../Editor.provider.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import ContentContainer from './ContentContainer.vue'
@@ -77,6 +79,8 @@ export default {
 			isRichEditor: true,
 			isRichWorkspace: false,
 		})
+		provide(editorWidthKey, null)
+		provide(EDITOR_UPLOAD, false)
 		return { editor, setContent }
 	},
 
