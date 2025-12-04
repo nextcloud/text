@@ -15,12 +15,6 @@ import Text from '@tiptap/extension-text'
 export default Extension.create({
 	name: 'PlainTable',
 
-	addOptions() {
-		return {
-			...this.parent?.(),
-		}
-	},
-
 	addExtensions() {
 		return [
 			Markdown,
