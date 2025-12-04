@@ -5,10 +5,10 @@
 
 import { Extension } from '@tiptap/core'
 
-import PlainTableDocument from './../nodes/PlainTableDocument.js'
 import EditableTable from './../nodes/EditableTable.js'
-import Markdown from './Markdown.js'
+import PlainTableDocument from './../nodes/PlainTableDocument.js'
 import Keymap from './Keymap.js'
+import Markdown from './Markdown.js'
 /* eslint-disable import/no-named-as-default */
 import Text from '@tiptap/extension-text'
 
@@ -16,12 +16,6 @@ export default Extension.create({
 	name: 'PlainTable',
 
 	addExtensions() {
-		return [
-			Markdown,
-			PlainTableDocument,
-			EditableTable,
-			Keymap,
-			Text,
-		]
+		return [Markdown, PlainTableDocument, EditableTable, Keymap, Text]
 	},
 })

@@ -4,9 +4,7 @@
 -->
 
 <template>
-	<Wrapper
-		:content-loaded="true"
-		:show-outline-outside="false">
+	<Wrapper :content-loaded="true" :show-outline-outside="false">
 		<MainContainer>
 			<ContentContainer :read-only="readOnly" />
 		</MainContainer>
@@ -22,11 +20,11 @@ import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
-import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import { EDITOR_UPLOAD } from '../Editor.provider.ts'
+import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { EDITOR_UPLOAD } from '../Editor.provider.ts'
 import ContentContainer from './ContentContainer.vue'
 
 export default {
@@ -42,19 +40,11 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	emits: ['update:content'],
 
 	setup(props) {
-		const extensions = [
-			PlainTable,
-			UndoRedo,
-			FocusTrap,
-		]
+		const extensions = [PlainTable, UndoRedo, FocusTrap]
 		const editor = new Editor({ extensions })
 
 		const { setEditable, setContent } = useEditorMethods(editor)
@@ -95,9 +85,9 @@ export default {
 
 			// Emit initial content
 			try {
-				const markdown = createMarkdownSerializer(this.editor.schema).serialize(
-					this.editor.state.doc,
-				)
+				const markdown = createMarkdownSerializer(
+					this.editor.schema,
+				).serialize(this.editor.state.doc)
 				this.emit('create:content', {
 					json: this.editor.state.doc,
 					markdown,
