@@ -9,6 +9,7 @@ import FocusTrap from './FocusTrap.js'
 import KeepSyntax from './KeepSyntax.js'
 import Markdown from './Markdown.js'
 import Mention from './Mention.js'
+import PlainTable from './PlainTable.js'
 import PlainText from './PlainText.js'
 import RichText from './RichText.js'
 import UserColor from './UserColor.js'
@@ -20,6 +21,7 @@ export {
 	KeepSyntax,
 	Markdown,
 	Mention,
+	PlainTable,
 	PlainText,
 	RichText,
 	UserColor,
