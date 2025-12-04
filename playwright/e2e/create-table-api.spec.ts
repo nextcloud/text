@@ -14,10 +14,9 @@ test.describe('createTable API', () => {
 		await open()
 
 		// Load the editor API bundle
-		await page.evaluate(async () => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore - Dynamic import in browser context
-			await import('/apps/text/js/text-editor.mjs')
+		await page.addScriptTag({
+			url: '/apps/text/js/text-editor.mjs',
+			type: 'module',
 		})
 	})
 
