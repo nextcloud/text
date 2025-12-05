@@ -9,23 +9,7 @@ import { TableHeader } from '@tiptap/extension-table'
 export default TableHeader.extend({
 	content: 'inline*',
 
-	toMarkdown(state, node) {
-		const headerIndex = state.options.currentHeaderIndex
-		const columnWidth = state.options.columnWidths[headerIndex]
-		const align = node.attrs?.textAlign || 'left'
-		const space = columnWidth - node.content.size
-		const leftPadding = Math.floor(space / 2)
-		const rightPadding = Math.ceil(space / 2)
-
-		state.write(' ')
-		if (align === 'center') state.write(' '.repeat(leftPadding))
-		if (align === 'right') state.write(' '.repeat(space))
-		state.renderInline(node)
-		if (align === 'center') state.write(' '.repeat(rightPadding))
-		if (align === 'left') state.write(' '.repeat(space))
-		state.write(' |')
-		state.options.currentHeaderIndex++
-	},
+	toMarkdown() {},
 
 	parseHTML() {
 		return [
