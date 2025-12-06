@@ -207,6 +207,8 @@ OC.L10N.register(
     "Increase indentation" : "Méadú ar eangú",
     "Decrease indentation" : "Laghdú eangú",
     "Blocks" : "Bloic",
+    "Inline math" : "Matamaitic inlíne",
+    "Block math" : "Matamaitic bloc",
     "Info callout" : "Glao amach faisnéise",
     "Success callout" : "Glao amach rathúil",
     "Warning callout" : "Glao amach rabhaidh",
