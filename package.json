@@ -80,7 +80,7 @@
     "debounce": "^3.0.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
-    "katex": "^0.16.25",
+    "katex": "^0.16.26",
     "lib0": "^0.2.114",
     "lowlight": "^3.3.0",
     "markdown-it": "^14.1.0",
