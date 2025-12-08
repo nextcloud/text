@@ -528,7 +528,7 @@ export default defineComponent({
 			})
 			this.updateUser(session)
 			this.updateHeadings(
-				[...headingAnchorPluginKey.getState(this.editor.state)?.headings] ?? []
+				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
 			)
 		},
 
@@ -553,7 +553,7 @@ export default defineComponent({
 				markdown: proseMirrorMarkdown,
 			})
 			this.updateHeadings(
-				[...headingAnchorPluginKey.getState(this.editor.state)?.headings] ?? []
+				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
 			)
 		},
 
