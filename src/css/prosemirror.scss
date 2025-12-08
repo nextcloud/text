@@ -360,6 +360,9 @@ div.ProseMirror {
 			&:first-child {
 				border-left: 1px solid var(--table-color-border);
 			}
+			* {
+				z-index: 3;
+			}
 		}
 		td {
 			border-top: 0;
@@ -403,6 +406,18 @@ div.ProseMirror {
 			td:last-child {
 				border-bottom-right-radius: var(--table-border-radius);
 			}
+		}
+
+		.selectedCell:after {
+			background: var(--color-background-dark);
+			content: '';
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			pointer-events: none;
+			position: absolute;
+			z-index: 2;
 		}
 	}
 }
