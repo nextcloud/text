@@ -13,6 +13,7 @@
 			role="document"
 			class="editor__content text-editor__content"
 			:editor="editor" />
+		<EditorOutline v-if="showOutline" class="editor__outline" />
 	</div>
 </template>
 
@@ -24,7 +25,6 @@ import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useEditorWidth } from '../../composables/useEditorWidth.ts'
 import EditorOutline from './EditorOutline.vue'
 import FloatingButtons from './FloatingButtons.vue'
-import { useOutlineStateMixin } from './Wrapper.provider.js'
 
 export default {
 	name: 'ContentContainer',
@@ -33,7 +33,6 @@ export default {
 		EditorOutline,
 		FloatingButtons,
 	},
-	mixins: [useOutlineStateMixin],
 	props: {
 		readOnly: {
 			type: Boolean,
@@ -48,14 +47,18 @@ export default {
 		return { editor, isMobile, isFullWidth, isRichEditor, isRichWorkspace }
 	},
 	computed: {
-		showOutline() {
-			return this.$outlineState.visible
-		},
 		showFloatingButtons() {
 			return (
 				!this.readOnly
 				&& !this.isMobile
 				&& !this.isFullWidth
+				&& this.isRichEditor
+				&& !this.isRichWorkspace
+			)
+		},
+		showOutline() {
+			return (
+				!this.isMobile
 				&& this.isRichEditor
 				&& !this.isRichWorkspace
 			)
@@ -66,8 +69,7 @@ export default {
 
 <style scoped lang="scss">
 .editor__content {
-	max-width: min(var(--text-editor-max-width), 100vw);
-	width: min(var(--text-editor-max-width), 100vw);
+	max-width: var(--text-editor-max-width);
 	margin: 0 auto;
 	position: relative;
 	:deep([contenteditable]) {

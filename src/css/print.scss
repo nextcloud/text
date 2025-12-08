@@ -65,6 +65,10 @@
 			// Margins set by page rule
 			max-width: 100%;
 		}
+		.editor__outline {
+			// Hide outline
+			display: none !important;
+		}
 		.text-editor__wrapper {
 			height: fit-content;
 			position: unset;

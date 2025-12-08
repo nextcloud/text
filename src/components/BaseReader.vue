@@ -9,29 +9,26 @@
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
+		<EditorOutline v-if="showOutline" class="editor__outline" />
 	</div>
 </template>
 
 <script>
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import { inject, watch } from 'vue'
 import { provideEditor } from '../composables/useEditor.ts'
+import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import EditorOutline from './Editor/EditorOutline.vue'
-import {
-	useOutlineActions,
-	useOutlineStateMixin,
-} from './Editor/Wrapper.provider.js'
 
 export default {
 	name: 'BaseReader',
 	components: {
-		EditorContent,
 		EditorOutline,
+		EditorContent,
 	},
-
-	mixins: [useOutlineStateMixin, useOutlineActions],
 
 	props: {
 		content: {
@@ -46,6 +43,8 @@ export default {
 		const editor = new Editor({ extensions: extensions() })
 		provideEditor(editor)
 
+		const isMobile = useIsMobile()
+		const { isRichEditor } = useEditorFlags()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		watch(
 			() => props.content,
@@ -59,12 +58,15 @@ export default {
 		// Render the initial content last as it may render Vue components
 		// that break the vue context of this setup function.
 		setContent(props.content, { addToHistory: false })
-		return { editor }
+		return { editor, isMobile, isRichEditor }
 	},
 
 	computed: {
 		showOutline() {
-			return this.$outlineState.visible
+			return (
+				!this.isMobile
+				&& this.isRichEditor
+			)
 		},
 	},
 
@@ -76,8 +78,7 @@ export default {
 
 <style scoped lang="scss">
 .editor__content {
-	max-width: min(var(--text-editor-max-width), 100vw);
-	width: min(var(--text-editor-max-width), 100vw);
+	max-width: var(--text-editor-max-width);
 	margin: 0 auto;
 	position: relative;
 }
