@@ -200,7 +200,7 @@ export default {
 	&.source-viewer {
 		display: block;
 
-		.text-editor__content-wrapper {
+		.editor__content-wrapper {
 			margin-top: var(--header-height);
 		}
 

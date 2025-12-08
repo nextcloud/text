@@ -905,10 +905,6 @@ export default defineComponent({
 		&.draggedOver {
 			background-color: var(--color-primary-element-light);
 		}
-
-		.text-editor__content-wrapper {
-			position: relative;
-		}
 	}
 }
 
@@ -916,11 +912,11 @@ export default defineComponent({
 	width: 50%;
 }
 
-.text-editor__wrapper.has-conflicts > .content-wrapper {
+.text-editor__wrapper.has-conflicts > .editor__content-wrapper {
 	width: 50%;
 
 	#read-only-editor {
-		margin: 0px auto;
+		margin: 0 auto;
 		// Add height of the menubar as padding-top
 		padding-top: calc(
 			var(--default-clickable-area) + 2 * var(--default-grid-baseline)
