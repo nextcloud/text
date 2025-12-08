@@ -4,20 +4,11 @@
 -->
 
 <template>
-	<div
-		data-text-el="editor-content-wrapper"
-		class="content-wrapper text-editor__content-wrapper"
-		:class="{
-			'--show-outline': showOutline,
-		}">
-		<div v-if="showOutline" class="text-editor__content-wrapper__left">
-			<EditorOutline />
-		</div>
+	<div data-text-el="editor-content-wrapper" class="editor__content-wrapper">
 		<EditorContent
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<div class="text-editor__content-wrapper__right" />
 	</div>
 </template>
 
@@ -85,23 +76,9 @@ export default {
 
 <style scoped lang="scss">
 .editor__content {
-	max-width: var(--text-editor-max-width);
-	margin: auto;
+	max-width: min(var(--text-editor-max-width), 100vw);
+	width: min(var(--text-editor-max-width), 100vw);
+	margin: 0 auto;
 	position: relative;
-	width: 100%;
-}
-
-.text-editor__content-wrapper {
-	--side-width: calc((100% - var(--text-editor-max-width)) / 2);
-	display: grid;
-	grid-template-columns: 1fr auto;
-	&.--show-outline {
-		grid-template-columns: var(--side-width) auto var(--side-width);
-	}
-	.text-editor__content-wrapper__left,
-	.text-editor__content-wrapper__right {
-		height: 100%;
-		position: relative;
-	}
 }
 </style>
