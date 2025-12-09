@@ -13,7 +13,7 @@
 			role="document"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<EditorOutline v-if="showOutline" class="editor__outline" />
+		<TocContainer v-if="useTableOfContents" />
 	</div>
 </template>
 
@@ -22,15 +22,15 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import EditorOutline from './EditorOutline.vue'
+import TocContainer from './TocContainer.vue'
 import FloatingButtons from './FloatingButtons.vue'
 
 export default {
 	name: 'ContentContainer',
 	components: {
 		EditorContent,
-		EditorOutline,
 		FloatingButtons,
+		TocContainer,
 	},
 	props: {
 		readOnly: {
@@ -41,21 +41,14 @@ export default {
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { isRichEditor, isRichWorkspace } = useEditorFlags()
-		return { editor, isMobile, isRichEditor, isRichWorkspace }
+		const { isRichEditor, isRichWorkspace, useTableOfContents } = useEditorFlags()
+		return { editor, isMobile, isRichEditor, isRichWorkspace, useTableOfContents }
 	},
 	computed: {
 		showFloatingButtons() {
 			return (
 				!this.readOnly
 				&& !this.isMobile
-				&& this.isRichEditor
-				&& !this.isRichWorkspace
-			)
-		},
-		showOutline() {
-			return (
-				!this.isMobile
 				&& this.isRichEditor
 				&& !this.isRichWorkspace
 			)

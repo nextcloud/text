@@ -22,6 +22,7 @@ import axios from '@nextcloud/axios'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import {
 	computed,
 	inject,
@@ -42,9 +43,12 @@ export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
 	Readonly<Ref<boolean> | null>
 >
 
+// desktop: leave space for floating buttons and outline (2 * 40px)
 // wide screen: 80ch content, narrow screen: full width
-const defaultEditorWidth = 'min(80ch, 100vw)'
-const fullEditorWidth = 'calc(100% - 2 * 48px)'
+const defaultEditorWidthDesktop = 'min(80ch, (100% - 2 * 40px))'
+const defaultEditorWidthMobile = 'min(80ch, 100%)'
+const fullEditorWidthDesktop = 'calc(100% - 2 * 40px)'
+const fullEditorWidthMobile = '100%'
 
 /**
  * Detect if other apps (such as collectives) already configured texts max width.
@@ -64,6 +68,7 @@ function maxWidthSetOutsideOfText() {
 }
 
 export const provideEditorWidth = () => {
+	const isMobile = useIsMobile()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
 		provide(editorWidthKey, null)
@@ -75,7 +80,9 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const width = computed(() => (isFullWidth.value ? fullEditorWidth : defaultEditorWidth))
+	const defaultEditorWidth = computed(() => (isMobile.value ? defaultEditorWidthMobile : defaultEditorWidthDesktop))
+	const fullEditorWidth = computed(() => (isMobile.value ? fullEditorWidthMobile : fullEditorWidthDesktop))
+	const width = computed(() => (isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value))
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',
