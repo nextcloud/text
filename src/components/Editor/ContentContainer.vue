@@ -16,6 +16,7 @@
 		<slot />
 		<FloatingButtons v-if="showFloatingButtons" />
 		<EditorContent
+			v-if="editorReady"
 			role="document"
 			class="editor__content text-editor__content"
 			:editor="editor" />
@@ -54,6 +55,11 @@ export default {
 		const { isFullWidth } = useEditorWidth()
 		return { editor, isMobile, isFullWidth, isRichEditor, isRichWorkspace }
 	},
+	data() {
+		return {
+			editorReady: false,
+		}
+	},
 	computed: {
 		showOutline() {
 			return this.$outlineState.visible
@@ -67,6 +73,9 @@ export default {
 				&& !this.isRichWorkspace
 			)
 		},
+	},
+	mounted() {
+		this.editorReady = true
 	},
 }
 </script>
