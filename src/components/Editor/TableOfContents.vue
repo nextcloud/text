@@ -4,24 +4,36 @@
 -->
 
 <template>
+	<!-- :class="{ '--initial-render': initialRender }" -->
 	<div
 		data-text-el="editor-table-of-contents"
-		:class="{ '--initial-render': initialRender }"
-		class="editor--toc">
-		<ul class="editor--toc__list">
+		class="editor__toc">
+		<div v-if="showClose" class="editor__toc-header">
+			<NcButton
+				variant="tertiary"
+				size="small"
+				:aria-label="t('text', 'Close table of contents')"
+				@click="$emit('close')">
+				<template #icon>
+					<CloseIcon :size="20" />
+				</template>
+			</NcButton>
+		</div>
+		<ul class="editor__toc-list">
 			<li
 				v-for="heading in headings"
 				:key="heading.id"
 				:data-toc-level="heading.level"
-				class="editor--toc__item"
+				class="editor__toc-item"
 				:class="{
-					[`editor--toc__item--${heading.level}`]: true,
-					[`editor--toc__item--previous-${heading.previous}`]:
+					active: heading.id === activeHeadingId,
+					[`level${heading.level}`]: true,
+					[`previous${heading.previous}`]:
 						heading.previous > 0,
 				}">
 				<a
 					:href="`#${heading.id}`"
-					class="editor--toc__item-link"
+					class="editor__toc__item-link"
 					@click.prevent="goto(heading)">
 					{{ heading.text }}
 				</a>
@@ -31,33 +43,44 @@
 </template>
 
 <script>
-import { useEditor } from '../../composables/useEditor.ts'
-import { headingAnchorPluginKey } from '../../plugins/headingAnchor.js'
+import { t } from '@nextcloud/l10n'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 export default {
 	name: 'TableOfContents',
-	setup() {
-		const { editor } = useEditor()
-		return { editor }
+	components: {
+		CloseIcon,
+		NcButton,
 	},
+	props: {
+		activeHeadingId: {
+			type: String,
+			default: null,
+		},
+		headings: {
+			type: Array,
+			required: true,
+		},
+		showClose: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	/*
 	data: () => ({
 		initialRender: true,
-		headings: [],
 	}),
 	mounted() {
-		this.editor.on('update', this.updateHeadings)
-		this.updateHeadings()
 		setTimeout(() => {
 			this.initialRender = false
 		}, 1000)
 	},
-	beforeDestroy() {
-		this.editor.off('update', this.updateHeadings)
-	},
+	 */
 	methods: {
 		goto(heading) {
-			const element = this.$root.$el.querySelector(`#${heading.id}`)
-			element.scrollIntoView({ block: 'start', behavior: 'smooth' })
+			const el = this.$root.$el.querySelector(`#${heading.id}`)
+			el?.scrollIntoView({ block: 'start', behavior: 'smooth' })
 			this.$nextTick(() => {
 				window.history.replaceState(
 					window.history.state,
@@ -65,51 +88,76 @@ export default {
 					`#${heading.id}`,
 				)
 			})
+			this.$emit('heading-clicked')
 		},
-		updateHeadings() {
-			this.headings =
-				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
-		},
+		t,
 	},
 }
 </script>
 
 <style lang="scss">
+/*
 .--initial-render {
-	.editor--toc {
-		&__item {
-			--initial-padding-left: 0;
+	.editor__toc {
+		&-item {
+			--initial-padding-inline-start: 0;
 			animation: initialPadding 1.5s;
 		}
 	}
 }
+ */
 
-.editor--toc {
-	padding: 0 10px;
-	color: var(--color-main-text-maxcontrast);
-	--animation-duration: 0.8s;
+.editor__toc {
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
 
-	h3 {
-		padding-left: 0.75rem;
+	--level-padding: 12px;
+
+	padding: 12px;
+	padding-bottom: 24px;
+	width: 200px;
+	// TODO: better max height
+	max-height: calc(100vh * 0.66);
+	background-color: var(--color-main-background);
+	border: 2px solid var(--color-border);
+	border-radius: var(--border-radius-large);
+	// --animation-duration: 0.8s;
+
+	&-header {
+		position: sticky;
+		top: 0;
+		width: 100%;
+		display: flex;
+		justify-content: end;
 	}
 
-	&__list {
+	&-list {
 		width: 100%;
 		list-style: none;
 		font-size: 0.9rem;
 		padding: 0;
 
-		animation-name: fadeInLeft;
-		animation-duration: var(--animation-duration);
+		// animation-name: fadeInLeft;
+		// animation-duration: var(--animation-duration);
 	}
 
-	&__item {
-		transform: translateX(var(--padding-left, 0rem));
-		text-overflow: ellipsis;
+	&-item {
+		// transform: translateX(var(--padding-inline-start, 0rem));
+		color: var(--color-text-lighter);
 		overflow: hidden;
+		text-overflow: ellipsis;
 		white-space: nowrap;
-		animation: initialPadding calc(var(--animation-duration) * 2);
-		width: calc(100% - var(--padding-left));
+		padding-inline-start: var(--padding-inline-start);
+		// animation: initialPadding calc(var(--animation-duration) * 2);
+
+		a {
+			color: var(--color-text-lighter);
+		}
+
+		&.active a {
+			color: var(--color-main-text);
+		}
 
 		a:hover {
 			color: var(--color-primary-element-hover);
@@ -121,67 +169,69 @@ export default {
 			);
 		}
 
-		&--1 {
-			--padding-left: 0rem;
+		&.level1 {
+			--padding-inline-start: calc(0 * var(--level-padding));
 			font-weight: 600;
 			&:not(:nth-child(1)) {
 				margin-top: 0.5rem;
 			}
 		}
 
-		&--2 {
-			--padding-left: 1rem;
+		&.level2 {
+			--padding-inline-start: calc(1 * var(--level-padding));
 		}
 
-		&--3 {
-			--padding-left: 2rem;
+		&.level3 {
+			--padding-inline-start: calc(2 * var(--level-padding));
 		}
 
-		&--4 {
-			--padding-left: 3rem;
+		&.level4 {
+			--padding-inline-start: calc(3 * var(--level-padding));
 		}
 
-		&--5 {
-			--padding-left: 4rem;
+		&.level5 {
+			--padding-inline-start: calc(4 * var(--level-padding));
 		}
 
-		&--6 {
-			--padding-left: 5rem;
+		&.level6 {
+			--padding-inline-start: calc(5 * var(--level-padding));
 		}
 
-		&--previous-1 {
-			--initial-padding-left: 0rem;
+		&.previous1 {
+			--initial-padding-inline-start: calc(0 * var(--level-padding));
 		}
 
-		&--previous-2 {
-			--initial-padding-left: 1rem;
+		&.previous2 {
+			--initial-padding-inline-start: calc(1 * var(--level-padding));
 		}
 
-		&--previous-3 {
-			--initial-padding-left: 2rem;
+		&.previous3 {
+			--initial-padding-inline-start: calc(2 * var(--level-padding));
 		}
 
-		&--previous-4 {
-			--initial-padding-left: 3rem;
+		&.previous4 {
+			--initial-padding-inline-start: calc(3 * var(--level-padding));
 		}
 
-		&--previous-5 {
-			--initial-padding-left: 4rem;
+		&.previous5 {
+			--initial-padding-inline-start: calc(4 * var(--level-padding));
 		}
 
-		&--previous-6 {
-			--initial-padding-left: 5rem;
+		&.previous6 {
+			--initial-padding-inline-start: calc(5 * var(--level-padding));
 		}
 	}
 }
 
+/**
 @keyframes initialPadding {
 	from {
-		transform: translateX(var(--initial-padding-left, initial));
+		transform: translateX(var(--initial-padding-inline-start, initial));
 	}
 
 	to {
-		transform: translateX(var(--padding-left, 0rem));
+		transform: translateX(var(--padding-inline-start, 0rem));
 	}
 }
+ */
 </style>

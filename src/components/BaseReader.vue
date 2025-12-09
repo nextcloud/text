@@ -9,25 +9,24 @@
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<EditorOutline v-if="showOutline" class="editor__outline" />
+		<TocContainer v-if="useTableOfContents" />
 	</div>
 </template>
 
 <script>
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import { inject, watch } from 'vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
-import EditorOutline from './Editor/EditorOutline.vue'
+import TocContainer from './Editor/TocContainer.vue'
 
 export default {
 	name: 'BaseReader',
 	components: {
-		EditorOutline,
 		EditorContent,
+		TocContainer,
 	},
 
 	props: {
@@ -43,8 +42,7 @@ export default {
 		const editor = new Editor({ extensions: extensions() })
 		provideEditor(editor)
 
-		const isMobile = useIsMobile()
-		const { isRichEditor } = useEditorFlags()
+		const { useTableOfContents } = useEditorFlags()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		watch(
 			() => props.content,
@@ -58,16 +56,7 @@ export default {
 		// Render the initial content last as it may render Vue components
 		// that break the vue context of this setup function.
 		setContent(props.content, { addToHistory: false })
-		return { editor, isMobile, isRichEditor }
-	},
-
-	computed: {
-		showOutline() {
-			return (
-				!this.isMobile
-				&& this.isRichEditor
-			)
-		},
+		return { editor, useTableOfContents }
 	},
 
 	beforeDestroy() {
