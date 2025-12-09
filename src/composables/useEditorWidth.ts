@@ -46,6 +46,7 @@ export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
 
 // wide screen: 80ch content, narrow screen: full width
 const defaultEditorWidth = 'min(80ch, 100vw)'
+const fullEditorWidth = 'calc(100% - 2 * 48px)'
 
 /**
  * Detect if other apps (such as collectives) already configured texts max width.
@@ -76,7 +77,7 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const width = computed(() => (isFullWidth.value ? '100%' : defaultEditorWidth))
+	const width = computed(() => (isFullWidth.value ? fullEditorWidth : defaultEditorWidth))
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',

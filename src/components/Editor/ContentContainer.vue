@@ -22,7 +22,6 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { useEditorWidth } from '../../composables/useEditorWidth.ts'
 import EditorOutline from './EditorOutline.vue'
 import FloatingButtons from './FloatingButtons.vue'
 
@@ -43,15 +42,13 @@ export default {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
 		const { isRichEditor, isRichWorkspace } = useEditorFlags()
-		const { isFullWidth } = useEditorWidth()
-		return { editor, isMobile, isFullWidth, isRichEditor, isRichWorkspace }
+		return { editor, isMobile, isRichEditor, isRichWorkspace }
 	},
 	computed: {
 		showFloatingButtons() {
 			return (
 				!this.readOnly
 				&& !this.isMobile
-				&& !this.isFullWidth
 				&& this.isRichEditor
 				&& !this.isRichWorkspace
 			)
@@ -68,6 +65,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/*
+.editor__content-wrapper {
+	width: min(calc(var(--text-editor-max-width) + 2 * 48px), 100%);
+	margin: 0 auto;
+}
+ */
+
 .editor__content {
 	max-width: var(--text-editor-max-width);
 	margin: 0 auto;
