@@ -13,6 +13,7 @@
 			variant="tertiary-no-background"
 			size="small"
 			:title="t('text', 'Insert below')"
+			:aria-label="t('text', 'Insert below')"
 			@click="onOpenSmartPicker">
 			<template #icon>
 				<PlusIcon :size="16" />
@@ -22,7 +23,8 @@
 			variant="tertiary-no-background"
 			size="small"
 			class="drag-button"
-			:title="t('text', 'Click for options, hold to drag')">
+			:title="t('text', 'Click for options, hold to drag')"
+			:aria-label="t('text', 'Click for options, hold to drag')">
 			<template #icon>
 				<DragVerticalIcon :size="16" />
 			</template>
