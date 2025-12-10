@@ -270,7 +270,7 @@ window.OCA.Text.createEditor = async function({
 		.render(el)
 }
 
-window.OCA.Text.createTable = async function ({
+window.OCA.Text.createTable = async function({
 	// Element to render the editor to
 	el,
 
