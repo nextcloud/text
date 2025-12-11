@@ -12,7 +12,7 @@ use OCP\IAppConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
-class ResetSessionsBeforeYjs implements IRepairStep {
+readonly class ResetSessionsBeforeYjs implements IRepairStep {
 	public function __construct(
 		private IAppConfig $config,
 		private DocumentService $documentService,
@@ -29,7 +29,8 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 	public function run(IOutput $output): void {
 		$appVersion = $this->config->getValueString('text', 'installed_version');
 
-		if (!$appVersion || version_compare($appVersion, '7.0.0-dev.2') !== -1) {
+		// Run only if installed version ($appVersion) is lower than specified
+		if (!$appVersion || version_compare($appVersion, '7.0.0-dev.3') !== -1) {
 			return;
 		}
 

@@ -5,7 +5,6 @@
 
 import { mergeAttributes } from '@tiptap/core'
 import { Table } from '@tiptap/extension-table'
-import { Node } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import {
 	addRowAfter,
@@ -15,6 +14,7 @@ import {
 	selectedRect,
 	selectionCell,
 } from '@tiptap/pm/tables'
+import { tableToMarkdown } from './markdown.ts'
 import TableCaption from './TableCaption.js'
 import TableCell from './TableCell.js'
 import TableHeader from './TableHeader.js'
@@ -70,50 +70,6 @@ function findSameCellInNextRow($cell) {
 		}
 		cellStart += rowNode.nodeSize
 	}
-}
-
-/**
- *
- * @param {Node} node - Table node
- */
-function getColumns(node) {
-	const columns = []
-
-	node.content.forEach((row) => {
-		row.content.forEach((cell, offset, columnIndex) => {
-			if (!columns[columnIndex]) {
-				columns[columnIndex] = []
-			}
-			columns[columnIndex].push(cell)
-		})
-	})
-
-	return columns
-}
-
-/**
- *
- * @param {Array} columns - Columns of table
- */
-function calculateColumnWidths(columns) {
-	const widths = []
-
-	columns.forEach((column) => {
-		let maxWidth = 0
-
-		column.forEach((cell) => {
-			let cellWidth = 0
-			cell.content.forEach((node) => {
-				cellWidth += node.text?.length || 6
-				if (node.text?.includes('|')) cellWidth += 1
-			})
-			maxWidth = Math.max(maxWidth, cellWidth)
-		})
-
-		widths.push(maxWidth)
-	})
-
-	return widths
 }
 
 export default Table.extend({
@@ -243,11 +199,7 @@ export default Table.extend({
 	},
 
 	toMarkdown(state, node) {
-		const columns = getColumns(node)
-		state.options.columnWidths = calculateColumnWidths(columns)
-		state.options.currentHeaderIndex = 0
-		state.renderContent(node)
-		state.closeBlock(node)
+		tableToMarkdown(state, node)
 	},
 
 	addKeyboardShortcuts() {
@@ -260,42 +212,6 @@ export default Table.extend({
 			Tab: () =>
 				this.editor.commands.goToNextCell()
 				|| this.editor.commands.leaveTable(),
-
-			/**
-			 * <Enter> inside a table
-			 * Insert newline or jump to next row if already in new line
-			 *
-			 * @param {object} object - object
-			 * @param {object} object.editor - the editor
-			 */
-			Enter: ({ editor }) => {
-				const { selection } = editor.state
-				if (!selection.$from.parent.type.name.startsWith('table'))
-					return false
-
-				if (selection.$from.nodeBefore?.type.name === 'hardBreak') {
-					if (editor.can().goToNextRow() || editor.can().addRowAfter()) {
-						// Remove previous hard break and move to next row instead
-						editor
-							.chain()
-							.setTextSelection({
-								from: selection.from - 1,
-								to: selection.from,
-							})
-							.deleteSelection()
-							.run()
-						if (editor.commands.goToNextRow()) return true
-						return editor.chain().addRowAfter().goToNextRow().run()
-					}
-					return false
-				} else {
-					return editor
-						.chain()
-						.insertContent('<br data-syntax="html" />')
-						.focus()
-						.run()
-				}
-			},
 		}
 	},
 })
