@@ -81,9 +81,15 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const defaultEditorWidth = computed(() => (isMobile.value ? defaultEditorWidthMobile : defaultEditorWidthDesktop))
-	const fullEditorWidth = computed(() => (isMobile.value ? fullEditorWidthMobile : fullEditorWidthDesktop))
-	const width = computed(() => (isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value))
+	const defaultEditorWidth = computed(() =>
+		isMobile.value ? defaultEditorWidthMobile : defaultEditorWidthDesktop,
+	)
+	const fullEditorWidth = computed(() =>
+		isMobile.value ? fullEditorWidthMobile : fullEditorWidthDesktop,
+	)
+	const width = computed(() =>
+		isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value,
+	)
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',

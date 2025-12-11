@@ -17,7 +17,7 @@ const Keymap = Extension.create({
 			 * Toggle editor outline
 			 */
 			'Mod-Alt-h': () => {
-				emit('text:keyboard:outline')
+				emit('text:toc:toggle')
 				return true
 			},
 			/**

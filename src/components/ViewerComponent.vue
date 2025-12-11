@@ -12,8 +12,7 @@
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
-		:mime="mime"
-		:show-outline-outside="showOutlineOutside" />
+		:mime="mime" />
 	<div
 		v-else
 		id="editor-container"
@@ -85,10 +84,6 @@ export default {
 		mime: {
 			type: String,
 			default: null,
-		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
 		},
 		permissions: {
 			type: String,

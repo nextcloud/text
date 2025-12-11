@@ -18,9 +18,7 @@
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
-			:show-outline-outside="showOutlineOutside"
-			@read-only-toggled="readOnlyToggled"
-			@outline-toggled="outlineToggled">
+			@read-only-toggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
 				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
@@ -99,7 +97,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
-import { useEditorHeadings } from '../composables/useEditorHeadings.ts'
+import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
@@ -109,6 +107,7 @@ import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
@@ -117,7 +116,6 @@ import {
 	serializePlainText,
 } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
-import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -215,10 +213,6 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 
 	setup(props) {
@@ -257,6 +251,8 @@ export default defineComponent({
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()
 
+		const { updateHeadings } = provideEditorHeadings()
+
 		const { setEditable, updateUser } = useEditorMethods(editor)
 
 		const serialize = isRichEditor
@@ -274,8 +270,6 @@ export default defineComponent({
 		)
 
 		const syncProvider = shallowRef(null)
-
-		const { updateHeadings } = useEditorHeadings()
 
 		return {
 			awareness,
@@ -528,7 +522,7 @@ export default defineComponent({
 			})
 			this.updateUser(session)
 			this.updateHeadings(
-				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
+				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? [],
 			)
 		},
 
@@ -553,7 +547,7 @@ export default defineComponent({
 				markdown: proseMirrorMarkdown,
 			})
 			this.updateHeadings(
-				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
+				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? [],
 			)
 		},
 
@@ -768,10 +762,6 @@ export default defineComponent({
 			}
 
 			return yjsData
-		},
-
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
 		},
 
 		readOnlyToggled() {

@@ -9,11 +9,7 @@ import debounce from 'debounce'
 
 import { useEditor } from '../../composables/useEditor.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import {
-	useOutlineActions,
-	useOutlineStateMixin,
-	useReadOnlyActions,
-} from '../Editor/Wrapper.provider.js'
+import { useReadOnlyActions } from '../Editor/Wrapper.provider.js'
 import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
@@ -22,12 +18,7 @@ import './ActionEntry.scss'
  * @type {import("vue").ComponentOptions} BaseActionEntry
  */
 const BaseActionEntry = {
-	mixins: [
-		useIsMobileMixin,
-		useOutlineActions,
-		useOutlineStateMixin,
-		useReadOnlyActions,
-	],
+	mixins: [useIsMobileMixin, useReadOnlyActions],
 	setup() {
 		const { editor } = useEditor()
 		return { editor }

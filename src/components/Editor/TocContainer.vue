@@ -6,14 +6,14 @@
 <template>
 	<div class="editor__toc-container">
 		<!-- desktop -->
-		<div v-if="isDesktopDisplay" class="editor__toc-content">
+		<div v-if="!isMobile" class="editor__toc-content">
 			<TocOutline
-				v-if="!displayToc"
+				v-if="!displayToc && headings.length > 1"
 				:active-heading-id="activeHeadingId"
 				:headings="headings"
 				@outline-clicked="setDisplayToc(true)" />
 			<TableOfContents
-				v-else
+				v-else-if="displayToc"
 				:active-heading-id="activeHeadingId"
 				:headings="headings"
 				@close="setDisplayToc(false)" />
@@ -35,13 +35,14 @@
 </template>
 
 <script lang="ts">
+import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { defineComponent } from 'vue'
+import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import TableOfContents from './TableOfContents.vue'
 import TocOutline from './TocOutline.vue'
-import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
 
 export default defineComponent({
 	name: 'TocContainer',
@@ -51,9 +52,9 @@ export default defineComponent({
 		TocOutline,
 	},
 	setup() {
-		const { displayToc, headings, setDisplayToc } = useEditorHeadings()
+		const { displayToc, headings } = useEditorHeadings()
 		const isMobile = useIsMobile()
-		return { displayToc, headings, isMobile, setDisplayToc }
+		return { displayToc, headings, isMobile }
 	},
 	data() {
 		return {
@@ -61,11 +62,6 @@ export default defineComponent({
 			visibleHeadingIds: new Set(),
 			activeHeadingId: null,
 		}
-	},
-	computed: {
-		isDesktopDisplay() {
-			return !this.isMobile && this.headings.length > 1
-		},
 	},
 	watch: {
 		headings() {
@@ -119,11 +115,14 @@ export default defineComponent({
 				}
 			})
 			const firstVisible = this.headings.find((heading) =>
-				this.visibleHeadingIds.has(heading.id)
+				this.visibleHeadingIds.has(heading.id),
 			)
 			if (firstVisible) {
 				this.activeHeadingId = firstVisible.id
 			}
+		},
+		setDisplayToc(visible) {
+			emit('text:toc:toggle', { visible })
 		},
 		t,
 	},
