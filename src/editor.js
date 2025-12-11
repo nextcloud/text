@@ -269,3 +269,47 @@ window.OCA.Text.createEditor = async function({
 		.onSearch(onSearch)
 		.render(el)
 }
+
+window.OCA.Text.createTable = async function({
+	// Element to render the editor to
+	el,
+
+	content = '',
+
+	readOnly = false,
+	autofocus = true,
+
+	onCreate = ({ markdown }) => {},
+	onLoaded = () => {},
+	onUpdate = ({ markdown }) => {},
+}) {
+	const { default: PlainTableContentEditor } = await import(
+		'./components/Editor/PlainTableContentEditor.vue'
+	)
+
+	const data = Vue.observable({
+		readOnly,
+		content,
+	})
+
+	const vm = new Vue({
+		data() {
+			return data
+		},
+		render: (h) => {
+			return h(PlainTableContentEditor, {
+				props: {
+					content: data.content,
+					readOnly: data.readOnly,
+					showOutlineOutside: false,
+				},
+			})
+		},
+	})
+
+	return new TextEditorEmbed(vm, data)
+		.onCreate(onCreate)
+		.onLoaded(onLoaded)
+		.onUpdate(onUpdate)
+		.render(el)
+}

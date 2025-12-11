@@ -8,6 +8,7 @@ import Emoji from './Emoji.js'
 import FocusTrap from './FocusTrap.js'
 import UserColor from './UserColor.js'
 import Markdown from './Markdown.js'
+import PlainTable from './PlainTable.js'
 import PlainText from './PlainText.js'
 import RichText from './RichText.js'
 import KeepSyntax from './KeepSyntax.js'
@@ -19,6 +20,7 @@ export {
 	FocusTrap,
 	UserColor,
 	Markdown,
+	PlainTable,
 	PlainText,
 	RichText,
 	KeepSyntax,
