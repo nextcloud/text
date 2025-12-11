@@ -4,10 +4,7 @@
 -->
 
 <template>
-	<Wrapper
-		:content-loaded="true"
-		:show-outline-outside="showOutlineOutside"
-		@outline-toggled="outlineToggled">
+	<Wrapper :content-loaded="true">
 		<MainContainer>
 			<template v-if="showMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -31,9 +28,11 @@ import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { headingAnchorPluginKey } from '../../plugins/headingAnchor.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
@@ -79,10 +78,6 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	emits: ['update:content'],
 
@@ -96,10 +91,14 @@ export default {
 		const editor = new Editor({ extensions })
 
 		const { setEditable, setContent } = useEditorMethods(editor)
+		const { updateHeadings } = provideEditorHeadings()
 		watch(
 			() => props.content,
 			(content) => {
 				setContent(content)
+				updateHeadings(
+					headingAnchorPluginKey.getState(editor.state)?.headings ?? [],
+				)
 			},
 		)
 
@@ -116,8 +115,10 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
+			useTableOfContents: true,
 		})
-		return { editor, setContent }
+
+		return { editor, updateHeadings, setContent }
 	},
 
 	created() {
@@ -125,6 +126,9 @@ export default {
 		// as it may render other vue components such as preview toggle
 		// which breaks the context of the setup function.
 		this.setContent(this.content, { addToHistory: false })
+		this.updateHeadings(
+			headingAnchorPluginKey.getState(this.editor.state)?.headings ?? [],
+		)
 		this.editor.on('create', () => {
 			this.$emit('ready')
 			this.$parent.$emit('ready')
@@ -153,10 +157,6 @@ export default {
 	},
 
 	methods: {
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
-		},
-
 		/**
 		 * Wrapper to emit events on our own and the parent component
 		 *

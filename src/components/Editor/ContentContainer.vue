@@ -4,9 +4,7 @@
 -->
 
 <template>
-	<div
-		data-text-el="editor-content-wrapper"
-		class="editor__content-wrapper">
+	<div data-text-el="editor-content-wrapper" class="editor__content-wrapper">
 		<slot />
 		<FloatingButtons v-if="showFloatingButtons" />
 		<EditorContent
@@ -22,8 +20,8 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import TocContainer from './TocContainer.vue'
 import FloatingButtons from './FloatingButtons.vue'
+import TocContainer from './TocContainer.vue'
 
 export default {
 	name: 'ContentContainer',
@@ -41,8 +39,15 @@ export default {
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { isRichEditor, isRichWorkspace, useTableOfContents } = useEditorFlags()
-		return { editor, isMobile, isRichEditor, isRichWorkspace, useTableOfContents }
+		const { isRichEditor, isRichWorkspace, useTableOfContents } =
+			useEditorFlags()
+		return {
+			editor,
+			isMobile,
+			isRichEditor,
+			isRichWorkspace,
+			useTableOfContents,
+		}
 	},
 	computed: {
 		showFloatingButtons() {

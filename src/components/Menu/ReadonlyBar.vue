@@ -41,10 +41,10 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { OutlineEntries, ReadOnlyEditEntries } from './entries.js'
 
 import { t } from '@nextcloud/l10n'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useMenuEntries } from '../../composables/useMenuEntries.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
@@ -77,16 +77,19 @@ export default defineComponent({
 
 	setup() {
 		const { isRichWorkspace } = useEditorFlags()
+		const { outlineEntries, readOnlyEditEntries } = useMenuEntries()
 		return {
 			isRichWorkspace,
+			outlineEntries,
+			readOnlyEditEntries,
 		}
 	},
 
 	data() {
 		return {
 			entries: this.openReadOnly
-				? [...ReadOnlyEditEntries, ...OutlineEntries]
-				: [...OutlineEntries],
+				? [...this.readOnlyEditEntries, ...this.outlineEntries]
+				: [...this.outlineEntries],
 			isReady: false,
 		}
 	},

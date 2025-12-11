@@ -26,15 +26,23 @@ export const provideEditorFlags = (props: Props) => {
 		loadState('text', 'rich_editing_enabled', true)
 		&& props.mime === 'text/markdown'
 	const useTableOfContents = !isRichWorkspace && isRichEditor
-	provide(editorFlagsKey, { isPublic, isRichEditor, isRichWorkspace, useTableOfContents })
+	provide(editorFlagsKey, {
+		isPublic,
+		isRichEditor,
+		isRichWorkspace,
+		useTableOfContents,
+	})
 	return { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
 }
 export const useEditorFlags = () => {
-	const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } = inject(editorFlagsKey, {
-		isPublic: false,
-		isRichEditor: false,
-		isRichWorkspace: false,
-		useTableOfContents: false,
-	})
+	const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } = inject(
+		editorFlagsKey,
+		{
+			isPublic: false,
+			isRichEditor: false,
+			isRichWorkspace: false,
+			useTableOfContents: false,
+		},
+	)
 	return { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
 }

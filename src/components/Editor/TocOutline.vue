@@ -10,9 +10,9 @@
 			:key="heading.id"
 			class="outline-line"
 			:class="[
-					`level${heading.level}`,
-					{ active: heading.id === activeHeadingId },
-				]" />
+				`level${heading.level}`,
+				{ active: heading.id === activeHeadingId },
+			]" />
 	</a>
 </template>
 
@@ -48,7 +48,9 @@ export default defineComponent({
 	width: 24px;
 	border-radius: 2px;
 	margin-inline-start: 0;
-	transition: background 0.2s, box-shadow 0.2s;
+	transition:
+		background 0.2s,
+		box-shadow 0.2s;
 
 	&.active {
 		background-color: var(--color-main-text);

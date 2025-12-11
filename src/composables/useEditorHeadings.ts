@@ -1,34 +1,64 @@
 /**
- * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { readonly, shallowRef } from 'vue'
+import { emit, subscribe } from '@nextcloud/event-bus'
+import { inject, provide, ref, shallowRef, type InjectionKey, type Ref, type ShallowRef } from 'vue'
 
-type Heading = {
-	id: string,
-	level: number,
-	offset: number,
-	text: string,
-	previous?: number,
+declare module '@nextcloud/event-bus' {
+	export interface NextcloudEvents {
+		'text:toc:toggle': { visible: boolean } | void
+	}
 }
 
-const headings = shallowRef<Heading[]>([])
-const displayToc = shallowRef<boolean>(false)
+export type Heading = {
+	id: string
+	level: number
+	offset: number
+	text: string
+	previous?: number
+}
+
+const headingsKey = Symbol('text:headings') as InjectionKey<ShallowRef<Heading[]>>
+const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boolean>>
+
+export const provideEditorHeadings = () => {
+	const headings = shallowRef<Heading[]>([])
+	const displayToc = ref<boolean>(false)
+	const updateHeadings = (newHeadings: Heading[]) => {
+		// Check length first (performant)
+		if (headings.value.length !== newHeadings.length) {
+			headings.value = newHeadings
+		}
+
+		// Deep comparison if length match
+		const hasChanged = newHeadings.some((heading, index) => {
+			const current = headings.value[index]
+			const keys = Object.keys(heading) as (keyof Heading)[]
+			return keys.some((key) => heading[key] !== current[key])
+		})
+
+		if (hasChanged) {
+			headings.value = newHeadings
+		}
+	}
+	provide(headingsKey, headings)
+	provide(displayTocKey, displayToc)
+	subscribe('text:toc:toggle', (event) => {
+		if (event?.visible !== undefined) {
+			displayToc.value = event.visible
+		} else {
+			displayToc.value = !displayToc.value
+		}
+		emit('text:toc:toggled', displayToc.value)
+	})
+
+	return { displayToc, headings, updateHeadings }
+}
 
 export const useEditorHeadings = () => {
-	const updateHeadings = (newHeadings: Heading[]) => {
-		headings.value = newHeadings
-	}
-
-	const setDisplayToc = (display: boolean) => {
-		displayToc.value = display
-	}
-
-	return {
-		displayToc: readonly(displayToc),
-		headings: readonly(headings),
-		setDisplayToc,
-		updateHeadings,
-	}
+	const headings = inject(headingsKey)
+	const displayToc = inject(displayTocKey)
+	return { displayToc, headings }
 }

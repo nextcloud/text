@@ -5,9 +5,7 @@
 
 <template>
 	<!-- :class="{ '--initial-render': initialRender }" -->
-	<div
-		data-text-el="editor-table-of-contents"
-		class="editor__toc">
+	<div data-text-el="editor-table-of-contents" class="editor__toc">
 		<div v-if="showClose" class="editor__toc-header">
 			<NcButton
 				variant="tertiary"
@@ -28,8 +26,7 @@
 				:class="{
 					active: heading.id === activeHeadingId,
 					[`level${heading.level}`]: true,
-					[`previous${heading.previous}`]:
-						heading.previous > 0,
+					[`previous${heading.previous}`]: heading.previous > 0,
 				}">
 				<a
 					:href="`#${heading.id}`"
@@ -44,8 +41,8 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import CloseIcon from 'vue-material-design-icons/Close.vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
 
 export default {
 	name: 'TableOfContents',

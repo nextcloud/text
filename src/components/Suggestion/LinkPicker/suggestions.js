@@ -12,7 +12,7 @@ import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 import { getIsActive } from '../../Menu/utils.js'
 import createSuggestions from '../suggestions.js'
-import { MenuEntries } from './../../Menu/entries.js'
+import { getMenuEntries } from './../../Menu/entries.ts'
 import LinkPickerList from './LinkPickerList.vue'
 
 const suggestGroupFormat = t('text', 'Formatting')
@@ -40,14 +40,15 @@ const sortImportantFirst = (list) => {
 }
 
 const formattingSuggestions = (query) => {
+	const menuEntries = getMenuEntries(false, false)
 	return sortImportantFirst(
 		[
-			...MenuEntries.find((e) => e.key === 'headings').children,
-			...MenuEntries.find((e) => e.key === 'lists').children,
-			...MenuEntries.filter((e) => e.action && !filterOut(e)),
-			...MenuEntries.find((e) => e.key === 'blocks').children,
+			...menuEntries.find((e) => e.key === 'headings').children,
+			...menuEntries.find((e) => e.key === 'lists').children,
+			...menuEntries.filter((e) => e.action && !filterOut(e)),
+			...menuEntries.find((e) => e.key === 'blocks').children,
 			{
-				...MenuEntries.find((e) => e.key === 'emoji-picker'),
+				...menuEntries.find((e) => e.key === 'emoji-picker'),
 				action: (command) => command.insertContent(':'),
 			},
 		]
