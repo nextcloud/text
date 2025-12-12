@@ -14,46 +14,27 @@
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
-	<div
+	<SourceView
 		v-else
-		id="editor-container"
-		data-text-el="editor-container"
-		class="text-editor source-viewer">
-		<Component
-			:is="readerComponent"
-			:content="content"
-			:file-id="fileid"
-			:read-only="true"
-			:show-menu-bar="false" />
-		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
-			{{ t('text', 'Edit') }}
-			<template #icon>
-				<PencilOutlineIcon />
-			</template>
-		</NcButton>
-	</div>
+		:fileid="fileid"
+		:filename="filename"
+		:mime="mime"
+		:source="source"
+		v-bind="$attrs"
+		@loaded="onLoaded">
+		@edit="toggleEdit">
+	</SourceView>
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
-import { getClient, getRootPath } from '@nextcloud/files/dav'
-import { t } from '@nextcloud/l10n'
 import { getSharingToken } from '@nextcloud/sharing/public'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import Vue from 'vue'
-import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
-import PlainTextReader from './PlainTextReader.vue'
-
 import getEditorInstance from './Editor.singleton.js'
+import SourceView from './SourceView.vue'
 
 export default {
 	name: 'ViewerComponent',
 	components: {
-		NcButton: Vue.extend(NcButton),
-		PencilOutlineIcon: Vue.extend(PencilOutlineIcon),
-		PlainTextReader: Vue.extend(PlainTextReader),
-		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
+		SourceView,
 		Editor: getEditorInstance,
 	},
 	provide() {
@@ -105,7 +86,6 @@ export default {
 	},
 	data() {
 		return {
-			content: '',
 			hasToggledInteractiveEmbedding: false,
 		}
 	},
@@ -121,66 +101,21 @@ export default {
 				&& !this.hasToggledInteractiveEmbedding
 			)
 		},
-
-		isEncrypted() {
-			return this.$attrs.e2EeIsEncrypted || false
-		},
-
-		isMarkdown() {
-			return (
-				this.mime === 'text/markdown' || this.mime === 'text/x-web-markdown'
-			)
-		},
-
-		/** @return {boolean} */
-		readerComponent() {
-			return this.isMarkdown ? MarkdownContentEditor : PlainTextReader
-		},
-	},
-
-	watch: {
-		source() {
-			this.loadFileContent()
-		},
 	},
 
 	mounted() {
-		this.loadFileContent()
+		if (!this.useSourceView) {
+			this.onLoaded()
+		}
 	},
 
 	methods: {
-		async loadFileContent() {
-			if (this.useSourceView) {
-				if (this.isEncrypted) {
-					this.content = await this.fetchDecryptedContent()
-					this.contentLoaded = true
-				} else {
-					const response = await axios.get(this.source)
-					this.content = response.data
-					this.contentLoaded = true
-				}
-			}
+		async onLoaded() {
 			this.$emit('update:loaded', true)
 		},
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
-		},
-		async fetchDecryptedContent() {
-			const client = getClient()
-			const response = await client.getFileContents(
-				`${getRootPath()}${this.filename}`,
-				{ details: true },
-			)
-			const blob = new Blob([response.data], {
-				type: response.headers['content-type'],
-			})
-			const reader = new FileReader()
-			reader.readAsText(blob)
-			return new Promise((resolve) => {
-				reader.onload = () => {
-					resolve(reader.result)
-				}
-			})
+			this.onLoaded()
 		},
 		t,
 	},
@@ -196,23 +131,6 @@ export default {
 	margin: 0 auto;
 	position: relative;
 	background-color: var(--color-main-background);
-
-	&.source-viewer {
-		display: block;
-
-		.text-editor__content-wrapper {
-			margin-top: var(--header-height);
-		}
-
-		.toggle-interactive {
-			position: sticky;
-			bottom: 0;
-			right: 0;
-			z-index: 1;
-			margin-left: auto;
-			margin-right: 0;
-		}
-	}
 
 	&.text-editor--embedding {
 		min-height: 400px;
