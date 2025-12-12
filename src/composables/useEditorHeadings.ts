@@ -28,8 +28,10 @@ export type Heading = {
 	previous?: number
 }
 
-const headingsKey = Symbol('text:headings') as InjectionKey<ShallowRef<Heading[]>>
-const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boolean>>
+export const headingsKey = Symbol('text:headings') as InjectionKey<
+	ShallowRef<Heading[]>
+>
+export const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boolean>>
 
 export const provideEditorHeadings = () => {
 	const headings = shallowRef<Heading[]>([])
