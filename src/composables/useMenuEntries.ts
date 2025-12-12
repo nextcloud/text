@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { computed } from 'vue'
 import { useEditorFlags } from './useEditorFlags'
 import { useEditorHeadings } from './useEditorHeadings'
 import {
@@ -18,8 +19,8 @@ export const useMenuEntries = () => {
 	const { isRichWorkspace } = useEditorFlags()
 
 	const assistantMenuEntries = getAssistantMenuEntries()
-	const menuEntries = getMenuEntries(displayToc?.value ?? false, isRichWorkspace)
-	const outlineEntries = getOutlineEntries(displayToc?.value ?? false)
+	const menuEntries = computed(() => getMenuEntries(displayToc?.value ?? false, isRichWorkspace))
+	const outlineEntries = computed(() => getOutlineEntries(displayToc?.value ?? false))
 
 	return {
 		assistantMenuEntries,
