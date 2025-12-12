@@ -20,7 +20,7 @@ import { inject, watch } from 'vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
-import TocContainer from './Editor/TocContainer.vue'
+import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 
 export default {
 	name: 'BaseReader',

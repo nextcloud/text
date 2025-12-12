@@ -4,8 +4,6 @@
  */
 
 import { computed } from 'vue'
-import { useEditorFlags } from './useEditorFlags'
-import { useEditorHeadings } from './useEditorHeadings'
 import {
 	getAssistantMenuEntries,
 	getMenuEntries,
@@ -13,14 +11,20 @@ import {
 	readOnlyDoneEntries,
 	readOnlyEditEntries,
 } from '../components/Menu/entries'
+import { useEditorFlags } from './useEditorFlags'
+import { useEditorHeadings } from './useEditorHeadings'
 
 export const useMenuEntries = () => {
 	const { displayToc } = useEditorHeadings()
 	const { isRichWorkspace } = useEditorFlags()
 
 	const assistantMenuEntries = getAssistantMenuEntries()
-	const menuEntries = computed(() => getMenuEntries(displayToc?.value ?? false, isRichWorkspace))
-	const outlineEntries = computed(() => getOutlineEntries(displayToc?.value ?? false))
+	const menuEntries = computed(() =>
+		getMenuEntries(displayToc?.value ?? false, isRichWorkspace),
+	)
+	const outlineEntries = computed(() =>
+		getOutlineEntries(displayToc?.value ?? false),
+	)
 
 	return {
 		assistantMenuEntries,

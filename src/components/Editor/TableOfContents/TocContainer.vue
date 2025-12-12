@@ -1,5 +1,5 @@
 <!--
-  - SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -12,43 +12,40 @@
 				:active-heading-id="activeHeadingId"
 				:headings="headings"
 				@outline-clicked="setDisplayToc(true)" />
-			<TableOfContents
-				v-else-if="displayToc"
-				:active-heading-id="activeHeadingId"
-				:headings="headings"
-				@close="setDisplayToc(false)" />
+			<TocDesktop v-else-if="displayToc" @close="setDisplayToc(false)">
+				<TableOfContents
+					:active-heading-id="activeHeadingId"
+					:headings="headings" />
+			</TocDesktop>
 		</div>
 
 		<!-- mobile -->
-		<NcModal
-			v-else-if="isMobile && displayToc"
-			size="full"
-			:name="t('collecitves', 'Table of contents')"
-			@close="setDisplayToc(false)">
+		<TocMobile v-else-if="isMobile && displayToc" @close="setDisplayToc(false)">
 			<TableOfContents
 				:active-heading-id="activeHeadingId"
 				:headings="headings"
 				:show-close="false"
 				@heading-clicked="setDisplayToc(false)" />
-		</NcModal>
+		</TocMobile>
 	</div>
 </template>
 
 <script lang="ts">
 import { emit } from '@nextcloud/event-bus'
-import { t } from '@nextcloud/l10n'
-import NcModal from '@nextcloud/vue/components/NcModal'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { defineComponent } from 'vue'
-import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 import TableOfContents from './TableOfContents.vue'
+import TocDesktop from './TocDesktop.vue'
+import TocMobile from './TocMobile.vue'
 import TocOutline from './TocOutline.vue'
 
 export default defineComponent({
 	name: 'TocContainer',
 	components: {
-		NcModal,
 		TableOfContents,
+		TocDesktop,
+		TocMobile,
 		TocOutline,
 	},
 	setup() {
@@ -124,7 +121,6 @@ export default defineComponent({
 		setDisplayToc(visible) {
 			emit('text:toc:toggle', { visible })
 		},
-		t,
 	},
 })
 </script>
@@ -144,8 +140,9 @@ export default defineComponent({
 
 .editor__toc-content {
 	position: sticky;
-	// Toolbar height + 24px
+	// Toolbar height + 34px
 	top: calc(var(--default-clickable-area) + 9px + 34px);
+	margin-top: calc(var(--default-clickable-area) + 9px + 34px);
 	margin-inline-end: 12px;
 }
 </style>

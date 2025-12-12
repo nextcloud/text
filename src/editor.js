@@ -270,14 +270,16 @@ window.OCA.Text.createEditor = async function ({
 		},
 	})
 
-	return new TextEditorEmbed(vm, data)
-		.onCreate(onCreate)
-		.onLoaded(onLoaded)
-		.onUpdate(onUpdate)
-		.onSearch(onSearch)
-		.onTocToggled(onOutlineToggle)
-		// .onTocToggled(onTocToggle)
-		.render(el)
+	return (
+		new TextEditorEmbed(vm, data)
+			.onCreate(onCreate)
+			.onLoaded(onLoaded)
+			.onUpdate(onUpdate)
+			.onSearch(onSearch)
+			.onTocToggled(onOutlineToggle)
+			// .onTocToggled(onTocToggle)
+			.render(el)
+	)
 }
 
 window.OCA.Text.createTable = async function ({
