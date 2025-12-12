@@ -56,10 +56,14 @@ type ClickContext = {
 	}
 }
 
+type LabelContext = {
+	displayToc: boolean
+}
+
 type MenuEntry =
 	| {
 			key: string
-			label?: string | (() => string)
+			label?: string | ((context: LabelContext) => string)
 			icon?: object
 			forceLabel?: boolean
 			keyChar?: string
@@ -75,14 +79,14 @@ type MenuEntry =
 	  }
 	| undefined
 
-export const getOutlineEntries = (displayToc: boolean): MenuEntry[] => {
+export const outlineEntries = (): MenuEntry[] => {
 	return [
 		{
 			key: 'outline',
 			forceLabel: true,
 			icon: FormatListBulleted,
 			click: () => emit('text:toc:toggle'),
-			label: () => {
+			label: ({ displayToc }) => {
 				return displayToc
 					? t('text', 'Hide outline')
 					: t('text', 'Show outline')
@@ -121,10 +125,7 @@ export const getAssistantMenuEntries = (): MenuEntry[] => {
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 
-export const getMenuEntries = (
-	displayToc: boolean,
-	isRichWorkspace: boolean,
-): MenuEntry[] => {
+export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',
@@ -228,7 +229,7 @@ export const getMenuEntries = (
 					icon: FormatListBulleted,
 					click: () => emit('text:toc:toggle'),
 					visible: !isRichWorkspace,
-					label: () => {
+					label: ({ displayToc }) => {
 						return displayToc
 							? t('text', 'Hide outline')
 							: t('text', 'Show outline')
