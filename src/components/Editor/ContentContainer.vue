@@ -21,7 +21,7 @@ import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import FloatingButtons from './FloatingButtons.vue'
-import TocContainer from './TocContainer.vue'
+import TocContainer from './TableOfContents/TocContainer.vue'
 
 export default {
 	name: 'ContentContainer',
@@ -63,13 +63,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-/*
-.editor__content-wrapper {
-	width: min(calc(var(--text-editor-max-width) + 2 * 48px), 100%);
-	margin: 0 auto;
-}
- */
-
 .editor__content {
 	max-width: var(--text-editor-max-width);
 	margin: 0 auto;

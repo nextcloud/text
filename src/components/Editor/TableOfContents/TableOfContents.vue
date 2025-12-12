@@ -5,51 +5,30 @@
 
 <template>
 	<!-- :class="{ '--initial-render': initialRender }" -->
-	<div data-text-el="editor-table-of-contents" class="editor__toc">
-		<div v-if="showClose" class="editor__toc-header">
-			<NcButton
-				variant="tertiary"
-				size="small"
-				:aria-label="t('text', 'Close table of contents')"
-				@click="$emit('close')">
-				<template #icon>
-					<CloseIcon :size="20" />
-				</template>
-			</NcButton>
-		</div>
-		<ul class="editor__toc-list">
-			<li
-				v-for="heading in headings"
-				:key="heading.id"
-				:data-toc-level="heading.level"
-				class="editor__toc-item"
-				:class="{
-					active: heading.id === activeHeadingId,
-					[`level${heading.level}`]: true,
-					[`previous${heading.previous}`]: heading.previous > 0,
-				}">
-				<a
-					:href="`#${heading.id}`"
-					class="editor__toc__item-link"
-					@click.prevent="goto(heading)">
-					{{ heading.text }}
-				</a>
-			</li>
-		</ul>
-	</div>
+	<ul class="toc-list">
+		<li
+			v-for="heading in headings"
+			:key="heading.id"
+			:data-toc-level="heading.level"
+			class="toc-list__item"
+			:class="{
+				active: heading.id === activeHeadingId,
+				[`level${heading.level}`]: true,
+				[`previous${heading.previous}`]: heading.previous > 0,
+			}">
+			<a
+				:href="`#${heading.id}`"
+				class="toc-list__item-link"
+				@click.prevent="goto(heading)">
+				{{ heading.text }}
+			</a>
+		</li>
+	</ul>
 </template>
 
 <script>
-import { t } from '@nextcloud/l10n'
-import NcButton from '@nextcloud/vue/components/NcButton'
-import CloseIcon from 'vue-material-design-icons/Close.vue'
-
 export default {
 	name: 'TableOfContents',
-	components: {
-		CloseIcon,
-		NcButton,
-	},
 	props: {
 		activeHeadingId: {
 			type: String,
@@ -58,10 +37,6 @@ export default {
 		headings: {
 			type: Array,
 			required: true,
-		},
-		showClose: {
-			type: Boolean,
-			default: true,
 		},
 	},
 	/*
@@ -87,12 +62,11 @@ export default {
 			})
 			this.$emit('heading-clicked')
 		},
-		t,
 	},
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /*
 .--initial-render {
 	.editor__toc {
@@ -104,42 +78,17 @@ export default {
 }
  */
 
-.editor__toc {
-	display: flex;
-	flex-direction: column;
-	overflow-y: auto;
+.toc-list {
+	width: 100%;
+	list-style: none;
+	font-size: 0.9rem;
+	padding: 0;
 
 	--level-padding: 12px;
+	// animation-name: fadeInLeft;
+	// animation-duration: var(--animation-duration);
 
-	padding: 12px;
-	padding-bottom: 24px;
-	width: 200px;
-	// TODO: better max height
-	max-height: calc(100vh * 0.66);
-	background-color: var(--color-main-background);
-	border: 2px solid var(--color-border);
-	border-radius: var(--border-radius-large);
-	// --animation-duration: 0.8s;
-
-	&-header {
-		position: sticky;
-		top: 0;
-		width: 100%;
-		display: flex;
-		justify-content: end;
-	}
-
-	&-list {
-		width: 100%;
-		list-style: none;
-		font-size: 0.9rem;
-		padding: 0;
-
-		// animation-name: fadeInLeft;
-		// animation-duration: var(--animation-duration);
-	}
-
-	&-item {
+	&__item {
 		// transform: translateX(var(--padding-inline-start, 0rem));
 		color: var(--color-text-lighter);
 		overflow: hidden;

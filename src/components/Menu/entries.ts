@@ -47,8 +47,8 @@ import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { type AnyCommands, type Editor } from '@tiptap/core'
-import { MODIFIERS } from './keys.js'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
+import { MODIFIERS } from './keys.js'
 
 type ClickContext = {
 	$readOnlyActions?: {
@@ -121,7 +121,10 @@ export const getAssistantMenuEntries = (): MenuEntry[] => {
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 
-export const getMenuEntries = (displayToc: boolean, isRichWorkspace: boolean): MenuEntry[] => {
+export const getMenuEntries = (
+	displayToc: boolean,
+	isRichWorkspace: boolean,
+): MenuEntry[] => {
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',

@@ -4,7 +4,15 @@
  */
 
 import { emit, subscribe } from '@nextcloud/event-bus'
-import { inject, provide, ref, shallowRef, type InjectionKey, type Ref, type ShallowRef } from 'vue'
+import {
+	inject,
+	provide,
+	ref,
+	shallowRef,
+	type InjectionKey,
+	type Ref,
+	type ShallowRef,
+} from 'vue'
 
 declare module '@nextcloud/event-bus' {
 	export interface NextcloudEvents {
