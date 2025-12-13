@@ -91,7 +91,7 @@ export default {
 		const editor = new Editor({ extensions })
 
 		const { setEditable, setContent } = useEditorMethods(editor)
-		provideEditorHeadings(editor)
+		const { updateHeadings } = provideEditorHeadings(editor)
 		watch(
 			() => props.content,
 			(content) => {
@@ -118,7 +118,7 @@ export default {
 		const { applyEditorWidth } = provideEditorWidth(true)
 		applyEditorWidth()
 
-		return { editor, setContent }
+		return { editor, setContent, updateHeadings }
 	},
 
 	created() {
@@ -126,6 +126,7 @@ export default {
 		// as it may render other vue components such as preview toggle
 		// which breaks the context of the setup function.
 		this.setContent(this.content, { addToHistory: false })
+		this.updateHeadings()
 		this.editor.on('create', () => {
 			this.$emit('ready')
 			this.$parent.$emit('ready')
