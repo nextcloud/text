@@ -28,7 +28,7 @@ import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
 import { UndoRedo } from '@tiptap/extensions'
-import { provide, watch } from 'vue'
+import { provide, watch, onMounted } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
@@ -38,6 +38,8 @@ import AttachmentResolver from '../../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
+import { provideConnection } from '../../composables/useConnection.ts'
+import { provideEditorWidth } from '../../composables/useEditorWidth.ts'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -116,6 +118,20 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
+		})
+
+		const { openConnection } = provideConnection({
+			fileId: props.fileId,
+			relativePath: props.relativePath,
+			shareToken: props.shareToken,
+		})
+
+		const { applyEditorWidth } = provideEditorWidth()
+		onMounted(() => {
+			applyEditorWidth()
+			if (props.fileId) {
+				openConnection().catch(() => {})
+			}
 		})
 		return { editor, setContent }
 	},
