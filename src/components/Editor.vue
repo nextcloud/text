@@ -107,7 +107,6 @@ import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
-import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
@@ -251,7 +250,7 @@ export default defineComponent({
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()
 
-		const { updateHeadings } = provideEditorHeadings()
+		provideEditorHeadings(editor)
 
 		const { setEditable, updateUser } = useEditorMethods(editor)
 
@@ -289,7 +288,6 @@ export default defineComponent({
 			syncProvider,
 			syncService,
 			updateUser,
-			updateHeadings,
 			width,
 			ydoc,
 		}
@@ -521,9 +519,6 @@ export default defineComponent({
 				}
 			})
 			this.updateUser(session)
-			this.updateHeadings(
-				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? [],
-			)
 		},
 
 		onChange({ document }) {
@@ -546,9 +541,6 @@ export default defineComponent({
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
-			this.updateHeadings(
-				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? [],
-			)
 		},
 
 		onSync({ steps, document }) {

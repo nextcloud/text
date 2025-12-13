@@ -48,3 +48,10 @@ Range.prototype.getClientRects = () => ({
 	length: 0,
 	[Symbol.iterator]: vi.fn(),
 })
+
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+	observe() {}
+	unobserve() {}
+	disconnect() {}
+}
