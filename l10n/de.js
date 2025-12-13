@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "In die Zwischenablage kopiert",
     "Could not copy to the clipboard" : "Konnte nicht in die Zwischenablage kopieren",
     "Front matter" : "Titelei",
+    "A table was pasted into a table. Nested tables are not supported." : "Eine Tabelle wurde in eine Tabelle eingefügt. Verschachtelte Tabellen werden nicht unterstützt.",
     "Link to this section" : "Verweis zu diesem Abschnitt",
     "Edit guest name" : "Gast-Namen bearbeiten",
     "Save guest name" : "Gast-Namen speichern",

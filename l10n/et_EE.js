@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Kopeeritud lõikelauale.",
     "Could not copy to the clipboard" : "Kopeerimine lõikelauale ei õnnestunud:",
     "Front matter" : "Kokkuvõte",
+    "A table was pasted into a table. Nested tables are not supported." : "Asestasid tabeli teise tabeli sisse ja selline lahendus pole toetatud.",
     "Link to this section" : "Lisa link sellele lõigule",
     "Edit guest name" : "Muuda külalise nime",
     "Save guest name" : "Salvesta külalise nimi",

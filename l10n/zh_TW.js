@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "已複製到剪貼簿",
     "Could not copy to the clipboard" : "無法複製到剪貼簿",
     "Front matter" : "前言",
+    "A table was pasted into a table. Nested tables are not supported." : "表格被貼上到表格中。不支援巢狀表格。",
     "Link to this section" : "連結至此節",
     "Edit guest name" : "編輯訪客名稱",
     "Save guest name" : "儲存訪客名稱",

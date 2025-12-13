@@ -228,6 +228,7 @@
     "Copied to the clipboard" : "Panoya kopyalandı",
     "Could not copy to the clipboard" : "Panoya kopyalanamadı",
     "Front matter" : "Açılış bölümleri ",
+    "A table was pasted into a table. Nested tables are not supported." : "Bir tablo başka bir tablo içine yapıştırıldı. İç içe geçmiş tablolar desteklenmiyor.",
     "Link to this section" : "Bu bölüm bağlantısı",
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
