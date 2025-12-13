@@ -6,16 +6,16 @@
 import type { Editor } from '@tiptap/core'
 import { mount } from '@vue/test-utils'
 import { expect, test } from 'vitest'
-import { ref, shallowRef, type ShallowRef } from 'vue'
+import { shallowRef, type ShallowRef } from 'vue'
 import TocContainer from '../../../components/Editor/TableOfContents/TocContainer.vue'
 import { editorKey } from '../../../composables/useEditor'
 import {
 	displayTocKey,
 	headingsKey,
+	provideEditorHeadings,
 	type Heading as HeadingType,
 } from '../../../composables/useEditorHeadings'
 import Heading from '../../../nodes/Heading.js'
-import { headingAnchorPluginKey } from '../../../plugins/headingAnchor.js'
 import createCustomEditor from '../../testHelpers/createCustomEditor'
 
 interface TocContainerInstance {
@@ -36,19 +36,14 @@ const headingsForContent = [
 
 const createEditor = (content = '') => createCustomEditor(content, [Heading])
 const mountWithEditor = (editor: Editor, displayToc = false) => {
-	const headingsRef = shallowRef([])
-	const updateHeadings = () => {
-		headingsRef.value =
-			headingAnchorPluginKey.getState(editor.state)?.headings ?? []
-	}
-	updateHeadings()
-	editor.on('update', updateHeadings)
+	const { headings, displayToc: displayTocRef } = provideEditorHeadings(editor)
+	displayTocRef.value = displayToc
 
 	return mount(TocContainer, {
 		provide: {
 			[editorKey as symbol]: shallowRef(editor),
-			[displayTocKey as symbol]: ref(displayToc),
-			[headingsKey as symbol]: headingsRef,
+			[displayTocKey as symbol]: displayTocRef,
+			[headingsKey as symbol]: headings,
 		},
 	})
 }
