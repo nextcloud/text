@@ -22,6 +22,7 @@ import axios from '@nextcloud/axios'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import {
 	computed,
 	inject,
@@ -32,6 +33,7 @@ import {
 	type InjectionKey,
 	type Ref,
 } from 'vue'
+import { useEditorFlags } from './useEditorFlags'
 
 // Keep the current value around when leaving the editor and reopening
 let valueSingleton = loadState('text', 'is_full_width_editor', false)
@@ -83,9 +85,14 @@ export const provideEditorWidth = () => {
 }
 
 export const useEditorWidth = () => {
+	const isMobile = useIsMobile()
+	const { isRichWorkspace } = useEditorFlags()
+
 	// This will be null if the width is already configured outside of text.
 	const isFullWidth = inject(editorWidthKey)
-	if (isFullWidth === null) {
+
+	// Disable if `editorWidthKey` got `null` injected or if in rich workspace or mobile view
+	if (isFullWidth === null || isRichWorkspace || isMobile.value) {
 		return { canToggleWidth: false }
 	}
 	const setFullWidth = (checked: boolean) => {
