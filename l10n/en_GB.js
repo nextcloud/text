@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copied to the clipboard",
     "Could not copy to the clipboard" : "Could not copy to the clipboard",
     "Front matter" : "Front matter",
+    "A table was pasted into a table. Nested tables are not supported." : "A table was pasted into a table. Nested tables are not supported.",
     "Link to this section" : "Link to this section",
     "Edit guest name" : "Edit guest name",
     "Save guest name" : "Save guest name",

@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Cóipeáladh chuig an ngearrthaisce",
     "Could not copy to the clipboard" : "Níorbh fhéidir cóip a dhéanamh chuig an ngearrthaisce",
     "Front matter" : "Ábhar tosaigh",
+    "A table was pasted into a table. Nested tables are not supported." : "Greamaíodh tábla isteach i dtábla. Ní thacaítear le táblaí neadaithe.",
     "Link to this section" : "Nasc leis an alt seo",
     "Edit guest name" : "Cuir ainm an aoi in eagar",
     "Save guest name" : "Sábháil ainm aoi",

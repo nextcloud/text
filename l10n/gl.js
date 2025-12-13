@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copiado no portapapeis",
     "Could not copy to the clipboard" : "Non foi posíbel copiar ao portapapeis",
     "Front matter" : "Preliminar ",
+    "A table was pasted into a table. Nested tables are not supported." : "Foi pegada unha táboa dentro doutra táboa. Non están admitidas as táboas aniñadas.",
     "Link to this section" : "Ligazón a esta sección",
     "Edit guest name" : "Editar o nome do convidado",
     "Save guest name" : "Gardar o nome do convidado",
