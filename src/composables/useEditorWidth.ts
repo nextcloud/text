@@ -44,11 +44,13 @@ export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
 	Readonly<Ref<boolean> | null>
 >
 
-// desktop: leave space for floating buttons and outline (2 * 40px)
+// desktop: leave space for floating buttons and outline (2 * 40px) if necessary
 // wide screen: 80ch content, narrow screen: full width
-const defaultEditorWidthDesktop = 'min(80ch, (100% - 2 * 40px))'
-const defaultEditorWidthMobile = 'min(80ch, 100%)'
-const fullEditorWidthDesktop = 'calc(100% - 2 * 40px)'
+const editorWidthDesktop = 'min(80ch, 100%)'
+const editorWidthDesktopEnhanced = 'min(80ch, (100% - 2 * 40px))'
+const fullEditorWidthDesktop = '100%'
+const fullEditorWidthDesktopEnhanced = 'calc(100% - 2 * 40px)'
+const editorWidthMobile = 'min(80ch, 100%)'
 const fullEditorWidthMobile = '100%'
 
 /**
@@ -70,6 +72,7 @@ function maxWidthSetOutsideOfText() {
 
 export const provideEditorWidth = () => {
 	const isMobile = useIsMobile()
+	const { useTableOfContents } = useEditorFlags()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
 		provide(editorWidthKey, null)
@@ -81,11 +84,17 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
+	const defaultEditorWidthDesktop = useTableOfContents
+		? editorWidthDesktopEnhanced
+		: editorWidthDesktop
+	const defaultFullEditorWidthDesktop = useTableOfContents
+		? fullEditorWidthDesktopEnhanced
+		: fullEditorWidthDesktop
 	const defaultEditorWidth = computed(() =>
-		isMobile.value ? defaultEditorWidthMobile : defaultEditorWidthDesktop,
+		isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop,
 	)
 	const fullEditorWidth = computed(() =>
-		isMobile.value ? fullEditorWidthMobile : fullEditorWidthDesktop,
+		isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop,
 	)
 	const width = computed(() =>
 		isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value,

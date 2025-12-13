@@ -25,7 +25,7 @@ export const provideEditorFlags = (props: Props) => {
 	const isRichEditor =
 		loadState('text', 'rich_editing_enabled', true)
 		&& props.mime === 'text/markdown'
-	const useTableOfContents = !isRichWorkspace && isRichEditor
+	const useTableOfContents = isRichEditor && !isRichWorkspace
 	provide(editorFlagsKey, {
 		isPublic,
 		isRichEditor,
