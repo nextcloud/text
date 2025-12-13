@@ -18,9 +18,7 @@
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
-			:show-outline-outside="showOutlineOutside"
-			@read-only-toggled="readOnlyToggled"
-			@outline-toggled="outlineToggled">
+			@read-only-toggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
 				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
@@ -99,6 +97,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
+import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
@@ -213,10 +212,6 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 
 	setup(props) {
@@ -254,6 +249,8 @@ export default defineComponent({
 
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()
+
+		provideEditorHeadings(editor)
 
 		const { setEditable, updateUser } = useEditorMethods(editor)
 
@@ -759,10 +756,6 @@ export default defineComponent({
 			return yjsData
 		},
 
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
-		},
-
 		readOnlyToggled() {
 			if (this.editMode) {
 				this.saveService.save()
@@ -894,10 +887,6 @@ export default defineComponent({
 		&.draggedOver {
 			background-color: var(--color-primary-element-light);
 		}
-
-		.text-editor__content-wrapper {
-			position: relative;
-		}
 	}
 }
 
@@ -905,11 +894,11 @@ export default defineComponent({
 	width: 50%;
 }
 
-.text-editor__wrapper.has-conflicts > .content-wrapper {
+.text-editor__wrapper.has-conflicts > .editor__content-wrapper {
 	width: 50%;
 
 	#read-only-editor {
-		margin: 0px auto;
+		margin: 0 auto;
 		// Add height of the menubar as padding-top
 		padding-top: calc(
 			var(--default-clickable-area) + 2 * var(--default-grid-baseline)

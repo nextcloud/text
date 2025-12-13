@@ -7,13 +7,10 @@
 
 import debounce from 'debounce'
 
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { useEditor } from '../../composables/useEditor.ts'
-import { useIsMobileMixin } from '../Editor.provider.ts'
-import {
-	useOutlineActions,
-	useOutlineStateMixin,
-	useReadOnlyActions,
-} from '../Editor/Wrapper.provider.js'
+import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
+import { useReadOnlyActions } from '../Editor/Wrapper.provider.js'
 import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
@@ -22,15 +19,12 @@ import './ActionEntry.scss'
  * @type {import("vue").ComponentOptions} BaseActionEntry
  */
 const BaseActionEntry = {
-	mixins: [
-		useIsMobileMixin,
-		useOutlineActions,
-		useOutlineStateMixin,
-		useReadOnlyActions,
-	],
+	mixins: [useReadOnlyActions],
 	setup() {
+		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		return { editor }
+		const { displayToc } = useEditorHeadings()
+		return { displayToc, editor, isMobile }
 	},
 	props: {
 		actionEntry: {
@@ -52,7 +46,9 @@ const BaseActionEntry = {
 		label() {
 			const { label } = this.actionEntry
 
-			return typeof label === 'function' ? label(this) : label
+			return typeof label === 'function'
+				? label({ displayToc: this.displayToc })
+				: label
 		},
 		icon() {
 			return this.actionEntry.icon
@@ -61,10 +57,10 @@ const BaseActionEntry = {
 			return getKeyshortcuts(this.actionEntry)
 		},
 		tooltip() {
-			return [this.label, getKeys(this.$isMobile, this.actionEntry)].join(' ')
+			return [this.label, getKeys(this.isMobile, this.actionEntry)].join(' ')
 		},
 		listItemTooltip() {
-			return [getKeys(this.$isMobile, this.actionEntry)].join(' ')
+			return [getKeys(this.isMobile, this.actionEntry)].join(' ')
 		},
 	},
 	watch: {

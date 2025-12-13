@@ -292,7 +292,7 @@ export default {
 	overflow: visible !important;
 }
 
-#rich-workspace:deep(.content-wrapper) {
+#rich-workspace:deep(.editor__content-wrapper) {
 	overflow: scroll !important;
 	max-height: calc(40vh - 50px);
 	padding-left: 10px;

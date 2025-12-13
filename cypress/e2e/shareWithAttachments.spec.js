@@ -92,8 +92,8 @@ describe('Public Share with attachments', () => {
 
 	it('open attached files in folder description', function () {
 		cy.visit(`/s/${this.token}`)
-		cy.get('.content-wrapper').should('exist')
-		cy.get('.content-wrapper .name', { timeout: 10_000 }).click()
+		cy.get('.editor__content-wrapper').should('exist')
+		cy.get('.editor__content-wrapper .name', { timeout: 10_000 }).click()
 		cy.get('.viewer').should('exist')
 		cy.get('.language-plaintext').should('contain', 'multiple lines')
 	})

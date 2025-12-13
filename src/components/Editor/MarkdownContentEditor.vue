@@ -4,10 +4,7 @@
 -->
 
 <template>
-	<Wrapper
-		:content-loaded="true"
-		:show-outline-outside="showOutlineOutside"
-		@outline-toggled="outlineToggled">
+	<Wrapper :content-loaded="true">
 		<MainContainer>
 			<template v-if="showMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -31,6 +28,7 @@ import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
@@ -79,10 +77,6 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	emits: ['update:content'],
 
@@ -96,6 +90,7 @@ export default {
 		const editor = new Editor({ extensions })
 
 		const { setEditable, setContent } = useEditorMethods(editor)
+		provideEditorHeadings(editor)
 		watch(
 			() => props.content,
 			(content) => {
@@ -116,7 +111,9 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
+			useTableOfContents: true,
 		})
+
 		return { editor, setContent }
 	},
 
@@ -153,10 +150,6 @@ export default {
 	},
 
 	methods: {
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
-		},
-
 		/**
 		 * Wrapper to emit events on our own and the parent component
 		 *

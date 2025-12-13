@@ -7,3 +7,8 @@ declare module '*?raw' {
 	const content: string
 	export default content
 }
+
+declare module '@nextcloud/vue/composables/useIsMobile' {
+	import { Ref } from 'vue'
+	export function useIsMobile(): Ref<boolean>
+}
