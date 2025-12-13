@@ -30,6 +30,7 @@ import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { provideEditorWidth } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
@@ -106,13 +107,16 @@ export default {
 			},
 		)
 
-		provideEditor(editor)
 		provide(editorFlagsKey, {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
 			useTableOfContents: true,
 		})
+		provideEditor(editor)
+
+		const { applyEditorWidth } = provideEditorWidth(true)
+		applyEditorWidth()
 
 		return { editor, setContent }
 	},

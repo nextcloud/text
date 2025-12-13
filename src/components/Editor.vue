@@ -225,7 +225,8 @@ export default defineComponent({
 		const awareness = new Awareness(ydoc)
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
+		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
+			provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
@@ -247,7 +248,7 @@ export default defineComponent({
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)
 
-		const { applyEditorWidth } = provideEditorWidth()
+		const { applyEditorWidth } = provideEditorWidth(useTableOfContents)
 		applyEditorWidth()
 
 		provideEditorHeadings(editor)

@@ -70,9 +70,8 @@ function maxWidthSetOutsideOfText() {
 	return Boolean(alreadySet) && alreadySet !== setByText
 }
 
-export const provideEditorWidth = () => {
+export const provideEditorWidth = (useTableOfContents = true) => {
 	const isMobile = useIsMobile()
-	const { useTableOfContents } = useEditorFlags()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
 		provide(editorWidthKey, null)
