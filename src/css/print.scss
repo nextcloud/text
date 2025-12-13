@@ -65,8 +65,12 @@
 			// Margins set by page rule
 			max-width: 100%;
 		}
-		.editor__outline {
-			// Hide outline
+		.floating-buttons {
+			// Hide floating buttons
+			display: none !important;
+		}
+		.editor__toc-container {
+			// Hide outline + table of contents
 			display: none !important;
 		}
 		.text-editor__wrapper {
