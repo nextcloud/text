@@ -228,6 +228,7 @@
     "Copied to the clipboard" : "Скопійовано в буфер обміну",
     "Could not copy to the clipboard" : "Не вдалося скопіювати до буферу обміну",
     "Front matter" : "Передня справа",
+    "A table was pasted into a table. Nested tables are not supported." : "Таблицю було вставлено до іншої таблиці. Вкладені таблиці не підтримуються.",
     "Link to this section" : "Посилання на цей розділ",
     "Edit guest name" : "Редагувати ім'я гостя",
     "Save guest name" : "Зберегти ім'я гостя",

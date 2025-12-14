@@ -22,6 +22,7 @@ OC.L10N.register(
     "Save" : "Sekles",
     "Translate" : "Suqel",
     "Nextcloud Assistant" : "Amallal n Nextcloud",
+    "Delete task" : "Kkes tawuri",
     "_%n word_::_%n words_" : ["%n n wawal","%n n wawalen"],
     "_%n char_::_%n chars_" : ["%n n usekkil","%n n isekkilen"],
     "Translate from {language}" : "Suqel seg {language}",
