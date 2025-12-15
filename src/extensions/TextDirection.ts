@@ -78,8 +78,6 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 			)
 			const changes = getChangedRanges(transform)
 
-			tr.setMeta('addToHistory', false)
-
 			changes.forEach(({ newRange }) => {
 				const nodes = findChildrenInRange(newState.doc, newRange, (node) =>
 					types.includes(node.type.name),
