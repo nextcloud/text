@@ -34,9 +34,7 @@ jobs:
         with:
           persist-credentials: false
           repository: nextcloud/server
-          # TODO: revert after viewer is fixed with latest server and `@nextcloud/files` v4.x
-          #ref: ${{ matrix.server-versions }}
-          ref: 282341a8d67b552a89768a1f91c1efe59b6ae254
+          ref: ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
