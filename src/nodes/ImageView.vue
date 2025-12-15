@@ -13,7 +13,7 @@
 			<div v-if="canDisplayImage"
 				v-click-outside="() => showIcons = false"
 				class="image__view"
-				@mouseover="showIcons = true"
+				@mouseenter="showIcons = true"
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<template v-if="!failed">
