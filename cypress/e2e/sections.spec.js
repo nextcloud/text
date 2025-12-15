@@ -8,7 +8,7 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 const fileName = 'empty.md'
 
-const clickOutline = () => {
+const clickMenubarTableOfContents = () => {
 	cy.getActionEntry('headings').click()
 
 	cy.get('.v-popper__wrapper .open').getActionEntry('outline').click()
@@ -107,7 +107,7 @@ describe('Content Sections', () => {
 	})
 
 	describe('Table of Contents', () => {
-		it('sidebar toc', () => {
+		it('toc via sidebar', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
 			cy.getContent().type(
@@ -115,9 +115,9 @@ describe('Content Sections', () => {
 			)
 			cy.closeFile()
 				.then(() => cy.openFile(fileName, { force: true }))
-				.then(clickOutline)
+				.then(clickMenubarTableOfContents)
 
-			cy.getOutline().find('header').should('exist')
+			cy.getTOC().find('.editor__toc-header').should('exist')
 
 			cy.getTOC().find('ul li').should('have.length', 6)
 			cy.getTOC()
@@ -134,11 +134,30 @@ describe('Content Sections', () => {
 				})
 		})
 
+		it('outline', () => {
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
+			cy.getContent().type('# T1 \n')
+
+			// No outline with one heading
+			cy.getOutline().should('not.exist')
+
+			cy.getContent().type('## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
+
+			// Open table of contents via outline
+			cy.getOutline().should('exist').click()
+
+			cy.getTOC().find('.editor__toc-header').should('exist')
+			cy.getTOC().find('ul li').should('have.length', 6)
+		})
+
 		it('empty toc', () => {
 			cy.visitTestFolder()
-			cy.openFile(fileName, { force: true }).then(clickOutline)
+			cy.openFile(fileName, { force: true })
+			// No outline without headings
+			cy.getOutline().should('not.exist').then(clickMenubarTableOfContents)
 
-			cy.getOutline().find('ul').should('be.empty')
+			cy.getTOC().find('ul').should('be.empty')
 		})
 	})
 })

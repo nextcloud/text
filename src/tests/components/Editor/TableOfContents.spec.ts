@@ -56,10 +56,18 @@ test('renders nothing for editor without headings', () => {
 	editor.destroy()
 })
 
+test('renders nothing for editor with just one heading', () => {
+	const editor = createEditor('# Heading 1')
+	const wrapper = mountWithEditor(editor)
+	expect(wrapper.find('[data-text-el="editor-outline"]').exists()).toBe(false)
+	expect(wrapper.text()).toEqual('')
+	editor.destroy()
+})
+
 test('renders outline with two headings', async () => {
 	const editor = createEditor(content)
 	const wrapper = mountWithEditor(editor)
-	expect(wrapper.find('.editor__toc-outline').exists()).toBe(true)
+	expect(wrapper.find('[data-text-el="editor-outline"]').exists()).toBe(true)
 	expect((wrapper.vm as unknown as TocContainerInstance).headings).toEqual(
 		headingsForContent,
 	)

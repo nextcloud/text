@@ -5,6 +5,7 @@
 
 <template>
 	<a
+		data-text-el="editor-outline"
 		class="editor__toc-outline"
 		@mouseenter="$emit('show-toc')"
 		@click="$emit('show-toc')"
