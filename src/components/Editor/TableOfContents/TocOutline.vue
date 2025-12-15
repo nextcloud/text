@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<a class="editor__toc-outline" @click="$emit('outline-clicked')">
+	<a
+		class="editor__toc-outline"
+		@mouseenter="$emit('show-toc')"
+		@click="$emit('show-toc')"
+		@keydown.enter="$emit('show-toc')">
 		<div
 			v-for="heading in headings"
 			:key="heading.id"

@@ -4,15 +4,20 @@
 -->
 
 <template>
-	<div data-text-el="editor-table-of-contents" class="editor__toc">
+	<div
+		data-text-el="editor-table-of-contents"
+		class="editor__toc"
+		@mouseleave="onMouseleave">
 		<div class="editor__toc-header">
 			<NcButton
 				variant="tertiary"
 				size="small"
-				:aria-label="t('text', 'Close table of contents')"
-				@click="$emit('close')">
+				:title="buttonTitle"
+				:aria-label="buttonTitle"
+				@click="onButtonClick">
 				<template #icon>
-					<CloseIcon :size="20" />
+					<CloseIcon v-if="keep" :size="20" />
+					<PinOutlineIcon v-else :size="20" />
 				</template>
 			</NcButton>
 		</div>
@@ -21,18 +26,50 @@
 </template>
 
 <script lang="ts">
+import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { defineComponent } from 'vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
+import PinOutlineIcon from 'vue-material-design-icons/PinOutline.vue'
 
 export default defineComponent({
 	name: 'TocDesktop',
 	components: {
 		CloseIcon,
+		PinOutlineIcon,
 		NcButton,
 	},
+	data() {
+		return {
+			keep: false,
+		}
+	},
+	computed: {
+		buttonTitle() {
+			return this.keep
+				? t('text', 'Close table of contents')
+				: t('text', 'Pin table of contents')
+		},
+	},
 	methods: {
+		onMouseleave() {
+			if (!this.keep) {
+				this.$emit('close')
+			}
+		},
+		onButtonClick() {
+			if (this.keep) {
+				this.keep = false
+				this.$emit('close')
+			} else {
+				this.keep = true
+			}
+
+			if (this.$file?.fileId) {
+				emit('text:toc:pin', { fileId: this.$file.fileId, keep: this.keep })
+			}
+		},
 		t,
 	},
 })

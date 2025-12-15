@@ -11,7 +11,7 @@
 				v-if="!displayToc && headings.length > 1"
 				:active-heading-id="activeHeadingId"
 				:headings="headings"
-				@outline-clicked="setDisplayToc(true)" />
+				@show-toc="setDisplayToc(true)" />
 			<TocDesktop v-else-if="displayToc" @close="setDisplayToc(false)">
 				<TableOfContents
 					:active-heading-id="activeHeadingId"

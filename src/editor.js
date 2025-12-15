@@ -68,6 +68,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	onTocPin(onTocPinCallback = () => {}) {
+		subscribe('text:toc:pin', onTocPinCallback)
+		return this
+	}
+
 	render(el) {
 		el.innerHTML = ''
 		const element = document.createElement('div')
@@ -190,6 +195,7 @@ window.OCA.Text.createEditor = async function ({
 	onUpdate = ({ markdown }) => {},
 	onTocToggle = (visible) => {},
 	onOutlineToggle = (visible) => {}, // deprecated, use `onTocToggle`
+	onTocPin = (fileId, keep) => {},
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
@@ -270,16 +276,15 @@ window.OCA.Text.createEditor = async function ({
 		},
 	})
 
-	return (
-		new TextEditorEmbed(vm, data)
-			.onCreate(onCreate)
-			.onLoaded(onLoaded)
-			.onUpdate(onUpdate)
-			.onSearch(onSearch)
-			.onTocToggled(onOutlineToggle)
-			// .onTocToggled(onTocToggle)
-			.render(el)
-	)
+	return new TextEditorEmbed(vm, data)
+		.onCreate(onCreate)
+		.onLoaded(onLoaded)
+		.onUpdate(onUpdate)
+		.onSearch(onSearch)
+		.onTocToggled(onOutlineToggle)
+		.onTocToggled(onTocToggle)
+		.onTocPin(onTocPin)
+		.render(el)
 }
 
 window.OCA.Text.createTable = async function ({
