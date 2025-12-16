@@ -123,24 +123,10 @@ export default {
 			}
 		}
 
-		&.level2 {
-			--padding-inline-start: calc(1 * var(--level-padding));
-		}
-
-		&.level3 {
-			--padding-inline-start: calc(2 * var(--level-padding));
-		}
-
-		&.level4 {
-			--padding-inline-start: calc(3 * var(--level-padding));
-		}
-
-		&.level5 {
-			--padding-inline-start: calc(4 * var(--level-padding));
-		}
-
-		&.level6 {
-			--padding-inline-start: calc(5 * var(--level-padding));
+		@for $i from 2 through 6 {
+			&.level#{$i} {
+				--padding-inline-start: calc(#{$i - 1} * var(--level-padding));
+			}
 		}
 
 		&.previous1 {
