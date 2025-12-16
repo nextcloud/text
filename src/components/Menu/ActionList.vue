@@ -41,7 +41,6 @@ import { t } from '@nextcloud/l10n'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import debounce from 'debounce'
-import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import ActionListItem from './ActionListItem.vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -55,7 +54,7 @@ export default {
 		ActionListItem,
 	},
 	extends: BaseActionEntry,
-	mixins: [useOutlineStateMixin, useMenuIDMixin],
+	mixins: [useMenuIDMixin],
 	props: {
 		forceEnabled: {
 			type: Boolean,

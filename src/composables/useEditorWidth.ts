@@ -44,6 +44,15 @@ export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
 	Readonly<Ref<boolean> | null>
 >
 
+// desktop: leave space for floating buttons and outline (2 * 40px) if necessary
+// wide screen: 80ch content, narrow screen: full width
+const editorWidthDesktop = 'min(80ch, 100%)'
+const editorWidthDesktopEnhanced = 'min(80ch, (100% - 2 * 40px))'
+const fullEditorWidthDesktop = '100%'
+const fullEditorWidthDesktopEnhanced = 'calc(100% - 2 * 40px)'
+const editorWidthMobile = 'min(80ch, 100%)'
+const fullEditorWidthMobile = '100%'
+
 /**
  * Detect if other apps (such as collectives) already configured texts max width.
  *
@@ -61,7 +70,8 @@ function maxWidthSetOutsideOfText() {
 	return Boolean(alreadySet) && alreadySet !== setByText
 }
 
-export const provideEditorWidth = () => {
+export const provideEditorWidth = (useTableOfContents = true) => {
+	const isMobile = useIsMobile()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
 		provide(editorWidthKey, null)
@@ -73,7 +83,21 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const width = computed(() => (isFullWidth.value ? '100%' : '80ch'))
+	const defaultEditorWidthDesktop = useTableOfContents
+		? editorWidthDesktopEnhanced
+		: editorWidthDesktop
+	const defaultFullEditorWidthDesktop = useTableOfContents
+		? fullEditorWidthDesktopEnhanced
+		: fullEditorWidthDesktop
+	const defaultEditorWidth = computed(() =>
+		isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop,
+	)
+	const fullEditorWidth = computed(() =>
+		isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop,
+	)
+	const width = computed(() =>
+		isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value,
+	)
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',

@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true" :show-outline-outside="false">
+	<Wrapper :content-loaded="true">
 		<MainContainer>
 			<ContentContainer :read-only="readOnly" />
 		</MainContainer>
@@ -68,6 +68,7 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
+			useTableOfContents: false,
 		})
 		provide(editorWidthKey, null)
 		provide(EDITOR_UPLOAD, false)

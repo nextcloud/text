@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { subscribe } from '@nextcloud/event-bus'
+import { emit, subscribe } from '@nextcloud/event-bus'
 import Vue from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
@@ -17,7 +17,7 @@ import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-const apiVersion = '1.2'
+const apiVersion = '1.3'
 
 window.OCA.Text = {
 	...window.OCA.Text,
@@ -58,15 +58,18 @@ class TextEditorEmbed {
 		return this
 	}
 
-	onOutlineToggle(onOutlineToggleCallback = () => {}) {
-		this.#vm.$on('outline-toggled', (visible) => {
-			onOutlineToggleCallback(visible)
-		})
+	onSearch(onSearchCallback = () => {}) {
+		subscribe('text:editor:search-results', onSearchCallback)
 		return this
 	}
 
-	onSearch(onSearchCallback = () => {}) {
-		subscribe('text:editor:search-results', onSearchCallback)
+	onTocToggle(onTocToggleCallback = () => {}) {
+		subscribe('text:toc:toggled', onTocToggleCallback)
+		return this
+	}
+
+	onTocPin(onTocPinCallback = () => {}) {
+		subscribe('text:toc:pin', onTocPinCallback)
 		return this
 	}
 
@@ -111,7 +114,7 @@ class TextEditorEmbed {
 	}
 
 	setShowOutline(value) {
-		this.#vm.$set(this.#data, 'showOutlineOutside', value)
+		emit('text:toc:toggle', { visible: value })
 		return this
 	}
 
@@ -190,7 +193,9 @@ window.OCA.Text.createEditor = async function ({
 	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
-	onOutlineToggle = (visible) => {},
+	onTocToggle = (visible) => {},
+	onOutlineToggle = (visible) => {}, // deprecated, use `onTocToggle`
+	onTocPin = (fileId, keep) => {},
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
@@ -203,7 +208,6 @@ window.OCA.Text.createEditor = async function ({
 	const { default: Editor } = await import('./components/Editor.vue')
 
 	const data = Vue.observable({
-		showOutlineOutside: false,
 		readonlyBarProps: readonlyBar.props,
 		readOnly,
 		content,
@@ -256,7 +260,6 @@ window.OCA.Text.createEditor = async function ({
 							mime: 'text/markdown',
 							active: true,
 							autofocus,
-							showOutlineOutside: data.showOutlineOutside,
 						},
 						scopedSlots,
 					})
@@ -267,18 +270,20 @@ window.OCA.Text.createEditor = async function ({
 							relativePath: filePath,
 							shareToken,
 							readOnly: data.readOnly,
-							showOutlineOutside: data.showOutlineOutside,
 						},
 						scopedSlots,
 					})
 		},
 	})
+
 	return new TextEditorEmbed(vm, data)
 		.onCreate(onCreate)
 		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
-		.onOutlineToggle(onOutlineToggle)
 		.onSearch(onSearch)
+		.onTocToggle(onOutlineToggle)
+		.onTocToggle(onTocToggle)
+		.onTocPin(onTocPin)
 		.render(el)
 }
 
@@ -313,7 +318,6 @@ window.OCA.Text.createTable = async function ({
 				props: {
 					content: data.content,
 					readOnly: data.readOnly,
-					showOutlineOutside: false,
 				},
 			})
 		},

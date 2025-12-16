@@ -45,7 +45,7 @@ describe('Open test.md in viewer', function () {
 					.getActionEntry('outline')
 					.click()
 
-				cy.getOutline().find('header').should('exist')
+				cy.getTOC().find('.editor__toc-header').should('exist')
 			})
 	})
 

@@ -72,6 +72,7 @@ import { ref } from 'vue'
 import { t } from '@nextcloud/l10n'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useMenuEntries } from '../../composables/useMenuEntries.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 import HelpModal from '../HelpModal.vue'
 import { DotsHorizontal } from '../icons.js'
@@ -79,7 +80,6 @@ import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
-import { AssistantMenuEntries, MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
 import WidthToggle from './WidthToggle.vue'
@@ -122,18 +122,30 @@ export default {
 	setup() {
 		const editor = useEditor()
 		const { isPublic, isRichEditor, isRichWorkspace } = useEditorFlags()
+		const { assistantMenuEntries, menuEntries, readOnlyDoneEntries } =
+			useMenuEntries()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { editor, isPublic, isRichEditor, isRichWorkspace, menubar, width }
+		return {
+			assistantMenuEntries,
+			editor,
+			isPublic,
+			isRichEditor,
+			isRichWorkspace,
+			menubar,
+			menuEntries,
+			readOnlyDoneEntries,
+			width,
+		}
 	},
 
 	data() {
 		return {
 			entries: (this.openReadOnly
-				? [...ReadOnlyDoneEntries, ...MenuEntries]
+				? [...this.readOnlyDoneEntries, ...this.menuEntries]
 				: this.isPublic || this.isRichWorkspace
-					? [...MenuEntries]
-					: [...MenuEntries, ...AssistantMenuEntries]
+					? [...this.menuEntries]
+					: [...this.menuEntries, ...this.assistantMenuEntries]
 			).filter((entry) => !!entry),
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
@@ -259,7 +271,7 @@ export default {
 
 	&.text-menubar--ready:not(.text-menubar--hide) {
 		visibility: visible;
-		animation-name: fadeInDown;
+		animation-name: fadeInRight;
 		animation-duration: 0.3s;
 	}
 

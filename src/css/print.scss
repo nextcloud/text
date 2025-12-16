@@ -61,11 +61,17 @@
 			// Hide table buttons
 			display: none !important;
 		}
-		.content-wrapper .editor__content {
-			// Prevent cut lines (due to `display: grid`)
-			display: block;
+		.editor__content-wrapper .editor__content {
 			// Margins set by page rule
 			max-width: 100%;
+		}
+		.floating-buttons {
+			// Hide floating buttons
+			display: none !important;
+		}
+		.editor__toc-container {
+			// Hide outline + table of contents
+			display: none !important;
 		}
 		.text-editor__wrapper {
 			height: fit-content;
@@ -119,22 +125,6 @@
 
 	.menubar-placeholder {
 		display: none;
-	}
-
-	.text-editor__content-wrapper {
-		&.--show-outline {
-			display: block;
-		}
-
-		.editor--outline {
-			width: auto;
-			height: auto;
-			overflow: unset;
-			position: relative;
-		}
-		.editor--outline__btn-close {
-			display: none;
-		}
 	}
 
 	.collaboration-carets__caret,
