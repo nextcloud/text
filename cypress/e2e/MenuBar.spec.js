@@ -63,14 +63,14 @@ describe('Test the rich text editor menu bar', function () {
 
 		it('applys default', function () {
 			cy.openTestFile()
-			cy.get('@maxWidth').should('equal', '80ch')
+			cy.get('@maxWidth').should('equal', 'min(80ch, (100% - 2 * 40px))')
 		})
 
 		it('toggles value', function () {
 			cy.openTestFile()
 			cy.getActionEntry('remain').click()
 			cy.contains('Full width editor').click()
-			cy.get('@maxWidth').should('equal', '100%')
+			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
 		it('preserves on reopen', function () {
@@ -79,7 +79,7 @@ describe('Test the rich text editor menu bar', function () {
 			cy.contains('Full width editor').click()
 			cy.closeFile()
 			cy.openTestFile()
-			cy.get('@maxWidth').should('equal', '100%')
+			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
 		it('preserves on reload', function () {
@@ -88,7 +88,7 @@ describe('Test the rich text editor menu bar', function () {
 			cy.contains('Full width editor').click()
 			cy.visit('/apps/files')
 			cy.openTestFile()
-			cy.get('@maxWidth').should('equal', '100%')
+			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
 		it('does not interfere if width is already set', function () {
