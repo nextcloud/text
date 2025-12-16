@@ -230,6 +230,7 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copiato negli appunti",
     "Could not copy to the clipboard" : "Impossibile copiare negli appunti",
     "Front matter" : "Frontespizio",
+    "A table was pasted into a table. Nested tables are not supported." : "Una tabella è stata incollata in un'altra tabella. Le tabelle nidificate non sono supportate.",
     "Link to this section" : "Collegamento a questa sezione",
     "Edit guest name" : "Modifica nome ospite",
     "Save guest name" : "Salva nome ospite",
