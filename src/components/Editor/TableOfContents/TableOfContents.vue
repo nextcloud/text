@@ -4,7 +4,6 @@
 -->
 
 <template>
-	<!-- :class="{ '--initial-render': initialRender }" -->
 	<ul class="toc-list">
 		<li
 			v-for="heading in headings"
@@ -39,16 +38,6 @@ export default {
 			required: true,
 		},
 	},
-	/*
-	data: () => ({
-		initialRender: true,
-	}),
-	mounted() {
-		setTimeout(() => {
-			this.initialRender = false
-		}, 1000)
-	},
-	 */
 	methods: {
 		goto(heading) {
 			const el = this.$root.$el.querySelector(`#${heading.id}`)
@@ -67,17 +56,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/*
-.--initial-render {
-	.editor__toc {
-		&-item {
-			--initial-padding-inline-start: 0;
-			animation: initialPadding 1.5s;
-		}
-	}
-}
- */
-
 .toc-list {
 	width: 100%;
 	list-style: none;
@@ -85,17 +63,13 @@ export default {
 	padding: 0;
 
 	--level-padding: 12px;
-	// animation-name: fadeInLeft;
-	// animation-duration: var(--animation-duration);
 
 	&__item {
-		// transform: translateX(var(--padding-inline-start, 0rem));
 		color: var(--color-text-lighter);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		padding-inline-start: var(--padding-inline-start);
-		// animation: initialPadding calc(var(--animation-duration) * 2);
 
 		a {
 			color: var(--color-text-lighter);
@@ -128,42 +102,6 @@ export default {
 				--padding-inline-start: calc(#{$i - 1} * var(--level-padding));
 			}
 		}
-
-		&.previous1 {
-			--initial-padding-inline-start: calc(0 * var(--level-padding));
-		}
-
-		&.previous2 {
-			--initial-padding-inline-start: calc(1 * var(--level-padding));
-		}
-
-		&.previous3 {
-			--initial-padding-inline-start: calc(2 * var(--level-padding));
-		}
-
-		&.previous4 {
-			--initial-padding-inline-start: calc(3 * var(--level-padding));
-		}
-
-		&.previous5 {
-			--initial-padding-inline-start: calc(4 * var(--level-padding));
-		}
-
-		&.previous6 {
-			--initial-padding-inline-start: calc(5 * var(--level-padding));
-		}
 	}
 }
-
-/**
-@keyframes initialPadding {
-	from {
-		transform: translateX(var(--initial-padding-inline-start, initial));
-	}
-
-	to {
-		transform: translateX(var(--padding-inline-start, 0rem));
-	}
-}
- */
 </style>

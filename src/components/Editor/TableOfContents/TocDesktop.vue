@@ -7,7 +7,9 @@
 	<div
 		data-text-el="editor-table-of-contents"
 		class="editor__toc"
-		@mouseleave="onMouseleave">
+		:class="{ 'editor__toc-closing': isClosing }"
+		@mouseleave="onMouseleave"
+		@animationend="onAnimationend">
 		<div class="editor__toc-header">
 			<NcButton
 				variant="tertiary"
@@ -43,6 +45,7 @@ export default defineComponent({
 	data() {
 		return {
 			keep: false,
+			isClosing: false,
 		}
 	},
 	computed: {
@@ -55,13 +58,19 @@ export default defineComponent({
 	methods: {
 		onMouseleave() {
 			if (!this.keep) {
+				this.close()
+			}
+		},
+		onAnimationend(event) {
+			if (event.animationName === 'fadeOutRight' && this.isClosing) {
+				this.isClosing = false
 				this.$emit('close')
 			}
 		},
 		onButtonClick() {
 			if (this.keep) {
 				this.keep = false
-				this.$emit('close')
+				this.close()
 			} else {
 				this.keep = true
 			}
@@ -69,6 +78,9 @@ export default defineComponent({
 			if (this.$file?.fileId) {
 				emit('text:toc:pin', { fileId: this.$file.fileId, keep: this.keep })
 			}
+		},
+		close() {
+			this.isClosing = true
 		},
 		t,
 	},
@@ -80,6 +92,8 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
+	animation-name: fadeInRight;
+	animation-duration: var(--animation-slow);
 
 	padding: 12px;
 	padding-bottom: 24px;
@@ -89,7 +103,10 @@ export default defineComponent({
 	background-color: var(--color-main-background);
 	border: 2px solid var(--color-border);
 	border-radius: var(--border-radius-large);
-	// --animation-duration: 0.8s;
+
+	&-closing {
+		animation-name: fadeOutRight;
+	}
 
 	&-header {
 		position: sticky;

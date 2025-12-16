@@ -271,7 +271,7 @@ export default {
 
 	&.text-menubar--ready:not(.text-menubar--hide) {
 		visibility: visible;
-		animation-name: fadeInDown;
+		animation-name: fadeInRight;
 		animation-duration: 0.3s;
 	}
 
