@@ -63,8 +63,8 @@ class TextEditorEmbed {
 		return this
 	}
 
-	onTocToggled(onTocToggledCallback = () => {}) {
-		subscribe('text:toc:toggled', onTocToggledCallback)
+	onTocToggle(onTocToggleCallback = () => {}) {
+		subscribe('text:toc:toggled', onTocToggleCallback)
 		return this
 	}
 
@@ -281,8 +281,8 @@ window.OCA.Text.createEditor = async function ({
 		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
 		.onSearch(onSearch)
-		.onTocToggled(onOutlineToggle)
-		.onTocToggled(onTocToggle)
+		.onTocToggle(onOutlineToggle)
+		.onTocToggle(onTocToggle)
 		.onTocPin(onTocPin)
 		.render(el)
 }
