@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
-import { common, createLowlight } from 'lowlight'
-
 /* eslint-disable import/no-named-as-default */
 import Blockquote from '@tiptap/extension-blockquote'
 import Code from '@tiptap/extension-code'
 import Document from '@tiptap/extension-document'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import { ListItem } from '@tiptap/extension-list'
+import Placeholder from '@tiptap/extension-placeholder'
 import Text from '@tiptap/extension-text'
+/* eslint-enable import/no-named-as-default */
 import { CharacterCount, Dropcursor, Gapcursor } from '@tiptap/extensions'
+import { common, createLowlight } from 'lowlight'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import Heading from '../nodes/Heading.js'
 import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
@@ -24,6 +26,7 @@ import Mention from './../extensions/Mention.js'
 import Search from './../extensions/Search.ts'
 import TextDirection from './../extensions/TextDirection.ts'
 import Typography from './../extensions/Typography.ts'
+import { Italic, Link, Strike, Strong, Underline } from './../marks/index.js'
 import BulletList from './../nodes/BulletList.js'
 import Callouts from './../nodes/Callouts.js'
 import CodeBlock from './../nodes/CodeBlock.js'
@@ -44,9 +47,6 @@ import TrailingNode from './../nodes/TrailingNode.js'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
 import Keymap from './Keymap.js'
-/* eslint-enable import/no-named-as-default */
-
-import { Italic, Link, Strike, Strong, Underline } from './../marks/index.js'
 
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
@@ -121,6 +121,11 @@ export default Extension.create({
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
+			this.options.editing
+				? Placeholder.configure({
+						placeholder: t('text', "Start writing or type '/' to add…"),
+					})
+				: null,
 			TrailingNode,
 			TextDirection.configure({
 				types: [
