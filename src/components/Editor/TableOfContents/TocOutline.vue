@@ -5,38 +5,24 @@
 
 <template>
 	<a
+		v-if="headings.length > 1"
 		data-text-el="editor-outline"
 		class="editor__toc-outline"
 		@mouseenter="$emit('show-toc')"
 		@click="$emit('show-toc')"
 		@keydown.enter="$emit('show-toc')">
-		<div
+		<TocOutlineEntry
 			v-for="heading in headings"
 			:key="heading.id"
-			class="outline-line"
-			:class="[
-				`level${heading.level}`,
-				{ active: heading.id === activeHeadingId },
-			]" />
+			:heading="heading" />
 	</a>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup>
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
+import TocOutlineEntry from './TocOutlineEntry.vue'
 
-export default defineComponent({
-	name: 'TocOutline',
-	props: {
-		activeHeadingId: {
-			type: String,
-			default: null,
-		},
-		headings: {
-			type: Array,
-			required: true,
-		},
-	},
-})
+const { headings } = useEditorHeadings()
 </script>
 
 <style lang="scss" scoped>
@@ -57,9 +43,16 @@ export default defineComponent({
 		background 0.2s,
 		box-shadow 0.2s;
 
-	&.active {
+	// only effective on the first line - see next selector
+	&.visible {
 		background-color: var(--color-main-text);
 		box-shadow: 0 0 3px var(--color-box-shadow);
+	}
+
+	// all following lines have the default style
+	.visible ~ &.visible {
+		background-color: var(--color-text-lighter);
+		box-shadow: none;
 	}
 
 	&.level2 {

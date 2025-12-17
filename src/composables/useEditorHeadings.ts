@@ -27,6 +27,7 @@ export type Heading = {
 	level: number
 	offset: number
 	text: string
+	previous?: number
 }
 
 export const headingsKey = Symbol('text:headings') as InjectionKey<

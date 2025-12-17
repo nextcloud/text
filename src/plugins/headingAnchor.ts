@@ -129,6 +129,10 @@ function decorationForHeading(heading: Heading) {
  * @return {HTMLElement}
  */
 function anchorForHeading(heading: Heading) {
+	const existing = document.getElementById(heading.id)
+	if (existing) {
+		return existing
+	}
 	const el = document.createElement('a')
 	const symbol = document.createTextNode('#')
 	el.appendChild(symbol)
