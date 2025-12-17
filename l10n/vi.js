@@ -24,8 +24,6 @@ OC.L10N.register(
     "Reload" : "Tải lại",
     "Reconnect" : "Kết nối lại",
     "This file is opened read-only as it is currently locked by {user}." : "Tệp này được mở ở chế độ chỉ đọc vì nó hiện bị khóa bởi {user}.",
-    "Close outline view" : "Đóng chế độ xem phác thảo",
-    "Outline" : "Đường viền",
     "Enter your name so other people can see who is editing" : "Nhập tên của bạn để người khác có thể biết ai đang chỉnh sửa",
     "Guest" : "Khách",
     "edit" : "chỉnh sửa",
@@ -96,6 +94,8 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chọn tập tin hoặc thư mục để liên kết đến",
     "Choose" : "Chọn",
     "Choose {file}" : "Chọn {file}",
+    "Close outline view" : "Đóng chế độ xem phác thảo",
+    "Outline" : "Đường viền",
     "Edit guest name" : "Chỉnh sửa tên khách",
     "Save guest name" : "Lưu tên khách",
     "Cannot copy, please copy the link manually" : "Không thể sao chép, vui lòng sao chép liên kết bằng tay"
