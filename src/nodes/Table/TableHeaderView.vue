@@ -14,6 +14,7 @@
 			<NcActions
 				v-if="isEditable"
 				ref="menu"
+				size="small"
 				variant="tertiary-no-background"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
@@ -214,6 +215,7 @@ th {
 	}
 
 	.action-item {
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
 		opacity: 50%;
 	}
 
