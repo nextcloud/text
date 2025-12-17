@@ -4,11 +4,11 @@
  */
 
 import { t } from '@nextcloud/l10n'
-import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import extractHeadings from './extractHeadings.ts'
-import type { Heading } from '../composables/useEditorHeadings'
 import type { Node } from '@tiptap/pm/model'
+import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
+import { Decoration, DecorationSet, EditorView } from '@tiptap/pm/view'
+import type { Heading } from '../composables/useEditorHeadings'
+import extractHeadings from './extractHeadings'
 
 export const headingAnchorPluginKey = new PluginKey('headingAnchor')
 
@@ -67,7 +67,11 @@ export default function headingAnchor() {
  *
  * @return {false|DecorationSet}
  */
-function mapDecorations(value: HeadingAnchorState, tr: Transaction, headings: Heading[]) {
+function mapDecorations(
+	value: HeadingAnchorState,
+	tr: Transaction,
+	headings: Heading[],
+) {
 	if (headingsChanged(headings, value.headings)) {
 		return false
 	}
@@ -115,35 +119,36 @@ function anchorDecorations(doc: Node, headings: Heading[]) {
 
 /**
  * Create a decoration for the given heading
- * @param {object} heading to decorate
+ * @param heading to decorate
  */
 function decorationForHeading(heading: Heading) {
-	return Decoration.widget(heading.offset + 1, anchorForHeading(heading), {
+	return Decoration.widget(heading.offset + 1, headingToDom(heading), {
 		side: -1,
 	})
 }
 
 /**
- * Create an anchor element for the given heading
- * @param {object} heading to generate anchor for
- * @return {HTMLElement}
+ * Returns a toDom function that creates an anchor element for the given heading
+ * @param heading to generate anchor for
  */
-function anchorForHeading(heading: Heading) {
-	const existing = document.getElementById(heading.id)
-	if (existing) {
-		return existing
+function headingToDom(heading: Heading) {
+	return (view: EditorView) => {
+		const existing = view.dom.querySelector(`#${heading.id}`)
+		if (existing) {
+			return existing
+		}
+		const el = document.createElement('a')
+		const symbol = document.createTextNode('#')
+		el.appendChild(symbol)
+		el.setAttribute('id', heading.id)
+		el.setAttribute('aria-hidden', 'true')
+		el.className = 'heading-anchor'
+		el.setAttribute('href', `#${heading.id}`)
+		el.setAttribute('title', t('text', 'Link to this section'))
+		el.setAttribute('contenteditable', 'false')
+		el.addEventListener('click', handleClick)
+		return el
 	}
-	const el = document.createElement('a')
-	const symbol = document.createTextNode('#')
-	el.appendChild(symbol)
-	el.setAttribute('id', heading.id)
-	el.setAttribute('aria-hidden', 'true')
-	el.className = 'heading-anchor'
-	el.setAttribute('href', `#${heading.id}`)
-	el.setAttribute('title', t('text', 'Link to this section'))
-	el.setAttribute('contenteditable', 'false')
-	el.addEventListener('click', handleClick)
-	return el
 }
 
 /**

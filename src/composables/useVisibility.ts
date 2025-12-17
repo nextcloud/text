@@ -16,6 +16,7 @@ import {
 	type Ref,
 } from 'vue'
 import { logger } from '../helpers/logger'
+import { useEditor } from './useEditor'
 
 export const intersectionObserverKey = Symbol(
 	'text:intersection_observer',
@@ -59,12 +60,13 @@ export const provideIntersectionObserver = () => {
 }
 
 export const useVisibility = (id: string) => {
+	const { editor } = useEditor()
 	const intersectionObserver = inject(intersectionObserverKey)!
 	const visibleIds = inject(visibleIdsKey)!
 
 	onMounted(() => {
 		nextTick(() => {
-			const el = document.getElementById(id)
+			const el = editor.view.dom.querySelector(`#${id}`)
 			if (el) {
 				intersectionObserver.observe(el)
 			} else {
@@ -75,8 +77,8 @@ export const useVisibility = (id: string) => {
 
 	onUnmounted(() => {
 		visibleIds.value.delete(id)
-		visibleIds.value = new Set(visibleIds.value)  // trigger reactivity
-		const el = document.getElementById(id)
+		visibleIds.value = new Set(visibleIds.value) // trigger reactivity
+		const el = editor.view.dom.querySelector(`#${id}`)
 		if (el) {
 			intersectionObserver.unobserve(el)
 		}
