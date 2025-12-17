@@ -58,7 +58,8 @@
 					v-show="contentLoaded"
 					ref="contentWrapper"
 					:read-only="!editMode" />
-				<SuggestionsBar v-if="isRichEditor && contentLoaded" />
+				<SuggestionsBar
+					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
 			</MainContainer>
 			<Reader
 				v-if="isResolvingConflict"
