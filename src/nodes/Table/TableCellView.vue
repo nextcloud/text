@@ -7,7 +7,7 @@
 	<NodeViewWrapper data-text-el="table-cell" as="td" :dir="dir" :style="textAlign">
 		<div class="container">
 			<NodeViewContent class="content" />
-			<NcActions v-if="isEditable" data-text-table-actions="row">
+			<NcActions v-if="isEditable" data-text-table-actions="row" size="small">
 				<NcActionButton
 					data-text-table-action="add-row-before"
 					close-after-click
@@ -141,10 +141,10 @@ td {
 
 	.action-item {
 		position: absolute;
-		right: -48px;
+		right: calc((var(--clickable-area-small) * -1) - 4px);
 		flex: 0 1 auto;
 		display: none;
-		top: 2px;
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
 	}
 
 	&:last-child {

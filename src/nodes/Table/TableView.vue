@@ -11,6 +11,7 @@
 		<NcActions
 			v-if="isEditable"
 			force-menu
+			size="small"
 			data-text-table-actions="settings"
 			class="table-settings">
 			<template #icon>
@@ -30,6 +31,7 @@
 		<NcButton
 			v-if="isEditable"
 			class="table-add-column"
+			size="small"
 			:aria-label="t('text', 'Add column after')"
 			:title="t('text', 'Add column after')"
 			@click="addColumnAfter">
@@ -40,6 +42,7 @@
 		<NcButton
 			v-if="isEditable"
 			class="table-add-row"
+			size="small"
 			:aria-label="t('text', 'Add row below')"
 			:title="t('text', 'Add row below')"
 			@click="addRowAfter">
@@ -154,8 +157,8 @@ export default {
 		padding-left: 3px;
 		opacity: 0.5;
 		position: absolute;
-		top: 0;
-		right: var(--default-clickable-area);
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
+		right: calc(var(--clickable-area-small) + 4px);
 
 		&:hover {
 			opacity: 1;
@@ -169,7 +172,7 @@ export default {
 		position: absolute;
 		top: var(--default-clickable-area);
 		right: 0;
-		bottom: 60px;
+		bottom: calc(var(--clickable-area-small) + 8px);
 		margin-top: 0 !important;
 
 		&:hover {
@@ -183,8 +186,9 @@ export default {
 		opacity: 0.5;
 		position: absolute;
 		left: 0;
-		bottom: 12px;
-		width: calc(100% - 80px) !important;
+		bottom: 4px;
+		// Needs to be in sync with table width in `prosemirror.css`
+		width: calc(100% - (2 * var(--clickable-area-small)) - 8px) !important;
 
 		&:hover {
 			opacity: 1;

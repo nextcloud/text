@@ -341,12 +341,11 @@ div.ProseMirror {
 
 	table {
 		border-spacing: 0;
-		width: calc(100% - 50px - var(--default-clickable-area));
+		// Needs to be sync with `.table-add-row` button width in `TableView.vue`
+		width: calc(100% - (2 * var(--clickable-area-small)) - 8px);
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
-		margin-bottom: calc(
-			var(--clickable-area-small) + var(--default-clickable-area)
-		);
+		margin-bottom: calc(var(--clickable-area-small) + 8px);
 		& + * {
 			margin-top: 1em;
 		}
