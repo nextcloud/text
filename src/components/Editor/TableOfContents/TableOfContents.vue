@@ -13,7 +13,6 @@
 			:class="{
 				active: heading.id === activeHeadingId,
 				[`level${heading.level}`]: true,
-				[`previous${heading.previous}`]: heading.previous > 0,
 			}">
 			<a
 				:href="`#${heading.id}`"
