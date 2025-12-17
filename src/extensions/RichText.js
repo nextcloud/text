@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
 import { common, createLowlight } from 'lowlight'
 
@@ -15,6 +16,7 @@ import Dropcursor from '@tiptap/extension-dropcursor'
 import Gapcursor from '@tiptap/extension-gapcursor'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import ListItem from '@tiptap/extension-list-item'
+import Placeholder from '@tiptap/extension-placeholder'
 import Text from '@tiptap/extension-text'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import Heading from '../nodes/Heading.js'
@@ -122,6 +124,11 @@ export default Extension.create({
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
+			this.options.editing
+				? Placeholder.configure({
+						placeholder: t('text', "Start writing or type '/' to add…"),
+					})
+				: null,
 			TrailingNode,
 			TextDirection.configure({
 				types: [
