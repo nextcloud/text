@@ -12,13 +12,11 @@ use Exception;
 use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
-use OCA\Text\AppInfo\Application;
+use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
-use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\ICacheFactory;
-use OCP\IConfig;
 use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
 use Sabre\DAV\INode;
@@ -35,9 +33,8 @@ class WorkspacePlugin extends ServerPlugin {
 
 	public function __construct(
 		private WorkspaceService $workspaceService,
-		private IRootFolder $rootFolder,
 		private ICacheFactory $cacheFactory,
-		private IConfig $config,
+		private ConfigService $configService,
 		private LoggerInterface $logger,
 		private ?string $userId,
 	) {
@@ -71,8 +68,8 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
-		$workspaceAvailable = $this->config->getAppValue(Application::APP_NAME, 'workspace_available', '1') === '1';
-		$workspaceEnabled = $this->config->getUserValue($this->userId, Application::APP_NAME, 'workspace_enabled', '1') === '1';
+		$workspaceAvailable = $this->configService->isRichWorkspaceAvailable();
+		$workspaceEnabled = $this->configService->isRichWorkspaceEnabledForUser($this->userId);
 
 		if (!$workspaceAvailable || !$workspaceEnabled) {
 			return;

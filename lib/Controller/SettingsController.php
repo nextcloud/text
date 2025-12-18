@@ -12,7 +12,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
 use OCP\IRequest;
 
 class SettingsController extends Controller {
@@ -24,7 +24,7 @@ class SettingsController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private IConfig $config,
+		private IUserConfig $userConfig,
 		private ?string $userId,
 	) {
 		parent::__construct($appName, $request);
@@ -40,8 +40,9 @@ class SettingsController extends Controller {
 		if (!in_array($key, self::ACCEPTED_KEYS, true)) {
 			return new DataResponse(['message' => 'Invalid config key'], Http::STATUS_BAD_REQUEST);
 		}
+
 		/** @psalm-suppress PossiblyNullArgument */
-		$this->config->setUserValue($this->userId, Application::APP_NAME, $key, (string)$value);
+		$this->userConfig->setValueBool($this->userId, Application::APP_NAME, $key, (string)($value) === '1');
 		return new DataResponse([
 			$key => $value
 		]);
