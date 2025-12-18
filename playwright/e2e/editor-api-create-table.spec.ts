@@ -12,7 +12,7 @@ test.describe('createTable API', () => {
 
 	const createTable = async (
 		page: Page,
-		options: { content: string, readOnly: boolean },
+		options: { content: string; readOnly: boolean },
 	) => {
 		await page.evaluate(
 			async ({ containerId, content, readOnly }) => {
