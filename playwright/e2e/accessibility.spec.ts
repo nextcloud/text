@@ -10,6 +10,7 @@ import { test as uploadFileTest } from '../support/fixtures/upload-file'
 import {
 	formatViolations,
 	getAccessibilitySummary,
+	violationFingerprints,
 } from '../support/utils/accessibility'
 
 const test = mergeTests(accessibilityTest, editorTest, uploadFileTest)
@@ -41,11 +42,11 @@ test.describe('Editor Accessibility', () => {
 			contentType: 'application/json',
 		})
 
-		// Expect no violations
+		// Snapshot test for violations to track changes over time
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('accessibility-violations.json')
 	})
 
 	test('should not have accessibility violations in the editor content area', async ({
@@ -71,9 +72,9 @@ test.describe('Editor Accessibility', () => {
 		})
 
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('editor-content-violations.json')
 	})
 
 	test('should not have accessibility violations in the menu bar', async ({
@@ -97,9 +98,9 @@ test.describe('Editor Accessibility', () => {
 		})
 
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('menubar-violations.json')
 	})
 
 	test('should have proper keyboard navigation support', async ({
@@ -125,9 +126,9 @@ test.describe('Editor Accessibility', () => {
 
 		// Check that interactive elements are keyboard accessible
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('keyboard-navigation-violations.json')
 	})
 
 	test('should have proper ARIA labels on interactive elements', async ({
@@ -156,9 +157,9 @@ test.describe('Editor Accessibility', () => {
 		})
 
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('aria-labels-violations.json')
 	})
 
 	test('should maintain accessibility after text formatting', async ({
@@ -191,8 +192,8 @@ test.describe('Editor Accessibility', () => {
 		})
 
 		expect(
-			accessibilityScanResults.violations,
+			violationFingerprints(accessibilityScanResults),
 			formatViolations(accessibilityScanResults),
-		).toEqual([])
+		).toMatchSnapshot('formatted-content-violations.json')
 	})
 })

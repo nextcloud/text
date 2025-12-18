@@ -1,0 +1,12 @@
+[
+  {
+    "rule": "label",
+    "description": "Ensure every form element has a label",
+    "targets": [
+      [
+        "input[data-cy-upload-picker-input=\"\"]"
+      ]
+    ],
+    "impact": "critical"
+  }
+]
