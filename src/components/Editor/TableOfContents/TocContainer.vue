@@ -7,7 +7,9 @@
 	<div class="editor__toc-container">
 		<!-- desktop -->
 		<div v-if="!isMobile" class="editor__toc-content">
-			<TocOutline v-if="!displayToc" @show-toc="setDisplayToc(true)" />
+			<TocOutline
+				v-if="!displayToc && headings.length > 1"
+				@show-toc="setDisplayToc(true)" />
 			<TocDesktop v-else-if="displayToc" @close="setDisplayToc(false)">
 				<TableOfContents />
 			</TocDesktop>
@@ -33,7 +35,7 @@ import TocMobile from './TocMobile.vue'
 import TocOutline from './TocOutline.vue'
 
 provideIntersectionObserver()
-const { displayToc } = useEditorHeadings()
+const { displayToc, headings } = useEditorHeadings()
 const isMobile = useIsMobile()
 const setDisplayToc = (visible) => {
 	emit('text:toc:toggle', { visible })

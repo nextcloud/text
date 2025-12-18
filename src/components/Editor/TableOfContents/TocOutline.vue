@@ -5,7 +5,6 @@
 
 <template>
 	<a
-		v-if="headings.length > 1"
 		data-text-el="editor-outline"
 		class="editor__toc-outline"
 		@mouseenter="$emit('show-toc')"
