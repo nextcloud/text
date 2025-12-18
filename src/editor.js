@@ -101,6 +101,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	getHTML() {
+		const editor = this.#getEditorComponent()?.editor
+		return editor?.getHTML()
+	}
+
 	async save() {
 		return this.#getEditorComponent().save?.()
 	}
