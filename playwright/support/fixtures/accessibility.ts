@@ -20,8 +20,6 @@ export const test = base.extend<AxeFixture>({
 			// See: https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md
 			.setLegacyMode()
 
-			// TODO: Fix these accessibility issues in the application
-			.exclude('input[data-cy-upload-picker-input]') // Upload input needs proper label
 
 		await use(makeAxeBuilder)
 	},
