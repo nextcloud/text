@@ -3,36 +3,38 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from '@playwright/test'
+import { test as base } from './random-user'
 
 export interface EditorApiFixture {
 	createEditor: (options: {
+		type: 'editor' | 'table',
 		content?: string,
 		fileId?: number,
 		readOnly?: boolean,
-		containerId?: string,
 	}) => Promise<void>
+	containerId: string
 }
 
 /**
- * This test fixture provides a helper to create an editor using the Text API
- * If a `fileId` is passed, an editor with session is created, if `content` is passed,
- * an editor without session is created.
+ * This test fixture provides helpers to create an editor or table using the Text API
+ * - createEditor: If a `fileId` is passed, an editor with session is created, if `content` is passed,
+ *   an editor without session is created.
+ * - createTable: Creates a table editor with the given content
  */
 export const test = base.extend<EditorApiFixture>({
 	createEditor: async ({ page }, use) => {
-		const createEditor = async (
+		const createComponent = async (
 			options: {
+				type: 'editor' | 'table',
 				content?: string,
 				fileId?: number,
 				readOnly?: boolean,
-				containerId?: string,
 			},
 		) => {
-			const containerId = options.containerId ?? 'test-editor-api'
+			const containerId = 'test-editor-api'
 
 			await page.evaluate(
-				async ({ containerId, content, fileId, readOnly }) => {
+				async ({ containerId, type, content, fileId, readOnly }) => {
 					const container = document.createElement('div')
 					container.id = containerId
 					container.style.position = 'fixed'
@@ -45,17 +47,32 @@ export const test = base.extend<EditorApiFixture>({
 					container.style.background = 'white'
 					document.body.appendChild(container)
 
+					const method = type === 'editor' ? 'createEditor' : 'createTable'
 					// @ts-expect-error - OCA.Text is a global
-					await window.OCA.Text.createEditor({
+					await window.OCA.Text[method]({
 						el: container,
 						...(fileId != null ? { fileId } : { content }),
 						readOnly,
 					})
 				},
-				{ containerId, content: options.content, fileId: options.fileId, readOnly: options.readOnly },
+				{ containerId, type: options.type, content: options.content, fileId: options.fileId, readOnly: options.readOnly },
 			)
 		}
 
+		const createEditor = async (
+			options: {
+				type: 'editor' | 'table',
+				content?: string,
+				fileId?: number,
+				readOnly?: boolean,
+			},
+		) => {
+			await createComponent(options)
+		}
+
 		await use(createEditor)
+	},
+	containerId: async (_, use) => {
+		await use('test-editor-api')
 	},
 })
