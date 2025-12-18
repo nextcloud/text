@@ -3,20 +3,21 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node } from '@tiptap/pm/model'
+import type { Heading } from '../composables/useEditorHeadings'
 import { slugify } from './slug.js'
 
 /**
  * Extract heading data structure from doc
  *
- * @param {Document} doc - the prosemirror doc
- * @param {Array} oldVal - the previous headings
- * @return {Array} headings found in the doc
+ * @param doc - the prosemirror doc
+ * @return headings found in the doc
  */
-export default function extractHeadings(doc, oldVal = []) {
+export default function extractHeadings(doc: Node) {
 	const counter = new Map()
-	const headings = []
+	const headings: Heading[] = []
 
-	const getId = (text) => {
+	const getId = (text: string) => {
 		const id = slugify(text)
 		if (counter.has(id)) {
 			const next = counter.get(id)
@@ -29,7 +30,7 @@ export default function extractHeadings(doc, oldVal = []) {
 		return 'h-' + id
 	}
 
-	doc.descendants((node, offset, _parent, index) => {
+	doc.descendants((node, offset) => {
 		if (node.type.name !== 'heading') {
 			return
 		}
@@ -37,14 +38,11 @@ export default function extractHeadings(doc, oldVal = []) {
 		// ignore empty headings
 		if (!text) return
 		const id = getId(text)
-		const old = oldVal.at(index)
-		const prev = old?.id === id ? { previous: old.level } : {}
 		const heading = Object.freeze({
 			level: node.attrs.level,
 			text,
 			id,
 			offset,
-			...prev,
 		})
 		headings.push(heading)
 	})

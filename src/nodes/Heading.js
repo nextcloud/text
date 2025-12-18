@@ -4,7 +4,7 @@
  */
 
 import TipTapHeading from '@tiptap/extension-heading'
-import headingAnchor from '../plugins/headingAnchor.js'
+import headingAnchor from '../plugins/headingAnchor.ts'
 
 const Heading = TipTapHeading.extend({
 	addKeyboardShortcuts() {

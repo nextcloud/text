@@ -4,11 +4,18 @@
  */
 
 import { t } from '@nextcloud/l10n'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import extractHeadings from './extractHeadings.js'
+import type { Node } from '@tiptap/pm/model'
+import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
+import { Decoration, DecorationSet, EditorView } from '@tiptap/pm/view'
+import type { Heading } from '../composables/useEditorHeadings'
+import extractHeadings from './extractHeadings'
 
 export const headingAnchorPluginKey = new PluginKey('headingAnchor')
+
+interface HeadingAnchorState {
+	headings: Heading[]
+	decorations: DecorationSet
+}
 
 /**
  * Heading anchor decorations ProseMirror plugin
@@ -42,7 +49,7 @@ export default function headingAnchor() {
 
 		props: {
 			decorations(state) {
-				return this.getState(state).decorations
+				return this.getState(state)!.decorations
 			},
 		},
 	})
@@ -54,13 +61,17 @@ export default function headingAnchor() {
  * Return false if headings changed or decorations would get removed.
  * The latter prevents lost decorations in case of replacements.
  *
- * @param {object} value - previous plugin state
- * @param {object} tr - current transaction
- * @param {Array} headings - array of headings
+ * @param value - previous plugin state
+ * @param tr - current transaction
+ * @param headings - array of headings
  *
  * @return {false|DecorationSet}
  */
-function mapDecorations(value, tr, headings) {
+function mapDecorations(
+	value: HeadingAnchorState,
+	tr: Transaction,
+	headings: Heading[],
+) {
 	if (headingsChanged(headings, value.headings)) {
 		return false
 	}
@@ -78,10 +89,8 @@ function mapDecorations(value, tr, headings) {
  *
  * @param {Array} current - array of headings
  * @param {Array} prev - headings to compare against
- *
- * @return {boolean}
  */
-function headingsChanged(current, prev) {
+function headingsChanged(current: Heading[], prev: Heading[]) {
 	return current.length !== prev.length || current.some(isDifferentFrom(prev))
 }
 
@@ -94,58 +103,62 @@ function headingsChanged(current, prev) {
  * The returned function takes a heading and an index (as provided by iterators)
  * and compares the id and level of the heading to the one in `other` with the same index.
  */
-const isDifferentFrom = (other) => (heading, i) => {
+const isDifferentFrom = (other: Heading[]) => (heading: Heading, i: number) => {
 	return heading.id !== other[i].id || heading.level !== other[i].level
 }
 
 /**
  * Create anchor decorations for the given headings
- * @param {Document} doc - prosemirror doc
- * @param {Array} headings - headings structure in the doc
- * @return {DecorationSet}
+ * @param doc - prosemirror doc
+ * @param headings - headings structure in the doc
  */
-function anchorDecorations(doc, headings) {
+function anchorDecorations(doc: Node, headings: Heading[]) {
 	const decorations = headings.map(decorationForHeading)
 	return DecorationSet.create(doc, decorations)
 }
 
 /**
  * Create a decoration for the given heading
- * @param {object} heading to decorate
- * @return {Decoration}
+ * @param heading to decorate
  */
-function decorationForHeading(heading) {
-	return Decoration.widget(heading.offset + 1, anchorForHeading(heading), {
+function decorationForHeading(heading: Heading) {
+	return Decoration.widget(heading.offset + 1, headingToDom(heading), {
 		side: -1,
 	})
 }
 
 /**
- * Create an anchor element for the given heading
- * @param {object} heading to generate anchor for
- * @return {HTMLElement}
+ * Returns a toDom function that creates an anchor element for the given heading
+ * @param heading to generate anchor for
  */
-function anchorForHeading(heading) {
-	const el = document.createElement('a')
-	const symbol = document.createTextNode('#')
-	el.appendChild(symbol)
-	el.setAttribute('id', heading.id)
-	el.setAttribute('aria-hidden', 'true')
-	el.className = 'heading-anchor'
-	el.setAttribute('href', `#${heading.id}`)
-	el.setAttribute('title', t('text', 'Link to this section'))
-	el.setAttribute('contenteditable', 'false')
-	el.addEventListener('click', handleClick)
-	return el
+function headingToDom(heading: Heading) {
+	return (view: EditorView) => {
+		const existing = view.dom.querySelector(`#${heading.id}`)
+		if (existing) {
+			return existing
+		}
+		const el = document.createElement('a')
+		const symbol = document.createTextNode('#')
+		el.appendChild(symbol)
+		el.setAttribute('id', heading.id)
+		el.setAttribute('aria-hidden', 'true')
+		el.className = 'heading-anchor'
+		el.setAttribute('href', `#${heading.id}`)
+		el.setAttribute('title', t('text', 'Link to this section'))
+		el.setAttribute('contenteditable', 'false')
+		el.addEventListener('click', handleClick)
+		return el
+	}
 }
 
 /**
  * Handle click on an anchor - scroll into view and change location hash.
  * @param {PointerEvent} event click that triggered the function
  */
-function handleClick(event) {
+function handleClick(event: PointerEvent) {
 	event.stopPropagation()
 	event.preventDefault()
-	event.target.scrollIntoView({ block: 'start', behavior: 'smooth' })
-	window.history.replaceState({}, '', event.target.getAttribute('href'))
+	const el = event.target as Element
+	el.scrollIntoView({ block: 'start', behavior: 'smooth' })
+	window.history.replaceState({}, '', el.getAttribute('href'))
 }

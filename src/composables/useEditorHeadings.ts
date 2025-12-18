@@ -38,27 +38,10 @@ export const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boole
 export const provideEditorHeadings = (editor: Editor) => {
 	const headings = shallowRef<Heading[]>([])
 	const displayToc = ref<boolean>(false)
-	const syncHeadings = (newHeadings: Heading[]) => {
-		// Check length first (performant)
-		if (headings.value.length !== newHeadings.length) {
-			headings.value = newHeadings
-			return
-		}
-
-		// Deep comparison if length match
-		const hasChanged = newHeadings.some((heading, index) => {
-			const current = headings.value[index]
-			const keys = Object.keys(heading) as (keyof Heading)[]
-			return keys.some((key) => heading[key] !== current[key])
-		})
-
-		if (hasChanged) {
-			headings.value = newHeadings
-		}
-	}
 
 	const updateHeadings = () => {
-		syncHeadings(headingAnchorPluginKey.getState(editor.state)?.headings ?? [])
+		headings.value =
+			headingAnchorPluginKey.getState(editor.state)?.headings ?? []
 	}
 	updateHeadings() // Initial sync on setup
 	editor.on('update', ({ transaction }) => {

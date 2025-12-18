@@ -15,5 +15,5 @@ export const useEditor = () => {
 	if (!editor) {
 		throw new Error('Failed to inject Editor')
 	}
-	return { editor: editor as Editor }
+	return { editor }
 }
