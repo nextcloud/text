@@ -61,8 +61,9 @@ fileTest.describe(
 	() => {
 		fileTest.use({ fileContent: 'some content\n' })
 
-		fileTest.beforeEach(async ({ open, page }) => {
-			await open()
+		fileTest.beforeEach(async ({ page }) => {
+			// Open the files app so we're somewhere with `window.OCA.Text` available
+			await page.goto('/apps/files')
 
 			// Load the editor API bundle
 			await page.addScriptTag({
