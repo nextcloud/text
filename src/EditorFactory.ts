@@ -8,6 +8,7 @@ import type { Node } from '@tiptap/pm/model'
 import type { Raw } from 'vue'
 import type { Connection } from './types/Connection.ts'
 
+import { translate as t } from '@nextcloud/l10n'
 import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
@@ -40,6 +41,10 @@ async function loadSyntaxHighlight(language: string) {
 const editorProps = {
 	scrollMargin: 50,
 	scrollThreshold: 50,
+	attributes: {
+		role: 'textbox',
+		'aria-label': t('text', 'Text editor'),
+	},
 }
 
 /**
