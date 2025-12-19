@@ -25,7 +25,7 @@ export interface EditorApiFixture {
  */
 export const test = base.extend<EditorApiFixture>({
 	createEditor: async ({ page }, use) => {
-		const createComponent = async (
+		const createEditor = async (
 			options: {
 				type: 'editor' | 'table',
 				content?: string,
@@ -58,17 +58,6 @@ export const test = base.extend<EditorApiFixture>({
 				},
 				{ containerId, type: options.type, content: options.content, fileId: options.fileId, readOnly: options.readOnly },
 			)
-		}
-
-		const createEditor = async (
-			options: {
-				type: 'editor' | 'table',
-				content?: string,
-				fileId?: number,
-				readOnly?: boolean,
-			},
-		) => {
-			await createComponent(options)
 		}
 
 		await use(createEditor)
