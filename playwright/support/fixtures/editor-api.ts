@@ -5,6 +5,8 @@
 
 import { test as base } from './random-user'
 
+const containerId = 'test-editor-api'
+
 export interface EditorApiFixture {
 	createEditor: (options: {
 		type: 'editor' | 'table',
@@ -31,7 +33,6 @@ export const test = base.extend<EditorApiFixture>({
 				readOnly?: boolean,
 			},
 		) => {
-			const containerId = 'test-editor-api'
 
 			await page.evaluate(
 				async ({ containerId, type, content, fileId, readOnly }) => {
@@ -72,7 +73,5 @@ export const test = base.extend<EditorApiFixture>({
 
 		await use(createEditor)
 	},
-	containerId: async (_, use) => {
-		await use('test-editor-api')
-	},
+	containerId,
 })
