@@ -222,6 +222,7 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Option" : "Opção",
     "Formatting" : "Formatação",
+    "Start writing or type '/' to add…" : "Comece a escrever ou digite '/' para adicionar…",
     "Select file or folder to link to" : "Selecione o arquivo ou pasta para vincular",
     "Choose" : "Escolher",
     "Choose {file}" : "Escolher {file}",

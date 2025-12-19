@@ -222,6 +222,7 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Option" : "Opción",
     "Formatting" : "Formatado",
+    "Start writing or type '/' to add…" : "Comece a escribir, ou teclee «/» para engadir…",
     "Select file or folder to link to" : "Seleccione o ficheiro ou cartafol ao que ligar",
     "Choose" : "Escoller",
     "Choose {file}" : "Escoller {file}",
