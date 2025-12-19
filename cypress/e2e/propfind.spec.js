@@ -7,7 +7,8 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('Text PROPFIND extension ', function () {
+// Retries fail because folders / files already exist.
+describe('Text PROPFIND extension ', { retries: 0 }, function () {
 	const richWorkspace = '{http://nextcloud.org/ns}rich-workspace'
 
 	before(function () {
