@@ -222,6 +222,7 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Option" : "Eelistus",
     "Formatting" : "Vorming",
+    "Start writing or type '/' to add…" : "Alusta kirjutamist või kasuta lisamiseks kaldkriipsu „/“…",
     "Select file or folder to link to" : "Vali lingitav fail või kaust",
     "Choose" : "Vali",
     "Choose {file}" : "Vali „{file}“",

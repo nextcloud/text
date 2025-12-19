@@ -212,6 +212,7 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Option" : "Option",
     "Formatting" : "Фармаціраванне",
+    "Start writing or type '/' to add…" : "Пачніце ўводзіць тэкст або '/' - каб дадаць…",
     "Select file or folder to link to" : "Выберыце файл або каталог, на які трэба зрабіць спасылку",
     "Choose" : "Выбраць",
     "Choose {file}" : "Выбраць {file}",
