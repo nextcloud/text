@@ -16,8 +16,7 @@ test.describe('editor API at window.OCA.Text - MarkdownContentEditor.vue without
 
 		// Load the editor API bundle
 		await page.addScriptTag({
-			url: '/apps/text/js/text-editor.mjs',
-			type: 'module',
+			url: '/apps/text/js/text-editor.js',
 		})
 	})
 
@@ -67,8 +66,7 @@ fileTest.describe(
 
 			// Load the editor API bundle
 			await page.addScriptTag({
-				url: '/apps/text/js/text-editor.mjs',
-				type: 'module',
+				url: '/apps/text/js/text-editor.js',
 			})
 		})
 
