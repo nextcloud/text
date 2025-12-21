@@ -14,8 +14,6 @@ import {
 } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 import { openLink } from './helpers/links.js'
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
-import 'vite/modulepreload-polyfill'
 
 const apiVersion = '1.3'
 
