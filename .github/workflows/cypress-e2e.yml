@@ -85,6 +85,7 @@ jobs:
           TESTING=true npm run build --if-present
 
       - name: Install node dependencies & build assistant app
+        if: matrix.server-versions == 'main'
         working-directory: apps/assistant
         run: |
           composer install --no-dev
