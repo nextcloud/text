@@ -91,6 +91,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	getHTML() {
+		const editor = this.#getEditorComponent()?.editor
+		return editor?.getHTML()
+	}
+
 	setSearchQuery(query, matchAll) {
 		const editor = this.#getEditorComponent()?.$editor
 		editor.commands.setSearchQuery(query, matchAll)
