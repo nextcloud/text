@@ -195,7 +195,9 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('.file-picker [data-filename="a"]').click()
 				cy.get('.file-picker [data-filename="a.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary')
+					.should('be.visible')
+					.click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -212,7 +214,9 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('.file-picker [data-filename="b"]').click()
 				cy.get('.file-picker [data-filename="b.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary')
+					.should('be.visible')
+					.click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -229,7 +233,9 @@ describe('Test all attachment insertion methods', () => {
 				cy.log('Select the file in the filepicker')
 				cy.get('.file-picker [data-filename="github.png"]').click()
 				cy.log('Click OK in the filepicker')
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary')
+					.should('be.visible')
+					.click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
