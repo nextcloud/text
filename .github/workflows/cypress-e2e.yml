@@ -41,11 +41,13 @@ jobs:
           path: apps/viewer
 
       - name: Register assistant Git reference
+        if: matrix.server-versions == 'main'
         run: |
           assistant_app_ref="$(if [ "${{ matrix.server-versions }}" = "stable30" ]; then echo -n "main"; else echo -n "${{ matrix.server-versions }}"; fi)"
           echo "assistant_app_ref=$assistant_app_ref" >> $GITHUB_ENV
 
       - name: Checkout assistant
+        if: matrix.server-versions == 'main'
         uses: actions/checkout@v4.1.1
         with:
           repository: nextcloud/assistant
@@ -81,6 +83,7 @@ jobs:
           TESTING=true npm run build --if-present
 
       - name: Install node dependencies & build assistant app
+        if: matrix.server-versions == 'main'
         working-directory: apps/assistant
         run: |
           composer install --no-dev
