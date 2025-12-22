@@ -12,6 +12,7 @@
 
 <script>
 import { Editor } from '@tiptap/core'
+/* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
 import MainContainer from './MainContainer.vue'
 import Wrapper from './Wrapper.vue'
