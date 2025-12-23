@@ -5,6 +5,7 @@
 
 import 'proxy-polyfill'
 
+import { translate as t } from '@nextcloud/l10n'
 import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
@@ -35,6 +36,10 @@ const loadSyntaxHighlight = async (language) => {
 const editorProps = {
 	scrollMargin: 50,
 	scrollThreshold: 50,
+	attributes: {
+		role: 'textbox',
+		'aria-label': t('text', 'Text editor'),
+	},
 }
 
 const createRichEditor = ({
