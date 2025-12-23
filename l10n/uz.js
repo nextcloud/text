@@ -12,6 +12,7 @@ OC.L10N.register(
     "File not found" : "File not found",
     "Text" : "Matn",
     "Reload" : "Qayta yuklash",
+    "you" : "siz",
     "Copy link" : "Havolani nusxalash",
     "Offline" : "Offline",
     "Saving …" : "Saqlanmoqda...",

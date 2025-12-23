@@ -205,6 +205,8 @@ OC.L10N.register(
     "Increase indentation" : "Zvětšit odsazení",
     "Decrease indentation" : "Zmenšit odsazení",
     "Blocks" : "Bloky",
+    "Inline math" : "Matematika v řádku",
+    "Block math" : "Matematika v bloku",
     "Info callout" : "Informační popisek",
     "Success callout" : "Popisek o úspěchu",
     "Warning callout" : "Varovný popisek",
