@@ -92,6 +92,20 @@ export default {
 	}
 }
 
+:deep(.plyr__video-wrapper) {
+	max-height: 400px;
+	overflow: hidden;
+}
+
+:deep(video),
+:deep(iframe) {
+	max-height: 400px;
+	height: auto;
+	width: 100%;
+	display: block;
+	object-fit: contain;
+}
+
 // Align in upper right corner of preview image
 .link-preview-header {
 	position: absolute;
