@@ -235,7 +235,7 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "بىر جەدىۋەل يەنە بىر جەدىۋەلگە چاپلاندى. بۇنىڭغا يول قۇيۇلمايدۇ.",
     "Link to this section" : "بۇ بۆلەككە ئۇلىنىش",
     "Close outline view" : "سىزىق كۆرۈنۈشىنى تاقاش",
-    "Outline" : "سىزىق",
+    "Outline" : "قىسقىچە چۈشەنچە",
     "Edit guest name" : "مېھمان نامىنى تەھرىرلەڭ",
     "Save guest name" : "مېھمان نامىنى ساقلاڭ",
     "Cannot copy, please copy the link manually" : "كۆچۈرگىلى بولمايدۇ ، ئۇلىنىشنى قولدا كۆچۈرۈڭ",
