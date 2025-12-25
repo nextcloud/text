@@ -65,6 +65,7 @@ OC.L10N.register(
     "Unsaved changes" : "Neuložené změny",
     "Save document" : "Uložit dokument",
     "Last saved" : "Naposledy uloženo",
+    "Table of contents" : "Obsah",
     "Formatting and shortcuts" : "Formátování a zkratky",
     "Speed up your writing with simple shortcuts." : "Zrychlete si své psaní snadnými zkratkami.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Stačí jen psát v Markdown syntaxi nebo používat níže uvedené klávesové zkratky.",
