@@ -36,7 +36,7 @@ import {
 	insertAttachmentFile,
 	uploadAttachment,
 } from '../../apis/attach.ts'
-import { logger } from '../../helpers/logger.js'
+import { logger } from '../../helpers/logger.ts'
 
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileMixin } from '../Editor.provider.ts'

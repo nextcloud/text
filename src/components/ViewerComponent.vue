@@ -5,16 +5,17 @@
 
 <template>
 	<Editor
-		v-if="!useSourceView"
+		v-if="!useSourceView && !reloading"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
-		:mime="mime" />
+		:mime="mime"
+		@reload="reloading = true" />
 	<div
-		v-else
+		v-else-if="!reloading"
 		id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
@@ -102,6 +103,7 @@ export default {
 		return {
 			content: '',
 			hasToggledInteractiveEmbedding: false,
+			reloading: false,
 		}
 	},
 	computed: {
@@ -136,6 +138,13 @@ export default {
 	watch: {
 		source() {
 			this.loadFileContent()
+		},
+		reloading(val) {
+			if (val) {
+				this.$nextTick(() => {
+					this.reloading = false
+				})
+			}
 		},
 	},
 
