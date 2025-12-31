@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
-import 'vite/modulepreload-polyfill'
 import Vue from 'vue'
 import DirectEditing from './views/DirectEditing.vue'
 

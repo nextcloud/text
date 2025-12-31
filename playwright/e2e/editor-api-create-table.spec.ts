@@ -13,8 +13,7 @@ test.describe('createTable API', () => {
 
 		// Load the editor API bundle
 		await page.addScriptTag({
-			url: '/apps/text/js/text-editor.mjs',
-			type: 'module',
+			url: '/apps/text/js/text-editor.js',
 		})
 	})
 
