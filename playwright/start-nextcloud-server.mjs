@@ -1,37 +1,49 @@
-/**
- * SPDX-FileCopyrightText: 2024 Ferdinand Thiessen <opensource@fthiessen.de>
- * SPDX-License-Identifier: AGPL-3.0-or-later
+/*!
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: MIT
  */
 
-import { startNextcloud, stopNextcloud } from '@nextcloud/e2e-test-server/docker'
+import {
+	configureNextcloud,
+	startNextcloud,
+	stopNextcloud,
+	waitOnNextcloud,
+} from '@nextcloud/e2e-test-server/docker'
 import { readFileSync } from 'fs'
+import { execSync } from 'node:child_process'
 
-const start = async () => {
-	return await startNextcloud(getBranch(), true, {
+async function start() {
+	const appinfo = readFileSync('appinfo/info.xml').toString()
+	const maxVersion = appinfo.match(
+		/<nextcloud min-version="\d+" max-version="(\d\d+)" \/>/,
+	)?.[1]
+
+	let branch = 'master'
+	if (maxVersion) {
+		const refs = execSync('git ls-remote --refs').toString('utf-8')
+		branch = refs.includes(`refs/heads/stable${maxVersion}`)
+			? `stable${maxVersion}`
+			: branch
+	}
+
+	return await startNextcloud(branch, true, {
 		exposePort: 8089,
 	})
 }
 
-const getBranch = () => {
-	try {
-		const appinfo = readFileSync('appinfo/info.xml').toString()
-		const maxVersion = appinfo.match(
-			/<nextcloud min-version="\d+" max-version="(\d\d+)" \/>/,
-		)?.[1]
-		return maxVersion ? `stable${maxVersion}` : undefined
-	} catch (err) {
-		if (err.code === 'ENOENT') {
-			console.warn('No appinfo/info.xml found. Using default server banch.')
-		}
-	}
+async function stop() {
+	process.stderr.write('Stopping Nextcloud server…\n')
+	await stopNextcloud()
+	process.exit(0)
 }
 
+process.on('SIGTERM', stop)
+process.on('SIGINT', stop)
+
 // Start the Nextcloud docker container
-await start()
-// Listen for process to exit (tests done) and shut down the docker container
-process.on('beforeExit', (code) => {
-	stopNextcloud()
-})
+const ip = await start()
+await waitOnNextcloud(ip)
+await configureNextcloud(['text', 'viewer'])
 
 // Idle to wait for shutdown
 while (true) {
