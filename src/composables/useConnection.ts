@@ -103,17 +103,9 @@ function openInitialSession(
 	if (props.initialSession) {
 		const { document, session } = props.initialSession
 		if (baseVersionEtag && baseVersionEtag !== document.baseVersionEtag) {
-			throw new Error(
+			throw new ConflictError(
 				'Base version etag did not match when opening initial session.',
 			)
-			// We need to handle dirty documents differently from 'clean' ones.
-			// For clean ones we need to
-			// * call .clearData() on the provider
-			// * reinitialize the editing session - maybe by reloading the component.
-			// In order to handle the dirty state - i.e. a conflict properly we'd need to:
-			// * fetch the file content.
-			// * throw the same exception as a 409 response.
-			// * include the file content as `outsideChange` in the error.
 		}
 		const connection = {
 			documentId: document.id,
@@ -125,4 +117,14 @@ function openInitialSession(
 		}
 		return { connection, data: props.initialSession }
 	}
+}
+
+/**
+ * Mimic axios error for a conflict while creating the session.
+ *
+ * This will be emitted from the SyncService
+ * and trigger conflict handling in Editor.vue
+ */
+class ConflictError extends Error {
+	response = { status: 412 }
 }
