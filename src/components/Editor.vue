@@ -12,7 +12,11 @@
 		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
-		<CollisionResolveDialog v-if="isResolvingConflict" :other-version="otherVersion" />
+		<CollisionResolveDialog
+			v-if="isResolvingConflict"
+			:other-version="otherVersion"
+			:reader-source="localChange ? 'local' : 'server'"
+			@resolved="$emit('resolved')" />
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
@@ -341,8 +345,11 @@ export default defineComponent({
 			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
-			return Boolean(this.localChange) ||
-				(this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION)
+			return (
+				Boolean(this.localChange)
+				|| (this.syncError
+					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISSION)
+			)
 		},
 		otherVersion() {
 			return this.localChange || this.syncError.data.outsideChange
