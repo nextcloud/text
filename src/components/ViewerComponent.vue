@@ -10,10 +10,12 @@
 		:relative-path="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
+		:local-change="localChange"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
-		@reload="reloading = true" />
+		@reload="onReload"
+		@resolved="localChange = ''" />
 	<SourceView
 		v-else-if="!reloading"
 		:fileid="fileid"
@@ -84,6 +86,7 @@ export default defineComponent({
 		return {
 			hasToggledInteractiveEmbedding: false,
 			reloading: false,
+			localChange: '',
 		}
 	},
 	computed: {
@@ -119,6 +122,10 @@ export default defineComponent({
 	methods: {
 		async onLoaded() {
 			this.$emit('update:loaded', true)
+		},
+		onReload(localChange) {
+			this.localChange = localChange
+			this.reloading = true
 		},
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true

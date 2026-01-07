@@ -12,7 +12,7 @@
 		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
-		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
+		<CollisionResolveDialog v-if="isResolvingConflict" :other-version="otherVersion" />
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
@@ -61,7 +61,7 @@
 			</MainContainer>
 			<Reader
 				v-if="isResolvingConflict"
-				:content="syncError.data.outsideChange"
+				:content="otherVersion"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
 		<DocumentStatus
@@ -202,6 +202,10 @@ export default defineComponent({
 			type: String,
 			default: null,
 		},
+		localChange: {
+			type: String,
+			default: '',
+		},
 		mime: {
 			type: String,
 			default: null,
@@ -337,9 +341,11 @@ export default defineComponent({
 			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
-			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
-			)
+			return Boolean(this.localChange) ||
+				(this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION)
+		},
+		otherVersion() {
+			return this.localChange || this.syncError.data.outsideChange
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -410,18 +416,12 @@ export default defineComponent({
 				return
 			}
 			logger.debug('Document is outdated')
-			if (this.dirty) {
-				logger.debug('There are local edits, need to resolve conflict')
-				// handle conflict between active editing session and offline content
-			} else {
-				// clear the outdated cached content and reload without it.
-				logger.debug(
-					'No local edits... clearing storage and reloading the editor',
-				)
-				this.clearIndexedDb().then(() => {
-					this.$emit('reload')
-				})
-			}
+			const localChange = this.dirty ? this.serialize() : ''
+			logger.debug('Clearing the outdated cache and connecting without it.')
+			this.clearIndexedDb().then(() => {
+				logger.debug('Cleared indexed db, reloading.', { localChange })
+				this.$emit('reload', localChange)
+			})
 		},
 	},
 	mounted() {
