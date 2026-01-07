@@ -162,6 +162,7 @@ class SyncService {
 
 	async open() {
 		if (this.hasActiveConnection()) {
+			logger.debug('already connected', { connection: this.connection })
 			return
 		}
 		const data = await this.#openConnection().catch((e) => this.#emitError(e))
