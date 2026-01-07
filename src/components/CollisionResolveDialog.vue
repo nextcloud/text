@@ -41,9 +41,9 @@ export default {
 		NcButton,
 	},
 	props: {
-		syncError: {
-			type: Object,
-			default: null,
+		otherVersion: {
+			type: String,
+			required: true,
 		},
 	},
 	setup() {
@@ -71,10 +71,9 @@ export default {
 			this.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
-			const { outsideChange } = this.syncError.data
 			this.clicked = true
 			this.setEditable(!this.readOnly)
-			this.setContent(outsideChange)
+			this.setContent(this.otherVersion)
 			this.saveService.forceSave().then(() => this.syncService.syncUp())
 		},
 	},
