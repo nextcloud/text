@@ -207,9 +207,8 @@ window.OCA.Text.createEditor = async function ({
 	openLinkHandler = undefined,
 	onSearch = undefined,
 }) {
-	const { default: MarkdownContentEditor } = await import(
-		'./components/Editor/MarkdownContentEditor.vue'
-	)
+	const { default: MarkdownContentEditor } =
+		await import('./components/Editor/MarkdownContentEditor.vue')
 	const { default: Editor } = await import('./components/Editor.vue')
 
 	const data = Vue.observable({
@@ -305,9 +304,8 @@ window.OCA.Text.createTable = async function ({
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 }) {
-	const { default: PlainTableContentEditor } = await import(
-		'./components/Editor/PlainTableContentEditor.vue'
-	)
+	const { default: PlainTableContentEditor } =
+		await import('./components/Editor/PlainTableContentEditor.vue')
 
 	const data = Vue.observable({
 		readOnly,
