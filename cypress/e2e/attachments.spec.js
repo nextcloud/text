@@ -195,7 +195,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('.file-picker [data-filename="a"]').click()
 				cy.get('.file-picker [data-filename="a.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -205,14 +205,14 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back from home to sub folder')
-				cy.get('.file-picker nav [title="Home"]').click()
+				cy.get('.file-picker nav [aria-label="All files"]').click()
 				cy.get('.file-picker [data-filename="sub"]').click()
 
 				cy.log('Go to sub folder (b)')
 				cy.get('.file-picker [data-filename="b"]').click()
 				cy.get('.file-picker [data-filename="b.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -224,12 +224,12 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back to home')
-				cy.get('.file-picker nav [title="Home"]').click()
+				cy.get('.file-picker nav [aria-label="All files"]').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('.file-picker [data-filename="github.png"]').click()
 				cy.log('Click OK in the filepicker')
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
