@@ -27,7 +27,6 @@ use OCP\AppFramework\Db\Entity;
  * @method setChecksum(?string $checksum): void
  */
 class Document extends Entity implements \JsonSerializable {
-	public $id = null;
 	// TODO: Remove obsolete field `currentVersion`
 	protected int $currentVersion = 0;
 	protected int $lastSavedVersion = 0;
@@ -38,7 +37,6 @@ class Document extends Entity implements \JsonSerializable {
 	protected ?string $checksum = null;
 
 	public function __construct() {
-		$this->addType('id', 'integer');
 		$this->addType('currentVersion', 'integer');
 		$this->addType('lastSavedVersion', 'integer');
 		$this->addType('lastSavedVersionTime', 'integer');
