@@ -500,6 +500,7 @@ export default defineComponent({
 			if (session.userId && this.relativePath?.length) {
 				const node = new File({
 					id: this.fileId,
+					root: `/files/${session.userId}`,
 					source: generateRemoteUrl(
 						`dav/files/${session.userId}${this.relativePath}`,
 					),
