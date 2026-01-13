@@ -53,7 +53,7 @@ export async function open(
 /**
  * Update the guest name
  * @param guestName the name to use for the local user
- * @param connection connection to close
+ * @param connection connection to update the guest name for
  */
 export async function update(
 	guestName: string,
