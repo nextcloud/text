@@ -15,8 +15,8 @@ OC.L10N.register(
     "Save" : "Cadw",
     "Translate" : "Cyfieithu",
     "to" : "at",
-    "Upload" : "Llwytho i fyny",
     "Edit" : "Golygu",
+    "Upload" : "Llwytho i fyny",
     "Source code" : "Cod ffynhonnell",
     "Details" : "Manylion",
     "Choose" : "Dewisa"

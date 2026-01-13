@@ -18,8 +18,8 @@ OC.L10N.register(
     "Save" : "Salveguardar",
     "Translate" : "Translate",
     "to" : "a",
-    "Upload" : "Incargar",
     "Edit" : "Modificar",
+    "Upload" : "Incargar",
     "Done" : "Preste",
     "Details" : "Detalios"
 },

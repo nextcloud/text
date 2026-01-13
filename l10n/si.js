@@ -10,8 +10,8 @@ OC.L10N.register(
     "Cancel" : "අවලංගු",
     "Translate" : "පරිවර්තනය",
     "Select language" : "භාෂාව තෝරන්න",
-    "Upload" : "උඩුගත",
     "Edit" : "සංස්කරණය",
+    "Upload" : "උඩුගත",
     "Choose" : "තෝරන්න"
 },
 "nplurals=2; plural=(n != 1);");

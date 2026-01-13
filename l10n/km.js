@@ -11,8 +11,8 @@ OC.L10N.register(
     "Save" : "រក្សាទុក",
     "Translate" : "Translate",
     "to" : "ទៅ",
-    "Upload" : "ផ្ទុក​ឡើង",
     "Edit" : "កែប្រែ",
+    "Upload" : "ផ្ទុក​ឡើង",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
     "Choose" : "ជ្រើស"
