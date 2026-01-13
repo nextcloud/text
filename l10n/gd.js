@@ -17,8 +17,8 @@ OC.L10N.register(
     "Save" : "Sàbhail",
     "Translate" : "Eadar-theangaich",
     "Replace" : "Cuir ’na àite",
-    "Upload" : "Luchdaich suas",
     "Edit" : "Deasaich",
+    "Upload" : "Luchdaich suas",
     "Source code" : "Bun-tùs",
     "Details" : "Mion-fhiosrachadh",
     "Choose" : "Tagh"

@@ -25,8 +25,8 @@ OC.L10N.register(
     "Select language" : "Seleccionar idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
-    "Upload" : "Cargar",
     "Edit" : "Editar",
+    "Upload" : "Cargar",
     "Source code" : "Código fuente",
     "Details" : "Detalles",
     "Choose" : "Seleccionar"

@@ -9,8 +9,8 @@ OC.L10N.register(
     "Cancel" : "ரத்து செய்",
     "Save" : "சேமிக்க ",
     "Translate" : "Translate",
-    "Upload" : "பதிவேற்றுக",
     "Edit" : "தொகுக்க",
+    "Upload" : "பதிவேற்றுக",
     "Done" : "Done",
     "Details" : "விவரங்கள்",
     "Choose" : "தெரிவுசெய்க "

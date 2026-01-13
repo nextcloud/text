@@ -14,8 +14,8 @@ OC.L10N.register(
     "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
-    "Upload" : "байршуулах",
     "Edit" : "засварлах",
+    "Upload" : "байршуулах",
     "Source code" : "эх үүсвэр талын код",
     "Details" : "Дэлгэрэнгүй",
     "Choose" : "Сонгох"
