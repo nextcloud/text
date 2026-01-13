@@ -40,14 +40,14 @@ import { getClient, getRootPath } from '@nextcloud/files/dav'
 import { t } from '@nextcloud/l10n'
 import { getSharingToken } from '@nextcloud/sharing/public'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import Vue from 'vue'
+import Vue, { defineComponent } from 'vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import PlainTextReader from './PlainTextReader.vue'
 
 import getEditorInstance from './Editor.singleton.js'
 
-export default {
+export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		NcButton: Vue.extend(NcButton),
@@ -184,7 +184,7 @@ export default {
 		},
 		t,
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
