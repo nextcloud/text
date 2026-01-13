@@ -26,10 +26,11 @@
 
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
+import { defineComponent } from 'vue'
 import getEditorInstance from './Editor.singleton.js'
 import SourceView from './SourceView.vue'
 
-export default {
+export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		SourceView,
@@ -112,7 +113,7 @@ export default {
 		},
 		t,
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
