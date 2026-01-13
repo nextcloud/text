@@ -10,8 +10,8 @@ OC.L10N.register(
     "Save" : "Simpan",
     "Translate" : "Translate",
     "to" : "kepada",
-    "Upload" : "Muat naik",
     "Edit" : "Sunting",
+    "Upload" : "Muat naik",
     "Done" : "Selesai"
 },
 "nplurals=1; plural=0;");

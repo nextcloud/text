@@ -11,8 +11,8 @@ OC.L10N.register(
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Save" : "﻿ಉಳಿಸಿ",
     "Translate" : "Translate",
-    "Upload" : "ವರ್ಗಾಯಿಸಿ",
     "Edit" : "ಸಂಪಾದಿಸು",
+    "Upload" : "ವರ್ಗಾಯಿಸಿ",
     "Choose" : "﻿ಆಯ್ಕೆ"
 },
 "nplurals=2; plural=(n > 1);");

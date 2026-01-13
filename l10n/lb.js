@@ -13,8 +13,8 @@ OC.L10N.register(
     "Save" : "Späicheren",
     "Translate" : "Iwwersetzen",
     "to" : "bis",
-    "Upload" : "Eroplueden",
     "Edit" : "Änneren",
+    "Upload" : "Eroplueden",
     "Details" : "Detailer",
     "Choose" : "Auswielen"
 },

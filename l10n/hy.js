@@ -18,8 +18,8 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "Պահպանել",
     "Translate" : "Թարգմանել",
-    "Upload" : "Բեռնել",
     "Edit" : "մշակել",
+    "Upload" : "Բեռնել",
     "Source code" : "ծրագրի կոդը",
     "Details" : "Մանրամասներ",
     "Choose" : "Ընտրել"

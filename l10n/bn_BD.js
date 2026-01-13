@@ -16,8 +16,8 @@ OC.L10N.register(
     "Save" : "সংরক্ষণ",
     "Translate" : "Translate",
     "to" : "প্রতি",
-    "Upload" : "আপলোড",
     "Edit" : "সম্পাদনা",
+    "Upload" : "আপলোড",
     "Done" : "শেষ হলো",
     "Details" : "বিসতারিত",
     "Choose" : "বেছে নিন"
