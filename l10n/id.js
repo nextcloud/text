@@ -44,6 +44,7 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "Choose" : "Pilih",
+    "Choose {file}" : "Pilih {file}",
     "Add folder description" : "Tambahkan deskripsi folder",
     "Edit guest name" : "Edit nama tamu",
     "Save guest name" : "Simpan nama tamu"
