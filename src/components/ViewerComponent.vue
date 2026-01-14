@@ -5,19 +5,16 @@
 
 <template>
 	<Editor
-		v-if="!useSourceView && !reloading"
+		v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
-		:local-change="localChange"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
-		:mime="mime"
-		@reload="onReload"
-		@resolved="localChange = ''" />
+		:mime="mime" />
 	<SourceView
-		v-else-if="!reloading"
+		v-else
 		:fileid="fileid"
 		:filename="filename"
 		:mime="mime"
@@ -30,7 +27,7 @@
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
-import Editor from './Editor.vue'
+import Editor from './Editor.js'
 import SourceView from './SourceView.vue'
 
 export default defineComponent({
@@ -85,8 +82,6 @@ export default defineComponent({
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
-			reloading: false,
-			localChange: '',
 		}
 	},
 	computed: {
@@ -103,16 +98,6 @@ export default defineComponent({
 		},
 	},
 
-	watch: {
-		reloading(val) {
-			if (val) {
-				this.$nextTick(() => {
-					this.reloading = false
-				})
-			}
-		},
-	},
-
 	mounted() {
 		if (!this.useSourceView) {
 			this.onLoaded()
@@ -122,10 +107,6 @@ export default defineComponent({
 	methods: {
 		async onLoaded() {
 			this.$emit('update:loaded', true)
-		},
-		onReload(localChange) {
-			this.localChange = localChange
-			this.reloading = true
 		},
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
