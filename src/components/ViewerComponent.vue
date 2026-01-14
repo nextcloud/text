@@ -27,14 +27,14 @@
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
-import getEditorInstance from './Editor.singleton.js'
+import Editor from './Editor.vue'
 import SourceView from './SourceView.vue'
 
 export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		SourceView,
-		Editor: getEditorInstance,
+		Editor,
 	},
 	provide() {
 		return {
