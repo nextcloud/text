@@ -39,7 +39,6 @@ class Step extends Entity implements JsonSerializable {
 	protected int $timestamp = 0;
 
 	public function __construct() {
-		$this->addType('id', 'integer');
 		$this->addType('version', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('sessionId', 'integer');
