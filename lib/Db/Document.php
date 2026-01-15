@@ -46,7 +46,7 @@ class Document extends Entity implements \JsonSerializable {
 
 	public function jsonSerialize(): array {
 		return [
-			'id' => $this->id,
+			'id' => $this->getId(),
 			'lastSavedVersion' => $this->lastSavedVersion,
 			'lastSavedVersionTime' => $this->lastSavedVersionTime,
 			'baseVersionEtag' => $this->baseVersionEtag,
