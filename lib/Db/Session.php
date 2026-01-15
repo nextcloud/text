@@ -53,7 +53,7 @@ class Session extends Entity implements JsonSerializable {
 
 	public function jsonSerialize(): array {
 		return [
-			'id' => $this->id,
+			'id' => $this->getId(),
 			'userId' => $this->userId,
 			'token' => $this->token,
 			'color' => $this->color,
