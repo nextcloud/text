@@ -31,6 +31,7 @@ class Step extends Entity implements JsonSerializable {
 	 */
 	public const VERSION_STORED_IN_ID = 2147483647;
 
+	public $id = null;
 	protected string $data = '';
 	protected int $version = 0;
 	protected int $sessionId = 0;
@@ -38,6 +39,7 @@ class Step extends Entity implements JsonSerializable {
 	protected int $timestamp = 0;
 
 	public function __construct() {
+		$this->addType('id', 'integer');
 		$this->addType('version', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('sessionId', 'integer');

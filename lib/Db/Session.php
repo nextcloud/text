@@ -27,6 +27,7 @@ use OCP\AppFramework\Db\Entity;
  * @method void setDocumentId(int $documentId)
  */
 class Session extends Entity implements JsonSerializable {
+	public $id;
 	protected ?string $userId = null;
 	protected string $token = '';
 	protected string $color = '';
@@ -36,6 +37,7 @@ class Session extends Entity implements JsonSerializable {
 	protected int $documentId = 0;
 
 	public function __construct() {
+		$this->addType('id', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('lastContact', 'integer');
 	}
