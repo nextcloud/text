@@ -156,5 +156,6 @@ documentReady(() => {
 })
 
 OCA.Text = {
+	...OCA.Text,
 	RichWorkspaceEnabled: loadState('text', 'workspace_available'),
 }
