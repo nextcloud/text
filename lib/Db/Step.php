@@ -31,6 +31,7 @@ class Step extends Entity implements JsonSerializable {
 	 */
 	public const VERSION_STORED_IN_ID = 2147483647;
 
+	public $id = null;
 	protected string $data = '';
 	protected int $version = 0;
 	protected int $sessionId = 0;

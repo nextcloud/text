@@ -27,6 +27,7 @@ use OCP\AppFramework\Db\Entity;
  * @method void setDocumentId(int $documentId)
  */
 class Session extends Entity implements JsonSerializable {
+	public $id;
 	protected ?string $userId = null;
 	protected string $token = '';
 	protected string $color = '';
