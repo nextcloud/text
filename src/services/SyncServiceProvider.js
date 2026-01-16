@@ -15,8 +15,9 @@ import { WebsocketProvider } from './y-websocket.js'
  * @param {number} options.fileId - file id of the file to open
  * @param {number} options.queue - queue for outgoing steps
  * @param {object} options.initialSession - initialSession to start from
- * @param {boolean} options.disableBc - disable broadcast channel synchronization (default: disabled in debug mode, enabled otherwise)
  * @param {object} options.awareness - awareness instance for the provider
+ * @param {boolean} options.disableBc - disable broadcast channel synchronization
+ * @param {string} options.baseVersionEtag - changes when a new editing session starts
  */
 export default function createSyncServiceProvider({
 	ydoc,
@@ -26,6 +27,7 @@ export default function createSyncServiceProvider({
 	queue,
 	awareness,
 	disableBc,
+	baseVersionEtag,
 }) {
 	if (!fileId) {
 		// We need a file id as a unique identifier for y.js as otherwise state might leak between different files

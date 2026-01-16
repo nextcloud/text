@@ -300,6 +300,7 @@ export default defineComponent({
 			dirty,
 			editor,
 			el,
+			getBaseVersionEtag,
 			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
@@ -492,6 +493,7 @@ export default defineComponent({
 				initialSession: this.initialSession,
 				disableBc: true,
 				awareness: this.awareness,
+				baseVersionEtag: this.getBaseVersionEtag(),
 			})
 		},
 
