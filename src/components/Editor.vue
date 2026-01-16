@@ -570,7 +570,7 @@ export default defineComponent({
 					})
 					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-			// Fetch the document state after syntax highlights are loaded
+			// apply the document content after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
 				if (!documentState) {
@@ -583,6 +583,11 @@ export default defineComponent({
 					})
 				}
 			})
+			// Save unsaved changes from offline editing session
+			if (this.dirty) {
+				this.saveService.autosave()
+				this.saveService.autosave.flush()
+			}
 			this.updateUser(session)
 		},
 
@@ -673,12 +678,14 @@ export default defineComponent({
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes before first user change
-				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.setDirty(state.dirty)
-					if (this.dirty) {
+				if (state.dirty) {
+					// ignore initial loading and other automated changes before first user change
+					if (this.editor.can().undo() || this.editor.can().redo()) {
+						this.setDirty(state.dirty)
 						this.saveService.autosave()
 					}
+				} else {
+					this.setDirty(state.dirty)
 				}
 			}
 		},
