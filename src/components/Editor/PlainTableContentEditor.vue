@@ -14,6 +14,7 @@
 import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
+import HardBreak from '@tiptap/extension-hard-break'
 import MainContainer from './MainContainer.vue'
 import Wrapper from './Wrapper.vue'
 import ContentContainer from './ContentContainer.vue'
@@ -59,7 +60,7 @@ export default {
 
 	created() {
 		const html = markdownit.render(this.content)
-		const extensions = [PlainTable, History]
+		const extensions = [HardBreak, PlainTable, History]
 
 		this.$editor = new Editor({
 			content: html,
