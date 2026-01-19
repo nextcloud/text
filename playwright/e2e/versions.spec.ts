@@ -75,7 +75,7 @@ test.describe('Versions with distant timestamps', () => {
  * @param editor editor section to inspect for headings
  */
 async function checkVersions(versions: Locator, editor: EditorSection) {
-	expect(await versions.getByRole('link').count()).toBe(3)
+	expect(await versions.getByRole('link')).toHaveCount(3)
 	// the oldest version is at the end of the versions list
 	await versions.getByRole('link').nth(2).click()
 	await expect(editor.getHeading({ name: 'V1' })).toBeVisible()
