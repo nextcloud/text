@@ -23,6 +23,13 @@ OC.L10N.register(
     "Saved" : "Disimpan",
     "Unsaved changes" : "Perubahan belum disimpan",
     "Keyboard shortcuts" : "Pintasan keyboard",
+    "Bold" : "Tebal",
+    "Italic" : "Miring",
+    "Strikethrough" : "Coret",
+    "Underline" : "Garis bawah",
+    "Heading 1" : "Judul 1",
+    "Blockquote" : "Kutipan blok",
+    "Code block" : "Blok kode",
     "Link" : "Tautan",
     "Undo" : "Undo",
     "Redo" : "Ulang lagi",
@@ -39,6 +46,8 @@ OC.L10N.register(
     "Source code" : "Kode sumber",
     "Both" : "Keduanya",
     "Done" : "Selesai",
+    "Heading 2" : "Judul 2",
+    "Heading 3" : "Judul 3",
     "Lists" : "Daftar",
     "Details" : "Detail",
     "Formatting" : "Pemformatan",
@@ -47,6 +56,7 @@ OC.L10N.register(
     "Choose {file}" : "Pilih {file}",
     "Add folder description" : "Tambahkan deskripsi folder",
     "Edit guest name" : "Edit nama tamu",
-    "Save guest name" : "Simpan nama tamu"
+    "Save guest name" : "Simpan nama tamu",
+    "Copy link to clipboard" : "Salin tautan ke papan klip"
 },
 "nplurals=1; plural=0;");
