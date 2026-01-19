@@ -96,6 +96,8 @@ class SaveService {
 	_autosave() {
 		return this.save({ manualSave: false }).catch((error) => {
 			logger.error('Failed to autosave document.', { error })
+			// retry in 30 seconds
+			this.autosave()
 		})
 	}
 }
