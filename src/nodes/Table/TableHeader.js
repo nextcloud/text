@@ -38,7 +38,7 @@ export default TableHeader.extend({
 		return {
 			...this.parent?.(),
 			textAlign: {
-				rendered: false,
+				rendered: true,
 				parseHTML: (element) => element.style.textAlign || null,
 			},
 		}
