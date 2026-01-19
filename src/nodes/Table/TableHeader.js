@@ -38,8 +38,17 @@ export default TableHeader.extend({
 		return {
 			...this.parent?.(),
 			textAlign: {
-				rendered: false,
-				parseHTML: (element) => element.style.textAlign || null,
+				rendered: true,
+				default: null,
+				renderHTML: attributes => {
+					if (!attributes.textAlign) {
+						return {}
+					}
+					return {
+						style: `text-align: ${attributes.textAlign}`,
+					}
+				},
+				parseHTML: element => element.style.textAlign || null,
 			},
 		}
 	},
