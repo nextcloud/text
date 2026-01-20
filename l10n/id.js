@@ -14,6 +14,7 @@ OC.L10N.register(
     "File not found" : "Berkas tidak ditemukan",
     "Text" : "Teks",
     "Reload" : "Muat ulang",
+    "Enter your name" : "Masukkan nama Anda",
     "Guest" : "Tamu",
     "you" : "Anda",
     "edit" : "ubah",
@@ -57,6 +58,7 @@ OC.L10N.register(
     "Add folder description" : "Tambahkan deskripsi folder",
     "Edit guest name" : "Edit nama tamu",
     "Save guest name" : "Simpan nama tamu",
+    "Cannot copy, please copy the link manually" : "Tidak dapat menyalin, silakan salin tautan secara manual",
     "Copy link to clipboard" : "Salin tautan ke papan klip"
 },
 "nplurals=1; plural=0;");
