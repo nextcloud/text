@@ -60,6 +60,7 @@ export default defineComponent({
 			isEmbedded: this.isEmbedded,
 		}
 	},
+	inheritAttrs: false,
 	props: {
 		filename: {
 			type: String,
@@ -84,14 +85,6 @@ export default defineComponent({
 		mime: {
 			type: String,
 			default: null,
-		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
-		permissions: {
-			type: String,
-			default: '',
 		},
 		source: {
 			type: String,
