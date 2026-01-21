@@ -36,6 +36,7 @@ export default defineComponent({
 		SourceView,
 		Editor,
 	},
+	inheritAttrs: false,
 	provide() {
 		return {
 			isEmbedded: this.isEmbedded,
@@ -65,10 +66,6 @@ export default defineComponent({
 		mime: {
 			type: String,
 			default: null,
-		},
-		permissions: {
-			type: String,
-			default: '',
 		},
 		source: {
 			type: String,
