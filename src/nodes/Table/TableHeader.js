@@ -44,7 +44,7 @@ export default TableHeader.extend({
 			textAlign: {
 				rendered: true,
 				default: null,
-				renderHTML: attributes => {
+				renderHTML: (attributes) => {
 					if (!attributes.textAlign) {
 						return {}
 					}
@@ -52,7 +52,7 @@ export default TableHeader.extend({
 						style: `text-align: ${attributes.textAlign}`,
 					}
 				},
-				parseHTML: element => element.style.textAlign || null,
+				parseHTML: (element) => element.style.textAlign || null,
 			},
 		}
 	},
