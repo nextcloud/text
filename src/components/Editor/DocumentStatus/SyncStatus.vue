@@ -5,17 +5,24 @@
 
 <template>
 	<NcNoteCard v-if="hasWarning || idle" :type="card.type || 'warning'">
-		<p v-if="card.message">
-			{{ card.message }}
-			<a v-if="card.action" class="button primary" @click="card.action">{{
-				card.actionLabel
-			}}</a>
-		</p>
+		<div v-if="card.message" class="notecard-content">
+			<div>
+				{{ card.message }}
+			</div>
+			<NcButton
+				v-if="card.action"
+				variant="primary"
+				class="notecard-button"
+				@click="card.action">
+				{{ card.actionLabel }}
+			</NcButton>
+		</div>
 	</NcNoteCard>
 </template>
 
 <script>
 import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import { ERROR_TYPE } from '../../../services/SyncService.ts'
 
@@ -23,6 +30,7 @@ export default {
 	name: 'SyncStatus',
 
 	components: {
+		NcButton,
 		NcNoteCard,
 	},
 
@@ -109,11 +117,24 @@ export default {
 .document-status {
 	.notecard {
 		margin-bottom: 0;
+		padding-block: 0;
+	}
+
+	.notecard-content {
+		display: flex;
+		align-items: center;
+		gap: var(--default-grid-baseline);
+	}
+
+	.notecard-button {
+		min-width: fit-content;
 	}
 }
+
 .document-status.mobile {
 	.notecard {
 		border-radius: 0;
+		margin-block: 0;
 	}
 }
 </style>
