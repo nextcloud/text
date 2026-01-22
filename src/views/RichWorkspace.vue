@@ -37,7 +37,7 @@ import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
 
-import getEditorInstance from '../components/Editor.singleton.js'
+import Editor from '../components/Editor.js'
 import RichTextReader from '../components/RichTextReader.vue'
 
 const IS_PUBLIC = isPublicShare()
@@ -58,7 +58,7 @@ export default {
 	name: 'RichWorkspace',
 	components: {
 		RichTextReader,
-		Editor: getEditorInstance,
+		Editor,
 	},
 	props: {
 		content: {

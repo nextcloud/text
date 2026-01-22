@@ -12,7 +12,11 @@
 		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
-		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
+		<CollisionResolveDialog
+			v-if="isResolvingConflict"
+			:other-version="otherVersion"
+			:reader-source="localChange ? 'local' : 'server'"
+			@resolved="$emit('resolved')" />
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
@@ -61,7 +65,7 @@
 			</MainContainer>
 			<Reader
 				v-if="isResolvingConflict"
-				:content="syncError.data.outsideChange"
+				:content="otherVersion"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
 		<DocumentStatus
@@ -86,7 +90,7 @@ import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, ref, shallowRef, watch } from 'vue'
-import { Doc } from 'yjs'
+import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
@@ -101,20 +105,21 @@ import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
+import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCaret } from '../extensions/index.js'
-import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
-import { logger } from '../helpers/logger.js'
-import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
+import { logger } from '../helpers/logger.ts'
+import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
 	createPlainEditor,
 	createRichEditor,
 	serializePlainText,
-} from './../EditorFactory.js'
+} from './../EditorFactory.ts'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
@@ -201,6 +206,10 @@ export default defineComponent({
 			type: String,
 			default: null,
 		},
+		localChange: {
+			type: String,
+			default: '',
+		},
 		mime: {
 			type: String,
 			default: null,
@@ -224,6 +233,14 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
+		const {
+			clearIndexedDb,
+			dirty,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+			setDirty,
+		} = useIndexedDbProvider(props, ydoc)
+
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
@@ -232,7 +249,11 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(props)
+		const { connection, openConnection } = provideConnection(
+			props,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
@@ -274,9 +295,12 @@ export default defineComponent({
 
 		return {
 			awareness,
+			clearIndexedDb,
 			connection,
+			dirty,
 			editor,
 			el,
+			getBaseVersionEtag,
 			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
@@ -286,6 +310,7 @@ export default defineComponent({
 			requireReconnect,
 			saveService,
 			serialize,
+			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -303,7 +328,6 @@ export default defineComponent({
 			fileNode: null,
 
 			idle: false,
-			dirty: false,
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
@@ -323,11 +347,23 @@ export default defineComponent({
 		},
 		hasSyncCollission() {
 			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+				Boolean(this.localChange)
+				|| (this.syncError
+					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISSION)
 			)
+		},
+		otherVersion() {
+			return this.localChange || this.syncError.data.outsideChange
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
+		},
+		hasOutdatedDocument() {
+			return (
+				this.syncError
+				&& this.syncError.type === ERROR_TYPE.LOAD_ERROR
+				&& this.syncError.data.status === 412
+			)
 		},
 		currentDirectory() {
 			return this.relativePath
@@ -383,6 +419,18 @@ export default defineComponent({
 			}
 			this.setEditable(!val)
 		},
+		hasOutdatedDocument(val) {
+			if (!val) {
+				return
+			}
+			logger.debug('Document is outdated')
+			const localChange = this.dirty ? this.serialize() : ''
+			logger.debug('Clearing the outdated cache and connecting without it.')
+			this.clearIndexedDb().then(() => {
+				logger.debug('Cleared indexed db, reloading.', { localChange })
+				this.$emit('reload', localChange)
+			})
+		},
 	},
 	mounted() {
 		if (!this.richWorkspace) {
@@ -400,10 +448,18 @@ export default defineComponent({
 	},
 	created() {
 		// The following can be useful for debugging ydoc updates
-		// this.ydoc.on('update', function(update, origin, doc, tr) {
-		//   console.debug('ydoc update', update, origin, doc, tr)
-		//   Y.logUpdate(update)
-		// });
+		this.ydoc.on('update', function (update, origin, doc, tr) {
+			if (window.OCA.Text.logYjsUpdates) {
+				logger.debug('ydoc update', {
+					update,
+					origin,
+					doc,
+					tr,
+					content: doc.getXmlFragment('default').toJSON(),
+				})
+				logUpdate(update)
+			}
+		})
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
@@ -411,6 +467,7 @@ export default defineComponent({
 		}
 	},
 	async beforeDestroy() {
+		logger.debug('beforeDestroy')
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
@@ -434,8 +491,9 @@ export default defineComponent({
 				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
-				disableBC: true,
+				disableBc: true,
 				awareness: this.awareness,
+				baseVersionEtag: this.getBaseVersionEtag(),
 			})
 		},
 
@@ -511,15 +569,24 @@ export default defineComponent({
 					})
 					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-			// Fetch the document state after syntax highlights are loaded
+			// apply the document content after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
 				if (!documentState) {
+					logger.debug('loading initial content', {
+						content,
+						isRichEditor: this.isRichEditor,
+					})
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
 				}
 			})
+			// Save unsaved changes from offline editing session
+			if (this.dirty) {
+				this.saveService.autosave()
+				this.saveService.autosave.flush()
+			}
 			this.updateUser(session)
 		},
 
@@ -527,7 +594,7 @@ export default defineComponent({
 			this.document = document
 
 			this.syncError = null
-			this.setEditable(this.editMode && !this.requireReconnect)
+			this.setEditable(this.editMode) // && !this.requireReconnect)
 		},
 
 		onCreate({ editor }) {
@@ -538,7 +605,9 @@ export default defineComponent({
 		},
 
 		onUpdate({ editor }) {
-			// this.debugContent(editor)
+			if (window.OCA.Text.logEditorUpdates) {
+				this.debugContent(editor)
+			}
 			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
@@ -608,12 +677,14 @@ export default defineComponent({
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes before first user change
-				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.dirty = state.dirty
-					if (this.dirty) {
+				if (state.dirty) {
+					// ignore initial loading and other automated changes before first user change
+					if (this.editor.can().undo() || this.editor.can().redo()) {
+						this.setDirty(state.dirty)
 						this.saveService.autosave()
 					}
+				} else {
+					this.setDirty(state.dirty)
 				}
 			}
 		},
@@ -665,6 +736,7 @@ export default defineComponent({
 		},
 
 		async disconnect() {
+			logger.debug('disconnecting')
 			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
 			this.syncProvider?.destroy()
@@ -673,11 +745,13 @@ export default defineComponent({
 		},
 
 		async close() {
+			logger.debug('closing')
 			await this.syncService
 				.sendRemainingSteps()
 				.catch((err) =>
 					logger.warn('Failed to send remaining steps', { err }),
 				)
+			logger.debug('sent remaining steps')
 			await this.disconnect().catch((err) =>
 				logger.warn('Failed to disconnect', { err }),
 			)
@@ -725,17 +799,18 @@ export default defineComponent({
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
+			// markdown, serialized from editor state by prosemirror-markdown
 			const proseMirrorMarkdown = this.serialize()
+			// HTML, serialized from markdown by markdown-it
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+			// HTML, as rendered in the browser by Tiptap
+			const tiptapHtml = editor.getHTML()
 
-			logger.debug(
-				'markdown, serialized from editor state by prosemirror-markdown',
-			)
-			console.debug(proseMirrorMarkdown)
-			logger.debug('HTML, serialized from markdown by markdown-it')
-			console.debug(markdownItHtml)
-			logger.debug('HTML, as rendered in the browser by Tiptap')
-			console.debug(editor.getHTML())
+			logger.debug('editor update', {
+				proseMirrorMarkdown,
+				markdownItHtml,
+				tiptapHtml,
+			})
 		},
 
 		/**

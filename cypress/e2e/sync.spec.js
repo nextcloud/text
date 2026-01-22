@@ -108,7 +108,10 @@ describe('Sync', () => {
 			'contain',
 			'The document could not be loaded.',
 		)
+		cy.intercept('**/apps/text/session/*/create').as('create')
 		cy.get('#editor-container .document-status').find('.button.primary').click()
+		// let first attempt fail
+		cy.wait('@create', { timeout: 10000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
 			'contain',
 			'The document could not be loaded.',
@@ -117,13 +120,13 @@ describe('Sync', () => {
 		cy.intercept('**/apps/text/session/*/*', (req) => {
 			req.continue()
 		}).as('alive')
-		cy.intercept('**/apps/text/session/*/create').as('create')
 		cy.get('#editor-container .document-status').find('.button.primary').click()
+		// this is the create request... - now with the alive alias
 		cy.wait('@alive', { timeout: 30000 })
-		cy.wait('@create', { timeout: 10000 })
 			.its('request.body')
 			.should('have.property', 'baseVersionEtag')
 			.should('not.be.empty')
+		cy.getContent().should('contain', 'Hello world')
 	})
 
 	it('recovers from a lost and closed connection', () => {
@@ -176,18 +179,9 @@ describe('Sync', () => {
 		cy.wait('@save')
 		cy.uploadTestFile('test.md')
 
-		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
-			'contain',
-			'Editing session has expired.',
-		)
-
-		// Reload button works
-		cy.get('#editor-container .document-status a.button')
-			.contains('Reload')
-			.click()
-
-		cy.getContent()
-		cy.get('#editor-container .document-status .notecard').should('not.exist')
+		cy.getContent().should('not.exist')
+		cy.getContent().find('h2').should('contain', 'Hello world')
+		cy.getContent().find('li').should('not.exist') // was overwritten after the save
 	})
 
 	it('passes the doc content from one session to the next', () => {

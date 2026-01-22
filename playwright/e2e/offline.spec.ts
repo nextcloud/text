@@ -52,5 +52,5 @@ test('typing offline and coming back online', async ({
 	await editor.typeHeading('Hello world')
 	await setOnline()
 	await expect(editor.offlineState).not.toBeVisible()
-	await expect(editor.saveIndicator).toHaveAttribute('title', /Unsaved changes/)
+	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
 })

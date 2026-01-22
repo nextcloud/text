@@ -6,7 +6,7 @@
 import { Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
 import { expect } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.js'
+import { createRichEditor } from '../../EditorFactory.ts'
 
 /**
  * Get node builders from the default rich editor.

@@ -210,7 +210,7 @@ window.OCA.Text.createEditor = async function ({
 	const { default: MarkdownContentEditor } = await import(
 		'./components/Editor/MarkdownContentEditor.vue'
 	)
-	const { default: Editor } = await import('./components/Editor.vue')
+	const { default: Editor } = await import('./components/Editor.js')
 
 	const data = Vue.observable({
 		readonlyBarProps: readonlyBar.props,

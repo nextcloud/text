@@ -5,17 +5,17 @@
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-import { logger } from './helpers/logger.js'
+import { logger } from './helpers/logger.ts'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
 /**
  * Wrapper for async registration of ViewerComponent.
  * Note: it should be named function - the name is used for component registration.
  *
- * @return {Promise<import('./components/ViewerComponent.vue')>} ViewerComponent
+ * @return {Promise<import('./views/ViewerView.js')>} ViewerComponent
  */
 function AsyncTextViewerComponent() {
-	return import('./components/ViewerComponent.vue')
+	return import('./views/ViewerView.js')
 }
 
 if (typeof OCA.Viewer === 'undefined') {

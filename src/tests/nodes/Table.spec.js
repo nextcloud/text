@@ -4,7 +4,7 @@
  */
 
 import { test as baseTest } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.js'
+import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
 

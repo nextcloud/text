@@ -12,18 +12,16 @@
 			:wide="true"
 			size="large"
 			:disabled="clicked"
-			data-cy="resolveThisVersion"
-			@click="resolveThisVersion">
-			{{ t('text', 'Overwrite the file and save the current changes') }}
+			data-cy="useEditorVersion"
+			@click="useEditorVersion">
+			{{ textForSource[editorSource] }}
 		</NcButton>
 		<NcButton
 			:wide="true"
 			:disabled="clicked"
-			data-cy="resolveServerVersion"
-			@click="resolveServerVersion">
-			{{
-				t('text', 'Discard the current changes and load the latest version')
-			}}
+			data-cy="useReaderVersion"
+			@click="useReaderVersion">
+			{{ textForSource[readerSource] }}
 		</NcButton>
 	</div>
 </template>
@@ -35,23 +33,38 @@ import { useEditor } from '../composables/useEditor.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSaveService } from '../composables/useSaveService.ts'
 import { useSyncService } from '../composables/useSyncService.ts'
+import { logger } from '../helpers/logger.ts'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
 	},
 	props: {
-		syncError: {
-			type: Object,
-			default: null,
+		otherVersion: {
+			type: String,
+			required: true,
+		},
+		readerSource: {
+			type: String,
+			required: true,
 		},
 	},
-	setup() {
+	setup(props) {
+		if (!['local', 'server'].includes(props.readerSource)) {
+			logger.warn('Invalid reader source', props)
+		}
 		const { editor } = useEditor()
 		const { syncService } = useSyncService()
 		const { saveService } = useSaveService()
 		const { setContent, setEditable } = useEditorMethods(editor)
+		const editorSource = props.readerSource === 'local' ? 'server' : 'local'
+		const textForSource = {
+			local: t('text', 'Overwrite the file and save the unsaved changes'),
+			server: t('text', 'Discard the changes and edit the latest version'),
+		}
 		return {
+			editorSource,
+			textForSource,
 			setContent,
 			setEditable,
 			saveService,
@@ -65,17 +78,22 @@ export default {
 		}
 	},
 	methods: {
-		resolveThisVersion() {
+		useEditorVersion() {
 			this.clicked = true
-			this.saveService.forceSave().then(() => this.syncService.syncUp())
+			this.saveService.forceSave().then(() => {
+				this.syncService.syncUp()
+				this.$emit('resolved')
+			})
 			this.setEditable(!this.readOnly)
 		},
-		resolveServerVersion() {
-			const { outsideChange } = this.syncError.data
+		useReaderVersion() {
 			this.clicked = true
 			this.setEditable(!this.readOnly)
-			this.setContent(outsideChange)
-			this.saveService.forceSave().then(() => this.syncService.syncUp())
+			this.setContent(this.otherVersion)
+			this.saveService.forceSave().then(() => {
+				this.syncService.syncUp()
+				this.$emit('resolved')
+			})
 		},
 	},
 }

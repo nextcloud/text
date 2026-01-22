@@ -42,4 +42,25 @@ describe('Yjs', function () {
 		expect(targetMap.get('keyB')).to.be.eq('valueB')
 		expect(targetMap.get('keyC')).to.be.eq('valueC')
 	})
+
+	it('detect empty updates', function () {
+		const source = new Doc()
+		const update0 = encodeStateAsUpdate(source)
+		expect(update0).toMatchInlineSnapshot(`
+			Uint8Array [
+			  0,
+			  0,
+			]
+		`)
+		const sourceMap = source.getMap()
+		sourceMap.set('keyA', 'valueA')
+		const sourceVectorA = encodeStateVector(source)
+		const updateAA = encodeStateAsUpdate(source, sourceVectorA)
+		expect(updateAA).toMatchInlineSnapshot(`
+			Uint8Array [
+			  0,
+			  0,
+			]
+		`)
+	})
 })
