@@ -8,7 +8,7 @@
 	"rangeStrategy": "bump",
 	"rebaseWhen": "conflicted",
 	"ignoreUnstable": false,
-	"baseBranchPatterns": ["main", "stable32", "stable31"],
+	"baseBranchPatterns": ["main", "stable33", "stable32", "stable31"],
 	"enabledManagers": ["npm"],
 	"ignoreDeps": ["node", "npm"],
 	"packageRules": [
@@ -51,27 +51,12 @@
 		},
 		{
 			"matchUpdateTypes": ["major"],
-			"matchBaseBranches": [
-				"stable32",
-				"stable31",
-				"stable30",
-				"stable29",
-				"stable28",
-				"stable27",
-				"stable26"
-			],
+			"matchBaseBranches": ["stable33", "stable32", "stable31"],
 			"enabled": false
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchBaseBranches": [
-				"stable31",
-				"stable30",
-				"stable29",
-				"stable28",
-				"stable27",
-				"stable26"
-			],
+			"matchBaseBranches": ["stable33", "stable32", "stable31"],
 			"enabled": false
 		},
 		{
@@ -81,15 +66,7 @@
 				"@nextcloud/cypress",
 				"@cypress/{/,}**"
 			],
-			"matchBaseBranches": [
-				"stable32",
-				"stable31",
-				"stable30",
-				"stable29",
-				"stable28",
-				"stable27",
-				"stable26"
-			],
+			"matchBaseBranches": ["stable33", "stable32", "stable31"],
 			"enabled": false
 		},
 		{
