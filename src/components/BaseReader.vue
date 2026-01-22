@@ -66,6 +66,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.editor__content-wrapper {
+	flex-grow: 1;
+}
+
 .editor__content {
 	max-width: var(--text-editor-max-width);
 	margin: 0 auto;
