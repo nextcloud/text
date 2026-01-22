@@ -41,7 +41,7 @@ variants.forEach(function ({ fixture, mime }) {
 				}).should('contain', 'session has expired')
 
 				// Reload button works
-				cy.get('#editor-container .document-status a.button')
+				cy.get('#editor-container .document-status button')
 					.contains('Reload')
 					.click()
 				getWrapper().should('not.exist')

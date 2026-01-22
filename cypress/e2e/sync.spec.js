@@ -108,7 +108,7 @@ describe('Sync', () => {
 			'contain',
 			'The document could not be loaded.',
 		)
-		cy.get('#editor-container .document-status').find('.button.primary').click()
+		cy.get('#editor-container .document-status').find('button').click()
 		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
 			'contain',
 			'The document could not be loaded.',
@@ -118,7 +118,7 @@ describe('Sync', () => {
 			req.continue()
 		}).as('alive')
 		cy.intercept('**/apps/text/session/*/create').as('create')
-		cy.get('#editor-container .document-status').find('.button.primary').click()
+		cy.get('#editor-container .document-status').find('button').click()
 		cy.wait('@alive', { timeout: 30000 })
 		cy.wait('@create', { timeout: 10000 })
 			.its('request.body')
@@ -150,7 +150,7 @@ describe('Sync', () => {
 		)
 
 		// Reconnect button works - it closes and reopens the session
-		cy.get('#editor-container .document-status a.button')
+		cy.get('#editor-container .document-status button')
 			.contains('Reconnect')
 			.click()
 
@@ -182,7 +182,7 @@ describe('Sync', () => {
 		)
 
 		// Reload button works
-		cy.get('#editor-container .document-status a.button')
+		cy.get('#editor-container .document-status button')
 			.contains('Reload')
 			.click()
 
