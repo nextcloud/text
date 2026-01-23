@@ -1,6 +1,6 @@
 {
   "name": "text",
-  "version": "7.0.0-dev.1",
+  "version": "8.0.0-dev.0",
   "description": "Collaborative document editing",
   "license": "AGPL-3.0-or-later",
   "type": "module",
