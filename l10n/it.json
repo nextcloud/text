@@ -29,7 +29,7 @@
     "You've been disconnected from the server." : "Sei stato disconnesso dal server.",
     "This file is opened read-only as it is currently locked by {user}." : "Questo file è aperto in sola lettura dato che è attualmente bloccato da {user}.",
     "Insert below" : "Inserisci sotto",
-    "Click for options, hold to drag" : "Clicca per le opzioni, tieni premuto per trascinare",
+    "Click for options, hold to drag" : "Fai clic per le opzioni, tieni premuto per trascinare",
     "Not connected. Cannot update guest name." : "Non connesso. Impossibile aggiornare il nome dell'ospite.",
     "Failed to update the guest name." : "Impossibile aggiornare il nome dell'ospite.",
     "Enter your name so other people can see who is editing" : "Inserisci il tuo nome in modo che gli altri possano vedere chi sta modificando",
