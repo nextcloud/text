@@ -115,7 +115,7 @@ OC.L10N.register(
     "Redo" : "Rifai",
     "Toggle outline" : "Attiva il contorno",
     "Alt" : "Alt",
-    "Open link" : "Apri link",
+    "Open link" : "Apri collegamento",
     "Edit link" : "Modifica collegamento",
     "Save changes" : "Salva modifiche",
     "Cancel" : "Annulla",
