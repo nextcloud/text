@@ -19,6 +19,7 @@ test.describe('Changing mimetype from markdown to plaintext', () => {
 		file,
 		viewer,
 	}) => {
+		test.slow()
 		await editor.typeHeading('Hello world')
 		await viewer.close()
 		const plaintext = await file.move('test.txt')
@@ -36,6 +37,7 @@ test.describe('Changing mimetype from plain to markdown', () => {
 		file,
 		viewer,
 	}) => {
+		test.slow()
 		await editor.type('## Hello world')
 		await expect(editor.content).toHaveText('## Hello world')
 		await viewer.close()

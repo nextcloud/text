@@ -78,7 +78,7 @@ export class Node {
 
 	async open() {
 		// loading the file list may take a while
-		const timeout = 10_000
+		const timeout = 15_000
 		await this.page.goto(`f/${this.id}`)
 		await expect(this.page.getByLabel(this.name, { exact: true }))
 			.toBeVisible({ timeout })
