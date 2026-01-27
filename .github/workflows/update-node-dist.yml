@@ -27,6 +27,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
+          # Needed to allow force push later
+          persist-credentials: true
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Read package.json node and npm engines version
@@ -78,7 +80,9 @@ jobs:
 
       - name: Add and commit
         if: steps.changes.outputs.CHANGED != ''
+        env:
+          HEAD_REF: ${{ needs.init.outputs.head_ref }}
         run: |
           git add --force js/ css/
           git commit --signoff -m 'chore(assets): recompile assets'
-          git push origin ${{ github.head_ref }}
+          git push origin "$HEAD_REF"
