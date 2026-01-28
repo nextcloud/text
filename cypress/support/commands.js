@@ -444,7 +444,7 @@ Cypress.Commands.add(
 			'[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]',
 		).should('not.exist')
 		cy.get(
-			'[data-cy-files-content-breadcrumbs] [data-cy-upload-picker] button.action-item__menutoggle',
+			'.files-list__header [data-cy-upload-picker] button.action-item__menutoggle',
 		).click()
 		cy.get('li.upload-picker__menu-entry button').contains(buttonLabel).click()
 
