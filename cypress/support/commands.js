@@ -266,7 +266,8 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	return cy.get('.vue-crumb:last-child a').click({ force: true })
+	cy.get('[data-cy-files-content-breadcrumbs] li:last-child').click()
+	return cy.get('button').contains('Reload content').click()
 })
 
 Cypress.Commands.add('openFolder', (name) => {
