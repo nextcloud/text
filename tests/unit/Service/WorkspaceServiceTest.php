@@ -33,28 +33,35 @@ class WorkspaceServiceTest extends TestCase {
 		$this->workspaceService = new WorkspaceService($this->l10n);
 	}
 
-	public function testGetFileReturnsFirstMatchingFileInPriorityOrder(): void {
+	private function mockFolder(string $internalPath, array $entryNames): Folder&MockObject {
 		$folder = $this->createMock(Folder::class);
 		$storage = $this->createMock(IStorage::class);
 		$cache = $this->createMock(ICache::class);
-		$readmeFile = $this->createMock(File::class);
 
 		$folder->method('getStorage')->willReturn($storage);
 		$storage->method('getCache')->willReturn($cache);
 		$folder->method('getInternalPath')->willReturn('docs');
 
-		$readmeEntry = $this->createMock(ICacheEntry::class);
-		$readmeEntry->method('getMimeType')->willReturn('text/markdown');
+		$entries = array_map(function (string $name) {
+			$entry = $this->createMock(ICacheEntry::class);
+			$entry->method('getName')->willReturn($name);
+			return $entry;
+		}, $entryNames);
 
-		$uppercaseEntry = $this->createMock(ICacheEntry::class);
-		$uppercaseEntry->method('getMimeType')->willReturn('text/markdown');
+		$cache->expects($this->once())
+			->method('getFolderContents')
+			->with($internalPath . '/', 'text/markdown')
+			->willReturn($entries);
 
-		$cache->method('get')->willReturnMap([
-			['docs/Readme.md', $readmeEntry],
-			['docs/README.md', $uppercaseEntry],
-			['docs/readme.md', false],
-			['docs/.Readme.md', false],
-		]);
+		return $folder;
+	}
+
+	public function testGetFileReturnsFirstMatchingFileInPriorityOrder(): void {
+		$readmeFile = $this->createMock(File::class);
+
+		// Cache order deliberately does not match priority order :README.md
+		// comes back before Readme.md, but Readme.md must still win.
+		$folder = $this->mockFolder('docs', ['README.md', 'Readme.md']);
 
 		$folder->expects($this->once())
 			->method('get')
@@ -66,24 +73,20 @@ class WorkspaceServiceTest extends TestCase {
 		$this->assertSame($readmeFile, $result);
 	}
 
-	public function testGetFileSkipsDirectoryCacheEntries(): void {
-		$folder = $this->createMock(Folder::class);
-		$storage = $this->createMock(IStorage::class);
-		$cache = $this->createMock(ICache::class);
+	public function testGetFileIgnoresMarkdownFilesWithUnsupportedNames(): void {
+		// text/markdown files that aren't one of the supported readme names
+		// (e.g. picked up by the mimetype filter but not a readme) must be skipped.
+		$folder = $this->mockFolder('docs', ['notes.md', 'CHANGELOG.md']);
 
-		$folder->method('getStorage')->willReturn($storage);
-		$storage->method('getCache')->willReturn($cache);
-		$folder->method('getInternalPath')->willReturn('docs');
+		$folder->expects($this->never())->method('get');
 
-		$directoryEntry = $this->createMock(ICacheEntry::class);
-		$directoryEntry->method('getMimeType')->willReturn(ICacheEntry::DIRECTORY_MIMETYPE);
+		$result = $this->workspaceService->getFile($folder);
 
-		$cache->method('get')->willReturnMap([
-			['docs/Readme.md', $directoryEntry],
-			['docs/README.md', false],
-			['docs/readme.md', false],
-			['docs/.Readme.md', false],
-		]);
+		$this->assertNull($result);
+	}
+
+	public function testGetFileReturnsNullWhenNoSupportedFileExists(): void {
+		$folder = $this->mockFolder('docs', []);
 
 		$folder->expects($this->never())->method('get');
 

@@ -9,10 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use OCP\Files\Cache\ICacheEntry;
 use OCP\Files\File;
 use OCP\Files\Folder;
-use OCP\Files\NotFoundException;
 use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
@@ -39,17 +37,15 @@ class WorkspaceService {
 			return null;
 		}
 
+		$content = $cache->getFolderContents($internalPath . '/', 'text/markdown');
+		$namesFound = array_flip(array_map(static fn ($entry) => $entry->getName(), $content));
+
 		foreach ($this->getSupportedFilenames() as $filename) {
-			try {
-				$cacheEntry = $cache->get($internalPath . '/' . $filename);
-				if ($cacheEntry !== false && $cacheEntry->getMimeType() !== ICacheEntry::DIRECTORY_MIMETYPE) {
-					$file = $folder->get($filename);
-					if ($file instanceof File) {
-						return $file;
-					}
+			if (isset($namesFound[$filename])) {
+				$file = $folder->get($filename);
+				if ($file instanceof File) {
+					return $file;
 				}
-			} catch (NotFoundException) {
-				continue;
 			}
 		}
 		return null;
