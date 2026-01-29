@@ -266,7 +266,8 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	return cy.get('.vue-crumb:last-child a').click({ force: true })
+	cy.get('[data-cy-files-content-breadcrumbs] li:last-child').click()
+	return cy.get('button').contains('Reload content').click()
 })
 
 Cypress.Commands.add('openFolder', (name) => {
@@ -443,7 +444,7 @@ Cypress.Commands.add(
 			'[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]',
 		).should('not.exist')
 		cy.get(
-			'[data-cy-files-content-breadcrumbs] [data-cy-upload-picker] button.action-item__menutoggle',
+			'.files-list__header [data-cy-upload-picker] button.action-item__menutoggle',
 		).click()
 		cy.get('li.upload-picker__menu-entry button').contains(buttonLabel).click()
 
