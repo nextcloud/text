@@ -138,7 +138,7 @@ class WorkspaceController extends OCSController {
 			}
 
 			$shareNode = $share->getNode();
-			$node = $shareNode instanceof File ? $shareNode : $shareNode->get($path);
+			$node = $shareNode instanceof Folder ? $shareNode->get($path) : $shareNode;
 			if ($node instanceof Folder) {
 				$file = $this->workspaceService->getFile($node);
 				if ($file === null) {
