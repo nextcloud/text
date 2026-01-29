@@ -80,9 +80,7 @@ jobs:
 
       - name: Add and commit
         if: steps.changes.outputs.CHANGED != ''
-        env:
-          HEAD_REF: ${{ github.head_ref }}
         run: |
           git add --force js/ css/
           git commit --signoff -m 'chore(assets): recompile assets'
-          git push origin "$HEAD_REF"
+          git push origin ${{ github.head_ref }}
