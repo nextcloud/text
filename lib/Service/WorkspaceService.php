@@ -28,14 +28,13 @@ class WorkspaceService {
 	}
 
 	public function getFile(Folder $folder): ?File {
-		foreach ($this->getSupportedFilenames() as $filename) {
-			try {
-				$file = $folder->get($filename);
+		$content = $folder->getStorage()->getCache()->getFolderContents($folder->getInternalPath() . '/', 'text/markdown');
+		foreach ($content as $file) {
+			if (in_array($file->getName(), $this->getSupportedFilenames(), true)) {
+				$file = $folder->get($file->getPath());
 				if ($file instanceof File) {
 					return $file;
 				}
-			} catch (NotFoundException|NotPermittedException|StorageInvalidException) {
-				continue;
 			}
 		}
 		return null;

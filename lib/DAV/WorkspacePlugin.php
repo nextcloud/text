@@ -64,7 +64,7 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
-		if (!$node instanceof Directory && !$node instanceof FilesHome) {
+		if (!$node instanceof FilesHome) {
 			return;
 		}
 
