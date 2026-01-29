@@ -11,30 +11,33 @@ namespace OCA\Text\Service;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
 use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
 class WorkspaceService {
+	private IL10N $l10n;
+
 	private const SUPPORTED_STATIC_FILENAMES = [
 		'Readme.md',
 		'README.md',
 		'readme.md'
 	];
 
-	public function __construct(
-		private readonly IL10N $l10n,
-	) {
+	public function __construct(IL10N $l10n) {
+		$this->l10n = $l10n;
 	}
 
 	public function getFile(Folder $folder): ?File {
 		foreach ($this->getSupportedFilenames() as $filename) {
 			try {
-				$file = $folder->get($filename);
-				if ($file instanceof File) {
-					return $file;
+				$exists = $folder->getStorage()->getCache()->get($folder->getInternalPath() . '/' . $filename);
+				if ($exists) {
+					$file = $folder->get($filename);
+					if ($file instanceof File) {
+						return $file;
+					}
 				}
-			} catch (NotFoundException|NotPermittedException|StorageInvalidException) {
+			} catch (NotFoundException|StorageInvalidException) {
 				continue;
 			}
 		}
