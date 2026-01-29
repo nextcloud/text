@@ -10,7 +10,6 @@ namespace OCA\Text\DAV;
 
 use Exception;
 use OC\Files\Node\File;
-use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\WorkspaceService;
@@ -64,7 +63,7 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
-		if (!$node instanceof Directory && !$node instanceof FilesHome) {
+		if (!$node instanceof FilesHome) {
 			return;
 		}
 
