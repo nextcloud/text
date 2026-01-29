@@ -266,7 +266,7 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	cy.get('[data-cy-files-content-breadcrumbs] li:last-child').click()
+	cy.get('[title="Reload current directory"] button').click()
 	return cy.get('button').contains('Reload content').click()
 })
 
