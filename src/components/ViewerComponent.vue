@@ -26,15 +26,17 @@
 
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
-import getEditorInstance from './Editor.singleton.js'
+import { defineComponent } from 'vue'
+import Editor from './Editor.vue'
 import SourceView from './SourceView.vue'
 
-export default {
+export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		SourceView,
-		Editor: getEditorInstance,
+		Editor,
 	},
+	inheritAttrs: false,
 	provide() {
 		return {
 			isEmbedded: this.isEmbedded,
@@ -64,10 +66,6 @@ export default {
 		mime: {
 			type: String,
 			default: null,
-		},
-		permissions: {
-			type: String,
-			default: '',
 		},
 		source: {
 			type: String,
@@ -112,7 +110,7 @@ export default {
 		},
 		t,
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
