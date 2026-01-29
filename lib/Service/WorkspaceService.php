@@ -10,8 +10,6 @@ namespace OCA\Text\Service;
 
 use OCP\Files\File;
 use OCP\Files\Folder;
-use OCP\Files\NotFoundException;
-use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
 class WorkspaceService {
@@ -28,17 +26,13 @@ class WorkspaceService {
 	}
 
 	public function getFile(Folder $folder): ?File {
-		foreach ($this->getSupportedFilenames() as $filename) {
-			try {
-				$exists = $folder->getStorage()->getCache()->get($folder->getInternalPath() . '/' . $filename);
-				if ($exists) {
-					$file = $folder->get($filename);
-					if ($file instanceof File) {
-						return $file;
-					}
+		$content = $folder->getStorage()->getCache()->getFolderContents($folder->getInternalPath() . '/', 'text/markdown');
+		foreach ($content as $file) {
+			if (in_array($file->getName(), $this->getSupportedFilenames(), true)) {
+				$file = $folder->get($file->getPath());
+				if ($file instanceof File) {
+					return $file;
 				}
-			} catch (NotFoundException|StorageInvalidException) {
-				continue;
 			}
 		}
 		return null;
