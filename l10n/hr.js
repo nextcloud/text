@@ -73,6 +73,7 @@ OC.L10N.register(
     "Details" : "Pojedinosti",
     "Insert attachment" : "Umetni privitak",
     "Command" : "Naredba",
+    "Ctrl" : "Ctrl",
     "Formatting" : "Oblikovanje",
     "Select file or folder to link to" : "Odaberi datoteku ili mapu za povezivanje na",
     "Choose" : "Odaberite",
