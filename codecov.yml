@@ -6,3 +6,8 @@ coverage:
                 paths:
                     - 'src'
                 only_pulls: true
+        patch:
+            default:
+                paths:
+                    - 'src'
+                only_pulls: true
