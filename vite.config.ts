@@ -78,6 +78,8 @@ const config = createAppConfig(
 				setupFiles: ['src/tests/setup.mjs'],
 				environment: 'jsdom',
 				globals: true,
+				include: ['src/tests/*.spec.[jt]s', 'src/tests/**/*.spec.[jt]s'],
+				exclude: ['**/node_modules/**', '**/.git/**', 'src/components/**'],
 				server: {
 					deps: {
 						inline: [/@nextcloud.*/],
