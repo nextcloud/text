@@ -7,6 +7,7 @@ import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class EditorSection {
+
 	public readonly el: Locator
 	public readonly content: Locator
 	public readonly formattingHelp: Locator
@@ -66,4 +67,5 @@ export class EditorSection {
 
 	getHeading = (options: object = {}) => this.content.getByRole('heading', options)
 	getSuggestion = (name: string) => this.suggestions.getByText(name)
+
 }

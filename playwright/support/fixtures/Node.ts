@@ -6,7 +6,6 @@
 import { expect, type Page } from '@playwright/test'
 import type { User } from './User'
 
-
 /**
  * Upload a file to the cloud.
  * @param options options for the file upload
@@ -62,10 +61,11 @@ export async function createFolder({ name, owner }: {
 }
 
 const ocsHeaders = {
-	Accept: 'application/json, text/plain, */*'
+	Accept: 'application/json, text/plain, */*',
 }
 
 export class Node {
+
 	public readonly id: number
 	public readonly name: string
 	private readonly page: Page
@@ -86,11 +86,11 @@ export class Node {
 		await this.page.request.fetch(
 			`/remote.php/webdav/${this.name}`,
 			{
-			headers: {
-				Destination: `/remote.php/webdav/${newName}`,
-			},
-			method: 'MOVE',
-		})
+				headers: {
+					Destination: `/remote.php/webdav/${newName}`,
+				},
+				method: 'MOVE',
+			})
 		return new Node({ ...this, page: this.page, name: newName })
 	}
 

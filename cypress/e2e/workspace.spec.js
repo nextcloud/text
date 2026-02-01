@@ -259,4 +259,3 @@ function testListButton(button, tag, content) {
 		.should('have.class', 'is-active')
 		.click()
 }
-

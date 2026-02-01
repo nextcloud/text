@@ -7,6 +7,7 @@ import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class ViewerSection {
+
 	public readonly el: Locator
 
 	constructor(
@@ -32,4 +33,5 @@ export class ViewerSection {
 		await this.page.waitForRequest(/close/)
 		await expect(this.el).not.toBeVisible()
 	}
+
 }

@@ -36,11 +36,11 @@ const setClientOffline = async (client: CDPSession): Promise<void> => {
 export const test = base.extend<OfflineFixture>({
 	setOffline: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
-		await use (() => setClientOffline(client))
+		await use(() => setClientOffline(client))
 		await setClientOnline(client)
 	},
 	setOnline: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
-		await use (() => setClientOnline(client))
+		await use(() => setClientOnline(client))
 	},
 })

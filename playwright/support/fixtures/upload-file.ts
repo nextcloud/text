@@ -27,8 +27,8 @@ export const test = base.extend<UploadFileFixture>({
 	oldVersions: [[], { option: true }],
 
 	file: async ({ fileContent, fileName, oldVersions, user }, use) => {
-		const uploadVersion =
-			(opts: { content?: string, mtime?: number }) =>
+		const uploadVersion
+			= (opts: { content?: string, mtime?: number }) =>
 				user.uploadFile({ name: fileName, ...opts })
 		for (const version of oldVersions) {
 			await uploadVersion(version)

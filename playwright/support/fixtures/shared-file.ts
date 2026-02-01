@@ -13,7 +13,6 @@ export interface SharedFileFixture {
 	share: { token: string }
 }
 
-
 /**
  * This test fixture uploads the file to a user's root directory and shares it.
  */
