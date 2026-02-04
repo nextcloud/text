@@ -53,6 +53,7 @@ OC.L10N.register(
     "Action" : "Radnja",
     "Undo" : "Poništi",
     "Redo" : "Ponovno",
+    "Edit link" : "Uredi poveznicu",
     "Save changes" : "Spremi promjene",
     "Cancel" : "Odustani",
     "URL" : "URL",
