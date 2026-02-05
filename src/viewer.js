@@ -12,10 +12,10 @@ import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js
  * Wrapper for async registration of ViewerComponent.
  * Note: it should be named function - the name is used for component registration.
  *
- * @return {Promise<import('./components/ViewerComponent.vue')>} ViewerComponent
+ * @return {Promise<import('./views/ViewerView.js')>} ViewerComponent
  */
 function AsyncTextViewerComponent() {
-	return import('./components/ViewerComponent.vue')
+	return import('./views/ViewerView.js')
 }
 
 if (typeof OCA.Viewer === 'undefined') {
