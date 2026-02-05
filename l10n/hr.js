@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Ponovno povezivanje",
     "Enter your name" : "Unesite svoje ime",
     "Guest" : "Gost",
+    "submit" : "submit",
     "you" : "vi",
     "edit" : "uredi",
     "Uploading multiple attachments failed." : "Učitavanje više privitaka nije uspjelo.",
