@@ -144,7 +144,9 @@ class SessionMiddleware extends Middleware {
 
 			if ($share->getPassword() !== null) {
 				$shareIds = $this->session->get('public_link_authenticated');
-				if ($share->getId() !== $shareIds && (is_array($shareIds) && !in_array($share->getId(), $shareIds, true))) {
+				$shareIds = is_array($shareIds) ? $shareIds : [$shareIds];
+
+				if (!in_array($share->getId(), $shareIds, true)) {
 					throw new InvalidSessionException();
 				}
 			}
