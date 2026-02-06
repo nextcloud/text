@@ -24,6 +24,7 @@ class ComposerStaticInitText
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'OCA\\Text\\AppInfo\\Application' => __DIR__ . '/..' . '/../lib/AppInfo/Application.php',
         'OCA\\Text\\Command\\ResetDocument' => __DIR__ . '/..' . '/../lib/Command/ResetDocument.php',
+        'OCA\\Text\\ConfigLexicon' => __DIR__ . '/..' . '/../lib/ConfigLexicon.php',
         'OCA\\Text\\Controller\\AttachmentController' => __DIR__ . '/..' . '/../lib/Controller/AttachmentController.php',
         'OCA\\Text\\Controller\\ISessionAwareController' => __DIR__ . '/..' . '/../lib/Controller/ISessionAwareController.php',
         'OCA\\Text\\Controller\\NavigationController' => __DIR__ . '/..' . '/../lib/Controller/NavigationController.php',
