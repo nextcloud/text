@@ -17,6 +17,7 @@
 		v-else
 		:fileid="fileid"
 		:filename="filename"
+		:is-encrypted="isEncrypted"
 		:mime="mime"
 		:source="source"
 		v-bind="$attrs"
@@ -92,6 +93,10 @@ export default defineComponent({
 					|| this.isEncrypted)
 				&& !this.hasToggledInteractiveEmbedding
 			)
+		},
+
+		isEncrypted() {
+			return this.$attrs.e2EeIsEncrypted || false
 		},
 	},
 
