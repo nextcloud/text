@@ -251,6 +251,7 @@ window.OCA.Text.createEditor = async function ({
 	onMentionInsert = undefined,
 	openLinkHandler = undefined,
 	onSearch = undefined,
+	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
 	const { default: MarkdownContentEditor } = await import(
 		/* webpackChunkName: "editor" */ './components/Editor/MarkdownContentEditor.vue'
