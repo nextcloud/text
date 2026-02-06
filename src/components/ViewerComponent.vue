@@ -40,6 +40,7 @@ export default {
 			isEmbedded: this.isEmbedded,
 		}
 	},
+	inheritAttrs: false,
 	props: {
 		filename: {
 			type: String,
