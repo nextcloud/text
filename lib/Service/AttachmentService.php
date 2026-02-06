@@ -594,6 +594,11 @@ readonly class AttachmentService {
 	public function cleanupAttachments(int $fileId): int {
 		$textFile = $this->rootFolder->getFirstNodeById($fileId);
 		if ($textFile instanceof File) {
+			if ($textFile->getStorage()->instanceOfStorage(\OCA\Collectives\Mount\CollectiveStorage::class)) {
+				// Don't cleanup attachments for Collectives pages
+				return 0;
+			}
+
 			if ($textFile->getMimeType() === 'text/markdown') {
 				// get IDs of the files inside the attachment dir
 				try {
