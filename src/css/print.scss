@@ -88,6 +88,8 @@
 					// try no page breaks within tables or images
 					break-inside: avoid-page;
 					page-break-inside: avoid;
+					// no need to leave room for buttons
+					width: 100%;
 				}
 
 				// Add some borders below header and between columns

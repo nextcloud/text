@@ -8,6 +8,16 @@ module.exports = {
 	extends: [
 		'@nextcloud',
 	],
+	overrides: [
+		{
+			files: ['**/*.ts'],
+			rules: {
+				// Do not err out on constructors with parameter properties only.
+				'no-useless-constructor': 'off',
+				'@typescript-eslint/no-useless-constructor': 'error',
+			},
+		},
+	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['off'],
 		'import/no-unresolved': [1, { ignore: ['\\.svg\\?raw$'] }],
