@@ -71,6 +71,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	onAttachmentsUpdated(onAttachmentsUpdatedCallback = () => {}) {
+		subscribe('text:editor:attachments:updated', onAttachmentsUpdatedCallback)
+		return this
+	}
+
 	render(el) {
 		el.innerHTML = ''
 		const element = document.createElement('div')
@@ -251,6 +256,7 @@ window.OCA.Text.createEditor = async function ({
 	onMentionInsert = undefined,
 	openLinkHandler = undefined,
 	onSearch = undefined,
+	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
 	const { default: MarkdownContentEditor } = await import(
 		/* webpackChunkName: "editor" */ './components/Editor/MarkdownContentEditor.vue'
@@ -336,6 +342,7 @@ window.OCA.Text.createEditor = async function ({
 		.onUpdate(onUpdate)
 		.onOutlineToggle(onOutlineToggle)
 		.onSearch(onSearch)
+		.onAttachmentsUpdated(onAttachmentsUpdated)
 		.render(el)
 }
 
