@@ -174,7 +174,7 @@ OC.L10N.register(
     "Copy code" : "Cóipeáil cód",
     "Code block options" : "Roghanna bloc cód",
     "Code block language" : "Teanga bloc cód",
-    "e.g. php, javascript, json…" : "e.g. php, javascript, json…",
+    "e.g. php, javascript, json…" : "m.sh. php, javascript, json…",
     "Source code" : "Cód foinse",
     "Diagram" : "Léaráid",
     "Both" : "An dá",
