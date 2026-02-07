@@ -34,7 +34,7 @@ use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
 use OCP\Util;
 
-class AttachmentService {
+readonly class AttachmentService {
 	public function __construct(
 		private IRootFolder $rootFolder,
 		private ShareManager $shareManager,
@@ -271,12 +271,8 @@ class AttachmentService {
 	/**
 	 * Save an uploaded file in the attachment folder
 	 *
-	 * @param int $documentId
-	 * @param string $newFileName
 	 * @param resource $newFileResource
-	 * @param string $userId
 	 *
-	 * @return array
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
@@ -302,12 +298,8 @@ class AttachmentService {
 	/**
 	 * Save an uploaded file in the attachment folder in a public context
 	 *
-	 * @param int|null $documentId
-	 * @param string $newFileName
 	 * @param resource $newFileResource
-	 * @param string $shareToken
 	 *
-	 * @return array
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
@@ -357,11 +349,6 @@ class AttachmentService {
 	/**
 	 * Copy a file from a user's storage in the attachment folder
 	 *
-	 * @param int $documentId
-	 * @param string $path
-	 * @param string $userId
-	 *
-	 * @return array
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
@@ -380,10 +367,6 @@ class AttachmentService {
 	/**
 	 * create a new file in the attachment folder
 	 *
-	 * @param int $documentId
-	 * @param string $userId
-	 *
-	 * @return array
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
@@ -407,11 +390,6 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param File $originalFile
-	 * @param Folder $saveDir
-	 * @param File $textFile
-	 *
-	 * @return array
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
 	 */
@@ -430,11 +408,6 @@ class AttachmentService {
 
 	/**
 	 * Get unique file name in a directory. Add '(n)' suffix.
-	 *
-	 * @param Folder $dir
-	 * @param string $fileName
-	 *
-	 * @return string
 	 */
 	public static function getUniqueFileName(Folder $dir, string $fileName): string {
 		$extension = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -471,10 +444,6 @@ class AttachmentService {
 	/**
 	 * Get or create file-specific attachment folder
 	 *
-	 * @param File $textFile
-	 * @param bool $create
-	 *
-	 * @return Folder
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
@@ -505,6 +474,7 @@ class AttachmentService {
 
 	/**
 	 * Get a user file from file ID
+	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws NoUserException
@@ -521,9 +491,6 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param File $file
-	 *
-	 * @return bool
 	 * @throws NotFoundException
 	 */
 	private function isDownloadDisabled(File $file): bool {
@@ -543,10 +510,6 @@ class AttachmentService {
 	/**
 	 * Get a user file from file ID
 	 *
-	 * @param int $documentId
-	 * @param string $userId
-	 *
-	 * @return File
 	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
@@ -563,10 +526,6 @@ class AttachmentService {
 	/**
 	 * Get file from share token
 	 *
-	 * @param int|null $documentId
-	 * @param string $shareToken
-	 *
-	 * @return File
 	 * @throws NotFoundException
 	 */
 	private function getTextFilePublic(?int $documentId, string $shareToken): File {
@@ -599,8 +558,6 @@ class AttachmentService {
 	/**
 	 * Get share folder
 	 *
-	 * @param string $shareToken
-	 *
 	 * @throws NotFoundException
 	 */
 	private function getShareFolder(string $shareToken): ?Folder {
@@ -626,11 +583,8 @@ class AttachmentService {
 	}
 
 	/**
-	 * Actually delete attachment files which are not pointed in the markdown content
+	 * Actually delete attachment files which are not pointed in the Markdown content
 	 *
-	 * @param int $fileId
-	 *
-	 * @return int The number of deleted files
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
@@ -640,6 +594,11 @@ class AttachmentService {
 	public function cleanupAttachments(int $fileId): int {
 		$textFile = $this->rootFolder->getFirstNodeById($fileId);
 		if ($textFile instanceof File) {
+			if ($textFile->getStorage()->instanceOfStorage(\OCA\Collectives\Mount\CollectiveStorage::class)) {
+				// Don't cleanup attachments for Collectives pages
+				return 0;
+			}
+
 			if ($textFile->getMimeType() === 'text/markdown') {
 				// get IDs of the files inside the attachment dir
 				try {
@@ -667,15 +626,11 @@ class AttachmentService {
 	}
 
 	/**
-	 * Get attachment file ids listed in the markdown file content
-	 *
-	 * @param string $content
-	 *
-	 * @return array
+	 * Get attachment file ids listed in the Markdown file content
 	 */
 	public static function getAttachmentIdsFromContent(string $content): array {
 		$matches = [];
-		// matches [ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](ANY_URL/f/FILE_ID and captures FILE_ID
+		// matches [ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](ANY_URL/f/FILE_ID) and captures FILE_ID
 		preg_match_all(
 			'/\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\S+\/f\/(\d+)/',
 			$content,
@@ -688,16 +643,11 @@ class AttachmentService {
 	}
 
 	/**
-	 * Get attachment file names listed in the markdown file content
-	 *
-	 * @param string $content
-	 * @param int $fileId
-	 *
-	 * @return array
+	 * Get attachment file names listed in the Markdown file content
 	 */
 	public static function getAttachmentNamesFromContent(string $content, int $fileId): array {
 		$matches = [];
-		// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](.attachments.DOCUMENT_ID/ANY_FILE_NAME) and captures FILE_NAME
+		// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](.attachments.DOCUMENT_ID/ANY_FILE_NAME) and captures ANY_FILE_NAME
 		preg_match_all(
 			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\.attachments\.' . $fileId . '\/([^)&]+)\)/',
 			$content,
@@ -710,56 +660,6 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param File $source
-	 * @param File $target
-	 *
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws InvalidPathException
-	 * @throws LockedException
-	 */
-	public function moveAttachments(File $source, File $target): void {
-		// if the parent directory has changed
-		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
-			try {
-				$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-			} catch (NotFoundException $e) {
-				// silently return if no attachment dir was found for source file
-				return;
-			}
-			// it is in the same directory as the source file in its owner's storage
-			// in other words, we move the attachment dir only if the .md file is moved by its owner
-			if ($source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
-			) {
-				$sourceAttachmentDir->move($target->getParent()->getPath() . '/' . $sourceAttachmentDir->getName());
-			}
-		}
-	}
-
-	/**
-	 * @param File $source
-	 *
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws InvalidPathException
-	 * @throws NoUserException
-	 */
-	public function deleteAttachments(File $source): void {
-		// if there is an attachment dir for this file
-		try {
-			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-		} catch (NotFoundException $e) {
-			// silently return if no attachment dir was found
-			return;
-		}
-		$sourceAttachmentDir->delete();
-	}
-
-	/**
-	 * @param File $source
-	 * @param File $target
-	 *
-	 * @return array file id translation map
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
@@ -787,6 +687,47 @@ class AttachmentService {
 			}
 		}
 		return $fileIdMapping;
+	}
+
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws InvalidPathException
+	 * @throws LockedException
+	 */
+	public function moveAttachments(File $source, File $target): void {
+		// if the parent directory has changed
+		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
+			try {
+				$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+			} catch (NotFoundException $e) {
+				// silently return if no attachment dir was found for source file
+				return;
+			}
+			// it is in the same directory as the source file in its owner's storage
+			// in other words, we move the attachment dir only if the .md file is moved by its owner
+			if ($source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
+			) {
+				$sourceAttachmentDir->move($target->getParent()->getPath() . '/' . $sourceAttachmentDir->getName());
+			}
+		}
+	}
+
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws InvalidPathException
+	 * @throws NoUserException
+	 */
+	public function deleteAttachments(File $source): void {
+		// if there is an attachment dir for this file
+		try {
+			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+		} catch (NotFoundException $e) {
+			// silently return if no attachment dir was found
+			return;
+		}
+		$sourceAttachmentDir->delete();
 	}
 
 	public static function replaceAttachmentFolderId(File $source, File $target): void {
