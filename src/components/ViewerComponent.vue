@@ -36,12 +36,12 @@ export default defineComponent({
 		SourceView,
 		Editor,
 	},
-	inheritAttrs: false,
 	provide() {
 		return {
 			isEmbedded: this.isEmbedded,
 		}
 	},
+	inheritAttrs: false,
 	props: {
 		filename: {
 			type: String,
