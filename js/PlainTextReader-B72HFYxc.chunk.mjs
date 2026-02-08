@@ -1,0 +1,2 @@
+import{P as n}from"./Wrapper-Ca2Dgabq.chunk.mjs";import{B as r}from"./BaseReader-8-ADxwj_.chunk.mjs";import{n as o}from"./NcCheckboxRadioSwitch-CgbTELjq-BFpDVXaF.chunk.mjs";const s={name:"PlainTextReader",components:{BaseReader:r},provide:{extensions:()=>[n]},props:{content:{type:String,required:!0}}};var a=function(){var e=this,t=e._self._c;return t("BaseReader",{attrs:{content:e.content}})},i=[],p=o(s,a,i,!1,null,null);const l=p.exports;export{l as P};
+//# sourceMappingURL=PlainTextReader-B72HFYxc.chunk.mjs.map
