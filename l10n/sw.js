@@ -72,6 +72,7 @@ OC.L10N.register(
     "Lists" : "Lists",
     "Table" : "Jedwali",
     "Details" : "Maelezo ya kina",
+    "Insert link" : "Ingiza kiungo",
     "Ctrl" : "Dhibiti",
     "Option" : "Chaguo",
     "Formatting" : "Formatting",
