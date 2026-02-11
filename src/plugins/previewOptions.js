@@ -27,7 +27,7 @@ export default function previewOptions({ editor }) {
 		state: {
 			init(_, { doc }) {
 				if (!editor.options.editable) {
-					return { decorations: DecorationSet.create() }
+					return { linkParagraphs: [], decorations: DecorationSet.empty }
 				}
 				const linkParagraphs = extractLinkParagraphs(doc)
 				return {
@@ -36,10 +36,11 @@ export default function previewOptions({ editor }) {
 				}
 			},
 			apply(tr, value, _oldState, newState) {
-				if (!tr.docChanged) {
-					return value
-				}
+				// Always return empty decorations if editor is not editable
 				if (!editor.options.editable) {
+					return { linkParagraphs: [], decorations: DecorationSet.empty }
+				}
+				if (!tr.docChanged) {
 					return value
 				}
 				const linkParagraphs = extractLinkParagraphs(newState.doc)
