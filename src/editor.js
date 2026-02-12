@@ -13,6 +13,7 @@ import {
 	OPEN_LINK_HANDLER,
 } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
+import { encodeAttachmentFilename } from './helpers/attachmentFilename.ts'
 import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
@@ -67,6 +68,11 @@ class TextEditorEmbed {
 
 	onSearch(onSearchCallback = () => {}) {
 		subscribe('text:editor:search-results', onSearchCallback)
+		return this
+	}
+
+	onAttachmentsUpdated(onAttachmentsUpdatedCallback = () => {}) {
+		subscribe('text:editor:attachments:updated', onAttachmentsUpdatedCallback)
 		return this
 	}
 
@@ -138,6 +144,55 @@ class TextEditorEmbed {
 			.run()
 	}
 
+	replaceAttachmentFilename(pageId, oldName, newName) {
+		const oldSrc =
+			'.attachments.' + pageId + '/' + encodeAttachmentFilename(oldName)
+		const newSrc =
+			'.attachments.' + pageId + '/' + encodeAttachmentFilename(newName)
+		const { view, state } = this.#getEditorComponent().editor
+		const { doc, schema, tr } = state
+		let modified = false
+
+		doc.descendants((node, pos) => {
+			if (!node.type === schema.nodes.image || node.attrs.src !== oldSrc) {
+				return
+			}
+
+			tr.setNodeMarkup(pos, undefined, {
+				...node.attrs,
+				src: newSrc,
+				alt: node.attrs.alt.replace(oldName, newName),
+			})
+			modified = true
+		})
+
+		if (modified) {
+			view.dispatch(tr)
+			this.save()
+		}
+	}
+
+	removeAttachmentReferences(pageId, name) {
+		const src = '.attachments.' + pageId + '/' + encodeAttachmentFilename(name)
+		const { view, state } = this.#getEditorComponent().editor
+		const { doc, schema, tr } = state
+		let modified = false
+
+		doc.descendants((node, pos) => {
+			if (!node.type === schema.nodes.image || node.attrs.src !== src) {
+				return
+			}
+
+			tr.delete(pos, pos + node.nodeSize)
+			modified = true
+		})
+
+		if (modified) {
+			view.dispatch(tr)
+			this.save()
+		}
+	}
+
 	focus() {
 		this.#getEditorComponent().editor?.commands.focus()
 	}
@@ -201,6 +256,7 @@ window.OCA.Text.createEditor = async function ({
 	onMentionInsert = undefined,
 	openLinkHandler = undefined,
 	onSearch = undefined,
+	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
 	const { default: MarkdownContentEditor } = await import(
 		/* webpackChunkName: "editor" */ './components/Editor/MarkdownContentEditor.vue'
@@ -286,6 +342,7 @@ window.OCA.Text.createEditor = async function ({
 		.onUpdate(onUpdate)
 		.onOutlineToggle(onOutlineToggle)
 		.onSearch(onSearch)
+		.onAttachmentsUpdated(onAttachmentsUpdated)
 		.render(el)
 }
 
