@@ -12,7 +12,7 @@ import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-const apiVersion = '1.2'
+const apiVersion = '1.4'
 
 Vue.prototype.t = window.t
 Vue.prototype.n = window.n
