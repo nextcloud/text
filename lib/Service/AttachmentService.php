@@ -794,6 +794,38 @@ class AttachmentService {
 		return $fileIdMapping;
 	}
 
+	public function copyAttachmentsInFolder(Folder $sourceFolder, Folder $targetFolder): void {
+		foreach ($sourceFolder->getDirectoryListing() as $sourceNode) {
+			if ($sourceNode instanceof Folder && !str_starts_with($sourceNode->getName(), '.attachments.')) {
+				try {
+					$targetNode = $targetFolder->get($sourceNode->getName());
+				} catch (NotFoundException) {
+					// ignore if target node doesn't exist
+					continue;
+				}
+				if ($targetNode instanceof Folder) {
+					$this->copyAttachmentsInFolder($sourceNode, $targetNode);
+				}
+			} elseif ($sourceNode instanceof File
+				&& $sourceNode->getMimeType() === 'text/markdown') {
+				$sourceAttachmentDirName = '.attachments.' . $sourceNode->getId();
+				try {
+					$sourceAttachmentDir = $sourceFolder->get($sourceAttachmentDirName);
+					$targetNode = $targetFolder->get($sourceNode->getName());
+					$targetAttachmentDirName = '.attachments.' . $targetNode->getId();
+					$targetAttachmentDir = $targetFolder->get($sourceAttachmentDirName);
+				} catch (NotFoundException) {
+					// ignore if either of the attachment dirs don't exist
+					continue;
+				}
+				if ($targetNode instanceof File && $targetAttachmentDir instanceof Folder) {
+					$targetAttachmentDir->move($targetFolder->getPath() . '/' . $targetAttachmentDirName);
+					self::replaceAttachmentFolderId($sourceNode, $targetNode);
+				}
+			}
+		}
+	}
+
 	public static function replaceAttachmentFolderId(File $source, File $target): void {
 		$sourceId = $source->getId();
 		$targetId = $target->getId();
