@@ -131,7 +131,8 @@ class ApiService {
 
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
-		if (!$readOnly && strcasecmp((string) $file->getName(), 'Readme.md') !== 0) {
+		/** @psalm-suppress RedundantCastGivenDocblockType */
+		if (!$readOnly && strcasecmp((string)$file->getName(), 'Readme.md') !== 0) {
 			$isLocked = $this->documentService->lock($file->getId());
 			if (!$isLocked) {
 				$readOnly = true;
