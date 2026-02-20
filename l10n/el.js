@@ -223,10 +223,6 @@ OC.L10N.register(
     "Front matter" : "Εισαγωγικά στοιχεία",
     "Link to this section" : "Σύνδεσμος προς αυτήν την ενότητα",
     "Close outline view" : "Κλείσιμο προβολής περιγράμματος",
-    "Outline" : "Περίγραμμα",
-    "Edit guest name" : "Επεξεργασία ονόματος επισκέπτη",
-    "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
-    "Cannot copy, please copy the link manually" : "Δεν μπορεί να αντιγραφεί, παρακαλώ αντιγράψτε χειροκίνητα",
-    "Copy link to clipboard" : "Αντιγραφή συνδέσμου στο πρόχειρο"
+    "Outline" : "Περίγραμμα"
 },
 "nplurals=2; plural=(n != 1);");

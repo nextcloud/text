@@ -225,10 +225,6 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
     "Close outline view" : "Close outline view",
-    "Outline" : "Outline",
-    "Edit guest name" : "ویرایش نام مهمان",
-    "Save guest name" : "ذخیره نام مهمان",
-    "Cannot copy, please copy the link manually" : "کپی کردن امکان پذیر نیست ، لطفا پیوند را به صورت دستی کپی کنید",
-    "Copy link to clipboard" : "Copy link to clipboard"
+    "Outline" : "Outline"
 },
 "nplurals=2; plural=(n > 1);");

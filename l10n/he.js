@@ -77,10 +77,6 @@ OC.L10N.register(
     "Insert attachment" : "הוספת קובץ מצורף",
     "Command" : "פקודה",
     "Formatting" : "עיצוב",
-    "Choose" : "בחר",
-    "Edit guest name" : "עריכת שם אורח",
-    "Save guest name" : "שמירת שם אורח",
-    "Cannot copy, please copy the link manually" : "לא ניתן להעתיק, נא להעתיק את הקישור ידנית",
-    "Copy link to clipboard" : "העתקת קישור ללוח הגזירים"
+    "Choose" : "בחר"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

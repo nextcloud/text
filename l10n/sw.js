@@ -80,8 +80,6 @@ OC.L10N.register(
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
     "Add folder description" : "Add folder description",
-    "Copied to the clipboard" : "Copied to the clipboard",
-    "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
-    "Copy link to clipboard" : "Copy link to clipboard"
+    "Copied to the clipboard" : "Copied to the clipboard"
 },
 "nplurals=2; plural=(n != 1);");

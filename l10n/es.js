@@ -223,10 +223,6 @@ OC.L10N.register(
     "Front matter" : "Prefacio",
     "Link to this section" : "Enlazar a esta sección",
     "Close outline view" : "Cerrar vista de esquema",
-    "Outline" : "Esquema",
-    "Edit guest name" : "Editar nombre del invitado",
-    "Save guest name" : "Guardar nombre del invitado",
-    "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copie el enlace manualmente",
-    "Copy link to clipboard" : "Copiar enlace al portapapeles"
+    "Outline" : "Esquema"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

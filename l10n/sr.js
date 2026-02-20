@@ -225,10 +225,6 @@ OC.L10N.register(
     "Front matter" : "Уводни део",
     "Link to this section" : "Линк на овај одељак",
     "Close outline view" : "Затвори контурни приказ",
-    "Outline" : "Контура",
-    "Edit guest name" : "Измени име госта",
-    "Save guest name" : "Сачувај име госта",
-    "Cannot copy, please copy the link manually" : "Не могу да копирам, копирајте везу ручно",
-    "Copy link to clipboard" : "Копирај везу у оставу"
+    "Outline" : "Контура"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

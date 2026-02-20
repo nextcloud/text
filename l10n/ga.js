@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Greamaíodh tábla isteach i dtábla. Ní thacaítear le táblaí neadaithe.",
     "Link to this section" : "Nasc leis an alt seo",
     "Close outline view" : "Amharc imlíne gar",
-    "Outline" : "Imlíne",
-    "Edit guest name" : "Cuir ainm an aoi in eagar",
-    "Save guest name" : "Sábháil ainm aoi",
-    "Cannot copy, please copy the link manually" : "Ní féidir cóip a dhéanamh, cóipeáil an nasc de láimh le do thoil",
-    "Copy link to clipboard" : "Cóipeáil an nasc chuig an ngearrthaisce"
+    "Outline" : "Imlíne"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

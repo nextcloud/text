@@ -233,10 +233,6 @@
     "A table was pasted into a table. Nested tables are not supported." : "Asestasid tabeli teise tabeli sisse ja selline lahendus pole toetatud.",
     "Link to this section" : "Lisa link sellele lõigule",
     "Close outline view" : "Sulge struktuuri vaade",
-    "Outline" : "Teksti struktuur",
-    "Edit guest name" : "Muuda külalise nime",
-    "Save guest name" : "Salvesta külalise nimi",
-    "Cannot copy, please copy the link manually" : "Ei saa kopeerida, palun kopeeri link käsitsi",
-    "Copy link to clipboard" : "Kopeeri link lõikelauale"
+    "Outline" : "Teksti struktuur"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

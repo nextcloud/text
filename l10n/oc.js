@@ -66,8 +66,6 @@ OC.L10N.register(
     "Insert link" : "Inserir un ligam",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Choose" : "Causir",
-    "Edit guest name" : "Modificar lo nom de convidat",
-    "Save guest name" : "Enregistrar lo nom de convidat"
+    "Choose" : "Causir"
 },
 "nplurals=2; plural=(n > 1);");

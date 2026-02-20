@@ -95,9 +95,6 @@ OC.L10N.register(
     "Choose" : "Chọn",
     "Choose {file}" : "Chọn {file}",
     "Close outline view" : "Đóng chế độ xem phác thảo",
-    "Outline" : "Đường viền",
-    "Edit guest name" : "Chỉnh sửa tên khách",
-    "Save guest name" : "Lưu tên khách",
-    "Cannot copy, please copy the link manually" : "Không thể sao chép, vui lòng sao chép liên kết bằng tay"
+    "Outline" : "Đường viền"
 },
 "nplurals=1; plural=0;");

@@ -223,10 +223,6 @@ OC.L10N.register(
     "Front matter" : "Metadata",
     "Link to this section" : "Link til dette afsnit",
     "Close outline view" : "Luk omrids visning",
-    "Outline" : "Omrids",
-    "Edit guest name" : "Redigér gæstens navn",
-    "Save guest name" : "Gem gæstens navn",
-    "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier venligst linket manuelt",
-    "Copy link to clipboard" : "Kopiér link til udklipsholderen"
+    "Outline" : "Omrids"
 },
 "nplurals=2; plural=(n != 1);");

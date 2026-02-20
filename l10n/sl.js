@@ -155,10 +155,6 @@ OC.L10N.register(
     "Front matter" : "Uvodne strani",
     "Link to this section" : "Poveži s tem odsekom",
     "Close outline view" : "Zapri obrisni pogled",
-    "Outline" : "Obrisni pogled",
-    "Edit guest name" : "Uredi ime gosta",
-    "Save guest name" : "Shrani ime gosta",
-    "Cannot copy, please copy the link manually" : "Povezave ni mogoče kopirati. Storite to ročno.",
-    "Copy link to clipboard" : "Kopiraj povezavo v odložišče"
+    "Outline" : "Obrisni pogled"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

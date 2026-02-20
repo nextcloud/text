@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Sebuah tabel ditempelkan ke dalam tabel. Tabel bersarang tidak didukung.",
     "Link to this section" : "Tautkan ke bagian ini",
     "Close outline view" : "Tutup tampilan kerangka",
-    "Outline" : "Kerangka",
-    "Edit guest name" : "Edit nama tamu",
-    "Save guest name" : "Simpan nama tamu",
-    "Cannot copy, please copy the link manually" : "Tidak dapat menyalin, silakan salin tautan secara manual",
-    "Copy link to clipboard" : "Salin tautan ke papan klip"
+    "Outline" : "Kerangka"
 },
 "nplurals=1; plural=0;");

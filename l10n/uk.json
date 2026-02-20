@@ -233,10 +233,6 @@
     "A table was pasted into a table. Nested tables are not supported." : "Таблицю було вставлено до іншої таблиці. Вкладені таблиці не підтримуються.",
     "Link to this section" : "Посилання на цей розділ",
     "Close outline view" : "Закрити вивід змісту",
-    "Outline" : "Зміст",
-    "Edit guest name" : "Редагувати ім'я гостя",
-    "Save guest name" : "Зберегти ім'я гостя",
-    "Cannot copy, please copy the link manually" : "Неможливо скопіювати, скопіюйте посилання вручну",
-    "Copy link to clipboard" : "Копіювати посилання"
+    "Outline" : "Зміст"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

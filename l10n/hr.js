@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Tablica je zalijepljena u tablicu. Ugniježđene tablice nisu podržane.",
     "Link to this section" : "Poveznica na ovaj odjeljak",
     "Close outline view" : "Zatvori prikaz strukture",
-    "Outline" : "Struktura",
-    "Edit guest name" : "Uredi ime gosta",
-    "Save guest name" : "Spremi ime gosta",
-    "Cannot copy, please copy the link manually" : "Kopiranje nije moguće, ručno kopirajte poveznicu",
-    "Copy link to clipboard" : "Kopiraj poveznicu u međuspremnik"
+    "Outline" : "Struktura"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

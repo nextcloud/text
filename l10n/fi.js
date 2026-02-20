@@ -165,10 +165,6 @@ OC.L10N.register(
     "Created \"{name}\"" : "Luotu \"{name}\"",
     "Copied to the clipboard" : "Kopioitu leikepöydälle",
     "Could not copy to the clipboard" : "Ei voitu kopioida leikepöydälle",
-    "Link to this section" : "Linkki tähän osioon",
-    "Edit guest name" : "Muokkaa vieraan nimeä",
-    "Save guest name" : "Tallenna vieraan nimi",
-    "Cannot copy, please copy the link manually" : "Kopioiminen ei onnistu. Kopioi linkki manuaalisesti",
-    "Copy link to clipboard" : "Kopioi linkki leikepöydälle"
+    "Link to this section" : "Linkki tähän osioon"
 },
 "nplurals=2; plural=(n != 1);");

@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Eine Tabelle wurde in eine Tabelle eingefügt. Verschachtelte Tabellen werden nicht unterstützt.",
     "Link to this section" : "Verweis zu diesem Abschnitt",
     "Close outline view" : "Gliederungsansicht schließen",
-    "Outline" : "Gliederung",
-    "Edit guest name" : "Gast-Namen bearbeiten",
-    "Save guest name" : "Gast-Namen speichern",
-    "Cannot copy, please copy the link manually" : "Kopieren fehlgeschlagen. Bitte kopiere den Link manuell",
-    "Copy link to clipboard" : "Link in die Zwischenablage kopieren"
+    "Outline" : "Gliederung"
 },
 "nplurals=2; plural=(n != 1);");

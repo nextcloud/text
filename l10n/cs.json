@@ -233,10 +233,6 @@
     "A table was pasted into a table. Nested tables are not supported." : "Pokoušíte se vložit tabulku do tabulky. Vnořené tabulky ale nejsou podporovány.",
     "Link to this section" : "Odkázat na tuto sekci",
     "Close outline view" : "Zavřít ohraničené zobrazení",
-    "Outline" : "Osnova",
-    "Edit guest name" : "Upravit jméno hosta",
-    "Save guest name" : "Uložit jméno hosta",
-    "Cannot copy, please copy the link manually" : "Nedaří se zkopírovat, zkopírujte odkaz ručně",
-    "Copy link to clipboard" : "Zkopírovat odkaz do schránky"
+    "Outline" : "Osnova"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

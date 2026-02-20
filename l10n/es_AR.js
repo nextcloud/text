@@ -41,7 +41,6 @@ OC.L10N.register(
     "Table" : "Tabla",
     "Details" : "Detalles",
     "Choose" : "Elige",
-    "Add folder description" : "Agregar una descripción a la carpeta",
-    "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente"
+    "Add folder description" : "Agregar una descripción a la carpeta"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

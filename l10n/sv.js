@@ -227,10 +227,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "En tabell klistrades in i en tabell. Nästlade tabeller stöds inte",
     "Link to this section" : "Länk till detta avsnitt",
     "Close outline view" : "Stäng översiktsvy",
-    "Outline" : "Översikt",
-    "Edit guest name" : "Ändra gästnamn",
-    "Save guest name" : "Spara gästnamn",
-    "Cannot copy, please copy the link manually" : "Kan inte kopiera, länken måste kopieras manuellt",
-    "Copy link to clipboard" : "Kopiera länken till urklipp"
+    "Outline" : "Översikt"
 },
 "nplurals=2; plural=(n != 1);");

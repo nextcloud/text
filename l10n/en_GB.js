@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "A table was pasted into a table. Nested tables are not supported.",
     "Link to this section" : "Link to this section",
     "Close outline view" : "Close outline view",
-    "Outline" : "Outline",
-    "Edit guest name" : "Edit guest name",
-    "Save guest name" : "Save guest name",
-    "Cannot copy, please copy the link manually" : "Cannot copy, please copy the link manually",
-    "Copy link to clipboard" : "Copy link to clipboard"
+    "Outline" : "Outline"
 },
 "nplurals=2; plural=(n != 1);");

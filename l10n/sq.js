@@ -41,8 +41,6 @@ OC.L10N.register(
     "Source code" : "Kodi burim",
     "Done" : "U bë",
     "Details" : "Detajet",
-    "Choose" : "Zgjidhni",
-    "Edit guest name" : "Ndryshoni emrin e të ftuarit",
-    "Save guest name" : "Ruaj emrin e të ftuarit"
+    "Choose" : "Zgjidhni"
 },
 "nplurals=2; plural=(n != 1);");

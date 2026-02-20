@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "テーブルがテーブルに貼り付けられました。ネストされたテーブルはサポートされていません。",
     "Link to this section" : "このセクションへのリンク",
     "Close outline view" : "目次の表示を閉じる",
-    "Outline" : "目次",
-    "Edit guest name" : "ゲスト名を編集",
-    "Save guest name" : "ゲスト名を保存",
-    "Cannot copy, please copy the link manually" : "コピーできませんでした。手動でリンクをコピーしてください。",
-    "Copy link to clipboard" : "リンクをクリップボードにコピーする"
+    "Outline" : "目次"
 },
 "nplurals=1; plural=0;");

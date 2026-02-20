@@ -57,9 +57,6 @@ OC.L10N.register(
     "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Choose" : "Elekti",
-    "Choose {file}" : "Elekti {file}",
-    "Edit guest name" : "Modifi la gastonomon",
-    "Save guest name" : "Koservi la gastonomon",
-    "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane."
+    "Choose {file}" : "Elekti {file}"
 },
 "nplurals=2; plural=(n != 1);");

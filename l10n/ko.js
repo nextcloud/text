@@ -210,10 +210,6 @@ OC.L10N.register(
     "Front matter" : "머리말",
     "Link to this section" : "이 부분으로 링크",
     "Close outline view" : "개요 닫기",
-    "Outline" : "개요",
-    "Edit guest name" : "손님 이름 편집하기",
-    "Save guest name" : "손님 이름 저장하기",
-    "Cannot copy, please copy the link manually" : "복사할 수 없습니다, 링크를 수동으로 복사하세요.",
-    "Copy link to clipboard" : "링크를 클립보드에 복사"
+    "Outline" : "개요"
 },
 "nplurals=1; plural=0;");

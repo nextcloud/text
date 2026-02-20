@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Bir tablo başka bir tablo içine yapıştırıldı. İç içe geçmiş tablolar desteklenmiyor.",
     "Link to this section" : "Bu bölüm bağlantısı",
     "Close outline view" : "Özet görünümünü kapat",
-    "Outline" : "Özet",
-    "Edit guest name" : "Konuk adını düzenle",
-    "Save guest name" : "Konuk adını kaydet",
-    "Cannot copy, please copy the link manually" : "Kopyalanamadı. Lütfen bağlantıyı el ile kopyalayın",
-    "Copy link to clipboard" : "Bağlantıyı panoya kopyala"
+    "Outline" : "Özet"
 },
 "nplurals=2; plural=(n > 1);");
