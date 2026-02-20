@@ -233,10 +233,6 @@
     "A table was pasted into a table. Nested tables are not supported." : "表格被粘贴进另一个表格中，不支持嵌套表格。",
     "Link to this section" : "链接至本节",
     "Close outline view" : "关闭大纲视图",
-    "Outline" : "大纲",
-    "Edit guest name" : "编辑访客姓名",
-    "Save guest name" : "保存访客姓名",
-    "Cannot copy, please copy the link manually" : "无法复制，请手动复制链接",
-    "Copy link to clipboard" : "复制链接到剪贴板"
+    "Outline" : "大纲"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

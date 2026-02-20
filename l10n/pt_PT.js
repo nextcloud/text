@@ -63,9 +63,6 @@ OC.L10N.register(
     "Formatting" : "Formação ",
     "Choose" : "Escolher",
     "Choose {file}" : "Escolher {file}",
-    "Add folder description" : "Adicionar descrição da pasta",
-    "Edit guest name" : "Inserir o nome do convidado",
-    "Save guest name" : "Guardar o nome do convidado",
-    "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente"
+    "Add folder description" : "Adicionar descrição da pasta"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

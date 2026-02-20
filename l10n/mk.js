@@ -106,9 +106,6 @@ OC.L10N.register(
     "Choose {file}" : "Избери {file}",
     "Add folder description" : "Додади опис на папката",
     "Close outline view" : "Затвори преглед",
-    "Outline" : "Преглед",
-    "Edit guest name" : "Промени име на гостин",
-    "Save guest name" : "Зачувај име на гостин",
-    "Cannot copy, please copy the link manually" : "Неможе да се копира, копирајте го линкот рачно"
+    "Outline" : "Преглед"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

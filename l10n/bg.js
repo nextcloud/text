@@ -156,10 +156,6 @@ OC.L10N.register(
     "Front matter" : "Предно съдържание",
     "Link to this section" : "Връзка към този раздел",
     "Close outline view" : "Затваряне на структурния изглед",
-    "Outline" : "Структура",
-    "Edit guest name" : "Редактиране на името на госта",
-    "Save guest name" : "Запис на името на госта",
-    "Cannot copy, please copy the link manually" : "Не може да се копира, моля, копирайте връзката ръчно",
-    "Copy link to clipboard" : "Копиране на връзката в клипборда"
+    "Outline" : "Структура"
 },
 "nplurals=2; plural=(n != 1);");

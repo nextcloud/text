@@ -233,10 +233,6 @@
     "A table was pasted into a table. Nested tables are not supported." : "Un tableau a été collé dans un tableau. Les tableaux imbriqués ne sont pas pris en charge.",
     "Link to this section" : "Lier vers cette section",
     "Close outline view" : "Fermer la vue du plan",
-    "Outline" : "Plan",
-    "Edit guest name" : "Modifier le nom de l'invité",
-    "Save guest name" : "Enregistrer le nom de l'invité",
-    "Cannot copy, please copy the link manually" : "Impossible de copier, merci de copier le lien manuellement",
-    "Copy link to clipboard" : "Copier le lien dans le presse-papier"
+    "Outline" : "Plan"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

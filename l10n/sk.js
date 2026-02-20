@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Stôl bol vložený do tabuľky. Vnorené tabuľky nie sú podporované.",
     "Link to this section" : "Odkaz na túto sekciu",
     "Close outline view" : "Zatvoriť prehľad",
-    "Outline" : "Prehľad",
-    "Edit guest name" : "Upraviť meno hosťa",
-    "Save guest name" : "Uložiť meno hosťa",
-    "Cannot copy, please copy the link manually" : "Nedarí sa skopírovať, skopírujte prosím ručne.",
-    "Copy link to clipboard" : "Skopírovať odkaz do schránky"
+    "Outline" : "Prehľad"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

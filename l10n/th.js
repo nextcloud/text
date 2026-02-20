@@ -34,7 +34,6 @@ OC.L10N.register(
     "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ",
     "Choose" : "เลือก",
-    "Choose {file}" : "เลือก {file}",
-    "Cannot copy, please copy the link manually" : "ไม่สามารถคัดลอก กรุณาคัดลอกลิงก์เอง"
+    "Choose {file}" : "เลือก {file}"
 },
 "nplurals=1; plural=0;");

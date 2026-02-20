@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Una tabella è stata incollata in un'altra tabella. Le tabelle nidificate non sono supportate.",
     "Link to this section" : "Collegamento a questa sezione",
     "Close outline view" : "Chiudi indice",
-    "Outline" : "Indice",
-    "Edit guest name" : "Modifica nome ospite",
-    "Save guest name" : "Salva nome ospite",
-    "Cannot copy, please copy the link manually" : "Impossibile copiare, copia il collegamento manualmente",
-    "Copy link to clipboard" : "Copia collegamento negli appunti"
+    "Outline" : "Indice"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -188,10 +188,6 @@ OC.L10N.register(
     "Front matter" : "Előlap",
     "Link to this section" : "Hivatkozás erre a szakaszra",
     "Close outline view" : "Vázlatnézet bezárása",
-    "Outline" : "Vázlat",
-    "Edit guest name" : "Vendégnév szerkesztése",
-    "Save guest name" : "Vendégnév mentése",
-    "Cannot copy, please copy the link manually" : "A másolás sikertelen, másolja kézzel a hivatkozást",
-    "Copy link to clipboard" : "Hivatkozás vágólapra másolása"
+    "Outline" : "Vázlat"
 },
 "nplurals=2; plural=(n != 1);");

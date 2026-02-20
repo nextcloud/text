@@ -206,10 +206,6 @@
     "Front matter" : "Text preliminar",
     "Link to this section" : "Enllaç a aquesta secció",
     "Close outline view" : "Tanca la visualització d'esquema",
-    "Outline" : "Esquema",
-    "Edit guest name" : "Edita el nom de convidat",
-    "Save guest name" : "Desa el nom de convidat",
-    "Cannot copy, please copy the link manually" : "No es pot copiar; copieu l'enllaç manualment",
-    "Copy link to clipboard" : "Copia l'enllaç al porta-retalls"
+    "Outline" : "Esquema"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

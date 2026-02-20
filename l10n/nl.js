@@ -221,10 +221,6 @@ OC.L10N.register(
     "Front matter" : "Voorwerk",
     "Link to this section" : "Link naar dit gedeelte",
     "Close outline view" : "Sluit overzichtsweergave",
-    "Outline" : "Overzicht",
-    "Edit guest name" : "Bewerk gast naam",
-    "Save guest name" : "Bewaar gast naam",
-    "Cannot copy, please copy the link manually" : "Kopiëren niet mogelijk, kopieer de link handmatig",
-    "Copy link to clipboard" : "Kopieer link naar klembord"
+    "Outline" : "Overzicht"
 },
 "nplurals=2; plural=(n != 1);");

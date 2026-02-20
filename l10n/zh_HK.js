@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "表格被貼上到表格中。不支援巢狀表格。",
     "Link to this section" : "連結到本節",
     "Close outline view" : "關閉大綱檢視",
-    "Outline" : "大綱",
-    "Edit guest name" : "編輯訪客名稱",
-    "Save guest name" : "儲存訪客名稱",
-    "Cannot copy, please copy the link manually" : "無法複製，請手動複製連結",
-    "Copy link to clipboard" : "複製連結到剪貼板"
+    "Outline" : "大綱"
 },
 "nplurals=1; plural=0;");

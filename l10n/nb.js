@@ -199,10 +199,6 @@ OC.L10N.register(
     "Front matter" : "Innledning",
     "Link to this section" : "Kobling til denne seksjonen",
     "Close outline view" : "Lukk konturvisning",
-    "Outline" : "Omriss",
-    "Edit guest name" : "Rediger gjestenavn",
-    "Save guest name" : "Lagre gjestenavn",
-    "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier lenken manuelt",
-    "Copy link to clipboard" : "Kopier lenke til utklippstavlen"
+    "Outline" : "Omriss"
 },
 "nplurals=2; plural=(n != 1);");

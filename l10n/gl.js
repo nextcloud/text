@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Foi pegada unha táboa dentro doutra táboa. Non están admitidas as táboas aniñadas.",
     "Link to this section" : "Ligazón a esta sección",
     "Close outline view" : "Pechar a vista de esquema",
-    "Outline" : "Esquema",
-    "Edit guest name" : "Editar o nome do convidado",
-    "Save guest name" : "Gardar o nome do convidado",
-    "Cannot copy, please copy the link manually" : "Non foi posíbel copiala. Copie a ligazón manualmente",
-    "Copy link to clipboard" : "Copiar a ligazón no portapapeis"
+    "Outline" : "Esquema"
 },
 "nplurals=2; plural=(n != 1);");

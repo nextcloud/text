@@ -144,10 +144,6 @@ OC.L10N.register(
     "Copied to the clipboard" : "Copióse nel cartafueyu",
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
     "Close outline view" : "Zarrar la visualización d'esquemes",
-    "Outline" : "Esquema",
-    "Edit guest name" : "Editar el nome de convidáu",
-    "Save guest name" : "Guardar el nome de convidáu",
-    "Cannot copy, please copy the link manually" : "Nun se pue copiar. Copia l'enllaz manualmente",
-    "Copy link to clipboard" : "Copiar l'enllaz nel cartafueyu"
+    "Outline" : "Esquema"
 },
 "nplurals=2; plural=(n != 1);");

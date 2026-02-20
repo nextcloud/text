@@ -235,10 +235,6 @@ OC.L10N.register(
     "A table was pasted into a table. Nested tables are not supported." : "Taula bat taula batean itsatsi da. Ez dira habiaratutako taulak onartzen.",
     "Link to this section" : "Estekatu atal honetara",
     "Close outline view" : "Itxi eskema ikuspegia",
-    "Outline" : "Eskema",
-    "Edit guest name" : "Editatu gonbidatuaren izena",
-    "Save guest name" : "Gorde gonbidatuaren izena",
-    "Cannot copy, please copy the link manually" : "Ezin izan da kopiatu. Kopiatu esteka eskuz",
-    "Copy link to clipboard" : "Kopiatu esteka arbelera"
+    "Outline" : "Eskema"
 },
 "nplurals=2; plural=(n != 1);");

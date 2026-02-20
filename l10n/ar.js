@@ -215,10 +215,6 @@ OC.L10N.register(
     "Front matter" : "المادة التقديمية front matter",
     "Link to this section" : "رابط إلى القسم section",
     "Close outline view" : "أغلق العرض التخطيطي outline view",
-    "Outline" : "عرض تخطيطي outline",
-    "Edit guest name" : "تعديل اسم الضيف",
-    "Save guest name" : "حفظ اسم الضيف",
-    "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
-    "Copy link to clipboard" : "انسخ الرابط إلى الحافظة"
+    "Outline" : "عرض تخطيطي outline"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

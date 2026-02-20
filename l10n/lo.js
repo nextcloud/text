@@ -227,10 +227,6 @@ OC.L10N.register(
     "Front matter" : "ຂໍ້ມູນສ່ວນໜ້າ",
     "Link to this section" : "ລິງໄປຫາສ່ວນນີ້",
     "Close outline view" : "ປິດມຸມມອງໂຄງຮ່າງ",
-    "Outline" : "ໂຄງຮ່າງ",
-    "Edit guest name" : "ແກ້ໄຂຊື່ແຂກ",
-    "Save guest name" : "ບັນທຶກຊື່ແຂກ",
-    "Cannot copy, please copy the link manually" : "ບໍ່ສາມາດສຳເນົາໄດ້, ກະລຸນາສຳເນົາລິງດ້ວຍຕົວເອງ",
-    "Copy link to clipboard" : "ສຳເນົາລິ້ງໃສ່ຄລິບບອດ"
+    "Outline" : "ໂຄງຮ່າງ"
 },
 "nplurals=1; plural=0;");
