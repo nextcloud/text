@@ -52,6 +52,7 @@ OC.L10N.register(
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",
     "to" : "a",
+    "Insert" : "Inserir",
     "Edit" : "Modificar",
     "Upload" : "Telecargament",
     "Source code" : "Còdi font",
