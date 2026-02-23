@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "The file was uploaded" : "Файл байршуулагдлаа",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Байршуулсан файл php.ini дахь upload_max_filesize хязгаараас хэтэрсэн",
+    "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Байршуулсан файл HTML маягтад заасан MAX_FILE_SIZE хязгаараас хэтэрсэн байна",
     "The file was only partially uploaded" : "Файл зөвхөн хэсэгчлэн байршуулагдсан",
     "No file was uploaded" : "Файл байршуулагдаагүй",
     "Missing a temporary folder" : "Түр хавтас олдохгүй байна",
@@ -22,6 +23,7 @@ OC.L10N.register(
     "Overwrite the file and save the current changes" : "Файлыг дарж бичиж одоогийн өөрчлөлтийг хадгалах",
     "Discard the current changes and load the latest version" : "Одоогийн өөрчлөлтийг хаяж хамгийн сүүлийн хувилбарыг ачаалах",
     "Reload" : "Дахин ачаалах",
+    "The document could not be loaded. Please check your internet connection." : "Баримт бичгийг ачааллах боломжгүй байна. Интернет холболтоо шалгана уу.",
     "Reconnect" : "Дахин холбогдох",
     "You've been disconnected from the server." : "Та серверээс салгагдсан.",
     "This file is opened read-only as it is currently locked by {user}." : "Энэ файл зөвхөн уншигдах горимоор нээгдсэн учир нь одоогоор {user} түгжсэн.",
