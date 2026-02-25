@@ -13,6 +13,7 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\Lock\ILockingProvider;
 
 /**
@@ -41,6 +42,8 @@ class NodeCopiedListener implements IEventListener {
 			AttachmentService::replaceAttachmentFolderId($source, $target);
 			AttachmentService::replaceAttachmentFileIds($target, $fileIdMapping);
 			$target->lock(ILockingProvider::LOCK_SHARED);
+		} elseif ($source instanceof Folder && $target instanceof Folder) {
+			$this->attachmentService->copyAttachmentsInFolder($source, $target);
 		}
 	}
 }
