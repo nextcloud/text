@@ -54,7 +54,7 @@
 						:svg="template.iconSvgInline" />
 					<Plus v-else />
 				</template>
-				{{ template.actionLabel }}
+				{{ template.label }}
 			</NcActionButton>
 		</template>
 	</NcActions>
