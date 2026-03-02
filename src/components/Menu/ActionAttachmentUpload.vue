@@ -116,7 +116,11 @@ export default {
 			return this.$uploadingState.isUploadingAttachments
 		},
 		templates() {
-			return loadState('files', 'templates', [])
+			let templates = loadState('collectives', 'templates', [])
+			if (!templates.length) {
+				templates = loadState('files', 'templates', [])
+			}
+			return templates
 		},
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
