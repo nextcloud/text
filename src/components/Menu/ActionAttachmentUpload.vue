@@ -54,7 +54,7 @@
 						:svg="template.iconSvgInline" />
 					<Plus v-else />
 				</template>
-				{{ template.actionLabel }}
+				{{ template.label }}
 			</NcActionButton>
 		</template>
 	</NcActions>
@@ -116,7 +116,15 @@ export default {
 			return this.$uploadingState.isUploadingAttachments
 		},
 		templates() {
-			return loadState('files', 'templates', [])
+			let templates = loadState('collectives', 'templates', [])
+			if (!templates.length) {
+				templates = loadState('files', 'templates', [])
+			}
+			return (
+				templates
+					// Exclude "New text file" as it doesn't make much sense from a text file
+					.filter((t) => !(t.app === 'text' && t.extension === '.md'))
+			)
 		},
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
