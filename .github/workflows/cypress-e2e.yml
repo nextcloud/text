@@ -166,6 +166,7 @@ jobs:
           php occ app:enable text
           php occ app:enable assistant --force
           php occ app:enable testing
+          php occ app:enable whiteboard --force
           php occ app:list
           php occ background:cron
           php occ config:system:set session_keepalive --value=false --type=boolean

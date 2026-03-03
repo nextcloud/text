@@ -12,7 +12,7 @@ const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
-const ACTION_CREATE_NEW_TEXT_FILE = 'insert-attachment-add-text-0'
+const ACTION_CREATE_NEW_WHITEBOARD_FILE = 'insert-attachment-add-whiteboard-0'
 
 /**
  * @param {string} name name of file
@@ -298,17 +298,14 @@ describe('Test all attachment insertion methods', () => {
 		cy.closeFile()
 	})
 
-	it('Create a new text file as an attachment', () => {
+	it('Create a new whiteboard file as an attachment', () => {
 		const check = (documentId, fileName) => {
 			cy.log(
 				'Check the attachment is visible and well formed',
 				documentId,
 				fileName,
 			)
-			return cy
-				.get(`.text-editor [basename="${fileName}"]`)
-				.find('.text-editor__wrapper')
-				.should('be.visible')
+			return cy.get('.preview .widget-file.whiteboard').should('be.visible')
 		}
 
 		cy.visit('/apps/files')
@@ -319,7 +316,7 @@ describe('Test all attachment insertion methods', () => {
 		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(
 			requestAlias,
 		)
-		clickOnAttachmentAction(ACTION_CREATE_NEW_TEXT_FILE).then(() => {
+		clickOnAttachmentAction(ACTION_CREATE_NEW_WHITEBOARD_FILE).then(() => {
 			return waitForRequestAndCheckAttachment(
 				requestAlias,
 				undefined,
