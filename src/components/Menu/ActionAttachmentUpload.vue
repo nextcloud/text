@@ -120,7 +120,11 @@ export default {
 			if (!templates.length) {
 				templates = loadState('files', 'templates', [])
 			}
-			return templates
+			return (
+				templates
+					// Exclude "New text file" as it doesn't make much sense from a text file
+					.filter((t) => !(t.app === 'text' && t.extension === '.md'))
+			)
 		},
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
