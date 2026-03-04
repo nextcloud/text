@@ -122,13 +122,9 @@ class SessionMiddleware extends Middleware {
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
 		$documentId = (int)$this->request->getParam('documentId');
-		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
-			// Check if user has access to document
-			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) === null) {
-				throw new InvalidSessionException();
-			}
-			$controller->setUserId($userId);
-		} elseif ('' !== $shareToken = (string)$this->request->getParam('shareToken')) {
+		$shareToken = (string)$this->request->getParam('shareToken');
+
+		if ($shareToken !== '') {
 			try {
 				$share = $this->shareManager->getShareByToken($shareToken);
 			} catch (ShareNotFound) {
@@ -157,11 +153,20 @@ class SessionMiddleware extends Middleware {
 			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
 				throw new InvalidSessionException();
 			}
-		} else {
-			throw new InvalidSessionException();
+
+			$controller->setDocumentId($documentId);
+			return;
 		}
 
-		$controller->setDocumentId($documentId);
+		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
+			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) !== null) {
+				$controller->setUserId($userId);
+				$controller->setDocumentId($documentId);
+				return;
+			}
+		}
+
+		throw new InvalidSessionException();
 	}
 
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
