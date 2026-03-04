@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { registerFileListHeaders } from '@nextcloud/files'
+import { registerFileListHeader } from '@nextcloud/files'
 import { registerDavProperty } from '@nextcloud/files/dav'
 import { loadState } from '@nextcloud/initial-state'
 import { addMenuRichWorkspace, FilesWorkspaceHeader } from './helpers/files.js'
@@ -17,5 +17,5 @@ registerDavProperty('nc:rich-workspace-file', { nc: 'http://nextcloud.org/ns' })
 
 if (workspaceAvailable) {
 	addMenuRichWorkspace()
-	registerFileListHeaders(FilesWorkspaceHeader)
+	registerFileListHeader(FilesWorkspaceHeader)
 }

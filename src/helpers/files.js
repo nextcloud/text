@@ -10,7 +10,6 @@ import { emit } from '@nextcloud/event-bus'
 import {
 	addNewFileMenuEntry,
 	File,
-	Header,
 	NewMenuEntryCategory,
 	Permission,
 } from '@nextcloud/files'
@@ -89,7 +88,10 @@ const enabled = (_, view) => {
 	return ['files', 'favorites', 'public-share'].includes(view.id)
 }
 
-export const FilesWorkspaceHeader = new Header({
+/**
+ * @type {import('@nexcloud/files').IFileListHeader}
+ */
+export const FilesWorkspaceHeader = {
 	id: 'workspace',
 	order: 10,
 	enabled,
@@ -140,6 +142,6 @@ export const FilesWorkspaceHeader = new Header({
 			folder.attributes['rich-workspace'] || ''
 		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
 	},
-})
+}
 
 export { FILE_ACTION_IDENTIFIER }
