@@ -122,15 +122,9 @@ class SessionMiddleware extends Middleware {
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
 		$documentId = (int)$this->request->getParam('documentId');
-		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
-			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) !== null) {
-				$controller->setUserId($userId);
-				$controller->setDocumentId($documentId);
-				return;
-			}
-		}
+		$shareToken = (string)$this->request->getParam('shareToken');
 
-		if ('' !== $shareToken = (string)$this->request->getParam('shareToken')) {
+		if ($shareToken !== '') {
 			try {
 				$share = $this->shareManager->getShareByToken($shareToken);
 			} catch (ShareNotFound) {
@@ -162,6 +156,14 @@ class SessionMiddleware extends Middleware {
 
 			$controller->setDocumentId($documentId);
 			return;
+		}
+
+		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
+			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) !== null) {
+				$controller->setUserId($userId);
+				$controller->setDocumentId($documentId);
+				return;
+			}
 		}
 
 		throw new InvalidSessionException();
