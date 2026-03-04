@@ -242,27 +242,66 @@ Cypress.Commands.add('getFileContent', (path) => {
 })
 
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
-	return cy.window(silent).then((win) => {
-		const files = win.OC.Files
-		const PROPERTY_WORKSPACE_FILE = `{${files.Client.NS_NEXTCLOUD}}rich-workspace-file`
-		const PROPERTY_WORKSPACE = `{${files.Client.NS_NEXTCLOUD}}rich-workspace`
-		const properties = [
-			...files.getClient().getPropfindProperties(),
-			PROPERTY_WORKSPACE_FILE,
-			PROPERTY_WORKSPACE,
-		]
-		const client = files.getClient().getClient()
-		return client
-			.propFind(client.baseUrl + path, properties, depth)
-			.then((results) => {
-				cy.log(`Propfind returned ${results.status}`)
-				if (depth) {
-					return results.body
-				} else {
-					return results.body.propStat[0].properties
-				}
+	const rootPath = `${url}/remote.php/webdav/`
+	const requestPath = path === '/' ? rootPath : `${rootPath}${path}`
+
+	return axios
+		.request({
+			method: 'PROPFIND',
+			url: requestPath,
+			headers: {
+				Depth: depth,
+				'Content-Type': 'application/xml',
+			},
+			data: `<?xml version="1.0"?>
+<d:propfind xmlns:d="DAV:"
+    xmlns:oc="http://owncloud.org/ns"
+    xmlns:nc="http://nextcloud.org/ns">
+    <d:prop>
+        <nc:rich-workspace />
+        <nc:rich-workspace-file />
+    </d:prop>
+</d:propfind>`,
+		})
+		.then((response) => {
+			const parser = new DOMParser()
+			const xmlDoc = parser.parseFromString(response.data, 'text/xml')
+			const responses = xmlDoc.querySelectorAll('d\\:response, response')
+			const results = Array.from(responses).map((resp) => {
+				const props = {}
+				const propStats = resp.querySelectorAll('d\\:propstat, propstat')
+				propStats.forEach((propStat) => {
+					const status =
+						propStat.querySelector('d\\:status, status')?.textContent
+
+					// Skip properties with 404 status ( not found)
+					if (status?.includes('404')) {
+						return
+					}
+
+					const propElements = resp.querySelectorAll(
+						'd\\:prop > *, prop > * ',
+					)
+
+					propElements.forEach((prop) => {
+						const tagName = prop.localName
+						const namespace = prop.namespaceURI
+
+						let key = tagName
+						if (namespace === 'http://nextcloud.org/ns') {
+							key = `nc:${tagName}`
+						} else if (namespace === 'http://owncloud.org/ns') {
+							key = `oc:${tagName}`
+						}
+
+						props[key] = prop.textContent || ''
+					})
+				})
+				return props
 			})
-	})
+
+			return depth > 0 ? results : results[0] || {}
+		})
 })
 
 Cypress.Commands.add('reloadFileList', () => {

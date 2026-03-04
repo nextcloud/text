@@ -9,7 +9,7 @@ const user = randUser()
 
 // Retries fail because folders / files already exist.
 describe('Text PROPFIND extension ', { retries: 0 }, function () {
-	const richWorkspace = '{http://nextcloud.org/ns}rich-workspace'
+	const richWorkspace = 'nc:rich-workspace'
 
 	before(function () {
 		cy.createUser(user)
@@ -48,11 +48,11 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
 			cy.visit('/apps/dashboard')
 			cy.propfindFolder('/', 1)
-				.then((results) => results.pop().propStat[0].properties)
+				.then((results) => results.pop())
 				.should('have.property', richWorkspace, '')
 			cy.uploadFile('test.md', 'text/markdown', '/workspace/Readme.md')
 			cy.propfindFolder('/', 1)
-				.then((results) => results.pop().propStat[0].properties)
+				.then((results) => results.pop())
 				.should('have.property', richWorkspace, '## Hello world\n')
 		})
 	})
@@ -71,7 +71,7 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 			cy.propfindFolder('/').should('not.have.property', richWorkspace)
 			cy.createFolder('/without-workspace')
 			cy.propfindFolder('/', 1)
-				.then((results) => results.pop().propStat[0].properties)
+				.then((results) => results.pop())
 				.should('not.have.property', richWorkspace)
 		})
 	})
