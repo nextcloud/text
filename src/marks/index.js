@@ -4,6 +4,7 @@
  */
 
 import TipTapItalic from '@tiptap/extension-italic'
+import Highlight from './Highlight.ts'
 import Link from './Link.js'
 import Strike from './Strike.js'
 import Strong from './Strong.js'
@@ -13,4 +14,4 @@ const Italic = TipTapItalic.extend({
 	name: 'em',
 })
 
-export { Italic, Link, Strike, Strong, Underline }
+export { Highlight, Italic, Link, Strike, Strong, Underline }

@@ -37,6 +37,7 @@ describe('keyboard shortcuts', () => {
 	it('italic', () => testShortcut(`${modKey}i`, 'em'))
 	it('underline', () => testShortcut(`${modKey}u`, 'u'))
 	it('strikethrough', () => testShortcut(`${modKey}{shift}s`, 's'))
+	it('highlight', () => testShortcut(`${modKey}{shift}h`, 'mark'))
 	it('blockquote', () => testShortcut(`${modKey}{shift}b`, 'blockquote'))
 	it('codeblock', () => testShortcut(`${modKey}{alt}c`, 'pre'))
 	it('ordered-list', () => testShortcut(`${modKey}{shift}7`, 'ol'))

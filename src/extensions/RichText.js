@@ -26,7 +26,14 @@ import Mention from './../extensions/Mention.js'
 import Search from './../extensions/Search.ts'
 import TextDirection from './../extensions/TextDirection.ts'
 import Typography from './../extensions/Typography.ts'
-import { Italic, Link, Strike, Strong, Underline } from './../marks/index.js'
+import {
+	Highlight,
+	Italic,
+	Link,
+	Strike,
+	Strong,
+	Underline,
+} from './../marks/index.js'
 import BulletList from './../nodes/BulletList.js'
 import Callouts from './../nodes/Callouts.js'
 import CodeBlock from './../nodes/CodeBlock.js'
@@ -73,6 +80,7 @@ export default Extension.create({
 			HardBreak,
 			Heading,
 			Strong,
+			Highlight,
 			Italic,
 			Strike,
 			Blockquote,

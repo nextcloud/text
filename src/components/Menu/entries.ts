@@ -9,6 +9,7 @@ import {
 	Danger,
 	Emoticon,
 	FormatBold,
+	FormatColorHighlight,
 	FormatHeader1,
 	FormatHeader2,
 	FormatHeader3,
@@ -283,6 +284,18 @@ export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 			priority: 13,
 		},
 		{
+			key: 'highlight',
+			label: t('text', 'Highlight'),
+			keyChar: 'h',
+			keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+			icon: FormatColorHighlight,
+			isActive: 'highlight',
+			action: (command) => {
+				return command.toggleHighlight()
+			},
+			priority: 14,
+		},
+		{
 			key: 'lists',
 			label: t('text', 'Lists'),
 			keyChar: '7…9',
@@ -477,7 +490,7 @@ export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 			action: (command) => {
 				return command.insertTable()
 			},
-			priority: 14,
+			priority: 15,
 		},
 		{
 			key: 'details',
@@ -487,7 +500,7 @@ export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 			action: (command) => {
 				return command.toggleDetails()
 			},
-			priority: 15,
+			priority: 16,
 		},
 		{
 			key: 'insert-link',
