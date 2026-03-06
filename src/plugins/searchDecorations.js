@@ -91,18 +91,34 @@ export function runSearch(doc, query, options) {
 		}
 	}
 
+	const mentionQuery = query.trim().startsWith('@')
+		? query.trim().slice(1).toLowerCase()
+		: query.trim().toLowerCase()
+
 	doc.descendants((node, offset, _position) => {
-		if (!node.isText) {
+		// Add decorations for text matches
+		if (node.isText) {
+			const matches = node.text.matchAll(new RegExp(query, 'gi'))
+
+			for (const match of matches) {
+				results.push({
+					from: match.index + offset,
+					to: match.index + offset + query.length,
+				})
+			}
+
 			return
 		}
 
-		const matches = node.text.matchAll(new RegExp(query, 'gi'))
-
-		for (const match of matches) {
-			results.push({
-				from: match.index + offset,
-				to: match.index + offset + query.length,
-			})
+		// Add decorations for mention matches
+		if (node.type.name === 'mention' && mentionQuery !== '') {
+			if (node.attrs.label.toLowerCase().startsWith(mentionQuery)) {
+				results.push({
+					from: offset,
+					to: offset + node.nodeSize,
+					mention: true,
+				})
+			}
 		}
 	})
 
@@ -142,7 +158,9 @@ export function highlightResults(doc, results) {
 		decorations.push(
 			Decoration.inline(result.from, result.to, {
 				'data-text-el': 'search-decoration',
-				style: 'background-color: #ead637; color: black; border-radius: 2px;',
+				style: result.mention
+					? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
+					: 'background-color: #ead637; color: black; border-radius: 2px;',
 			}),
 		)
 	})
