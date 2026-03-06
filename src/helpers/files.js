@@ -85,7 +85,7 @@ let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
 const enabled = (_, view) => {
-	return ['files', 'favorites', 'public-share'].includes(view.id)
+	return ['files', 'favorites', 'public-share', 'personal'].includes(view.id)
 }
 
 /**
