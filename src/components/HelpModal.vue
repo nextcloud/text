@@ -78,6 +78,17 @@
 					</td>
 				</tr>
 				<tr>
+					<td>{{ t('text', 'Underline') }}</td>
+					<td>
+						<code>__{{ t('text', 'Underlined text') }}__</code>
+					</td>
+					<td v-if="!isMobileCached">
+						<kbd>{{ ctrlOrModKey }}</kbd>
+						+
+						<kbd>U</kbd>
+					</td>
+				</tr>
+				<tr>
 					<td>{{ t('text', 'Strikethrough') }}</td>
 					<td>
 						<code>~~{{ t('text', 'Mistaken text') }}~~</code>
@@ -91,14 +102,16 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t('text', 'Underline') }}</td>
+					<td>{{ t('text', 'Highlight') }}</td>
 					<td>
-						<code>__{{ t('text', 'Underlined text') }}__</code>
+						<code>=={{ t('text', 'Highlighted text') }}==</code>
 					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
-						<kbd>U</kbd>
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>H</kbd>
 					</td>
 				</tr>
 				<tr>

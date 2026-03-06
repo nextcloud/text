@@ -7,6 +7,7 @@ import markdownitMentions from '@quartzy/markdown-it-mentions'
 import MarkdownIt from 'markdown-it'
 import frontMatter from 'markdown-it-front-matter'
 import implicitFigures from 'markdown-it-image-figures'
+import mark from 'markdown-it-mark'
 import multimdTable from 'markdown-it-multimd-table'
 import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 import callouts from './callouts.js'
@@ -33,6 +34,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(keepSyntax)
 	.use(markdownitMentions)
 	.use(implicitFigures)
+	.use(mark)
 	.use(mathematics)
 	.use(multimdTable, {
 		multiline: true,
