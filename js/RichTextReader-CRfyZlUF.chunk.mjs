@@ -1,2 +1,2 @@
 import{R as o}from"./Wrapper-Z6v7BoZa.chunk.mjs";import{B as i}from"./BaseReader-DvV70f5u.chunk.mjs";import{n as s}from"./NcCheckboxRadioSwitch-CgbTELjq-B7o3tVsk.chunk.mjs";const c={name:"RichTextReader",components:{BaseReader:i},provide:{extensions(){return[o.configure({editing:!1})]}},props:{content:{type:String,required:!0}}};var a=function(){var e=this,t=e._self._c;return t("BaseReader",{attrs:{content:e.content},on:{"click-link":(n,r)=>e.$emit("click-link",n,r)}})},p=[],m=s(c,a,p,!1,null,null);const u=m.exports;export{u as R};
-//# sourceMappingURL=RichTextReader-gCrFR3zK.chunk.mjs.map
+//# sourceMappingURL=RichTextReader-CRfyZlUF.chunk.mjs.map
