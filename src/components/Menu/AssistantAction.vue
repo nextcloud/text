@@ -176,9 +176,9 @@ import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 import { useEditor } from '../../composables/useEditor.ts'
+import { useFileProps } from '../../composables/useFileProps.ts'
 import markdownit from '../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
-import { useFileMixin } from '../Editor.provider.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
@@ -212,10 +212,11 @@ export default {
 		NcModal,
 	},
 	extends: BaseActionEntry,
-	mixins: [useFileMixin, useMenuIDMixin],
+	mixins: [useMenuIDMixin],
 	setup() {
 		const { editor } = useEditor()
-		return { editor }
+		const { fileId } = useFileProps()
+		return { editor, fileId }
 	},
 	data() {
 		return {
@@ -238,7 +239,7 @@ export default {
 	},
 	computed: {
 		identifier() {
-			return 'text-file:' + this.$file.fileId
+			return 'text-file:' + this.fileId
 		},
 		badgeStateIcon() {
 			if (

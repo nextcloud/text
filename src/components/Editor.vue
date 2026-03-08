@@ -91,7 +91,7 @@ import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
-import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
+import { ATTACHMENT_RESOLVER, IS_MOBILE } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { generateRemoteUrl } from '@nextcloud/router'
@@ -101,6 +101,7 @@ import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
+import { provideFileProps } from '../composables/useFileProps.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -156,9 +157,6 @@ export default defineComponent({
 		// using getters we can always provide the
 		// actual values without being reactive
 		Object.defineProperties(val, {
-			[FILE]: {
-				get: () => this.fileData,
-			},
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver,
 			},
@@ -272,6 +270,8 @@ export default defineComponent({
 
 		const syncProvider = shallowRef(null)
 
+		provideFileProps(props)
+
 		return {
 			awareness,
 			connection,
@@ -353,15 +353,6 @@ export default defineComponent({
 		},
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
-		},
-		fileData() {
-			return {
-				fileId: this.fileId,
-				relativePath: this.relativePath,
-				document: {
-					...this.document,
-				},
-			}
 		},
 	},
 	watch: {

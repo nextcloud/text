@@ -39,8 +39,9 @@ import {
 import { logger } from '../../helpers/logger.js'
 
 import { useEditor } from '../../composables/useEditor.ts'
-import { useFileMixin } from '../Editor.provider.ts'
+import { useFileProps } from '../../composables/useFileProps.ts'
 
+import { ref } from 'vue'
 import { useConnection } from '../../composables/useConnection.ts'
 import {
 	ACTION_ATTACHMENT_PROMPT,
@@ -53,7 +54,6 @@ const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
 export default {
 	name: 'MediaHandler',
-	mixins: [useFileMixin],
 	provide() {
 		const val = {}
 
@@ -78,26 +78,24 @@ export default {
 		const { connection } = useConnection()
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
+		const { relativePath } = useFileProps()
+		const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
+		const startPath = ref(parentPath)
 		return {
 			connection,
 			editor,
 			isMobile,
+			startPath,
 		}
 	},
 	data() {
 		return {
-			lastFilePath: null,
 			draggedOver: false,
 			// make it reactive to be used inject/provide
 			state: {
 				isUploadingAttachments: false,
 			},
 		}
-	},
-	computed: {
-		initialFilePath() {
-			return this.lastFilePath ?? getDir(this.$file?.relativePath ?? '/')
-		},
 	},
 	methods: {
 		setDraggedOver(val, event) {
@@ -184,11 +182,11 @@ export default {
 				[],
 				true,
 				undefined,
-				this.initialFilePath,
+				this.startPath,
 			)
 		},
 		insertFromPath(filePath) {
-			this.lastFilePath = getDir(filePath)
+			this.startPath = getDir(filePath)
 
 			this.state.isUploadingAttachments = true
 

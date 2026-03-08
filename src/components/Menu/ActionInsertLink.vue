@@ -90,9 +90,10 @@ import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { t } from '@nextcloud/l10n'
+import { ref } from 'vue'
+import { useFileProps } from '../../composables/useFileProps.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { buildFilePicker } from '../../helpers/filePicker.js'
-import { useFileMixin } from '../Editor.provider.ts'
 import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -110,16 +111,22 @@ export default {
 		Shape,
 	},
 	extends: BaseActionEntry,
-	mixins: [useFileMixin, useMenuIDMixin],
+	mixins: [useMenuIDMixin],
 	setup() {
 		const { networkOnline } = useNetworkState()
-		return { ...BaseActionEntry.setup(), networkOnline }
+		const { relativePath } = useFileProps()
+		const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
+		const startPath = ref(parentPath)
+		return {
+			...BaseActionEntry.setup(),
+			networkOnline,
+			startPath,
+		}
 	},
 	data: () => {
 		return {
 			href: '',
 			isInputMode: false,
-			startPath: null,
 			/** Open state of the actions menu */
 			menuOpen: false,
 			isUsingDirectEditing:
@@ -130,9 +137,6 @@ export default {
 		activeClass() {
 			return this.state.active ? 'is-active' : ''
 		},
-		relativePath() {
-			return this.$file?.relativePath ?? '/'
-		},
 	},
 	methods: {
 		/**
@@ -140,10 +144,6 @@ export default {
 		 * Triggered by the "link file" button
 		 */
 		linkFile() {
-			if (this.startPath === null) {
-				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
-			}
-
 			const filePicker = buildFilePicker(this.startPath)
 
 			filePicker
