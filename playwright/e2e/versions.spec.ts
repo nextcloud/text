@@ -59,9 +59,7 @@ test.describe('Versions with distant timestamps', () => {
 			.getByRole('menuitem', { name: 'Compare to current version' })
 			.click()
 		const oldVersion = page.getByRole('textbox')
-		const current = page.locator(
-			'.viewer__content .viewer__file--active .ProseMirror',
-		)
+		const current = page.locator('.ProseMirror[contenteditable="true"]')
 		await expect(oldVersion.getByRole('heading', { name: 'V1' })).toBeVisible()
 		await expect(current.getByRole('heading', { name: 'V3' })).toBeVisible()
 	})
