@@ -62,6 +62,10 @@ export default {
 			type: String,
 			default: undefined,
 		},
+		isEncrypted: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -69,10 +73,6 @@ export default {
 		}
 	},
 	computed: {
-		isEncrypted() {
-			return this.$attrs.e2EeIsEncrypted || false
-		},
-
 		isMarkdown() {
 			return (
 				this.mime === 'text/markdown' || this.mime === 'text/x-web-markdown'
