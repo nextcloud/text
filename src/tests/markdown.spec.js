@@ -69,6 +69,11 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe(
 			'[bar\\\\](/uri)',
 		)
+		// Issue #4900
+		expect(markdownThroughEditor('[`code`](foo)')).toBe('[`code`](foo)')
+		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe(
+			'[text with `code` inside](foo)',
+		)
 	})
 	test('images', () => {
 		// Inline images
