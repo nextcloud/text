@@ -7,7 +7,6 @@ import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import Blockquote from '@tiptap/extension-blockquote'
-import Code from '@tiptap/extension-code'
 import Document from '@tiptap/extension-document'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import { ListItem } from '@tiptap/extension-list'
@@ -27,6 +26,7 @@ import Search from './../extensions/Search.ts'
 import TextDirection from './../extensions/TextDirection.ts'
 import Typography from './../extensions/Typography.ts'
 import {
+	Code,
 	Highlight,
 	Italic,
 	Link,
