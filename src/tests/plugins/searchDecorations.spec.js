@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import Mentions from '../../extensions/Mention.js'
 import { highlightResults, runSearch } from '../../plugins/searchDecorations.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
@@ -76,10 +77,34 @@ describe('search plugin', () => {
 
 		testSearch(doc, 'cat', expected)
 	})
+
+	it('finds matches with mentions', () => {
+		const doc =
+			'<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
+
+		const expected = {
+			results: [
+				{ from: 1, to: 5 },
+				{ from: 21, to: 22, mention: true },
+			],
+		}
+
+		testSearch(doc, 'jane', expected)
+	})
+
+	it('finds matches with mentions with @', () => {
+		const doc =
+			'<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
+
+		const expected = {
+			results: [{ from: 21, to: 22, mention: true }],
+		}
+		testSearch(doc, '@jane', expected)
+	})
 })
 
 const testSearch = (content, query, expectedSearchResults) => {
-	const editor = createCustomEditor(content)
+	const editor = createCustomEditor(content, [Mentions])
 	const doc = editor.state.doc
 	const searched = runSearch(doc, query)
 	expect(searched).toHaveProperty('results', expectedSearchResults.results)
