@@ -14,6 +14,8 @@ const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
 const ACTION_CREATE_NEW_WHITEBOARD_FILE = 'insert-attachment-add-whiteboard-0'
 
+let lastFileId = 0
+
 /**
  * @param {string} name name of file
  * @param {string|null} requestAlias alias name
@@ -145,6 +147,7 @@ const waitForRequestAndCheckAttachment = (
 	return cy.wait('@' + requestAlias).then((req) => {
 		// the name of the created file on NC side is returned in the response
 		const fileId = req.response.body.id
+		lastFileId = fileId
 		const fileName = req.response.body.name
 		const documentId = req.response.body.documentId
 
@@ -174,11 +177,16 @@ describe('Test all attachment insertion methods', () => {
 		cy.showHiddenFiles()
 	})
 
+	afterEach(() => {
+		cy.wrap(lastFileId).should('eq', 1)
+	})
+
 	it('See test files in the list and display hidden files', () => {
 		cy.visit('/apps/files')
 		cy.getFile('test.md')
 		cy.getFile('github.png')
 		cy.getFile('.hidden')
+		cy.getFileId('.hidden').should('eq', 1)
 	})
 
 	it('Insert an image file from Files', () => {
