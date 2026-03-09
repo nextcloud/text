@@ -345,40 +345,44 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it('test if attachment folder is moved with the markdown file', () => {
-		const fileName = 'moveSource.md'
-		cy.createFolder('subFolder')
-		cy.createMarkdown(
-			fileName,
-			'![git](.attachments.123/github.png)',
-			false,
-		).then((fileId) => {
-			const attachmentsFolder = `.attachments.${fileId}`
-			cy.createFolder(attachmentsFolder)
-			cy.uploadFile(
-				'github.png',
-				'image/png',
-				`${attachmentsFolder}/github.png`,
-			)
-			cy.moveFile(fileName, 'subFolder/test.md')
-		})
+	// retries fail to create the subFolder as it already exists.
+	it(
+		'test if attachment folder is moved with the markdown file',
+		{ retries: 0 },
+		() => {
+			const fileName = 'moveSource.md'
+			cy.createFolder('subFolder')
+			cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false)
+				.as('createdFileId')
+				.then((fileId) => {
+					const attachmentsFolder = `.attachments.${fileId}`
+					cy.createFolder(attachmentsFolder)
+					cy.uploadFile(
+						'github.png',
+						'image/png',
+						`${attachmentsFolder}/github.png`,
+					)
+					cy.moveFile(fileName, 'subFolder/test.md')
+				})
 
-		cy.visit('/apps/files')
-		cy.openFolder('subFolder')
-		cy.getFile('test.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
-				cy.openFolder('.attachments.' + documentId)
-				for (const name in files) {
-					cy.getFile(name)
-						.should('exist')
-						.should('have.attr', 'data-cy-files-list-row-fileid')
-						.should('eq', String(files[name]))
-				}
-			})
-	})
+			cy.visit('/apps/files')
+			cy.openFolder('subFolder')
+			cy.getFile('test.md')
+				.should('exist')
+				.should('have.attr', 'data-cy-files-list-row-fileid')
+				.then((documentId) => {
+					const files = attachmentFileNameToId[documentId]
+					cy.get('@createdFileId').should('eq', parseInt(documentId))
+					cy.openFolder('.attachments.' + documentId)
+					for (const name in files) {
+						cy.getFile(name)
+							.should('exist')
+							.should('have.attr', 'data-cy-files-list-row-fileid')
+							.should('eq', String(files[name]))
+					}
+				})
+		},
+	)
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
 		const fileName = 'copySource.md'
