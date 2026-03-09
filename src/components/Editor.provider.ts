@@ -6,7 +6,6 @@
 import { openLink } from '../helpers/links.js'
 import { logger } from '../helpers/logger.js'
 
-export const FILE = Symbol('editor:file')
 export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
@@ -17,19 +16,6 @@ export const OPEN_LINK_HANDLER = Symbol('editor:open-link-handler')
 export const useIsMobileMixin = {
 	inject: {
 		$isMobile: { from: IS_MOBILE, default: false },
-	},
-}
-
-export const useFileMixin = {
-	inject: {
-		$file: {
-			from: FILE,
-			default: () => ({
-				fileId: 0,
-				relativePath: null,
-				document: null,
-			}),
-		},
 	},
 }
 

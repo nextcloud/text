@@ -61,13 +61,14 @@ import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { ref } from 'vue'
 import { Document, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
+import { useFileProps } from '../composables/useFileProps.ts'
 import { useNetworkState } from '../composables/useNetworkState.ts'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
-import { useFileMixin } from './Editor.provider.ts'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
@@ -80,23 +81,26 @@ export default {
 		Upload,
 	},
 
-	mixins: [useActionChooseLocalAttachmentMixin, useFileMixin],
+	mixins: [useActionChooseLocalAttachmentMixin],
 
 	setup() {
 		const { editor } = useEditor()
 		const { openData } = useConnection()
 		const { networkOnline } = useNetworkState()
+		const { relativePath } = useFileProps()
+		const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
+		const startPath = ref(parentPath)
 		return {
 			editor,
 			isMobileDevice,
 			networkOnline,
 			openData,
+			startPath,
 		}
 	},
 
 	data: () => {
 		return {
-			startPath: null,
 			isEmptyContent: false,
 		}
 	},
@@ -164,10 +168,6 @@ export default {
 		 * Triggered by the "link to file or folder" button
 		 */
 		linkFile() {
-			if (this.startPath === null) {
-				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
-			}
-
 			const filePicker = buildFilePicker(this.startPath)
 
 			filePicker
