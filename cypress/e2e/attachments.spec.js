@@ -365,8 +365,7 @@ describe('Test all attachment insertion methods', () => {
 					cy.moveFile(fileName, 'subFolder/test.md')
 				})
 
-			cy.visit('/apps/files')
-			cy.openFolder('subFolder')
+			cy.visit('/apps/files?dir=/subFolder')
 			cy.getFile('test.md')
 				.should('exist')
 				.should('have.attr', 'data-cy-files-list-row-fileid')
