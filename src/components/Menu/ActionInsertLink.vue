@@ -38,7 +38,7 @@
 			ref="buttonFile"
 			:disabled="!networkOnline"
 			:data-text-action-entry="`${actionEntry.key}-file`"
-			@click="linkFile">
+			@click="linkFileAndCloseMenu">
 			<template #icon>
 				<Document />
 			</template>
@@ -81,7 +81,6 @@
 
 <script>
 import { loadState } from '@nextcloud/initial-state'
-import { generateUrl } from '@nextcloud/router'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActions from '@nextcloud/vue/components/NcActions'
@@ -90,10 +89,9 @@ import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { t } from '@nextcloud/l10n'
-import { ref } from 'vue'
 import { useFileProps } from '../../composables/useFileProps.ts'
+import { useLinkFile } from '../../composables/useLinkFile.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
-import { buildFilePicker } from '../../helpers/filePicker.js'
 import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -113,14 +111,14 @@ export default {
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	setup() {
+		const base = BaseActionEntry.setup()
 		const { networkOnline } = useNetworkState()
 		const { relativePath } = useFileProps()
-		const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
-		const startPath = ref(parentPath)
+		const { linkFile } = useLinkFile({ editor: base.editor, relativePath })
 		return {
-			...BaseActionEntry.setup(),
+			...base,
+			linkFile,
 			networkOnline,
-			startPath,
 		}
 	},
 	data: () => {
@@ -143,30 +141,11 @@ export default {
 		 * Open dialog and ask user which file to link to
 		 * Triggered by the "link file" button
 		 */
-		linkFile() {
-			const filePicker = buildFilePicker(this.startPath)
-
-			filePicker
-				.pick()
-				.then((file) => {
-					const client = OC.Files.getClient()
-					client.getFileInfo(file).then((_status, fileInfo) => {
-						const url = new URL(
-							generateUrl(`/f/${fileInfo.id}`),
-							window.origin,
-						)
-						this.setLink(url.href, fileInfo.name)
-						this.startPath =
-							fileInfo.path
-							+ (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
-					})
-					this.menuOpen = false
-				})
-				.catch(() => {
-					// do not close menu but keep focus
-					this.$refs.buttonFile?.$el.focus()
-				})
+		async linkFileAndCloseMenu() {
+			await this.linkFile()
+			this.menuOpen = false
 		},
+
 		/**
 		 * Allow user to enter an URL manually
 		 * Triggered when by the "link url" button

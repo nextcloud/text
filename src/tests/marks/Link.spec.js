@@ -4,7 +4,7 @@
  */
 import Underline from '../../marks/Underline.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
-import Link from './../../marks/Link.js'
+import Link from './../../marks/Link.ts'
 
 describe('Link extension integrated in the editor', () => {
 	it('should have link available in commands', () => {

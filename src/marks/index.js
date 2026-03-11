@@ -5,7 +5,7 @@
 
 import TipTapItalic from '@tiptap/extension-italic'
 import Highlight from './Highlight.ts'
-import Link from './Link.js'
+import Link from './Link.ts'
 import Strike from './Strike.js'
 import Strong from './Strong.js'
 import Underline from './Underline.js'
