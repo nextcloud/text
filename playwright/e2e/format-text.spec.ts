@@ -26,6 +26,7 @@ new Map([
 				Italic: 'em',
 				Underline: 'u',
 				Strikethrough: 's',
+				Highlight: 'mark',
 			}
 			await editor.type('Format me')
 			for (const [button] of Object.entries(buttons)) {

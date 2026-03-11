@@ -146,6 +146,10 @@ div.ProseMirror {
 		font-style: italic;
 	}
 
+	mark {
+		background-color: var(--color-mark, #fff0c7);
+	}
+
 	h1,
 	h2,
 	h3,
