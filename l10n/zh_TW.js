@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "有底線的文字",
     "Strikethrough" : "刪除線",
     "Mistaken text" : "錯誤的文字",
+    "Highlight" : "突顯",
+    "Highlighted text" : "突顯文字",
     "Heading 1" : "標題 1",
     "Heading level 1" : "標題層級 1",
     "Heading 6" : "標題 6",
