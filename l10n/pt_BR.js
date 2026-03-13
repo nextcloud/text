@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Texto sublinhado",
     "Strikethrough" : "Riscado",
     "Mistaken text" : "Texto errado",
+    "Highlight" : "Destaque",
+    "Highlighted text" : "Texto destacado",
     "Heading 1" : "Título 1",
     "Heading level 1" : "Título de nível 1",
     "Heading 6" : "Título 6",

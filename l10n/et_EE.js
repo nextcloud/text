@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Allajoonitud tekst",
     "Strikethrough" : "Läbikriipsutatud",
     "Mistaken text" : "Vigane tekst",
+    "Highlight" : "Tõsta esile",
+    "Highlighted text" : "Esiletõstetud tekst",
     "Heading 1" : "Pealkiri 1",
     "Heading level 1" : "Pealkirjade 1. tase",
     "Heading 6" : "Pealkiri 6",
