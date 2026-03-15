@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Téacs a bhfuil líne faoi",
     "Strikethrough" : "Stailc tríd",
     "Mistaken text" : "Téacs mícheart",
+    "Highlight" : "Aibhsigh",
+    "Highlighted text" : "Téacs aibhsithe",
     "Heading 1" : "Ceannteideal 1",
     "Heading level 1" : "Leibhéal 1 ceannteideal",
     "Heading 6" : "Ceannteideal 6",
