@@ -58,16 +58,14 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { ref } from 'vue'
 import { Document, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
 import { useFileProps } from '../composables/useFileProps.ts'
+import { useLinkFile } from '../composables/useLinkFile.ts'
 import { useNetworkState } from '../composables/useNetworkState.ts'
-import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
@@ -88,14 +86,13 @@ export default {
 		const { openData } = useConnection()
 		const { networkOnline } = useNetworkState()
 		const { relativePath } = useFileProps()
-		const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
-		const startPath = ref(parentPath)
+		const { linkFile } = useLinkFile({ editor, relativePath })
 		return {
 			editor,
 			isMobileDevice,
+			linkFile,
 			networkOnline,
 			openData,
-			startPath,
 		}
 	},
 
@@ -106,9 +103,6 @@ export default {
 	},
 
 	computed: {
-		relativePath() {
-			return this.$file?.relativePath ?? '/'
-		},
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
 		},
@@ -161,45 +155,6 @@ export default {
 		 */
 		insertTable() {
 			this.editor.chain().focus().insertTable()?.run()
-		},
-
-		/**
-		 * Open dialog and ask user which file to link to
-		 * Triggered by the "link to file or folder" button
-		 */
-		linkFile() {
-			const filePicker = buildFilePicker(this.startPath)
-
-			filePicker
-				.pick()
-				.then((file) => {
-					const client = OC.Files.getClient()
-					client.getFileInfo(file).then((_status, fileInfo) => {
-						const url = new URL(
-							generateUrl(`/f/${fileInfo.id}`),
-							window.origin,
-						)
-						this.setLink(url.href, fileInfo.name)
-						this.startPath =
-							fileInfo.path
-							+ (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
-					})
-				})
-				.catch(() => {
-					// do not close menu but keep focus
-					this.$refs.linkFileOrFolder.$el.focus()
-				})
-		},
-
-		/**
-		 * Save user entered URL as a link markup
-		 * Triggered when the user submits the ActionInput
-		 *
-		 * @param {string} url href attribute of the link
-		 * @param {string} text Text part of the link
-		 */
-		setLink(url, text) {
-			this.editor.chain().insertOrSetLink(text, { href: url }).focus().run()
 		},
 
 		onUpdate({ editor }) {

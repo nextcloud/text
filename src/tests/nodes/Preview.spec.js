@@ -11,7 +11,7 @@ import {
 	markdownThroughEditorHtml,
 } from '../testHelpers/markdown.js'
 import Markdown from './../../extensions/Markdown.js'
-import Link from './../../marks/Link.js'
+import Link from './../../marks/Link.ts'
 import Preview from './../../nodes/Preview.js'
 
 const test = baseTest.extend({
