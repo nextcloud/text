@@ -34,8 +34,8 @@ describe('Sync service provider', function () {
 	})
 
 	afterEach(function () {
-		this.sourceProvider?.destroy()
-		this.targetProvider?.destroy()
+		cy.get('@sourceProvider').invoke('destroy')
+		cy.get('@targetProvider').invoke('destroy')
 	})
 
 	/**
@@ -162,4 +162,27 @@ describe('Sync service provider', function () {
 		// 2 clients sync fast first and then every 5 seconds -> 2*12 = 24. Actual 32.
 		cy.get('@sync.all').its('length').should('be.lessThan', 60)
 	})
+
+	it('syncs even when initial state was present', function() {
+		const sourceMap = this.source.getMap()
+		const targetMap = this.target.getMap()
+		sourceMap.set('unrelated', 'value')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' })
+			.as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
+			.as('sync')
+		cy.wait('@push')
+		cy.then(() => {
+			sourceMap.set('keyA', 'valueA')
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
+		})
+		cy.wait('@sync')
+		cy.wait('@sync')
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(1000)
+		cy.then(() => {
+			expect(targetMap.get('keyA')).to.be.eq('valueA')
+		})
+	})
+
 })
