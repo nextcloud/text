@@ -21,7 +21,7 @@ describe('Link marks', { retries: 0 }, () => {
 
 		it('can run on normal paragraph', () => {
 			prepareEditor('hello\n', 3)
-			expect(editor.can().insertOrSetLink().run()).to.equal(true)
+			expect(editor.can().insertOrSetLink()).to.equal(true)
 		})
 
 		it('will insert a link in a normal paragraph', () => {
