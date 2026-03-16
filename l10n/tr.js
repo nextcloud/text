@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Altı çizili yazı",
     "Strikethrough" : "Üzeri çizili",
     "Mistaken text" : "Hatalı yazı",
+    "Highlight" : "Vurgula",
+    "Highlighted text" : "Vurgulanmış yazı",
     "Heading 1" : "1. Başlık",
     "Heading level 1" : "1. başlık düzeyi",
     "Heading 6" : "6. Başlık",
