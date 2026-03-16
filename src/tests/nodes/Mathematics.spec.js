@@ -9,10 +9,7 @@ import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
-import {
-	markdownThroughEditor,
-	markdownThroughEditorHtml,
-} from '../testHelpers/markdown.js'
+import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
 	editor: async ({ task: _ }, use) => {
@@ -81,20 +78,6 @@ describe('Mathematics nodes', () => {
 		})
 	})
 
-	describe('HTML parsing - Pasted KaTeX content', () => {
-		test('inline katex HTML to markdown', () => {
-			const html =
-				'<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2</annotation></semantics></math></span></span></p>'
-			expect(markdownThroughEditorHtml(html)).toBe('$E=mc^2$')
-		})
-
-		test('block katex HTML to markdown', () => {
-			const html =
-				'<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">E=mc^2\n</annotation></semantics></math></span></span></span></p>'
-			expect(markdownThroughEditorHtml(html)).toBe('$$\nE=mc^2\n$$')
-		})
-	})
-
 	describe('Menu commands', () => {
 		test('insertMathInline with empty selection', ({ editor }) => {
 			// Insert empty inline math
@@ -156,16 +139,17 @@ describe('Mathematics nodes', () => {
 	})
 
 	describe('Markdown-it rendering', () => {
-		test('renders inline math to katex HTML', () => {
+		test('renders inline math to HTML span element', () => {
 			const rendered = markdownit.render('$E=mc^2$')
-			expect(rendered).toContain('katex')
+			expect(rendered).toContain('span')
+			expect(rendered).toContain('inline-math')
 			expect(rendered).toContain('E=mc^2')
 		})
 
-		test('renders block math to katex HTML', () => {
+		test('renders block math to HTML div element', () => {
 			const rendered = markdownit.render('$$\nE=mc^2\n$$')
-			expect(rendered).toContain('katex-block')
-			expect(rendered).toContain('katex-display')
+			expect(rendered).toContain('div')
+			expect(rendered).toContain('block-math')
 			expect(rendered).toContain('E=mc^2')
 		})
 	})
@@ -173,11 +157,12 @@ describe('Mathematics nodes', () => {
 	describe('Serialization to markdown', () => {
 		test('serializes inline math node', ({ editor }) => {
 			editor.commands.insertInlineMath({ latex: 'E=mc^2' })
+			editor.commands.insertContent(' some more text.')
 
 			const serializer = createMarkdownSerializer(editor.schema)
 			const markdown = serializer.serialize(editor.state.doc)
 
-			expect(markdown).toBe('$E=mc^2$')
+			expect(markdown).toBe('$E=mc^2$ some more text.')
 		})
 
 		test('serializes block math node', ({ editor }) => {
