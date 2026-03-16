@@ -31,7 +31,7 @@ describe('Preview Options', function () {
 			.contains('Open in new tab')
 			.should('be.visible')
 		cy.get('.action-button__text').contains('Remove link').should('be.visible')
-		cy.get('.action-radio__label').each((el) => {
+		cy.get('.action-radio__text').each((el) => {
 			cy.wrap(el)
 				.invoke('text')
 				.should('match', /Text only|Show link preview/)
@@ -40,7 +40,7 @@ describe('Preview Options', function () {
 
 	it('should toggle to Link Preview', function () {
 		cy.get('.preview').should('not.exist')
-		cy.get('.action-radio__label').each((el) => {
+		cy.get('.action-radio__text').each((el) => {
 			cy.wrap(el)
 				.invoke('text')
 				.then((text) => {
