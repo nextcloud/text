@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Testo sottolineato",
     "Strikethrough" : "Sbarrato",
     "Mistaken text" : "Barrato",
+    "Highlight" : "Evidenziare",
+    "Highlighted text" : "Testo evidenziato",
     "Heading 1" : "Intestazione 1",
     "Heading level 1" : "Livello di intestazione 1",
     "Heading 6" : "Intestazione 6",
