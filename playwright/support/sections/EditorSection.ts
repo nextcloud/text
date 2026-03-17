@@ -8,6 +8,7 @@ import { expect } from '@playwright/test'
 
 export class EditorSection {
 	public readonly el: Locator
+	public readonly menubar: Locator
 	public readonly content: Locator
 	public readonly formattingHelp: Locator
 	public readonly offlineState: Locator
@@ -15,11 +16,13 @@ export class EditorSection {
 	public readonly referenceWidget: Locator
 	public readonly saveIndicator: Locator
 	public readonly sessionList: Locator
+	public readonly suggestionsContainer: Locator
 	public readonly suggestions: Locator
 
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('.editor').first()
+		this.menubar = this.el.getByRole('region')
 		this.content = this.el.getByRole('textbox')
 		this.formattingHelp = this.page.getByRole('dialog', {
 			name: 'Formatting and shortcuts',
@@ -29,6 +32,7 @@ export class EditorSection {
 		this.referenceWidget = this.page.locator('.reference-widget')
 		this.saveIndicator = this.el.locator('.save-status')
 		this.sessionList = this.el.locator('.session-list')
+		this.suggestionsContainer = this.page.locator('.container-suggestions')
 		this.suggestions = this.page.locator('.tippy-box .suggestion-list')
 	}
 
