@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Підкреслений текст",
     "Strikethrough" : "Перекреслений",
     "Mistaken text" : "Помилковий текст",
+    "Highlight" : "Виділити",
+    "Highlighted text" : "Виділений текст",
     "Heading 1" : "Заголовок 1",
     "Heading level 1" : "Рівень заголовка 1",
     "Heading 6" : "Заголовок 6",
