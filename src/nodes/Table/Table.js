@@ -72,6 +72,8 @@ function findSameCellInNextRow($cell) {
 	}
 }
 
+const getSortableCellText = (cell) => cell.textContent.trim()
+
 export default Table.extend({
 	content: 'tableCaption? tableHeadRow tableRow*',
 
@@ -181,6 +183,96 @@ export default Table.extend({
 						)
 						dispatch(tr.setSelection(selection).scrollIntoView())
 					}
+					return true
+				},
+			sortColumn:
+				(direction = 'asc', explicitColumnIndex = null) =>
+				({ state, tr, dispatch }) => {
+					if (!isInTable(state)) return false
+
+					const $cell = selectionCell(state)
+					const columnIndex =
+						typeof explicitColumnIndex === 'number'
+							? explicitColumnIndex
+							: $cell.index(-1)
+
+					// find the table node
+					let tableDepth = $cell.depth
+					while (
+						tableDepth > 0
+						&& $cell.node(tableDepth).type.name !== 'table'
+					) {
+						tableDepth -= 1
+					}
+					if (tableDepth === 0) return false
+
+					const table = $cell.node(tableDepth)
+					const tablePos = $cell.before(tableDepth)
+					const bodyRows = []
+					const nonBodyChildren = []
+					table.forEach((child) => {
+						if (child.type.name === 'tableRow') {
+							bodyRows.push(child)
+							return
+						}
+						nonBodyChildren.push(child)
+					})
+					if (bodyRows.length < 2) return true
+
+					// check if all rows have a cell at the column index and that the cell doesn't have colspan or rowspan
+					const canSortRows = bodyRows.every((row) => {
+						if (columnIndex >= row.childCount) {
+							return false
+						}
+						const targetCell = row.child(columnIndex)
+						return (
+							(targetCell.attrs.colspan ?? 1) === 1
+							&& (targetCell.attrs.rowspan ?? 1) === 1
+						)
+					})
+					if (!canSortRows) return false
+
+					// sort the rows based on the content of the cell at the column index
+					const collator = new Intl.Collator(undefined, {
+						numeric: true,
+						sensitivity: 'base',
+					})
+					const sortDirection = direction === 'desc' ? -1 : 1
+					const sortedRows = bodyRows
+						.map((row, index) => ({
+							index,
+							row,
+							key: getSortableCellText(row.child(columnIndex)),
+						}))
+						.sort((a, b) => {
+							const keyCompare =
+								collator.compare(a.key, b.key) * sortDirection
+							if (keyCompare !== 0) {
+								return keyCompare
+							}
+							return a.index - b.index
+						})
+
+					const hasChangedOrder = sortedRows.some(
+						({ index }, sortedIndex) => index !== sortedIndex,
+					)
+					if (!hasChangedOrder) return true
+
+					const sortedTable = table.type.createChecked(
+						table.attrs,
+						[...nonBodyChildren, ...sortedRows.map(({ row }) => row)],
+						table.marks,
+					)
+
+					if (dispatch) {
+						tr.replaceWith(
+							tablePos,
+							tablePos + table.nodeSize,
+							sortedTable,
+						)
+						dispatch(tr.scrollIntoView())
+					}
+
 					return true
 				},
 		}
