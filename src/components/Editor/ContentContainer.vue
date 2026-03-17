@@ -64,10 +64,12 @@ export default {
 
 <style scoped lang="scss">
 .editor__content-wrapper {
+	display: flex;
 	flex-grow: 1;
 }
 
 .editor__content {
+	flex-grow: 1;
 	max-width: var(--text-editor-max-width);
 	margin: 0 auto;
 	position: relative;
