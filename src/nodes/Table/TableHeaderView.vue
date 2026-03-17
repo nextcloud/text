@@ -1,6 +1,6 @@
 <!--
-  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
-  - SPDX-License-Identifier: AGPL-3.0-or-later
+	- SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+	- SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <template>
@@ -49,6 +49,24 @@
 					</NcActionButton>
 				</NcActionButtonGroup>
 				<NcActionButton
+					data-text-table-action="sort-column-asc"
+					close-after-click
+					@click="sortColumnAsc">
+					<template #icon>
+						<SortAscending />
+					</template>
+					{{ t('text', 'Sort ascending') }}
+				</NcActionButton>
+				<NcActionButton
+					data-text-table-action="sort-column-desc"
+					close-after-click
+					@click="sortColumnDesc">
+					<template #icon>
+						<SortDescending />
+					</template>
+					{{ t('text', 'Sort descending') }}
+				</NcActionButton>
+				<NcActionButton
 					data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
@@ -90,6 +108,8 @@ import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
 	AlignHorizontalRight,
+	SortAscending,
+	SortDescending,
 	TableAddColumnAfter,
 	TableAddColumnBefore,
 	TrashCan,
@@ -109,6 +129,8 @@ export default {
 		NodeViewContent,
 		TableAddColumnBefore,
 		TableAddColumnAfter,
+		SortAscending,
+		SortDescending,
 	},
 	props: {
 		editor: {
@@ -190,6 +212,15 @@ export default {
 				.setTextSelection(this.getPos())
 				.addColumnAfter()
 				.run()
+		},
+		sortColumnAsc() {
+			this.sortColumn('asc')
+		},
+		sortColumnDesc() {
+			this.sortColumn('desc')
+		},
+		sortColumn(direction) {
+			this.editor.commands.sortColumn(direction, this.node)
 		},
 		t,
 	},

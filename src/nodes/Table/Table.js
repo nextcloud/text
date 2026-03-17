@@ -183,6 +183,118 @@ export default Table.extend({
 					}
 					return true
 				},
+			sortColumn:
+				(direction = 'asc', cell = null) =>
+				({ state, tr, dispatch }) => {
+					if (
+						cell?.type?.name !== 'tableCell'
+						&& cell?.type?.name !== 'tableHeader'
+					) {
+						return false
+					}
+
+					// find the table, its position and the column index of the cell
+					let table = null
+					let tablePos = null
+					let columnIndex = -1
+
+					state.doc.descendants((node, pos) => {
+						if (node.type.name !== 'table') {
+							return true
+						}
+
+						for (
+							let rowIndex = 0;
+							rowIndex < node.childCount;
+							rowIndex += 1
+						) {
+							const row = node.child(rowIndex)
+							for (
+								let currentColumnIndex = 0;
+								currentColumnIndex < row.childCount;
+								currentColumnIndex += 1
+							) {
+								if (row.child(currentColumnIndex) === cell) {
+									table = node
+									tablePos = pos
+									columnIndex = currentColumnIndex
+									return false
+								}
+							}
+						}
+
+						return true
+					})
+
+					if (!table || tablePos === null || columnIndex < 0) return false
+
+					const bodyRows = []
+					const nonBodyChildren = []
+					table.forEach((child) => {
+						if (child.type.name === 'tableRow') {
+							bodyRows.push(child)
+							return
+						}
+						nonBodyChildren.push(child)
+					})
+					if (bodyRows.length < 2) return true
+
+					// check if all rows have a cell at the column index and that the cell doesn't have colspan or rowspan
+					const canSortRows = bodyRows.every((row) => {
+						if (columnIndex >= row.childCount) {
+							return false
+						}
+						const targetCell = row.child(columnIndex)
+						return (
+							(targetCell.attrs.colspan ?? 1) === 1
+							&& (targetCell.attrs.rowspan ?? 1) === 1
+						)
+					})
+					if (!canSortRows) return false
+
+					// sort the rows based on the content of the cell at the column index
+					const collator = new Intl.Collator(undefined, {
+						numeric: true,
+						sensitivity: 'base',
+					})
+					const sortDirection = direction === 'desc' ? -1 : 1
+					const sortedRows = bodyRows
+						.map((row, index) => ({
+							index,
+							row,
+							key: row.child(columnIndex).textContent.trim(),
+						}))
+						.sort((a, b) => {
+							const keyCompare =
+								collator.compare(a.key, b.key) * sortDirection
+							if (keyCompare !== 0) {
+								return keyCompare
+							}
+							return a.index - b.index
+						})
+
+					const hasChangedOrder = sortedRows.some(
+						({ index }, sortedIndex) => index !== sortedIndex,
+					)
+					if (!hasChangedOrder) return true
+
+					const sortedTable = table.type.createChecked(
+						table.attrs,
+						[...nonBodyChildren, ...sortedRows.map(({ row }) => row)],
+						table.marks,
+					)
+
+					if (dispatch) {
+						tr.replaceWith(
+							tablePos,
+							tablePos + table.nodeSize,
+							sortedTable,
+						)
+						dispatch(tr.scrollIntoView())
+					}
+
+					return true
+				},
 		}
 	},
 
