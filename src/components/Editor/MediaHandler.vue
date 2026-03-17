@@ -184,7 +184,7 @@ export default {
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 			const src = dirname + '/'
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
+				+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
 					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
 				})
 			// simply get rid of brackets to make sure link text is valid
