@@ -228,17 +228,18 @@ export default {
 			this.editor.chain().focus().insertPreview(href).run()
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
+			const sanitizedName = name.replaceAll('\u202E', '')
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 			const src =
 				dirname
 				+ '/'
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
+				+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
 					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
 				})
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
+			const alt = sanitizedName.replaceAll(/[[\]]/g, '')
 
 			const chain = position
 				? this.editor.chain().focus(position)
