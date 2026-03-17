@@ -180,6 +180,7 @@ export default {
 			})
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
+			const sanitizedName = name.replaceAll('\u202E', '')
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 			const src = dirname + '/'
@@ -188,7 +189,7 @@ export default {
 				})
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
+			const alt = sanitizedName.replaceAll(/[[\]]/g, '')
 
 			const chain = position
 				? this.$editor.chain().focus(position)
