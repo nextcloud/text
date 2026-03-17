@@ -298,6 +298,48 @@ describe('Test all attachment insertion methods', () => {
 		cy.closeFile()
 	})
 
+	it('Upload a local image file with RTLO character in name (RTLO is stripped)', () => {
+		const filename = randHash() + '.md'
+		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.visit('/apps/files')
+		cy.openFile(filename)
+
+		const requestAlias = 'uploadRTLORequest'
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(
+			requestAlias,
+		)
+
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
+			cy.getEditor()
+				.find('input[type="file"][data-text-el="attachment-file-input"]')
+				.selectFile(
+					[
+						{
+							contents: 'cypress/fixtures/github.png',
+							fileName: 'git\u202e.png',
+						},
+					],
+					{ force: true },
+				)
+
+			return cy.wait('@' + requestAlias).then((req) => {
+				const fileName = req.response.body.name // server echoes back name with RTLO
+				const documentId = req.response.body.documentId
+
+				// insertAttachment strips RTLO from the name before building the src URL and the
+				// alt text. The src URL no longer matches the on-disk filename (which still has
+				// the RTLO), so the image 404s. The alt text shows the clean name, exposing the
+				// real file extension instead of the visually spoofed one.
+				const strippedName = fileName.replaceAll('\u202e', '')
+				const encodedName = fixedEncodeURIComponent(strippedName)
+				cy.get(
+					`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`,
+				).should('exist')
+			})
+		})
+		cy.closeFile()
+	})
+
 	it('Create a new whiteboard file as an attachment', () => {
 		const check = (documentId, fileName) => {
 			cy.log(
