@@ -68,4 +68,7 @@ export default defineConfig({
 		openMode: 0,
 	},
 	'numTestsKeptInMemory': 5,
+	// Make nextcloud accept the outdate browser as we won't upgrade cypress anymore:
+	userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/13.6.4 Chrome/144.0.0.0 Electron/25.8.4 Safari/537.36',
+
 })
