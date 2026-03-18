@@ -12,6 +12,7 @@ export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
 export const OPEN_LINK_HANDLER = Symbol('editor:open-link-handler')
+export const HOOK_MENUBAR_LINK_CUSTOM_ACTION = Symbol('menubar:link-custom-action')
 
 export const useIsMobileMixin = {
 	inject: {
