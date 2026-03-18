@@ -85,6 +85,7 @@ export default {
 
 <style scoped lang="scss">
 .editor__content {
+	flex-grow: 1;
 	max-width: var(--text-editor-max-width);
 	margin: auto;
 	position: relative;
