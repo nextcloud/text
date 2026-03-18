@@ -72,6 +72,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$file->method('getStorage')->willReturn($storage);
 		$file->method('getId')->willReturn($id);
 		$file->method('getOwner')->willReturn($owner);
+		$file->method('getName')->willReturn('name');
 		return $file;
 	}
 
