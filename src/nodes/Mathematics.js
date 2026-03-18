@@ -19,19 +19,6 @@ const MathInline = TiptapInlineMath.extend({
 		return [
 			// Tiptap's default format
 			{ tag: 'span[data-type="inline-math"]' },
-			// KaTeX HTML from markdown-it
-			{
-				tag: 'span.katex',
-				priority: 50,
-				getAttrs: (element) => {
-					// Extract LaTeX from annotation tag
-					const annotation = element.querySelector('annotation')
-					if (annotation) {
-						return { latex: annotation.textContent.trim() }
-					}
-					return false
-				},
-			},
 		]
 	},
 
@@ -63,19 +50,6 @@ const MathBlock = TiptapBlockMath.extend({
 		return [
 			// Tiptap's default format
 			{ tag: 'div[data-type="block-math"]' },
-			// KaTeX HTML from markdown-it
-			{
-				tag: 'p.katex-block',
-				priority: 100,
-				getAttrs: (element) => {
-					// Extract LaTeX from annotation tag
-					const annotation = element.querySelector('annotation')
-					if (annotation) {
-						return { latex: annotation.textContent.trim() }
-					}
-					return false
-				},
-			},
 		]
 	},
 
