@@ -29,8 +29,8 @@
     "extends @nextcloud/browserslist-config"
   ],
   "dependencies": {
-    "@iktakahiro/markdown-it-katex": "^4.0.1",
     "@mdi/svg": "^7.4.47",
+    "@mdit/plugin-tex": "^0.24.1",
     "@nextcloud/auth": "^2.5.3",
     "@nextcloud/axios": "^2.5.2",
     "@nextcloud/browser-storage": "^0.5.0",

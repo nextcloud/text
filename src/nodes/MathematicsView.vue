@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<NodeViewWrapper :as="isBlock ? 'div' : 'span'" :class="wrapperClass">
+	<NodeViewWrapper
+		:as="isBlock ? 'div' : 'span'"
+		:data-type="isBlock ? 'block-math' : 'inline-math'"
+		:data-latex="node.attrs.latex"
+		:class="wrapperClass">
 		<span ref="mathEl" @click="onMathClick"></span>
 		<ShowMathModal
 			v-if="showModal"

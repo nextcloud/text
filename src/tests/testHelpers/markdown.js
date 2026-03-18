@@ -15,7 +15,8 @@ import markdownit from '../../markdownit/index.js'
  */
 export function markdownThroughEditor(markdown) {
 	const tiptap = createRichEditor()
-	tiptap.commands.setContent(markdownit.render(markdown))
+	const content = markdownit.render(markdown)
+	tiptap.commands.setContent(content)
 	const serializer = createMarkdownSerializer(tiptap.schema)
 	const serializedMarkdown = serializer.serialize(tiptap.state.doc)
 	tiptap.destroy()
