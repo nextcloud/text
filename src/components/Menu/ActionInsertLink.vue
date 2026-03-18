@@ -33,6 +33,12 @@
 			</template>
 			{{ t('text', 'Remove link') }}
 		</NcActionButton>
+		<NcActionButton v-if="hasMenubarLinkCustomAction" @click="linkCustomAction">
+			<template #icon>
+				<component :is="menubarLinkCustomAction.icon" />
+			</template>
+			{{ menubarLinkCustomAction.label }}
+		</NcActionButton>
 		<NcActionButton
 			v-if="!isUsingDirectEditing"
 			ref="buttonFile"
@@ -90,7 +96,7 @@ import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { t } from '@nextcloud/l10n'
 import { buildFilePicker } from '../../helpers/filePicker.js'
-import { useFileMixin } from '../Editor.provider.ts'
+import { HOOK_MENUBAR_LINK_CUSTOM_ACTION, useFileMixin } from '../Editor.provider.ts'
 import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -109,6 +115,12 @@ export default {
 	},
 	extends: BaseActionEntry,
 	mixins: [useFileMixin, useMenuIDMixin],
+	inject: {
+		menubarLinkCustomAction: {
+			from: HOOK_MENUBAR_LINK_CUSTOM_ACTION,
+			default: null,
+		},
+	},
 	data: () => {
 		return {
 			href: '',
@@ -126,6 +138,12 @@ export default {
 		},
 		relativePath() {
 			return this.$file?.relativePath ?? '/'
+		},
+		hasMenubarLinkCustomAction() {
+			return (
+				typeof this.menubarLinkCustomAction?.action === 'function'
+				&& this.menubarLinkCustomAction?.icon
+			)
 		},
 	},
 	methods: {
@@ -222,16 +240,32 @@ export default {
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then((link) => {
-					const chain = this.editor?.chain()
-					if (this.editor?.view.state?.selection.empty) {
-						chain.focus().insertPreview(link).run()
-					} else {
-						chain.setLink({ href: link }).focus().run()
-					}
+					this.insertLink(link)
 				})
 				.catch((error) => {
 					console.error('Smart picker promise rejected', error)
 				})
+		},
+		linkCustomAction() {
+			this.menubarLinkCustomAction
+				.action()
+				.then((link) => {
+					this.insertLink(link)
+				})
+				.catch((error) => {
+					console.error('Custom link action promise rejected', error)
+				})
+		},
+		insertLink(link) {
+			if (!link) {
+				return
+			}
+			const chain = this.editor?.chain()
+			if (this.editor?.view.state?.selection.empty) {
+				chain.focus().insertPreview(link).run()
+			} else {
+				chain.setLink({ href: link }).focus().run()
+			}
 		},
 		t,
 	},

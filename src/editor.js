@@ -10,6 +10,7 @@ import {
 	EDITOR_UPLOAD,
 	HOOK_MENTION_INSERT,
 	HOOK_MENTION_SEARCH,
+	HOOK_MENUBAR_LINK_CUSTOM_ACTION,
 	OPEN_LINK_HANDLER,
 } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
@@ -246,6 +247,7 @@ window.OCA.Text.createEditor = async function ({
 		component: null,
 		props: null,
 	},
+	menubarLinkCustomAction = undefined,
 
 	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
@@ -294,6 +296,7 @@ window.OCA.Text.createEditor = async function ({
 						]
 					},
 				},
+				[HOOK_MENUBAR_LINK_CUSTOM_ACTION]: menubarLinkCustomAction,
 			}
 		},
 		data() {
