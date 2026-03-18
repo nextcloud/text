@@ -5,7 +5,7 @@ name: Playwright Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, stable3*]
 
 permissions:
   contents: read
