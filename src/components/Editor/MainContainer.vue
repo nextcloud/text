@@ -30,6 +30,7 @@ export default {
 .editor {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1;
 	background: var(--color-main-background);
 	color: var(--color-main-text);
 	background-clip: padding-box;
