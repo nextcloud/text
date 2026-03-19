@@ -13,7 +13,7 @@
 				class="suggestions--button"
 				@click="linkFile">
 				<template #icon>
-					<Document :size="20" />
+					<Folder :size="20" />
 				</template>
 				{{ t('text', 'Link to file or folder') }}
 			</NcButton>
@@ -60,7 +60,7 @@
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { Document, Shape, Table as TableIcon, Upload } from '../components/icons.js'
+import { Folder, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
 import { useFileProps } from '../composables/useFileProps.ts'
@@ -73,7 +73,7 @@ export default {
 	name: 'SuggestionsBar',
 	components: {
 		TableIcon,
-		Document,
+		Folder,
 		NcButton,
 		Shape,
 		Upload,

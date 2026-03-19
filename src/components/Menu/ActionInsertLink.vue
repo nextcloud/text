@@ -46,7 +46,7 @@
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFileAndCloseMenu">
 			<template #icon>
-				<Document />
+				<Folder />
 			</template>
 			{{ t('text', 'Link to file or folder') }}
 		</NcActionButton>
@@ -99,7 +99,7 @@ import { useFileProps } from '../../composables/useFileProps.ts'
 import { useLinkFile } from '../../composables/useLinkFile.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { HOOK_MENUBAR_LINK_CUSTOM_ACTION } from '../Editor.provider.ts'
-import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
+import { Folder, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
@@ -109,7 +109,7 @@ export default {
 		NcActions,
 		NcActionButton,
 		NcActionInput,
-		Document,
+		Folder,
 		Loading,
 		LinkOff,
 		Web,
