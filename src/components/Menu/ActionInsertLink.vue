@@ -45,7 +45,7 @@
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
 			<template #icon>
-				<Document />
+				<Folder />
 			</template>
 			{{ t('text', 'Link to file or folder') }}
 		</NcActionButton>
@@ -107,7 +107,7 @@ export default {
 		NcActions,
 		NcActionButton,
 		NcActionInput,
-		Document,
+		Folder,
 		Loading,
 		LinkOff,
 		Web,
