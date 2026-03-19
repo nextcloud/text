@@ -45,7 +45,7 @@
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
 			<template #icon>
-				<Document />
+				<Folder />
 			</template>
 			{{ t('text', 'Link to file or folder') }}
 		</NcActionButton>
@@ -97,7 +97,7 @@ import { getMarkAttributes, isActive } from '@tiptap/core'
 import { t } from '@nextcloud/l10n'
 import { buildFilePicker } from '../../helpers/filePicker.js'
 import { HOOK_MENUBAR_LINK_CUSTOM_ACTION, useFileMixin } from '../Editor.provider.ts'
-import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
+import { Folder, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
@@ -107,7 +107,7 @@ export default {
 		NcActions,
 		NcActionButton,
 		NcActionInput,
-		Document,
+		Folder,
 		Loading,
 		LinkOff,
 		Web,
