@@ -42,6 +42,7 @@ const createRichEditor = ({
 	connection,
 	relativePath,
 	isEmbedded = false,
+	mentionSearch = undefined,
 	noLazyImages = false,
 } = {}) => {
 	return new Editor({
@@ -51,6 +52,7 @@ const createRichEditor = ({
 				connection,
 				relativePath,
 				isEmbedded,
+				mentionSearch,
 				noLazyImages,
 			}),
 			FocusTrap,

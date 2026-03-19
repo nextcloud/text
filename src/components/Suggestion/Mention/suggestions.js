@@ -11,8 +11,26 @@ export default ({ connection, options }) =>
 	createSuggestions({
 		listComponent: MentionList,
 		items: async ({ query }) => {
-			const users = await getUsers(query, { connection })
-			return Object.entries(users).map(([id, label]) => ({ id, label }))
+			let customUsers = {}
+			if (typeof options?.mentionSearch === 'function') {
+				customUsers = await options.mentionSearch(query)
+			}
+
+			const entries = Object.entries(customUsers).map(([id, label]) => ({
+				id,
+				label,
+			}))
+			if (entries.length >= 6) {
+				return entries
+			}
+
+			const serverUsers = await getUsers(query, { connection })
+			const serverEntries = Object.entries(serverUsers)
+				.filter(([id]) => !(id in customUsers))
+				.map(([id, label]) => ({ id, label }))
+				.slice(0, 6 - entries.length)
+
+			return [...entries, ...serverEntries]
 		},
 
 		command: ({ editor, range, props }) => {
