@@ -259,7 +259,7 @@ window.OCA.Text.createEditor = async function ({
 	onOutlineToggle = (visible) => {}, // deprecated, use `onTocToggle`
 	onTocPin = (fileId, keep) => {},
 	onFileInsert = undefined,
-	onMentionSearch = undefined,
+	onMentionSearch = undefined, // (query) => Promise<{ [id]: label }>
 	onMentionInsert = undefined,
 	openLinkHandler = undefined,
 	onSearch = undefined,
@@ -283,8 +283,8 @@ window.OCA.Text.createEditor = async function ({
 			return {
 				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
 				[EDITOR_UPLOAD]: !!sessionEditor,
-				[HOOK_MENTION_SEARCH]: sessionEditor ? true : onMentionSearch,
-				[HOOK_MENTION_INSERT]: sessionEditor ? true : onMentionInsert,
+				[HOOK_MENTION_SEARCH]: onMentionSearch,
+				[HOOK_MENTION_INSERT]: onMentionInsert,
 				[OPEN_LINK_HANDLER]: {
 					openLink: openLinkHandler || openLink,
 				},
