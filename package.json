@@ -124,7 +124,7 @@
     "cypress-split": "^1.24.31",
     "cypress-vite": "^1.8.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-cypress": "^3.6.0",
+    "eslint-plugin-cypress": "^6.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^28.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
