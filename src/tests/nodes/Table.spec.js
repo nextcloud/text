@@ -236,7 +236,85 @@ describe('Table extension', () => {
 			expect(editor.getHTML()).toBe(editorHtml)
 		}
 	})
+
+	test('sorts table body rows in ascending order by selected column', ({
+		editor,
+	}) => {
+		editor.commands.setContent(
+			markdownit.render(
+				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
+			),
+		)
+
+		selectHeaderCell(editor, 0)
+		expect(editor.commands.sortColumn('asc', 0)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
+
+		selectHeaderCell(editor, 1)
+		expect(editor.commands.sortColumn('asc', 1)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['10', '2', '1'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['a', 'b', 'c'])
+	})
+
+	test('sorts table body rows in descending order by selected column', ({
+		editor,
+	}) => {
+		editor.commands.setContent(
+			markdownit.render(
+				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
+			),
+		)
+
+		selectHeaderCell(editor, 0)
+		expect(editor.commands.sortColumn('desc', 0)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['10', '2', '1'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['a', 'b', 'c'])
+
+		selectHeaderCell(editor, 1)
+		expect(editor.commands.sortColumn('desc', 1)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
+	})
 })
+
+const selectHeaderCell = (editor, targetIndex = 0) => {
+	let currentIndex = 0
+	let selectionPos
+	editor.state.doc.descendants((node, pos) => {
+		if (node.type.name !== 'tableHeader') {
+			return true
+		}
+		if (currentIndex === targetIndex) {
+			selectionPos = pos + 1
+			return false
+		}
+		currentIndex += 1
+		return true
+	})
+	if (selectionPos != null) {
+		editor.commands.setTextSelection(selectionPos)
+	}
+	return selectionPos
+}
+
+const getBodyColumnValues = (editor, columnIndex) => {
+	const values = []
+	editor.state.doc.descendants((node) => {
+		if (node.type.name !== 'tableRow') {
+			return true
+		}
+		if (columnIndex < node.childCount) {
+			values.push(node.child(columnIndex).textContent.trim())
+		}
+		return true
+	})
+	return values
+}
 
 const formatHTML = (html) => {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
