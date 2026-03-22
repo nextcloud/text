@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Podtržený text",
     "Strikethrough" : "Přeškrtnuté",
     "Mistaken text" : "Už neplatící text",
+    "Highlight" : "Zvýraznit",
+    "Highlighted text" : "Zvýrazněný text",
     "Heading 1" : "Nadpis 1",
     "Heading level 1" : "Nadpis první úrovně",
     "Heading 6" : "Nadpis 6",
