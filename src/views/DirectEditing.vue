@@ -23,9 +23,9 @@
 
 <script>
 import Vue from 'vue'
-import Editor from '../components/Editor.vue'
+import Editor from '../components/Editor.js'
 
-import { logger } from '../helpers/logger.js'
+import { logger } from '../helpers/logger.ts'
 
 const log = Vue.observable({
 	messages: [],

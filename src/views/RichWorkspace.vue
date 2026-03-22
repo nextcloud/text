@@ -37,7 +37,7 @@ import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
 
-import Editor from '../components/Editor.vue'
+import Editor from '../components/Editor.js'
 import RichTextReader from '../components/RichTextReader.vue'
 
 const IS_PUBLIC = isPublicShare()

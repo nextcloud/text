@@ -124,4 +124,9 @@ export class Node {
 		return { token, id }
 	}
 
+	async getContent() {
+		const response = await this.page.request.get(`/remote.php/webdav/${this.name}`)
+		return response.text()
+	}
+
 }

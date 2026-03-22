@@ -43,15 +43,20 @@ describe('Sync service provider', function () {
 	 */
 	function createProvider(ydoc) {
 		const relativePath = '.'
-		const { connection, openConnection, baseVersionEtag } = provideConnection({
-			fileId,
-			relativePath,
-		})
-		const { syncService } = provideSyncService(
-			connection,
-			openConnection,
-			baseVersionEtag,
+		let baseVersionEtag
+		const setBaseVersionEtag = (val) => {
+			baseVersionEtag = val
+		}
+		const getBaseVersionEtag = () => baseVersionEtag
+		const { connection, openConnection } = provideConnection(
+			{
+				fileId,
+				relativePath,
+			},
+			getBaseVersionEtag,
+			setBaseVersionEtag,
 		)
+		const { syncService } = provideSyncService(connection, openConnection)
 		const queue = []
 		syncService.bus.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({
