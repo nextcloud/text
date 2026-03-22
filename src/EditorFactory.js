@@ -42,11 +42,17 @@ const createRichEditor = ({
 	connection,
 	relativePath,
 	isEmbedded = false,
+	mentionSearch = undefined,
 } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
-			RichText.configure({ connection, relativePath, isEmbedded }),
+			RichText.configure({
+				connection,
+				relativePath,
+				isEmbedded,
+				mentionSearch,
+			}),
 			FocusTrap,
 			...extensions,
 		],
