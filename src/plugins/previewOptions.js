@@ -51,6 +51,9 @@ export default function previewOptions({ editor }) {
 
 		props: {
 			decorations(state) {
+				if (!editor.options.editable) {
+					return DecorationSet.empty
+				}
 				return this.getState(state).decorations
 			},
 		},
