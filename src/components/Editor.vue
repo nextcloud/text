@@ -20,7 +20,7 @@
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
-			:has-connection-issue="requireReconnect"
+			:has-connection-issue="displayConnectionIssue"
 			:content-loaded="contentLoaded"
 			@read-only-toggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">
@@ -34,7 +34,7 @@
 								:document="document"
 								:dirty="dirty"
 								:sync-error="syncError"
-								:has-connection-issue="requireReconnect" />
+								:has-connection-issue="displayConnectionIssue" />
 							<slot name="header" />
 						</ReadonlyBar>
 					</slot>
@@ -51,7 +51,7 @@
 							:document="document"
 							:dirty="dirty"
 							:sync-error="syncError"
-							:has-connection-issue="requireReconnect" />
+							:has-connection-issue="displayConnectionIssue" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -72,7 +72,7 @@
 			:idle="idle"
 			:lock="document?.lock"
 			:sync-error="syncError"
-			:has-connection-issue="requireReconnect"
+			:has-connection-issue="displayConnectionIssue"
 			@reconnect="reconnect" />
 		<Translate
 			:show="translateModal"
@@ -247,7 +247,8 @@ export default defineComponent({
 		} = useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
-		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
+		const { delayed: displayConnectionIssue } =
+			useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
 			provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
@@ -316,7 +317,7 @@ export default defineComponent({
 			isRichWorkspace,
 			language,
 			lowlightLoaded,
-			requireReconnect,
+			displayConnectionIssue,
 			saveService,
 			serialize,
 			setDirty,
@@ -413,11 +414,11 @@ export default defineComponent({
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
 			}
 		},
-		requireReconnect(val) {
+		displayConnectionIssue(val) {
 			if (val) {
 				this.emit('sync-service:error')
 			}
-			this.setEditable(!val)
+			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
 		},
 		hasOutdatedDocument(val) {
 			if (!val) {
@@ -595,7 +596,7 @@ export default defineComponent({
 			this.document = document
 
 			this.syncError = null
-			this.setEditable(this.editMode) // && !this.requireReconnect)
+			this.setEditable(this.editMode)
 		},
 
 		onCreate({ editor }) {
