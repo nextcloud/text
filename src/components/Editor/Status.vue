@@ -96,7 +96,7 @@ export default {
 			let message = t('text', 'Last saved {lastSave}', {
 				lastSave: this.lastSavedString,
 			})
-			if (this.hasSyncCollission) {
+			if (this.hasSyncCollision) {
 				message = t(
 					'text',
 					'The document has been changed outside of the editor. The changes cannot be applied.',
@@ -108,9 +108,9 @@ export default {
 			return message
 		},
 
-		hasSyncCollission() {
+		hasSyncCollision() {
 			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISION
 			)
 		},
 		saveStatusClass() {

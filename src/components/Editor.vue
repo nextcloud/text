@@ -352,13 +352,13 @@ export default defineComponent({
 	},
 	computed: {
 		isResolvingConflict() {
-			return this.hasSyncCollission && !this.readOnly
+			return this.hasSyncCollision && !this.readOnly
 		},
-		hasSyncCollission() {
+		hasSyncCollision() {
 			return (
 				Boolean(this.localChange)
 				|| (this.syncError
-					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISSION)
+					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
 		otherVersion() {
@@ -641,9 +641,9 @@ export default defineComponent({
 			}
 
 			if (
-				type === ERROR_TYPE.SAVE_COLLISSION
+				type === ERROR_TYPE.SAVE_COLLISION
 				&& (!this.syncError
-					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISION)
 			) {
 				this.contentLoaded = true
 				this.syncError = {

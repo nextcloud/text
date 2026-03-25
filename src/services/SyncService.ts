@@ -32,9 +32,9 @@ const COLLABORATOR_DISCONNECT_TIME = 90
 const ERROR_TYPE = {
 	/**
 	 * Failed to save collaborative document due to external change
-	 * collission needs to be resolved manually
+	 * collision needs to be resolved manually
 	 */
-	SAVE_COLLISSION: 0,
+	SAVE_COLLISION: 0,
 	/**
 	 * Failed to push changes for MAX_REBASE_RETRY times
 	 */

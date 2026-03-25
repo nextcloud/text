@@ -58,7 +58,7 @@ export default {
 					actionLabel: t('text', 'Reload'),
 				}
 			}
-			if (this.hasSyncCollission) {
+			if (this.hasSyncCollision) {
 				return {
 					message: t(
 						'text',
@@ -86,9 +86,9 @@ export default {
 			}
 			return {}
 		},
-		hasSyncCollission() {
+		hasSyncCollision() {
 			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISION
 			)
 		},
 		isLoadingError() {

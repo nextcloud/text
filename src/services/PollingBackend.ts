@@ -196,7 +196,7 @@ class PollingBackend {
 			this._handleResponse(e.response)
 			logger.error('Conflict during file save, please resolve')
 			this.#syncService.bus.emit('error', {
-				type: ERROR_TYPE.SAVE_COLLISSION,
+				type: ERROR_TYPE.SAVE_COLLISION,
 				data: {
 					outsideChange: e.response.data.outsideChange,
 				},
