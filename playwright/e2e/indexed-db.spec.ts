@@ -23,6 +23,7 @@ test('recovering from indexed db', async ({
 	close,
 	editor,
 	file,
+	page,
 	setOffline,
 	setOnline,
 }) => {
@@ -31,10 +32,25 @@ test('recovering from indexed db', async ({
 	await editor.typeHeading('Hello world')
 	await close()
 	await setOnline()
+	const pushWithSteps = page.waitForRequest(
+		(request) => {
+			if (!request.url().includes('push')) {
+				return false
+			}
+			const data = request.postDataJSON()
+			return data.steps.length > 0
+		},
+		{ timeout: 10_000 },
+	)
 	await file.open()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 	await expect(editor.offlineState).not.toBeVisible()
-	await expect(editor.saveIndicator).toHaveAttribute('title', /Unsaved changes/)
+	await expect(editor.saveIndicator).not.toHaveAttribute(
+		'title',
+		/Unsaved changes/,
+	)
+	expect(await file.getContent()).toBe('## Hello world')
+	await pushWithSteps
 })
 ;[
 	{
