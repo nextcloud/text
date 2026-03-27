@@ -561,4 +561,8 @@ export class WebsocketProvider extends Observable {
 			this.connectBc()
 		}
 	}
+
+	sendUpdateFromDoc(origin, doc) {
+		this._updateHandler({}, origin, doc)
+	}
 }

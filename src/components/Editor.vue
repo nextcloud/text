@@ -584,10 +584,11 @@ export default defineComponent({
 					})
 				}
 			})
-			// Save unsaved changes from offline editing session
+			// Save and push unsaved changes from offline editing session
 			if (this.dirty) {
 				this.saveService.autosave()
 				this.saveService.autosave.flush()
+				this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
 			}
 			this.updateUser(session)
 		},
