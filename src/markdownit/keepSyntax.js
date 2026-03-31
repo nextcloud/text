@@ -10,7 +10,7 @@
  */
 export default function keepSyntax(md) {
 	// Extracting named groups as positive lookbehind patterns are not supported by Safari
-	const escaped = /(\n(?<linestart>[#\-*+>])|(?<special>[`*\\~[\]]+))/
+	const escaped = /(\n(?<linestart>[#\-*+>])|(?<special>[`*\\~[\]]))/
 
 	md.core.ruler.before('text_join', 'tag-markdown-syntax', (state) => {
 		const open = new state.Token('keep_md_open', 'span', 1)
