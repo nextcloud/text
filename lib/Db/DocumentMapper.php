@@ -54,6 +54,22 @@ class DocumentMapper extends QBMapper {
 		}
 	}
 
+	public function findAllWithNoActiveSessions(): Generator {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('d.*')
+			->from($this->getTableName(), 'd')
+			->leftJoin('d', 'text_sessions', 's', $qb->expr()->eq('s.document_id', 'd.id'))
+			->where($qb->expr()->isNull('s.id'))
+			->executeQuery();
+		try {
+			while ($row = $result->fetch()) {
+				yield $this->mapRowToEntity($row);
+			}
+		} finally {
+			$result->closeCursor();
+		}
+	}
+
 	public function countAll(): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select($qb->func()->count('id'))
