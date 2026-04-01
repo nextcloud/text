@@ -101,8 +101,8 @@ export default Table.extend({
 								for (let i = 0; i < lastRow.childCount; i++) {
 									tr.setNodeAttribute(
 										pos,
-										'textAlign',
-										lastRow.child(i).attrs.textAlign,
+										'align',
+										lastRow.child(i).attrs.align,
 									)
 									pos += newRow.child(i).nodeSize
 								}
@@ -129,8 +129,8 @@ export default Table.extend({
 								for (let i = 0; i < lastRow.childCount; i++) {
 									tr.setNodeAttribute(
 										pos,
-										'textAlign',
-										lastRow.child(i).attrs.textAlign,
+										'align',
+										lastRow.child(i).attrs.align,
 									)
 									pos += newRow.child(i).nodeSize
 								}

@@ -4,11 +4,7 @@
 -->
 
 <template>
-	<NodeViewWrapper
-		data-text-el="table-header"
-		as="th"
-		:dir="dir"
-		:style="textAlign">
+	<NodeViewWrapper data-text-el="table-header" as="th" :dir="dir" :style="align">
 		<div>
 			<NodeViewContent class="content" />
 			<NcActions
@@ -23,8 +19,8 @@
 						:aria-label="t('text', 'Left align column')"
 						type="radio"
 						value="left"
-						:model-value="node.attrs.textAlign"
-						@click="alignLeft">
+						:model-value="node.attrs.align"
+						@click="setAlignLeft">
 						<template #icon>
 							<AlignHorizontalLeft />
 						</template>
@@ -34,8 +30,8 @@
 						:aria-label="t('text', 'Center align column')"
 						type="radio"
 						value="center"
-						:model-value="node.attrs.textAlign"
-						@click="alignCenter">
+						:model-value="node.attrs.align"
+						@click="setAlignCenter">
 						<template #icon>
 							<AlignHorizontalCenter />
 						</template>
@@ -45,8 +41,8 @@
 						:aria-label="t('text', 'Right align column')"
 						type="radio"
 						value="right"
-						:model-value="node.attrs.textAlign"
-						@click="alignRight">
+						:model-value="node.attrs.align"
+						@click="setAlignRight">
 						<template #icon>
 							<AlignHorizontalRight />
 						</template>
@@ -134,8 +130,8 @@ export default {
 		}
 	},
 	computed: {
-		textAlign() {
-			return { 'text-align': this.node.attrs.textAlign }
+		align() {
+			return { 'text-align': this.node.attrs.align }
 		},
 		dir() {
 			return this.node.attrs.dir || ''
@@ -148,24 +144,24 @@ export default {
 		})
 	},
 	methods: {
-		alignCenter() {
-			this.align('center')
+		setAlignCenter() {
+			this.setAlign('center')
 		},
-		alignLeft() {
-			this.align('left')
+		setAlignLeft() {
+			this.setAlign('left')
 		},
-		alignRight() {
-			this.align('right')
+		setAlignRight() {
+			this.setAlign('right')
 		},
-		align(textAlign) {
+		setAlign(align) {
 			this.editor
 				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.setCellAttribute('textAlign', textAlign)
+				.setCellAttribute('align', align)
 				.run()
 			while (this.editor.commands.goToNextRow()) {
-				this.editor.commands.setCellAttribute('textAlign', textAlign)
+				this.editor.commands.setCellAttribute('align', align)
 			}
 			// Set focus back to first row
 			this.editor.chain().setTextSelection(this.getPos()).focus().run()
