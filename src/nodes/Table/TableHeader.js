@@ -37,23 +37,4 @@ export default TableHeader.extend({
 		}
 		return ['th', attributes, 0]
 	},
-
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			textAlign: {
-				rendered: true,
-				default: null,
-				renderHTML: (attributes) => {
-					if (!attributes.textAlign) {
-						return {}
-					}
-					return {
-						style: `text-align: ${attributes.textAlign}`,
-					}
-				},
-				parseHTML: (element) => element.style.textAlign || null,
-			},
-		}
-	},
 })

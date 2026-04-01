@@ -31,25 +31,6 @@ export default TableCell.extend({
 		]
 	},
 
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			textAlign: {
-				rendered: true,
-				default: null,
-				renderHTML: (attributes) => {
-					if (!attributes.textAlign) {
-						return {}
-					}
-					return {
-						style: `text-align: ${attributes.textAlign}`,
-					}
-				},
-				parseHTML: (element) => element.style.textAlign || null,
-			},
-		}
-	},
-
 	renderHTML({ HTMLAttributes }) {
 		const attributes = mergeAttributes(
 			this.options.HTMLAttributes,

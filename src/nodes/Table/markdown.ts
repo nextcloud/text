@@ -198,7 +198,7 @@ function tableToMarkdown(state: MarkdownSerializerState, node: Node) {
 			row.length = Math.max(row.length, lines.length)
 			const lineLength = Math.max(...lines.map((line) => line.length))
 			columnWidths[cellIdx] = Math.max(columnWidths[cellIdx], lineLength)
-			const align = node.attrs?.textAlign ?? ''
+			const align = node.attrs?.align ?? ''
 			row.cells.push({ md, lines, nodeTypes, align })
 		})
 	})

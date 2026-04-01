@@ -114,19 +114,13 @@ describe('Table extension', () => {
 			editor.state.doc,
 			table(
 				thead(
-					th({ dir: 'ltr', textAlign: 'center' }, 'heading'),
-					th({ dir: 'ltr', textAlign: 'right' }, 'heading 2'),
+					th({ dir: 'ltr', align: 'center' }, 'heading'),
+					th({ dir: 'ltr', align: 'right' }, 'heading 2'),
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td(
-						{ dir: 'ltr', textAlign: 'center' },
-						p({ dir: 'ltr' }, 'center'),
-					),
-					td(
-						{ dir: 'ltr', textAlign: 'right' },
-						p({ dir: 'ltr' }, 'right'),
-					),
+					td({ dir: 'ltr', align: 'center' }, p({ dir: 'ltr' }, 'center')),
+					td({ dir: 'ltr', align: 'right' }, p({ dir: 'ltr' }, 'right')),
 					td(
 						{ dir: 'ltr' },
 						p(
@@ -148,19 +142,13 @@ describe('Table extension', () => {
 			editor.state.doc,
 			table(
 				thead(
-					th({ dir: 'ltr', textAlign: 'center' }, 'heading'),
-					th({ dir: 'ltr', textAlign: 'right' }, 'heading 2'),
+					th({ dir: 'ltr', align: 'center' }, 'heading'),
+					th({ dir: 'ltr', align: 'right' }, 'heading 2'),
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td(
-						{ dir: 'ltr', textAlign: 'center' },
-						p({ dir: 'ltr' }, 'center'),
-					),
-					td(
-						{ dir: 'ltr', textAlign: 'right' },
-						p({ dir: 'ltr' }, 'right'),
-					),
+					td({ dir: 'ltr', align: 'center' }, p({ dir: 'ltr' }, 'center')),
+					td({ dir: 'ltr', align: 'right' }, p({ dir: 'ltr' }, 'right')),
 					td(
 						{ dir: 'ltr' },
 						p(
