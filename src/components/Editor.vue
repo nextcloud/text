@@ -91,8 +91,6 @@ import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
-import { IndexeddbPersistence } from 'y-indexeddb'
-import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
