@@ -592,9 +592,11 @@ export default defineComponent({
 			// Save and push unsaved changes from offline editing session.
 			Promise.all([this.whenSynced, this.editorReady]).then(() => {
 				if (this.dirty) {
-					this.saveService.save().catch(
-						(err) => logger.error('Failed to save offline changes', { err }),
-					)
+					this.saveService
+						.save()
+						.catch((err) =>
+							logger.error('Failed to save offline changes', { err }),
+						)
 					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
 				}
 			})

@@ -50,7 +50,9 @@ test('recovering from indexed db', async ({
 		'title',
 		/Unsaved changes/,
 	)
-	await expect.poll(() => file.getContent(), { timeout: 10_000 }).toBe('## Hello world')
+	await expect
+		.poll(() => file.getContent(), { timeout: 10_000 })
+		.toBe('## Hello world')
 })
 ;[
 	{
