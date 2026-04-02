@@ -22,15 +22,14 @@ export function useIndexedDbProvider(
 ) {
 	const name = `${props.fileId}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
-	indexedDbProvider.on('synced', async (provider: IndexeddbPersistence) => {
-		logger.info('synced from indexeddb', {
-			dirty: await provider.get('dirty'),
-			baseVersionEtag: await provider.get('baseVersionEtag'),
-		})
-	})
 	const dirty = ref(false)
-	indexedDbProvider.get('dirty').then((val) => {
+	const whenSynced: Promise<void> = indexedDbProvider.whenSynced.then(async () => {
+		const val = await indexedDbProvider.get('dirty')
 		dirty.value = Boolean(val)
+		logger.info('synced from indexeddb', {
+			dirty: val,
+			baseVersionEtag: await indexedDbProvider.get('baseVersionEtag'),
+		})
 	})
 
 	/**
@@ -72,5 +71,6 @@ export function useIndexedDbProvider(
 		getBaseVersionEtag,
 		setBaseVersionEtag,
 		setDirty,
+		whenSynced,
 	}
 }
