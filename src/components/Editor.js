@@ -9,7 +9,7 @@ import Editor from './Editor.vue'
 export default defineComponent({
 	emits: ['focus', 'ready'],
 	props: Editor.props,
-	setup(props, { attrs, emit }) {
+	setup(props, { attrs, emit, slots }) {
 		const reloading = ref(false)
 		const localChange = ref('')
 		watch(reloading, (val) => {
@@ -38,6 +38,7 @@ export default defineComponent({
 						localChange.value = ''
 					},
 				},
+				scopedSlots: slots,
 			})
 	},
 })
