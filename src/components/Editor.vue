@@ -244,6 +244,7 @@ export default defineComponent({
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 			setDirty,
+			whenSynced,
 		} = useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
@@ -301,6 +302,10 @@ export default defineComponent({
 
 		const syncProvider = shallowRef(null)
 
+		const editorReady = new Promise((resolve) => {
+			editor.on('create', () => resolve())
+		})
+
 		provideFileProps(props)
 
 		return {
@@ -309,6 +314,7 @@ export default defineComponent({
 			connection,
 			dirty,
 			editor,
+			editorReady,
 			el,
 			getBaseVersionEtag,
 			hasConnectionIssue,
@@ -325,6 +331,7 @@ export default defineComponent({
 			syncProvider,
 			syncService,
 			updateUser,
+			whenSynced,
 			width,
 			ydoc,
 		}
@@ -584,12 +591,15 @@ export default defineComponent({
 					})
 				}
 			})
-			// Save and push unsaved changes from offline editing session
-			if (this.dirty) {
-				this.saveService.autosave()
-				this.saveService.autosave.flush()
-				this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
-			}
+			// Save and push unsaved changes from offline editing session.
+			Promise.all([this.whenSynced, this.editorReady]).then(() => {
+				if (this.dirty) {
+					this.saveService.save().catch(
+						(err) => logger.error('Failed to save offline changes', { err }),
+					)
+					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
+				}
+			})
 			this.updateUser(session)
 		},
 
