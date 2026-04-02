@@ -50,6 +50,7 @@ const createRichEditor = ({
 	connection?: Connection
 	relativePath?: string
 	isEmbedded?: boolean
+	mentionSearch?: (query: string) => Promise<Record<string, string>>
 } = {}) => {
 	return new Editor({
 		editorProps,
