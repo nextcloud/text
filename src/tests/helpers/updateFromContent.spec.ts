@@ -98,5 +98,7 @@ function contentWithUpdates(...updates: Uint8Array[]) {
 		relativePath: '',
 	})
 	const serializer = createMarkdownSerializer(editor.schema)
-	return serializer.serialize(editor.state.doc)
+	const content = serializer.serialize(editor.state.doc)
+	editor.destroy()
+	return content
 }
