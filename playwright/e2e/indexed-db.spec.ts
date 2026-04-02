@@ -45,12 +45,12 @@ test('recovering from indexed db', async ({
 	await file.open()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 	await expect(editor.offlineState).not.toBeVisible()
+	await pushWithSteps
 	await expect(editor.saveIndicator).not.toHaveAttribute(
 		'title',
 		/Unsaved changes/,
 	)
-	expect(await file.getContent()).toBe('## Hello world')
-	await pushWithSteps
+	await expect.poll(() => file.getContent(), { timeout: 10_000 }).toBe('## Hello world')
 })
 ;[
 	{
