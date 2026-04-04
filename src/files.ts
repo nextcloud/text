@@ -13,6 +13,14 @@ const workspaceEnabled = loadState('text', 'workspace_enabled')
 const openReadOnlyEnabled = loadState('text', 'open_read_only_enabled')
 
 document.addEventListener('DOMContentLoaded', async () => {
+	if (workspaceEnabled && window.jQuery) {
+		window.jQuery('#app-content-files').on('ready.richworkspace', async () => {
+			const { default: RichWorkspace } = await import('./richWorkspace')
+			// eslint-disable-next-line no-new
+			new RichWorkspace()
+		})
+	}
+
 	if (workspaceAvailable && window.OCA.Files?.Settings) {
 		const { default: Vue } = await import('vue')
 		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
