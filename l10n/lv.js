@@ -49,7 +49,7 @@ OC.L10N.register(
     "Source code" : "Izejas kods",
     "Done" : "Pabeigts",
     "Details" : "Informācija",
-    "Insert link" : "Ievietojiet saiti",
+    "Insert link" : "Ievietot saiti",
     "Command" : "Komanda",
     "Choose" : "Izvēlēties",
     "Add folder description" : "Pievienot mapes aprakstu"
