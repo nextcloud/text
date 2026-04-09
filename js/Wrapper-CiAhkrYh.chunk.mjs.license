@@ -113,7 +113,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 0.1.5
 	- license: Apache-2.0
 - @mdit/plugin-tex
-	- version: 0.24.1
+	- version: 0.24.2
 	- license: MIT
 - @nextcloud/auth
 	- version: 2.5.3
