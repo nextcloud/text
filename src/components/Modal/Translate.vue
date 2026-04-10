@@ -97,8 +97,8 @@ import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcTextArea from '@nextcloud/vue/components/NcTextArea'
-import { useIsMobileMixin } from '../Editor.provider.ts'
 import { markFileAsAiGenerated } from '../../apis/ai.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
 	name: 'Translate',

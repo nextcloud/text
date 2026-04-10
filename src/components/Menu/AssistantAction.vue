@@ -175,11 +175,11 @@ import TextBoxPlusOutlineIcon from 'vue-material-design-icons/TextBoxPlusOutline
 import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
+import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import markdownit from '../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
-import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
