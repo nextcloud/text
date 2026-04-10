@@ -179,6 +179,7 @@ import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import markdownit from '../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
+import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
@@ -373,6 +374,9 @@ export default {
 				? markdownit.render(task.output.output)
 				: task.output.output
 			this.editor.commands.insertContent(content)
+			if (this.fileId) {
+				await markFileAsAiGenerated(this.fileId)
+			}
 			this.showTaskList = false
 		},
 		async copyResult(task) {
