@@ -16,10 +16,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
 class AiControllerTest extends TestCase {
-	/** @var IRequest|MockObject */
-	private $request;
-	/** @var AiTagService|MockObject */
-	private $aiTagService;
+	private IRequest&MockObject $request;
+	private AiTagService&MockObject $aiTagService;
 	private AiController $controller;
 
 	protected function setUp(): void {
