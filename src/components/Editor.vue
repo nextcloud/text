@@ -85,13 +85,18 @@ import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import { defineComponent, ref, shallowRef, watch } from 'vue'
+import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
-import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
+import {
+	ATTACHMENT_RESOLVER,
+	FILE,
+	HOOK_MENTION_SEARCH,
+	IS_MOBILE,
+} from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { generateRemoteUrl } from '@nextcloud/router'
@@ -239,12 +244,14 @@ export default defineComponent({
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
+		const mentionSearch = inject(HOOK_MENTION_SEARCH)
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,
 					relativePath: props.relativePath,
 					extensions,
 					isEmbedded: props.isEmbedded,
+					mentionSearch,
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)
