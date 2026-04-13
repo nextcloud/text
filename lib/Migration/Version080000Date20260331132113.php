@@ -54,11 +54,11 @@ class Version080000Date20260331132113 extends SimpleMigrationStep {
 			// We need to add the index with a DESC manually
 			// See https://github.com/doctrine/orm/issues/8128
 			if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_POSTGRES) {
-				$stm = $this->connection->prepare('CREATE INDEX CONCURRENTLY text_steps_doc_id_id_index ON **PREFIX**text_steps (document_id, id DESC);');
+				$stm = $this->connection->prepare('CREATE INDEX CONCURRENTLY text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
 			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_ORACLE) {
-				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON **PREFIX**text_steps (document_id, id DESC) ONLINE;');
+				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC) ONLINE;');
 			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_SQLITE) {
-				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON **PREFIX**text_steps (document_id, id DESC);');
+				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
 			} else {
 				throw new \RuntimeException('Unsupported platform');
 			}
