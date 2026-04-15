@@ -463,6 +463,10 @@ class DocumentService {
 		return $this->documentMapper->findAll();
 	}
 
+	public function getAllWithNoActiveSession(): \Generator {
+		return $this->documentMapper->findAllWithNoActiveSessions();
+	}
+
 	/**
 	 * @throws NotPermittedException
 	 * @throws NotFoundException
