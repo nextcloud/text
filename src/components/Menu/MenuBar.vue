@@ -237,7 +237,8 @@ export default {
 	top: 0;
 	bottom: 0;
 	width: 100%;
-	z-index: 10021; // above modal-header so menubar is always on top
+	// Display above link previews and tables, but below dialogs and calendar event popover
+	z-index: 4;
 	background-color: var(--color-main-background-translucent);
 	backdrop-filter: var(--background-blur);
 	border-bottom: 1px solid var(--color-border);
