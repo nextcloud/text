@@ -114,7 +114,8 @@ export default defineComponent({
 	top: 0;
 	bottom: var(--default-grid-baseline);
 	width: 100%;
-	z-index: 10021; // above modal-header so menubar is always on top
+	// Display above link previews and tables, but below dialogs and calendar event popover
+	z-index: 4;
 	background-color: var(--color-main-background-translucent);
 	backdrop-filter: var(--background-blur);
 	max-height: var(
