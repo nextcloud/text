@@ -24,8 +24,6 @@ class AiTagService {
 	 *
 	 * @return void
 	 *
-	 * @throws \Exception
-	 *
 	 * @since 34.0.0 (ISystemTagObjectMapper::assignGeneratedByAITag)
 	 */
 	public function tagFileAsAiGenerated(int $fileId): void {
