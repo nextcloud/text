@@ -63,6 +63,7 @@ return array(
     'OCA\\Text\\Migration\\Version030901Date20231114150437' => $baseDir . '/../lib/Migration/Version030901Date20231114150437.php',
     'OCA\\Text\\Migration\\Version040100Date20240611165300' => $baseDir . '/../lib/Migration/Version040100Date20240611165300.php',
     'OCA\\Text\\Migration\\Version070000Date20250925110024' => $baseDir . '/../lib/Migration/Version070000Date20250925110024.php',
+    'OCA\\Text\\Migration\\Version080000Date20260331132113' => $baseDir . '/../lib/Migration/Version080000Date20260331132113.php',
     'OCA\\Text\\Notification\\Notifier' => $baseDir . '/../lib/Notification/Notifier.php',
     'OCA\\Text\\Service\\ApiService' => $baseDir . '/../lib/Service/ApiService.php',
     'OCA\\Text\\Service\\AttachmentService' => $baseDir . '/../lib/Service/AttachmentService.php',
