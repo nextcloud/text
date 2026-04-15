@@ -36,7 +36,11 @@ export const addMenuRichWorkspace = () => {
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
 			}
-			return (context.permissions & Permission.CREATE) !== 0
+			// Check read permission to not show option in file drop shares
+			return (
+				(context.permissions & Permission.READ) !== 0
+				&& (context.permissions & Permission.CREATE) !== 0
+			)
 		},
 		iconSvgInline: TextSvg,
 		async handler(context, content) {
