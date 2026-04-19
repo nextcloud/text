@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { schema } from '@tiptap/pm/schema-basic'
 import { EditorState, Plugin } from '@tiptap/pm/state'
+import { schema } from 'prosemirror-schema-basic'
 import { hideLinkBubble, linkBubble, setActiveLink } from '../../plugins/links.js'
 
 describe('linkBubble prosemirror plugin', () => {

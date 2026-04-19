@@ -5,9 +5,9 @@
 
 import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
-import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
 import ImageView from './ImageView.vue'
 
