@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { MarkdownSerializerState } from '@tiptap/pm/markdown'
 import { Node } from '@tiptap/pm/model'
+import { MarkdownSerializerState } from 'prosemirror-markdown'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 
 type Cell = {

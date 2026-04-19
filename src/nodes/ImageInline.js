@@ -4,8 +4,8 @@
  */
 
 import TiptapImage from '@tiptap/extension-image'
-import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import ImageView from './ImageView.vue'
 
 // Inline image extension. Needed if markdown contains inline images.
