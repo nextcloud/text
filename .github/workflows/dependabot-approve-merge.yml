@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   auto-approve-merge:
-    if: github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'renovate[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest-low
     permissions:
       # for hmarr/auto-approve-action to approve PRs
@@ -53,6 +53,6 @@ jobs:
       # Enable GitHub auto merge
       - name: Auto merge
         uses: alexwilson/enable-github-automerge-action@56e3117d1ae1540309dc8f7a9f2825bc3c5f06ff # v2.0.0
-        if: startsWith(steps.branchname.outputs.branch, 'dependabot/')
+        if: startsWith(steps.branchname.outputs.branch, 'dependabot/') && (github.event.pull_request.action == 'opened' || github.event.pull_request.action == 'reopened')
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
