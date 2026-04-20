@@ -3,7 +3,8 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NextcloudVueNcActionButton close-after-click
+	<NextcloudVueNcActionButton
+		close-after-click
 		data-text-action-entry="formatting-help"
 		v-on="$listeners">
 		<template #icon>
@@ -14,8 +15,9 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
+import NextcloudVueNcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { defineComponent } from 'vue'
-import { NcActionButton as NextcloudVueNcActionButton } from '@nextcloud/vue'
 import { Help } from '../icons.js'
 
 export default defineComponent({
@@ -28,6 +30,9 @@ export default defineComponent({
 	components: {
 		NextcloudVueNcActionButton,
 		Help,
+	},
+	methods: {
+		t,
 	},
 })
 </script>

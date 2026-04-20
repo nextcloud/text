@@ -4,62 +4,45 @@
 -->
 
 <template>
-	<Editor v-if="!useSourceView"
+	<Editor
+		v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
+		:mime="mime" />
+	<SourceView
+		v-else
+		:fileid="fileid"
+		:filename="filename"
+		:is-encrypted="isEncrypted"
 		:mime="mime"
-		:show-outline-outside="showOutlineOutside" />
-	<div v-else
-		id="editor-container"
-		data-text-el="editor-container"
-		class="text-editor source-viewer">
-		<Component :is="readerComponent"
-			:content="content"
-			:file-id="fileid"
-			:read-only="true"
-			:show-menu-bar="false" />
-		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
-			{{ t('text', 'Edit') }}
-			<template #icon>
-				<PencilIcon />
-			</template>
-		</NcButton>
-	</div>
+		:source="source"
+		v-bind="$attrs"
+		@loaded="onLoaded"
+		@edit="toggleEdit" />
 </template>
 
 <script>
-import Vue from 'vue'
-import axios from '@nextcloud/axios'
 import { getSharingToken } from '@nextcloud/sharing/public'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import PlainTextReader from './PlainTextReader.vue'
-import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
-import { translate, translatePlural } from '@nextcloud/l10n'
+import { defineComponent } from 'vue'
+import Editor from './Editor.vue'
+import SourceView from './SourceView.vue'
 
-import getEditorInstance from './Editor.singleton.js'
-
-Vue.prototype.t = translate
-Vue.prototype.n = translatePlural
-
-export default {
+export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
-		NcButton: Vue.extend(NcButton),
-		PencilIcon: Vue.extend(PencilIcon),
-		PlainTextReader: Vue.extend(PlainTextReader),
-		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
-		Editor: getEditorInstance,
+		SourceView,
+		Editor,
 	},
 	provide() {
 		return {
 			isEmbedded: this.isEmbedded,
 		}
 	},
+	inheritAttrs: false,
 	props: {
 		filename: {
 			type: String,
@@ -85,14 +68,6 @@ export default {
 			type: String,
 			default: null,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
-		permissions: {
-			type: String,
-			default: '',
-		},
 		source: {
 			type: String,
 			default: undefined,
@@ -104,47 +79,43 @@ export default {
 	},
 	data() {
 		return {
-			content: '',
 			hasToggledInteractiveEmbedding: false,
 		}
 	},
 	computed: {
 		/** @return {boolean} */
 		useSourceView() {
-			return this.source && (this.fileVersion || !this.fileid || this.isEmbedded) && !this.hasToggledInteractiveEmbedding
+			return (
+				this.source
+				&& (this.fileVersion
+					|| !this.fileid
+					|| this.isEmbedded
+					|| this.isEncrypted)
+				&& !this.hasToggledInteractiveEmbedding
+			)
 		},
 
-		/** @return {boolean} */
-		readerComponent() {
-			return this.mime === 'text/markdown' ? MarkdownContentEditor : PlainTextReader
-		},
-	},
-
-	watch: {
-		source() {
-			this.loadFileContent()
+		isEncrypted() {
+			return this.$attrs.e2EeIsEncrypted || false
 		},
 	},
 
 	mounted() {
-		this.loadFileContent()
+		if (!this.useSourceView) {
+			this.onLoaded()
+		}
 	},
 
 	methods: {
-		t: translate,
-		async loadFileContent() {
-			if (this.useSourceView) {
-				const response = await axios.get(this.source)
-				this.content = response.data
-				this.contentLoaded = true
-			}
+		async onLoaded() {
 			this.$emit('update:loaded', true)
 		},
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
 		},
+		t,
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
@@ -157,31 +128,12 @@ export default {
 	position: relative;
 	background-color: var(--color-main-background);
 
-	&.source-viewer {
-		display: block;
-
-		.text-editor__content-wrapper {
-			margin-top: var(--header-height);
-		}
-
-		.toggle-interactive {
-			position: sticky;
-			bottom: 0;
-			right: 0;
-			z-index: 1;
-			margin-left: auto;
-			margin-right: 0;
-		}
-	}
-
 	&.text-editor--embedding {
 		min-height: 400px;
 	}
-
 }
 </style>
 <style lang="scss">
-@import './../css/variables';
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
 	.text-editor {

@@ -4,17 +4,20 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<NcCheckboxRadioSwitch :checked.sync="showWorkspace" @update:checked="toggle">
+		<NcCheckboxRadioSwitch
+			:checked.sync="showWorkspace"
+			@update:checked="toggle">
 			{{ t('text', 'Show folder description') }}
 		</NcCheckboxRadioSwitch>
 	</div>
 </template>
 
 <script>
-import { emit } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
-import { NcCheckboxRadioSwitch } from '@nextcloud/vue'
+import { emit } from '@nextcloud/event-bus'
+import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 
 export default {
 	name: 'FilesSettings',
@@ -43,6 +46,7 @@ export default {
 				})
 			}
 		},
+		t,
 	},
 }
 </script>

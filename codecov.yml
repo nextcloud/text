@@ -1,8 +1,13 @@
 coverage:
-  status:
-    project:
-      default:
-        threshold: 0
-        paths:
-          - "src"
-        only_pulls: true
+    status:
+        project:
+            default:
+                threshold: 0
+                paths:
+                    - 'src'
+                only_pulls: true
+        patch:
+            default:
+                paths:
+                    - 'src'
+                only_pulls: true

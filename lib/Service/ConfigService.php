@@ -8,12 +8,14 @@
 namespace OCA\Text\Service;
 
 use OCA\Text\AppInfo\Application;
+use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
 use OCP\IConfig;
 
 class ConfigService {
 	public function __construct(
 		private IAppConfig $appConfig,
+		private IUserConfig $userConfig,
 		private IConfig $config,
 	) {
 	}
@@ -41,15 +43,18 @@ class ConfigService {
 		if ($userId === null) {
 			return true;
 		}
-		return $this->config->getUserValue($userId, Application::APP_NAME, 'workspace_enabled', '1') === '1';
+		return $this->userConfig->getValueBool($userId, Application::APP_NAME, 'workspace_enabled', true);
 	}
 
 	public function isNotifyPushSyncEnabled(): bool {
-		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push', true);
 
 	}
 
 	public function isFullWidthEditor(?string $userId): bool {
-		return $this->config->getUserValue($userId, Application::APP_NAME, 'is_full_width_editor', '0') === '1';
+		if ($userId === null) {
+			return false;
+		}
+		return $this->userConfig->getValueBool($userId, Application::APP_NAME, 'is_full_width_editor');
 	}
 }

@@ -8,21 +8,15 @@
 </template>
 
 <script>
-/* eslint-disable import/no-named-as-default */
-import CodeBlock from '@tiptap/extension-code-block'
-import escapeHtml from 'escape-html'
-import BaseReader from './BaseReader.vue'
 import { PlainText } from './../extensions/index.js'
+import BaseReader from './BaseReader.vue'
 
 export default {
 	name: 'PlainTextReader',
 	components: { BaseReader },
 
 	provide: {
-		renderHtml(content) {
-			return '<pre>' + escapeHtml(content) + '</pre>'
-		},
-		extensions: () => [PlainText, CodeBlock],
+		extensions: () => [PlainText],
 	},
 
 	props: {
@@ -31,6 +25,5 @@ export default {
 			required: true,
 		},
 	},
-
 }
 </script>

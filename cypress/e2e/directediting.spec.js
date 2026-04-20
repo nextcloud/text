@@ -23,48 +23,50 @@ function enterContentAndClose() {
 	cy.wait('@closeRequest')
 }
 
-describe('direct editing', function() {
-
-	before(function() {
+describe('direct editing', function () {
+	before(function () {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 
 	it('Open an existing file, edit it', () => {
 		cy.login(user)
-		cy.createDirectEditingLink('empty.md')
-			.then((token) => {
-				cy.session('direct-editing', () => { })
-				cy.openDirectEditingToken(token)
-			})
+		cy.createDirectEditingLink('empty.md').then((token) => {
+			cy.session('direct-editing', () => {})
+			cy.openDirectEditingToken(token)
+		})
 		enterContentAndClose()
 		cy.login(user)
-		cy.getFileContent('empty.md')
-			.should('equal', '# This is a headline\n\nSome text')
+		cy.getFileContent('empty.md').should(
+			'equal',
+			'# This is a headline\n\nSome text',
+		)
 	})
 
 	it('Create a file, edit it', () => {
 		cy.login(user)
-		cy.createDirectEditingLinkForNewFile('newfile.md')
-			.then((token) => {
-				cy.session('direct-editing', () => { })
-				cy.openDirectEditingToken(token)
-			})
+		cy.createDirectEditingLinkForNewFile('newfile.md').then((token) => {
+			cy.session('direct-editing', () => {})
+			cy.openDirectEditingToken(token)
+		})
 		enterContentAndClose()
 		cy.login(user)
-		cy.getFileContent('newfile.md')
-			.should('equal', '# This is a headline\n\nSome text')
+		cy.getFileContent('newfile.md').should(
+			'equal',
+			'# This is a headline\n\nSome text',
+		)
 	})
 
 	it('Open an existing plain text file, edit it', () => {
 		cy.login(user)
-		cy.createDirectEditingLink('empty.txt')
-			.then((token) => {
-				cy.session('direct-editing', () => { })
-				cy.openDirectEditingToken(token)
-			})
+		cy.createDirectEditingLink('empty.txt').then((token) => {
+			cy.session('direct-editing', () => {})
+			cy.openDirectEditingToken(token)
+		})
 		enterContentAndClose()
 		cy.login(user)
-		cy.getFileContent('empty.txt')
-			.should('equal', '# This is a headline\nSome text\n')
+		cy.getFileContent('empty.txt').should(
+			'equal',
+			'# This is a headline\nSome text\n',
+		)
 	})
 })

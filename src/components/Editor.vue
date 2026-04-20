@@ -4,66 +4,74 @@
 -->
 
 <template>
-	<div id="editor-container"
+	<div
+		id="editor-container"
 		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
-		tabindex="-1"
-		@keydown.stop="onKeyDown">
+		:class="{ 'is-mobile': isMobile }"
+		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
-		<Wrapper v-if="displayed"
+		<Wrapper
+			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
-			:show-outline-outside="showOutlineOutside"
-			@read-only-toggled="readOnlyToggled"
-			@outline-toggled="outlineToggled">
-			<MainContainer v-if="hasEditor">
+			@read-only-toggled="readOnlyToggled">
+			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
-				<div v-if="readOnly || (openReadOnlyEnabled && !editMode)" class="text-editor--readonly-bar">
+				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
 					<slot name="readonlyBar">
-						<ReadonlyBar :open-read-only="openReadOnlyEnabled">
-							<Status :document="document"
+						<ReadonlyBar
+							:is-hidden="hideMenu"
+							:open-read-only="openReadOnlyEnabled">
+							<Status
+								:document="document"
 								:dirty="dirty"
-								:sessions="filteredSessions"
 								:sync-error="syncError"
 								:has-connection-issue="requireReconnect" />
+							<slot name="header" />
 						</ReadonlyBar>
 					</slot>
-				</div>
+				</template>
 				<!-- Rich Menu -->
 				<template v-else>
-					<MenuBar v-if="renderMenus"
+					<MenuBar
+						v-if="renderMenus"
 						ref="menubar"
 						:is-hidden="hideMenu"
 						:open-read-only="openReadOnlyEnabled"
 						:loaded.sync="menubarLoaded">
-						<Status :document="document"
+						<Status
+							:document="document"
 							:dirty="dirty"
-							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="requireReconnect"
-							@editor-width-change="handleEditorWidthChange" />
+							:has-connection-issue="requireReconnect" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
 				</template>
-				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper" />
-				<SuggestionsBar v-if="isRichEditor && contentLoaded" />
+				<ContentContainer
+					v-show="contentLoaded"
+					ref="contentWrapper"
+					:read-only="!editMode" />
+				<SuggestionsBar
+					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
 			</MainContainer>
-			<Reader v-if="isResolvingConflict"
+			<Reader
+				v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-			<DocumentStatus :idle="idle"
-				:lock="lock"
-				:sync-error="syncError"
-				:has-connection-issue="requireReconnect"
-				@reconnect="reconnect" />
 		</Wrapper>
-		<Assistant v-if="hasEditor" />
-		<Translate :show="translateModal"
+		<DocumentStatus
+			:idle="idle"
+			:lock="document?.lock"
+			:sync-error="syncError"
+			:has-connection-issue="requireReconnect"
+			@reconnect="reconnect" />
+		<Translate
+			:show="translateModal"
 			:content="translateContent"
 			@insert-content="translateInsert"
 			@replace-content="translateReplace"
@@ -72,64 +80,63 @@
 </template>
 
 <script>
-import Vue, { ref, set, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
-import { loadState } from '@nextcloud/initial-state'
-import { isPublicShare } from '@nextcloud/sharing/public'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
-import Autofocus from '../extensions/Autofocus.js'
-import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
+import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
+import { Doc } from 'yjs'
+import Autofocus from '../extensions/Autofocus.js'
 
+import { provideEditor } from '../composables/useEditor.ts'
+import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import {
-	EDITOR,
-	FILE,
 	ATTACHMENT_RESOLVER,
+	HOOK_MENTION_SEARCH,
 	IS_MOBILE,
-	IS_PUBLIC,
-	IS_RICH_EDITOR,
-	IS_RICH_WORKSPACE,
-	SYNC_SERVICE,
-} from './Editor.provider.js'
+} from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
+import { generateRemoteUrl } from '@nextcloud/router'
+import { Awareness } from 'y-protocols/awareness.js'
+import { provideConnection } from '../composables/useConnection.ts'
+import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
+import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { provideEditorWidth } from '../composables/useEditorWidth.ts'
+import { provideFileProps } from '../composables/useFileProps.ts'
+import { provideSaveService } from '../composables/useSaveService.ts'
+import { provideSyncService } from '../composables/useSyncService.ts'
+import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
+import { CollaborationCaret } from '../extensions/index.js'
+import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.js'
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import SessionApi from '../services/SessionApi.js'
-import createSyncServiceProvider from './../services/SyncServiceProvider.js'
-import AttachmentResolver from './../services/AttachmentResolver.js'
-import { extensionHighlight } from '../helpers/mappings.js'
+import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
+import { fetchNode } from '../services/WebdavClient.ts'
 import {
-	createRichEditor,
 	createPlainEditor,
+	createRichEditor,
 	serializePlainText,
-	loadSyntaxHighlight,
 } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
-import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
-import { CollaborationCursor } from '../extensions/index.js'
-import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
-import setContent from './../mixins/setContent.js'
-import MenuBar from './Menu/MenuBar.vue'
-import ContentContainer from './Editor/ContentContainer.vue'
-import Status from './Editor/Status.vue'
-import MainContainer from './Editor/MainContainer.vue'
-import Wrapper from './Editor/Wrapper.vue'
-import SkeletonLoading from './SkeletonLoading.vue'
-import Assistant from './Assistant.vue'
-import Translate from './Modal/Translate.vue'
+import AttachmentResolver from './../services/AttachmentResolver.js'
+import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
-import { generateRemoteUrl } from '@nextcloud/router'
-import { fetchNode } from '../services/WebdavClient.ts'
+import ContentContainer from './Editor/ContentContainer.vue'
+import DocumentStatus from './Editor/DocumentStatus.vue'
+import MainContainer from './Editor/MainContainer.vue'
+import Status from './Editor/Status.vue'
+import Wrapper from './Editor/Wrapper.vue'
+import MenuBar from './Menu/MenuBar.vue'
+import Translate from './Modal/Translate.vue'
+import SkeletonLoading from './SkeletonLoading.vue'
 import SuggestionsBar from './SuggestionsBar.vue'
-import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 
-export default {
+export default defineComponent({
 	name: 'Editor',
 	components: {
 		CollisionResolveDialog,
@@ -140,45 +147,22 @@ export default {
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
+		Reader: () => import('./Reader.vue'),
 		Status,
-		Assistant,
 		Translate,
 		SuggestionsBar,
 	},
-	mixins: [
-		isMobile,
-		setContent,
-	],
+	mixins: [isMobile],
 
 	provide() {
 		const val = {}
 
 		// providers aren't naturally reactive
-		// and $editor will start as null
 		// using getters we can always provide the
-		// actual $editor, and other values without being reactive
+		// actual values without being reactive
 		Object.defineProperties(val, {
-			[EDITOR]: {
-				get: () => this.$editor,
-			},
-			[SYNC_SERVICE]: {
-				get: () => this.$syncService,
-			},
-			[FILE]: {
-				get: () => this.fileData,
-			},
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver,
-			},
-			[IS_PUBLIC]: {
-				get: () => this.isPublic,
-			},
-			[IS_RICH_EDITOR]: {
-				get: () => this.isRichEditor,
-			},
-			[IS_RICH_WORKSPACE]: {
-				get: () => this.isRichWorkspace,
 			},
 			[IS_MOBILE]: {
 				get: () => this.isMobile,
@@ -193,7 +177,6 @@ export default {
 	props: {
 		richWorkspace: {
 			type: Boolean,
-			require: false,
 			default: false,
 		},
 		initialSession: {
@@ -232,22 +215,90 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 
-	setup() {
+	setup(props) {
 		const el = ref(null)
 		const { width } = useElementSize(el)
-		watch(width, value => {
+		watch(width, (value) => {
 			const maxWidth = Math.floor(value) - 36
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
+		const ydoc = new Doc()
+		const awareness = new Awareness(ydoc)
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		return { el, width, hasConnectionIssue, requireReconnect }
+		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
+			provideEditorFlags(props)
+		const { language, lowlightLoaded } = useSyntaxHighlighting(
+			isRichEditor,
+			props,
+		)
+		const { connection, openConnection } = provideConnection(props)
+		const { syncService } = provideSyncService(connection, openConnection)
+		const extensions = [
+			Autofocus.configure({ fileId: props.fileId }),
+			Collaboration.configure({ document: ydoc }),
+			CollaborationCaret.configure({ provider: { awareness } }),
+		]
+		const mentionSearch = inject(HOOK_MENTION_SEARCH)
+		const editor = isRichEditor
+			? createRichEditor({
+					connection,
+					relativePath: props.relativePath,
+					extensions,
+					isEmbedded: props.isEmbedded,
+					mentionSearch,
+				})
+			: createPlainEditor({ language, extensions })
+		provideEditor(editor)
+
+		const { applyEditorWidth } = provideEditorWidth(useTableOfContents)
+		applyEditorWidth()
+
+		provideEditorHeadings(editor)
+
+		const { setEditable, updateUser } = useEditorMethods(editor)
+
+		const serialize = isRichEditor
+			? () =>
+					createMarkdownSerializer(editor.schema).serialize(
+						editor.state.doc,
+					)
+			: () => serializePlainText(editor.state.doc)
+
+		const { saveService } = provideSaveService(
+			connection,
+			syncService,
+			serialize,
+			ydoc,
+		)
+
+		const syncProvider = shallowRef(null)
+
+		provideFileProps(props)
+
+		return {
+			awareness,
+			connection,
+			editor,
+			el,
+			hasConnectionIssue,
+			isPublic,
+			isRichEditor,
+			isRichWorkspace,
+			language,
+			lowlightLoaded,
+			requireReconnect,
+			saveService,
+			serialize,
+			setEditable,
+			syncProvider,
+			syncService,
+			updateUser,
+			width,
+			ydoc,
+		}
 	},
 
 	data() {
@@ -255,17 +306,12 @@ export default {
 			IDLE_TIMEOUT,
 
 			document: null,
-			sessions: [],
-			currentSession: null,
 			fileNode: null,
-
-			filteredSessions: {},
 
 			idle: false,
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
-			hasEditor: false,
 			readOnly: true,
 			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
 			editMode: true,
@@ -278,26 +324,16 @@ export default {
 		}
 	},
 	computed: {
-		isRichWorkspace() {
-			return this.richWorkspace
-		},
 		isResolvingConflict() {
 			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
-		},
-		isPublic() {
-			return this.isDirectEditing || isPublicShare()
-		},
-		isRichEditor() {
-			return loadState('text', 'rich_editing_enabled', true) && this.mime === 'text/markdown'
-		},
-		fileExtension() {
-			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
 		},
 		currentDirectory() {
 			return this.relativePath
@@ -305,35 +341,24 @@ export default {
 				: '/'
 		},
 		displayed() {
-			return (this.currentSession && this.active) || this.syncError
+			return (this.connection && this.active) || this.syncError
 		},
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
 		},
 		renderRichEditorMenus() {
-			return this.contentLoaded
+			return (
+				this.contentLoaded
 				&& this.isRichEditor
 				&& !this.syncError
 				&& !this.readOnly
+			)
 		},
 		renderMenus() {
-			return this.contentLoaded
-				&& !this.syncError
+			return this.contentLoaded && !this.syncError
 		},
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
-		},
-		fileData() {
-			return {
-				fileId: this.fileId,
-				relativePath: this.relativePath,
-				document: {
-					...this.document,
-				},
-			}
-		},
-		editorMaxWidth() {
-			return loadState('text', 'is_full_width_editor', false) ? '100%' : '80ch'
 		},
 	},
 	watch: {
@@ -341,12 +366,6 @@ export default {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
-		},
-		editorMaxWidth: {
-			immediate: true,
-			handler(newWidth) {
-				this.updateEditorWidth(newWidth)
-			},
 		},
 		dirty(val) {
 			if (val) {
@@ -359,21 +378,17 @@ export default {
 			if (val) {
 				this.emit('sync-service:error')
 			}
-			if (this.$editor?.isEditable === val) {
-				this.$editor.setEditable(!val)
-			}
+			this.setEditable(!val)
 		},
 	},
 	mounted() {
-		if (this.active && (this.hasDocumentParameters)) {
-			this.initSession()
-		}
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
 			   if richt workspace is used we **must** not hide the content */
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
+		subscribe('text:keyboard:save', this.onKeyboardSave)
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
@@ -381,239 +396,140 @@ export default {
 		exposeForDebugging(this)
 	},
 	created() {
-		this.$ydoc = new Doc()
 		// The following can be useful for debugging ydoc updates
-		// this.$ydoc.on('update', function(update, origin, doc, tr) {
+		// this.ydoc.on('update', function(update, origin, doc, tr) {
 		//   console.debug('ydoc update', update, origin, doc, tr)
 		//   Y.logUpdate(update)
 		// });
-		this.$providers = []
-		this.$editor = null
-		this.$syncService = null
 		this.$attachmentResolver = null
+		if (this.active && this.hasDocumentParameters) {
+			this.initSession()
+			this.listenEditorEvents()
+		}
 	},
 	async beforeDestroy() {
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
+		unsubscribe('text:keyboard:save', this.onKeyboardSave)
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.$syncService.save()])
+			await Promise.any([timeout, this.saveService.save()])
 		}
 		await this.close()
 		removeFromDebugging(this)
 	},
 	methods: {
 		initSession() {
-			if (!this.hasDocumentParameters) {
-				this.emit('error', 'No valid file provided')
-				return
-			}
-			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
-
-			const api = new SessionApi({
-				guestName,
-				shareToken: this.shareToken,
-				filePath: this.relativePath,
-			})
-
-			this.$syncService = new SyncService({
-				api,
-				baseVersionEtag: this.$baseVersionEtag,
-				serialize: this.isRichEditor
-					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
-					: (content) => serializePlainText(content ?? this.$editor.state.doc),
-				getDocumentState: () => getDocumentState(this.$ydoc),
-			})
-
 			this.listenSyncServiceEvents()
-
-			const syncServiceProvider = createSyncServiceProvider({
-				ydoc: this.$ydoc,
-				syncService: this.$syncService,
+			this.syncProvider = createSyncServiceProvider({
+				ydoc: this.ydoc,
+				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
 				disableBC: true,
+				awareness: this.awareness,
 			})
-			this.$providers.push(syncServiceProvider)
 		},
 
 		listenEditorEvents() {
-			this.$editor.on('focus', this.onFocus)
-			this.$editor.on('blur', this.onBlur)
-			this.$editor.on('create', this.onCreate)
-			this.$editor.on('update', this.onUpdate)
+			this.editor.on('focus', this.onFocus)
+			this.editor.on('blur', this.onBlur)
+			this.editor.on('create', this.onCreate)
+			this.editor.on('update', this.onUpdate)
 		},
 
 		unlistenEditorEvents() {
-			this.$editor.off('focus', this.onFocus)
-			this.$editor.off('blur', this.onBlur)
-			this.$editor.off('create', this.onCreate)
-			this.$editor.off('update', this.onUpdate)
+			this.editor.off('focus', this.onFocus)
+			this.editor.off('blur', this.onBlur)
+			this.editor.off('create', this.onCreate)
+			this.editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
-			this.$syncService
-				.on('opened', this.onOpened)
-				.on('change', this.onChange)
-				.on('loaded', this.onLoaded)
-				.on('sync', this.onSync)
-				.on('error', this.onError)
-				.on('stateChange', this.onStateChange)
-				.on('idle', this.onIdle)
-				.on('save', this.onSave)
+			const bus = this.syncService.bus
+			bus.on('opened', this.onOpened)
+			bus.on('change', this.onChange)
+			bus.on('sync', this.onSync)
+			bus.on('error', this.onError)
+			bus.on('stateChange', this.onStateChange)
+			bus.on('idle', this.onIdle)
+			bus.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
-			this.$syncService
-				.off('opened', this.onOpened)
-				.off('change', this.onChange)
-				.off('loaded', this.onLoaded)
-				.off('sync', this.onSync)
-				.off('error', this.onError)
-				.off('stateChange', this.onStateChange)
-				.off('idle', this.onIdle)
-				.off('save', this.onSave)
+			const bus = this.syncService.bus
+			bus.off('opened', this.onOpened)
+			bus.off('change', this.onChange)
+			bus.off('sync', this.onSync)
+			bus.off('error', this.onError)
+			bus.off('stateChange', this.onStateChange)
+			bus.off('idle', this.onIdle)
+			bus.off('save', this.onSave)
 		},
 
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.disconnect().then(this.initSession)
+			this.disconnect().then(() => {
+				this.initSession()
+			})
 			this.idle = false
 		},
 
-		updateSessions(sessions) {
-			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
-
-			// Make sure we get our own session updated
-			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
-			set(this, 'currentSession', currentUpdatedSession)
-
-			const currentSessionIds = this.sessions.map((session) => session.userId)
-			const currentGuestIds = this.sessions.map((session) => session.guestId)
-
-			const removedSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
-
-			for (const index in removedSessions) {
-				Vue.delete(this.filteredSessions, removedSessions[index])
-			}
-			for (const index in this.sessions) {
-				const session = this.sessions[index]
-				const sessionKey = session.displayName ? session.userId : session.id
-				if (this.filteredSessions[sessionKey]) {
-					// update timestamp if relevant
-					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
-						set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
-					}
-				} else {
-					set(this.filteredSessions, sessionKey, session)
-				}
-				if (session.id === this.currentSession.id) {
-					set(this.filteredSessions[sessionKey], 'isCurrent', true)
-				}
-			}
-		},
-
-		onOpened({ document, session }) {
-			this.currentSession = session
+		onOpened({ document, session, content, documentState, readOnly }) {
 			this.document = document
-			this.readOnly = document.readOnly
-			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.readOnly = readOnly
+			this.editMode = !readOnly && !this.openReadOnlyEnabled
+			this.hasConnectionIssue = false
 
-			if (this.$editor) {
-				this.$editor.setEditable(this.editMode)
-			}
-			this.lock = this.$syncService.lock
-			localStorage.setItem('nick', this.currentSession.guestName)
+			this.setEditable(this.editMode)
 			this.$attachmentResolver = new AttachmentResolver({
-				session: this.currentSession,
+				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
-			if (this.currentSession?.userId && this.relativePath?.length) {
+			if (session.userId && this.relativePath?.length) {
 				const node = new File({
 					id: this.fileId,
-					source: generateRemoteUrl(`dav/files/${this.currentSession.userId}${this.relativePath}`),
+					root: `/files/${session.userId}`,
+					source: generateRemoteUrl(
+						`dav/files/${session.userId}${this.relativePath}`,
+					),
 					mime: this.mime,
 				})
 				fetchNode(node)
-					.then((n) => { this.fileNode = n })
-					.catch(err => logger.warn('Failed to fetch node', { err }))
-			}
-		},
-
-		onLoaded({ document, documentSource, documentState }) {
-			if (!documentState) {
-				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
-			}
-
-			this.$baseVersionEtag = document.baseVersionEtag
-			this.hasConnectionIssue = false
-			if (this.$editor) {
-				// $editor already existed. So this is a reconnect.
-				this.$syncService.startSync()
-				return
-			}
-
-			const session = this.currentSession
-			const extensions = [
-				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.$ydoc }),
-				CollaborationCursor.configure({
-					provider: this.$providers[0],
-					user: {
-						name: session?.userId
-							? session.displayName
-							: (session?.guestName || t('text', 'Guest')),
-						color: session?.color,
-						clientId: this.$ydoc.clientID,
-					},
-				}),
-			]
-			if (this.isRichEditor) {
-				this.$editor = createRichEditor({
-					relativePath: this.relativePath,
-					session,
-					extensions,
-					isEmbedded: this.isEmbedded,
-				})
-				this.hasEditor = true
-				this.listenEditorEvents()
-			} else {
-				const language = extensionHighlight[this.fileExtension]
-					|| this.fileExtension
-				loadSyntaxHighlight(language)
-					.then(() => {
-						this.$editor = createPlainEditor({ language, extensions })
-						this.hasEditor = true
-						this.listenEditorEvents()
+					.then((n) => {
+						this.fileNode = n
 					})
+					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-
+			// Fetch the document state after syntax highlights are loaded
+			this.lowlightLoaded.then(() => {
+				this.syncService.startSync()
+				if (!documentState) {
+					setInitialYjsState(this.ydoc, content, {
+						isRichEditor: this.isRichEditor,
+					})
+				}
+			})
+			this.updateUser(session)
 		},
 
-		onChange({ document, sessions }) {
-			this.updateSessions.bind(this)(sessions)
+		onChange({ document }) {
 			this.document = document
 
 			this.syncError = null
-			const editable = this.editMode && !this.requireReconnect
-			if (this.$editor.isEditable !== editable) {
-				this.$editor.setEditable(editable)
-			}
+			this.setEditable(this.editMode && !this.requireReconnect)
 		},
 
 		onCreate({ editor }) {
-			this.$syncService.startSync()
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -621,19 +537,20 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0
-				|| !this.$providers[0].wsconnected
-				|| this.$syncService.pushError > 0
-			if (this.$syncService.pushError > 0) {
+			this.hasConnectionIssue =
+				this.syncService.backend.fetcher === 0
+				|| !this.syncProvider?.wsconnected
+				|| this.syncService.pushError > 0
+			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
-				this.$syncService.sendStepsNow()
+				this.syncService.sendStepsNow()
 			}
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
@@ -651,15 +568,21 @@ export default {
 				}
 			}
 
-			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
+			if (
+				type === ERROR_TYPE.SAVE_COLLISSION
+				&& (!this.syncError
+					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+			) {
 				this.contentLoaded = true
 				this.syncError = {
 					type,
 					data,
 				}
 			}
-			if (type === ERROR_TYPE.CONNECTION_FAILED
-				|| type === ERROR_TYPE.SOURCE_NOT_FOUND) {
+			if (
+				type === ERROR_TYPE.CONNECTION_FAILED
+				|| type === ERROR_TYPE.SOURCE_NOT_FOUND
+			) {
 				this.hasConnectionIssue = true
 			}
 
@@ -677,30 +600,28 @@ export default {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
 					this.$nextTick(() => {
-						this.$editor.commands.autofocus()
+						this.editor.commands.autofocus()
 					})
 				}
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
-				if (this.$editor
-					&& (this.$editor.can().undo() || this.$editor.can().redo())
-				) {
+				if (this.editor.can().undo() || this.editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
-						this.$syncService.autosave()
+						this.saveService.autosave()
 					}
 				}
 			}
 		},
 
 		onIdle() {
-			this.$syncService.close()
+			this.syncService.close()
 			this.idle = true
 			this.readOnly = true
 			this.editMode = false
-			this.$editor.setEditable(this.editMode)
+			this.setEditable(this.editMode)
 
 			this.$nextTick(() => {
 				this.emit('sync-service:idle')
@@ -725,6 +646,10 @@ export default {
 			this.emit('blur')
 		},
 
+		onKeyboardSave() {
+			this.saveService.save()
+		},
+
 		onAddImageNode() {
 			this.emit('add-image-node')
 		},
@@ -734,35 +659,34 @@ export default {
 		},
 
 		async save() {
-			await this.$syncService.save()
+			await this.saveService.save()
 		},
 
 		async disconnect() {
-			await this.$syncService.close()
+			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach(p => p?.destroy())
-			this.$providers = []
-			this.$syncService = null
+			this.syncProvider?.destroy()
 			// disallow editing while still showing the content
 			this.readOnly = true
 		},
 
 		async close() {
-			await this.$syncService.sendRemainingSteps()
-				.catch(err => logger.warn('Failed to send remaining steps', { err }))
-			await this.disconnect()
-				.catch(err => logger.warn('Failed to disconnect', { err }))
-			if (this.$editor) {
+			await this.syncService
+				.sendRemainingSteps()
+				.catch((err) =>
+					logger.warn('Failed to send remaining steps', { err }),
+				)
+			await this.disconnect().catch((err) =>
+				logger.warn('Failed to disconnect', { err }),
+			)
+			if (this.editor) {
 				try {
 					this.unlistenEditorEvents()
-					this.$editor.destroy()
-					this.$editor = null
-					this.hasEditor = false
+					this.editor.destroy()
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
-			return true
 		},
 
 		/**
@@ -799,10 +723,12 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
-			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
+			logger.debug(
+				'markdown, serialized from editor state by prosemirror-markdown',
+			)
 			console.debug(proseMirrorMarkdown)
 			logger.debug('HTML, serialized from markdown by markdown-it')
 			console.debug(markdownItHtml)
@@ -817,48 +743,25 @@ export default {
 			const yjsData = {
 				fileId: this.fileId,
 				filePath: this.relativePath,
-				clientId: this.$ydoc.clientID,
-				pendingStructs: this.$ydoc.store.pendingStructs,
+				clientId: this.ydoc.clientID,
+				pendingStructs: this.ydoc.store.pendingStructs,
+				pendingStructsRemote: this.syncProvider?.remote.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.$syncService?.getDocumentState(),
+				documentState: this.saveService.getDocumentState(),
 			}
-			for (const client of this.$ydoc.store.clients.values()) {
+			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
 			}
 
 			return yjsData
 		},
 
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
-		},
-
 		readOnlyToggled() {
 			if (this.editMode) {
-				this.$syncService.save()
+				this.saveService.save()
 			}
 			this.editMode = !this.editMode
-			this.$editor.setEditable(this.editMode)
-		},
-
-		onKeyDown(event) {
-			if (event.key === 'Escape') {
-				event.preventDefault()
-				return
-			}
-
-			if (event.key === 'Tab' && !event.shiftKey && !event.ctrlKey && !event.metaKey && this.$editor.isActive('codeBlock')) {
-				this.$editor.commands.insertContent('\t')
-				this.$editor.commands.focus()
-				event.preventDefault()
-				event.stopPropagation()
-				return
-			}
-
-			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-				this.$syncService.save()
-				event.preventDefault()
-			}
+			this.setEditable(this.editMode)
 		},
 
 		showTranslateModal(e) {
@@ -868,14 +771,17 @@ export default {
 		hideTranslate() {
 			this.translateModal = false
 		},
+		applyCommand(fn) {
+			this.editor.commands.command(fn)
+		},
 		translateInsert(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
+			this.applyCommand(({ tr, commands }) => {
 				return commands.insertContentAt(tr.selection.to, content)
 			})
 			this.translateModal = false
 		},
 		translateReplace(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
+			this.applyCommand(({ tr, commands }) => {
 				const selection = tr.selection
 				const range = {
 					from: selection.from,
@@ -886,34 +792,29 @@ export default {
 			this.translateModal = false
 		},
 
-		handleEditorWidthChange(newWidth) {
-			this.updateEditorWidth(newWidth)
-			this.$nextTick(() => {
-				if (this.$editor) {
-					this.$editor.view.updateState(this.$editor.view.state)
-					this.$editor.commands.focus()
-				}
-			})
-		},
-		updateEditorWidth(newWidth) {
-			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
-		},
-
 		saveBeforeUnload() {
-			this.$syncService?.saveViaSendBeacon()
+			this.saveService.saveViaSendBeacon()
 		},
 	},
-}
+})
 </script>
 
 <style scoped lang="scss">
 .modal-container .text-editor {
 	top: 0;
 	height: calc(100vh - var(--header-height));
+
+	&.is-mobile {
+		// TODO: Why is this required to prevent small scrolling container on mobile with short content?
+		height: calc(
+			100vh - var(--header-height) - 2 * var(--default-grid-baseline)
+		);
+	}
 }
 
 .text-editor {
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	max-width: 100%;
 	height: 100%;
@@ -924,7 +825,9 @@ export default {
 }
 
 .text-editor .text-editor__wrapper.has-conflicts {
-	height: calc(100% - 50px);
+	// Make space for document status and conflict resolving dialog
+	height: calc(100% - 48px - 54px);
+	overflow-y: auto;
 }
 
 #body-public {
@@ -940,26 +843,27 @@ export default {
 			overflow: auto;
 			z-index: 20;
 		}
+
 		.has-conflicts .text-editor__main {
 			padding-top: 0;
 		}
 	}
 }
 
-.menubar-placeholder,
-.text-editor--readonly-bar {
+.menubar-placeholder {
 	position: fixed;
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
-	height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-	padding-top:3px;
-	padding-bottom: 3px;
+	height: var(
+		--default-clickable-area
+	); // important for mobile so that the buttons are always inside the container
+	border-bottom: 1px solid var(--color-border);
+	padding-block: var(--default-grid-baseline);
 }
 
-.text-editor--readonly-bar,
 .menubar-placeholder--with-slot {
 	opacity: unset;
 	visibility: unset;
@@ -973,20 +877,15 @@ export default {
 </style>
 
 <style lang="scss">
-@import './../css/variables';
-@import './../css/style';
-@import './../css/print';
+@use './../css/style';
+@use './../css/print';
+@use './../css/prosemirror';
 
 .text-editor__wrapper {
-	@import './../css/prosemirror';
-
 	// relative position for the alignment of the menububble
 	.text-editor__main {
 		&.draggedOver {
 			background-color: var(--color-primary-element-light);
-		}
-		.text-editor__content-wrapper {
-			position: relative;
 		}
 	}
 }
@@ -995,33 +894,42 @@ export default {
 	width: 50%;
 }
 
-.text-editor__wrapper.has-conflicts > .content-wrapper {
+.text-editor__wrapper.has-conflicts > .editor__content-wrapper {
 	width: 50%;
+
 	#read-only-editor {
-		margin: 0px auto;
-		padding-top: 50px;
+		margin: 0 auto;
+		// Add height of the menubar as padding-top
+		padding-top: calc(
+			var(--default-clickable-area) + 2 * var(--default-grid-baseline)
+		);
 		overflow: initial;
 	}
 }
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 /* Give a remote user a caret */
-.collaboration-cursor__caret {
+.collaboration-carets__caret {
 	position: relative;
 	margin-left: -1px;
 	margin-right: -1px;
-	border-left: 1px solid #0D0D0D;
-	border-right: 1px solid #0D0D0D;
+	border-left: 1px solid #0d0d0d;
+	border-right: 1px solid #0d0d0d;
 	word-break: normal;
 	pointer-events: none;
 }
 
 /* Render the username above the caret */
-.collaboration-cursor__label {
+.collaboration-carets__label {
 	position: absolute;
 	top: -1.4em;
 	left: -1px;
@@ -1030,17 +938,17 @@ export default {
 	font-weight: 600;
 	line-height: normal;
 	user-select: none;
-	color: #0D0D0D;
+	color: #0d0d0d;
 	padding: 0.1rem 0.3rem;
 	border-radius: 3px 3px 3px 0;
 	white-space: nowrap;
 	opacity: 0;
 
-	&.collaboration-cursor__label__active {
+	&.collaboration-carets__label__active {
 		opacity: 1;
 	}
 
-	&:not(.collaboration-cursor__label__active) {
+	&:not(.collaboration-carets__label__active) {
 		transition: opacity 0.2s 5s;
 	}
 }

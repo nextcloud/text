@@ -1,12 +1,13 @@
-// SPDX-FileCopyrightText: Ferdinand Thiessen <opensource@fthiessen.de>
-// SPDX-License-Identifier: AGPL-3.0-or-later
+/**
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 
-/// <reference types="vitest/config" />
+import type { Connect, ViteDevServer } from 'vite'
 
 import { createAppConfig } from '@nextcloud/vite-config'
-import type { ViteDevServer, Connect } from 'vite'
-import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
+import webpackStats from 'rollup-plugin-webpack-stats'
 
 const rewriteMiddlewarePlugin = {
 	name: 'rewriteAssetsUrl',
@@ -17,70 +18,73 @@ const rewriteMiddlewarePlugin = {
 				if (m[1] === 'text') {
 					req.url = req.url?.replace(/\/js\/text-.*.mjs/, '/src/main.js')
 				} else {
-					req.url = req.url?.replace(/\/js\/text-.*.mjs/, `/src/${m[1]}.js`)
+					req.url = req.url?.replace(
+						/\/js\/text-.*.mjs/,
+						`/src/${m[1]}.js`,
+					)
 				}
 			}
 			next()
 		})
-	}
+	},
 }
 
-const config = createAppConfig({
-	text: path.join(__dirname, 'src', 'main.js'),
-	files: path.join(__dirname, 'src', 'files.js'),
-	public: path.join(__dirname, 'src', 'public.js'),
-	viewer: path.join(__dirname, 'src', 'viewer.js'),
-	editor: path.join(__dirname, 'src', 'editor.js'),
-	init: path.join(__dirname, 'src', 'init.js'),
-}, {
-	createEmptyCSSEntryPoints: true,
-	extractLicenseInformation: {
-		overwriteLicenses: {
-			khroma: 'MIT',
-		},
+const config = createAppConfig(
+	{
+		text: path.join(__dirname, 'src', 'main.js'),
+		files: path.join(__dirname, 'src', 'files.ts'),
+		public: path.join(__dirname, 'src', 'public.js'),
+		viewer: path.join(__dirname, 'src', 'viewer.js'),
+		editor: path.join(__dirname, 'src', 'editor.js'),
+		init: path.join(__dirname, 'src', 'init.js'),
 	},
-	thirdPartyLicense: false,
-	config: {
-		base: process.env.BASE,
-		resolve: {
-			dedupe: ['vue'],
+	{
+		createEmptyCSSEntryPoints: true,
+		emptyOutputDirectory: {
+			additionalDirectories: ['css/'],
 		},
-		css: {
-			modules: {
-				localsConvention: 'camelCase',
+		extractLicenseInformation: {
+			overwriteLicenses: {
+				khroma: 'MIT',
 			},
 		},
-		plugins: [
-			webpackStats(),
-			rewriteMiddlewarePlugin,
-		],
-		build: {
-			cssCodeSplit: true,
-			rollupOptions: {
-				output: {
-					manualChunks: (id) => {
-						// Make the emoji related dependencies a custom chunk to reduce the size of the RichText chunk
-						if (id.includes('emoji-mart-vue') || id.includes('emoji-datasource')) {
-							return 'emoji-picker'
-						}
+		thirdPartyLicense: false,
+		config: {
+			base: process.env.BASE,
+			resolve: {
+				dedupe: ['vue'],
+			},
+			css: {
+				modules: {
+					localsConvention: 'camelCase',
+				},
+			},
+			plugins: [webpackStats(), rewriteMiddlewarePlugin],
+			build: {
+				cssCodeSplit: true,
+				rollupOptions: {
+					output: {
+						manualChunks: (id) => {
+							// Make the emoji related dependencies a custom chunk to reduce the size of the RichText chunk
+							if (
+								id.includes('emoji-mart-vue')
+								|| id.includes('emoji-datasource')
+							) {
+								return 'emoji-picker'
+							}
+						},
 					},
 				},
 			},
-		},
-		test: {
-			setupFiles: ['src/tests/setup.mjs'],
-			environment: 'jsdom',
-			globals: true,
 			server: {
-				deps: {
-					inline: [/@nextcloud.*/],
-				}
+				allowedHosts: [
+					'host.docker.internal',
+					'localhost',
+					'nextcloud.local',
+				],
 			},
 		},
-		server: {
-			allowedHosts: ['host.docker.internal', 'localhost', 'nextcloud.local'],
-		},
 	},
-})
+)
 
 export default config

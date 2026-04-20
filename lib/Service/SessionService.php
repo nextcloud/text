@@ -71,10 +71,9 @@ class SessionService {
 	public function initSession(int $documentId, ?string $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
-		$userName = $this->userId ?? $guestName;
 		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
-		$session->setColor($this->getColorForGuestName($guestName ?? ''));
+		$session->setColor($this->getColor());
 		if ($this->userId === null) {
 			$session->setGuestName($guestName ?? '');
 		}
@@ -137,6 +136,14 @@ class SessionService {
 	public function removeInactiveSessionsWithoutSteps(?int $documentId = null): int {
 		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
+	}
+
+	public function removeOldSessions(int $ageInSeconds = 7776000): int {
+		return $this->sessionMapper->deleteOldSessions($ageInSeconds);
+	}
+
+	public function removeOrphanedSteps(int $ageInSeconds = 604800): int {
+		return $this->sessionMapper->deleteOrphanedSteps($ageInSeconds);
 	}
 
 	public function getSession(int $documentId, int $sessionId, string $token): ?Session {
@@ -223,9 +230,19 @@ class SessionService {
 		return $this->sessionMapper->update($session);
 	}
 
+	private function getColor(string $guestName = ''): string {
+		if ($this->userId === null) {
+			return $this->getColorForGuestName($guestName);
+		}
+		$name = $this->userManager->getDisplayName($this->userId) ?? $this->userId;
+		$color = $this->avatarManager->getAvatar($this->userId)->avatarBackgroundColor($name);
+		return $color->name();
+	}
+
 	private function getColorForGuestName(string $guestName = ''): string {
-		$guestName = $this->userId !== null ? $guestName : '';
-		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
+		$uniqueGuestId = !empty($guestName)
+			? $guestName . '(guest)' // make it harder to impersonate users.
+			: $this->secureRandom->generate(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();
 	}

@@ -4,9 +4,7 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true"
-		:show-outline-outside="showOutlineOutside"
-		@outline-toggled="outlineToggled">
+	<Wrapper :content-loaded="true">
 		<MainContainer>
 			<template v-if="showMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -14,24 +12,29 @@
 					<ReadonlyBar />
 				</slot>
 			</template>
-			<ContentContainer />
+			<ContentContainer :read-only="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
 
 <script>
-import Wrapper from './Wrapper.vue'
-import MainContainer from './MainContainer.vue'
-import MenuBar from '../Menu/MenuBar.vue'
 import { Editor } from '@tiptap/core'
+import MenuBar from '../Menu/MenuBar.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
-import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
-import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR } from '../Editor.provider.js'
+import { UndoRedo } from '@tiptap/extensions'
+import { provide, watch } from 'vue'
+import { provideEditor } from '../../composables/useEditor.ts'
+import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
+import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { provideEditorWidth } from '../../composables/useEditorWidth.ts'
+import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
-import markdownit from '../../markdownit/index.js'
-import { RichText, FocusTrap } from '../../extensions/index.js'
+import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 
@@ -42,14 +45,8 @@ export default {
 		const val = {}
 
 		Object.defineProperties(val, {
-			[EDITOR]: {
-				get: () => this.$editor,
-			},
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver ?? null,
-			},
-			[IS_RICH_EDITOR]: {
-				get: () => true,
 			},
 		})
 
@@ -81,28 +78,68 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		showOutlineOutside: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	emits: ['update:content'],
 
-	computed: {
-		htmlContent() {
-			return this.renderHtml(this.content)
-		},
-	},
+	setup(props) {
+		const extensions = [
+			RichText.configure({
+				extensions: [UndoRedo],
+			}),
+			FocusTrap,
+		]
+		const editor = new Editor({ extensions })
 
-	watch: {
-		content() {
-			this.updateContent()
-		},
+		const { setEditable, setContent } = useEditorMethods(editor)
+		const { updateHeadings } = provideEditorHeadings(editor)
+		watch(
+			() => props.content,
+			(content) => {
+				setContent(content)
+			},
+		)
+
+		setEditable(!props.readOnly)
+		watch(
+			() => props.readOnly,
+			(readOnly) => {
+				setEditable(!readOnly)
+			},
+		)
+
+		provide(editorFlagsKey, {
+			isPublic: false,
+			isRichEditor: true,
+			isRichWorkspace: false,
+			useTableOfContents: true,
+		})
+		provideEditor(editor)
+
+		const { applyEditorWidth } = provideEditorWidth(true)
+		applyEditorWidth()
+
+		return { editor, setContent, updateHeadings }
 	},
 
 	created() {
-		this.$editor = this.createEditor()
-		this.$editor.setEditable(!this.readOnly)
+		// Set content after the setup function
+		// as it may render other vue components such as preview toggle
+		// which breaks the context of the setup function.
+		this.setContent(this.content, { addToHistory: false })
+		this.updateHeadings()
+		this.editor.on('create', () => {
+			this.$emit('ready')
+			this.$parent.$emit('ready')
+		})
+		this.editor.on('update', ({ editor }) => {
+			const markdown = createMarkdownSerializer(editor.schema).serialize(
+				editor.state.doc,
+			)
+			this.emit('update:content', {
+				json: editor.state.doc,
+				markdown,
+			})
+		})
 		if (this.fileId) {
 			this.$attachmentResolver = new AttachmentResolver({
 				currentDirectory: this.relativePath?.match(/.*\//),
@@ -113,55 +150,11 @@ export default {
 		}
 	},
 
-	updated() {
-		this.$editor.setEditable(!this.readOnly)
-	},
-
 	beforeDestroy() {
-		this.$editor.destroy()
+		this.editor.destroy()
 	},
 
 	methods: {
-		renderHtml(content) {
-			return markdownit.render(content)
-		},
-		extensions() {
-			return [
-				RichText.configure({
-					component: this,
-					extensions: [
-						History,
-					],
-				}),
-				FocusTrap,
-			]
-		},
-		createEditor() {
-			return new Editor({
-				content: this.htmlContent,
-				extensions: this.extensions(),
-				onUpdate: ({ editor }) => {
-					const markdown = (createMarkdownSerializer(this.$editor.schema)).serialize(editor.state.doc)
-					this.emit('update:content', {
-						json: editor.state.doc,
-						markdown,
-					})
-				},
-				onCreate: ({ editor }) => {
-					this.$emit('ready')
-					this.$parent.$emit('ready')
-				},
-			})
-		},
-
-		updateContent() {
-			this.$editor.commands.setContent(this.htmlContent, true)
-		},
-
-		outlineToggled(visible) {
-			this.emit('outline-toggled', visible)
-		},
-
 		/**
 		 * Wrapper to emit events on our own and the parent component
 		 *
@@ -183,6 +176,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './../../css/prosemirror';
-@import './../../css/print';
+@use './../../css/prosemirror';
+@use './../../css/print';
 </style>

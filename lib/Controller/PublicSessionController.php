@@ -78,8 +78,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
-		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $token);
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
+		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $token);
 	}
 
 	#[NoAdminRequired]
@@ -94,7 +94,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function save(string $token, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function save(string $token, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 

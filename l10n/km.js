@@ -1,18 +1,20 @@
 OC.L10N.register(
     "text",
     {
-    "Translate" : "Translate",
     "Reload" : "ផ្ទុកឡើងវិញ",
+    "you" : "អ្នក​",
+    "Copy link" : "ចម្លងតំណ",
     "guest" : "ភ្ញៀវ",
     "Saved" : "បាន​រក្សាទុក",
     "Cancel" : "លើកលែង",
     "URL" : "URL",
+    "Save" : "រក្សាទុក",
+    "Translate" : "Translate",
     "to" : "ទៅ",
-    "Upload" : "ផ្ទុក​ឡើង",
     "Edit" : "កែប្រែ",
+    "Upload" : "ផ្ទុក​ឡើង",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
-    "Info" : "Info",
-    "Warning" : "បម្រាម"
+    "Choose" : "ជ្រើស"
 },
 "nplurals=1; plural=0;");

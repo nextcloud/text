@@ -4,26 +4,34 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-view" class="table-wrapper" :class="{ 'focused': isFocused }">
-		<NcActions v-if="isEditable"
+	<NodeViewWrapper
+		data-text-el="table-view"
+		class="table-wrapper"
+		:class="{ focused: isFocused }">
+		<NcActions
+			v-if="isEditable"
 			force-menu
+			size="small"
 			data-text-table-actions="settings"
 			class="table-settings">
 			<template #icon>
 				<TableSettings />
 			</template>
-			<NcActionButton data-text-table-action="delete"
+			<NcActionButton
+				data-text-table-action="delete"
 				close-after-click
 				@click="deleteNode">
 				<template #icon>
-					<Delete />
+					<TrashCan />
 				</template>
 				{{ t('text', 'Delete this table') }}
 			</NcActionButton>
 		</NcActions>
 		<NodeViewContent class="content" as="table" />
-		<NcButton v-if="isEditable"
+		<NcButton
+			v-if="isEditable"
 			class="table-add-column"
+			size="small"
 			:aria-label="t('text', 'Add column after')"
 			:title="t('text', 'Add column after')"
 			@click="addColumnAfter">
@@ -31,8 +39,10 @@
 				<TableAddColumnAfter />
 			</template>
 		</NcButton>
-		<NcButton v-if="isEditable"
+		<NcButton
+			v-if="isEditable"
 			class="table-add-row"
+			size="small"
 			:aria-label="t('text', 'Add row below')"
 			:title="t('text', 'Add row below')"
 			@click="addRowAfter">
@@ -45,9 +55,17 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcButton } from '@nextcloud/vue'
-import { TableSettings, Delete, TableAddColumnAfter, TableAddRowAfter } from '../../components/icons.js'
+import { t } from '@nextcloud/l10n'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import {
+	TableAddColumnAfter,
+	TableAddRowAfter,
+	TableSettings,
+	TrashCan,
+} from '../../components/icons.js'
 
 export default {
 	name: 'TableView',
@@ -60,7 +78,7 @@ export default {
 		NodeViewWrapper,
 		NodeViewContent,
 		TableSettings,
-		Delete,
+		TrashCan,
 	},
 	props: {
 		editor: {
@@ -97,7 +115,8 @@ export default {
 	methods: {
 		addColumnAfter() {
 			const headerRowNode = this.node.firstChild
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos() + headerRowNode.nodeSize - 1)
 				.addColumnAfter()
@@ -106,13 +125,17 @@ export default {
 		},
 		addRowAfter() {
 			const lastRowNode = this.node.lastChild
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
-				.setTextSelection(this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1)
+				.setTextSelection(
+					this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1,
+				)
 				.addRowAfter()
 				.setTextSelection(this.getPos() + this.node.nodeSize + 1)
 				.run()
 		},
+		t,
 	},
 }
 </script>
@@ -122,18 +145,20 @@ export default {
 	position: relative;
 	overflow-x: auto;
 
-	&.focused, &:hover {
-		.table-add-column, .table-add-row {
+	&.focused,
+	&:hover {
+		.table-add-column,
+		.table-add-row {
 			visibility: visible;
 		}
 	}
 
 	.table-settings {
 		padding-left: 3px;
-		opacity: .5;
+		opacity: 0.5;
 		position: absolute;
-		top: 0;
-		right: var(--default-clickable-area);
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
+		right: calc(var(--clickable-area-small) + 4px);
 
 		&:hover {
 			opacity: 1;
@@ -143,11 +168,11 @@ export default {
 	.table-add-column {
 		visibility: hidden;
 		padding-left: 3px;
-		opacity: .5;
+		opacity: 0.5;
 		position: absolute;
 		top: var(--default-clickable-area);
 		right: 0;
-		bottom: 60px;
+		bottom: calc(var(--clickable-area-small) + 8px);
 		margin-top: 0 !important;
 
 		&:hover {
@@ -158,11 +183,12 @@ export default {
 	.table-add-row {
 		visibility: hidden;
 		padding-left: 3px;
-		opacity: .5;
+		opacity: 0.5;
 		position: absolute;
 		left: 0;
-		bottom: 12px;
-		width: calc(100% - 80px) !important;
+		bottom: 4px;
+		// Needs to be in sync with table width in `prosemirror.css`
+		width: calc(100% - (2 * var(--clickable-area-small)) - 8px) !important;
 
 		&:hover {
 			opacity: 1;

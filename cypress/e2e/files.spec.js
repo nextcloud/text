@@ -39,5 +39,4 @@ describe('Text and server mimetypes', () => {
 		cy.openFile('markdown.md')
 		cy.getContent().find('h2').should('contain', 'Hello world')
 	})
-
 })

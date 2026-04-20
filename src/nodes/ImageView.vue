@@ -5,36 +5,41 @@
 
 <template>
 	<NodeViewWrapper :contenteditable="isEditable">
-		<figure class="image image-view"
+		<figure
+			ref="wrapper"
+			class="image image-view"
 			data-component="image-view"
 			:data-attachment-type="attachmentType"
-			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
+			:class="{ 'icon-loading': !loaded, 'image-view--failed': failed }"
 			:data-src="src">
-			<div v-if="canDisplayImage"
-				v-click-outside="() => showIcons = false"
+			<div
+				v-if="canDisplayImage"
+				v-click-outside="() => (showIcons = false)"
 				class="image__view"
-				@mouseover="showIcons = true"
+				@mouseenter="showIcons = true"
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<template v-if="!failed">
-						<div v-if="isMediaAttachment"
+						<div
+							v-if="isMediaAttachment"
 							contenteditable="false"
 							class="media"
 							@click="handleAttachmentClick">
 							<div class="media__wrapper">
-								<img v-show="loaded"
+								<img
+									v-show="loaded"
 									:src="imageUrl"
 									:alt="alt"
 									class="image__main"
-									@load="onLoaded">
+									@load="onLoaded" />
 								<div class="metadata">
 									<span class="name">{{ alt }}</span>
 									<span class="size">{{ attachmentSize }}</span>
 								</div>
 							</div>
-							<div v-if="showDeleteIcon"
-								class="buttons">
-								<NcButton :aria-label="t('text', 'Delete this attachment')"
+							<div v-if="showDeleteIcon" class="buttons">
+								<NcButton
+									:aria-label="t('text', 'Delete this attachment')"
 									:title="t('text', 'Delete this attachment')"
 									@click="onDelete">
 									<template #icon>
@@ -44,20 +49,24 @@
 							</div>
 						</div>
 						<div v-else class="media" contenteditable="false">
-							<img v-show="loaded"
+							<img
+								v-show="loaded"
 								:src="imageUrl"
 								:alt="alt"
 								class="image__main"
 								@click="handleImageClick"
-								@load="onLoaded">
+								@load="onLoaded" />
 						</div>
 					</template>
 					<template v-else>
-						<ImageIcon class="image__main image__main--broken-icon" :size="100" />
+						<ImageIcon
+							class="image__main image__main--broken-icon"
+							:size="100" />
 					</template>
 				</transition>
 				<transition name="fade">
-					<div v-if="!isMediaAttachment"
+					<div
+						v-if="!isMediaAttachment"
 						v-show="loaded"
 						class="image__caption"
 						:title="alt">
@@ -65,17 +74,20 @@
 							{{ alt }}
 						</figcaption>
 						<div v-else class="image__caption__wrapper">
-							<input v-show="!isMediaAttachment"
+							<input
+								v-show="!isMediaAttachment"
 								ref="altInput"
 								type="text"
 								class="image__caption__input"
 								:value="alt"
 								@blur="updateAlt"
-								@keyup="updateAlt">
-							<div v-if="showImageDeleteIcon"
+								@keyup="updateAlt" />
+							<div
+								v-if="showImageDeleteIcon"
 								contenteditable="false"
 								class="image__caption__delete">
-								<NcButton :aria-label="t('text', 'Delete this image')"
+								<NcButton
+									:aria-label="t('text', 'Delete this image')"
 									:title="t('text', 'Delete this image')"
 									@click="onDelete">
 									<template #icon>
@@ -87,21 +99,29 @@
 					</div>
 				</transition>
 				<div class="image__modal">
-					<ShowImageModal :images="embeddedImageList"
+					<ShowImageModal
+						:images="embeddedImageList"
 						:start-index="imageIndex"
 						:show="showImageModal"
-						@close="showImageModal=false" />
+						@close="showImageModal = false" />
 				</div>
+			</div>
+			<div v-else-if="canDisplayPlaceholder" class="image__placeholder">
+				<NcBlurHash
+					:hash="imageBlurhash"
+					:style="blurhashSize"
+					aria-hidden="true" />
 			</div>
 			<div v-else class="image-view__cant_display">
 				<transition name="fade">
 					<div v-show="loaded" class="image__caption">
-						<input ref="altInput"
+						<input
+							ref="altInput"
 							type="text"
 							:value="alt"
 							:disabled="!isEditable"
 							@blur="updateAlt"
-							@keyup.enter="updateAlt">
+							@keyup.enter="updateAlt" />
 					</div>
 				</transition>
 			</div>
@@ -113,23 +133,24 @@
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside'
-import { NcButton } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
-import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
-import { useAttachmentResolver } from '../components/Editor.provider.js'
 import { emit } from '@nextcloud/event-bus'
+import { t } from '@nextcloud/l10n'
+import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { NodeViewWrapper } from '@tiptap/vue-2'
-import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
+import ClickOutside from 'vue-click-outside'
+import { useAttachmentResolver } from '../components/Editor.provider.ts'
+import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
+import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
+import { logger } from '../helpers/logger.js'
 
 class LoadImageError extends Error {
-
 	constructor(reason, imageUrl) {
 		super(reason?.message || t('text', 'Failed to load'))
 		this.reason = reason
 		this.imageUrl = imageUrl
 	}
-
 }
 
 export default {
@@ -138,20 +159,25 @@ export default {
 		ImageIcon,
 		DeleteIcon,
 		NcButton,
+		NcBlurHash,
 		ShowImageModal,
 		NodeViewWrapper,
 	},
 	directives: {
 		ClickOutside,
 	},
-	mixins: [
-		useAttachmentResolver,
-	],
+	mixins: [useAttachmentResolver],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
 		return {
 			attachment: null,
+			attachmentPromise: null,
 			imageLoaded: false,
+			imageWidth: 0,
+			imageHeight: 0,
+			wrapperWidth: 0,
+			resizeObserver: null,
+			imageBlurhash: null,
 			loaded: false,
 			failed: false,
 			showIcons: false,
@@ -161,7 +187,9 @@ export default {
 			showImageModal: false,
 			imageIndex: null,
 			isEditable: false,
+			isLastInserted: false,
 			embeddedImageList: [],
+			loadIntersectionObserver: null,
 		}
 	},
 	computed: {
@@ -187,6 +215,25 @@ export default {
 			}
 
 			return this.loaded && this.imageLoaded
+		},
+		canDisplayPlaceholder() {
+			return this.imageHeight > 0
+		},
+		blurhashSize() {
+			if (this.imageWidth > 0 && this.imageHeight > 0) {
+				const ratio = this.imageWidth / this.imageHeight
+				const newWidth =
+					this.wrapperWidth - 12 > this.imageWidth
+						? this.imageWidth
+						: this.wrapperWidth - 12
+				const newHeight = newWidth / ratio
+
+				return {
+					width: `${newWidth}px`,
+					height: `${newHeight}px`,
+				}
+			}
+			return {}
 		},
 		src: {
 			get() {
@@ -214,12 +261,76 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
-		this.loadPreview()
-			.catch(this.onImageLoadFailure)
+		this.editor.on('transaction', ({ transaction }) => {
+			const trMeta = transaction.getMeta('insertedAttachmentSrc')
+			if (trMeta?.src === this.src) {
+				this.isLastInserted = true
+			}
+		})
+	},
+	mounted() {
+		this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
+		this.loadAttachmentMetadata()
+		this.setupResizeObserver()
+
+		this.$nextTick(() => {
+			// nextTick is necessary, intersection detection is slightly unreliable without it
+			const options = {
+				root: null,
+				threshold: 0,
+			}
+			const startImageLoad = (entries, observer) => {
+				if (entries[0].isIntersecting) {
+					observer.disconnect()
+					this.loadPreview().catch(this.onImageLoadFailure)
+				}
+			}
+			this.loadIntersectionObserver = new IntersectionObserver(
+				startImageLoad,
+				options,
+			)
+			this.loadIntersectionObserver.observe(this.$el)
+		})
+	},
+	beforeUnmount() {
+		this.loadIntersectionObserver?.disconnect()
+		this.resizeObserver?.disconnect()
 	},
 	methods: {
+		setupResizeObserver() {
+			if (!this.$refs.wrapper) return
+
+			this.resizeObserver = new ResizeObserver((entries) => {
+				const width = entries[0].contentRect.width
+				if (width > 0) {
+					this.wrapperWidth = width
+				}
+			})
+
+			this.resizeObserver.observe(this.$refs.wrapper)
+		},
+		async loadAttachmentMetadata() {
+			try {
+				this.attachment = await this.attachmentPromise
+
+				const metadata = this.attachment?.metadata || null
+
+				if (metadata) {
+					const size = metadata['photos-size']?.value
+					this.imageWidth = size?.width || 0
+					this.imageHeight = size?.height || 0
+
+					this.imageBlurhash = metadata.blurhash?.value || null
+				}
+			} catch (err) {
+				// TODO: bump up to warn when the Photos dependency is gone (i.e., we can expect the metadata to exist)
+				logger.debug('Failed to load attachment metadata', { err })
+			}
+		},
 		async loadPreview() {
-			this.attachment = await this.$attachmentResolver.resolve(this.src)
+			if (!this.attachment) {
+				this.attachment = await this.attachmentPromise
+			}
 			if (!this.attachment.previewUrl) {
 				throw new Error('Attachment source was not resolved')
 			}
@@ -230,6 +341,9 @@ export default {
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentSize = this.attachment.size
+					// once the image is loaded, we can stop tracking the container width
+					//  since we only use it for sizing the placeholder
+					this.resizeObserver?.disconnect()
 				}
 				img.onerror = (e) => {
 					reject(new LoadImageError(e, this.attachment.previewUrl))
@@ -257,18 +371,26 @@ export default {
 		onLoaded() {
 			this.loaded = true
 			this.$nextTick(() => {
-				this.$refs.altInput?.focus()
+				if (this.isLastInserted) {
+					this.$refs.altInput?.focus()
+				}
 			})
 		},
 		async updateEmbeddedImageList() {
 			this.embeddedImageList = []
 			// Get all images that succeeded to load
-			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view'))
+			const imageViews = Array.from(
+				document.querySelectorAll(
+					'figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view',
+				),
+			)
 			for (const imgv of imageViews) {
 				const src = imgv.getAttribute('data-src')
-				if (!this.embeddedImageList.find(i => i.src === src)) {
+				if (!this.embeddedImageList.find((i) => i.src === src)) {
 					// Don't add duplicates (e.g. when several editors are loaded in HTML document)
-					const attachment = await this.$attachmentResolver.resolve(imgv.getAttribute('data-src'))
+					const attachment = await this.$attachmentResolver.resolve(
+						imgv.getAttribute('data-src'),
+					)
 					this.embeddedImageList.push({
 						src,
 						...attachment,
@@ -278,14 +400,16 @@ export default {
 		},
 		handleAttachmentClick() {
 			// Open in viewer if possible
-			if (OCA.Viewer
+			if (
+				OCA.Viewer
 				// Viewer is not in use
 				&& !OCA.Viewer.file
 				// Viewer supports mimetype
 				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
 				// Attachment has davPath, i.e. is native attachment and not in public share
 				//  (in public share we probably don't have DAV access)
-				&& this.attachment.davPath) {
+				&& this.attachment.davPath
+			) {
 				// Viewer exists, is not in use and supports mimetype
 				OCA.Viewer.open({ path: this.attachment.davPath })
 				return
@@ -296,11 +420,16 @@ export default {
 		},
 		async handleImageClick() {
 			await this.updateEmbeddedImageList()
-			this.imageIndex = this.embeddedImageList.findIndex(i => (i.src === this.src))
+			this.imageIndex = this.embeddedImageList.findIndex(
+				(i) => i.src === this.src,
+			)
 			if (this.imageIndex !== -1) {
 				this.showImageModal = true
 			} else {
-				console.error('Could not find image in attachments list', this.attachment)
+				console.error(
+					'Could not find image in attachments list',
+					this.attachment,
+				)
 				showError(t('text', 'Could not find image in attachments list.'))
 			}
 		},
@@ -308,6 +437,7 @@ export default {
 			emit('text:image-node:delete', this.imageUrl)
 			this.deleteNode()
 		},
+		t,
 	},
 }
 </script>
@@ -317,7 +447,8 @@ export default {
 	margin: 0;
 	padding: 0;
 
-	&, * {
+	&,
+	* {
 		-webkit-user-modify: read-only !important;
 	}
 }
@@ -340,7 +471,8 @@ export default {
 		position: absolute;
 		bottom: -1px;
 		right: -3px;
-		&, svg {
+		&,
+		svg {
 			cursor: pointer;
 		}
 	}
@@ -371,11 +503,18 @@ export default {
 	height: 100px;
 }
 
+.image__placeholder {
+	padding: 7px 6px;
+	margin-bottom: 26px;
+	position: relative;
+}
+
 .image__main {
 	max-height: calc(100vh - 50px - 50px);
 }
 
-.image__main--broken-icon, .image__error-message {
+.image__main--broken-icon,
+.image__error-message {
 	color: var(--color-text-maxcontrast);
 }
 
@@ -439,7 +578,7 @@ export default {
 }
 
 .fade-enter-active {
-	transition: opacity .3s ease-in-out;
+	transition: opacity 0.3s ease-in-out;
 }
 
 .fade-enter-to {

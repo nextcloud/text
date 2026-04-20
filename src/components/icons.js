@@ -5,23 +5,26 @@
 
 /* eslint-disable camelcase */
 
-import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
-import MDI_Close from 'vue-material-design-icons/Close.vue'
-import MDI_Check from 'vue-material-design-icons/Check.vue'
-import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
-import MDI_CodeBrackets from 'vue-material-design-icons/CodeBrackets.vue'
-import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
+import MDI_Warn from 'vue-material-design-icons/Alert.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
-import MDI_Delete from 'vue-material-design-icons/Delete.vue'
-import MDI_Document from 'vue-material-design-icons/FileDocument.vue'
-import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
-import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
-import MDI_Folder from 'vue-material-design-icons/Folder.vue'
-import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
-import MDI_FormatSize from 'vue-material-design-icons/FormatSize.vue'
 import MDI_AlignHorizontalCenter from 'vue-material-design-icons/AlignHorizontalCenter.vue'
 import MDI_AlignHorizontalLeft from 'vue-material-design-icons/AlignHorizontalLeft.vue'
 import MDI_AlignHorizontalRight from 'vue-material-design-icons/AlignHorizontalRight.vue'
+import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
+import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
+import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
+import MDI_Check from 'vue-material-design-icons/Check.vue'
+import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
+import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
+import MDI_Close from 'vue-material-design-icons/Close.vue'
+import MDI_CodeBrackets from 'vue-material-design-icons/CodeBrackets.vue'
+import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
+import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
+import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
+import MDI_Document from 'vue-material-design-icons/FileDocument.vue'
+import MDI_Folder from 'vue-material-design-icons/FolderOutline.vue'
+import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
+import MDI_FormatColorHighlight from 'vue-material-design-icons/FormatColorHighlight.vue'
 import MDI_FormatHeader1 from 'vue-material-design-icons/FormatHeader1.vue'
 import MDI_FormatHeader2 from 'vue-material-design-icons/FormatHeader2.vue'
 import MDI_FormatHeader3 from 'vue-material-design-icons/FormatHeader3.vue'
@@ -35,35 +38,34 @@ import MDI_FormatListBulleted from 'vue-material-design-icons/FormatListBulleted
 import MDI_FormatListCheckbox from 'vue-material-design-icons/FormatListCheckbox.vue'
 import MDI_FormatListNumbered from 'vue-material-design-icons/FormatListNumbered.vue'
 import MDI_FormatQuote from 'vue-material-design-icons/FormatQuoteClose.vue'
+import MDI_FormatSize from 'vue-material-design-icons/FormatSize.vue'
 import MDI_FormatStrikethrough from 'vue-material-design-icons/FormatStrikethrough.vue'
 import MDI_FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue'
-import MDI_Help from 'vue-material-design-icons/HelpCircle.vue'
+import MDI_Help from 'vue-material-design-icons/HelpCircleOutline.vue'
 import MDI_Image from 'vue-material-design-icons/ImageOutline.vue'
-import MDI_Info from 'vue-material-design-icons/Information.vue'
+import MDI_Info from 'vue-material-design-icons/InformationOutline.vue'
 import MDI_Link from 'vue-material-design-icons/Link.vue'
 import MDI_LinkOff from 'vue-material-design-icons/LinkOff.vue'
-import MDI_LinkVariantPlus from 'vue-material-design-icons/LinkVariantPlus.vue'
+import MDI_LinkVariantPlus from 'vue-material-design-icons/LinkPlus.vue'
 import MDI_Loading from 'vue-material-design-icons/Loading.vue'
-import MDI_Lock from 'vue-material-design-icons/Lock.vue'
+import MDI_Lock from 'vue-material-design-icons/LockOutline.vue'
 import MDI_Paperclip from 'vue-material-design-icons/Paperclip.vue'
-import MDI_Pencil from 'vue-material-design-icons/Pencil.vue'
-import MDI_PencilOff from 'vue-material-design-icons/PencilOff.vue'
-import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
-import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
-import MDI_Shape from 'vue-material-design-icons/Shape.vue'
+import MDI_PencilOff from 'vue-material-design-icons/PencilOffOutline.vue'
+import MDI_Pencil from 'vue-material-design-icons/PencilOutline.vue'
+import MDI_Plus from 'vue-material-design-icons/Plus.vue'
+import MDI_Shape from 'vue-material-design-icons/ShapeOutline.vue'
+import MDI_Sigma from 'vue-material-design-icons/Sigma.vue'
 import MDI_Table from 'vue-material-design-icons/Table.vue'
+import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
 import MDI_TableAddColumnAfter from 'vue-material-design-icons/TableColumnPlusAfter.vue'
 import MDI_TableAddColumnBefore from 'vue-material-design-icons/TableColumnPlusBefore.vue'
 import MDI_TableAddRowAfter from 'vue-material-design-icons/TableRowPlusAfter.vue'
 import MDI_TableAddRowBefore from 'vue-material-design-icons/TableRowPlusBefore.vue'
-import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
-import MDI_TrashCan from 'vue-material-design-icons/TrashCan.vue'
-import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
+import MDI_TranslateVariant from 'vue-material-design-icons/Translate.vue'
+import MDI_TrashCan from 'vue-material-design-icons/TrashCanOutline.vue'
+import MDI_Upload from 'vue-material-design-icons/TrayArrowUp.vue'
 import MDI_UnfoldMoreHorizontal from 'vue-material-design-icons/UnfoldMoreHorizontal.vue'
-import MDI_Upload from 'vue-material-design-icons/Upload.vue'
-import MDI_Warn from 'vue-material-design-icons/Alert.vue'
 import MDI_Web from 'vue-material-design-icons/Web.vue'
-import MDI_TranslateVariant from 'vue-material-design-icons/TranslateVariant.vue'
 
 const DEFAULT_ICON_SIZE = 20
 
@@ -100,12 +102,12 @@ export const CodeBrackets = makeIcon(MDI_CodeBrackets)
 export const CodeTags = makeIcon(MDI_CodeTags)
 export const CircleMedium = makeIcon(MDI_CircleMedium)
 export const Danger = makeIcon(MDI_Danger)
-export const Delete = makeIcon(MDI_Delete)
 export const Document = makeIcon(MDI_Document)
 export const DotsHorizontal = makeIcon(MDI_DotsHorizontal)
 export const Emoticon = makeIcon(MDI_Emoticon)
 export const Folder = makeIcon(MDI_Folder)
 export const FormatBold = makeIcon(MDI_FormatBold)
+export const FormatColorHighlight = makeIcon(MDI_FormatColorHighlight)
 export const FormatSize = makeIcon(MDI_FormatSize)
 export const FormatHeader1 = makeIcon(MDI_FormatHeader1)
 export const FormatHeader2 = makeIcon(MDI_FormatHeader2)
@@ -148,3 +150,5 @@ export const UnfoldMoreHorizontal = makeIcon(MDI_UnfoldMoreHorizontal)
 export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
 export const Web = makeIcon(MDI_Web)
+export const Plus = makeIcon(MDI_Plus)
+export const Sigma = makeIcon(MDI_Sigma)

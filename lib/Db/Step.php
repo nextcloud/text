@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -38,7 +39,6 @@ class Step extends Entity implements JsonSerializable {
 	protected int $timestamp = 0;
 
 	public function __construct() {
-		$this->addType('id', 'integer');
 		$this->addType('version', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('sessionId', 'integer');

@@ -5,11 +5,24 @@
 
 module.exports = {
 	root: true,
-	extends: [
-		'@nextcloud',
+	extends: ['@nextcloud', 'prettier'],
+	overrides: [
+		{
+			files: ['**/*.vue'],
+			rules: {
+				'vue/first-attribute-linebreak': 'off',
+			},
+		},
+		{
+			files: ['**/*.ts'],
+			rules: {
+				// Do not err out on constructors with parameter properties only.
+				'no-useless-constructor': 'off',
+				'@typescript-eslint/no-useless-constructor': 'error',
+			},
+		},
 	],
 	rules: {
-		'@typescript-eslint/no-unused-vars': ['off'],
 		'import/no-unresolved': [1, { ignore: ['\\.svg\\?raw$'] }],
 	},
 }

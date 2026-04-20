@@ -3,23 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable import/no-named-as-default */
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
+import { ListItem, OrderedList } from '@tiptap/extension-list'
 /* eslint-enable import/no-named-as-default */
-import TaskList from './../../../src/nodes/TaskList.js'
-import TaskItem from './../../../src/nodes/TaskItem.js'
-import BulletList from './../../../src/nodes/BulletList.js'
 import Markdown from './../../../src/extensions/Markdown.js'
+import BulletList from './../../../src/nodes/BulletList.js'
+import TaskItem from './../../../src/nodes/TaskItem.js'
+import TaskList from './../../../src/nodes/TaskList.js'
 import { createCustomEditor } from './../../support/components.js'
-import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
+import { expectMarkdown, loadMarkdown, runCommands } from './helpers.js'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/ListItem.md?raw'
 
 describe('ListItem extension integrated in the editor', () => {
-
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [

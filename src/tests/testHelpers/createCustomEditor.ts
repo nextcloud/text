@@ -20,11 +20,6 @@ export default function createCustomEditor(
 ): Editor {
 	return new Editor({
 		content,
-		extensions: [
-			Document,
-			Paragraph,
-			Text,
-			...extensions,
-		],
+		extensions: [Document, Paragraph, Text, ...extensions],
 	})
 }

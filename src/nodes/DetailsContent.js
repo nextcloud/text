@@ -21,13 +21,21 @@ const DetailsContent = Node.create({
 	},
 
 	parseHTML() {
-		return [{
-			tag: `div[data-type="${this.name}"]`,
-		}]
+		return [
+			{
+				tag: `div[data-type="${this.name}"]`,
+			},
+		]
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		return ['div', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { class: 'details-content' }), 0]
+		return [
+			'div',
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+				class: 'details-content',
+			}),
+			0,
+		]
 	},
 
 	addNodeView() {

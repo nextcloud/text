@@ -18,6 +18,8 @@ return [
 		['name' => 'Attachment#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::uploadAttachment() */
 		['name' => 'Attachment#uploadAttachment', 'url' => '/attachment/upload', 'verb' => 'POST'],
+		/** @see Controller\AttachmentController::createAttachment() */
+		['name' => 'Attachment#createAttachment', 'url' => '/attachment/create', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::getImageFile() */
 		['name' => 'Attachment#getImageFile', 'url' => '/image', 'verb' => 'GET'],
 		/** @see Controller\AttachmentController::getMediaFile() */

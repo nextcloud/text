@@ -8,12 +8,9 @@ const user = randUser()
 
 const modKey = Cypress.platform === 'darwin' ? '{cmd}' : '{ctrl}'
 const testShortcut = (shortcut, tag) => {
-	cy.getContent()
-		.type(shortcut)
+	cy.getContent().type(shortcut)
 
-	cy.getContent()
-		.find(tag)
-		.should('contain', Cypress.currentTest.title)
+	cy.getContent().find(tag).should('contain', Cypress.currentTest.title)
 
 	return cy.closeFile()
 }
@@ -23,7 +20,6 @@ const testHeading = (num) => {
 }
 
 describe('keyboard shortcuts', () => {
-
 	before(() => {
 		cy.createUser(user)
 	})
@@ -33,7 +29,7 @@ describe('keyboard shortcuts', () => {
 		cy.uploadTestFile()
 		cy.visit('/apps/files')
 		cy.openTestFile()
-	    cy.getContent().type(Cypress.currentTest.title)
+		cy.getContent().type(Cypress.currentTest.title)
 		cy.getContent().type('{selectall}')
 	})
 
@@ -41,6 +37,7 @@ describe('keyboard shortcuts', () => {
 	it('italic', () => testShortcut(`${modKey}i`, 'em'))
 	it('underline', () => testShortcut(`${modKey}u`, 'u'))
 	it('strikethrough', () => testShortcut(`${modKey}{shift}s`, 's'))
+	it('highlight', () => testShortcut(`${modKey}{shift}h`, 'mark'))
 	it('blockquote', () => testShortcut(`${modKey}{shift}b`, 'blockquote'))
 	it('codeblock', () => testShortcut(`${modKey}{alt}c`, 'pre'))
 	it('ordered-list', () => testShortcut(`${modKey}{shift}7`, 'ol'))
@@ -52,5 +49,4 @@ describe('keyboard shortcuts', () => {
 	levels.forEach((level) => {
 		it(`heading-${level}`, () => testHeading(level))
 	})
-
 })

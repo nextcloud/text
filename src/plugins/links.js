@@ -4,9 +4,9 @@
  */
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 import { activeLinkFromSelection } from './linkHelpers.js'
-import { isLinkToSelfWithHash } from '../helpers/links.js'
 
 // Commands
 
@@ -15,8 +15,7 @@ import { isLinkToSelfWithHash } from '../helpers/links.js'
  * @params {ResolvedPos} resolved position of the action
  */
 export const setActiveLink = (resolved) => (state, dispatch) => {
-	const mark = resolved.marks()
-		.find(m => m.type.name === 'link')
+	const mark = resolved.marks().find((m) => m.type.name === 'link')
 	if (!mark) {
 		return false
 	}
@@ -62,11 +61,12 @@ export function linkBubble(options) {
 			},
 		},
 
-		view: (view) => new LinkBubblePluginView({
-			view,
-			options,
-			plugin: linkBubblePlugin,
-		}),
+		view: (view) =>
+			new LinkBubblePluginView({
+				view,
+				options,
+				plugin: linkBubblePlugin,
+			}),
 
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
@@ -78,7 +78,9 @@ export function linkBubble(options) {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
-			const noHistory = transactions.every(tr => tr.meta.addToHistory === false)
+			const noHistory = transactions.every(
+				(tr) => tr.meta.addToHistory === false,
+			)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
@@ -92,10 +94,12 @@ export function linkBubble(options) {
 			// when clicking a link in read-only mode on Firefox.
 			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
 				// Only regard left clicks without Ctrl/Meta
-				if (!direct
+				if (
+					!direct
 					|| event.button !== 0
 					|| event.ctrlKey
-					|| event.metaKey) {
+					|| event.metaKey
+				) {
 					return false
 				}
 				const { state, dispatch } = view
@@ -112,9 +116,7 @@ export function linkBubble(options) {
 					}
 				},
 			},
-
 		},
-
 	})
 	return linkBubblePlugin
 }
@@ -135,7 +137,13 @@ export function linkClicking() {
 			handleDOMEvents: {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
-					if (event.target.closest('a') && event.button === 1 && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+					if (
+						event.target.closest('a')
+						&& event.button === 1
+						&& !event.ctrlKey
+						&& !event.metaKey
+						&& !event.shiftKey
+					) {
 						event.preventDefault()
 						event.stopImmediatePropagation()
 
@@ -153,21 +161,26 @@ export function linkClicking() {
 						event.stopImmediatePropagation()
 					}
 				},
-				// Prevent open link (except anchor links) on left click (required for read-only mode)
-				// Open link in new tab on Ctrl/Cmd + left click
+				// Prevent open link for text-only links on left click. Required for read-only mode.
 				click: (view, event) => {
 					const linkEl = event.target.closest('a')
-					if (event.button === 0 && linkEl) {
-						// No special handling in mermaid diagrams to not break links there
-						if (linkEl.closest('svg[id^="mermaid-view"]')) {
-							return false
-						}
+					// Only text-only links need special handling (e.g. don't handle links inside preview or mermaid diagrams)
+					if (
+						!linkEl
+						|| !linkEl.matches('a[data-text-el="text-only-link"]')
+					) {
+						return false
+					}
 
+					if (event.button === 0) {
+						// Stop browser from opening the link
 						event.preventDefault()
+
 						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
 							// Open anchor links directly
 							location.href = linkEl.attributes.href.value
 						} else if (event.ctrlKey || event.metaKey) {
+							// Open link in new tab on Ctrl/Cmd + left click
 							window.open(linkEl.href, '_blank')
 						}
 					}

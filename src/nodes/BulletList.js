@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TiptapBulletList from '@tiptap/extension-bullet-list'
+import { BulletList as TiptapBulletList } from '@tiptap/extension-list'
 import { listInputRule } from '../commands/index.js'
 
 /* We want to allow for `* [ ]` as an input rule for bullet lists.
@@ -13,7 +13,9 @@ import { listInputRule } from '../commands/index.js'
  */
 const BulletList = TiptapBulletList.extend({
 	parseHTML() {
-		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: true }))
+		return this.parent().map((rule) =>
+			Object.assign(rule, { preserveWhitespace: true }),
+		)
 	},
 
 	addAttributes() {
@@ -26,21 +28,14 @@ const BulletList = TiptapBulletList.extend({
 			bullet: {
 				default: '-',
 				rendered: false,
-				isRequired: true,
 				parseHTML: (el) => el.getAttribute('data-bullet'),
 			},
 		}
 	},
 
 	addInputRules() {
-		return [
-			listInputRule(
-				/^\s*([-+*])\s([^\s[]+)$/,
-				this.type,
-			),
-		]
+		return [listInputRule(/^\s*([-+*])\s([^\s[]+)$/, this.type)]
 	},
-
 })
 
 export default BulletList

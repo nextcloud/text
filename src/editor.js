@@ -3,25 +3,29 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit, subscribe } from '@nextcloud/event-bus'
 import Vue from 'vue'
-import { subscribe } from '@nextcloud/event-bus'
-import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
+import {
+	ATTACHMENT_RESOLVER,
+	EDITOR_UPLOAD,
+	HOOK_MENTION_INSERT,
+	HOOK_MENTION_SEARCH,
+	HOOK_MENUBAR_LINK_CUSTOM_ACTION,
+	OPEN_LINK_HANDLER,
+} from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
+import { encodeAttachmentFilename } from './helpers/attachmentFilename.ts'
+import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-const apiVersion = '1.2'
-
-Vue.prototype.t = window.t
-Vue.prototype.n = window.n
-Vue.prototype.OCA = window.OCA
+const apiVersion = '1.4'
 
 window.OCA.Text = {
 	...window.OCA.Text,
 }
 
 class TextEditorEmbed {
-
 	#vm
 	#data
 	constructor(vm, data) {
@@ -56,16 +60,24 @@ class TextEditorEmbed {
 		return this
 	}
 
-	onOutlineToggle(onOutlineToggleCallback = () => {}) {
-		this.#vm.$on('outline-toggled', (visible) => {
-			onOutlineToggleCallback(visible)
-		})
+	onSearch(onSearchCallback = () => {}) {
+		subscribe('text:editor:search-results', onSearchCallback)
 		return this
 	}
 
-	onSearch(onSearchCallback = () => {}) {
-	  subscribe('text:editor:search-results', onSearchCallback)
-	  return this
+	onTocToggle(onTocToggleCallback = () => {}) {
+		subscribe('text:toc:toggled', onTocToggleCallback)
+		return this
+	}
+
+	onTocPin(onTocPinCallback = () => {}) {
+		subscribe('text:toc:pin', onTocPinCallback)
+		return this
+	}
+
+	onAttachmentsUpdated(onAttachmentsUpdatedCallback = () => {}) {
+		subscribe('text:editor:attachments:updated', onAttachmentsUpdatedCallback)
+		return this
 	}
 
 	render(el) {
@@ -89,19 +101,24 @@ class TextEditorEmbed {
 		return this
 	}
 
+	getHTML() {
+		const editor = this.#getEditorComponent()?.editor
+		return editor?.getHTML()
+	}
+
 	setSearchQuery(query, matchAll) {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.setSearchQuery(query, matchAll)
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.setSearchQuery(query, matchAll)
 	}
 
 	searchNext() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.nextMatch()
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.nextMatch()
 	}
 
 	searchPrevious() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.previousMatch()
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.previousMatch()
 	}
 
 	async save() {
@@ -109,7 +126,7 @@ class TextEditorEmbed {
 	}
 
 	setShowOutline(value) {
-		this.#vm.$set(this.#data, 'showOutlineOutside', value)
+		emit('text:toc:toggle', { visible: value })
 		return this
 	}
 
@@ -124,39 +141,97 @@ class TextEditorEmbed {
 	}
 
 	insertAtCursor(content) {
-		this.#getEditorComponent().$editor.chain().insertContent(content).focus().run()
+		this.#getEditorComponent()
+			.editor?.chain()
+			.insertContent(content)
+			.focus()
+			.run()
+	}
+
+	replaceAttachmentFilename(pageId, oldName, newName) {
+		const oldSrc =
+			'.attachments.' + pageId + '/' + encodeAttachmentFilename(oldName)
+		const newSrc =
+			'.attachments.' + pageId + '/' + encodeAttachmentFilename(newName)
+		const { view, state } = this.#getEditorComponent().editor
+		const { doc, schema, tr } = state
+		let modified = false
+
+		doc.descendants((node, pos) => {
+			if (!node.type === schema.nodes.image || node.attrs.src !== oldSrc) {
+				return
+			}
+
+			tr.setNodeMarkup(pos, undefined, {
+				...node.attrs,
+				src: newSrc,
+				alt: node.attrs.alt.replace(oldName, newName),
+			})
+			modified = true
+		})
+
+		if (modified) {
+			view.dispatch(tr)
+			this.save()
+		}
+	}
+
+	removeAttachmentReferences(pageId, name) {
+		const src = '.attachments.' + pageId + '/' + encodeAttachmentFilename(name)
+		const { view, state } = this.#getEditorComponent().editor
+		const { doc, schema, tr } = state
+		let modified = false
+
+		doc.descendants((node, pos) => {
+			if (!node.type === schema.nodes.image || node.attrs.src !== src) {
+				return
+			}
+
+			tr.delete(pos, pos + node.nodeSize)
+			modified = true
+		})
+
+		if (modified) {
+			view.dispatch(tr)
+			this.save()
+		}
 	}
 
 	focus() {
-		this.#getEditorComponent().$editor.commands.focus()
+		this.#getEditorComponent().editor?.commands.focus()
 	}
 
 	debugYjs() {
 		const yjsData = this.#getEditorComponent().debugYjsData()
 
-		const intro = 'Editor Yjs debug data. Copy the object below that starts with "clientId".'
+		const intro =
+			'Editor Yjs debug data. Copy the object below that starts with "clientId".'
 		const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-		const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
+		const introFirefox =
+			'- In Firefox, right-click on the object and select "Copy object".'
 		const styleBold = 'font-weight: bold;'
 		const styleItalic = 'font-weight: normal; font-style: italic;'
 		console.warn(JSON.stringify(yjsData, null, ' '))
-		console.warn('%c%s\n%c%s\n%s', styleBold, intro, styleItalic, introChrome, introFirefox)
+		console.warn(
+			'%c%s\n%c%s\n%s',
+			styleBold,
+			intro,
+			styleItalic,
+			introChrome,
+			introFirefox,
+		)
 	}
 
 	#registerDebug() {
 		if (window?._oc_debug) {
 			this.vm = this.#vm
-			window.OCA.Text._debug = [
-				...(window.OCA.Text._debug ?? []),
-				this,
-			]
+			window.OCA.Text._debug = [...(window.OCA.Text._debug ?? []), this]
 		}
 	}
-
 }
 
 window.OCA.Text.apiVersion = apiVersion
-window.OCA.Text.createEditor = async function({
+window.OCA.Text.createEditor = async function ({
 	// Element to render the editor to
 	el,
 
@@ -175,21 +250,27 @@ window.OCA.Text.createEditor = async function({
 		component: null,
 		props: null,
 	},
+	menubarLinkCustomAction = undefined,
 
 	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
-	onOutlineToggle = (visible) => {},
+	onTocToggle = (visible) => {},
+	onOutlineToggle = (visible) => {}, // deprecated, use `onTocToggle`
+	onTocPin = (fileId, keep) => {},
 	onFileInsert = undefined,
-	onMentionSearch = undefined,
+	onMentionSearch = undefined, // (query) => Promise<{ [id]: label }>
 	onMentionInsert = undefined,
+	openLinkHandler = undefined,
 	onSearch = undefined,
+	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
-	const { default: MarkdownContentEditor } = await import(/* webpackChunkName: "editor" */'./components/Editor/MarkdownContentEditor.vue')
-	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
+	const { default: MarkdownContentEditor } = await import(
+		'./components/Editor/MarkdownContentEditor.vue'
+	)
+	const { default: Editor } = await import('./components/Editor.vue')
 
 	const data = Vue.observable({
-		showOutlineOutside: false,
 		readonlyBarProps: readonlyBar.props,
 		readOnly,
 		content,
@@ -202,63 +283,114 @@ window.OCA.Text.createEditor = async function({
 			return {
 				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
 				[EDITOR_UPLOAD]: !!sessionEditor,
-				[HOOK_MENTION_SEARCH]: sessionEditor ? true : onMentionSearch,
-				[HOOK_MENTION_INSERT]: sessionEditor ? true : onMentionInsert,
+				[HOOK_MENTION_SEARCH]: onMentionSearch,
+				[HOOK_MENTION_INSERT]: onMentionInsert,
+				[OPEN_LINK_HANDLER]: {
+					openLink: openLinkHandler || openLink,
+				},
 				[ATTACHMENT_RESOLVER]: {
 					resolve(src, preferRaw) {
-						return [{
-							type: 'image',
-							url: src,
-						}]
+						return [
+							{
+								type: 'image',
+								url: src,
+							},
+						]
 					},
 				},
+				[HOOK_MENUBAR_LINK_CUSTOM_ACTION]: menubarLinkCustomAction,
 			}
 		},
 		data() {
 			return data
 		},
-		render: h => {
+		render: (h) => {
 			const scopedSlots = readonlyBar?.component
 				? {
-					readonlyBar: () => {
-						return h(readonlyBar.component, {
-							props: data.readonlyBarProps,
-						})
-					},
-				}
+						readonlyBar: () => {
+							return h(readonlyBar.component, {
+								props: data.readonlyBarProps,
+							})
+						},
+					}
 				: {}
 
 			return sessionEditor
 				? h(Editor, {
-					props: {
-						fileId,
-						relativePath: filePath,
-						shareToken,
-						mime: 'text/markdown',
-						active: true,
-						autofocus,
-						showOutlineOutside: data.showOutlineOutside,
-					},
-					scopedSlots,
-				})
+						props: {
+							fileId,
+							relativePath: filePath,
+							shareToken,
+							mime: 'text/markdown',
+							active: true,
+							autofocus,
+						},
+						scopedSlots,
+					})
 				: h(MarkdownContentEditor, {
-					props: {
-						fileId,
-						content: data.content,
-						relativePath: filePath,
-						shareToken,
-						readOnly: data.readOnly,
-						showOutlineOutside: data.showOutlineOutside,
-					},
-					scopedSlots,
-				})
+						props: {
+							fileId,
+							content: data.content,
+							relativePath: filePath,
+							shareToken,
+							readOnly: data.readOnly,
+						},
+						scopedSlots,
+					})
 		},
 	})
+
 	return new TextEditorEmbed(vm, data)
 		.onCreate(onCreate)
 		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
-		.onOutlineToggle(onOutlineToggle)
 		.onSearch(onSearch)
+		.onTocToggle(onOutlineToggle)
+		.onTocToggle(onTocToggle)
+		.onTocPin(onTocPin)
+		.onAttachmentsUpdated(onAttachmentsUpdated)
+		.render(el)
+}
+
+window.OCA.Text.createTable = async function ({
+	// Element to render the editor to
+	el,
+
+	content = '',
+
+	readOnly = false,
+	autofocus = true,
+
+	onCreate = ({ markdown }) => {},
+	onLoaded = () => {},
+	onUpdate = ({ markdown }) => {},
+}) {
+	const { default: PlainTableContentEditor } = await import(
+		'./components/Editor/PlainTableContentEditor.vue'
+	)
+
+	const data = Vue.observable({
+		readOnly,
+		content,
+	})
+
+	const vm = new Vue({
+		data() {
+			return data
+		},
+		render: (h) => {
+			return h(PlainTableContentEditor, {
+				props: {
+					content: data.content,
+					readOnly: data.readOnly,
+				},
+			})
+		},
+	})
+
+	return new TextEditorEmbed(vm, data)
+		.onCreate(onCreate)
+		.onLoaded(onLoaded)
+		.onUpdate(onUpdate)
 		.render(el)
 }

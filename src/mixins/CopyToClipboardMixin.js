@@ -4,6 +4,7 @@
  */
 
 import { showError, showSuccess } from '@nextcloud/dialogs'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	data() {
@@ -32,7 +33,8 @@ export default {
 				this.copied = true
 				showError(
 					`<div>${t('text', 'Could not copy to the clipboard')}</div>`,
-					{ isHTML: true })
+					{ isHTML: true },
+				)
 			} finally {
 				this.copyLoading = false
 				setTimeout(() => {

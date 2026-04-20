@@ -115,7 +115,8 @@ export const FilesWorkspaceHeader = {
 			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace = !!latestFolder.attributes['rich-workspace-file-flat']
+		const hasRichWorkspace =
+			!!latestFolder.attributes['rich-workspace-file-flat']
 		const content = latestFolder.attributes['rich-workspace-flat'] || ''
 		const path = latestFolder.path || ''
 

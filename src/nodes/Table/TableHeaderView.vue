@@ -4,46 +4,52 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-header" as="th" :style="textAlign">
+	<NodeViewWrapper data-text-el="table-header" as="th" :dir="dir" :style="align">
 		<div>
 			<NodeViewContent class="content" />
-			<NcActions v-if="isEditable"
+			<NcActions
+				v-if="isEditable"
 				ref="menu"
-				type="tertiary-no-background"
+				size="small"
+				variant="tertiary-no-background"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
-					<NcActionButton data-text-table-action="align-column-left"
+					<NcActionButton
+						data-text-table-action="align-column-left"
 						:aria-label="t('text', 'Left align column')"
 						type="radio"
 						value="left"
-						:model-value="node.attrs.textAlign"
-						@click="alignLeft">
+						:model-value="node.attrs.align"
+						@click="setAlignLeft">
 						<template #icon>
 							<AlignHorizontalLeft />
 						</template>
 					</NcActionButton>
-					<NcActionButton data-text-table-action="align-column-center"
+					<NcActionButton
+						data-text-table-action="align-column-center"
 						:aria-label="t('text', 'Center align column')"
 						type="radio"
 						value="center"
-						:model-value="node.attrs.textAlign"
-						@click="alignCenter">
+						:model-value="node.attrs.align"
+						@click="setAlignCenter">
 						<template #icon>
 							<AlignHorizontalCenter />
 						</template>
 					</NcActionButton>
-					<NcActionButton data-text-table-action="align-column-right"
+					<NcActionButton
+						data-text-table-action="align-column-right"
 						:aria-label="t('text', 'Right align column')"
 						type="radio"
 						value="right"
-						:model-value="node.attrs.textAlign"
-						@click="alignRight">
+						:model-value="node.attrs.align"
+						@click="setAlignRight">
 						<template #icon>
 							<AlignHorizontalRight />
 						</template>
 					</NcActionButton>
 				</NcActionButtonGroup>
-				<NcActionButton data-text-table-action="add-column-before"
+				<NcActionButton
+					data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
 					<template #icon>
@@ -51,7 +57,8 @@
 					</template>
 					{{ t('text', 'Add column before') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="add-column-after"
+				<NcActionButton
+					data-text-table-action="add-column-after"
 					close-after-click
 					@click="addColumnAfter">
 					<template #icon>
@@ -59,11 +66,12 @@
 					</template>
 					{{ t('text', 'Add column after') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="remove-column"
+				<NcActionButton
+					data-text-table-action="remove-column"
 					close-after-click
 					@click="deleteColumn">
 					<template #icon>
-						<Delete />
+						<TrashCan />
 					</template>
 					{{ t('text', 'Delete this column') }}
 				</NcActionButton>
@@ -73,15 +81,18 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcActionButtonGroup } from '@nextcloud/vue'
+import { t } from '@nextcloud/l10n'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
 	AlignHorizontalRight,
-	Delete,
-	TableAddColumnBefore,
 	TableAddColumnAfter,
+	TableAddColumnBefore,
+	TrashCan,
 } from '../../components/icons.js'
 
 export default {
@@ -90,7 +101,7 @@ export default {
 		AlignHorizontalCenter,
 		AlignHorizontalLeft,
 		AlignHorizontalRight,
-		Delete,
+		TrashCan,
 		NcActionButton,
 		NcActionButtonGroup,
 		NcActions,
@@ -119,8 +130,11 @@ export default {
 		}
 	},
 	computed: {
-		textAlign() {
-			return { 'text-align': this.node.attrs.textAlign }
+		align() {
+			return { 'text-align': this.node.attrs.align }
+		},
+		dir() {
+			return this.node.attrs.dir || ''
 		},
 	},
 	beforeMount() {
@@ -130,68 +144,81 @@ export default {
 		})
 	},
 	methods: {
-		alignCenter() {
-			this.align('center')
+		setAlignCenter() {
+			this.setAlign('center')
 		},
-		alignLeft() {
-			this.align('left')
+		setAlignLeft() {
+			this.setAlign('left')
 		},
-		alignRight() {
-			this.align('right')
+		setAlignRight() {
+			this.setAlign('right')
 		},
-		align(textAlign) {
-			this.editor.chain()
+		setAlign(align) {
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.setCellAttribute('textAlign', textAlign)
+				.setCellAttribute('align', align)
 				.run()
 			while (this.editor.commands.goToNextRow()) {
-				this.editor.commands.setCellAttribute('textAlign', textAlign)
+				this.editor.commands.setCellAttribute('align', align)
 			}
 			// Set focus back to first row
-			this.editor.chain()
-				.setTextSelection(this.getPos())
-				.focus()
-				.run()
+			this.editor.chain().setTextSelection(this.getPos()).focus().run()
 			this.$refs.menu.closeMenu(false)
 		},
 		deleteColumn() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.deleteColumn()
 				.run()
 		},
 		addColumnBefore() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addColumnBefore()
 				.run()
 		},
 		addColumnAfter() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addColumnAfter()
 				.run()
 		},
+		t,
 	},
 }
 </script>
 
 <style scoped lang="scss">
+div[contenteditable='true'] th .content {
+	padding-right: 0;
+}
 th {
-
 	.content {
 		margin: 0;
 		flex-grow: 1;
+		padding: calc(
+				(var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2
+			)
+			0.75em;
 	}
+
 	.action-item {
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
 		opacity: 50%;
 	}
 
-	&:hover, &:active, &:focus, &:focus-within {
+	&:hover,
+	&:active,
+	&:focus,
+	&:focus-within {
 		.action-item {
 			opacity: 100%;
 		}

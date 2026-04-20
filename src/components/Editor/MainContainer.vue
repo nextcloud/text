@@ -13,28 +13,37 @@
 </template>
 
 <script>
+import { useEditorUpload } from '../Editor.provider.ts'
 import MediaHandler from './MediaHandler.vue'
-import { useEditorUpload } from '../Editor.provider.js'
 
 export default {
 	name: 'MainContainer',
 	components: {
 		MediaHandler,
 	},
-	mixins: [
-		useEditorUpload,
-	],
+	mixins: [useEditorUpload],
 }
 </script>
 
 <style scoped lang="scss">
-	.text-editor__main, .editor {
-		background: var(--color-main-background);
-		color: var(--color-main-text);
-		background-clip: padding-box;
-		border-radius: var(--border-radius);
-		padding: 0;
-		position: relative;
-		width: 100%;
+.text-editor__main,
+.editor {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	background: var(--color-main-background);
+	color: var(--color-main-text);
+	background-clip: padding-box;
+	border-radius: var(--border-radius);
+	padding: 0;
+	position: relative;
+	width: 100%;
+}
+
+.text-editor__main {
+	&.is-mobile {
+		flex-grow: 1;
+		flex-direction: column-reverse;
 	}
+}
 </style>

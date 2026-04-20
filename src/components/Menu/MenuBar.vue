@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div :id="randomID"
+	<div
+		:id="randomID"
 		class="text-menubar"
 		data-text-el="menubar"
 		role="region"
@@ -12,19 +13,28 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--hide': isHidden,
-			'text-menubar--is-workspace': $isRichWorkspace,
+			'text-menubar--is-workspace': isRichWorkspace,
+			'is-mobile': $isMobile,
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
-		<div v-if="$isRichEditor"
+		<div
+			v-if="isRichEditor"
 			ref="menubar"
 			role="toolbar"
 			class="text-menubar__entries"
 			:aria-label="t('text', 'Formatting menu bar')"
-			@keydown.left.stop="handleToolbarNavigation"
-			@keydown.right.stop="handleToolbarNavigation">
+			@keyup.left.stop="handleToolbarNavigation"
+			@keyup.right.stop="handleToolbarNavigation">
 			<!-- The visible inline actions -->
-			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
+			<component
+				:is="
+					actionEntry.component
+						? actionEntry.component
+						: actionEntry.children
+							? 'ActionList'
+							: 'ActionSingle'
+				"
 				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
@@ -34,18 +44,14 @@
 				@click="activeMenuEntry = index" />
 
 			<!-- The remaining actions -->
-			<ActionList ref="remainingEntries"
+			<ActionList
+				ref="remainingEntries"
 				:action-entry="hiddenEntries"
 				:can-be-focussed="activeMenuEntry === visibleEntries.length"
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton v-if="canTranslate" close-after-click @click="showTranslate">
-						<template #icon>
-							<TranslateVariant />
-						</template>
-						{{ t('text', 'Translate') }}
-					</NcActionButton>
+					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<CharacterCount v-bind="{ visible }" />
@@ -59,27 +65,24 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
-import { loadState } from '@nextcloud/initial-state'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
-import { emit } from '@nextcloud/event-bus'
+import { ref } from 'vue'
 
+import { t } from '@nextcloud/l10n'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useMenuEntries } from '../../composables/useMenuEntries.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import HelpModal from '../HelpModal.vue'
+import { DotsHorizontal } from '../icons.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
-import HelpModal from '../HelpModal.vue'
-import ToolBarLogic from './ToolBarLogic.js'
-import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
-import { DotsHorizontal, TranslateVariant } from '../icons.js'
-import {
-	useEditorMixin,
-	useIsMobileMixin,
-	useIsRichEditorMixin,
-	useIsRichWorkspaceMixin,
-} from '../Editor.provider.js'
+import ToolBarLogic from './ToolBarLogic.js'
+import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'MenuBar',
@@ -89,17 +92,11 @@ export default {
 		ActionSingle,
 		HelpModal,
 		NcActionSeparator,
-		NcActionButton,
 		CharacterCount,
-		TranslateVariant,
+		WidthToggle,
 	},
 	extends: ToolBarLogic,
-	mixins: [
-		useEditorMixin,
-		useIsMobileMixin,
-		useIsRichEditorMixin,
-		useIsRichWorkspaceMixin,
-	],
+	mixins: [useIsMobileMixin],
 	provide() {
 		const val = {}
 
@@ -123,34 +120,57 @@ export default {
 	},
 
 	setup() {
+		const editor = useEditor()
+		const { isPublic, isRichEditor, isRichWorkspace } = useEditorFlags()
+		const { assistantMenuEntries, menuEntries, readOnlyDoneEntries } =
+			useMenuEntries()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { menubar, width }
+		return {
+			assistantMenuEntries,
+			editor,
+			isPublic,
+			isRichEditor,
+			isRichWorkspace,
+			menubar,
+			menuEntries,
+			readOnlyDoneEntries,
+			width,
+		}
 	},
 
 	data() {
 		return {
-			entries: this.openReadOnly ? [...ReadOnlyDoneEntries, ...MenuEntries] : [...MenuEntries],
-			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
+			entries: (this.openReadOnly
+				? [...this.readOnlyDoneEntries, ...this.menuEntries]
+				: this.isPublic || this.isRichWorkspace
+					? [...this.menuEntries]
+					: [...this.menuEntries, ...this.assistantMenuEntries]
+			).filter((entry) => !!entry),
+			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
-			canTranslate: loadState('text', 'translation_languages', []).from?.length > 0,
 			resize: null,
 		}
 	},
 	computed: {
+		visibleEntryKeys() {
+			// if entry has no priority, we assume it always will be visible (priority: 0)
+			return this.entries
+				.toSorted((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
+				.map((e) => e.key)
+				.slice(0, this.iconsLimit)
+		},
 		visibleEntries() {
-			const list = this.entries.filter(({ priority }) => {
-				// if entry has no priority, we assume it always will be visible
-				return priority === undefined || priority <= this.iconsLimit
+			// only entries from `visibleEntryKeys but in original order
+			return this.entries.filter((entry) => {
+				return this.visibleEntryKeys.includes(entry.key)
 			})
-
-			return list
 		},
 		hiddenEntries() {
-			const remainingEntries = this.entries.filter(({ priority }) => {
+			const remainingEntries = this.entries.filter((entry) => {
 				// reverse logic from visibleEntries
-				return priority !== undefined && priority > this.iconsLimit
+				return !this.visibleEntryKeys.includes(entry.key)
 			})
 			const entries = remainingEntries.reduce((acc, entry, index) => {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
@@ -158,12 +178,26 @@ export default {
 				// If this block has menu entries, it should be separated for better visibility and a11y (menu item radio grouping)
 				if (children.length > 1) {
 					const hasPreviousItem = acc.length && !acc.at(-1).isSeparator
-					const separatorBefore = hasPreviousItem ? [{ key: `separator-before-${entry.id}`, isSeparator: true }] : []
+					const separatorBefore = hasPreviousItem
+						? [
+								{
+									key: `separator-before-${entry.id}`,
+									isSeparator: true,
+								},
+							]
+						: []
 
 					const hasNextItem = index !== remainingEntries.length - 1
-					const separatorAfter = hasNextItem ? [{ key: `separator-after-${entry.id}`, isSeparator: true }] : []
+					const separatorAfter = hasNextItem
+						? [{ key: `separator-after-${entry.id}`, isSeparator: true }]
+						: []
 
-					return [...acc, ...separatorBefore, ...children, ...separatorAfter]
+					return [
+						...acc,
+						...separatorBefore,
+						...children,
+						...separatorAfter,
+					]
 				}
 				return [...acc, ...children]
 			}, [])
@@ -183,9 +217,7 @@ export default {
 		iconsLimit() {
 			// leave some buffer - this is necessary so the bar does not wrap during resizing
 			const spaceToFill = this.width - 4
-			const spacePerSlot = this.$isMobile
-				? this.iconWidth
-				: this.iconWidth + 2
+			const spacePerSlot = this.$isMobile ? this.iconWidth : this.iconWidth + 2
 			const slots = Math.floor(spaceToFill / spacePerSlot)
 			// Leave one slot empty for the three dot menu
 			return slots - 1
@@ -198,7 +230,6 @@ export default {
 		})
 	},
 	methods: {
-
 		showHelp() {
 			this.displayHelp = true
 		},
@@ -206,73 +237,70 @@ export default {
 		hideHelp() {
 			this.displayHelp = false
 		},
-		showTranslate() {
-			const { from, to } = this.$editor.view.state.selection
-			let selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
-
-			if (!selectedText.trim().length) {
-				this.$editor.commands.selectAll()
-				selectedText = this.$editor.view.state.doc.textContent
-			}
-
-			console.debug('translation click', this.$editor.view.state.selection, selectedText)
-			emit('text:translate-modal:show', { content: selectedText })
-		},
+		t,
 	},
 }
 </script>
 
 <style scoped lang="scss">
-	.text-menubar {
-		--background-blur: blur(10px);
-		position: sticky;
-		top: 0;
-		z-index: 10021; // above modal-header so menubar is always on top
-		background-color: var(--color-main-background-translucent);
-		backdrop-filter: var(--background-blur);
-		max-height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-		border-bottom: 1px solid var(--color-border);
-		padding-top:3px;
-		padding-bottom: 3px;
+.text-menubar {
+	--background-blur: blur(10px);
+	position: sticky;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	// Display above link previews and tables, but below dialogs and calendar event popover
+	z-index: 4;
+	background-color: var(--color-main-background-translucent);
+	backdrop-filter: var(--background-blur);
+	border-bottom: 1px solid var(--color-border);
+	padding-block: var(--default-grid-baseline);
 
-		visibility: hidden;
+	visibility: hidden;
 
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	&.is-mobile {
+		border-top: 1px solid var(--color-border);
+		border-bottom: unset;
+	}
+
+	&.text-menubar--ready:not(.text-menubar--hide) {
+		visibility: visible;
+		animation-name: fadeInRight;
+		animation-duration: 0.3s;
+	}
+
+	&.text-menubar--hide {
+		opacity: 0;
+		transition:
+			visibility 0.2s 0.4s,
+			opacity 0.2s 0.4s;
+	}
+	.text-menubar__entries {
 		display: flex;
+		flex-grow: 1;
+		margin-left: max(0px, calc((100% - var(--text-editor-max-width)) / 2));
+	}
+
+	.text-menubar__slot {
 		justify-content: flex-end;
-		align-items: center;
+		display: flex;
+		min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
+	}
 
-		&.text-menubar--ready:not(.text-menubar--hide) {
-			visibility: visible;
-			animation-name: fadeInDown;
-			animation-duration: 0.3s;
-		}
-
-		&.text-menubar--hide {
-			opacity: 0;
-			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
-		}
+	&.text-menubar--is-workspace {
 		.text-menubar__entries {
-			display: flex;
-			flex-grow: 1;
-			margin-left: max(0px, calc((100% - var(--text-editor-max-width)) / 2));
-		}
-
-		.text-menubar__slot {
-			justify-content: flex-end;
-			display: flex;
-			min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
-		}
-
-		&.text-menubar--is-workspace {
-			.text-menubar__entries {
-				margin-left: 0;
-			}
-		}
-
-		@media (max-width: 660px) {
-			.text-menubar__entries {
-				margin-left: 0;
-			}
+			margin-left: 0;
 		}
 	}
+
+	@media (max-width: 660px) {
+		.text-menubar__entries {
+			margin-left: 0;
+		}
+	}
+}
 </style>

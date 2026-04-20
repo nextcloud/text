@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-const t = window.t
-const isMac = (navigator.userAgent.includes('Mac'))
+import { t } from '@nextcloud/l10n'
+const isMac = navigator.userAgent.includes('Mac')
 
 const MODIFIERS = {
 	Mod: isMac ? 'Meta' : 'Control',
@@ -24,7 +24,4 @@ const TRANSLATIONS = {
 	[MODIFIERS.Shift]: t('text', 'Shift'),
 }
 
-export {
-	MODIFIERS,
-	TRANSLATIONS,
-}
+export { MODIFIERS, TRANSLATIONS }

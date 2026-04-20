@@ -29,20 +29,17 @@ vi.mock('@nextcloud/dialogs', () => ({
 }))
 
 vi.mock('@nextcloud/capabilities', async () => {
-	const getCapabilities = vi.fn(() => ({ }))
+	const getCapabilities = vi.fn(() => ({}))
 	return { getCapabilities }
 })
 
 global.OC = {
 	requestToken: '123',
-	coreApps: [
-		'core',
-	],
+	coreApps: ['core'],
 	config: {
 		modRewriteWorking: true,
 	},
-	dialogs: {
-	},
+	dialogs: {},
 	isUserAdmin() {
 		return true
 	},

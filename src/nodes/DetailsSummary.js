@@ -19,13 +19,19 @@ const DetailsSummary = Node.create({
 	},
 
 	parseHTML() {
-		return [{
-			tag: 'summary',
-		}]
+		return [
+			{
+				tag: 'summary',
+			},
+		]
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		return ['summary', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+		return [
+			'summary',
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+			0,
+		]
 	},
 
 	toMarkdown: (state, node) => {

@@ -3,39 +3,38 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import vue from '@vitejs/plugin-vue2'
 import { defineConfig } from 'cypress'
 import cypressSplit from 'cypress-split'
-import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin'
 import vitePreprocessor from 'cypress-vite'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
-import vue from '@vitejs/plugin-vue2'
 
 export default defineConfig({
 	projectId: 'hx9gqy',
 	viewportWidth: 1280,
 	viewportHeight: 900,
-	screenshotsFolder: './cypress/snapshots/actual',
 	trashAssetsBeforeRuns: true,
 	env: {
 		failSilently: false,
 		type: 'actual',
 	},
 	e2e: {
-		env: {
-			visualRegressionType: 'regression',
-		},
 		setupNodeEvents(on, config) {
-			on('file:preprocessor', vitePreprocessor({
-				plugins: [vue(), nodePolyfills()],
-				configFile: false,
-			}))
+			on(
+				'file:preprocessor',
+				vitePreprocessor({
+					plugins: [vue(), nodePolyfills()],
+					configFile: false,
+				}),
+			)
 			cypressSplit(on, config)
-			configureVisualRegression(on)
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
 				if (browser.family === 'chromium' && browser.name !== 'electron') {
-					launchOptions.preferences.default['browser.enable_spellchecking'] = false
+					launchOptions.preferences.default[
+						'browser.enable_spellchecking'
+					] = false
 					return launchOptions
 				}
 
@@ -58,8 +57,8 @@ export default defineConfig({
 	},
 	component: {
 		devServer: {
-			framework: "vue",
-			bundler: "vite",
+			framework: 'vue',
+			bundler: 'vite',
 		},
 	},
 	retries: {
@@ -67,5 +66,5 @@ export default defineConfig({
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
-	'numTestsKeptInMemory': 5,
+	numTestsKeptInMemory: 5,
 })

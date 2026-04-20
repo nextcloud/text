@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
- @media print {
+@media print {
 	@page {
 		size: A4;
 		margin: 2.5cm 2cm 2cm 2.5cm;
@@ -12,16 +12,16 @@
 	body {
 		// position: fixed does not support scrolling and as such only prints one page
 		position: absolute;
-		overflow: visible!important;
+		overflow: visible !important;
 	}
 
 	#header {
-		display: none!important;
+		display: none !important;
 	}
 
 	#content {
-		display: block!important;
-		position: relative!important;
+		display: block !important;
+		position: relative !important;
 		border-radius: 0;
 		margin: 0;
 		width: 100%;
@@ -29,19 +29,19 @@
 	}
 
 	footer {
-		display: none!important;
+		display: none !important;
 	}
 
 	#viewer[data-handler='text'] {
 		// Hide top border
 		border: none;
-		width: 100%!important;
+		width: 100% !important;
 		// NcModal uses fixed, which will be cropped when printed
-		position: absolute!important;
+		position: absolute !important;
 
 		.modal-header {
 			// Hide modal header (close button)
-			display: none!important;
+			display: none !important;
 		}
 		.modal-container {
 			// Make sure top aligned as we hided the menubar */
@@ -51,19 +51,27 @@
 	}
 
 	.text-editor {
-		height: fit-content!important;
+		height: fit-content !important;
 
-		.text-menubar {
+		.text-menubar, .text-readonly-bar {
 			// Hide menu bar
-			display: none!important;
+			display: none !important;
 		}
-		.action-item {
-			// Hide table settings
-			display: none!important;
+		.action-item, .table-add-column, .table-add-row {
+			// Hide table buttons
+			display: none !important;
 		}
-		.content-wrapper .editor__content {
+		.editor__content-wrapper .editor__content {
 			// Margins set by page rule
 			max-width: 100%;
+		}
+		.floating-buttons {
+			// Hide floating buttons
+			display: none !important;
+		}
+		.editor__toc-container {
+			// Hide outline + table of contents
+			display: none !important;
 		}
 		.text-editor__wrapper {
 			height: fit-content;
@@ -72,42 +80,41 @@
 			div.ProseMirror {
 				margin-top: 0;
 				margin-bottom: 0;
-				padding-top: 0;
-				padding-bottom: 0;
+				padding: 0;
 
-				h1, h2, h3, h4, h5 {
+				h1,
+				h2,
+				h3,
+				h4,
+				h5 {
 					// orphaned headlines are ugly
 					break-after: avoid;
 					page-break-after: avoid;
 				}
-				.image, img, table {
+				.image,
+				img,
+				table {
+					// make sure table content fits page width
+					overflow-wrap: anywhere;
 					// try no page breaks within tables or images
 					break-inside: avoid-page;
 					page-break-inside: avoid;
-					// Some more indention
-					max-width: 90%!important;
-					margin: 5vw auto 5vw 5%!important;
+					// no need to leave room for buttons
+					width: 100%;
 				}
 
 				// Add some borders below header and between columns
 				th {
-					color: black!important;
-					font-weight: bold!important;
-					border-width: 0 1px 2px 0!important;
-					border-color: gray!important;
-					border-style: none solid solid none!important;
-				}
-				th:last-of-type {
-					border-width: 0 0 2px 0!important;
+					color: black !important;
+					font-weight: bold !important;
+					border-width: 1px !important;
+					border-bottom-width: 2px !important;
+					border-color: gray !important;
 				}
 
 				td {
-					border-style: none solid none none!important;
-					border-width: 1px!important;
-					border-color: gray!important;
-				}
-				td:last-of-type {
-					border: none!important;
+					border-width: 1px !important;
+					border-color: gray !important;
 				}
 			}
 			.container-suggestions {
@@ -116,29 +123,12 @@
 		}
 	}
 
-
-	.menubar-placeholder, .text-editor--readonly-bar {
+	.menubar-placeholder {
 		display: none;
 	}
 
-	.text-editor__content-wrapper {
-		&.--show-outline {
-			display: block;
-		}
-
-		.editor--outline {
-			width: auto;
-			height: auto;
-			overflow: unset;
-			position: relative;
-		}
-		.editor--outline__btn-close {
-			display: none;
-		}
-	}
-
-	.collaboration-cursor__caret,
-	.collaboration-cursor__label {
+	.collaboration-carets__caret,
+	.collaboration-carets__label {
 		display: none;
 	}
 }

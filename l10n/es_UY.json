@@ -6,8 +6,9 @@
     "New text file" : "Nuevo archivo de texto",
     "File not found" : "Archivo no encontrado",
     "Text" : "Texto",
-    "Translate" : "Traducir",
     "Guest" : "Invitado",
+    "you" : "tú",
+    "Copy link" : "Copiar liga",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
@@ -15,17 +16,18 @@
     "Link" : "Ligas",
     "Action" : "Acción",
     "Undo" : "Deshacer",
+    "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Guardar",
     "Formatting help" : "Ayuda de formato",
+    "Translate" : "Traducir",
     "Select language" : "Seleccionar idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
-    "Upload" : "Cargar",
     "Edit" : "Editar",
+    "Upload" : "Cargar",
     "Source code" : "Código fuente",
     "Details" : "Detalles",
-    "Info" : "Info",
-    "Success" : "Éxito",
-    "Warning" : "Advertencia"
+    "Choose" : "Seleccionar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

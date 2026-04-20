@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import {
-	TRANSLATIONS,
-	MODIFIERS,
-} from './keys.js'
+import { MODIFIERS, TRANSLATIONS } from './keys.js'
 
 const getEntryClasses = (actionEntry, isActive) => {
 	return {
@@ -17,37 +14,33 @@ const getEntryClasses = (actionEntry, isActive) => {
 
 const keysString = (keyChar, modifiers = []) => {
 	return modifiers
-		.map(mod => TRANSLATIONS[mod])
+		.map((mod) => TRANSLATIONS[mod])
 		.concat(keyChar.toUpperCase())
 		.join('+')
 }
 
 const getKeyshortcuts = ({ keyChar, keyModifiers = [] }) => {
 	return keyModifiers
-		.map(mod => MODIFIERS[mod])
+		.map((mod) => MODIFIERS[mod])
 		.concat(keyChar)
 		.join('+')
 }
 
 const getKeys = (isMobile, { keyChar, keyModifiers }) => {
-	return (!isMobile && keyChar)
-		? `(${keysString(keyChar, keyModifiers)})`
-		: ''
+	return !isMobile && keyChar ? `(${keysString(keyChar, keyModifiers)})` : ''
 }
 
-const isDisabled = (actionEntry, $editor) => {
-	return actionEntry.action && !actionEntry.action($editor.can(), $editor)
+const isDisabled = (actionEntry, editor) => {
+	return actionEntry.action && !actionEntry.action(editor.can(), editor)
 }
 
-const getIsActive = ({ isActive }, $editor) => {
+const getIsActive = ({ isActive }, editor) => {
 	if (!isActive) {
 		return false
 	}
 
 	// Supports either one type or an array of types
-	const types = Array.isArray(isActive)
-		? isActive
-		: [isActive]
+	const types = Array.isArray(isActive) ? isActive : [isActive]
 
 	for (const type of types) {
 		let args
@@ -60,7 +53,7 @@ const getIsActive = ({ isActive }, $editor) => {
 		} else {
 			args = [type]
 		}
-		if ($editor.isActive(...args)) {
+		if (editor.isActive(...args)) {
 			return true
 		}
 	}
@@ -68,7 +61,7 @@ const getIsActive = ({ isActive }, $editor) => {
 	return false
 }
 
-const getType = (actionEntry) => {
+const getActionType = (actionEntry) => {
 	// isActive stores the value changing on active state change (on click)
 
 	// If it is an array, the button is a submenu button.
@@ -92,22 +85,22 @@ const getType = (actionEntry) => {
 	return 'button'
 }
 
-const getActionState = (actionEntry, $editor) => {
-	const active = getIsActive(actionEntry, $editor)
+const getActionState = (actionEntry, editor) => {
+	const active = getIsActive(actionEntry, editor)
 
 	return {
-		disabled: isDisabled(actionEntry, $editor),
+		disabled: isDisabled(actionEntry, editor),
 		class: getEntryClasses(actionEntry, active),
 		active,
-		type: getType(actionEntry),
 	}
 }
 
 export {
-	isDisabled,
+	getActionState,
+	getActionType,
+	getEntryClasses,
 	getIsActive,
 	getKeys,
 	getKeyshortcuts,
-	getEntryClasses,
-	getActionState,
+	isDisabled,
 }

@@ -4,22 +4,20 @@
 -->
 
 <template>
-	<BaseReader :content="content" @click-link="(e, a) => $emit('click-link', e, a)" />
+	<BaseReader
+		:content="content"
+		@click-link="(e, a) => $emit('click-link', e, a)" />
 </template>
 
 <script>
-import BaseReader from './BaseReader.vue'
 import { RichText } from './../extensions/index.js'
-import markdownit from './../markdownit/index.js'
+import BaseReader from './BaseReader.vue'
 
 export default {
 	name: 'RichTextReader',
 	components: { BaseReader },
 
 	provide: {
-		renderHtml(content) {
-			return markdownit.render(content)
-		},
 		extensions() {
 			return [
 				RichText.configure({
@@ -39,6 +37,6 @@ export default {
 </script>
 
 <style lang="scss">
-	@import './../css/prosemirror';
-	@import './../css/print';
+@use './../css/prosemirror';
+@use './../css/print';
 </style>

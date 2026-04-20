@@ -5,6 +5,9 @@ name: Cypress
 
 on: pull_request
 
+permissions:
+  contents: read
+
 concurrency:
   group: cypress-${{ github.head_ref || github.run_id }}
   cancel-in-progress: ${{ !github.head_ref }}
@@ -27,38 +30,38 @@ jobs:
 
     steps:
       - name: Checkout server
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
+          persist-credentials: false
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
+          persist-credentials: false
           repository: nextcloud/viewer
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
-      - name: Register assistant Git reference
-        run: |
-          assistant_app_ref="$(if [ "${{ matrix.server-versions }}" = "master" ]; then echo -n "main"; else echo -n "${{ matrix.server-versions }}"; fi)"
-          echo "assistant_app_ref=$assistant_app_ref" >> $GITHUB_ENV
-
       - name: Checkout assistant
-        uses: actions/checkout@v4.1.1
+        if: matrix.server-versions == 'main'
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
+          persist-credentials: false
           repository: nextcloud/assistant
-          ref: '${{ env.assistant_app_ref }}'
+          ref: main
           path: apps/assistant
 
       - name: Checkout app
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
+          persist-credentials: false
           path: apps/${{ env.APP_NAME }}
 
       - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@v3
+        uses: skjnldsv/read-package-engines-version-actions@06d6baf7d8f41934ab630e97d9e6c0bc9c9ac5e4 # v3
         id: versions
         with:
           fallbackNode: "^20"
@@ -72,7 +75,7 @@ jobs:
           node-version: ${{ steps.versions.outputs.nodeVersion }}
 
       - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
-        run: npm i -g npm@"${{ steps.versions.outputs.npmVersion }}"
+        run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
 
       - name: Install node dependencies & build app
         working-directory: apps/${{ env.APP_NAME }}
@@ -81,6 +84,7 @@ jobs:
           TESTING=true npm run build --if-present
 
       - name: Install node dependencies & build assistant app
+        if: matrix.server-versions == 'main'
         working-directory: apps/assistant
         run: |
           composer install --no-dev
@@ -88,7 +92,7 @@ jobs:
           npm run build
 
       - name: Save context
-        uses: buildjet/cache/save@v4.0.2
+        uses: buildjet/cache/save@3e70d19e31d6a8030aeddf6ed8dbe601f94d09f4 # v4.0.2
         with:
           key: cypress-context-${{ github.run_id }}
           path: |
@@ -103,13 +107,13 @@ jobs:
       fail-fast: false
       matrix:
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        php-versions: ['8.1']
+        php-versions: ['8.3']
 
     name: runner ${{ matrix.containers }}
 
     services:
       postgres:
-        image: ghcr.io/nextcloud/continuous-integration-postgres-14:latest
+        image: ghcr.io/nextcloud/continuous-integration-postgres-16:latest # zizmor: ignore[unpinned-images]
         ports:
           - 4444:5432/tcp
         env:
@@ -120,7 +124,7 @@ jobs:
 
     steps:
       - name: Restore context
-        uses: buildjet/cache/restore@v4.0.2
+        uses: buildjet/cache/restore@3e70d19e31d6a8030aeddf6ed8dbe601f94d09f4 # v4.0.2
         with:
           fail-on-cache-miss: true
           key: cypress-context-${{ github.run_id }}
@@ -128,16 +132,16 @@ jobs:
             ./
 
       - name: Set up node ${{ needs.init.outputs.nodeVersion }}
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           cache: 'npm'
           node-version: ${{ needs.init.outputs.nodeVersion }}
 
       - name: Set up npm ${{ needs.init.outputs.npmVersion }}
-        run: npm i -g npm@"${{ needs.init.outputs.npmVersion }}"
+        run: npm i -g 'npm@${{ needs.init.outputs.npmVersion }}'
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@8872c784b04a1420e81191df5d64fbd59d3d3033 # 2.30.2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, pgsql, pdo_pgsql
@@ -162,6 +166,7 @@ jobs:
           php occ app:enable text
           php occ app:enable assistant --force
           php occ app:enable testing
+          php occ app:enable whiteboard --force
           php occ app:list
           php occ background:cron
           php occ config:system:set session_keepalive --value=false --type=boolean
@@ -184,7 +189,7 @@ jobs:
 
 
       - name: Upload snapshots
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         if: failure()
         with:
           name: snapshots_${{ matrix.containers }}
@@ -194,7 +199,7 @@ jobs:
           retention-days: 5
 
       - name: Upload NC logs
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         if: failure()
         with:
           name: nc_logs_${{ matrix.containers }}.log

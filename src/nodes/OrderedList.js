@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TiptapOrderedList from '@tiptap/extension-ordered-list'
+import { OrderedList as TiptapOrderedList } from '@tiptap/extension-list'
 
 const OrderedList = TiptapOrderedList.extend({
 	addAttributes() {

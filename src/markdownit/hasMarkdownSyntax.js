@@ -21,5 +21,5 @@ export default function hasMarkdownSyntax(content) {
 		/`.*?`/, // Code: `code`
 	]
 
-	return markdownPatterns.some(pattern => pattern.test(content))
+	return markdownPatterns.some((pattern) => pattern.test(content))
 }

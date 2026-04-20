@@ -2,20 +2,20 @@
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 import { logger } from './helpers/logger.js'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
-import 'vite/modulepreload-polyfill'
 
 /**
  * Wrapper for async registration of ViewerComponent.
  * Note: it should be named function - the name is used for component registration.
  *
- * @return {Promise<import('./components/ViewerComponent.vue')>} ViewerComponent
+ * @return {Promise<import('./views/ViewerView.js')>} ViewerComponent
  */
 function AsyncTextViewerComponent() {
-	return import('./components/ViewerComponent.vue')
+	return import('./views/ViewerView.js')
 }
 
 if (typeof OCA.Viewer === 'undefined') {
@@ -28,5 +28,20 @@ if (typeof OCA.Viewer === 'undefined') {
 		group: null,
 		theme: 'default',
 		canCompare: true,
+		downloadCallback: async (fileInfo) => {
+			// Save any unsaved changes before download
+			const editors = window.OCA?.Text?.editorComponents
+			if (editors instanceof Set) {
+				for (const editor of editors) {
+					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
+						logger.debug('Saving file before download', {
+							fileId: fileInfo.fileid,
+						})
+						await editor.save()
+						return
+					}
+				}
+			}
+		},
 	})
 }

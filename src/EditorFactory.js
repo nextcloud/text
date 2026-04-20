@@ -3,18 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
-
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
-import { createLowlight } from 'lowlight'
 import hljs from 'highlight.js/lib/core'
+import { createLowlight } from 'lowlight'
 
+import { FocusTrap, PlainText, RichText } from './extensions/index.js'
 import { logger } from './helpers/logger.js'
-import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
-// eslint-disable-next-line import/no-named-as-default
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
 const lowlight = createLowlight()
 
@@ -25,7 +21,9 @@ const loadSyntaxHighlight = async (language) => {
 		try {
 			logger.debug('Loading language', language)
 			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(/* webpackChunkName: "highlight/[request]" */`../node_modules/highlight.js/lib/languages/${language}.js`)
+			const syntax = await import(
+				`../node_modules/highlight.js/lib/languages/${language}.js`
+			)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
@@ -39,21 +37,21 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded = false } = {}) => {
+const createRichEditor = ({
+	extensions = [],
+	connection,
+	relativePath,
+	isEmbedded = false,
+	mentionSearch = undefined,
+} = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
 			RichText.configure({
+				connection,
 				relativePath,
 				isEmbedded,
-				component: this,
-				extensions: [
-					Mention.configure({
-						suggestion: MentionSuggestion({
-							session,
-						}),
-					}),
-				],
+				mentionSearch,
 			}),
 			FocusTrap,
 			...extensions,
@@ -61,16 +59,16 @@ const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded =
 	})
 }
 
-const createPlainEditor = ({ language, extensions = [] } = {}) => {
+const createPlainEditor = ({ language = 'plaintext', extensions = [] } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
-			PlainText,
-			CodeBlockLowlight.configure({
+			PlainText.configure({
+				// Options to be passed through to `CodeBlockPlainText`
 				lowlight,
 				defaultLanguage: language,
-				exitOnTripleEnter: false,
 			}),
+			FocusTrap,
 			...extensions,
 		],
 	})
@@ -80,4 +78,9 @@ const serializePlainText = (doc) => {
 	return doc.textContent
 }
 
-export { createRichEditor, createPlainEditor, serializePlainText, loadSyntaxHighlight }
+export {
+	createPlainEditor,
+	createRichEditor,
+	loadSyntaxHighlight,
+	serializePlainText,
+}

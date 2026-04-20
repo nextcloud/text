@@ -5,22 +5,32 @@
 
 <template>
 	<NcNoteCard v-if="hasWarning || idle" :type="card.type || 'warning'">
-		<p v-if="card.message">
-			{{ card.message }}
-			<a v-if="card.action" class="button primary" @click="card.action">{{ card.actionLabel }}</a>
-		</p>
+		<div v-if="card.message" class="notecard-content">
+			<div>
+				{{ card.message }}
+			</div>
+			<NcButton
+				v-if="card.action"
+				variant="primary"
+				class="notecard-button"
+				@click="card.action">
+				{{ card.actionLabel }}
+			</NcButton>
+		</div>
 	</NcNoteCard>
 </template>
 
 <script>
-
-import { ERROR_TYPE } from '../../../services/SyncService.js'
-import { NcNoteCard } from '@nextcloud/vue'
+import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import { ERROR_TYPE } from '../../../services/SyncService.ts'
 
 export default {
 	name: 'SyncStatus',
 
 	components: {
+		NcButton,
 		NcNoteCard,
 	},
 
@@ -50,12 +60,18 @@ export default {
 			}
 			if (this.hasSyncCollission) {
 				return {
-					message: t('text', 'The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed.'),
+					message: t(
+						'text',
+						'The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed.',
+					),
 				}
 			}
 			if (this.hasConnectionIssue) {
 				return {
-					message: t('text', 'The document could not be loaded. Please check your internet connection.'),
+					message: t(
+						'text',
+						'The document could not be loaded. Please check your internet connection.',
+					),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}
@@ -63,7 +79,7 @@ export default {
 			if (this.idle) {
 				return {
 					type: 'info',
-					message: t('text', 'You\'ve been disconnected from the server.'),
+					message: t('text', "You've been disconnected from the server."),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}
@@ -71,7 +87,9 @@ export default {
 			return {}
 		},
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		isLoadingError() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
@@ -92,20 +110,31 @@ export default {
 			window.location.reload()
 		},
 	},
-
 }
-
 </script>
 
 <style scoped lang="scss">
-	.document-status {
-		.notecard {
-			margin-bottom: 0;
-		}
+.document-status {
+	.notecard {
+		margin-bottom: 0;
+		padding-block: 0;
 	}
-	.document-status.mobile {
-		.notecard {
-			border-radius: 0;
-		}
+
+	.notecard-content {
+		display: flex;
+		align-items: center;
+		gap: var(--default-grid-baseline);
 	}
+
+	.notecard-button {
+		min-width: fit-content;
+	}
+}
+
+.document-status.mobile {
+	.notecard {
+		border-radius: 0;
+		margin-block: 0;
+	}
+}
 </style>

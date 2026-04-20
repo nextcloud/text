@@ -1,0 +1,37 @@
+/**
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+import { mount } from '@vue/test-utils'
+import { test as baseTest, expect } from 'vitest'
+import { nextTick } from 'vue'
+import RichTextReader from '../../components/RichTextReader.vue'
+
+const test = baseTest.extend({
+	content: ({ task: _ }, use) => use(''),
+	wrapper: async ({ content }, use) => {
+		const wrapper = mount(RichTextReader, { propsData: { content } })
+		await nextTick()
+		await use(wrapper)
+		try {
+			wrapper.destroy()
+		} catch {
+			// Might throw "The editor view is not available. Cannot access view['dom']. The editor may not be mounted yet."
+		}
+	},
+})
+
+test.scoped({ content: '# Hello world\n\n[this is a link](https://example.org)' })
+test('renders markdown', async ({ wrapper }) => {
+	expect(wrapper.get('h1').text()).toBe('#Hello world') // # is the heading anchor
+	expect(wrapper.get('a[href="https://example.org"]').text()).toBe(
+		'this is a link',
+	)
+})
+
+test('updates markdown', async ({ wrapper }) => {
+	await wrapper.setProps({ content: '## Hello world' })
+	expect(wrapper.get('h2').text()).toBe('#Hello world') // # is the heading anchor
+	expect(wrapper.find('a[href="https://example.org"]').exists()).toBeFalsy()
+})

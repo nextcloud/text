@@ -54,12 +54,12 @@ lint:
 lint-fix:
 	npm run lint:fix
 
-# Style linting
-stylelint:
-	npm run stylelint
+# Formatting
+format-check:
+	npm run prettier
 
-stylelint-fix:
-	npm run stylelint:fix
+format-fix:
+	npm run prettier:fix
 
 # Cleaning
 clean:

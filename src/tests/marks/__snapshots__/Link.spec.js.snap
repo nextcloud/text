@@ -22,7 +22,7 @@ exports[`Link extension integrated in the editor > Should only update link the a
           "marks": [
             {
               "attrs": {
-                "href": "not-nextcloud.com",
+                "href": "not-example.org",
                 "title": null,
               },
               "type": "link",
@@ -48,7 +48,7 @@ exports[`Link extension integrated in the editor > should insert new link if non
           "marks": [
             {
               "attrs": {
-                "href": "nextcloud.com",
+                "href": "example.org",
                 "title": null,
               },
               "type": "link",
@@ -70,7 +70,7 @@ exports[`Link extension integrated in the editor > should insert new link if non
           "marks": [
             {
               "attrs": {
-                "href": "https://nextcloud.com",
+                "href": "https://example.org",
                 "title": null,
               },
               "type": "link",

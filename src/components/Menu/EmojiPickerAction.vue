@@ -3,12 +3,14 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NcEmojiPicker class="entry-action entry-action__emoji"
+	<NcEmojiPicker
+		class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
 		:container="menuIDSelector"
 		@select-data="addEmoji">
 		<div>
-			<NcButton class="entry-action__button"
+			<NcButton
+				class="entry-action__button"
 				role="menu"
 				:title="actionEntry.label"
 				:aria-label="actionEntry.label">
@@ -21,8 +23,9 @@
 </template>
 
 <script>
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcEmojiPicker from '@nextcloud/vue/components/NcEmojiPicker'
 import { BaseActionEntry } from './BaseActionEntry.js'
-import { NcEmojiPicker, NcButton } from '@nextcloud/vue'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {
@@ -36,7 +39,7 @@ export default {
 	methods: {
 		addEmoji({ id, native }) {
 			this.actionEntry
-				.action(this.$editor.chain(), { id, native })
+				.action(this.editor?.chain(), { id, native })
 				.focus()
 				.run()
 		},

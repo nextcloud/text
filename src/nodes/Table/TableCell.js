@@ -3,64 +3,39 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { TableCell } from '@tiptap/extension-table-cell'
-import { Plugin } from '@tiptap/pm/state'
-import { Fragment } from '@tiptap/pm/model'
+import { t } from '@nextcloud/l10n'
 import { mergeAttributes } from '@tiptap/core'
+import { TableCell } from '@tiptap/extension-table'
+import { Fragment, Slice } from '@tiptap/pm/model'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 
 export default TableCell.extend({
-	content: 'inline*',
+	content: 'block+',
 
-	toMarkdown(state, node) {
-		state.write(' ')
-		const backup = state.options?.escapeExtraCharacters
-		const columnIndex = state.options.currentColumnIndex
-		state.options.escapeExtraCharacters = /\|/
-
-		let cellRenderedContentLength = 0
-		node.content.forEach((childNode, offset, index) => {
-			cellRenderedContentLength += (childNode.text?.length || 6)
-			if (childNode.text?.includes('|')) cellRenderedContentLength += 1
-			if (childNode.attrs.syntax === '  ') node.child(index).attrs.syntax = 'html'
-		})
-		const columnWidth = state.options.columnWidths[columnIndex]
-		const align = node.attrs?.textAlign || 'left'
-		const space = columnWidth - cellRenderedContentLength
-		const leftPadding = Math.floor(space / 2)
-		const rightPadding = Math.ceil(space / 2)
-
-		if (align === 'center') state.write(' '.repeat(leftPadding))
-		if (align === 'right') state.write(' '.repeat(space))
-		state.renderInline(node)
-		if (align === 'center') state.write(' '.repeat(rightPadding))
-		if (align === 'left') state.write(' '.repeat(space))
-
-		state.options.escapeExtraCharacters = backup
-		state.write(' |')
-		state.options.currentColumnIndex++
-	},
+	toMarkdown() {},
 
 	parseHTML() {
 		return [
 			{ tag: 'td', preserveWhitespace: true },
 			{ tag: 'th', preserveWhitespace: true },
-			{ tag: 'table thead ~ tbody th', priority: 70, preserveWhitespace: true },
-			{ tag: 'table thead ~ tbody td', priority: 70, preserveWhitespace: true },
+			{
+				tag: 'table thead ~ tbody th',
+				priority: 70,
+				preserveWhitespace: true,
+			},
+			{
+				tag: 'table thead ~ tbody td',
+				priority: 70,
+				preserveWhitespace: true,
+			},
 		]
 	},
 
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			textAlign: {
-				rendered: false,
-				parseHTML: (element) => element.style.textAlign || null,
-			},
-		}
-	},
-
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		const attributes = mergeAttributes(
+			this.options.HTMLAttributes,
+			HTMLAttributes,
+		)
 		if (attributes.colspan === 1) {
 			delete attributes.colspan
 		}
@@ -73,26 +48,80 @@ export default TableCell.extend({
 	addProseMirrorPlugins() {
 		return [
 			new Plugin({
+				key: new PluginKey('preventNestedTables'),
+				// Prevent nested table (low level protection): filter out transactions that lead to nested table
+				filterTransaction: (transaction) => {
+					if (!transaction.docChanged) {
+						return true
+					}
+
+					let hasNestedTable = false
+					transaction.doc.descendants((node, pos) => {
+						if (node.type.name.startsWith('table')) {
+							const $pos = transaction.doc.resolve(pos)
+							for (let depth = $pos.depth; depth >= 0; depth--) {
+								const ancestor = $pos.node(depth)
+								if (ancestor.type.name === 'tableCell') {
+									console.warn(
+										'Detected nested table, filtering out transaction',
+									)
+									hasNestedTable = true
+								}
+							}
+						}
+					})
+
+					return !hasNestedTable
+				},
 				props: {
-					// Only paste (marked) text into table cells to prevent jumping out of cell
-					handlePaste: (view, event, slice) => {
+					// Prevent nested table when pasting to a table cell
+					transformPasted: (slice) => {
 						if (!this.editor.isActive(this.type.name)) {
-							return false
+							return slice
 						}
 
-						const { state } = view
-						const { schema } = state
-						const childNodes = []
-						slice.content.descendants((node, pos) => {
-							if (node.isText) {
-								childNodes.push(schema.text(node.textContent, node.marks))
-							} else if (childNodes.length !== 0 && node.type === schema.nodes.hardBreak) {
-								childNodes.push(node)
+						let tablePaste = false
+						slice.content.descendants((node) => {
+							if (node.type.name.startsWith('table')) {
+								tablePaste = true
 							}
 						})
 
-						const newNode = schema.node('paragraph', [], childNodes)
-						slice.content = Fragment.empty.addToStart(newNode)
+						if (!tablePaste) {
+							return slice
+						}
+
+						if (
+							slice.content.childCount === 1
+							&& slice.content.firstChild?.type.name === 'table'
+						) {
+							const tableChild = slice.content.firstChild.firstChild
+							if (
+								(tableChild.childCount === 1
+									&& tableChild.type.name === 'tableRow')
+								|| tableChild.type.name === 'tableHeadRow'
+							) {
+								const rowChild = tableChild.firstChild
+								if (
+									(rowChild.childCount === 1
+										&& rowChild.type.name === 'tableCell')
+									|| rowChild.type.name === 'tableHeader'
+								) {
+									return new Slice(rowChild.content, 0, 0)
+								}
+							}
+						}
+
+						console.warn('Nested tables are not supported')
+						alert(
+							t(
+								'text',
+								'A table was pasted into a table. Nested tables are not supported.',
+							),
+						)
+
+						const newSlice = new Slice(Fragment.empty, 0, 0)
+						return newSlice
 					},
 				},
 			}),

@@ -4,11 +4,12 @@ node_modules/
 vendor/
 img/twemoji/
 cypress/screenshots/
-cypress/snapshots/actual
-cypress/snapshots/diff
+cypress/snapshots/
 cypress/videos/
 cypress/downloads/
+/playwright-report/
 .php-cs-fixer.cache
+/test-results/
 /tests/clover.xml
 /tests/.phpunit.result.cache
 dist/
@@ -16,3 +17,7 @@ webpack-stats.json
 
 # js folder, to be updated wth --force
 /js
+
+# Playwright snapshots - only keep the ci version in git
+playwright/e2e/*-snapshots/**
+!playwright/e2e/*-snapshots/*-on-ci-**

@@ -19,10 +19,10 @@
  *
  * @param {string} html Pasted html content
  */
-export default function(html) {
+export default function (html) {
 	const parser = new DOMParser()
 	const doc = parser.parseFromString(html, 'text/html')
-	forAllTextNodes(doc, textNode => {
+	forAllTextNodes(doc, (textNode) => {
 		if (collapseWhiteSpace(textNode)) {
 			textNode.textContent = textNode.textContent.replaceAll('\n', ' ')
 		}
@@ -39,10 +39,7 @@ export default function(html) {
  *
  */
 function forAllTextNodes(doc, fn) {
-	const nodeIterator = doc.createNodeIterator(
-		doc.body,
-		NodeFilter.SHOW_TEXT,
-	)
+	const nodeIterator = doc.createNodeIterator(doc.body, NodeFilter.SHOW_TEXT)
 	let currentNode = nodeIterator.nextNode()
 	while (currentNode) {
 		fn(currentNode)

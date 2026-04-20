@@ -3,19 +3,21 @@
     "No file was uploaded" : "Ingen filer vart lasta opp",
     "Missing a temporary folder" : "Manglar ei mellombels mappe",
     "File not found" : "Fann ikkje fila",
-    "Translate" : "Translate",
     "Guest" : "Gjest",
+    "Copy link" : "Kopier lenkje",
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Link" : "Lenkje",
+    "Cancel" : "Cancel",
     "URL" : "URL",
+    "Save" : "Lagre",
+    "Translate" : "Translate",
     "Select language" : "Vel språk",
     "to" : "til",
     "Replace" : "Erstatt",
-    "Upload" : "Last opp",
     "Edit" : "Endra",
+    "Upload" : "Last opp",
     "Details" : "Detaljar",
-    "Info" : "Info",
-    "Warning" : "Åtvaring"
+    "Choose" : "Vel"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

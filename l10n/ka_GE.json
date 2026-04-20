@@ -6,8 +6,8 @@
     "New text file" : "ახალი ტექსტ ფაილი",
     "File not found" : "ფაილი ვერ იქნა ნაპოვნი",
     "Text" : "ტექსტი",
-    "Translate" : "გადათარგმნეთ",
     "Guest" : "სტუმარი",
+    "you" : "თქვენ",
     "Offline" : "კავშირ-გარეშე რეჟიმი",
     "Saved" : "შენახულია",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
@@ -17,17 +17,17 @@
     "Save changes" : "ცვილებების შენახვა",
     "Cancel" : "გაუქმება",
     "URL" : "URL",
+    "Save" : "შენახვა",
     "Formatting help" : "დახმარება ფორმატირებაზე",
+    "Translate" : "გადათარგმნეთ",
     "Select language" : "აირჩიეთ ენა",
     "to" : "ვის",
     "Replace" : "ჩანაცვლება",
-    "Upload" : "ატვირთვა",
     "Edit" : "ცვლილება",
+    "Upload" : "ატვირთვა",
     "Source code" : "კოდი",
     "Done" : "დასრულდა",
     "Details" : "დეტალები",
-    "Info" : "ინფორმაცია",
-    "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება"
+    "Choose" : "აირჩიეთ"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, test } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { expect, test } from 'vitest'
 import SyncStatus from '../../components/Editor/DocumentStatus/SyncStatus.vue'
-import { ERROR_TYPE } from '../../services/SyncService.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
 
 const FLAGS = ['idle', 'hasConnectionIssue']
 
 test('is empty without props', () => {
 	const wrapper = shallowMount(SyncStatus)
-	expect(wrapper.contains('p')).toBe(false)
+	expect(wrapper.find('p').exists()).toBe(false)
 	expect(wrapper.html()).toBe('')
 })
 
-FLAGS.forEach(flag => {
+FLAGS.forEach((flag) => {
 	test(`renders ${flag}`, () => {
 		const wrapper = shallowMount(SyncStatus, {
 			propsData: { [flag]: true },
@@ -25,7 +25,7 @@ FLAGS.forEach(flag => {
 	})
 })
 
-Object.values(ERROR_TYPE).forEach(type => {
+Object.values(ERROR_TYPE).forEach((type) => {
 	test(`renders sync error ${type}`, () => {
 		const data = {
 			data: { error: 'Error Message goes here' },

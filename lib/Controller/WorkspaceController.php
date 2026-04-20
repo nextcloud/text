@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -130,14 +131,16 @@ class WorkspaceController extends OCSController {
 			}
 			/** @psalm-suppress RedundantConditionGivenDocblockType */
 			if ($share->getPassword() !== null) {
-				$shareId = $this->session->get('public_link_authenticated');
-				if ($share->getId() !== $shareId) {
+				$shareIds = $this->session->get('public_link_authenticated');
+				$shareIds = is_array($shareIds) ? $shareIds : [$shareIds];
+
+				if (!in_array($share->getId(), $shareIds, true)) {
 					throw new ShareNotFound();
 				}
 			}
 
 			$shareNode = $share->getNode();
-			$node = $shareNode instanceof File ? $shareNode : $shareNode->get($path);
+			$node = $shareNode instanceof Folder ? $shareNode->get($path) : $shareNode;
 			if ($node instanceof Folder) {
 				$file = $this->workspaceService->getFile($node);
 				if ($file === null) {

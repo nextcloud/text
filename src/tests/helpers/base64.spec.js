@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { encodeArrayBuffer, decodeArrayBuffer } from '../../helpers/base64.ts'
+import { decodeArrayBuffer, encodeArrayBuffer } from '../../helpers/base64.ts'
 
 describe('encoding ArrayBuffer content', () => {
 	test('empty array buffer is empty base64 string', () => {

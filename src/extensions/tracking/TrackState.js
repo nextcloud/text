@@ -26,9 +26,15 @@ function updateBlameMap(map, transform, clientIDs) {
 	}
 
 	for (let i = 0; i < mapping.maps.length; i++) {
-		const map = mapping.maps[i]; const after = mapping.slice(i + 1)
+		const map = mapping.maps[i]
+		const after = mapping.slice(i + 1)
 		map.forEach((_s, _e, start, end) => {
-			insertIntoBlameMap(result, after.map(start, 1), after.map(end, -1), clientIDs[i])
+			insertIntoBlameMap(
+				result,
+				after.map(start, 1),
+				after.map(end, -1),
+				clientIDs[i],
+			)
 		})
 	}
 
@@ -51,8 +57,10 @@ function insertIntoBlameMap(map, from, to, author) {
 		next = map[pos]
 		if (next.author === author) {
 			if (next.to >= from) break
-		} else if (next.to > from) { // Different author, not before
-			if (next.from < from) { // Sticks out to the left (loop below will handle right side)
+		} else if (next.to > from) {
+			// Different author, not before
+			if (next.from < from) {
+				// Sticks out to the left (loop below will handle right side)
 				const left = new Span(next.from, from, next.author)
 				if (next.to > to) map.splice(pos++, 0, left)
 				else map[pos++] = left
@@ -83,7 +91,6 @@ function insertIntoBlameMap(map, from, to, author) {
 }
 
 export default class TrackState {
-
 	constructor(blameMap) {
 		// The blame map is a data structure that lists a sequence of
 		// document ranges, along with the author that inserted them. This
@@ -94,11 +101,11 @@ export default class TrackState {
 
 	// Apply a transform to this state
 	applyTransform(transform) {
-		const clientID = transform.getMeta('clientID') ?? transform.steps.map(item => 'self')
+		const clientID =
+			transform.getMeta('clientID') ?? transform.steps.map((item) => 'self')
 		const newBlame = updateBlameMap(this.blameMap, transform, clientID)
 		// Create a new state—since these are part of the editor state, a
 		// persistent data structure, they must not be mutated.
 		return new TrackState(newBlame)
 	}
-
 }

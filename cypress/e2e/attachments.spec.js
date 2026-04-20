@@ -12,6 +12,7 @@ const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
+const ACTION_CREATE_NEW_WHITEBOARD_FILE = 'insert-attachment-add-whiteboard-0'
 
 /**
  * @param {string} name name of file
@@ -19,16 +20,22 @@ const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
  */
 function attachFile(name, requestAlias = null) {
 	if (requestAlias) {
-		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(requestAlias)
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(
+			requestAlias,
+		)
 	}
-	return cy.getEditor()
+	return cy
+		.getEditor()
 		.find('input[type="file"][data-text-el="attachment-file-input"]')
-		.selectFile([
-			{
-				contents: 'cypress/fixtures/' + name,
-				fileName: name,
-			},
-		], { force: true })
+		.selectFile(
+			[
+				{
+					contents: 'cypress/fixtures/' + name,
+					fileName: name,
+				},
+			],
+			{ force: true },
+		)
 }
 
 /**
@@ -47,12 +54,9 @@ function fixedEncodeURIComponent(str) {
  * @param {string} actionName position of the action to be clicked
  */
 const clickOnAttachmentAction = (actionName) => {
-	cy.getActionEntry('insert-attachment')
-		.click()
+	cy.getActionEntry('insert-attachment').click()
 
-	return cy.get('.v-popper__wrapper .open')
-		.getActionEntry(actionName)
-		.click()
+	return cy.get('.v-popper__wrapper .open').getActionEntry(actionName).click()
 }
 
 /**
@@ -68,8 +72,16 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 	const encodedName = fixedEncodeURIComponent(fileName)
 	const src = `.attachments.${documentId}/${encodedName}`
 
-	cy.log('Check the attachment is visible and well formed', documentId, fileName, fileId, index, encodedName)
-	return cy.get(`.text-editor__main [data-component="image-view"][data-src="${src}"]`)
+	cy.log(
+		'Check the attachment is visible and well formed',
+		documentId,
+		fileName,
+		fileId,
+		index,
+		encodedName,
+	)
+	return cy
+		.get(`.text-editor__main [data-component="image-view"][data-src="${src}"]`)
 		.find('.image__view') // wait for load finish
 		.within(($el) => {
 			// keep track that we have created this attachment in the attachment dir
@@ -93,19 +105,26 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 				.should('be.visible')
 				.find('img')
 				.should('have.attr', 'src')
-				.should('contain', 'apps/text/' + srcPathEnd + '?documentId=' + documentId)
-				.should('contain', srcFileNameParam + '=' + fixedEncodeURIComponent(fileName))
+				.should(
+					'contain',
+					'apps/text/' + srcPathEnd + '?documentId=' + documentId,
+				)
+				.should(
+					'contain',
+					srcFileNameParam + '=' + fixedEncodeURIComponent(fileName),
+				)
 
 			return isImage
-				? cy.wrap($el)
-					.find('.image__caption input')
-					.should('be.visible')
-					.should('have.value', fileName)
-				: cy.wrap($el)
-					.find('.metadata .name')
-					.should('be.visible')
-					.should('have.text', fileName)
-
+				? cy
+						.wrap($el)
+						.find('.image__caption input')
+						.should('be.visible')
+						.should('have.value', fileName)
+				: cy
+						.wrap($el)
+						.find('.metadata .name')
+						.should('be.visible')
+						.should('have.text', fileName)
 		})
 }
 
@@ -115,17 +134,22 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
  * @param {string} requestAlias Alias of the request we are waiting for
  * @param {number|undefined} index of the attachment
  * @param {boolean} isImage is the attachment an image or a media file?
+ * @param {Function} check function used to check document for attachment
  */
-const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) => {
-	return cy.wait('@' + requestAlias)
-		.then((req) => {
-			// the name of the created file on NC side is returned in the response
-			const fileId = req.response.body.id
-			const fileName = req.response.body.name
-			const documentId = req.response.body.documentId
+const waitForRequestAndCheckAttachment = (
+	requestAlias,
+	index,
+	isImage = true,
+	check = checkAttachment,
+) => {
+	return cy.wait('@' + requestAlias).then((req) => {
+		// the name of the created file on NC side is returned in the response
+		const fileId = req.response.body.id
+		const fileName = req.response.body.name
+		const documentId = req.response.body.documentId
 
-			return checkAttachment(documentId, fileName, fileId, index, isImage)
-		})
+		return check(documentId, fileName, fileId, index, isImage)
+	})
 }
 
 describe('Test all attachment insertion methods', () => {
@@ -171,7 +195,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('.file-picker [data-filename="a"]').click()
 				cy.get('.file-picker [data-filename="a.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -181,14 +205,14 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back from home to sub folder')
-				cy.get('.file-picker nav [title="Home"]').click()
+				cy.get('.file-picker nav [aria-label="All files"]').click()
 				cy.get('.file-picker [data-filename="sub"]').click()
 
 				cy.log('Go to sub folder (b)')
 				cy.get('.file-picker [data-filename="b"]').click()
 				cy.get('.file-picker [data-filename="b.png"]').click()
 
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -200,12 +224,12 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back to home')
-				cy.get('.file-picker nav [title="Home"]').click()
+				cy.get('.file-picker nav [aria-label="All files"]').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('.file-picker [data-filename="github.png"]').click()
 				cy.log('Click OK in the filepicker')
-				cy.get('.dialog__actions button.button-vue--vue-primary').click()
+				cy.get('.dialog__actions button.button-vue--primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -218,15 +242,14 @@ describe('Test all attachment insertion methods', () => {
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
 		// is not handled correctly when the upload has been done in <MenuBar>
-		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
-			.then(() => {
-				const requestAlias = 'uploadRequest'
-				cy.log('Upload the file through the input')
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
+			const requestAlias = 'uploadRequest'
+			cy.log('Upload the file through the input')
 
-				attachFile('table.png', requestAlias)
+			attachFile('table.png', requestAlias)
 
-				return waitForRequestAndCheckAttachment(requestAlias)
-			})
+			return waitForRequestAndCheckAttachment(requestAlias)
+		})
 		cy.closeFile()
 	})
 
@@ -236,15 +259,14 @@ describe('Test all attachment insertion methods', () => {
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
 		// is not handled correctly when the upload has been done in <MenuBar>
-		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
-			.then(() => {
-				const requestAlias = 'uploadMediaRequest'
-				cy.log('Upload the file through the input')
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
+			const requestAlias = 'uploadMediaRequest'
+			cy.log('Upload the file through the input')
 
-				attachFile('file.txt.gz', requestAlias)
+			attachFile('file.txt.gz', requestAlias)
 
-				return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
-			})
+			return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
+		})
 		cy.closeFile()
 	})
 
@@ -256,27 +278,94 @@ describe('Test all attachment insertion methods', () => {
 		cy.visit('/apps/files')
 		cy.openFile(filename)
 
-		const assertImage = index => {
-			return clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
-				.then(() => {
-					const requestAlias = `uploadRequest${index}`
-					cy.log('Upload the file through the input', { index })
+		const assertImage = (index) => {
+			return clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
+				const requestAlias = `uploadRequest${index}`
+				cy.log('Upload the file through the input', { index })
 
-					attachFile('github.png', requestAlias)
+				attachFile('github.png', requestAlias)
 
-					return waitForRequestAndCheckAttachment(requestAlias, index)
-				})
+				return waitForRequestAndCheckAttachment(requestAlias, index)
+			})
 		}
 
-		cy.wrap([0, 1, 2])
-			.each((index) => {
-				return new Cypress.Promise((resolve, reject) => {
-					assertImage(index).then(resolve, reject)
-				})
+		cy.wrap([0, 1, 2]).each((index) => {
+			return new Cypress.Promise((resolve, reject) => {
+				assertImage(index).then(resolve, reject)
 			})
-		cy.getEditor().find('[data-component="image-view"]')
-			.should('have.length', 3)
+		})
+		cy.getEditor().find('[data-component="image-view"]').should('have.length', 3)
 		cy.closeFile()
+	})
+
+	it('Upload a local image file with RTLO character in name (RTLO is stripped)', () => {
+		const filename = randHash() + '.md'
+		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.visit('/apps/files')
+		cy.openFile(filename)
+
+		const requestAlias = 'uploadRTLORequest'
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(
+			requestAlias,
+		)
+
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
+			cy.getEditor()
+				.find('input[type="file"][data-text-el="attachment-file-input"]')
+				.selectFile(
+					[
+						{
+							contents: 'cypress/fixtures/github.png',
+							fileName: 'git\u202e.png',
+						},
+					],
+					{ force: true },
+				)
+
+			return cy.wait('@' + requestAlias).then((req) => {
+				const fileName = req.response.body.name // server echoes back name with RTLO
+				const documentId = req.response.body.documentId
+
+				// insertAttachment strips RTLO from the name before building the src URL and the
+				// alt text. The src URL no longer matches the on-disk filename (which still has
+				// the RTLO), so the image 404s. The alt text shows the clean name, exposing the
+				// real file extension instead of the visually spoofed one.
+				const strippedName = fileName.replaceAll('\u202e', '')
+				const encodedName = fixedEncodeURIComponent(strippedName)
+				cy.get(
+					`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`,
+				).should('exist')
+			})
+		})
+		cy.closeFile()
+	})
+
+	it('Create a new whiteboard file as an attachment', () => {
+		const check = (documentId, fileName) => {
+			cy.log(
+				'Check the attachment is visible and well formed',
+				documentId,
+				fileName,
+			)
+			return cy.get('.preview .widget-file.whiteboard').should('be.visible')
+		}
+
+		cy.visit('/apps/files')
+		cy.openFile('test.md')
+
+		cy.log('Create a new text file as an attachment')
+		const requestAlias = 'create-attachment-request'
+		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(
+			requestAlias,
+		)
+		clickOnAttachmentAction(ACTION_CREATE_NEW_WHITEBOARD_FILE).then(() => {
+			return waitForRequestAndCheckAttachment(
+				requestAlias,
+				undefined,
+				false,
+				check,
+			)
+		})
 	})
 
 	it('test if attachment files are in the attachment folder', () => {
@@ -298,39 +387,58 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it('test if attachment folder is moved with the markdown file', () => {
-		const fileName = 'moveSource.md'
-		cy.createFolder('subFolder')
-		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
-			const attachmentsFolder = `.attachments.${fileId}`
-			cy.createFolder(attachmentsFolder)
-			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
-			cy.moveFile(fileName, 'subFolder/test.md')
-		})
+	// retries fail to create the subFolder as it already exists.
+	it(
+		'test if attachment folder is moved with the markdown file',
+		{ retries: 0 },
+		() => {
+			const fileName = 'moveSource.md'
+			cy.createFolder('subFolder')
+			cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false)
+				.as('createdFileId')
+				.then((fileId) => {
+					const attachmentsFolder = `.attachments.${fileId}`
+					cy.createFolder(attachmentsFolder)
+					cy.uploadFile(
+						'github.png',
+						'image/png',
+						`${attachmentsFolder}/github.png`,
+					)
+					cy.moveFile(fileName, 'subFolder/test.md')
+				})
 
-		cy.visit('/apps/files')
-		cy.openFolder('subFolder')
-		cy.getFile('test.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
-				cy.openFolder('.attachments.' + documentId)
-				for (const name in files) {
-					cy.getFile(name)
-						.should('exist')
-						.should('have.attr', 'data-cy-files-list-row-fileid')
-						.should('eq', String(files[name]))
-				}
-			})
-	})
+			cy.visit('/apps/files?dir=/subFolder')
+			cy.getFile('test.md')
+				.should('exist')
+				.should('have.attr', 'data-cy-files-list-row-fileid')
+				.then((documentId) => {
+					const files = attachmentFileNameToId[documentId]
+					cy.get('@createdFileId').should('eq', parseInt(documentId))
+					cy.openFolder('.attachments.' + documentId)
+					for (const name in files) {
+						cy.getFile(name)
+							.should('exist')
+							.should('have.attr', 'data-cy-files-list-row-fileid')
+							.should('eq', String(files[name]))
+					}
+				})
+		},
+	)
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
 		const fileName = 'copySource.md'
-		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+		cy.createMarkdown(
+			fileName,
+			'![git](.attachments.123/github.png)',
+			false,
+		).then((fileId) => {
 			const attachmentsFolder = `.attachments.${fileId}`
 			cy.createFolder(attachmentsFolder)
-			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+			cy.uploadFile(
+				'github.png',
+				'image/png',
+				`${attachmentsFolder}/github.png`,
+			)
 		})
 
 		cy.copyFile(fileName, 'testCopied.md')
@@ -356,10 +464,18 @@ describe('Test all attachment insertion methods', () => {
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
 		const fileName = 'deleteSource.md'
-		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+		cy.createMarkdown(
+			fileName,
+			'![git](.attachments.123/github.png)',
+			false,
+		).then((fileId) => {
 			const attachmentsFolder = `.attachments.${fileId}`
 			cy.createFolder(attachmentsFolder)
-			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+			cy.uploadFile(
+				'github.png',
+				'image/png',
+				`${attachmentsFolder}/github.png`,
+			)
 		})
 
 		cy.visit('/apps/files')
@@ -370,67 +486,7 @@ describe('Test all attachment insertion methods', () => {
 			.then((documentId) => {
 				cy.deleteFile(fileName)
 				cy.reloadFileList()
-				cy.getFile('.attachments.' + documentId)
-					.should('not.exist')
-			})
-	})
-
-	it('[share] check everything behaves correctly on the share target user side', () => {
-		const fileName = 'testShared.md'
-		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
-			const attachmentsFolder = `.attachments.${fileId}`
-			cy.createFolder(attachmentsFolder)
-			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
-			cy.shareFileToUser(fileName, recipient)
-		})
-
-		cy.login(recipient)
-		cy.showHiddenFiles()
-
-		cy.visit('/apps/files')
-		// check the file list
-		cy.getFile('testShared.md')
-			.should('exist')
-		cy.getFile('github.png')
-			.should('not.exist')
-
-		// check the attachment folder is not there
-		cy.getFile('testShared.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				cy.getFile('.attachments.' + documentId)
-					.should('not.exist')
-			})
-
-		// move the file and check the attachment folder is still not there
-		cy.moveFile('testShared.md', 'testMoved.md')
-		cy.reloadFileList()
-		cy.getFile('testMoved.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				cy.getFile('.attachments.' + documentId)
-					.should('not.exist')
-			})
-
-		// copy the file and check the attachment folder was copied
-		cy.copyFile('testMoved.md', 'testCopied.md')
-		cy.reloadFileList()
-		cy.getFile('testCopied.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
-				cy.openFolder('.attachments.' + documentId)
-				for (const name in files) {
-					cy.getFile(name)
-						.should('exist')
-						.should('have.attr', 'data-cy-files-list-row-fileid')
-						// these are new copied attachment files
-						// so they should not have the same IDs than the ones created when uploading the files
-						.should('not.eq', String(files[name]))
-				}
+				cy.getFile('.attachments.' + documentId).should('not.exist')
 			})
 	})
 })

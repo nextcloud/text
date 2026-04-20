@@ -5,12 +5,14 @@
 
 // This file is loaded before all e2e tests
 
+import chaiExtension from './chai.js'
 import './commands.js'
 import './sessions.js'
-import chaiExtension from './chai.js'
 
 beforeEach(() => {
-	cy.intercept('GET', '**/preview-service-worker.js', { fixture: 'preview-service-worker.txt' })
+	cy.intercept('GET', '**/preview-service-worker.js', {
+		fixture: 'preview-service-worker.txt',
+	})
 })
 
 Cypress.on('window:before:load', (win) => {
@@ -24,7 +26,7 @@ before(() => {
 
 	Cypress.on('uncaught:exception', (err) => {
 		if (err.message.includes('ResizeObserver')) {
-		  return false
+			return false
 		}
 
 		if (err.message.includes('clearFocusTrap')) {
@@ -41,7 +43,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 	// TODO: Remove this once
 	// https://github.com/nextcloud/server/pull/40065
 	// is merged.
-	if (err.message.includes('Cannot read properties of undefined (reading \'views\')')) {
+	if (
+		err.message.includes("Cannot read properties of undefined (reading 'views')")
+	) {
 		return false
 	}
 	// we still want to ensure there are no other unexpected

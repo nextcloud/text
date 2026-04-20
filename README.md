@@ -2,11 +2,12 @@
   - SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
+
 # Nextcloud Text
+
 [![REUSE status](https://api.reuse.software/badge/github.com/nextcloud/text)](https://api.reuse.software/info/github.com/nextcloud/text)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nextcloud/text/node.yml?branch=main)
 [![Start contributing](https://img.shields.io/github/issues/nextcloud/text/good%20first%20issue?color=7057ff&label=Contribute)](https://github.com/nextcloud/text/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22)
-
 
 **📑 Collaborative document editing!**
 
@@ -18,8 +19,28 @@
 - **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.dev) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
+- **🧮 Math support:** Write mathematical formulas using LaTeX syntax with inline (`$E=mc^2$`) and display (`$$...$$`) math rendering powered by KaTeX.
 
 Nextcloud Text is the default text editor since Nextcloud 17. To start editing just open an existing markdown or plaintext file or create a new one.
+
+### Mathematical formulas
+
+You can insert mathematical formulas using LaTeX syntax:
+
+- **Inline math:** Wrap your formula with single dollar signs: `$E=mc^2$`
+- **Display math (block):** Wrap your formula with double dollar signs on separate lines:
+    ```
+    $$
+    \sum_{i=1}^n i = \frac{n(n+1)}{2}
+    $$
+    ```
+    **Note:** When typing in the editor, create a soft line break (`Shift+Return`) to add lines within the formula block.
+
+You can also:
+
+- Select text and use the math buttons in the toolbar to convert it to a formula
+- Click on existing formulas to edit them in a dialog
+- Paste markdown with math formulas to have them automatically rendered
 
 ## Configuration
 
@@ -51,20 +72,20 @@ To use the advantages of `vite serve` with hot module replacement (HMR) and not 
 
 1. Configure your webserver to redirect requests to `/apps/text/` to the vite serve server.
    When using [nextcloud-docker-dev](https://github.com/juliusknorr/nextcloud-docker-dev), add the following snippet to `data/nginx/vhost.d/nextcloud.local` and restart the proxy container. You might have to replace `/apps/text/` with e.g. `/apps-extra/text/` depending on where the text app resides in your dev setup.
-   ```
-   location /apps/text/ {
-       proxy_pass http://host.docker.internal:5173/apps/text/;
-       # fallback to nextcloud server if vite serve doesn't answer
-       error_page 502 = @fallback;
-   }
-   location @fallback {
-       proxy_pass http://nextcloud.local;
-   }
-   ```
+    ```
+    location /apps/text/ {
+        proxy_pass http://host.docker.internal:5173/apps/text/;
+        # fallback to nextcloud server if vite serve doesn't answer
+        error_page 502 = @fallback;
+    }
+    location @fallback {
+        proxy_pass http://nextcloud.local;
+    }
+    ```
 2. Run `npm run serve` to start the vite serve server. If text resides somewhere else than `/apps/text`, run e.g. `BASE=/apps-extra/text npm run serve`.
 
 Afterwards all changes to the code will apply to the application in your browser automatically thanks to hot module replacement (HMR).
-   
+
 ### 🧙 Advanced development stuff
 
 To build the Javascript whenever you make changes, instead of the full `make` you can also run `npm run build`. Or run `npm run watch` to rebuild on every file save.
@@ -84,12 +105,21 @@ Please note the cypress tests require a nextcloud server running, the if no runn
 this requires the current user to be in the `docker` group.
 Or you might set the `CYPRESS_baseUrl` environment variable for a custom nextcloud server.
 
+##### Testing direct editing
+
+The mobile apps open the text editor via a direct editing session. To test this in a browser, do the following:
+
+```sh
+curl --silent --insecure --request POST --url 'https://admin:admin@nextcloud.local/ocs/v2.php/apps/files/api/v1/directEditing/open?editorId=text&creatorId=textdocument&format=json' --header 'Content-Type: multipart/form-data' --header 'OCS-APIRequest: true' --form path=/test.md | jq -r '.ocs.data.url'
+```
+
+The URL that's returned can be used to open the direct editing view. It contains a one-time token that expires after being opened once.
+
 #### Adding support for other mime types
 
 - The mime type needs to be known by Nextcloud server (see https://github.com/nextcloud/server/pull/24488 for how this can be added)
 - Once that is there, please open a pull request to add them to https://github.com/nextcloud/text/blob/12df66ffdd3d71cc696438e2e4ec60fa17b89a64/src/helpers/mime.js#L35-L61
 - You can test them like other mime types in cypress/e2e/files.spec.js
-
 
 ## 🛠️ Integrate text in your app
 
@@ -110,7 +140,6 @@ if (class_exists(LoadEditor::class)) {
 ### Integrate a file editor
 
 Make sure to check if OCA.Text is available as the Text app needs to be enabled. If you want your app to work without Text being installed, you will need to provide an editor fallback on your own.
-
 
 ```js
 window.OCA.Text.createEditor({

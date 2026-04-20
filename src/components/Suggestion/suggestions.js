@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import tippy from 'tippy.js'
 import { VueRenderer } from '@tiptap/vue-2'
+import tippy from 'tippy.js'
 
 export default ({
 	listComponent,
@@ -18,7 +18,7 @@ export default ({
 		let popup
 
 		return {
-			onStart: props => {
+			onStart: (props) => {
 				component = new VueRenderer(listComponent, {
 					parent: this,
 					propsData: props,

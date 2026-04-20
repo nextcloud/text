@@ -5,37 +5,41 @@
 
 <template>
 	<div class="text-editor__session-list">
-		<div :title="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
-			<NcButton type="tertiary"
+		<div
+			:title="lastSavedStatusTooltip"
+			class="save-status"
+			:class="saveStatusClass">
+			<NcButton
+				variant="tertiary"
 				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
 				<template #icon>
-					<NcSavingIndicatorIcon :saving="saveStatusClass === 'saving'"
+					<NcSavingIndicatorIcon
+						:saving="saveStatusClass === 'saving'"
 						:error="saveStatusClass === 'error'" />
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions"
-			@editor-width-change="onEditorWidthChange">
+		<SessionList v-if="networkOnline && !hasConnectionIssue">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog v-if="$isPublic && currentSession && !currentSession.userId" :session="currentSession" />
 		</SessionList>
+		<OfflineState v-else :offline-since="offlineSince" />
 	</div>
 </template>
 
 <script>
-
-import { ERROR_TYPE } from '../../services/SyncService.js'
+import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
-import { NcButton, NcSavingIndicatorIcon } from '@nextcloud/vue'
-import {
-	useIsMobileMixin,
-	useIsPublicMixin,
-	useSyncServiceMixin,
-} from '../Editor.provider.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
+import { useNetworkState } from '../../composables/useNetworkState.ts'
+import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import OfflineState from './OfflineState.vue'
 
 export default {
 	name: 'Status',
@@ -43,25 +47,20 @@ export default {
 	components: {
 		NcButton,
 		NcSavingIndicatorIcon,
-		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
-		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
+		OfflineState,
+		SessionList: () => import('./SessionList.vue'),
 	},
 
-	mixins: [
-		useIsMobileMixin,
-		useIsPublicMixin,
-		useSyncServiceMixin,
-		refreshMoment,
-	],
+	mixins: [useIsMobileMixin, refreshMoment],
 
 	props: {
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		dirty: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		document: {
 			type: Object,
@@ -71,12 +70,12 @@ export default {
 			type: Object,
 			default: null,
 		},
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
-		},
+	},
+
+	setup() {
+		const { networkOnline, offlineSince } = useNetworkState()
+		const { saveService } = useSaveService()
+		return { networkOnline, offlineSince, saveService }
 	},
 
 	computed: {
@@ -86,15 +85,22 @@ export default {
 					? t('text', 'Offline')
 					: t('text', 'Offline, changes will be saved when online')
 			}
-			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
+			return this.dirtyStateIndicator
+				? t('text', 'Saving …')
+				: t('text', 'Saved')
 		},
 		dirtyStateIndicator() {
 			return this.dirty
 		},
 		lastSavedStatusTooltip() {
-			let message = t('text', 'Last saved {lastSave}', { lastSave: this.lastSavedString })
+			let message = t('text', 'Last saved {lastSave}', {
+				lastSave: this.lastSavedString,
+			})
 			if (this.hasSyncCollission) {
-				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
+				message = t(
+					'text',
+					'The document has been changed outside of the editor. The changes cannot be applied.',
+				)
 			}
 			if (this.dirty) {
 				message += ' - ' + t('text', 'Unsaved changes')
@@ -103,34 +109,35 @@ export default {
 		},
 
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		saveStatusClass() {
-			if (this.syncError && this.lastSavedString !== '') {
+			if (
+				(this.dirtyStateIndicator && !this.networkOnline)
+				|| (this.syncError && this.lastSavedString !== '')
+			) {
 				return 'error'
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
 			/* eslint-disable-next-line no-unused-expressions */
 			this.refreshMoment
-			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
+			const timestamp = this.document?.lastSavedVersionTime
+			return timestamp ? moment(timestamp * 1000).fromNow() : ''
 		},
 	},
 
 	methods: {
 		onClickSave() {
 			if (this.dirtyStateIndicator) {
-				this.$syncService.forceSave()
+				this.saveService.forceSave()
 			}
 		},
-		onEditorWidthChange(newWidth) {
-			this.$emit('editor-width-change', newWidth)
-		},
+		t,
 	},
 }
 </script>
@@ -139,7 +146,8 @@ export default {
 .text-editor__session-list {
 	display: flex;
 
-	input, div {
+	input,
+	div {
 		vertical-align: middle;
 		margin-left: 3px;
 	}

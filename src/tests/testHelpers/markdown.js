@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { createRichEditor } from '../../EditorFactory.js'
+import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 
 /**
@@ -15,9 +15,12 @@ import markdownit from '../../markdownit/index.js'
  */
 export function markdownThroughEditor(markdown) {
 	const tiptap = createRichEditor()
-	tiptap.commands.setContent(markdownit.render(markdown))
+	const content = markdownit.render(markdown)
+	tiptap.commands.setContent(content)
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const serializedMarkdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return serializedMarkdown
 }
 
 /**
@@ -30,7 +33,9 @@ export function markdownThroughEditorHtml(html) {
 	const tiptap = createRichEditor()
 	tiptap.commands.setContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const markdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return markdown
 }
 
 /**
@@ -43,5 +48,7 @@ export function markdownFromPaste(html) {
 	const tiptap = createRichEditor()
 	tiptap.commands.insertContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	const markdown = serializer.serialize(tiptap.state.doc)
+	tiptap.destroy()
+	return markdown
 }

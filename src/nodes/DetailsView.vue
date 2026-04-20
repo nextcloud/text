@@ -4,14 +4,13 @@
  -->
 
 <template>
-	<NodeViewWrapper data-text-el="details"
-		class="details"
-		as="div">
-		<NcButton type="tertiary" size="small">
+	<NodeViewWrapper data-text-el="details" class="details" as="div">
+		<NcButton variant="tertiary" size="small">
 			<template #icon>
-				<TriangleSmallDownIcon :size="20"
+				<TriangleSmallDownIcon
+					:size="20"
 					class="button-open"
-					:class="{ 'open': open }"
+					:class="{ open: open }"
 					@click="toggleOpen" />
 			</template>
 		</NcButton>
@@ -20,8 +19,8 @@
 </template>
 
 <script>
-import { NcButton } from '@nextcloud/vue'
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue'
 
 export default {
@@ -87,7 +86,7 @@ div.details {
 
 	.details-container {
 		width: 100%;
-		margin-right: 12px;
+		margin-inline-end: 12px;
 	}
 
 	:deep(summary) {

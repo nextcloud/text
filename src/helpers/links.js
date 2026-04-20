@@ -6,7 +6,7 @@
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 
-const domHref = function(node, relativePath) {
+const domHref = function (node, relativePath) {
 	const ref = node.attrs.href
 	if (!ref) {
 		return ref
@@ -33,12 +33,12 @@ const domHref = function(node, relativePath) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, , id] = match
-		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
+		return new URL(generateUrl(`/f/${id}`), window.origin).href
 	}
 	return ref
 }
 
-const parseHref = function(dom) {
+const parseHref = function (dom) {
 	const ref = dom.getAttribute('href')
 	if (!ref) {
 		return ref
@@ -46,18 +46,37 @@ const parseHref = function(dom) {
 	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
 		const [, , id] = match
-		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
+		return new URL(generateUrl(`/f/${id}`), window.origin).href
 	}
 	return ref
 }
 
-const isLinkToSelfWithHash = function(href) {
-	const locationNoHash = window.location.origin + window.location.pathname + window.location.search
+const isLinkToSelfWithHash = function (href) {
+	const locationNoHash =
+		window.location.origin + window.location.pathname + window.location.search
 	return href?.startsWith('#') || href?.startsWith(locationNoHash + '#')
 }
 
-export {
-	domHref,
-	parseHref,
-	isLinkToSelfWithHash,
+/**
+ * Open links, to be used as custom click handler
+ *
+ * @param {string} href the link href
+ */
+const openLink = function (href) {
+	const linkUrl = new URL(href, window.location.href)
+	// Consider rerouting links to Collectives if already inside Collectives app
+	const collectivesUrlBase = '/apps/collectives'
+	if (
+		window.OCA.Collectives?.vueRouter
+		&& linkUrl.pathname.toString().startsWith(generateUrl(collectivesUrlBase))
+	) {
+		const collectivesUrl = linkUrl.href.substring(
+			linkUrl.href.indexOf(collectivesUrlBase) + collectivesUrlBase.length,
+		)
+		window.OCA.Collectives.vueRouter.push(collectivesUrl)
+		return
+	}
+	window.open(linkUrl, '_blank')
 }
+
+export { domHref, isLinkToSelfWithHash, openLink, parseHref }

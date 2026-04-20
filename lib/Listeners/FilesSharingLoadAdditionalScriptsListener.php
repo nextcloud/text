@@ -30,6 +30,8 @@ class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 
 		Util::addScript('text', 'text-public');
 		Util::addStyle('text', 'text-public');
+		Util::addInitScript('text', 'text-init');
+		Util::addStyle('text', 'text-init');
 
 		$this->initialStateProvider->provideState();
 		$node = $event->getShare()->getNode();

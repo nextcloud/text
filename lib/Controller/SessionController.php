@@ -56,10 +56,10 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $version, array $steps, string $awareness): DataResponse {
+	public function push(int $version, array $steps, string $awareness, ?int $recoveryAttempt = null): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness);
+			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt);
 		} finally {
 			$this->restoreSessionUser();
 		}
@@ -82,7 +82,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function save(int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
 			$this->loginSessionUser();
 			return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);

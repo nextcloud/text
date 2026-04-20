@@ -13,6 +13,8 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\File;
+use OCP\Files\Folder;
+use OCP\Lock\ILockingProvider;
 
 /**
  * @template-implements IEventListener<Event|NodeCopiedEvent>
@@ -35,7 +37,13 @@ class NodeCopiedListener implements IEventListener {
 			&& $target instanceof File
 			&& $target->getMimeType() === 'text/markdown'
 		) {
-			$this->attachmentService->copyAttachments($source, $target);
+			$fileIdMapping = $this->attachmentService->copyAttachments($source, $target);
+			$target->unlock(ILockingProvider::LOCK_SHARED);
+			AttachmentService::replaceAttachmentFolderId($source, $target);
+			AttachmentService::replaceAttachmentFileIds($target, $fileIdMapping);
+			$target->lock(ILockingProvider::LOCK_SHARED);
+		} elseif ($source instanceof Folder && $target instanceof Folder) {
+			$this->attachmentService->copyAttachmentsInFolder($source, $target);
 		}
 	}
 }

@@ -4,110 +4,129 @@
 -->
 
 <template>
-	<div v-if="isEmptyContent" class="container-suggestions">
-		<NcButton ref="linkFileOrFolder"
-			type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="linkFile">
-			<template #icon>
-				<Document :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+	<transition name="fade">
+		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
+			<NcButton
+				ref="linkFileOrFolder"
+				variant="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="linkFile">
+				<template #icon>
+					<Folder :size="20" />
+				</template>
 				{{ t('text', 'Link to file or folder') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="$callChooseLocalAttachment">
-			<template #icon>
-				<Upload :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton
+				variant="secondary"
+				size="normal"
+				class="suggestions--button"
+				:disabled="isUploadDisabled"
+				:title="uploadTitle"
+				@click="$callChooseLocalAttachment">
+				<template #icon>
+					<Upload :size="20" />
+				</template>
 				{{ t('text', 'Upload') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="insertTable">
-			<template #icon>
-				<TableIcon :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton
+				variant="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="insertTable">
+				<template #icon>
+					<TableIcon :size="20" />
+				</template>
 				{{ t('text', 'Insert Table') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="linkPicker">
-			<template #icon>
-				<Shape :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton
+				variant="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="linkPicker">
+				<template #icon>
+					<Shape :size="20" />
+				</template>
 				{{ t('text', 'Smart Picker') }}
-			</template>
-		</NcButton>
-	</div>
+			</NcButton>
+		</div>
+	</transition>
 </template>
 
 <script>
-import { NcButton } from '@nextcloud/vue'
-import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
-import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
+import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { useEditorMixin, useFileMixin } from './Editor.provider.js'
-import { generateUrl } from '@nextcloud/router'
-import { buildFilePicker } from '../helpers/filePicker.js'
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { Folder, Shape, Table as TableIcon, Upload } from '../components/icons.js'
+import { useConnection } from '../composables/useConnection.ts'
+import { useEditor } from '../composables/useEditor.ts'
+import { useFileProps } from '../composables/useFileProps.ts'
+import { useLinkFile } from '../composables/useLinkFile.ts'
+import { useNetworkState } from '../composables/useNetworkState.ts'
+import { isMobileDevice } from '../helpers/isMobileDevice.js'
+import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
 	name: 'SuggestionsBar',
 	components: {
 		TableIcon,
-		Document,
+		Folder,
 		NcButton,
 		Shape,
 		Upload,
 	},
-	mixins: [
-		useActionChooseLocalAttachmentMixin,
-		useEditorMixin,
-		useFileMixin,
-	],
+
+	mixins: [useActionChooseLocalAttachmentMixin],
 
 	setup() {
-		const isMobile = useIsMobile()
+		const { editor } = useEditor()
+		const { openData } = useConnection()
+		const { networkOnline } = useNetworkState()
+		const { relativePath } = useFileProps()
+		const { linkFile } = useLinkFile({ editor, relativePath })
 		return {
-			isMobile,
+			editor,
+			isMobileDevice,
+			linkFile,
+			networkOnline,
+			openData,
 		}
 	},
 
 	data: () => {
 		return {
-			startPath: null,
 			isEmptyContent: false,
 		}
 	},
 
 	computed: {
-		relativePath() {
-			return this.$file?.relativePath ?? '/'
+		isUploadDisabled() {
+			return !this.openData?.hasOwner || !this.networkOnline
+		},
+		uploadTitle() {
+			if (!this.networkOnline) {
+				return t('text', 'Disabled because you are currently offline.')
+			}
+			if (this.isUploadDisabled) {
+				return t(
+					'text',
+					'Uploading attachments is disabled because the file is shared from another cloud.',
+				)
+			}
+			return ''
 		},
 	},
 
 	mounted() {
-		this.$editor.on('update', this.onUpdate)
-		this.onUpdate({ editor: this.$editor })
+		this.editor.on('update', this.onUpdate)
+		this.onUpdate({ editor: this.editor })
 	},
 
 	beforeDestroy() {
-		this.$editor.off('update', this.onUpdate)
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
@@ -117,15 +136,15 @@ export default {
 		 */
 		linkPicker() {
 			getLinkWithPicker(null, true)
-				.then(link => {
-					const chain = this.$editor.chain()
-					if (this.$editor.view.state?.selection.empty) {
+				.then((link) => {
+					const chain = this.editor.chain()
+					if (this.editor.view.state.selection.empty) {
 						chain.focus().insertPreview(link).run()
 					} else {
 						chain.setLink({ href: link }).focus().run()
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.error('Smart picker promise rejected', error)
 				})
 		},
@@ -135,44 +154,7 @@ export default {
 		 * Triggered by the "Insert table" button
 		 */
 		insertTable() {
-			this.$editor.chain().focus().insertTable()?.run()
-		},
-
-		/**
-		 * Open dialog and ask user which file to link to
-		 * Triggered by the "link to file or folder" button
-		 */
-		linkFile() {
-			if (this.startPath === null) {
-				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
-			}
-
-			const filePicker = buildFilePicker(this.startPath)
-
-			filePicker.pick()
-				.then((file) => {
-					const client = OC.Files.getClient()
-					client.getFileInfo(file).then((_status, fileInfo) => {
-						const url = new URL(generateUrl(`/f/${fileInfo.id}`), window.origin)
-						this.setLink(url.href, fileInfo.name)
-						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
-					})
-				})
-				.catch(() => {
-					// do not close menu but keep focus
-					this.$refs.linkFileOrFolder.$el.focus()
-				})
-		},
-
-		/**
-		 * Save user entered URL as a link markup
-		 * Triggered when the user submits the ActionInput
-		 *
-		 * @param {string} url href attribute of the link
-		 * @param {string} text Text part of the link
-		 */
-		setLink(url, text) {
-			this.$editor.chain().insertOrSetLink(text, { href: url }).focus().run()
+			this.editor.chain().focus().insertTable()?.run()
 		},
 
 		onUpdate({ editor }) {
@@ -182,18 +164,34 @@ export default {
 			const EMPTY_DOCUMENT_SIZE = 4
 			this.isEmptyContent = editor.state.doc.nodeSize <= EMPTY_DOCUMENT_SIZE
 		},
+		t,
 	},
 }
 </script>
 
 <style scoped lang="scss">
-
 .container-suggestions {
 	display: flex;
 	margin-left: max(0px, (100% - var(--text-editor-max-width)) / 2);
+	flex-wrap: wrap;
 }
 
 .suggestions--button {
 	margin: 5px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity var(--animation-slow) ease-in-out;
+}
+
+.fade-enter-to,
+.fade-leave {
+	opacity: 1;
+}
+
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
 }
 </style>

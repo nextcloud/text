@@ -5,8 +5,9 @@
 
 <template>
 	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items">
-		<template #default="{ item, active}">
-			<NcAutoCompleteResult :id="item.id"
+		<template #default="{ item, active }">
+			<NcAutoCompleteResult
+				:id="item.id"
 				:label="item.label"
 				icon="icon-user"
 				source="users"
@@ -21,6 +22,7 @@
 <script>
 import { NcAutoCompleteResult } from '@nextcloud/vue'
 
+import { t } from '@nextcloud/l10n'
 import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 
 export default {
@@ -39,6 +41,7 @@ export default {
 		},
 	},
 	methods: {
+		t,
 		onKeyDown({ event }) {
 			// Ignore any key modifier combinations
 			return this.$refs.suggestionList?.onKeyDown({ event })

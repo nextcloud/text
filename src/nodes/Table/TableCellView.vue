@@ -4,12 +4,12 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-cell" as="td" :style="textAlign">
+	<NodeViewWrapper data-text-el="table-cell" as="td" :dir="dir" :style="align">
 		<div class="container">
 			<NodeViewContent class="content" />
-			<NcActions v-if="isEditable"
-				data-text-table-actions="row">
-				<NcActionButton data-text-table-action="add-row-before"
+			<NcActions v-if="isEditable" data-text-table-actions="row" size="small">
+				<NcActionButton
+					data-text-table-action="add-row-before"
 					close-after-click
 					@click="addRowBefore">
 					<template #icon>
@@ -17,7 +17,8 @@
 					</template>
 					{{ t('text', 'Add row before') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="add-row-after"
+				<NcActionButton
+					data-text-table-action="add-row-after"
 					close-after-click
 					@click="addRowAfter">
 					<template #icon>
@@ -25,11 +26,12 @@
 					</template>
 					{{ t('text', 'Add row after') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="remove-row"
+				<NcActionButton
+					data-text-table-action="remove-row"
 					close-after-click
 					@click="deleteRow">
 					<template #icon>
-						<Delete />
+						<TrashCan />
 					</template>
 					{{ t('text', 'Delete this row') }}
 				</NcActionButton>
@@ -39,9 +41,15 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton } from '@nextcloud/vue'
-import { TableAddRowBefore, TableAddRowAfter, Delete } from '../../components/icons.js'
+import { t } from '@nextcloud/l10n'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import {
+	TableAddRowAfter,
+	TableAddRowBefore,
+	TrashCan,
+} from '../../components/icons.js'
 
 export default {
 	name: 'TableCellView',
@@ -52,7 +60,7 @@ export default {
 		NodeViewContent,
 		TableAddRowBefore,
 		TableAddRowAfter,
-		Delete,
+		TrashCan,
 	},
 	props: {
 		editor: {
@@ -70,8 +78,11 @@ export default {
 		}
 	},
 	computed: {
-		textAlign() {
-			return { 'text-align': this.node.attrs.textAlign }
+		align() {
+			return { 'text-align': this.node.attrs.align }
+		},
+		dir() {
+			return this.node.attrs.dir || ''
 		},
 	},
 	beforeMount() {
@@ -82,26 +93,30 @@ export default {
 	},
 	methods: {
 		deleteRow() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.deleteRow()
 				.run()
 		},
 		addRowBefore() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addRowBefore()
 				.run()
 		},
 		addRowAfter() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addRowAfter()
 				.run()
 		},
+		t,
 	},
 }
 </script>
@@ -118,14 +133,18 @@ td {
 	.content {
 		flex: 1 1 0;
 		margin: 0;
+		padding: calc(
+				(var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2
+			)
+			0.75em;
 	}
 
 	.action-item {
 		position: absolute;
-		right: -48px;
+		right: calc((var(--clickable-area-small) * -1) - 4px);
 		flex: 0 1 auto;
 		display: none;
-		top: 2px;
+		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
 	}
 
 	&:last-child {
@@ -134,13 +153,14 @@ td {
 			opacity: 50%;
 		}
 
-		&:hover, &:active, &:focus, &:focus-within {
+		&:hover,
+		&:active,
+		&:focus,
+		&:focus-within {
 			.action-item {
 				opacity: 100%;
 			}
 		}
 	}
-
 }
-
 </style>

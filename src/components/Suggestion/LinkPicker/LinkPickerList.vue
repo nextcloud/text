@@ -3,14 +3,15 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<SuggestionListWrapper ref="suggestionList"
+	<SuggestionListWrapper
+		ref="suggestionList"
 		:command="command"
 		:items="items"
 		@select="(item) => $emit('select', item)">
 		<template #default="{ item }">
 			<div class="link-picker__item" :data-key="item.key">
 				<compoent :is="item.icon" v-if="typeof item.icon !== 'string'" />
-				<img v-else :src="item.icon">
+				<img v-else :src="item.icon" />
 				<div>{{ item.label }}</div>
 			</div>
 		</template>
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 
 export default {
@@ -38,6 +40,7 @@ export default {
 		},
 	},
 	methods: {
+		t,
 		onKeyDown({ event }) {
 			// Ignore any key modifier combinations
 			return this.$refs.suggestionList?.onKeyDown({ event })

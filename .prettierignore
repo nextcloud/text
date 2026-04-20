@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# version control systems directories
+**/.git
+**/.svn
+**/.hg
+
+# 3rdparty dependencies
+**/node_modules
+**/vendor
+
+# Compiled output
+js/
+css/
+
+# PHP
+lib/
+**/*.php
+composer/
+composer.lock
+
+# Translations
+l10n/
+
+# Github files
+.github/
+
+# Test fixtures
+**/fixtures

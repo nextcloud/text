@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -43,6 +44,22 @@ class DocumentMapper extends QBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())
+			->executeQuery();
+		try {
+			while ($row = $result->fetch()) {
+				yield $this->mapRowToEntity($row);
+			}
+		} finally {
+			$result->closeCursor();
+		}
+	}
+
+	public function findAllWithNoActiveSessions(): Generator {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('d.*')
+			->from($this->getTableName(), 'd')
+			->leftJoin('d', 'text_sessions', 's', $qb->expr()->eq('s.document_id', 'd.id'))
+			->where($qb->expr()->isNull('s.id'))
 			->executeQuery();
 		try {
 			while ($row = $result->fetch()) {

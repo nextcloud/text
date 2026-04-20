@@ -5,34 +5,36 @@
 
 <template>
 	<div class="avatar-wrapper" :style="sessionAvatarStyle">
-		<NcAvatar v-if="session.userId"
-			:user="session.userId ? session.userId : session.guestName"
-			:is-guest="session.userId === null"
+		<NcAvatar
+			v-if="session.userId"
+			:user="session.userId"
+			:is-guest="false"
 			:disable-menu="true"
-			:show-user-status="false"
-			:disable-tooltip="true"
-			:size="size" />
+			hide-status
+			:disable-tooltip="true" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
-			{{ guestInitial }}
+			<template v-if="session.guestName">
+				{{ guestInitial }}
+			</template>
+			<AccountOutlineIcon v-else />
 		</div>
 	</div>
 </template>
 
 <script>
-import { NcAvatar } from '@nextcloud/vue'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
+import AccountOutlineIcon from 'vue-material-design-icons/AccountOutline.vue'
+
 export default {
 	name: 'AvatarWrapper',
 	components: {
 		NcAvatar,
+		AccountOutlineIcon,
 	},
 	props: {
 		session: {
 			type: Object,
 			required: true,
-		},
-		size: {
-			type: Number,
-			default: () => 32,
 		},
 	},
 	computed: {
@@ -40,37 +42,45 @@ export default {
 			return {
 				...this.sessionBackgroundStyle,
 				'border-color': this.session.color,
-				'border-width': '2px',
-				'border-style': 'solid',
-				'--size': this.size + 'px',
-				'--font-size': this.size / 2 + 'px',
 			}
 		},
 		sessionBackgroundStyle() {
 			return {
-				'background-color': this.session.userId ? this.session.color + ' !important' : '#b9b9b9',
+				'background-color': this.session.userId
+					? this.session.color + ' !important'
+					: 'var(--color-background-dark)',
 			}
 		},
 		guestInitial() {
-			return this.session.guestName === '' ? '?' : this.session.guestName.slice(0, 1).toUpperCase()
+			return this.session.guestName === ''
+				? '?'
+				: this.session.guestName.slice(0, 1).toUpperCase()
 		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
+.avatar-wrapper {
+	overflow: hidden;
+}
 
-.avatar, .avatar-wrapper {
+.avatar,
+.avatar-wrapper {
+	--size: var(--default-clickable-area);
 	border-radius: 50%;
 	width: var(--size);
 	height: var(--size);
 	text-align: center;
-	color: #ffffff;
+	color: var(--color-text-maxcontrast);
 	line-height: var(--size);
-	font-size: var(--font-size);
+	font-size: calc(var(--size) / 2);
 	font-weight: normal;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-width: 2px;
+	border-style: solid;
+	box-sizing: border-box;
 }
 </style>

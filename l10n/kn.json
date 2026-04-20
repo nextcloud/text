@@ -2,14 +2,15 @@
     "No file was uploaded" : "ವರ್ಗಾವಣೆಗೆ ﻿ಯಾವುದೇ ಕಡತಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
     "Missing a temporary folder" : "ತಾತ್ಕಾಲಿಕ ಕಡತಕೋಶ ದೊರೆಕುತ್ತಿಲ್ಲ",
     "File not found" : "ಕಡತ ಕಂಡುಬಂದಿಲ್ಲ",
-    "Translate" : "Translate",
     "guest" : "ಅತಿಥಿ",
     "Saved" : "﻿ಉಳಿಸಿದ",
     "Link" : "ಸಂಪರ್ಕ ಕೊಂಡಿ",
+    "Cancel" : "Cancel",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
-    "Upload" : "ವರ್ಗಾಯಿಸಿ",
+    "Save" : "﻿ಉಳಿಸಿ",
+    "Translate" : "Translate",
     "Edit" : "ಸಂಪಾದಿಸು",
-    "Info" : "Info",
-    "Warning" : "﻿ಎಚ್ಚರಿಕೆ"
+    "Upload" : "ವರ್ಗಾಯಿಸಿ",
+    "Choose" : "﻿ಆಯ್ಕೆ"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TiptapTaskList from '@tiptap/extension-task-list'
 import { mergeAttributes } from '@tiptap/core'
+import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
 
 const TaskList = TiptapTaskList.extend({
-
 	parseHTML: [
 		{
 			priority: 100,
@@ -16,7 +15,13 @@ const TaskList = TiptapTaskList.extend({
 	],
 
 	renderHTML({ HTMLAttributes }) {
-		return ['ul', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { class: 'contains-task-list' }), 0]
+		return [
+			'ul',
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+				class: 'contains-task-list',
+			}),
+			0,
+		]
 	},
 
 	addAttributes() {
@@ -29,7 +34,6 @@ const TaskList = TiptapTaskList.extend({
 			bullet: {
 				default: '-',
 				rendered: false,
-				isRequired: true,
 				parseHTML: (el) => el.getAttribute('data-bullet'),
 			},
 		}
@@ -38,7 +42,6 @@ const TaskList = TiptapTaskList.extend({
 	toMarkdown: (state, node) => {
 		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
 	},
-
 })
 
 export default TaskList

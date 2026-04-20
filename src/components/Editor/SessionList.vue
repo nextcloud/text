@@ -4,41 +4,45 @@
 -->
 
 <template>
-	<NcPopover class="session-list" placement="bottom">
+	<NcPopover
+		:no-focus-trap="!showGuestNameDialog"
+		class="session-list"
+		placement="bottom">
 		<template #trigger="{ attrs }">
 			<div>
-				<button :title="label"
+				<NcButton
+					:title="label"
 					:aria-label="label"
+					variant="tertiary"
 					class="avatar-list"
 					v-bind="attrs">
-					<div class="avatardiv icon-group" />
-					<AvatarWrapper v-for="session in sessionsVisible"
-						:key="session.id"
-						:session="session"
-						:size="30" />
-				</button>
+					<template #icon>
+						<AccountMultipleOutlineIcon :size="20" />
+						<AvatarWrapper
+							v-for="session in sessionsForTriggerButton"
+							:key="session.id"
+							:session="session" />
+					</template>
+				</NcButton>
 			</div>
 		</template>
 		<template #default>
 			<div class="session-menu">
 				<slot name="lastSaved" />
 				<ul>
-					<slot />
-					<li v-for="session in participantsPopover"
+					<GuestNameDialog
+						v-if="showGuestNameDialog"
+						:session.sync="currentGuestSession" />
+					<li
+						v-for="session in sessionList"
 						:key="session.id"
 						:style="avatarStyle(session)">
-						<AvatarWrapper :session="session" :size="36" />
-						<span class="session-label">
-							{{
-								session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest'))
-							}}
+						<AvatarWrapper :session="session" />
+						<span
+							class="session-label"
+							:class="!session.userId && 'guest'">
+							{{ displayNameOrGuestName(session) }}
 						</span>
-						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
-					</li>
-					<li>
-						<NcCheckboxRadioSwitch :checked="isFullWidth" @update:checked="onWidthToggle">
-							{{ t('text', 'Full width editor') }}
-						</NcCheckboxRadioSwitch>
 					</li>
 				</ul>
 			</div>
@@ -47,77 +51,71 @@
 </template>
 
 <script>
-import { NcCheckboxRadioSwitch, NcPopover } from '@nextcloud/vue'
+import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcPopover from '@nextcloud/vue/components/NcPopover'
+import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useSessions } from '../../composables/useSessions.ts'
+import { useSyncService } from '../../composables/useSyncService.ts'
+import { COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.js'
-import { loadState } from '@nextcloud/initial-state'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import GuestNameDialog from './GuestNameDialog.vue'
 
 export default {
 	name: 'SessionList',
 	components: {
+		AccountMultipleOutlineIcon,
 		AvatarWrapper,
+		GuestNameDialog,
+		NcButton,
 		NcPopover,
-		NcCheckboxRadioSwitch,
 	},
-	props: {
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
-		},
-	},
-	data() {
-		const isFullWidth = loadState('text', 'is_full_width_editor', false)
-		return {
-			myName: '',
-			isFullWidth,
-		}
+	setup() {
+		const { isPublic } = useEditorFlags()
+		const { syncService } = useSyncService()
+		const { currentGuestSession, currentSession, sessions } =
+			useSessions(syncService)
+		return { currentGuestSession, currentSession, sessions, isPublic }
 	},
 	computed: {
 		label() {
 			return t('text', 'Active people')
 		},
-		participantsPopover() {
-			if (this.currentSession?.guestName) {
-				return this.participantsWithoutCurrent
-			}
-			return this.participants
+		sessionList() {
+			return this.showGuestNameDialog ? this.remoteSessions : this.sessions
 		},
-		participantsWithoutCurrent() {
-			return this.participants.filter((session) => !session.isCurrent)
+		remoteSessions() {
+			return this.sessions.filter(
+				(session) => session.id !== this.currentSession?.id,
+			)
 		},
-		participants() {
-			return Object.values(this.sessions).filter((session) =>
-				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-				&& (session.userId !== null || session.guestName !== null),
-			).sort((a, b) => a.lastContact < b.lastContact)
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
+		showGuestNameDialog() {
+			return this.isPublic && this.currentGuestSession
 		},
 		avatarStyle() {
 			return (session) => {
 				return {
-					opacity: session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
+					opacity:
+						session.lastContact
+						> Date.now() / 1000 - COLLABORATOR_IDLE_TIME
+							? 1
+							: 0.5,
 				}
 			}
 		},
-		sessionsVisible() {
-			return this.participantsWithoutCurrent.slice(0, 3)
+		sessionsForTriggerButton() {
+			return this.remoteSessions.slice(0, 3)
 		},
 	},
 	methods: {
-		onWidthToggle(checked) {
-			this.isFullWidth = checked
-			this.$emit('editor-width-change', checked ? '100%' : '80ch')
-
-			axios.post(generateUrl('/apps/text/settings'), {
-				key: 'is_full_width_editor',
-				value: checked ? '1' : '0',
-			})
+		t,
+		displayNameOrGuestName: (session) => {
+			if (session.userId) {
+				return session.displayName
+			}
+			const guestName = session.guestName || t('text', 'Guest')
+			return `${guestName} (${t('text', 'guest')})`
 		},
 	},
 }
@@ -128,40 +126,28 @@ export default {
 	height: var(--default-clickable-area);
 }
 
-.avatar-list {
-	border: none;
-	background-color: var(--color-main-background);
-	padding: 0;
-	margin: 0;
-	padding-left: 3px;
-	display: inline-flex;
-	flex-direction: row-reverse;
+/* Needs to be more specific than 0,2,0 (NcButton) */
+.button-vue--icon-only.avatar-list {
+	width: min-content !important;
+	padding-inline: var(--default-grid-baseline);
 
-	.avatar-wrapper {
-		margin: 0 -12px 0 0;
-		z-index: 1;
-		border-radius: 50%;
-		overflow: hidden;
-		box-sizing: content-box !important;
-		height: calc(var(--default-clickable-area) - 4px);
-		width: calc(var(--default-clickable-area) - 4px);
-	}
+	:deep(.button-vue__icon) {
+		display: inline-flex;
+		flex-direction: row-reverse;
+		width: min-content;
 
-	.icon-more, .icon-group, .icon-settings-dark {
-		width: var(--default-clickable-area);
-		height: var(--default-clickable-area);
-		margin: 0 3px 0 0;
-
-		&:hover {
-			background-color: var(--color-background-hover);
+		.avatar-wrapper {
+			margin: 3px -12px 3px 0;
+			z-index: 1;
 		}
 	}
 }
 
 .session-menu {
-	max-width: 280px;
-	padding-top: 6px;
-	padding-bottom: 6px;
+	--session-max-width: 280px;
+	max-width: var(--session-max-width);
+	padding-block-start: 6px;
+	padding-block-end: 6px;
 
 	ul li {
 		align-items: center;
@@ -169,18 +155,23 @@ export default {
 		padding: 6px;
 
 		.avatar-wrapper {
-			height: 36px;
-			width: 36px;
-			margin-right: 6px;
+			margin-inline-end: 6px;
 		}
 
 		.session-label {
-			padding-right: 3px;
+			padding-inline-end: 3px;
+			/* keep some room for the avatar and edit button */
+			max-width: calc(var(--session-max-width) - 60px);
+			overflow-wrap: break-word;
+		}
+
+		.guest-label,
+		.guest {
+			color: var(--color-text-maxcontrast);
 		}
 
 		.guest-label {
-			padding-left: 3px;
-			color: var(--color-text-maxcontrast);
+			padding-inline-start: 3px;
 		}
 	}
 }

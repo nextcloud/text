@@ -21,7 +21,6 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Constants;
-use OCP\Files\AlreadyExistsException;
 use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
@@ -90,23 +89,11 @@ class ApiService {
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$document = $this->documentService->getDocument($file->getId());
-			$freshSession = $document === null;
-			if ($baseVersionEtag !== null && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
+			$document = $this->documentService->getOrCreateDocument($file);
+			if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
 				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 			}
 
-			if ($freshSession) {
-				$this->logger->info('Create new document of ' . $file->getId());
-				try {
-					$document = $this->documentService->createDocument($file);
-				} catch (AlreadyExistsException) {
-					$freshSession = false;
-					$document = $this->documentService->getDocument($file->getId());
-				}
-			} else {
-				$this->logger->info('Keep previous document of ' . $file->getId());
-			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
@@ -118,17 +105,16 @@ class ApiService {
 
 		$documentState = null;
 		$content = null;
-		if ($freshSession) {
-			$this->logger->debug('Starting a fresh editing session for ' . $file->getId());
+		if ($document->getLastSavedVersion() === 0) {
+			$this->logger->debug('Sending content for unsaved file ' . $file->getId());
 			$content = $this->loadContent($file);
 		} else {
-			$this->logger->debug('Loading existing session for ' . $file->getId());
+			$this->logger->debug('Loading saved document state for ' . $file->getId());
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
-				$this->logger->debug('Existing document, state file loaded ' . $file->getId());
 			} catch (NotFoundException $e) {
-				$this->logger->debug('Existing document, but state file not found for ' . $file->getId());
+				$this->logger->warning('State file not found for saved document' . $file->getId());
 
 				// If we have no state file we need to load the content from the file
 				// On the client side we use this to initialize a idempotent initial y.js document
@@ -141,7 +127,11 @@ class ApiService {
 			$lockInfo = null;
 		}
 
-		if (!$readOnly) {
+		$hasOwner = $file->getOwner() !== null;
+
+		// Disable file locking for Readme.md files, because in the
+		// current setup, this makes it almost impossible to delete these files.
+		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
 			$isLocked = $this->documentService->lock($file->getId());
 			if (!$isLocked) {
 				$readOnly = true;
@@ -155,6 +145,7 @@ class ApiService {
 			'content' => $content,
 			'documentState' => $documentState,
 			'lock' => $lockInfo,
+			'hasOwner' => $hasOwner,
 		]);
 	}
 
@@ -171,18 +162,15 @@ class ApiService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?string $token = null): DataResponse {
+	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, ?string $token = null): DataResponse {
 		try {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
 			// Session was removed in the meantime. #3875
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
-		if (empty($steps)) {
-			return new DataResponse([]);
-		}
 		try {
-			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
+			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $token);
 			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
@@ -249,7 +237,7 @@ class ApiService {
 		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
 	}
 
-	public function save(Session $session, Document $document, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 		} catch (NotPermittedException|NotFoundException $e) {

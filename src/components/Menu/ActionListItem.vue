@@ -4,14 +4,14 @@
 -->
 
 <template>
-	<NextcloudVueNcActionButton class="entry-single-action entry-action entry-action-item"
+	<NextcloudVueNcActionButton
+		class="entry-single-action entry-action entry-action-item"
 		:title="listItemTooltip || undefined"
 		:class="state.class"
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:type="state.type"
-		:model-value="state.type !== 'button' ? state.active : undefined"
+		:model-value="actionType !== 'button' ? state.active : undefined"
 		close-after-click
 		v-on="$listeners"
 		@click="runAction">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { NcActionButton as NextcloudVueNcActionButton } from '@nextcloud/vue'
+import NextcloudVueNcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {
@@ -41,7 +41,7 @@ export default {
 	extends: BaseActionEntry,
 
 	mounted() {
-		this.$editor.on('transaction', () => this.updateState())
+		this.editor?.on('transaction', () => this.updateState())
 	},
 
 	methods: {
@@ -53,7 +53,7 @@ export default {
 			} else {
 				// Some actions run themselves.
 				// others still need to have .run() called upon them.
-				actionEntry.action(this.$editor.chain().focus(), this.$editor)?.run()
+				actionEntry.action(this.editor?.chain().focus(), this.editor)?.run()
 			}
 
 			this.$nextTick(() => {

@@ -25,10 +25,10 @@ div.ProseMirror {
 		scroll-margin-top: 40px;
 	}
 
-	&[contenteditable=true],
-	&[contenteditable=false],
-	[contenteditable=true],
-	[contenteditable=false] {
+	&[contenteditable='true'],
+	&[contenteditable='false'],
+	[contenteditable='true'],
+	[contenteditable='false'] {
 		width: 100%;
 		background-color: transparent;
 		color: var(--color-main-text);
@@ -37,11 +37,12 @@ div.ProseMirror {
 		user-select: text;
 		font-size: var(--default-font-size);
 
-		&:not(.collaboration-cursor__caret) {
+		&:not(.collaboration-carets__caret) {
 			border: none !important;
 		}
 
-		&:focus, &:focus-visible {
+		&:focus,
+		&:focus-visible {
 			box-shadow: none !important;
 		}
 	}
@@ -50,9 +51,9 @@ div.ProseMirror {
 		display: flex;
 		align-items: start;
 		// Leave space for checkbox (14px width + 2x 1px border + 6px margin-right)
-		margin-left: -24px;
+		margin-inline-start: -24px;
 
-		input[type=checkbox] {
+		input[type='checkbox'] {
 			display: none;
 		}
 		&:before {
@@ -68,7 +69,7 @@ div.ProseMirror {
 			background-position: center;
 			cursor: pointer;
 		}
-		&.checked{
+		&.checked {
 			&:before {
 				background-image: url('../../img/checkbox-mark.svg');
 				background-color: var(--color-primary-element);
@@ -76,7 +77,6 @@ div.ProseMirror {
 			}
 			> label > p {
 				color: var(--color-text-maxcontrast);
-				text-decoration: line-through;
 			}
 		}
 		label {
@@ -90,7 +90,12 @@ div.ProseMirror {
 		margin-top: 10px;
 	}
 
-	> h1,h2,h3,h4,h5,h6 {
+	> h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		position: relative;
 
 		&:first-child {
@@ -107,13 +112,16 @@ div.ProseMirror {
 			font-size: max(1em, 16px);
 			position: absolute;
 			text-decoration: none;
-			transition-duration: .15s;
+			transition-duration: 0.15s;
 			transition-property: opacity;
-			transition-timing-function: cubic-bezier(.4,0,.2,1);
+			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			scroll-margin-top: calc(
+				var(--default-clickable-area) + 4 * var(--default-grid-baseline)
+			);
 		}
 
 		&:hover .heading-anchor {
-			opacity: 0.5!important;
+			opacity: 0.5 !important;
 		}
 
 		&:focus-visible {
@@ -124,7 +132,7 @@ div.ProseMirror {
 	a {
 		color: var(--color-primary-element);
 		text-decoration: underline;
-		padding: .5em 0;
+		padding: 0.5em 0;
 	}
 
 	p {
@@ -135,6 +143,10 @@ div.ProseMirror {
 
 	em {
 		font-style: italic;
+	}
+
+	mark {
+		background-color: var(--color-mark, #fff0c7);
 	}
 
 	h1,
@@ -174,11 +186,6 @@ div.ProseMirror {
 		font-size: var(--default-font-size);
 	}
 
-	img {
-		cursor: default;
-		max-width: 100%;
-	}
-
 	hr {
 		padding: 2px 0;
 		border: none;
@@ -195,7 +202,8 @@ div.ProseMirror {
 	}
 
 	pre {
-		white-space: pre-wrap;
+		white-space: pre;
+		overflow-x: auto;
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
 		padding: 1em 1.3em;
@@ -210,6 +218,12 @@ div.ProseMirror {
 			font-size: 0.6rem;
 		}
 		code {
+			// We want line wrapping in plaintext documents only
+			white-space: pre !important;
+			&.language-plaintext {
+				white-space: pre-wrap !important;
+			}
+
 			.hljs-comment,
 			.hljs-quote {
 				color: #999999;
@@ -258,7 +272,7 @@ div.ProseMirror {
 
 	pre.frontmatter {
 		margin-bottom: 2em;
-		border-left: 4px solid var(--color-primary-element);
+		border-inline-start: 4px solid var(--color-primary-element);
 	}
 
 	pre.frontmatter::before {
@@ -268,15 +282,15 @@ div.ProseMirror {
 		padding-bottom: 0.5em;
 	}
 
-	p code {
+	code {
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
-		padding: .1em .3em;
+		padding: 0.1em 0.3em;
 	}
 
 	li {
 		position: relative;
-		padding-left: 3px;
+		padding-inline-start: 3px;
 
 		p {
 			position: relative;
@@ -284,17 +298,18 @@ div.ProseMirror {
 		}
 	}
 
-	li [dir="rtl"] {
+	li [dir='rtl'] {
 		text-align: right;
 	}
 
-	li [dir="ltr"] {
+	li [dir='ltr'] {
 		text-align: left;
 	}
 
-	ul, ol {
-		padding-left: 10px;
-		margin-left: 10px;
+	ul,
+	ol {
+		padding-inline-start: 10px;
+		margin-inline-start: 10px;
 		margin-bottom: 1em;
 	}
 
@@ -313,11 +328,10 @@ div.ProseMirror {
 	}
 
 	blockquote {
-		padding-left: 1em;
-		border-left: 4px solid var(--color-primary-element);
+		padding-inline-start: 1em;
+		border-inline-start: 4px solid var(--color-primary-element);
 		color: var(--color-text-maxcontrast);
-		margin-left: 0;
-		margin-right: 0;
+		margin-inline: 0;
 	}
 
 	// table variables
@@ -330,32 +344,37 @@ div.ProseMirror {
 
 	table {
 		border-spacing: 0;
-		width: calc(100% - 50px - var(--default-clickable-area));
+		// Needs to be sync with `.table-add-row` button width in `TableView.vue`
+		width: calc(100% - (2 * var(--clickable-area-small)) - 8px);
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
-		margin-bottom: calc(var(--clickable-area-small) + var(--default-clickable-area));
-		&+ * {
+		margin-bottom: calc(var(--clickable-area-small) + 8px);
+		& + * {
 			margin-top: 1em;
 		}
 
-
-		td, th {
+		td,
+		th {
 			border: 1px solid var(--table-color-border);
 			border-left: 0;
 			vertical-align: top;
 			max-width: 100%;
-			line-height: var(--default-clickable-area);
 			&:first-child {
 				border-left: 1px solid var(--table-color-border);
 			}
+			* {
+				z-index: 3;
+			}
 		}
 		td {
-			padding: 0 0 0 0.75em;
 			border-top: 0;
 			color: var(--color-main-text);
+
+			p:last-child {
+				margin-bottom: 0;
+			}
 		}
 		th {
-			padding: 0 0 0 0.75em;
 			font-weight: normal;
 			border-bottom-color: var(--table-color-heading-border);
 			color: var(--table-color-heading);
@@ -366,23 +385,43 @@ div.ProseMirror {
 		}
 		tr {
 			background-color: var(--table-color-background);
-			&:hover, &:active, &:focus {
+			&:hover,
+			&:active,
+			&:focus {
 				background-color: var(--table-color-background-hover);
 			}
 		}
 
 		tr:first-child {
-			th:first-child { border-top-left-radius: var(--table-border-radius); }
-			th:last-child { border-top-right-radius: var(--table-border-radius); }
+			th:first-child {
+				border-top-left-radius: var(--table-border-radius);
+			}
+			th:last-child {
+				border-top-right-radius: var(--table-border-radius);
+			}
 		}
 
 		tr:last-child {
-			td:first-child { border-bottom-left-radius: var(--table-border-radius); }
-			td:last-child { border-bottom-right-radius: var(--table-border-radius); }
+			td:first-child {
+				border-bottom-left-radius: var(--table-border-radius);
+			}
+			td:last-child {
+				border-bottom-right-radius: var(--table-border-radius);
+			}
 		}
 
+		.selectedCell:after {
+			background: var(--color-background-dark);
+			content: '';
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			pointer-events: none;
+			position: absolute;
+			z-index: 2;
+		}
 	}
-
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
@@ -402,5 +441,12 @@ div.ProseMirror {
 }
 
 .tippy-content div {
+	box-sizing: border-box;
 	visibility: visible !important;
+}
+
+div.ProseMirror[contenteditable='false'] {
+	table {
+		width: 100%;
+	}
 }

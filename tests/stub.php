@@ -12,6 +12,24 @@ namespace OC\AppFramework\OCS {
 	}
 }
 
+namespace OC\Files\Storage\Wrapper {
+	use OCP\Files\Storage\IStorage;
+
+	class Wrapper implements IStorage {
+		public function __construct(array $parameters) {
+		}
+	}
+}
+
+namespace OCA\Collectives\Mount {
+
+	use OC\Files\Storage\Wrapper\Wrapper;
+	use OCP\Files\Storage\IConstructableStorage;
+
+	class CollectiveStorage extends Wrapper implements IConstructableStorage {
+	}
+}
+
 namespace OCA\Files\Event {
 	class LoadAdditionalScriptsEvent extends \OCP\EventDispatcher\Event {
 	}
@@ -70,5 +88,11 @@ namespace OCA\Files_Versions\Events {
 namespace OCA\Files_Versions\Versions {
 	abstract class IVersion {
 		abstract public function getSourceFile(): \OCP\Files\File;
+	}
+}
+
+namespace OCA\DAV\Connector\Sabre {
+	class PublicAuth {
+		public const DAV_AUTHENTICATED = '';
 	}
 }

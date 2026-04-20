@@ -5,7 +5,8 @@
 
 <template>
 	<NcModal v-if="active" :name="fileName" @close="close">
-		<Editor :file-id="fileId"
+		<Editor
+			:file-id="fileId"
 			:relative-path="relativePath"
 			:active="active"
 			:share-token="shareToken"
@@ -14,13 +15,13 @@
 </template>
 
 <script>
-import { NcModal } from '@nextcloud/vue'
+import NcModal from '@nextcloud/vue/components/NcModal'
 
 export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
+		Editor: () => import('./Editor.vue'),
 	},
 	props: {
 		fileId: {
@@ -46,7 +47,9 @@ export default {
 	},
 	computed: {
 		fileName() {
-			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
+			return this.relativePath.substring(
+				this.relativePath.lastIndexOf('/') + 1,
+			)
 		},
 	},
 	methods: {

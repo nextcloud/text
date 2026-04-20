@@ -3,16 +3,16 @@
     "No file was uploaded" : "Nijedna datoteka nije učitana.",
     "Missing a temporary folder" : "Nedostaje privremeni direktorij.",
     "File not found" : "Datoteka nije pronađena",
-    "Translate" : "Translate",
     "guest" : "gost",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
     "Link" : "Veza",
     "Cancel" : "Odustani",
+    "Save" : "Spremi",
+    "Translate" : "Translate",
     "to" : "do",
-    "Upload" : "Učitaj",
     "Edit" : "Izmjeni",
-    "Info" : "Info",
-    "Warning" : "Upozorenje"
+    "Upload" : "Učitaj",
+    "Choose" : "Izaberite"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

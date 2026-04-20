@@ -3,48 +3,57 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
-import { createLowlight, common } from 'lowlight'
-
 /* eslint-disable import/no-named-as-default */
 import Blockquote from '@tiptap/extension-blockquote'
-import BulletList from './../nodes/BulletList.js'
-import Callouts from './../nodes/Callouts.js'
-import CharacterCount from '@tiptap/extension-character-count'
-import Code from '@tiptap/extension-code'
-import CodeBlock from './../nodes/CodeBlock.js'
-import Details from './../nodes/Details.js'
 import Document from '@tiptap/extension-document'
-import Dropcursor from '@tiptap/extension-dropcursor'
-import EditableTable from './../nodes/EditableTable.js'
-import Emoji from './Emoji.js'
-import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
-import FrontMatter from './../nodes/FrontMatter.js'
-import Gapcursor from '@tiptap/extension-gapcursor'
-import HardBreak from './../nodes/HardBreak.js'
-import Heading from '../nodes/Heading.js'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import Image from './../nodes/Image.js'
-import ImageInline from './../nodes/ImageInline.js'
-import KeepSyntax from './KeepSyntax.js'
-import LinkPicker from './../extensions/LinkPicker.js'
+import { ListItem } from '@tiptap/extension-list'
+import Placeholder from '@tiptap/extension-placeholder'
+import Text from '@tiptap/extension-text'
+/* eslint-enable import/no-named-as-default */
+import { CharacterCount, Dropcursor, Gapcursor } from '@tiptap/extensions'
+import { common, createLowlight } from 'lowlight'
+import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
+import Heading from '../nodes/Heading.js'
+import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
 import LinkBubble from './../extensions/LinkBubble.js'
-import ListItem from '@tiptap/extension-list-item'
+import LinkPicker from './../extensions/LinkPicker.js'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
-import Search from './../extensions/Search.js'
+import Search from './../extensions/Search.ts'
+import TextDirection from './../extensions/TextDirection.ts'
+import Typography from './../extensions/Typography.ts'
+import {
+	Code,
+	Highlight,
+	Italic,
+	Link,
+	Strike,
+	Strong,
+	Underline,
+} from './../marks/index.js'
+import BulletList from './../nodes/BulletList.js'
+import Callouts from './../nodes/Callouts.js'
+import CodeBlock from './../nodes/CodeBlock.js'
+import Details from './../nodes/Details.js'
+import EditableTable from './../nodes/EditableTable.js'
+import FrontMatter from './../nodes/FrontMatter.js'
+import HardBreak from './../nodes/HardBreak.js'
+import Image from './../nodes/Image.js'
+import ImageInline from './../nodes/ImageInline.js'
+import { MathBlock, MathInline } from './../nodes/Mathematics.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
 import Preview from './../nodes/Preview.js'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
-import Text from '@tiptap/extension-text'
 import TrailingNode from './../nodes/TrailingNode.js'
-import TextDirection from 'tiptap-text-direction'
-/* eslint-enable import/no-named-as-default */
-
-import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
+import Emoji from './Emoji.js'
+import KeepSyntax from './KeepSyntax.js'
+import Keymap from './Keymap.js'
 
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
@@ -54,23 +63,25 @@ export default Extension.create({
 
 	addOptions() {
 		return {
+			connection: null,
 			editing: true,
 			extensions: [],
-			component: null,
 			relativePath: null,
 			isEmbedded: false,
+			mentionSearch: undefined,
 		}
 	},
 
 	addExtensions() {
 		const defaultExtensions = [
-			this.options.editing ? Markdown : null,
+			Markdown,
 			Document,
 			Text,
 			Paragraph,
 			HardBreak,
 			Heading,
 			Strong,
+			Highlight,
 			Italic,
 			Strike,
 			Blockquote,
@@ -95,11 +106,22 @@ export default Extension.create({
 			Underline,
 			Image,
 			ImageInline,
-			Dropcursor,
+			Dropcursor.configure({
+				color: 'var(--color-primary-element)',
+				width: 2,
+			}),
 			Gapcursor,
 			KeepSyntax,
+			Keymap,
 			FrontMatter,
-			Mention,
+			Mention.configure({
+				suggestion: MentionSuggestion({
+					connection: this.options.connection,
+					options: {
+						mentionSearch: this.options.mentionSearch,
+					},
+				}),
+			}),
 			Search,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
@@ -107,20 +129,39 @@ export default Extension.create({
 			LinkPicker,
 			Link.configure({
 				openOnClick: true,
-				shouldAutoLink: href => /^https?:\/\//.test(href),
+				shouldAutoLink: (href) => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
+			this.options.editing
+				? Placeholder.configure({
+						placeholder: t('text', "Start writing or type '/' to add…"),
+					})
+				: null,
 			TrailingNode,
 			TextDirection.configure({
-				types: ['heading', 'paragraph', 'listItem', 'orderedList'],
+				types: [
+					'blockquote',
+					'callout',
+					'detailsSummary',
+					'heading',
+					'listItem',
+					'paragraph',
+					'tableCell',
+					'tableHeader',
+					'taskItem',
+				],
 			}),
+			Typography,
+			MathInline,
+			MathBlock,
 		]
-		const additionalExtensionNames = this.options.extensions.map(e => e.name)
+		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
-			...defaultExtensions.filter(e => e && !additionalExtensionNames.includes(e.name)),
+			...defaultExtensions.filter(
+				(e) => e && !additionalExtensionNames.includes(e.name),
+			),
 			...this.options.extensions,
 		]
 	},
-
 })

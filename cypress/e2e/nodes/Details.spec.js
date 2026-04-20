@@ -24,17 +24,13 @@ describe('Details plugin', () => {
 	})
 
 	it('inserts and removes details', () => {
-		cy.getContent()
-			.type('content{selectAll}')
+		cy.getContent().type('content{selectAll}')
 
 		cy.getMenuEntry('details').click()
 
-		cy.getContent()
-			.find('div[data-text-el="details"]')
-			.should('exist')
+		cy.getContent().find('div[data-text-el="details"]').should('exist')
 
-		cy.getContent()
-			.type('summary')
+		cy.getContent().type('summary')
 
 		cy.getContent()
 			.find('div[data-text-el="details"]')
@@ -48,11 +44,8 @@ describe('Details plugin', () => {
 
 		cy.getMenuEntry('details').click()
 
-		cy.getContent()
-			.find('div[data-text-el="details"]')
-			.should('not.exist')
+		cy.getContent().find('div[data-text-el="details"]').should('not.exist')
 
-		cy.getContent()
-			.should('contain', 'content')
+		cy.getContent().should('contain', 'content')
 	})
 })

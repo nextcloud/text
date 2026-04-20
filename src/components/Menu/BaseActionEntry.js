@@ -7,9 +7,11 @@
 
 import debounce from 'debounce'
 
-import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
-import { useOutlineActions, useOutlineStateMixin, useReadOnlyActions } from '../Editor/Wrapper.provider.js'
-import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
+import { useReadOnlyActions } from '../Editor/Wrapper.provider.js'
+import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
 
@@ -17,13 +19,13 @@ import './ActionEntry.scss'
  * @type {import("vue").ComponentOptions} BaseActionEntry
  */
 const BaseActionEntry = {
-	mixins: [
-		useEditorMixin,
-		useIsMobileMixin,
-		useOutlineActions,
-		useOutlineStateMixin,
-		useReadOnlyActions,
-	],
+	mixins: [useReadOnlyActions],
+	setup() {
+		const isMobile = useIsMobile()
+		const { editor } = useEditor()
+		const { displayToc } = useEditorHeadings()
+		return { displayToc, editor, isMobile }
+	},
 	props: {
 		actionEntry: {
 			type: Object,
@@ -36,7 +38,8 @@ const BaseActionEntry = {
 	},
 	data() {
 		return {
-			state: getActionState(this.actionEntry, this.$editor),
+			state: getActionState(this.actionEntry, this.editor),
+			actionType: getActionType(this.actionEntry),
 		}
 	},
 	computed: {
@@ -44,7 +47,7 @@ const BaseActionEntry = {
 			const { label } = this.actionEntry
 
 			return typeof label === 'function'
-				? label(this)
+				? label({ displayToc: this.displayToc })
 				: label
 		},
 		icon() {
@@ -54,15 +57,10 @@ const BaseActionEntry = {
 			return getKeyshortcuts(this.actionEntry)
 		},
 		tooltip() {
-			return [
-				this.label,
-				getKeys(this.$isMobile, this.actionEntry),
-			].join(' ')
+			return [this.label, getKeys(this.isMobile, this.actionEntry)].join(' ')
 		},
 		listItemTooltip() {
-			return [
-				getKeys(this.$isMobile, this.actionEntry),
-			].join(' ')
+			return [getKeys(this.isMobile, this.actionEntry)].join(' ')
 		},
 	},
 	watch: {
@@ -73,25 +71,28 @@ const BaseActionEntry = {
 	},
 	mounted() {
 		this.$_updateState = debounce(this.updateState.bind(this), 50)
-		this.$editor.on('update', this.$_updateState)
-		this.$editor.on('selectionUpdate', this.$_updateState)
+		this.editor.on('update', this.$_updateState)
+		this.editor.on('selectionUpdate', this.$_updateState)
 		// Initially emit the disabled event to set the state in parent
 		this.$emit('disabled', this.state.disabled)
 		// Initially set the tabindex
 		this.setTabIndexOnButton()
 	},
 	beforeDestroy() {
-		this.$editor.off('update', this.$_updateState)
-		this.$editor.off('selectionUpdate', this.$_updateState)
+		this.editor.off('update', this.$_updateState)
+		this.editor.off('selectionUpdate', this.$_updateState)
 	},
 	methods: {
 		updateState() {
-			this.state = getActionState(this.actionEntry, this.$editor)
+			this.state = getActionState(this.actionEntry, this.editor)
 			this.$emit('disabled', this.state.disabled)
 		},
 		setTabIndexOnButton() {
 			/** @type {HTMLButtonElement} */
-			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+			const button =
+				this.$el.tagName.toLowerCase() === 'button'
+					? this.$el
+					: this.$el.querySelector('button')
 
 			if (this.canBeFocussed === null) {
 				button.removeAttribute('tabindex')
@@ -104,7 +105,10 @@ const BaseActionEntry = {
 		 */
 		focusButton() {
 			/** @type {HTMLButtonElement} */
-			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+			const button =
+				this.$el.tagName.toLowerCase() === 'button'
+					? this.$el
+					: this.$el.querySelector('button')
 			button.focus()
 		},
 	},

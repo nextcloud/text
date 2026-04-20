@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { expectMarkdown, loadMarkdown } from '../nodes/helpers.js'
 import Markdown from './../../../src/extensions/Markdown.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import { createCustomEditor } from './../../support/components.js'
-import { loadMarkdown, expectMarkdown } from '../nodes/helpers.js'
 
 describe('Link marks', { retries: 0 }, () => {
 	const editor = createCustomEditor({
@@ -21,15 +21,15 @@ describe('Link marks', { retries: 0 }, () => {
 
 		it('can run on normal paragraph', () => {
 			prepareEditor('hello\n', 3)
-			expect(editor.can().insertOrSetLink().run()).to.equal(true)
+			expect(editor.can().insertOrSetLink()).to.equal(true)
 		})
 
 		it('will insert a link in a normal paragraph', () => {
 			prepareEditor('hello\n', 3)
-			editor.commands.insertOrSetLink('https://nextcloud.com', {
-				href: 'https://nextcloud.com',
+			editor.commands.insertOrSetLink('https://example.org', {
+				href: 'https://example.org',
 			})
-			expectMarkdown(editor, 'he\n\n<https://nextcloud.com>\n\nllo')
+			expectMarkdown(editor, 'he\n\n<https://example.org>\n\nllo')
 		})
 	})
 

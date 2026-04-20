@@ -5,11 +5,10 @@
 
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
-import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
+import { domHref } from '../helpers/links.js'
 
 class LinkBubblePluginView {
-
 	#component = null
 	#editor = null
 
@@ -21,29 +20,19 @@ class LinkBubblePluginView {
 	}
 
 	addEventListeners() {
-		this.view.dom.addEventListener('dragstart',
-			this.closeOnExternalEvents,
-		)
-		document.addEventListener('mousedown',
-			this.closeOnExternalEvents,
-		)
-		document.addEventListener('scroll',
-			this.closeOnExternalEvents,
-			{ capture: true },
-		)
+		this.view.dom.addEventListener('dragstart', this.closeOnExternalEvents)
+		document.addEventListener('mousedown', this.closeOnExternalEvents)
+		document.addEventListener('scroll', this.closeOnExternalEvents, {
+			capture: true,
+		})
 	}
 
 	removeEventListeners() {
-		this.view.dom.removeEventListener('dragstart',
-			this.closeOnExternalEvents,
-		)
-		document.removeEventListener('mousedown',
-			this.closeOnExternalEvents,
-		)
-		document.removeEventListener('scroll',
-			this.closeOnExternalEvents,
-			{ capture: true },
-		)
+		this.view.dom.removeEventListener('dragstart', this.closeOnExternalEvents)
+		document.removeEventListener('mousedown', this.closeOnExternalEvents)
+		document.removeEventListener('scroll', this.closeOnExternalEvents, {
+			capture: true,
+		})
 	}
 
 	closeOnExternalEvents = (event) => {
@@ -69,7 +58,7 @@ class LinkBubblePluginView {
 		}
 
 		this.#component ||= new VueRenderer(LinkBubbleView, {
-			parent: this.options.parent,
+			parent: this.options.editor.contentComponent,
 			propsData: {
 				editor: this.options.editor,
 				href: null,
@@ -109,7 +98,13 @@ class LinkBubblePluginView {
 	}
 
 	updateTooltip(view, { mark, nodeStart }) {
-		let referenceEl = view.nodeDOM(nodeStart)
+		let referenceEl
+		try {
+			referenceEl = view.nodeDOM(nodeStart)
+		} catch (e) {
+			// Prevent throwing error at rerouting in `openLink()`
+			return
+		}
 		if (Object.prototype.toString.call(referenceEl) === '[object Text]') {
 			referenceEl = referenceEl.parentElement
 		}
@@ -132,7 +127,6 @@ class LinkBubblePluginView {
 	destroy() {
 		this.tippy?.destroy()
 	}
-
 }
 
 export default LinkBubblePluginView

@@ -28,9 +28,11 @@ const Emoji = Node.create({
 
 	addCommands() {
 		return {
-			emoji: (emojiObject) => ({ commands }) => {
-				return commands.insertContent(emojiObject.native + ' ')
-			},
+			emoji:
+				(emojiObject) =>
+				({ commands }) => {
+					return commands.insertContent(emojiObject.native + ' ')
+				},
 		}
 	},
 

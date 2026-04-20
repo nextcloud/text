@@ -6,13 +6,14 @@
 <template>
 	<div class="document-status" :class="{ mobile: isMobile }">
 		<div class="status-wrapper">
-			<SyncStatus :idle="idle"
+			<SyncStatus
+				:idle="idle"
 				:sync-error="syncError"
 				:has-connection-issue="hasConnectionIssue"
 				@reconnect="$emit('reconnect')" />
 			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
-					<Lock :size="20" />
+					<LockOutlineIcon :size="20" />
 				</template>
 			</NcNoteCard>
 		</div>
@@ -20,9 +21,9 @@
 </template>
 
 <script>
-
-import { NcNoteCard } from '@nextcloud/vue'
-import Lock from 'vue-material-design-icons/Lock.vue'
+import { t } from '@nextcloud/l10n'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import LockOutlineIcon from 'vue-material-design-icons/LockOutline.vue'
 import isMobile from '../../mixins/isMobile.js'
 import SyncStatus from './DocumentStatus/SyncStatus.vue'
 
@@ -32,7 +33,7 @@ export default {
 	components: {
 		SyncStatus,
 		NcNoteCard,
-		Lock,
+		LockOutlineIcon,
 	},
 
 	mixins: [isMobile],
@@ -40,7 +41,7 @@ export default {
 	props: {
 		idle: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		lock: {
 			type: Object,
@@ -52,7 +53,7 @@ export default {
 		},
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 	},
 
@@ -69,20 +70,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.document-status {
-		position: absolute;
-		bottom: calc(var(--default-grid-baseline) * 2);
-		z-index: 100000;
-		// max-height: 50px;
-		margin: auto;
-		display: flex;
-		width: 100%;
-		justify-content: center;
-	}
-	.document-status.mobile {
-		bottom: 0;
-	}
-	.status-wrapper {
-		background-color: var(--color-main-background);
-	}
+.document-status {
+	position: sticky;
+	bottom: calc(var(--default-grid-baseline) * 2);
+	z-index: 100000;
+	// max-height: 50px;
+	margin-inline: auto;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+.document-status.mobile {
+	bottom: 0;
+}
+.status-wrapper {
+	background-color: var(--color-main-background);
+}
 </style>

@@ -3,29 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { TableHeader } from '@tiptap/extension-table-header'
 import { mergeAttributes } from '@tiptap/core'
+import { TableHeader } from '@tiptap/extension-table'
 
 export default TableHeader.extend({
 	content: 'inline*',
 
-	toMarkdown(state, node) {
-		const headerIndex = state.options.currentHeaderIndex
-		const columnWidth = state.options.columnWidths[headerIndex]
-		const align = node.attrs?.textAlign || 'left'
-		const space = columnWidth - node.content.size
-		const leftPadding = Math.floor(space / 2)
-		const rightPadding = Math.ceil(space / 2)
-
-		state.write(' ')
-		if (align === 'center') state.write(' '.repeat(leftPadding))
-		if (align === 'right') state.write(' '.repeat(space))
-		state.renderInline(node)
-		if (align === 'center') state.write(' '.repeat(rightPadding))
-		if (align === 'left') state.write(' '.repeat(space))
-		state.write(' |')
-		state.options.currentHeaderIndex++
-	},
+	toMarkdown() {},
 
 	parseHTML() {
 		return [
@@ -41,7 +25,10 @@ export default TableHeader.extend({
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		const attributes = mergeAttributes(
+			this.options.HTMLAttributes,
+			HTMLAttributes,
+		)
 		if (attributes.colspan === 1) {
 			delete attributes.colspan
 		}
@@ -49,15 +36,5 @@ export default TableHeader.extend({
 			delete attributes.rowspan
 		}
 		return ['th', attributes, 0]
-	},
-
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			textAlign: {
-				rendered: false,
-				parseHTML: (element) => element.style.textAlign || null,
-			},
-		}
 	},
 })

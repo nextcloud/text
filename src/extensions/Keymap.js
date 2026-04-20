@@ -3,15 +3,29 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit } from '@nextcloud/event-bus'
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 
 const Keymap = Extension.create({
-
-	name: 'customkeymap',
+	name: 'CustomKeymap',
 
 	addKeyboardShortcuts() {
-		return this.options
+		return {
+			/**
+			 * <Mod>-<Alt>-<H>
+			 * Toggle editor outline
+			 */
+			'Mod-Alt-h': () => {
+				emit('text:toc:toggle')
+				return true
+			},
+			/**
+			 * <Backspace>
+			 * Allows to undo input rules after they got automatically applied
+			 */
+			Backspace: () => this.editor.commands.undoInputRule(),
+		}
 	},
 
 	addProseMirrorPlugins() {
@@ -19,26 +33,56 @@ const Keymap = Extension.create({
 			new Plugin({
 				props: {
 					handleKeyDown(view, event) {
-						const key = event.key || event.keyCode
-						if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
-							// We need to stop propagation and dispatch the event on the window
-							// in order to force triggering the browser native search in the text editor
+						/**
+						 * <Mod>-<S>
+						 * Save editor content
+						 */
+						if (
+							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 's'
+						) {
+							event.preventDefault()
 							event.stopPropagation()
-							window.dispatchEvent(event)
+							emit('text:keyboard:save')
 							return true
 						}
-						if (event.key === 'Delete' && event.ctrlKey === true) {
-							// Prevent deleting the file, by core Viewer.vue
+
+						/**
+						 * <Esc>
+						 * Overwrite Viewer keybinding to close viewer
+						 */
+						if (
+							!event.ctrlKey
+							&& !event.metaKey
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 'Escape'
+						) {
+							event.preventDefault()
 							event.stopPropagation()
-							window.dispatchEvent(event)
 							return true
+						}
+
+						/**
+						 * <Mod>-<Del>
+						 * Prevent Viewer keybinding to delete the file, but don't prevent
+						 * browser keybinding to delete word after cursor.
+						 */
+						if (
+							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 'Delete'
+						) {
+							event.stopPropagation()
 						}
 					},
 				},
 			}),
 		]
 	},
-
 })
 
 export default Keymap

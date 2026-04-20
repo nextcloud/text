@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit } from '@nextcloud/event-bus'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import { emit } from '@nextcloud/event-bus'
 import { searchQueryPluginKey } from './searchQuery.js'
+
+export const searchDecorationsPluginKey = new PluginKey('searchDecorations')
 
 /**
  * Search decorations ProseMirror plugin
@@ -16,7 +18,7 @@ import { searchQueryPluginKey } from './searchQuery.js'
  */
 export default function searchDecorations() {
 	return new Plugin({
-		key: new PluginKey('searchDecorations'),
+		key: searchDecorationsPluginKey,
 		state: {
 			init(_, { doc }) {
 				const search = runSearch(doc, '')
@@ -26,18 +28,27 @@ export default function searchDecorations() {
 				const oldSearch = searchQueryPluginKey.getState(oldState)
 				const newSearch = searchQueryPluginKey.getState(newState)
 
-				const queryChanged = (newSearch.query !== oldSearch.query)
-				const indexChanged = (newSearch.index !== oldSearch.index)
-				const matchAllChanged = (newSearch.matchAll !== oldSearch.matchAll)
+				const queryChanged = newSearch.query !== oldSearch.query
+				const indexChanged = newSearch.index !== oldSearch.index
+				const matchAllChanged = newSearch.matchAll !== oldSearch.matchAll
 
-				if (tr.docChanged || queryChanged || indexChanged || matchAllChanged) {
-					const { results, total, index } = runSearch(tr.doc, newSearch.query, {
-						matchAll: newSearch.matchAll,
-						index: newSearch.index,
-					})
+				if (
+					tr.docChanged
+					|| queryChanged
+					|| indexChanged
+					|| matchAllChanged
+				) {
+					const { results, total, index } = runSearch(
+						tr.doc,
+						newSearch.query,
+						{
+							matchAll: newSearch.matchAll,
+							index: newSearch.index,
+						},
+					)
 
 					emit('text:editor:search-results', {
-						totalMatches: (newSearch.query === '' ? null : total),
+						totalMatches: newSearch.query === '' ? null : total,
 						matchIndex: index,
 					})
 
@@ -80,18 +91,34 @@ export function runSearch(doc, query, options) {
 		}
 	}
 
+	const mentionQuery = query.trim().startsWith('@')
+		? query.trim().slice(1).toLowerCase()
+		: query.trim().toLowerCase()
+
 	doc.descendants((node, offset, _position) => {
-		if (!node.isText) {
+		// Add decorations for text matches
+		if (node.isText) {
+			const matches = node.text.matchAll(new RegExp(query, 'gi'))
+
+			for (const match of matches) {
+				results.push({
+					from: match.index + offset,
+					to: match.index + offset + query.length,
+				})
+			}
+
 			return
 		}
 
-		const matches = node.text.matchAll(new RegExp(query, 'gi'))
-
-		for (const match of matches) {
-			results.push({
-				from: match.index + offset,
-				to: match.index + offset + query.length,
-			})
+		// Add decorations for mention matches
+		if (node.type.name === 'mention' && mentionQuery !== '') {
+			if (node.attrs.label.toLowerCase().startsWith(mentionQuery)) {
+				results.push({
+					from: offset,
+					to: offset + node.nodeSize,
+					mention: true,
+				})
+			}
 		}
 	})
 
@@ -131,7 +158,9 @@ export function highlightResults(doc, results) {
 		decorations.push(
 			Decoration.inline(result.from, result.to, {
 				'data-text-el': 'search-decoration',
-				style: 'background-color: #ead637; color: black; border-radius: 2px;',
+				style: result.mention
+					? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
+					: 'background-color: #ead637; color: black; border-radius: 2px;',
 			}),
 		)
 	})
@@ -151,7 +180,7 @@ function normalizeIndex(index, length) {
 	}
 
 	if (index < 0) {
-		return (index % length + length) % length
+		return ((index % length) + length) % length
 	} else {
 		return index % length
 	}

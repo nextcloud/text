@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -7,6 +8,7 @@
 namespace OCA\Text\DirectEditing;
 
 use OCP\DirectEditing\ACreateEmpty;
+use OCP\IAppConfig;
 use OCP\IL10N;
 
 class TextDocumentCreator extends ACreateEmpty {
@@ -17,8 +19,14 @@ class TextDocumentCreator extends ACreateEmpty {
 	 */
 	private $l10n;
 
-	public function __construct(IL10N $l10n) {
+	/**
+	 * @var IAppConfig
+	 */
+	private $appConfig;
+
+	public function __construct(IL10N $l10n, IAppConfig $appConfig) {
 		$this->l10n = $l10n;
+		$this->appConfig = $appConfig;
 	}
 
 	public function getId(): string {
@@ -30,10 +38,16 @@ class TextDocumentCreator extends ACreateEmpty {
 	}
 
 	public function getExtension(): string {
-		return 'md';
+		return $this->appConfig->getValueString('text', 'default_file_extension', 'md');
 	}
 
 	public function getMimetype(): string {
-		return 'text/markdown';
+		switch ($this->getExtension()) {
+			case 'txt':
+				return 'text/plain';
+			case 'md':
+			default:
+				return 'text/markdown';
+		}
 	}
 }

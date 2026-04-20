@@ -8,14 +8,17 @@
     "Could not write file to disk" : "Cha b’ urrainn dhuinn am faidhle a sgrìobhadh dhan diosg",
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
     "File not found" : "Cha deach am faidhle a lorg",
-    "Translate" : "Eadar-theangaich",
+    "Copy link" : "Dèan lethbhreac dhen cheangal",
     "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",
     "Cancel" : "Sguir dheth",
+    "Save" : "Sàbhail",
+    "Translate" : "Eadar-theangaich",
     "Replace" : "Cuir ’na àite",
-    "Upload" : "Luchdaich suas",
     "Edit" : "Deasaich",
+    "Upload" : "Luchdaich suas",
     "Source code" : "Bun-tùs",
-    "Details" : "Mion-fhiosrachadh"
+    "Details" : "Mion-fhiosrachadh",
+    "Choose" : "Tagh"
 },"pluralForm" :"nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;"
 }

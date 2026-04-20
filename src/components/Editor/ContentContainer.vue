@@ -4,85 +4,78 @@
 -->
 
 <template>
-	<div data-text-el="editor-content-wrapper"
-		class="content-wrapper text-editor__content-wrapper"
-		:class="{
-			'--show-outline': showOutline
-		}">
-		<div v-if="showOutline" class="text-editor__content-wrapper__left">
-			<EditorOutline />
-		</div>
+	<div data-text-el="editor-content-wrapper" class="editor__content-wrapper">
 		<slot />
-		<EditorContent role="document"
+		<FloatingButtons v-if="showFloatingButtons" />
+		<EditorContent
+			role="document"
 			class="editor__content text-editor__content"
-			:editor="$editor" />
-		<div class="text-editor__content-wrapper__right" />
+			:editor="editor" />
+		<TocContainer v-if="useTableOfContents" />
 	</div>
 </template>
 
 <script>
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-2'
-import { useEditorMixin } from '../Editor.provider.js'
-import { useOutlineStateMixin } from './Wrapper.provider.js'
-import EditorOutline from './EditorOutline.vue'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import FloatingButtons from './FloatingButtons.vue'
+import TocContainer from './TableOfContents/TocContainer.vue'
 
 export default {
 	name: 'ContentContainer',
 	components: {
 		EditorContent,
-		EditorOutline,
+		FloatingButtons,
+		TocContainer,
 	},
-	mixins: [useEditorMixin, useOutlineStateMixin],
+	props: {
+		readOnly: {
+			type: Boolean,
+			required: true,
+		},
+	},
+	setup() {
+		const isMobile = useIsMobile()
+		const { editor } = useEditor()
+		const { isRichEditor, isRichWorkspace, useTableOfContents } =
+			useEditorFlags()
+		return {
+			editor,
+			isMobile,
+			isRichEditor,
+			isRichWorkspace,
+			useTableOfContents,
+		}
+	},
 	computed: {
-		showOutline() {
-			return this.$outlineState.visible
+		showFloatingButtons() {
+			return (
+				!this.readOnly
+				&& !this.isMobile
+				&& this.isRichEditor
+				&& !this.isRichWorkspace
+			)
 		},
 	},
 }
 </script>
 
 <style scoped lang="scss">
-	.editor__content {
-		max-width: min(var(--text-editor-max-width), calc(100vw - 16px));
-		margin: 0 auto;
-		position: relative;
-		width: 100%;
-		:deep([contenteditable]) {
-			// drop off obsolete server styles
-			margin: 0 !important;
-		}
-	}
+.editor__content-wrapper {
+	display: flex;
+	flex-grow: 1;
+}
 
-	.ie {
-		.editor__content:deep(.ProseMirror) {
-			padding-top: 50px;
-		}
+.editor__content {
+	flex-grow: 1;
+	max-width: var(--text-editor-max-width);
+	margin: 0 auto;
+	position: relative;
+	:deep([contenteditable]) {
+		// drop off obsolete server styles
+		margin: 0 !important;
 	}
-
-	.text-editor__content-wrapper {
-		--side-width: calc((100% - var(--text-editor-max-width)) / 2);
-		display: grid;
-		grid-template-columns: 1fr auto;
-		overflow: auto;
-		flex: 1;
-		&.--show-outline {
-			grid-template-columns: var(--side-width) auto var(--side-width);
-		}
-		.text-editor__content-wrapper__left,
-		.text-editor__content-wrapper__right {
-			height: 100%;
-			position: relative;
-		}
-	}
-
-	.is-rich-workspace {
-		.text-editor__content-wrapper {
-			--side-width: var(--text-editor-max-width);
-			grid-template-columns: var(--side-width) auto;
-			.text-editor__content-wrapper__left,
-			.text-editor__content-wrapper__right {
-				display: none;
-			}
-		}
-	}
+}
 </style>
