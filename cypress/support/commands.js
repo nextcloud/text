@@ -220,7 +220,9 @@ Cypress.Commands.add('waitForPreview', (name) => {
 })
 
 Cypress.Commands.add('deleteFile', (path) => {
-	return axios.delete(`${url}/remote.php/webdav/${path}`)
+	return axios.delete(`${url}/remote.php/webdav/${path}`, {
+		validateStatus: (status) => status < 500,
+	})
 })
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => {
@@ -241,7 +243,15 @@ Cypress.Commands.add('getFileContent', (path) => {
 		.then((response) => response.data)
 })
 
-Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
+Cypress.Commands.add('propfindFolder', (path, depth = 0, properties = null) => {
+	const defaultProperties = `
+        <nc:rich-workspace />
+        <nc:rich-workspace-file />`
+
+	const propsXml = properties
+		? properties.map((p) => `<${p} />`).join('\n')
+		: defaultProperties
+
 	const rootPath = `${url}/remote.php/webdav/`
 	const requestPath = path === '/' ? rootPath : `${rootPath}${path}`
 
@@ -258,8 +268,7 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
     xmlns:oc="http://owncloud.org/ns"
     xmlns:nc="http://nextcloud.org/ns">
     <d:prop>
-        <nc:rich-workspace />
-        <nc:rich-workspace-file />
+        ${propsXml}
     </d:prop>
 </d:propfind>`,
 		})
