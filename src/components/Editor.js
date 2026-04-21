@@ -11,7 +11,6 @@ export default defineComponent({
 	props: Editor.props,
 	setup(props, { attrs, emit, slots }) {
 		const reloading = ref(false)
-		const localChange = ref('')
 		watch(reloading, (val) => {
 			if (val) {
 				nextTick(() => {
@@ -23,20 +22,11 @@ export default defineComponent({
 			!reloading.value
 			&& h(Editor, {
 				attrs,
-				props: {
-					...props,
-					localChange: localChange.value,
-				},
+				props,
 				on: {
 					focus: () => emit('focus'),
 					ready: () => emit('ready'),
-					reload: (change) => {
-						localChange.value = change
-						reloading.value = true
-					},
-					resolved: () => {
-						localChange.value = ''
-					},
+					reload: () => (reloading.value = true),
 				},
 				scopedSlots: slots,
 			})

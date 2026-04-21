@@ -15,8 +15,8 @@
 		<CollisionResolveDialog
 			v-if="isResolvingConflict"
 			:other-version="otherVersion"
-			:reader-source="localChange ? 'local' : 'server'"
-			@resolved="$emit('resolved')" />
+			:reader-source="indexedDbConflictContent ? 'local' : 'server'"
+			@resolved="resolved()" />
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
@@ -209,10 +209,6 @@ export default defineComponent({
 			type: String,
 			default: null,
 		},
-		localChange: {
-			type: String,
-			default: '',
-		},
 		mime: {
 			type: String,
 			default: null,
@@ -354,6 +350,7 @@ export default defineComponent({
 			contentWrapper: null,
 			translateModal: false,
 			translateContent: '',
+			indexedDbConflictContent: '',
 		}
 	},
 	computed: {
@@ -362,13 +359,13 @@ export default defineComponent({
 		},
 		hasSyncCollision() {
 			return (
-				Boolean(this.localChange)
+				Boolean(this.indexedDbConflictContent)
 				|| (this.syncError
 					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
 		otherVersion() {
-			return this.localChange || this.syncError.data.outsideChange
+			return this.indexedDbConflictContent || this.syncError.data.outsideChange
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -405,6 +402,9 @@ export default defineComponent({
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
 		},
+		indexedDbConflictKey() {
+			return `text-indexeddb-conflict-${this.fileId}`
+		},
 	},
 	watch: {
 		displayed() {
@@ -425,20 +425,35 @@ export default defineComponent({
 			}
 			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
 		},
-		hasOutdatedDocument(val) {
+		async hasOutdatedDocument(val) {
 			if (!val) {
 				return
 			}
 			logger.debug('Document is outdated')
-			const localChange = this.dirty ? this.serialize() : ''
+
+			if (this.dirty) {
+				const conflictData = {
+					hasConflict: true,
+					indexedDbContent: this.serialize(),
+					timestamp: Date.now(),
+				}
+				localStorage.setItem(
+					this.indexedDbConflictKey,
+					JSON.stringify(conflictData),
+				)
+				logger.debug('Stored conflict to localStorage', {
+					fileId: this.fileId,
+				})
+			}
+
 			logger.debug('Clearing the outdated cache and connecting without it.')
-			this.clearIndexedDb().then(() => {
-				logger.debug('Cleared indexed db, reloading.', { localChange })
-				this.$emit('reload', localChange)
-			})
+			await this.clearIndexedDb()
+			if (!this._isBeingDestroyed) {
+				this.$emit('reload')
+			}
 		},
 	},
-	mounted() {
+	async mounted() {
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
 			   if richt workspace is used we **must** not hide the content */
@@ -451,6 +466,9 @@ export default defineComponent({
 		this.emit('update:loaded', true)
 		subscribe('text:translate-modal:show', this.showTranslateModal)
 		exposeForDebugging(this)
+
+		await this.whenSynced
+		this.checkIndexedDbConflict()
 	},
 	created() {
 		// The following can be useful for debugging ydoc updates
@@ -473,6 +491,7 @@ export default defineComponent({
 		}
 	},
 	async beforeDestroy() {
+		this._isBeingDestroyed = true
 		logger.debug('beforeDestroy')
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
@@ -482,7 +501,7 @@ export default defineComponent({
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
-		if (this.dirty) {
+		if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.saveService.save()])
 		}
@@ -884,6 +903,33 @@ export default defineComponent({
 
 		saveBeforeUnload() {
 			this.saveService.saveViaSendBeacon()
+		},
+
+		checkIndexedDbConflict() {
+			// Only check if we're not already showing a conflict (e.g. when server API reported one)
+			if (this.hasSyncCollision) {
+				return
+			}
+
+			const conflictDataStr = localStorage.getItem(this.indexedDbConflictKey)
+
+			if (conflictDataStr) {
+				try {
+					const conflictData = JSON.parse(conflictDataStr)
+					if (conflictData.hasConflict && conflictData.indexedDbContent) {
+						this.indexedDbConflictContent = conflictData.indexedDbContent
+					}
+				} catch (e) {
+					logger.warn('Failed to parse persisted conflict data', { e })
+					localStorage.removeItem(this.indexedDbConflictKey)
+				}
+			}
+		},
+
+		resolved() {
+			localStorage.removeItem(this.indexedDbConflictKey)
+			this.indexedDbConflictContent = ''
+			this.$emit('resolved')
 		},
 	},
 })
