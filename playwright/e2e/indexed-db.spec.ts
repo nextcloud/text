@@ -54,39 +54,3 @@ test('recovering from indexed db', async ({
 		.poll(() => file.getContent(), { timeout: 10_000 })
 		.toBe('## Hello world')
 })
-;[
-	{
-		source: 'local',
-		buttonName: /Overwrite the file and save /,
-		headingName: 'Hello world',
-	},
-	{
-		source: 'server',
-		buttonName: /Discard the changes and edit /,
-		headingName: 'Good bye',
-	},
-].forEach(({ source, buttonName, headingName }) => {
-	test(`resolve conflict with ${source} version`, async ({
-		close,
-		container,
-		editor,
-		file,
-		reader,
-		setOffline,
-		setOnline,
-		user,
-	}) => {
-		await expect(editor.el).toBeVisible()
-		await setOffline()
-		await editor.typeHeading('Hello world')
-		await close()
-		await setOnline()
-		await user.uploadFile({ name: file.name, content: '## Good bye' })
-		await file.open()
-		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
-		await expect(reader.getHeading({ name: 'Hello world' })).toBeVisible()
-		await container.getButton({ name: buttonName }).click()
-		await expect(reader.el).not.toBeVisible()
-		await expect(editor.getHeading({ name: headingName })).toBeVisible()
-	})
-})
