@@ -23,6 +23,7 @@ export function useIndexedDbProvider(
 	const name = `${props.fileId}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
+	let isDestroyed = false
 	const whenSynced: Promise<void> = indexedDbProvider.whenSynced.then(async () => {
 		const val = await indexedDbProvider.get('dirty')
 		dirty.value = Boolean(val)
@@ -38,6 +39,10 @@ export function useIndexedDbProvider(
 	 */
 	function setDirty(val: boolean) {
 		dirty.value = Boolean(val)
+		if (isDestroyed) {
+			logger.debug('IndexedDB already destroyed, skipping setDirty')
+			return Promise.resolve()
+		}
 		return indexedDbProvider.set('dirty', val ? 1 : 0)
 	}
 
@@ -45,6 +50,10 @@ export function useIndexedDbProvider(
 	 * Get the base version etag the document had when it was edited last.
 	 */
 	function getBaseVersionEtag(): Promise<string | undefined> {
+		if (isDestroyed) {
+			logger.debug('IndexedDB already destroyed, skipping getBaseVersionEtag')
+			return Promise.resolve(undefined)
+		}
 		return indexedDbProvider.get('baseVersionEtag')
 	}
 
@@ -53,6 +62,10 @@ export function useIndexedDbProvider(
 	 * @param val the base version etag as returned by open.
 	 */
 	function setBaseVersionEtag(val: string) {
+		if (isDestroyed) {
+			logger.debug('IndexedDB already destroyed, skipping setBaseVersionEtag')
+			return Promise.resolve(undefined)
+		}
 		return indexedDbProvider.set('baseVersionEtag', val)
 	}
 
@@ -62,6 +75,7 @@ export function useIndexedDbProvider(
 	 */
 	function clearIndexedDb() {
 		logger.info('clearing indexeddb')
+		isDestroyed = true
 		return indexedDbProvider.clearData()
 	}
 
