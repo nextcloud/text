@@ -73,6 +73,7 @@
 			:lock="document?.lock"
 			:sync-error="syncError"
 			:has-connection-issue="displayConnectionIssue"
+			:has-indexed-db-conflict="!!indexedDbConflictContent"
 			@reconnect="reconnect" />
 		<Translate
 			:show="translateModal"
