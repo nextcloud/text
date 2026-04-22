@@ -118,7 +118,7 @@ OC.L10N.register(
     "Toggle outline" : "Rodyti / slėpti turinį",
     "Alt" : "Alt",
     "Open link" : "Atverti nuorodą",
-    "Edit link" : "Taisyti nuorodą",
+    "Edit link" : "Redaguoti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
     "Cancel" : "Atsisakyti",
     "URL" : "URL",
