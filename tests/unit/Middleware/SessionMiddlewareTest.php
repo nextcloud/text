@@ -7,12 +7,16 @@ use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
+use OCP\Constants;
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ISession;
+use OCP\IUser;
 use OCP\IUserSession;
+use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
 use Test\TestCase;
@@ -89,29 +93,74 @@ class SessionMiddlewareTest extends TestCase {
 		$this->invokeMiddleware($share);
 	}
 
+	public function testLoggedInUserWithInvalidToken(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('user1');
+
+		$share = $this->createPasswordProtectedShare('42');
+		$this->shareManager->method('getShareByToken')->willThrowException(new ShareNotFound());
+
+		$this->invokeMiddleware($share, $user);
+	}
+
+	public function testLoggedInUserWithValidToken(): void {
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('user1');
+
+		$share = $this->createMock(IShare::class);
+		$share->method('getId')->willReturn('user2-share');
+		$share->method('getPassword')->willReturn(null);
+		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
+		$share->method('getShareOwner')->willReturn('user2');
+		$share->method('getAttributes')->willReturn(null);
+
+		$this->shareManager->method('getShareByToken')->willReturn($share);
+
+		$controller = $this->createMock(ISessionAwareController::class);
+		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->once())->method('setDocumentId');
+
+		$this->invokeMiddleware($share, $user, $controller);
+	}
+
+	public function testLoggedInUserWithValidTokenUnauthenticated(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('user1');
+
+		$share = $this->createPasswordProtectedShare('user2-share');
+		$this->session->method('get')->with('public_link_authenticated')->willReturn(null);
+		$this->shareManager->method('getShareByToken')->willReturn($share);
+
+		$this->invokeMiddleware($share, $user);
+	}
+
 	private function createPasswordProtectedShare(string $id): IShare {
 		$share = $this->createMock(IShare::class);
 		$share->method('getId')->willReturn($id);
 		$share->method('getPassword')->willReturn('password');
-		$share->method('getPermissions')->willReturn(\OCP\Constants::PERMISSION_READ);
+		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$share->method('getShareOwner')->willReturn('owner');
 		$share->method('getAttributes')->willReturn(null);
 		return $share;
 	}
 
-	private function invokeMiddleware(IShare $share): void {
+	private function invokeMiddleware(IShare $share, ?IUser $user = null, ?ISessionAwareController $controller = null): void {
 		$this->request->method('getParam')->willReturnMap([
 			['documentId', null, 999],
 			['shareToken', null, 'token'],
 		]);
-		$this->userSession->method('getUser')->willReturn(null);
+		$this->userSession->method('getUser')->willReturn($user);
 		$this->shareManager->method('getShareByToken')->willReturn($share);
 
 		$folder = $this->createMock(Folder::class);
-		$folder->method('getFirstNodeById')->willReturn($this->createMock(\OCP\Files\File::class));
+		$folder->method('getFirstNodeById')->willReturn($this->createMock(File::class));
 		$this->rootFolder->method('getUserFolder')->willReturn($folder);
 
-		$controller = $this->createMock(ISessionAwareController::class);
+		$controller ??= $this->createMock(ISessionAwareController::class);
 		self::invokePrivate($this->middleware, 'assertUserOrShareToken', [$controller]);
 	}
 }
