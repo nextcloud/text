@@ -94,11 +94,14 @@ resolutionVariants.forEach(({ source, buttonName, headingName }) => {
 		container,
 		editor,
 		file,
+		page,
 		reader,
 		user,
 	}) => {
 		await expect(editor.el).toBeVisible()
+		const pushPromise = page.waitForRequest(/push/)
 		await editor.typeHeading('Hello world')
+		await pushPromise
 		await user.uploadFile({ name: file.name, content: '## Good bye' })
 
 		// Verify both verisons are shown
@@ -186,7 +189,9 @@ test('readonly session hides conflict dialog', async ({
 }) => {
 	await expect(editor.el).toBeVisible()
 	await setOffline()
+	const pushPromise = page.waitForRequest(/push/)
 	await editor.typeHeading('Hello world')
+	await pushPromise
 	await close()
 
 	await setOnline()
@@ -197,33 +202,92 @@ test('readonly session hides conflict dialog', async ({
 	await page.goto(`/s/${token}`)
 
 	// Should show latest content, no conflict dialog
-
 	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
 	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
 })
 
-test.skip('no conflict when uploading identical content', async ({
-	close,
+test('no conflict when uploading identical content with unsaved changes', async ({
 	container,
 	editor,
 	file,
 	reader,
+	page,
+	user,
+}) => {
+	await expect(editor.el).toBeVisible()
+	const pushPromise = page.waitForRequest(/push/)
+	await editor.typeHeading('Hello world')
+	await pushPromise
+	const requestPromise = page.waitForRequest(/save/)
+	await editor.saveIndicator.click()
+	await requestPromise
+	await editor.type('\nUnsaved change')
+
+	await user.uploadFile({ name: file.name, content: '## Hello world' })
+
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(reader.content).not.toBeVisible()
+	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+})
+
+test('no conflict when uploading identical content with local unsaved changes', async ({
+	container,
+	editor,
+	file,
+	reader,
+	page,
 	setOffline,
 	setOnline,
 	user,
 }) => {
 	await expect(editor.el).toBeVisible()
-	await setOffline()
+	const pushPromise = page.waitForRequest(/push/)
 	await editor.typeHeading('Hello world')
-	await close()
+	await pushPromise
+	const requestPromise = page.waitForRequest(/save/)
+	await editor.saveIndicator.click()
+	await requestPromise
+	await setOffline()
+	await editor.type('\nLocal change')
 
 	await setOnline()
 	await user.uploadFile({ name: file.name, content: '## Hello world' })
 
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(reader.content).not.toBeVisible()
+	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+})
+
+test('no conflict when uploading identical content with local unsaved changes after reopening the editor', async ({
+	close,
+	container,
+	editor,
+	file,
+	reader,
+	page,
+	setOffline,
+	setOnline,
+	user,
+}) => {
+	await expect(editor.el).toBeVisible()
+	const pushPromise = page.waitForRequest(/push/)
+	await editor.typeHeading('Hello world')
+	await pushPromise
+	const requestPromise = page.waitForRequest(/save/)
+	await editor.saveIndicator.click()
+	await requestPromise
+	await setOffline()
+	await editor.type('\nLocal change')
+	await close()
+
+	await setOnline()
+	await user.uploadFile({ name: file.name, content: '## Hello world' })
 	await file.open()
 
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
-	await expect(reader.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(reader.content).not.toBeVisible()
 	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 })
@@ -240,7 +304,9 @@ test('conflict dialog is sticky when scrolling', async ({
 	user,
 }) => {
 	await expect(editor.el).toBeVisible()
+	const pushPromise = page.waitForRequest(/push/)
 	await editor.typeHeading('Long content\n')
+	await pushPromise
 	await setOffline()
 
 	for (let i = 1; i < 8; i++) {
