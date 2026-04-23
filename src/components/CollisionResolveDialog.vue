@@ -59,8 +59,11 @@ export default {
 		const { setContent, setEditable } = useEditorMethods(editor)
 		const editorSource = props.readerSource === 'local' ? 'server' : 'local'
 		const textForSource = {
-			local: t('text', 'Overwrite the file and save the unsaved changes'),
-			server: t('text', 'Discard the changes and edit the latest version'),
+			local: t(
+				'text',
+				'Keep my local changes and overwrite the remote version',
+			),
+			server: t('text', 'Discard my local changes and use the remote version'),
 		}
 		return {
 			editorSource,

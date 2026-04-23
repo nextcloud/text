@@ -22,12 +22,12 @@ test.beforeEach(async ({ open }) => {
 const resolutionVariants = [
 	{
 		source: 'local',
-		buttonName: /Overwrite the file and save /,
+		buttonName: /Keep my local changes and overwrite the remote version/,
 		headingName: 'Hello world',
 	},
 	{
 		source: 'server',
-		buttonName: /Discard the changes and edit /,
+		buttonName: /Discard my local changes and use the remote version/,
 		headingName: 'Good bye',
 	},
 ]
@@ -120,12 +120,12 @@ test.describe('Plaintext conflict resolution', () => {
 	const plaintextResolutionVariants = [
 		{
 			source: 'local',
-			buttonName: /Overwrite the file and save /,
+			buttonName: /Keep my local changes and overwrite the remote version/,
 			content: 'Hello world',
 		},
 		{
 			source: 'server',
-			buttonName: /Discard the changes and edit /,
+			buttonName: /Discard my local changes and use the remote version/,
 			content: 'Good bye',
 		},
 	]
@@ -174,7 +174,11 @@ test('[conflict] automatic resolution if no unsaved changes', async ({
 	// Should show latest content, no conflict dialog
 	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
 	await expect(reader.content).not.toBeVisible()
-	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
+	await expect(
+		container.getButton({
+			name: /Keep my local changes and overwrite the remote version/,
+		}),
+	).not.toBeVisible()
 })
 
 test('readonly session hides conflict dialog', async ({
@@ -203,7 +207,11 @@ test('readonly session hides conflict dialog', async ({
 
 	// Should show latest content, no conflict dialog
 	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
-	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
+	await expect(
+		container.getButton({
+			name: /Keep my local changes and overwrite the remote version/,
+		}),
+	).not.toBeVisible()
 })
 
 test('no conflict when uploading identical content with unsaved changes', async ({
@@ -288,7 +296,11 @@ test('no conflict when uploading identical content with local unsaved changes af
 
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 	await expect(reader.content).not.toBeVisible()
-	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
+	await expect(
+		container.getButton({
+			name: /Keep my local changes and overwrite the remote version/,
+		}),
+	).not.toBeVisible()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 })
 
@@ -325,6 +337,10 @@ test('conflict dialog is sticky when scrolling', async ({
 	// Scroll down
 	await reader.getHeading({ name: 'Section 7' }).scrollIntoViewIfNeeded()
 
-	await expect(container.getButton({ name: /Overwrite/ })).toBeVisible()
+	await expect(
+		container.getButton({
+			name: /Keep my local changes and overwrite the remote version/,
+		}),
+	).toBeVisible()
 	await expect(page.locator('.document-status')).toBeVisible()
 })
