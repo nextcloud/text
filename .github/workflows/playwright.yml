@@ -14,15 +14,19 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
     steps:
       - name: Checkout app
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
       - name: Check composer.json
         id: check_composer
-        uses: andstor/file-existence-action@076e0072799f4942c8bc574a82233e1e4d13e9d6 # v3.0.0
+        uses: andstor/file-existence-action@558493d6c74bf472d87c84eab196434afc2fa029 # v3.1.0
         with:
           files: 'composer.json'
 
@@ -30,38 +34,35 @@ jobs:
         if: steps.check_composer.outputs.files_exists == 'true'
         run: composer install --no-dev
 
-      - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@06d6baf7d8f41934ab630e97d9e6c0bc9c9ac5e4 # v3
+      - name: Read package.json
+        uses: nextcloud-libraries/parse-package-engines-action@122ae05d4257008180a514e1ddeb0c1b9d094bdd # v0.1.0
         id: versions
-        with:
-          fallbackNode: '^20'
-          fallbackNpm: '^10'
 
-      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
-          node-version: ${{ steps.versions.outputs.nodeVersion }}
+          node-version: ${{ steps.versions.outputs.node-version }}
 
-      - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
-        run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
+      - name: Set up npm
+        run: npm i -g 'npm@${{ steps.versions.outputs.steps.versions.outputs.package-manager-version }}'
 
       - name: Install node dependencies & build app
         env:
           CYPRESS_INSTALL_BINARY: 0
         run: |
           npm ci
-          TESTING=true npm run build --if-present
+          npm run build --if-present
 
       - name: Install Playwright Browsers
         run: npx playwright install chromium --only-shell
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload results
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !cancelled() }}
         with:
-          name: playwright-report
+          name: playwright-report_shard${{ matrix.shardIndex }}
           path: test-results/
-          retention-days: 30
+          retention-days: 7
