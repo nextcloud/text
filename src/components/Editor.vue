@@ -104,6 +104,7 @@ import {
 } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
+import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
@@ -243,8 +244,15 @@ export default defineComponent({
 		} = useIndexedDbProvider(props, ydoc)
 
 		const hasConnectionIssue = ref(false)
-		const { delayed: displayConnectionIssue } =
-			useDelayedFlag(hasConnectionIssue)
+		const offlineReadonlyDelay = loadState(
+			'text',
+			'offline_readonly_delay',
+			5 * 60,
+		)
+		const { delayed: displayConnectionIssue } = useDelayedFlag(
+			hasConnectionIssue,
+			offlineReadonlyDelay * 1000,
+		)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
 			provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(

@@ -7,9 +7,14 @@ import { ref, watch, type Ref } from 'vue'
 
 /**
  * Delay the changing of the boolean
+ *
  * @param input - ref to react to
+ * @param customDelay - custom delay
  */
-export function useDelayedFlag(input: Ref<boolean>): { delayed: Ref<boolean> } {
+export function useDelayedFlag(
+	input: Ref<boolean>,
+	customDelay?: number,
+): { delayed: Ref<boolean> } {
 	let timeout: ReturnType<typeof setTimeout> | undefined
 	const delayed = ref(input.value)
 
@@ -17,7 +22,7 @@ export function useDelayedFlag(input: Ref<boolean>): { delayed: Ref<boolean> } {
 		if (timeout) {
 			clearTimeout(timeout)
 		}
-		const delay = val ? 5000 : 200
+		const delay = val ? (customDelay ?? 5000) : 200
 		timeout = setTimeout(() => {
 			delayed.value = val
 		}, delay)

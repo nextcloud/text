@@ -170,6 +170,8 @@ jobs:
           php occ app:list
           php occ background:cron
           php occ config:system:set session_keepalive --value=false --type=boolean
+          # Set offline_readonly_delay to 5 seconds to speed up tests that rely on it, like recover tests in sync.spec.js
+          php occ config:app:set --type integer --value 5 text offline_readonly_delay
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
 
