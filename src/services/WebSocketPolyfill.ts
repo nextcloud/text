@@ -66,6 +66,9 @@ export default function initWebSocketPolyfill(
 			syncService.bus.on('sync', this.#onSync)
 
 			syncService.open()
+			if (syncService.hasActiveConnection()) {
+				setTimeout(() => this.onopen?.(), 0)
+			}
 		}
 
 		/**
