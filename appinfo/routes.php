@@ -58,6 +58,9 @@ return [
 
 		/** @see Controller\UserApiController::index() */
 		['name' => 'UserApi#index', 'url' => '/api/v1/users', 'verb' => 'POST'],
+
+		/** @see Controller\AiController::tagFile() */
+		['name' => 'Ai#tagFile', 'url' => '/ai/tag/{fileId}', 'verb' => 'POST'],
 	],
 	'ocs' => [
 		/** @see Controller\WorkspaceController::folder() */

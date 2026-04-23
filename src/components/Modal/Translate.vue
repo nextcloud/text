@@ -97,6 +97,7 @@ import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcTextArea from '@nextcloud/vue/components/NcTextArea'
+import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
@@ -117,6 +118,10 @@ export default {
 		content: {
 			type: String,
 			default: '',
+		},
+		fileId: {
+			type: Number,
+			default: null,
 		},
 	},
 	data() {
@@ -231,9 +236,15 @@ export default {
 			}
 		},
 		async contentInsert() {
+			if (this.fileId) {
+				await markFileAsAiGenerated(this.fileId)
+			}
 			this.$emit('insert-content', this.result)
 		},
 		async contentReplace() {
+			if (this.fileId) {
+				await markFileAsAiGenerated(this.fileId)
+			}
 			this.$emit('replace-content', this.result)
 		},
 		autosize() {

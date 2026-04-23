@@ -73,6 +73,7 @@
 		<Translate
 			:show="translateModal"
 			:content="translateContent"
+			:file-id="fileId"
 			@insert-content="translateInsert"
 			@replace-content="translateReplace"
 			@close="hideTranslate" />

@@ -175,6 +175,7 @@ import TextBoxPlusOutlineIcon from 'vue-material-design-icons/TextBoxPlusOutline
 import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
+import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import markdownit from '../../markdownit/index.js'
@@ -373,6 +374,9 @@ export default {
 				? markdownit.render(task.output.output)
 				: task.output.output
 			this.editor.commands.insertContent(content)
+			if (this.fileId) {
+				await markFileAsAiGenerated(this.fileId)
+			}
 			this.showTaskList = false
 		},
 		async copyResult(task) {
