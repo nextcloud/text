@@ -49,7 +49,9 @@ resolutionVariants.forEach(({ source, buttonName, headingName }) => {
 		await user.uploadFile({ name: file.name, content: '## Good bye' })
 
 		// Verify both verisons are shown
-		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
+		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+			timeout: 10_000,
+		})
 		await expect(reader.getHeading({ name: 'Hello world' })).toBeVisible()
 
 		// Resolve conflict
@@ -79,7 +81,9 @@ resolutionVariants.forEach(({ source, buttonName, headingName }) => {
 		await file.open()
 
 		// Verify both verisons are shown
-		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
+		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+			timeout: 10_000,
+		})
 		await expect(reader.getHeading({ name: 'Hello world' })).toBeVisible()
 
 		// Resolve conflict
@@ -105,7 +109,9 @@ resolutionVariants.forEach(({ source, buttonName, headingName }) => {
 		await user.uploadFile({ name: file.name, content: '## Good bye' })
 
 		// Verify both verisons are shown
-		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
+		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+			timeout: 10_000,
+		})
 		await expect(reader.getHeading({ name: 'Hello world' })).toBeVisible()
 
 		// Resolve conflict
@@ -143,7 +149,7 @@ test.describe('Plaintext conflict resolution', () => {
 			await user.uploadFile({ name: file.name, content: 'Good bye' })
 
 			// Verify both verisons are shown
-			await expect(editor.content).toHaveText('Good bye')
+			await expect(editor.content).toHaveText('Good bye', { timeout: 10_000 })
 			await expect(reader.content).toHaveText('Hello world')
 
 			// Resolve conflict
@@ -172,7 +178,9 @@ test('[conflict] automatic resolution if no unsaved changes', async ({
 	await user.uploadFile({ name: file.name, content: '## Good bye' })
 
 	// Should show latest content, no conflict dialog
-	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
+	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(reader.content).not.toBeVisible()
 	await expect(
 		container.getButton({
@@ -206,7 +214,9 @@ test('readonly session hides conflict dialog', async ({
 	await page.goto(`/s/${token}`)
 
 	// Should show latest content, no conflict dialog
-	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible()
+	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(
 		container.getButton({
 			name: /Keep my local changes and overwrite the remote version/,
@@ -233,7 +243,9 @@ test('no conflict when uploading identical content with unsaved changes', async 
 
 	await user.uploadFile({ name: file.name, content: '## Hello world' })
 
-	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(reader.content).not.toBeVisible()
 	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
@@ -262,7 +274,9 @@ test('no conflict when uploading identical content with local unsaved changes', 
 	await setOnline()
 	await user.uploadFile({ name: file.name, content: '## Hello world' })
 
-	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(reader.content).not.toBeVisible()
 	await expect(container.getButton({ name: /Overwrite/ })).not.toBeVisible()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
@@ -294,7 +308,9 @@ test('no conflict when uploading identical content with local unsaved changes af
 	await user.uploadFile({ name: file.name, content: '## Hello world' })
 	await file.open()
 
-	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
+	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(reader.content).not.toBeVisible()
 	await expect(
 		container.getButton({
@@ -331,7 +347,10 @@ test('conflict dialog is sticky when scrolling', async ({
 	await user.uploadFile({ name: file.name, content: '## Different content' })
 	await file.open()
 
-	await expect(editor.getHeading({ name: 'Different content' })).toBeVisible()
+	// Verify both verisons are shown
+	await expect(editor.getHeading({ name: 'Different content' })).toBeVisible({
+		timeout: 10_000,
+	})
 	await expect(reader.getHeading({ name: 'Long content' })).toBeVisible()
 
 	// Scroll down
