@@ -20,7 +20,6 @@
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
-			:has-connection-issue="displayConnectionIssue"
 			:content-loaded="contentLoaded"
 			@read-only-toggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">

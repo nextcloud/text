@@ -40,10 +40,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		hasConnectionIssue: {
-			type: Boolean,
-			default: false,
-		},
 		contentLoaded: {
 			type: Boolean,
 			default: true,
