@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Understruken text",
     "Strikethrough" : "Genomstruken",
     "Mistaken text" : "Genomstruken text",
+    "Highlight" : "Markera",
+    "Highlighted text" : "Markerad text",
     "Heading 1" : "Rubrik 1",
     "Heading level 1" : "Rubrik nivå 1",
     "Heading 6" : "Rubrik 6",
