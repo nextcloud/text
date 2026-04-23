@@ -179,6 +179,7 @@ class PollingBackend {
 	}) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+				this.increaseRefetchTimer()
 				logger.error(
 					'[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED',
 				)
