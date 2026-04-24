@@ -89,6 +89,8 @@ OC.L10N.register(
     "Underlined text" : "Podkreślony tekst",
     "Strikethrough" : "Tekst przekreślony",
     "Mistaken text" : "Przekreślony tekst",
+    "Highlight" : "Podświetl",
+    "Highlighted text" : "Podświetl tekst",
     "Heading 1" : "Nagłówek 1",
     "Heading level 1" : "Nagłówek poziom 1",
     "Heading 6" : "Nagłówek 6",
