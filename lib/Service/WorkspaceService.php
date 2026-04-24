@@ -36,7 +36,7 @@ class WorkspaceService {
 		} catch (StorageInvalidException) {
 			return null;
 		}
-	
+
 		foreach ($this->getSupportedFilenames() as $filename) {
 			try {
 				$cacheEntry = $cache->get($internalPath . '/' . $filename);
