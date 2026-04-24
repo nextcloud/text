@@ -22,7 +22,6 @@ use OCP\Constants;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
-use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -52,12 +51,16 @@ class WorkspaceController extends OCSController {
 	}
 
 	/**
-	 * Checks for available files in the current folder and returns required details to present
-	 * the rich workspace
+	 * Checks for available files in the current folder and returns required
+	 * details to present the rich workspace.
+	 *
+	 * Returns 200 with file metadata and folder permissions if a README is found,
+	 * or 404 with folder permissions if not (so the client can still offer to create one).
+	 *
+	 * @param string $path Path relative to the user's root folder
 	 */
 	#[NoAdminRequired]
 	public function folder(string $path = '/'): DataResponse {
-		/**  */
 		try {
 			/** @psalm-suppress PossiblyNullArgument */
 			$userFolder = $this->rootFolder->getUserFolder($this->userId);
@@ -96,9 +99,11 @@ class WorkspaceController extends OCSController {
 	}
 
 	/**
-	 * Checks for available files in the current folder and returns required details to present
-	 * the rich workspace
-	 * @api
+	 * Checks for available files in a publicly shared folder and returns required
+	 * details to present the rich workspace.
+	 *
+	 * @param string $shareToken Public share token
+	 * @param string $path Path relative to the share root
 	 */
 	#[NoAdminRequired]
 	#[PublicPage]
@@ -145,6 +150,14 @@ class WorkspaceController extends OCSController {
 		return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
 	}
 
+	/**
+	 * Returns a direct editing URL for the workspace README in the given folder.
+	 *
+	 * If a README file already exists, opens it for editing. If not, creates a new
+	 * file using the first entry of getSupportedFilenames() as the default name.
+	 *
+	 * @param string $path Path to the folder, relative to the user's root folder
+	 */
 	#[NoAdminRequired]
 	public function direct(string $path): DataResponse {
 		$this->eventDispatcher->dispatchTyped(new RegisterDirectEditorEvent($this->directEditingManager));
