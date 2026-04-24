@@ -20,7 +20,7 @@ export function useIndexedDbProvider(
 	},
 	ydoc: Doc,
 ) {
-	const name = `${props.fileId}`
+	const name = `text-${props.fileId}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
 	let isDestroyed = false
