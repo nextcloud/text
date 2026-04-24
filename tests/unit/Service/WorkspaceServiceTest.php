@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Tests\Service;
 
+use OCA\Text\Service\WorkspaceService;
 use OCP\Files\Cache\ICache;
 use OCP\Files\Cache\ICacheEntry;
 use OCP\Files\File;
