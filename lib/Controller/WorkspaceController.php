@@ -1,31 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
- */
-
-declare(strict_types=1);
-/**
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
- *
- * @author Julius Härtl <jus@bitgrid.net>
- *
- * @license GNU AGPL version 3 or any later version
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 namespace OCA\Text\Controller;
@@ -174,9 +153,13 @@ class WorkspaceController extends OCSController {
 			/** @psalm-suppress PossiblyNullArgument */
 			$folder = $this->rootFolder->getUserFolder($this->userId)->get($path);
 			if ($folder instanceof Folder) {
-				$file = $this->getFile($folder);
+				$file = $this->workspaceService->getFile($folder);
 				if ($file === null) {
-					$token = $this->directEditingManager->create($path . '/' . $this->workspaceService->getSupportedFilenames()[0], Application::APP_NAME, TextDocumentCreator::CREATOR_ID);
+					$token = $this->directEditingManager->create(
+						$path . '/' . $this->workspaceService->getSupportedFilenames()[0],
+						Application::APP_NAME,
+						TextDocumentCreator::CREATOR_ID
+					);
 				} else {
 					$token = $this->directEditingManager->open($path . '/' . $file->getName(), Application::APP_NAME);
 				}
@@ -190,19 +173,5 @@ class WorkspaceController extends OCSController {
 		}
 
 		return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
-	}
-
-	private function getFile(Folder $folder): ?File {
-		$file = null;
-		foreach ($this->workspaceService->getSupportedFilenames() as $filename) {
-			try {
-				$node = $folder->get($filename);
-				if ($node instanceof File) {
-					$file = $node;
-				}
-			} catch (NotFoundException) {
-			}
-		}
-		return $file;
 	}
 }
