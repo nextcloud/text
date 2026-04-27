@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, getNodeType, isNodeActive } from '@tiptap/core'
+import { Node, getMarkRange, getNodeType, isNodeActive } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 
@@ -78,15 +78,49 @@ export default Node.create({
 			setPreview:
 				() =>
 				({ state, chain }) => {
-					return (
-						previewPossible(state)
-						&& chain()
+					if (!previewPossible(state)) {
+						return false
+					}
+
+					const { $from } = state.selection
+
+					if (!hasOtherContent($from.parent)) {
+						// Paragraph contains only a link
+						return chain()
 							.setNode(
 								this.name,
 								previewAttributesFromSelection(state),
 							)
 							.run()
-					)
+					}
+
+					if ($from.parent.type.name !== 'paragraph') {
+						return false
+					}
+
+					const previewAttrs = previewAttributesFromSelection(state)
+
+					// Link is surrounded by other text in a paragraph
+					const range = getMarkRange($from, state.schema.marks.link)
+					if (!range) {
+						return false
+					}
+
+					const hasContentBefore = range.from > $from.start()
+					const hasContentAfter = range.to < $from.end()
+
+					let c = chain()
+
+					if (hasContentAfter) {
+						c = c.setTextSelection(range.to).splitBlock()
+					}
+					if (hasContentBefore) {
+						c = c.setTextSelection(range.from).splitBlock()
+					} else {
+						c = c.setTextSelection($from.before() + 1)
+					}
+
+					return c.setNode(this.name, previewAttrs).run()
 				},
 
 			/**
@@ -134,15 +168,28 @@ export default Node.create({
 })
 
 /**
+ *
+ * @param {object} state the editor state
+ * @returns {object|null} the link node or null
+ */
+function getLinkAtCursor(state) {
+	const { $from } = state.selection
+	const range = getMarkRange($from, state.schema.marks.link)
+	if (!range) {
+		return null
+	}
+	return state.doc.resolve(range.from).nodeAfter
+}
+
+/**
  * Attributes for a preview from link in the current selection
  *
  * @param {object} state the edior state
- * @param {object} state.selection current selection
  * @return {object}
  */
-function previewAttributesFromSelection({ selection }) {
-	const { $from } = selection
-	const href = extractHref($from.nodeAfter)
+function previewAttributesFromSelection(state) {
+	const linkNode = getLinkAtCursor(state)
+	const href = extractHref(linkNode)
 	return { href, title: 'preview' }
 }
 
@@ -160,16 +207,14 @@ function isActive(typeOrName, attributes, state) {
 
 /**
  * Is it possible to convert the currently selected node into a preview?
+ *
  * @param {object} state current editor state
  * @param {object} state.selection current selection
  * @return {boolean}
  */
-function previewPossible({ selection }) {
-	const { $from } = selection
-	if (hasOtherContent($from.parent)) {
-		return false
-	}
-	const href = extractHref($from.parent.firstChild)
+function previewPossible(state) {
+	const linkNode = getLinkAtCursor(state)
+	const href = extractHref(linkNode)
 	if (!href || isLinkToSelfWithHash(href)) {
 		return false
 	}
