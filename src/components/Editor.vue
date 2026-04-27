@@ -937,7 +937,6 @@ export default defineComponent({
 		resolved() {
 			localStorage.removeItem(this.indexedDbConflictKey)
 			this.indexedDbConflictContent = ''
-			this.$emit('resolved')
 		},
 	},
 })

@@ -325,6 +325,13 @@ window.OCA.Text.createEditor = async function ({
 							active: true,
 							autofocus,
 						},
+						on: {
+							ready: () => vm.$emit('ready'),
+							'create:content': (content) =>
+								vm.$emit('create:content', content),
+							'update:content': (content) =>
+								vm.$emit('update:content', content),
+						},
 						scopedSlots,
 					})
 				: h(MarkdownContentEditor, {
