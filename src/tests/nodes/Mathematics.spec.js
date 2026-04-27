@@ -5,7 +5,7 @@
 
 import { getExtensionField } from '@tiptap/core'
 import { test as baseTest } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.js'
+import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 import { MathBlock, MathInline } from '../../nodes/Mathematics.js'

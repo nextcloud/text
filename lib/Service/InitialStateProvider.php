@@ -87,6 +87,11 @@ class InitialStateProvider {
 			'is_full_width_editor',
 			$this->configService->isFullWidthEditor($this->userId),
 		);
+
+		$this->initialState->provideInitialState(
+			'offline_readonly_delay',
+			$this->configService->getOfflineReadonlyDelay(),
+		);
 	}
 
 	public function provideFileId(int $fileId): void {

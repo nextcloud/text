@@ -28,7 +28,7 @@ export class ViewerSection {
 	}
 
 	public async close(): Promise<void> {
-		await this.page.getByRole('button', { name: 'Close', exact: true }).click()
+		await this.el.getByRole('button', { name: 'Close', exact: true }).click()
 		await this.page.waitForRequest(/close/)
 		await expect(this.el).not.toBeVisible()
 	}

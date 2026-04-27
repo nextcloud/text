@@ -47,6 +47,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		hasIndexedDbConflict: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	computed: {
@@ -58,7 +62,7 @@ export default {
 					actionLabel: t('text', 'Reload'),
 				}
 			}
-			if (this.hasSyncCollission) {
+			if (this.hasSyncCollision) {
 				return {
 					message: t(
 						'text',
@@ -86,9 +90,11 @@ export default {
 			}
 			return {}
 		},
-		hasSyncCollission() {
+		hasSyncCollision() {
 			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+				Boolean(this.hasIndexedDbConflict)
+				|| (this.syncError
+					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
 		isLoadingError() {
@@ -98,7 +104,11 @@ export default {
 			return this.isLoadingError && this.syncError.data.status === 412
 		},
 		hasWarning() {
-			return this.syncError || this.hasConnectionIssue
+			return (
+				this.syncError
+				|| this.hasConnectionIssue
+				|| this.hasIndexedDbConflict
+			)
 		},
 	},
 

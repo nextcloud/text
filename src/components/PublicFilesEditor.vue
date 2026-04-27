@@ -21,7 +21,7 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		Editor: () => import('./Editor.vue'),
+		Editor: () => import('./Editor.js'),
 	},
 	props: {
 		fileId: {

@@ -41,20 +41,26 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
  * @param props.shareToken Share token of the file.
+ * @param getBaseVersionEtag Async getter function for the base version etag.
+ * @param setBaseVersionEtag Async setter function for the base version etag.
  */
-export function provideConnection(props: {
-	fileId: number
-	relativePath: string
-	initialSession?: InitialData
-	shareToken?: string
-}) {
-	let baseVersionEtag: string | undefined
+export function provideConnection(
+	props: {
+		fileId: number
+		relativePath: string
+		initialSession?: InitialData
+		shareToken?: string
+	},
+	getBaseVersionEtag: () => Promise<string | undefined>,
+	setBaseVersionEtag: (val: string) => Promise<string | undefined>,
+) {
 	const connection = shallowRef<Connection | undefined>(undefined)
 	const openData = shallowRef<OpenData | undefined>(undefined)
 	const openConnection = async () => {
+		const baseVersionEtag = await getBaseVersionEtag()
 		const guestName = localStorage.getItem('nick') ?? ''
 		const { connection: opened, data } =
-			openInitialSession(props)
+			openInitialSession(props, baseVersionEtag)
 			|| (await open({
 				fileId: props.fileId,
 				guestName,
@@ -62,7 +68,7 @@ export function provideConnection(props: {
 				filePath: props.relativePath,
 				baseVersionEtag,
 			}))
-		baseVersionEtag = data.document.baseVersionEtag
+		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
 		return data
@@ -84,14 +90,23 @@ export const useConnection = () => {
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
  * @param props.shareToken Share token of the file.
+ * @param baseVersionEtag Etag from the last editing session.
  */
-function openInitialSession(props: {
-	relativePath: string
-	initialSession?: InitialData
-	shareToken?: string
-}) {
+function openInitialSession(
+	props: {
+		relativePath: string
+		initialSession?: InitialData
+		shareToken?: string
+	},
+	baseVersionEtag: string | undefined,
+) {
 	if (props.initialSession) {
 		const { document, session } = props.initialSession
+		if (baseVersionEtag && baseVersionEtag !== document.baseVersionEtag) {
+			throw new ConflictError(
+				'Base version etag did not match when opening initial session.',
+			)
+		}
 		const connection = {
 			documentId: document.id,
 			sessionId: session.id,
@@ -102,4 +117,14 @@ function openInitialSession(props: {
 		}
 		return { connection, data: props.initialSession }
 	}
+}
+
+/**
+ * Mimic axios error for a conflict while creating the session.
+ *
+ * This will be emitted from the SyncService
+ * and trigger conflict handling in Editor.vue
+ */
+class ConflictError extends Error {
+	response = { status: 412 }
 }

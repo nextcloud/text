@@ -133,7 +133,7 @@ class DocumentService {
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setBaseVersionEtag(uniqid());
-		$document->setChecksum($this->computeCheckSum($file->getContent()));
+		$document->setChecksum(self::computeCheckSum($file->getContent()));
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
@@ -162,6 +162,25 @@ class DocumentService {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 		return $this->appData->getFolder('documents')->getFile($filename);
+	}
+
+	/**
+	 * @throws Exception
+	 * @throws InvalidPathException
+	 * @throws LockedException
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
+	public function updateDocumentVersionInfo(File $file): void {
+		$document = $this->getDocument($file->getId());
+		if ($document === null) {
+			return;
+		}
+
+		$document->setLastSavedVersionTime($file->getMTime());
+		$document->setLastSavedVersionEtag($file->getEtag());
+		$document->setChecksum(self::computeCheckSum($file->getContent()));
+		$this->documentMapper->update($document);
 	}
 
 	/**
@@ -208,8 +227,12 @@ class DocumentService {
 			if ($readOnly && $message->isUpdate()) {
 				continue;
 			}
+			// Only accept sync protocol
+			if ($message->getYjsMessageType() !== YjsMessage::YJS_MESSAGE_SYNC) {
+				continue;
+			}
 			// Filter out query steps as they would just trigger clients to send their steps again
-			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
+			if ($message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
 				$stepsIncludeQuery = true;
 			} else {
 				$stepsToInsert[] = $step;
@@ -249,7 +272,7 @@ class DocumentService {
 		$stepsToReturn = [];
 		foreach ($allSteps as $step) {
 			$message = YjsMessage::fromBase64($step->getData());
-			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_UPDATE) {
+			if ($message->isUpdate()) {
 				$stepsToReturn[] = $step;
 			}
 		}
@@ -330,7 +353,7 @@ class DocumentService {
 
 		$storedChecksum = $document->getChecksum();
 		$fileContent = $file->getContent();
-		$fileChecksum = $this->computeChecksum($fileContent);
+		$fileChecksum = self::computeCheckSum($fileContent);
 
 		if ($storedChecksum !== $fileChecksum) {
 			throw new DocumentSaveConflictException('File changed in the meantime from outside');
@@ -345,7 +368,7 @@ class DocumentService {
 	 * @param string $content
 	 * @return string
 	 */
-	private function computeCheckSum(string $content): string {
+	public static function computeCheckSum(string $content): string {
 		return hash('crc32', $content);
 	}
 
@@ -422,7 +445,7 @@ class DocumentService {
 			$document->setLastSavedVersion($version);
 			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
-			$document->setChecksum($this->computeCheckSum($autoSaveDocument));
+			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time

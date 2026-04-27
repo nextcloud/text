@@ -179,6 +179,7 @@ class PollingBackend {
 	}) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+				this.increaseRefetchTimer()
 				logger.error(
 					'[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED',
 				)
@@ -196,7 +197,7 @@ class PollingBackend {
 			this._handleResponse(e.response)
 			logger.error('Conflict during file save, please resolve')
 			this.#syncService.bus.emit('error', {
-				type: ERROR_TYPE.SAVE_COLLISSION,
+				type: ERROR_TYPE.SAVE_COLLISION,
 				data: {
 					outsideChange: e.response.data.outsideChange,
 				},

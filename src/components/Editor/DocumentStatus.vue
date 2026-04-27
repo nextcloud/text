@@ -10,6 +10,7 @@
 				:idle="idle"
 				:sync-error="syncError"
 				:has-connection-issue="hasConnectionIssue"
+				:has-indexed-db-conflict="hasIndexedDbConflict"
 				@reconnect="$emit('reconnect')" />
 			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
@@ -54,6 +55,10 @@ export default {
 		hasConnectionIssue: {
 			type: Boolean,
 			required: true,
+		},
+		hasIndexedDbConflict: {
+			type: Boolean,
+			default: false,
 		},
 	},
 

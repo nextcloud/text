@@ -12,11 +12,14 @@
 		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
-		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
+		<CollisionResolveDialog
+			v-if="isResolvingConflict"
+			:other-version="otherVersion"
+			:reader-source="indexedDbConflictContent ? 'local' : 'server'"
+			@resolved="resolved()" />
 		<Wrapper
 			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
-			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
 			@read-only-toggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">
@@ -30,7 +33,7 @@
 								:document="document"
 								:dirty="dirty"
 								:sync-error="syncError"
-								:has-connection-issue="requireReconnect" />
+								:has-connection-issue="displayConnectionIssue" />
 							<slot name="header" />
 						</ReadonlyBar>
 					</slot>
@@ -47,7 +50,7 @@
 							:document="document"
 							:dirty="dirty"
 							:sync-error="syncError"
-							:has-connection-issue="requireReconnect" />
+							:has-connection-issue="displayConnectionIssue" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -61,14 +64,15 @@
 			</MainContainer>
 			<Reader
 				v-if="isResolvingConflict"
-				:content="syncError.data.outsideChange"
+				:content="otherVersion"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
 		<DocumentStatus
 			:idle="idle"
 			:lock="document?.lock"
 			:sync-error="syncError"
-			:has-connection-issue="requireReconnect"
+			:has-connection-issue="displayConnectionIssue"
+			:has-indexed-db-conflict="!!indexedDbConflictContent"
 			@reconnect="reconnect" />
 		<Translate
 			:show="translateModal"
@@ -87,7 +91,7 @@ import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
-import { Doc } from 'yjs'
+import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
@@ -99,6 +103,7 @@ import {
 } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
+import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
@@ -107,20 +112,21 @@ import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideFileProps } from '../composables/useFileProps.ts'
+import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCaret } from '../extensions/index.js'
-import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
-import { logger } from '../helpers/logger.js'
-import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
+import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
+import { logger } from '../helpers/logger.ts'
+import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
 import {
 	createPlainEditor,
 	createRichEditor,
 	serializePlainText,
-} from './../EditorFactory.js'
+} from './../EditorFactory.ts'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
@@ -227,15 +233,36 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
+		const {
+			clearIndexedDb,
+			dirty,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+			setDirty,
+			whenSynced,
+		} = useIndexedDbProvider(props, ydoc)
+
 		const hasConnectionIssue = ref(false)
-		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
+		const offlineReadonlyDelay = loadState(
+			'text',
+			'offline_readonly_delay',
+			5 * 60,
+		)
+		const { delayed: displayConnectionIssue } = useDelayedFlag(
+			hasConnectionIssue,
+			offlineReadonlyDelay * 1000,
+		)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
 			provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(props)
+		const { connection, openConnection } = provideConnection(
+			props,
+			getBaseVersionEtag,
+			setBaseVersionEtag,
+		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
@@ -277,26 +304,36 @@ export default defineComponent({
 
 		const syncProvider = shallowRef(null)
 
+		const editorReady = new Promise((resolve) => {
+			editor.on('create', () => resolve())
+		})
+
 		provideFileProps(props)
 
 		return {
 			awareness,
+			clearIndexedDb,
 			connection,
+			dirty,
 			editor,
+			editorReady,
 			el,
+			getBaseVersionEtag,
 			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
 			isRichWorkspace,
 			language,
 			lowlightLoaded,
-			requireReconnect,
+			displayConnectionIssue,
 			saveService,
 			serialize,
+			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
 			updateUser,
+			whenSynced,
 			width,
 			ydoc,
 		}
@@ -310,7 +347,6 @@ export default defineComponent({
 			fileNode: null,
 
 			idle: false,
-			dirty: false,
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
@@ -322,19 +358,32 @@ export default defineComponent({
 			contentWrapper: null,
 			translateModal: false,
 			translateContent: '',
+			indexedDbConflictContent: '',
 		}
 	},
 	computed: {
 		isResolvingConflict() {
-			return this.hasSyncCollission && !this.readOnly
+			return this.hasSyncCollision && !this.readOnly
 		},
-		hasSyncCollission() {
+		hasSyncCollision() {
 			return (
-				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+				Boolean(this.indexedDbConflictContent)
+				|| (this.syncError
+					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
+		},
+		otherVersion() {
+			return this.indexedDbConflictContent || this.syncError.data.outsideChange
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
+		},
+		hasOutdatedDocument() {
+			return (
+				this.syncError
+				&& this.syncError.type === ERROR_TYPE.LOAD_ERROR
+				&& this.syncError.data.status === 412
+			)
 		},
 		currentDirectory() {
 			return this.relativePath
@@ -361,6 +410,9 @@ export default defineComponent({
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
 		},
+		indexedDbConflictKey() {
+			return `text-indexeddb-conflict-${this.fileId}`
+		},
 	},
 	watch: {
 		displayed() {
@@ -375,14 +427,41 @@ export default defineComponent({
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
 			}
 		},
-		requireReconnect(val) {
+		displayConnectionIssue(val) {
 			if (val) {
 				this.emit('sync-service:error')
 			}
-			this.setEditable(!val)
+			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
+		},
+		async hasOutdatedDocument(val) {
+			if (!val) {
+				return
+			}
+			logger.debug('Document is outdated')
+
+			if (this.dirty) {
+				const conflictData = {
+					hasConflict: true,
+					indexedDbContent: this.serialize(),
+					timestamp: Date.now(),
+				}
+				localStorage.setItem(
+					this.indexedDbConflictKey,
+					JSON.stringify(conflictData),
+				)
+				logger.debug('Stored conflict to localStorage', {
+					fileId: this.fileId,
+				})
+			}
+
+			logger.debug('Clearing the outdated cache and connecting without it.')
+			await this.clearIndexedDb()
+			if (!this._isBeingDestroyed) {
+				this.$emit('reload')
+			}
 		},
 	},
-	mounted() {
+	async mounted() {
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
 			   if richt workspace is used we **must** not hide the content */
@@ -395,13 +474,24 @@ export default defineComponent({
 		this.emit('update:loaded', true)
 		subscribe('text:translate-modal:show', this.showTranslateModal)
 		exposeForDebugging(this)
+
+		await this.whenSynced
+		this.checkIndexedDbConflict()
 	},
 	created() {
 		// The following can be useful for debugging ydoc updates
-		// this.ydoc.on('update', function(update, origin, doc, tr) {
-		//   console.debug('ydoc update', update, origin, doc, tr)
-		//   Y.logUpdate(update)
-		// });
+		this.ydoc.on('update', function (update, origin, doc, tr) {
+			if (window.OCA.Text.logYjsUpdates) {
+				logger.debug('ydoc update', {
+					update,
+					origin,
+					doc,
+					tr,
+					content: doc.getXmlFragment('default').toJSON(),
+				})
+				logUpdate(update)
+			}
+		})
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
@@ -409,6 +499,8 @@ export default defineComponent({
 		}
 	},
 	async beforeDestroy() {
+		this._isBeingDestroyed = true
+		logger.debug('beforeDestroy')
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
@@ -417,7 +509,7 @@ export default defineComponent({
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
-		if (this.dirty) {
+		if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.saveService.save()])
 		}
@@ -432,8 +524,9 @@ export default defineComponent({
 				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
-				disableBC: true,
+				disableBc: true,
 				awareness: this.awareness,
+				baseVersionEtag: this.getBaseVersionEtag(),
 			})
 		},
 
@@ -510,13 +603,28 @@ export default defineComponent({
 					})
 					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-			// Fetch the document state after syntax highlights are loaded
+			// apply the document content after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
 				if (!documentState) {
+					logger.debug('loading initial content', {
+						content,
+						isRichEditor: this.isRichEditor,
+					})
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
+				}
+			})
+			// Save and push unsaved changes from offline editing session.
+			Promise.all([this.whenSynced, this.editorReady]).then(() => {
+				if (this.dirty) {
+					this.saveService
+						.save()
+						.catch((err) =>
+							logger.error('Failed to save offline changes', { err }),
+						)
+					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
 				}
 			})
 			this.updateUser(session)
@@ -526,7 +634,7 @@ export default defineComponent({
 			this.document = document
 
 			this.syncError = null
-			this.setEditable(this.editMode && !this.requireReconnect)
+			this.setEditable(this.editMode)
 		},
 
 		onCreate({ editor }) {
@@ -537,7 +645,9 @@ export default defineComponent({
 		},
 
 		onUpdate({ editor }) {
-			// this.debugContent(editor)
+			if (window.OCA.Text.logEditorUpdates) {
+				this.debugContent(editor)
+			}
 			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
@@ -570,9 +680,9 @@ export default defineComponent({
 			}
 
 			if (
-				type === ERROR_TYPE.SAVE_COLLISSION
+				type === ERROR_TYPE.SAVE_COLLISION
 				&& (!this.syncError
-					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISION)
 			) {
 				this.contentLoaded = true
 				this.syncError = {
@@ -607,12 +717,14 @@ export default defineComponent({
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes before first user change
-				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.dirty = state.dirty
-					if (this.dirty) {
+				if (state.dirty) {
+					// ignore initial loading and other automated changes before first user change
+					if (this.editor.can().undo() || this.editor.can().redo()) {
+						this.setDirty(state.dirty)
 						this.saveService.autosave()
 					}
+				} else {
+					this.setDirty(state.dirty)
 				}
 			}
 		},
@@ -664,6 +776,7 @@ export default defineComponent({
 		},
 
 		async disconnect() {
+			logger.debug('disconnecting')
 			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
 			this.syncProvider?.destroy()
@@ -672,11 +785,13 @@ export default defineComponent({
 		},
 
 		async close() {
+			logger.debug('closing')
 			await this.syncService
 				.sendRemainingSteps()
 				.catch((err) =>
 					logger.warn('Failed to send remaining steps', { err }),
 				)
+			logger.debug('sent remaining steps')
 			await this.disconnect().catch((err) =>
 				logger.warn('Failed to disconnect', { err }),
 			)
@@ -724,17 +839,18 @@ export default defineComponent({
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
+			// markdown, serialized from editor state by prosemirror-markdown
 			const proseMirrorMarkdown = this.serialize()
+			// HTML, serialized from markdown by markdown-it
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+			// HTML, as rendered in the browser by Tiptap
+			const tiptapHtml = editor.getHTML()
 
-			logger.debug(
-				'markdown, serialized from editor state by prosemirror-markdown',
-			)
-			console.debug(proseMirrorMarkdown)
-			logger.debug('HTML, serialized from markdown by markdown-it')
-			console.debug(markdownItHtml)
-			logger.debug('HTML, as rendered in the browser by Tiptap')
-			console.debug(editor.getHTML())
+			logger.debug('editor update', {
+				proseMirrorMarkdown,
+				markdownItHtml,
+				tiptapHtml,
+			})
 		},
 
 		/**
@@ -795,6 +911,33 @@ export default defineComponent({
 
 		saveBeforeUnload() {
 			this.saveService.saveViaSendBeacon()
+		},
+
+		checkIndexedDbConflict() {
+			// Only check if we're not already showing a conflict (e.g. when server API reported one)
+			if (this.hasSyncCollision) {
+				return
+			}
+
+			const conflictDataStr = localStorage.getItem(this.indexedDbConflictKey)
+
+			if (conflictDataStr) {
+				try {
+					const conflictData = JSON.parse(conflictDataStr)
+					if (conflictData.hasConflict && conflictData.indexedDbContent) {
+						this.indexedDbConflictContent = conflictData.indexedDbContent
+					}
+				} catch (e) {
+					logger.warn('Failed to parse persisted conflict data', { e })
+					localStorage.removeItem(this.indexedDbConflictKey)
+				}
+			}
+		},
+
+		resolved() {
+			localStorage.removeItem(this.indexedDbConflictKey)
+			this.indexedDbConflictContent = ''
+			this.$emit('resolved')
 		},
 	},
 })

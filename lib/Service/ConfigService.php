@@ -57,4 +57,9 @@ class ConfigService {
 		}
 		return $this->userConfig->getValueBool($userId, Application::APP_NAME, 'is_full_width_editor');
 	}
+
+	public function getOfflineReadonlyDelay(): int {
+		// Default to 20 seconds
+		return $this->appConfig->getValueInt(Application::APP_NAME, 'offline_readonly_delay', 5 * 60);
+	}
 }

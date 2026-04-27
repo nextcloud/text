@@ -28,7 +28,7 @@
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
-import Editor from './Editor.vue'
+import Editor from './Editor.js'
 import SourceView from './SourceView.vue'
 
 export default defineComponent({

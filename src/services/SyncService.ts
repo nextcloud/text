@@ -32,9 +32,9 @@ const COLLABORATOR_DISCONNECT_TIME = 90
 const ERROR_TYPE = {
 	/**
 	 * Failed to save collaborative document due to external change
-	 * collission needs to be resolved manually
+	 * collision needs to be resolved manually
 	 */
-	SAVE_COLLISSION: 0,
+	SAVE_COLLISION: 0,
 	/**
 	 * Failed to push changes for MAX_REBASE_RETRY times
 	 */
@@ -162,9 +162,10 @@ class SyncService {
 
 	async open() {
 		if (this.hasActiveConnection()) {
+			logger.debug('already connected', { connection: this.connection })
 			return
 		}
-		const data = await this.#openConnection().catch((e) => this._emitError(e))
+		const data = await this.#openConnection().catch((e) => this.#emitError(e))
 		if (!data) {
 			// Error was already emitted above
 			return
@@ -176,13 +177,6 @@ class SyncService {
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
 		this.bus.emit('opened', data)
-		// Emit sync after opened, so websocket onmessage comes after onopen.
-		if (data.documentState) {
-			this._emitDocumentStateStep(
-				data.documentState,
-				data.document.lastSavedVersion,
-			)
-		}
 	}
 
 	startSync() {
@@ -193,18 +187,15 @@ class SyncService {
 		this.backend?.resetRefetchTimer()
 	}
 
-	_emitError(error: { response?: object; code?: string }) {
-		if (!error.response || error.code === 'ECONNABORTED') {
-			this.bus.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-		} else {
-			this.bus.emit('error', {
-				type: ERROR_TYPE.LOAD_ERROR,
-				data: error.response,
-			})
-		}
+	#emitError(error: { response?: object; code?: string }) {
+		const eventData =
+			!error.response || error.code === 'ECONNABORTED'
+				? { type: ERROR_TYPE.CONNECTION_FAILED, data: {} }
+				: { type: ERROR_TYPE.LOAD_ERROR, data: error.response }
+		this.bus.emit('error', eventData)
 	}
 
-	_emitDocumentStateStep(documentState: string, version: number) {
+	#emitDocumentStateStep(documentState: string, version: number) {
 		const documentStateStep = documentStateToStep(documentState, version)
 		this.bus.emit('sync', {
 			steps: [documentStateStep],
@@ -257,7 +248,7 @@ class SyncService {
 					version: number
 				}
 				if (documentState) {
-					this._emitDocumentStateStep(documentState, version)
+					this.#emitDocumentStateStep(documentState, version)
 				}
 				this.pushError = 0
 				this.#sending = false
