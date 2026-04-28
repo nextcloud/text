@@ -20,8 +20,6 @@
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Zajedničko obrađivanje dokumenata",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Zajedničko obrađivanje dokumenata!**\n\n- **📝 Usredotočite se na pisanje:** bez ikakvih ometanja, koristite se formatiranjem koje vam je potrebno.\n- **🙋 Radite zajedno:** dijelite i surađujte s prijateljima i kolegama neovisno o tome imaju li Nextcloud!\n- **💾 Otvoren format:** datoteke se spremaju kao [Markdown](https://en.wikipedia.org/wiki/Markdown) kako biste ih mogli uređivati iz bilo koje aplikacije za uređivanje teksta.\n- **✊ Snažni temelji:** koristimo [🐈 tiptap](https://tiptap.scrumpy.io) temeljen na [🦉 ProseMirror](https://prosemirror.net) – puno im hvala!",
-    "Overwrite the file and save the current changes" : "Prepiši datoteku i spremi trenutne promjene",
-    "Discard the current changes and load the latest version" : "Odbaci trenutne promjene i učitaj najnoviju verziju",
     "Reload" : "Ponovno učitaj",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Datoteka je prepisana. Trenutne promjene nije moguće automatski spremiti. Odaberite kako želite nastaviti.",
     "The document could not be loaded. Please check your internet connection." : "Dokument nije moguće učitati. Provjerite internetsku vezu.",
@@ -234,6 +232,8 @@
     "Front matter" : "Prednji metapodaci",
     "A table was pasted into a table. Nested tables are not supported." : "Tablica je zalijepljena u tablicu. Ugniježđene tablice nisu podržane.",
     "Link to this section" : "Poveznica na ovaj odjeljak",
+    "Overwrite the file and save the current changes" : "Prepiši datoteku i spremi trenutne promjene",
+    "Discard the current changes and load the latest version" : "Odbaci trenutne promjene i učitaj najnoviju verziju",
     "Close outline view" : "Zatvori prikaz strukture",
     "Outline" : "Struktura"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"

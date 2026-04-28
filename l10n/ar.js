@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "نص",
     "📝 Collaborative document editing" : "📝تحرير المستندات تعاونيّاً Collaborative document editing",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 تحرير المستندات تعاونيّاً! ** \n- ** 📝 التركيز على الكتابة: ** لا تشتيت للانتباه، فقط التنسيق الذي تحتاجه.\n- ** 💾 نسق مفتوح: ** يتم حفظ الملفات على نسق ماركداون [Markdown] (https://en.wikipedia.org/wiki/Markdown)، حتى تتمكن من تحريرها من أي تطبيق نصي آخر أيضًا.\n-** 🙋 العمل معًا: ** شارك وتعاون مع الأصدقاء والزملاء، بغض النظر عما إذا يستخدمون نكست كلاود أم لا! .\n- ** ✊ أساسٌ قويٌّ: ** نستخدم محرر ماركداون \"تِب توب\" [🐈 tiptap] (https://tiptap.scrumpy.io) الذي بدوره يعتمد على \"بروز ميرور\" [🦉 ProseMirror] (https://prosemirror.net) - شكراً جزيلاً لهم!",
-    "Overwrite the file and save the current changes" : "إستبدِل الملف واحفظ التغييرات الحالية",
-    "Discard the current changes and load the latest version" : "تجاهل التغييرات الحالية وارفع آخر نسخة",
     "Reload" : "إعادة تحميل",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "تم استبدال الملف. لا يمكن حفظ تغييراتك الحالية تلقائيًا. يُرجى اختيار كيفية المتابعة.",
     "The document could not be loaded. Please check your internet connection." : "تعذّر تحميل المستند. يُرجى التحقُّق من اتصالك بالإنترنت.",
@@ -214,6 +212,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "تعذّر النسخ إلى الحافظة",
     "Front matter" : "المادة التقديمية front matter",
     "Link to this section" : "رابط إلى القسم section",
+    "Overwrite the file and save the current changes" : "إستبدِل الملف واحفظ التغييرات الحالية",
+    "Discard the current changes and load the latest version" : "تجاهل التغييرات الحالية وارفع آخر نسخة",
     "Close outline view" : "أغلق العرض التخطيطي outline view",
     "Outline" : "عرض تخطيطي outline"
 },

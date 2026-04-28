@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Texte",
     "📝 Collaborative document editing" : "📝 Édition collaborative de documents",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Édition collaborative de documents !**\n\n- **📝 Restez concentré :** Aucune distraction, seulement la mise en forme dont vous avez besoin.\n- **🙋 Travaillez ensemble :** Partagez et collaborez avec vos amis et vos collègues, qu'ils utilisent Nextcloud ou non !\n- **💾 Format ouvert :** Les fichiers sont enregistrés en [Markdown](https://fr.wikipedia.org/wiki/Markdown), ce qui vous permet de les éditer depuis d'autres applications de texte.\n- **✊ Base solide :** Nous utilisons [🐈 tiptap](https://tiptap.scrumpy.io) qui est basé sur [🦉 ProseMirror](https://prosemirror.net) – un grand merci à eux !",
-    "Overwrite the file and save the current changes" : "Écraser le fichier et enregistrer les modifications actuelles",
-    "Discard the current changes and load the latest version" : "Abandonner les modifications et charger la dernière version",
     "Reload" : "Recharger",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Le fichier a été écrasé. Vos modifications ne peuvent pas être enregistrées automatiquement. Veuillez choisir comment procéder.",
     "The document could not be loaded. Please check your internet connection." : "Le document n'a pu être chargé. Veuillez vérifier votre connexion internet.",
@@ -234,6 +232,8 @@ OC.L10N.register(
     "Front matter" : "Avant-propos",
     "A table was pasted into a table. Nested tables are not supported." : "Un tableau a été collé dans un tableau. Les tableaux imbriqués ne sont pas pris en charge.",
     "Link to this section" : "Lier vers cette section",
+    "Overwrite the file and save the current changes" : "Écraser le fichier et enregistrer les modifications actuelles",
+    "Discard the current changes and load the latest version" : "Abandonner les modifications et charger la dernière version",
     "Close outline view" : "Fermer la vue du plan",
     "Outline" : "Plan"
 },

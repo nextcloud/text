@@ -20,8 +20,6 @@
     "Text" : "Text",
     "📝 Collaborative document editing" : "Gemensam dokumentredigering",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Gemensam dokumentredigering!**\n\n- **📝 Fokuserat skrivande:** Inga distraktioner, endast den formatering du behöver.\n- **🙋 Arbeta tillsammans:** Dela och samarbeta med vänner och kollegor, oavsett om de använder Nextcloud eller inte!\n- **💾 Öppna format:** Filer sparas som [Markdown](https://en.wikipedia.org/wiki/Markdown), så du kan redigera dem från valfri text-app också.\n- **✊ Stark grund:** Vi använder [🐈 tiptap](https://tiptap.scrumpy.io) som baseras på [🦉 ProseMirror](https://prosemirror.net) – tack till dem!",
-    "Overwrite the file and save the current changes" : "Skriv över filen och spara de aktuella ändringarna",
-    "Discard the current changes and load the latest version" : "Ignorera de aktuella ändringarna och ladda den senaste versionen",
     "Reload" : "Ladda om",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Filen skrevs över. Dina aktuella ändringar kan inte sparas automatiskt. Välj hur du vill fortsätta.",
     "The document could not be loaded. Please check your internet connection." : "Dokumentet kunde inte laddas. Kontrollera din internetanslutning.",
@@ -234,6 +232,8 @@
     "Front matter" : "Förtexter",
     "A table was pasted into a table. Nested tables are not supported." : "En tabell klistrades in i en tabell. Nästlade tabeller stöds inte",
     "Link to this section" : "Länk till detta avsnitt",
+    "Overwrite the file and save the current changes" : "Skriv över filen och spara de aktuella ändringarna",
+    "Discard the current changes and load the latest version" : "Ignorera de aktuella ändringarna och ladda den senaste versionen",
     "Close outline view" : "Stäng översiktsvy",
     "Outline" : "Översikt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

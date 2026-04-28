@@ -20,8 +20,6 @@ OC.L10N.register(
     "File not found" : "–§–∞–π–ª –æ–ª–¥—Å–æ–Ω–≥“Ø–π",
     "Readme" : "Readme",
     "Text" : "Текст",
-    "Overwrite the file and save the current changes" : "Файлыг дарж бичиж одоогийн өөрчлөлтийг хадгалах",
-    "Discard the current changes and load the latest version" : "Одоогийн өөрчлөлтийг хаяж хамгийн сүүлийн хувилбарыг ачаалах",
     "Reload" : "Дахин ачаалах",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Файл дарж бичигдсэн. Таны одоогийн өөрчлөлтүүдийг автоматаар хадгалах боломжгүй. Үргэлжлүүлэх аргаа сонгоно уу.",
     "The document could not be loaded. Please check your internet connection." : "Баримт бичгийг ачааллах боломжгүй байна. Интернет холболтоо шалгана уу.",
@@ -230,6 +228,8 @@ OC.L10N.register(
     "Front matter" : "Нүүр хэсэг",
     "A table was pasted into a table. Nested tables are not supported." : "Хүснэгт хүснэгт рүү буулгагдсан. Үүрлэсэн хүснэгт дэмжигдэхгүй.",
     "Link to this section" : "Энэ хэсэг рүү холбоос",
+    "Overwrite the file and save the current changes" : "Файлыг дарж бичиж одоогийн өөрчлөлтийг хадгалах",
+    "Discard the current changes and load the latest version" : "Одоогийн өөрчлөлтийг хаяж хамгийн сүүлийн хувилбарыг ачаалах",
     "Close outline view" : "Тоймын харагдацыг хаах",
     "Outline" : "Тойм"
 },

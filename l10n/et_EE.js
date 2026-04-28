@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝  Ühistegevuslik dokumendikoostamine",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Ühistegevuslik dokumentide koostamine!**\n\n- **📝 Saad keskenduda vaid kirjutamisele:** Pole liigset müra, on vaid sulle vajalik vormindus.\n- **🙋 Ühistöö:** Jaga või koosta sisu sõprade ja kolleegidega, pole oluline, kas nad kasutavad Nextcloudi või mitte!\n- **💾 Avatud vorming:** Failid salvestatakse [Markdown](https://en.wikipedia.org/wiki/Markdown) vormingus ning see võimaldab sul neid muuta ka teiste rakendustega.\n- **✊ Korralik aluskiht:** Põhiteek on [🐈 tiptap](https://tiptap.scrumpy.io), mis omakorda põhineb [🦉 ProseMirroril](https://prosemirror.net) – suur tänu mõlemale!",
-    "Overwrite the file and save the current changes" : "Salvesta senised muudatused ja sellega kirjuta senine fail üle",
-    "Discard the current changes and load the latest version" : "Loodu senistest muudatustest ja laadi fail uuesti",
     "Reload" : "Laadi uuesti",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Fail on üle kirjutatud. Sinu seniseid muudatusi ei saa automaatselt salvestada. Palun vali edasine tegevus.",
     "The document could not be loaded. Please check your internet connection." : "Dokumenti ei õnnestunud laadida. Palun kontrolli oma seadme internetiühenduse toimivust.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Kokkuvõte",
     "A table was pasted into a table. Nested tables are not supported." : "Asestasid tabeli teise tabeli sisse ja selline lahendus pole toetatud.",
     "Link to this section" : "Lisa link sellele lõigule",
+    "Overwrite the file and save the current changes" : "Salvesta senised muudatused ja sellega kirjuta senine fail üle",
+    "Discard the current changes and load the latest version" : "Loodu senistest muudatustest ja laadi fail uuesti",
     "Close outline view" : "Sulge struktuuri vaade",
     "Outline" : "Teksti struktuur"
 },

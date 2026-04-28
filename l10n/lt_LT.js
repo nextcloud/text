@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Tekstas",
     "📝 Collaborative document editing" : "📝 Dokumentų taisymas bendradarbiaujant",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Dokumentų taisymas bendradarbiaujant!**\n\n- **📝 Rašymas susitelkus:** Jokio blaškymosi. Tik tas formatavimas, kurio jums reikia.\n- **🙋 Dirbkite kartu:** Bendrinkite ir bendradarbiaukite su draugais ir kolegomis, nepriklausomai nuo to, ar jie naudoja Nextcloud, ar ne!\n- **💾 Atvirasis formatas:** Failai yra įrašomi kaip [Markdown](https://en.wikipedia.org/wiki/Markdown), taigi, galite juos taisyti naudodami bet kurią kitą tekstų programėlę.\n- **✊ Stiprus pagrindas:** Mes naudojame [🐈 tiptap](https://tiptap.scrumpy.io), kuris yra pagrįstas [🦉 ProseMirror](https://prosemirror.net) – didelis jiems ačiū!",
-    "Overwrite the file and save the current changes" : "Pakeisti failą ir išsaugoti dabartinius pakeitimus",
-    "Discard the current changes and load the latest version" : "Atmeskite dabartinius pakeitimus ir įkelkite naujausią versiją",
     "Reload" : "Įkelti iš naujo",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Failas buvo perrašytas. Jūsų dabartiniai pakeitimai negali būti išsaugoti automatiškai. Pasirinkite, kaip elgtis toliau.",
     "The document could not be loaded. Please check your internet connection." : "Nepavyko įkelti dokumento. Patikrinkite interneto ryšį.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Dokumento metaduomenys",
     "A table was pasted into a table. Nested tables are not supported." : "Lentelė buvo įklijuota į lentelę. Įdėtosios lentelės nepalaikomos.",
     "Link to this section" : "Link to this section",
+    "Overwrite the file and save the current changes" : "Pakeisti failą ir išsaugoti dabartinius pakeitimus",
+    "Discard the current changes and load the latest version" : "Atmeskite dabartinius pakeitimus ir įkelkite naujausią versiją",
     "Close outline view" : "Uždaryti kontūro rodinį",
     "Outline" : "Kontūras"
 },

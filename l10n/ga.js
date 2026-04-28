@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Téacs",
     "📝 Collaborative document editing" : "📝 Eagarthóireacht doiciméad comhoibríoch",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Comhoibríoch eagarthóireacht doiciméad!**\n\n- **📝 Scríbhneoireacht dhírithe:** Gan aon seachrán, ní gá ach an fhormáidiú atá uait.\n- **🙋 Bí ag obair le chéile:** Roinn agus comhoibrigh le cairde agus comhghleacaithe, is cuma má úsáideann siad Nextcloud nó nach mbaineann!\n- **💾 Formáid oscailte:** Sábháiltear comhaid mar [Markdown](https://en.wikipedia.org/wiki/Markdown), ionas gur féidir leat iad a chur in eagar ó aon aip téacs eile freisin.\n- **✊ Bunús láidir:** Bainimid úsáid as [🐈 tiptap](https://tiptap.scrumpy.io) atá bunaithe ar [🦉 ProseMirror](https://prosemirror.net) – buíochas mór leo!",
-    "Overwrite the file and save the current changes" : "Forscríobh an comhad agus sábháil na hathruithe reatha",
-    "Discard the current changes and load the latest version" : "Scrios na hathruithe reatha agus luchtaigh an leagan is déanaí",
     "Reload" : "Athlódáil",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Rinneadh an file a fhorscríobh. Ní féidir d'athruithe reatha a shábháil go huathoibríoch. Roghnaigh conas dul ar aghaidh le do thoil.",
     "The document could not be loaded. Please check your internet connection." : "Níorbh fhéidir an doiciméad a lódáil. Seiceáil do nasc idirlín.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Ábhar tosaigh",
     "A table was pasted into a table. Nested tables are not supported." : "Greamaíodh tábla isteach i dtábla. Ní thacaítear le táblaí neadaithe.",
     "Link to this section" : "Nasc leis an alt seo",
+    "Overwrite the file and save the current changes" : "Forscríobh an comhad agus sábháil na hathruithe reatha",
+    "Discard the current changes and load the latest version" : "Scrios na hathruithe reatha agus luchtaigh an leagan is déanaí",
     "Close outline view" : "Amharc imlíne gar",
     "Outline" : "Imlíne"
 },

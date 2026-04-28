@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Modifica documenti collaborativa!**\n\n- **📝 Scrittura focalizzata:** Nessuna distrazione, solo la formattazione che ti serve.\n- **🙋 Lavora insieme:** Condividi e collabora con amici e colleghi, non importa se utilizzano Nextcloud o no!\n- **💾 Formato aperto:** I file sono salvati come [Markdown](https://en.wikipedia.org/wiki/Markdown), così puoi modificarli anche da qualsiasi altra applicazione.\n- **✊ Una forte fondazione:** Noi usiamo [🐈 tiptap](https://tiptap.scrumpy.io) che è basato su [🦉 ProseMirror](https://prosemirror.net) – un grande ringraziamento a loro!",
-    "Overwrite the file and save the current changes" : "Sovrascrivi il file e salva le modifiche correnti",
-    "Discard the current changes and load the latest version" : "Ignora le modifiche correnti e carica la versione più recente",
     "Reload" : "Ricarica",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Il file è stato sovrascritto. Le modifiche correnti non possono essere salvate automaticamente. Scegli come procedere.",
     "The document could not be loaded. Please check your internet connection." : "Impossibile caricare il documento. Controlla la tua connessione Internet.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Frontespizio",
     "A table was pasted into a table. Nested tables are not supported." : "Una tabella è stata incollata in un'altra tabella. Le tabelle nidificate non sono supportate.",
     "Link to this section" : "Collegamento a questa sezione",
+    "Overwrite the file and save the current changes" : "Sovrascrivi il file e salva le modifiche correnti",
+    "Discard the current changes and load the latest version" : "Ignora le modifiche correnti e carica la versione più recente",
     "Close outline view" : "Chiudi indice",
     "Outline" : "Indice"
 },
