@@ -7,7 +7,7 @@ import { defineComponent, h, nextTick, ref, watch } from 'vue'
 import Editor from './Editor.vue'
 
 export default defineComponent({
-	emits: ['focus', 'ready', 'create:content', 'update:content'],
+	emits: ['focus'],
 	props: Editor.props,
 	setup(props, { attrs, emit, slots }) {
 		const reloading = ref(false)
@@ -25,10 +25,7 @@ export default defineComponent({
 				props,
 				on: {
 					focus: () => emit('focus'),
-					ready: () => emit('ready'),
 					reload: () => (reloading.value = true),
-					'create:content': (content) => emit('create:content', content),
-					'update:content': (content) => emit('update:content', content),
 				},
 				scopedSlots: slots,
 			})
