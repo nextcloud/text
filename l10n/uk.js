@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Текст",
     "📝 Collaborative document editing" : "Спільне редагування документів",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Спільне редагування документів!**\n\n- **📝 Цілеспрямоване письмо: ** Ніяких відволікань, лише необхідне форматування. \n- **🙋 Працюйте разом: ** Діліться та співпрацюйте з друзями та колегами, незалежно від того, використовують вони Nextcloud чи ні! \n- **💾 Відкритий формат:** Файли зберігаються як [Markdown](https://en.wikipedia.org/wiki/Markdown), тож ви також можете редагувати їх із будь-якої іншої текстової програми. - **✊ Міцна основа:** Ми використовуємо [🐈 tiptap](https://tiptap.scrumpy.io), який базується на [🦉 ProseMirror](https://prosemirror.net) – величезне спасибі їм!",
-    "Overwrite the file and save the current changes" : "Перезаписати файл та зберегти поточні зміни",
-    "Discard the current changes and load the latest version" : "Відхилити поточні зміни та завантажити останню версію",
     "Reload" : "Перезавантажити",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Файл було перезаписано. Ваші поточні зміни неможливо автоматично зберегти. Виберіть, як далі продовжити.",
     "The document could not be loaded. Please check your internet connection." : "Неможливо завантажити документ. Перевірте з'єднання з мережею.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Передня справа",
     "A table was pasted into a table. Nested tables are not supported." : "Таблицю було вставлено до іншої таблиці. Вкладені таблиці не підтримуються.",
     "Link to this section" : "Посилання на цей розділ",
+    "Overwrite the file and save the current changes" : "Перезаписати файл та зберегти поточні зміни",
+    "Discard the current changes and load the latest version" : "Відхилити поточні зміни та завантажити останню версію",
     "Close outline view" : "Закрити вивід змісту",
     "Outline" : "Зміст"
 },

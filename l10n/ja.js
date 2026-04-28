@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "テキスト",
     "📝 Collaborative document editing" : "📝 共同文書編集",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "**📝共同文書編集！**\n\n- **📝 集中執筆：集中モードで、必要なフォーマットだけ。\n- **🙋 一緒に仕事をする：**友達や同僚と、Nextcloudを使っていようとなかろうと、共有して共同作業しよう！\n- **💾 オープンフォーマット:** ファイルは[Markdown](https://en.wikipedia.org/wiki/Markdown)として保存されるので、他のテキストアプリからも編集できます。\n- **✊ 強固な基盤：**私たちは[🦉 ProseMirror](https://prosemirror.net)をベースにした[🐈 tiptap](https://tiptap.scrumpy.io)を使用しています - 本当にありがとうございます！",
-    "Overwrite the file and save the current changes" : "ファイルを上書きし現在の変更を保存します",
-    "Discard the current changes and load the latest version" : "現在の変更を破棄し、最新バージョンをロードします",
     "Reload" : "再読み込み",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "ファイルが上書きされました。現在の変更は自動保存できません。続行方法を選択してください。",
     "The document could not be loaded. Please check your internet connection." : "ドキュメントを読み込めませんでした。インターネット接続を確認してください。",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "A table was pasted into a table. Nested tables are not supported." : "テーブルがテーブルに貼り付けられました。ネストされたテーブルはサポートされていません。",
     "Link to this section" : "このセクションへのリンク",
+    "Overwrite the file and save the current changes" : "ファイルを上書きし現在の変更を保存します",
+    "Discard the current changes and load the latest version" : "現在の変更を破棄し、最新バージョンをロードします",
     "Close outline view" : "目次の表示を閉じる",
     "Outline" : "目次"
 },

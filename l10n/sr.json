@@ -20,8 +20,6 @@
     "Text" : "Текст",
     "📝 Collaborative document editing" : "📝 Заједничко уређивање докумената",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Заједничко уређивање докумената!**\n\n- **📝 Фокус на писању:** Нема ометања, само форматираер које вам треба.\n- **🙋 Радите заједно:** Делите и радите заједно са пријатељима и колегама, без обзира да ли имају Некстклауд или не!\n- **💾 Отворени формат:** Фајлови се чувају као [Markdown](https://en.wikipedia.org/wiki/Markdown), тако да их можете мењати из било које друге апликације.\n- **✊ Јаки темељи:** Користимо [🐈 tiptap](https://tiptap.scrumpy.io) који се базира на [🦉 ProseMirror-у](https://prosemirror.net) – пуно им хвала!",
-    "Overwrite the file and save the current changes" : "Препиши фајл и сачувај текуће измене",
-    "Discard the current changes and load the latest version" : "Одбаци текуће измене и учитај последњу верзију",
     "Reload" : "Поново учитај",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Фајл је преписан. Ваше текуће измене се неће аутоматски сачувати. Молимо вас да одлучите како да се настави.",
     "The document could not be loaded. Please check your internet connection." : "Документ не може да се учита. Молимо вас да проверите везу са интернетом.",
@@ -222,6 +220,8 @@
     "Could not copy to the clipboard" : "Кôд није могао да се копира у клипборд",
     "Front matter" : "Уводни део",
     "Link to this section" : "Линк на овај одељак",
+    "Overwrite the file and save the current changes" : "Препиши фајл и сачувај текуће измене",
+    "Discard the current changes and load the latest version" : "Одбаци текуће измене и учитај последњу верзију",
     "Close outline view" : "Затвори контурни приказ",
     "Outline" : "Контура"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

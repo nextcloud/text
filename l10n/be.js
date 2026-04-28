@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Тэкст",
     "📝 Collaborative document editing" : "📝 Супольнае рэдагаванне дакументаў",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Супольнае рэдагаванне дакументаў!**\n\n- **📝 Засяродзьцеся на пісьме:** Нічога не адцягвае ўвагу, толькі неабходнае фарматаванне.\n- **🙋 Працуйце разам:** Абагульвайце і супрацоўнічайце з сябрамі і калегамі, незалежна ад таго, выкарыстоўваюць яны Nextcloud ці не!\n- **💾 Адкрыты фармат:** Файлы захоўваюцца як [Markdown](https://en.wikipedia.org/wiki/Markdown), таму вы можаце рэдагаваць іх і ў любой іншай тэкставай праграме.\n- **✊ Моцная аснова:** Мы выкарыстоўваем [🐈 tiptap](https://tiptap.scrumpy.io), які заснаваны на [🦉 ProseMirror](https://prosemirror.net) – вялізная ім падзяка!",
-    "Overwrite the file and save the current changes" : "Перазапісаць файл і захаваць бягучыя змены",
-    "Discard the current changes and load the latest version" : "Адхіліць бягучыя змены і загрузіць апошнюю версію",
     "Reload" : "Перазагрузіць",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Файл быў перазапісаны. Вашы бягучыя змены нельга захаваць аўтаматычна. Выберыце, як дзейнічаць.",
     "The document could not be loaded. Please check your internet connection." : "Не ўдалося загрузіць дакумент. Праверце злучэнне з інтэрнэтам.",
@@ -223,6 +221,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Не ўдалося скапіяваць у буфер абмену",
     "Front matter" : "Уступная частка",
     "Link to this section" : "Спасылка на гэты раздзел",
+    "Overwrite the file and save the current changes" : "Перазапісаць файл і захаваць бягучыя змены",
+    "Discard the current changes and load the latest version" : "Адхіліць бягучыя змены і загрузіць апошнюю версію",
     "Close outline view" : "Закрыць рэжым структуры",
     "Outline" : "Структура"
 },

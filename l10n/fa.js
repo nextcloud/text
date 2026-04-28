@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "متن",
     "📝 Collaborative document editing" : "📝 Collaborative document editing",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!",
-    "Overwrite the file and save the current changes" : "فایل را بازنویسی کنید و تغییرات فعلی را ذخیره کنید",
-    "Discard the current changes and load the latest version" : "تغییرات فعلی را نادیده بگیرید و جدیدترین نسخه را بارگذاری کنید",
     "Reload" : "بار کردن دوباره",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "فایل رونویسی شده است. تغییرات فعلی شما قابل ذخیره خودکار نیستند. لطفاً نحوه ادامه را انتخاب کنید.",
     "The document could not be loaded. Please check your internet connection." : "سند قابل بارگیری نیست. لطفاً اتصال اینترنت خود را بررسی کنید.",
@@ -224,6 +222,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "نتوانستم در کلیپ‌بورد کپی کنم",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
+    "Overwrite the file and save the current changes" : "فایل را بازنویسی کنید و تغییرات فعلی را ذخیره کنید",
+    "Discard the current changes and load the latest version" : "تغییرات فعلی را نادیده بگیرید و جدیدترین نسخه را بارگذاری کنید",
     "Close outline view" : "Close outline view",
     "Outline" : "Outline"
 },

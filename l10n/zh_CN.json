@@ -20,8 +20,6 @@
     "Text" : "文本 ",
     "📝 Collaborative document editing" : "文档协作编辑",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 协作式的文档编辑！**\n\n- **📝 专注的写作：** 无干扰，只有您需要的格式化。\n- **🙋 一起工作：** 与朋友和同事共享协作，无论他们是否使用Nextcloud！\n- **💾 开放标准：** 文件将保存为 [Markdown](https://en.wikipedia.org/wiki/Markdown)，所以您也可以使用任何其他文本应用。\n- **✊ 雄厚基础：** 我们使用 [🐈 tiptap](https://tiptap.scrumpy.io) ，它基于 [🦉 ProseMirror](https://prosemirror.net) – 非常感谢它们！",
-    "Overwrite the file and save the current changes" : "覆盖文件并保存当前更改",
-    "Discard the current changes and load the latest version" : "放弃当前更改并加载最新版本",
     "Reload" : "重载",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "文件已被覆盖。无法自动保存您当前的更改。请选择如何继续。",
     "The document could not be loaded. Please check your internet connection." : "无法加载文档。请检查您的互联网连接。",
@@ -234,6 +232,8 @@
     "Front matter" : "前言",
     "A table was pasted into a table. Nested tables are not supported." : "表格被粘贴进另一个表格中，不支持嵌套表格。",
     "Link to this section" : "链接至本节",
+    "Overwrite the file and save the current changes" : "覆盖文件并保存当前更改",
+    "Discard the current changes and load the latest version" : "放弃当前更改并加载最新版本",
     "Close outline view" : "关闭大纲视图",
     "Outline" : "大纲"
 },"pluralForm" :"nplurals=1; plural=0;"

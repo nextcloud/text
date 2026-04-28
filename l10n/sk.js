@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Text",
     "📝 Collaborative document editing" : "Spoločná úprava dokumentov",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Spoločná úprava dokumentov**\n\n- **📝 Sústredené písanie:** Žiadne rozptyľovanie, len formát, ktorý naozaj potrebujete\n- **🙋 Pracujte spoločne:** Spolupracujte s kolegami, či už používajú Nextcloud alebo nie.\n- **💾 Otvorený formát:** Súbory sa ukladaju vo formáte [Markdown] (https://en.wikipedia.org/wiki/Markdown), takže ich je možné upravovať v akomkoľvek textovom editore.\n- **✊ Solídne základy:** Používame [🐈 tiptap](https://tiptap.scrumpy.io) založený na [🦉 ProseMirror](https://prosemirror.net) – patrí im veľká vďaka!",
-    "Overwrite the file and save the current changes" : "Prepísať súbor a uložiť aktuálne zmeny",
-    "Discard the current changes and load the latest version" : "Zahodiť aktuálne zmeny a načítať najnovšiu verziu",
     "Reload" : "Znovu načítať",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Súbor bol prepísaný. Vaše aktuálne zmeny nie je možné automaticky uložiť. Vyberte, ako postupovať.",
     "The document could not be loaded. Please check your internet connection." : "Dokument sa nepodarilo načítať. Skontrolujte svoje internetové pripojenie.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Predná strana",
     "A table was pasted into a table. Nested tables are not supported." : "Stôl bol vložený do tabuľky. Vnorené tabuľky nie sú podporované.",
     "Link to this section" : "Odkaz na túto sekciu",
+    "Overwrite the file and save the current changes" : "Prepísať súbor a uložiť aktuálne zmeny",
+    "Discard the current changes and load the latest version" : "Zahodiť aktuálne zmeny a načítať najnovšiu verziu",
     "Close outline view" : "Zatvoriť prehľad",
     "Outline" : "Prehľad"
 },

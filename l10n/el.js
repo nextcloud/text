@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Κείμενο",
     "📝 Collaborative document editing" : "📝 Συνεργατική επεξεργασία εγγράφων",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Συνεργατική επεξεργασία εγγράφων!**\n\n- **📝 Απλή γραφή:** Χωρίς περιττά, μόνο η μορφοποίηση που χρειάζεστε.\n- **🙋 Συμμετοχή:** Μοιράστε και συνεργαστείτε με φίλους και συνάδελφους, ανεξάρτητα αν χρησιμοποιούν το Nextcloud ή όχι!\n- **💾 Ελεύθερη μορφή:** Τα αρχεία αποθηκεύονται ως [Markdown](https://en.wikipedia.org/wiki/Markdown), ώστε να μπορείτε να τα επεξεργαστείτε από οποιαδήποτε άλλη εφαρμογή κειμενογράφου.\n- **✊ Ισχυρό θεμέλιο:** Χρησιμοποιούμε [🐈 tiptap](https://tiptap.scrumpy.io) όπου βασίζεται στο [🦉 ProseMirror](https://prosemirror.net) – ένα μεγάλο ευχαριστώ σε αυτά!",
-    "Overwrite the file and save the current changes" : "Αντικατάσταση του αρχείου και αποθήκευση των τρεχουσών αλλαγών",
-    "Discard the current changes and load the latest version" : "Απόρριψη των τρεχουσών αλλαγών και φόρτωση της τελευταίας έκδοσης",
     "Reload" : "Επαναφόρτωση",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Το αρχείο αντικαταστάθηκε. Οι τρέχουσες αλλαγές σας δεν μπορούν να αποθηκευτούν αυτόματα. Παρακαλώ επιλέξτε πώς να συνεχίσετε.",
     "The document could not be loaded. Please check your internet connection." : "Το έγγραφο δεν μπορούσε να φορτωθεί. Παρακαλώ ελέγξτε τη σύνδεσή σας στο διαδίκτυο.",
@@ -229,6 +227,8 @@ OC.L10N.register(
     "Front matter" : "Εισαγωγικά στοιχεία",
     "A table was pasted into a table. Nested tables are not supported." : "Έγινε επικόλληση πίνακα μέσα σε πίνακα. Οι εμφωλευμένοι πίνακες δεν υποστηρίζονται.",
     "Link to this section" : "Σύνδεσμος προς αυτήν την ενότητα",
+    "Overwrite the file and save the current changes" : "Αντικατάσταση του αρχείου και αποθήκευση των τρεχουσών αλλαγών",
+    "Discard the current changes and load the latest version" : "Απόρριψη των τρεχουσών αλλαγών και φόρτωση της τελευταίας έκδοσης",
     "Close outline view" : "Κλείσιμο προβολής περιγράμματος",
     "Outline" : "Περίγραμμα"
 },

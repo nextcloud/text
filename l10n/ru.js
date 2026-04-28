@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Текст",
     "📝 Collaborative document editing" : "📝 Совместная работа над документами",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Совместная работа над документами!**\n\n- **📝 Все внимание на написание:** Ничего отвлекающего, только нужное вам редактирование.\n- **🙋 Совместная работа:** Делитесь и кооперируйтесь с друзьями и коллегами, независимо от того, используют они Nextcloud или нет!\n- **💾 Открытый формат:** Файлы сохраняются как [Markdown] (https://en.wikipedia.org/wiki/Markdown), поэтому вы также можете редактировать их из любого другого текстового приложения.\n- **✊ Крепкий фундамент: ** Мы используем [🐈 tiptap] (https://tiptap.scrumpy.io), основанный на [🦉 ProseMirror] (https://prosemirror.net) - огромное им спасибо!",
-    "Overwrite the file and save the current changes" : "Перезаписать файл и сохранить текущие изменения",
-    "Discard the current changes and load the latest version" : "Отменить текущие изменения и загрузить последнюю версию",
     "Reload" : "Обновить",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Файл был перезаписан. Ваши текущие изменения не могут быть автоматически сохранены. Пожалуйста, выберите, как продолжить.",
     "The document could not be loaded. Please check your internet connection." : "Не удалось загрузить документ. Пожалуйста, проверьте ваше соединение с интернетом.",
@@ -222,6 +220,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Не удалось скопировать в буфер обмена",
     "Front matter" : "Передний план",
     "Link to this section" : "Ссылка на этот раздел",
+    "Overwrite the file and save the current changes" : "Перезаписать файл и сохранить текущие изменения",
+    "Discard the current changes and load the latest version" : "Отменить текущие изменения и загрузить последнюю версию",
     "Close outline view" : "Выйти из режима просмотра обрамлений",
     "Outline" : "Обрамления"
 },

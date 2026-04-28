@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : " **📝 Edición colaborativa de documentos!**\n\n- **📝 Escritura enfocada:** Sen distraccións, só o formato necesario.\n- **🙋 Traballo en equipo:** Comparta e colabore con amigos e compañeiros. Non importa se usan Nextcloud ou non.\n- **💾 Formato aberto:** Os ficheiros gárdanse como [Markdown](https://en.wikipedia.org/wiki/Markdown), para que poida editalos desde calquera otra aplicación.\n- **✊ Bases sólidas:** Usamos [🐈 tiptap](https://tiptap.scrumpy.io), que está baseado en [🦉 ProseMirror](https://prosemirror.net). Moitas grazas a eles!",
-    "Overwrite the file and save the current changes" : "Sobrescribir o ficheiro e gardar os cambios actuais",
-    "Discard the current changes and load the latest version" : "Desbotar os cambios actuais e cargar a última versión",
     "Reload" : "Volver cargar",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "O ficheiro foi sobrescrito. Non é posíbel gardar automaticamente os cambios actuais. Escolla como proceder.",
     "The document could not be loaded. Please check your internet connection." : "Non foi posíbel cargar o documento. Comprobe a súa conexión a Internet.",
@@ -234,6 +232,8 @@ OC.L10N.register(
     "Front matter" : "Preliminar ",
     "A table was pasted into a table. Nested tables are not supported." : "Foi pegada unha táboa dentro doutra táboa. Non están admitidas as táboas aniñadas.",
     "Link to this section" : "Ligazón a esta sección",
+    "Overwrite the file and save the current changes" : "Sobrescribir o ficheiro e gardar os cambios actuais",
+    "Discard the current changes and load the latest version" : "Desbotar os cambios actuais e cargar a última versión",
     "Close outline view" : "Pechar a vista de esquema",
     "Outline" : "Esquema"
 },
