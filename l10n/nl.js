@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Gezamenlijke documentbewerking",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Gezamenlijke documentbewerking!**\n\n- **📝 Gericht schrijven:** Geen afleiding, alleen de edit mogelijkheden die je nodig hebt.\n- **🙋 Werk samen:** Deel en werk samen met vrienden en collega's, of je nu Nextcloud gebruikt of niet!\n- **💾 Open formaat:** Bestanden worden bewaard als [Markdown] (https://en.wikipedia.org/wiki/Markdown), je kan ze bewerken met elke andere tekst app.\n- **✊ Sterke basis:** We gebruiken [🐈 tiptap](https://tiptap.scrumpy.io) welke gebaseerd is op [🦉 ProseMirror](https://prosemirror.net) – Credits voor hen!",
-    "Overwrite the file and save the current changes" : "Overschrijf het bestand en bewaar de huidige wijzgingen",
-    "Discard the current changes and load the latest version" : "Negeer de huidige wijzgingen en laad de laatste versie",
     "Reload" : "Herladen",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Het bestand is overschreven. Je huidige wijzigingen kunnen niet automatisch bewaard worden. Kies hoe verder te gaan.",
     "The document could not be loaded. Please check your internet connection." : "Document kon niet worden geladen. Controleer de internetverbinding.",
@@ -220,6 +218,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Kon niet kopiëren naar het klembord",
     "Front matter" : "Voorwerk",
     "Link to this section" : "Link naar dit gedeelte",
+    "Overwrite the file and save the current changes" : "Overschrijf het bestand en bewaar de huidige wijzgingen",
+    "Discard the current changes and load the latest version" : "Negeer de huidige wijzgingen en laad de laatste versie",
     "Close outline view" : "Sluit overzichtsweergave",
     "Outline" : "Overzicht"
 },

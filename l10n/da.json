@@ -20,8 +20,6 @@
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Kollaborativ dokumentredigering",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Kollaborativ dokumentredigering! **\n\n- ** 📝 Fokuseret skrivning: ** Ingen distraktioner, kun den formatering, du har brug for.\n- ** 🙋 Arbejd sammen: ** Del og samarbejd med venner og kolleger, uanset om de bruger Nextcloud eller ej!\n- ** 💾 Åbent format: ** Filer gemmes som [Markdown] (https://da.wikipedia.org/wiki/Markdown), så du kan også redigere dem fra enhver anden tekstapp.\n- ** ✊ Stærkt fundament: ** Vi bruger [🐈 tiptap] (https://tiptap.scrumpy.io), som er baseret på [🦉 ProseMirror] (https://prosemirror.net) - kæmpe tak til dem!",
-    "Overwrite the file and save the current changes" : "Overskriv filen og gem de aktuelle ændringer",
-    "Discard the current changes and load the latest version" : "Kasser de aktuelle ændringer og indlæs den nyeste version",
     "Reload" : "Genindlæs",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Filen blev overskrevet. Dine nuværende ændringer kan ikke gemmes automatisk. Vælg venligst, hvordan der skal fortsættes.",
     "The document could not be loaded. Please check your internet connection." : "Dokumentet kunne ikke indlæses. Tjek din internetforbindelse.",
@@ -220,6 +218,8 @@
     "Could not copy to the clipboard" : "Kunne ikke kopiere til udklipsholderen",
     "Front matter" : "Metadata",
     "Link to this section" : "Link til dette afsnit",
+    "Overwrite the file and save the current changes" : "Overskriv filen og gem de aktuelle ændringer",
+    "Discard the current changes and load the latest version" : "Kasser de aktuelle ændringer og indlæs den nyeste version",
     "Close outline view" : "Luk omrids visning",
     "Outline" : "Omrids"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

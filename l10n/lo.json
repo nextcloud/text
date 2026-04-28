@@ -20,8 +20,6 @@
     "Text" : "ຂໍ້ຄວາມ",
     "📝 Collaborative document editing" : "📝 ການແກ້ໄຂເອກະສານຮ່ວມກັນ",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 ການແກ້ໄຂເອກະສານຮ່ວມກັນ!**\n\n- **📝 ການຂຽນທີ່ຈົດຈໍ່:** ບໍ່ມີສິ່ງລົບກວນ, ມີແຕ່ຮູບແບບທີ່ທ່ານຕ້ອງການ.\n- **🙋 ເຮັດວຽກຮ່ວມກັນ:** ແບ່ງປັນ ແລະ ເຮັດວຽກຮ່ວມກັບໝູ່ເພື່ອນ ແລະ ເພື່ອນຮ່ວມງານ, ບໍ່ວ່າພວກເຂົາຈະໃຊ້ Nextcloud ຫຼື ບໍ່ກໍຕາມ!\n- **💾 ຮູບແບບເປີດ:** ໄຟລ໌ຕ່າງໆຖືກບັນທຶກເປັນ [Markdown](https://en.wikipedia.org/wiki/Markdown), ສະນັ້ນທ່ານສາມາດແກ້ໄຂພວກມັນຈາກແອັບຂໍ້ຄວາມອື່ນໆໄດ້ເຊັ່ນກັນ.\n- **✊ ຮາກຖານທີ່ເຂັ້ມແຂງ:** ພວກເຮົາໃຊ້ [🐈 tiptap](https://tiptap.scrumpy.io) ເຊິ່ງອີງໃສ່ [🦉 ProseMirror](https://prosemirror.net) – ຂໍຂອບໃຈຢ່າງສູງ!",
-    "Overwrite the file and save the current changes" : "ຂຽນທັບໄຟລ໌ ແລະ ບັນທຶກການປ່ຽນແປງປັດຈຸບັນ",
-    "Discard the current changes and load the latest version" : "ຍົກເລີກການປ່ຽນແປງປັດຈຸບັນ ແລະ ໂຫລດເວີຊັນຫຼ້າສຸດ",
     "Reload" : "ໂຫລດຄືນໃໝ່",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "ໄຟລ໌ຖືກຂຽນທັບແລ້ວ. ການປ່ຽນແປງປັດຈຸບັນຂອງທ່ານບໍ່ສາມາດບັນທຶກອັດຕະໂນມັດໄດ້. ກະລຸນາເລືອກວິທີດຳເນີນການຕໍ່ໄປ.",
     "The document could not be loaded. Please check your internet connection." : "ບໍ່ສາມາດໂຫລດເອກະສານໄດ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງທ່ານ.",
@@ -224,6 +222,8 @@
     "Could not copy to the clipboard" : "ບໍ່ສາມາດສຳເນົາໃສ່ຄລິບບອດໄດ້",
     "Front matter" : "ຂໍ້ມູນສ່ວນໜ້າ",
     "Link to this section" : "ລິງໄປຫາສ່ວນນີ້",
+    "Overwrite the file and save the current changes" : "ຂຽນທັບໄຟລ໌ ແລະ ບັນທຶກການປ່ຽນແປງປັດຈຸບັນ",
+    "Discard the current changes and load the latest version" : "ຍົກເລີກການປ່ຽນແປງປັດຈຸບັນ ແລະ ໂຫລດເວີຊັນຫຼ້າສຸດ",
     "Close outline view" : "ປິດມຸມມອງໂຄງຮ່າງ",
     "Outline" : "ໂຄງຮ່າງ"
 },"pluralForm" :"nplurals=1; plural=0;"

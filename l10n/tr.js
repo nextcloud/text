@@ -22,8 +22,6 @@ OC.L10N.register(
     "Text" : "Yazı",
     "📝 Collaborative document editing" : "📝 İş birlikli belge düzenleme",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 İş birlikli belge düzenleme!**\n\n- **📝 Odaklanmış yazım:** Dikkat dağıtan bir şey yok, yalnızca gerek duyacağınız biçimlendirme özellikleri var.\n- **🙋 Birlikte çalışma:** Nextcloud kullanıyor olsun ya da olmasınlar, tanıdık ve iş arkadaşlarınız ile paylaşarak iş birliği yapma!\n- **💾 Açık dosya biçimi:** Dosyalar [Markdown](https://en.wikipedia.org/wiki/Markdown), biçiminde kaydedildiğinden başka yazı uygulamalarında da düzenlenebilir.\n- **✊ Sağlam temel:** [🦉 ProseMirror](https://prosemirror.net) üzerine geliştirilmiş [🐈 tiptap](https://tiptap.scrumpy.io) uygulamasını kullanıyoruz. Onlara minnettarız!",
-    "Overwrite the file and save the current changes" : "Dosyanın üzerine yaz ve geçerli değişiklikleri kaydet",
-    "Discard the current changes and load the latest version" : "Geçerli değişiklikleri at ve son sürümü yükle",
     "Reload" : "Yeniden yükle",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Dosyanın üzerine yazıldı. Geçerli değişiklikleriniz otomatik olarak kaydedilemez. Lütfen nasıl ilerlemek istediğinizi seçin.",
     "The document could not be loaded. Please check your internet connection." : "Belge yüklenemedi. Lütfen internet bağlantınızı denetleyin.",
@@ -236,6 +234,8 @@ OC.L10N.register(
     "Front matter" : "Açılış bölümleri ",
     "A table was pasted into a table. Nested tables are not supported." : "Bir tablo başka bir tablo içine yapıştırıldı. İç içe geçmiş tablolar desteklenmiyor.",
     "Link to this section" : "Bu bölüm bağlantısı",
+    "Overwrite the file and save the current changes" : "Dosyanın üzerine yaz ve geçerli değişiklikleri kaydet",
+    "Discard the current changes and load the latest version" : "Geçerli değişiklikleri at ve son sürümü yükle",
     "Close outline view" : "Özet görünümünü kapat",
     "Outline" : "Özet"
 },

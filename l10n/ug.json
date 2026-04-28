@@ -20,8 +20,6 @@
     "Text" : "تېكىست",
     "📝 Collaborative document editing" : "Document ھەمكارلىشىپ ھۆججەت تەھرىرلەش",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** document ھەمكارلىشىپ ھۆججەت تەھرىرلەش! **\n\n- ** writing فوكۇسلانغان يېزىق: ** دىققىتى چېچىلىدىغان ئىش يوق ، پەقەت سىز ئېھتىياجلىق بولغان فورماتلاش.\n- ** together بىللە ئىشلەڭ: ** Nextcloud نى ئىشلەتسۇن ياكى ئىشلەتمىسۇن ، دوستلىرىڭىز ۋە خىزمەتداشلىرىڭىز بىلەن ئورتاقلىشىڭ ۋە ھەمكارلىشىڭ!\n- ** 💾 ئوچۇق فورماتى: ** ھۆججەتلەر [Markdown] (https://en.wikipedia.org/wiki/Markdown) سۈپىتىدە ساقلىنىدۇ ، شۇڭا ئۇلارنى باشقا تېكىست دېتالىدىنمۇ تەھرىرلىيەلەيسىز.\n- ** ✊ مۇستەھكەم ئاساس: ** بىز [🦉 ProseMirror] (https://prosemirror.net) نى ئاساس قىلغان [🐈 tiptap] (https://tiptap.scrumpy.io) نى ئىشلىتىمىز - ئۇلارغا كۆپ رەھمەت!",
-    "Overwrite the file and save the current changes" : "ھۆججەتنى ئۈستىلەپ باز ھەمدە نۆۋەتتىكى ئۆزگەرتىشلەرنى ساقلا",
-    "Discard the current changes and load the latest version" : "نۆۋەتتىكى ئۆزگەرتىشلەرنى تاشلىۋەت ھەمدە ئالدىنقى نۇسخىسىنى يۈكلە",
     "Reload" : "قايتا يۈكلە",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "ھۆججەتنىڭ ئۈستىگە يېزىلدى. نۆۋەتتىكى ئۆزگەرتىشلىرىڭىزنى ئاپتوماتىك ساقلىغىلى بولمايدۇ. قانداق داۋاملاشتۇرۇشنى تاللاڭ.",
     "The document could not be loaded. Please check your internet connection." : "ھۆججەتنى يۈكلىگىلى بولمىدى. تور ئۇلىنىشىڭىزنى تەكشۈرۈڭ.",
@@ -232,6 +230,8 @@
     "Front matter" : "ئالدى مەسىلە",
     "A table was pasted into a table. Nested tables are not supported." : "بىر جەدىۋەل يەنە بىر جەدىۋەلگە چاپلاندى. بۇنىڭغا يول قۇيۇلمايدۇ.",
     "Link to this section" : "بۇ بۆلەككە ئۇلىنىش",
+    "Overwrite the file and save the current changes" : "ھۆججەتنى ئۈستىلەپ باز ھەمدە نۆۋەتتىكى ئۆزگەرتىشلەرنى ساقلا",
+    "Discard the current changes and load the latest version" : "نۆۋەتتىكى ئۆزگەرتىشلەرنى تاشلىۋەت ھەمدە ئالدىنقى نۇسخىسىنى يۈكلە",
     "Close outline view" : "سىزىق كۆرۈنۈشىنى تاقاش",
     "Outline" : "قىسقىچە چۈشەنچە"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

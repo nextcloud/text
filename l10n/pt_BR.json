@@ -20,8 +20,6 @@
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edição colaborativa de documentos",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Edição colaborativa de documentos!**\n\n- **📝 Escrita focada:** Sem distrações, apenas o formato que você precisa.\n- **🙋 Trabalhe em conjunto:** Compartilhe e colabore com amigos e colegas, independentemente de usarem o Nextcloud ou não!\n- **💾 Formato aberto:** Arquivos são salvos como [Markdown(https://en.wikipedia.org/wiki/Markdown), para que você possa editá-los com qualquer aplicativo de texto.\n- **✊ Base forte:** Usamos [🐈 tiptap](https://tiptap.scrumpy.io) que é baseado no [🦉 ProseMirror](https://prosemirror.net) – enorme agradecimento a eles!",
-    "Overwrite the file and save the current changes" : "Substituir o arquivo e salvar as alterações atuais",
-    "Discard the current changes and load the latest version" : "Descartar as alterações atuais e carregar a versão mais recente",
     "Reload" : "Recarregar",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "O arquivo foi sobrescrito. Suas alterações atuais não podem ser salvas automaticamente. Escolha como proceder.",
     "The document could not be loaded. Please check your internet connection." : "O documento não pôde ser carregado. Verifique sua conexão com a Internet.",
@@ -234,6 +232,8 @@
     "Front matter" : "Capa",
     "A table was pasted into a table. Nested tables are not supported." : "Uma tabela foi colada em outra tabela. Tabelas aninhadas não são suportadas.",
     "Link to this section" : "Criar um link para esta seção!",
+    "Overwrite the file and save the current changes" : "Substituir o arquivo e salvar as alterações atuais",
+    "Discard the current changes and load the latest version" : "Descartar as alterações atuais e carregar a versão mais recente",
     "Close outline view" : "Fechar visualização de estrutura",
     "Outline" : "Estrutura"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

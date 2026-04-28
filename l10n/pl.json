@@ -20,8 +20,6 @@
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Współpraca przy edycji dokumentów",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Współpraca przy edycji dokumentów!**\n\n- **📝 Skupienie się na pisaniu:** Bez rozpraszania uwagi, tylko niezbędne formatowanie.\n- **🙋 Pracuj w grupie:** Udostępniaj i współpracuj z przyjaciółmi i współpracownikami, niezależnie od tego, czy korzystają z Nextcloud, czy też nie!\n- **💾 Otwarty format:** Pliki są zapisywane jako [Markdown](https://en.wikipedia.org/wiki/Markdown), więc możesz edytować je z każdej innej aplikacji tekstowej.\n- **✊ Mocna podstawa:** Używamy [🐈 tiptap](https://tiptap.scrumpy.io) opartego na [🦉 ProseMirror](https://prosemirror.net) – wielkie podziękowania dla nich!",
-    "Overwrite the file and save the current changes" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
-    "Discard the current changes and load the latest version" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
     "Reload" : "Przeładuj",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "Plik został nadpisany. Twoje bieżące zmiany nie mogą zostać automatycznie zapisane. Wybierz, jak chcesz kontynuować.",
     "The document could not be loaded. Please check your internet connection." : "Nie udało się załadować dokumentu. Sprawdź swoje połączenie internetowe.",
@@ -234,6 +232,8 @@
     "Front matter" : "Wstęp",
     "A table was pasted into a table. Nested tables are not supported." : "Tabela została wklejona do tabeli. Zagnieżdżone tabele nie są obsługiwane.",
     "Link to this section" : "Link do tej sekcji",
+    "Overwrite the file and save the current changes" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
+    "Discard the current changes and load the latest version" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
     "Close outline view" : "Zamknij widok konspektu",
     "Outline" : "Konspekt"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
