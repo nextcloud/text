@@ -224,7 +224,83 @@ describe('Table extension', () => {
 			expect(editor.getHTML()).toBe(editorHtml)
 		}
 	})
+
+	test('sorts table body rows in ascending order by selected column', ({
+		editor,
+	}) => {
+		editor.commands.setContent(
+			markdownit.render(
+				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
+			),
+		)
+
+		let cell
+		cell = getHeaderCell(editor, 0)
+		expect(editor.commands.sortColumn('asc', cell)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
+
+		cell = getHeaderCell(editor, 1)
+		expect(editor.commands.sortColumn('asc', cell)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['10', '2', '1'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['a', 'b', 'c'])
+	})
+
+	test('sorts table body rows in descending order by selected column', ({
+		editor,
+	}) => {
+		editor.commands.setContent(
+			markdownit.render(
+				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
+			),
+		)
+
+		let cell
+		cell = getHeaderCell(editor, 0)
+		expect(editor.commands.sortColumn('desc', cell)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['10', '2', '1'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['a', 'b', 'c'])
+
+		cell = getHeaderCell(editor, 1)
+		expect(editor.commands.sortColumn('desc', cell)).toBe(true)
+
+		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
+		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
+	})
 })
+
+const getHeaderCell = (editor, targetIndex = 0) => {
+	let cell
+	editor.state.doc.descendants((node, pos) => {
+		if (!['tableHeadRow', 'tableRow'].includes(node.type.name)) {
+			return true
+		}
+		if (targetIndex >= node.childCount) {
+			return false
+		}
+
+		cell = node.child(targetIndex)
+		return false
+	})
+	return cell
+}
+
+const getBodyColumnValues = (editor, columnIndex) => {
+	const values = []
+	editor.state.doc.descendants((node) => {
+		if (node.type.name !== 'tableRow') {
+			return true
+		}
+		if (columnIndex < node.childCount) {
+			values.push(node.child(columnIndex).textContent.trim())
+		}
+		return true
+	})
+	return values
+}
 
 const formatHTML = (html) => {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
