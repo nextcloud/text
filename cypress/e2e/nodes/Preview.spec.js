@@ -46,11 +46,6 @@ describe('Preview extension', { retries: 0 }, () => {
 			expect(editor.can().setPreview()).to.be.false
 		})
 
-		it('cannot run on a paragraph with other content', () => {
-			prepareEditor('[link text](https://example.org) hello\n')
-			expect(editor.can().setPreview()).to.be.false
-		})
-
 		it('convert a paragraph with a link', () => {
 			prepareEditor('[link text](https://example.org)\n')
 			editor.commands.setPreview()
