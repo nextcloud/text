@@ -36,7 +36,12 @@ class TextEditorEmbed {
 	}
 
 	#getEditorComponent() {
-		return this.#vm.$children[0]
+		let component = this.#vm.$children[0]
+		// For session editors, there's an extra wrapper component before Editor.vue
+		if (component && !('editor' in component)) {
+			component = component.$children[0]
+		}
+		return component
 	}
 
 	onCreate(onCreateCallback = () => {}) {
