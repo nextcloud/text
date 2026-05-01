@@ -132,7 +132,7 @@ OC.L10N.register(
     "Link to file or folder" : "Nuoroda į failą ar aplanką",
     "Link to website" : "Nuoroda į internetinę svetainę",
     "Update link" : "Atnaujinti nuorodą",
-    "Open the Smart Picker" : "Atidaryti \"Smart Picker\"",
+    "Open the Smart Picker" : "Atidaryti „Išmanusis rinkiklis\"",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, pasirinkta \"{selectedSubMenuItemName}\"",
     "Insert result" : "Įterpti rezultatą",
     "Nextcloud Assistant result copied" : "\"Nextcloud\" asistento rezultatai nukopijuoti",
