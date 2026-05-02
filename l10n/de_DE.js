@@ -191,6 +191,8 @@ OC.L10N.register(
     "Left align column" : "Spalte links ausrichten",
     "Center align column" : "Spalte zentrieren",
     "Right align column" : "Spalte rechts ausrichten",
+    "Sort ascending" : "Aufsteigend sortieren",
+    "Sort descending" : "Absteigend sortieren",
     "Add column before" : "Spalte davor hinzufügen",
     "Add column after" : "Spalte danach hinzufügen",
     "Delete this column" : "Diese Spalte löschen",

@@ -26,6 +26,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "บันทึก",
     "Translate" : "แปลภาษา",
+    "Delete task" : "ลบงาน",
     "to" : "ถึง",
     "Replace" : "แทนที่",
     "Edit" : "แก้ไข",
