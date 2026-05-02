@@ -191,6 +191,8 @@ OC.L10N.register(
     "Left align column" : "Vänsterjusterad kolumn",
     "Center align column" : "Centrerad kolumn",
     "Right align column" : "Högerjusterad kolumn",
+    "Sort ascending" : "Sortera stigande",
+    "Sort descending" : "Sortera fallande",
     "Add column before" : "Lägg till kolumn innan",
     "Add column after" : "Lägg till kolumn efter",
     "Delete this column" : "Ta bort denna kolumn",
