@@ -511,6 +511,7 @@ export default {
 
 .image__main {
 	max-height: calc(100vh - 50px - 50px);
+	margin: auto;
 }
 
 .image__main--broken-icon,
