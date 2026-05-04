@@ -191,6 +191,8 @@ OC.L10N.register(
     "Left align column" : "Colún ailínithe ar chlé",
     "Center align column" : "Colún ailínithe lár",
     "Right align column" : "Colún ailínithe ar dheis",
+    "Sort ascending" : "Sórtáil in ord ardaitheach",
+    "Sort descending" : "Sórtáil íslitheach",
     "Add column before" : "Cuir colún leis roimhe seo",
     "Add column after" : "Cuir colún leis ina dhiaidh",
     "Delete this column" : "Scrios an colún seo",
