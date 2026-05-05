@@ -29,6 +29,7 @@
 /mkdocs.yml
 /node_modules/
 /psalm.xml
+/playwright/
 /README.md
 /renovate.json
 /run-eslint.sh
