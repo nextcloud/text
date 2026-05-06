@@ -191,6 +191,8 @@ OC.L10N.register(
     "Left align column" : "Joonda veerg vasakule",
     "Center align column" : "Joonda veerg keskele",
     "Right align column" : "Joonda veerg paremale",
+    "Sort ascending" : "Järjesta kasvavalt",
+    "Sort descending" : "Järjesta kahanevalt",
     "Add column before" : "Lisa veerg ettepoole",
     "Add column after" : "Lisa veerg tahapoole",
     "Delete this column" : "Kustuta see veerg",
