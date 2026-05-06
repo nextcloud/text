@@ -14,9 +14,10 @@ const openReadOnlyEnabled = loadState('text', 'open_read_only_enabled')
 
 document.addEventListener('DOMContentLoaded', async () => {
 	if (workspaceAvailable && window.OCA.Files?.Settings) {
-		const { default: Vue } = await import('vue')
-		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
-
+		const { default: Vue, defineAsyncComponent } = await import('vue')
+		const FilesSettings = defineAsyncComponent(
+			() => import('./views/FilesSettings.vue'),
+		)
 		const vm = new Vue({
 			render: (h) => h(FilesSettings, {}),
 		})
