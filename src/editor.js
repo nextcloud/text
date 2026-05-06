@@ -4,7 +4,7 @@
  */
 
 import { emit, subscribe } from '@nextcloud/event-bus'
-import Vue from 'vue'
+import Vue, { defineAsyncComponent } from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
@@ -270,10 +270,10 @@ window.OCA.Text.createEditor = async function ({
 	onSearch = undefined,
 	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
-	const { default: MarkdownContentEditor } = await import(
-		'./components/Editor/MarkdownContentEditor.vue'
+	const MarkdownContentEditor = defineAsyncComponent(
+		() => import('./components/Editor/MarkdownContentEditor.vue'),
 	)
-	const { default: Editor } = await import('./components/Editor.js')
+	const Editor = defineAsyncComponent(() => import('./components/Editor.js'))
 
 	const data = Vue.observable({
 		readonlyBarProps: readonlyBar.props,
@@ -377,8 +377,8 @@ window.OCA.Text.createTable = async function ({
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 }) {
-	const { default: PlainTableContentEditor } = await import(
-		'./components/Editor/PlainTableContentEditor.vue'
+	const PlainTableContentEditor = defineAsyncComponent(
+		() => import('./components/Editor/PlainTableContentEditor.vue'),
 	)
 
 	const data = Vue.observable({
