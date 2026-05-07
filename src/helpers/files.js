@@ -33,7 +33,7 @@ export const addMenuRichWorkspace = () => {
 			if (!window?.OCA?.Text?.RichWorkspaceEnabled) {
 				return false
 			}
-			if (Number(context.attributes['rich-workspace-file'])) {
+			if (Number(context.attributes['rich-workspace-file-flat'])) {
 				return false
 			}
 			// Check read permission to not show option in file drop shares
@@ -75,8 +75,8 @@ export const addMenuRichWorkspace = () => {
 
 			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
 
-			context.attributes['rich-workspace-file'] = fileid
-			context.attributes['rich-workspace'] = ''
+			context.attributes['rich-workspace-file-flat'] = fileid
+			context.attributes['rich-workspace-flat'] = ''
 
 			emit('files:node:created', file)
 			emit('files:node:updated', context)
@@ -115,8 +115,9 @@ export const FilesWorkspaceHeader = {
 			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace = !!latestFolder.attributes['rich-workspace-file']
-		const content = latestFolder.attributes['rich-workspace'] || ''
+		const hasRichWorkspace =
+			!!latestFolder.attributes['rich-workspace-file-flat']
+		const content = latestFolder.attributes['rich-workspace-flat'] || ''
 		const path = latestFolder.path || ''
 
 		// Create a new instance of the RichWorkspace component
@@ -140,10 +141,10 @@ export const FilesWorkspaceHeader = {
 		}
 
 		const hasRichWorkspace =
-			!!folder.attributes['rich-workspace-file'] && enabled(folder, view)
+			!!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
 		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
 		FilesHeaderRichWorkspaceInstance.content =
-			folder.attributes['rich-workspace'] || ''
+			folder.attributes['rich-workspace-flat'] || ''
 		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
 	},
 }
