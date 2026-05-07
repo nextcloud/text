@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { toggleListCommand } from './convertList'
 import listInputRule from './listInputRule.js'
 
-export { listInputRule }
+export { listInputRule, toggleListCommand }

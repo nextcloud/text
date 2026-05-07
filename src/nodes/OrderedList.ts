@@ -4,6 +4,7 @@
  */
 
 import { OrderedList as TiptapOrderedList } from '@tiptap/extension-list'
+import { toggleListCommand } from '../commands'
 
 const OrderedList = TiptapOrderedList.extend({
 	addAttributes() {
@@ -13,6 +14,13 @@ const OrderedList = TiptapOrderedList.extend({
 				default: true,
 				rendered: false,
 			},
+		}
+	},
+
+	addCommands() {
+		return {
+			...this.parent?.(),
+			toggleOrderedList: toggleListCommand('orderedList', 'listItem'),
 		}
 	},
 })

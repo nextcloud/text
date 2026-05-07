@@ -4,7 +4,7 @@
  */
 
 import { BulletList as TiptapBulletList } from '@tiptap/extension-list'
-import { listInputRule } from '../commands/index.js'
+import { listInputRule, toggleListCommand } from '../commands'
 
 /* We want to allow for `* [ ]` as an input rule for bullet lists.
  * Therefore the list input rules need to check the input
@@ -13,7 +13,7 @@ import { listInputRule } from '../commands/index.js'
  */
 const BulletList = TiptapBulletList.extend({
 	parseHTML() {
-		return this.parent().map((rule) =>
+		return this.parent?.()?.map((rule) =>
 			Object.assign(rule, { preserveWhitespace: true }),
 		)
 	},
@@ -35,6 +35,13 @@ const BulletList = TiptapBulletList.extend({
 
 	addInputRules() {
 		return [listInputRule(/^\s*([-+*])\s([^\s[]+)$/, this.type)]
+	},
+
+	addCommands() {
+		return {
+			...this.parent?.(),
+			toggleBulletList: toggleListCommand('bulletList', 'listItem'),
+		}
 	},
 })
 

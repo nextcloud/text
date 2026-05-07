@@ -43,13 +43,26 @@
 ## bullet list to task list
 
 * toggleTaskList
-* keep
+* two
+* three
+
+---
+
+* [ ] did toggleTaskList
+* [ ] two
+* [ ] three
+
+## numbered list to task list
+
+1. toggleTaskList
+2. two
+3. three
 
 ---
 
 - [ ] did toggleTaskList
-
-* keep
+- [ ] two
+- [ ] three
 
 ## bullet list to ordered list
 
@@ -61,6 +74,17 @@
 1. did toggleOrderedList
 2. keep
 
+## task list to bullet list
+
+* [ ] one
+* [ ] toggleBulletList
+* [ ] three
+
+---
+
+* one
+* did toggleBulletList
+* three
 
 ## removes the list when toggling task off
 
@@ -78,31 +102,6 @@ toggleBulletList
 
 - did toggleBulletList
 
-## Splits bullet list when turning one item into task
-
-* toggleTaskList
-* not todo
-
----
-
-- [ ] did toggleTaskList
-
-* not todo
-
-## toggles two list items separately
-
-* toggleTaskList
-* not todo
-* toggleTaskList
-
----
-
-- [ ] did toggleTaskList
-
-* not todo
-
-- [ ] did toggleTaskList
-
 ## toggle off task list item should turn it into normal list item
 
 * not todo
@@ -113,9 +112,3 @@ toggleBulletList
 * not todo
 
 did toggleTaskList
-
----
-
-* not todo
-* toggleTaskList
-
