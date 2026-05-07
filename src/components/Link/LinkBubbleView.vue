@@ -53,7 +53,7 @@
 				@toggle="setPreview"
 				@delete="removeLink" />
 			<NcButton
-				v-else
+				v-else-if="isEditable"
 				:title="t('text', 'Cancel')"
 				:aria-label="t('text', 'Cancel')"
 				type="tertiary"
