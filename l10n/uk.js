@@ -191,6 +191,8 @@ OC.L10N.register(
     "Left align column" : "Вирівняти по лівій стороні",
     "Center align column" : "Вирівняти по центру",
     "Right align column" : "Вирівняти по правій стороні",
+    "Sort ascending" : "Впорядкувати за зростанням",
+    "Sort descending" : "Впорядкувати за спаданням",
     "Add column before" : "Додайте стовпець перед",
     "Add column after" : "Додайте стовпець після",
     "Delete this column" : "Вилучити цей стовпець",
