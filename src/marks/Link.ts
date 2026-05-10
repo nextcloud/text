@@ -259,17 +259,15 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			index: number,
 		) {
 			if (!mark.attrs.isWikiLink) {
-				return defaultMarkdownSerializer.marks.link.open(
-					state,
-					mark,
-					parent,
-					index,
-				)
+				const open = defaultMarkdownSerializer.marks.link.open
+				return typeof open === 'function'
+					? open(state, mark, parent, index)
+					: open
 			}
 			const href = mark.attrs.href as string
 			// Collect the display text of this mark's span to decide the form
 			let innerText = ''
-			parent.descendants((child, _pos) => {
+			parent.descendants((child) => {
 				if (!mark.isInSet(child.marks)) {
 					return false
 				}
@@ -286,12 +284,10 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			_index: number,
 		) {
 			if (!mark.attrs.isWikiLink) {
-				return defaultMarkdownSerializer.marks.link.close(
-					state,
-					mark,
-					_parent,
-					_index,
-				)
+				const close = defaultMarkdownSerializer.marks.link.close
+				return typeof close === 'function'
+					? close(state, mark, _parent, _index)
+					: close
 			}
 			return ']]'
 		},
