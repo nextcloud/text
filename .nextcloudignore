@@ -15,7 +15,7 @@
 /build/
 /codecov.yml
 /cypress
-/cypress.config.mjs
+/cypress.config.ts
 /jsconfig.json
 /krankerl.toml
 /node_modules/
