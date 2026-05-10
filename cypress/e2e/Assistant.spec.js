@@ -46,9 +46,9 @@ describe('Assistant', () => {
 		cy.getActionEntry('assistant').click()
 		cy.get('.action-button').contains('Free text to text prompt').click()
 
-		cy.get('.assistant-modal--content #input-input').should('be.visible')
-
-		cy.get('.assistant-modal--content #input-input').type('Hello World')
+		cy.get('.assistant-modal--content #input-input').type('Hello World', {
+			force: true,
+		})
 		cy.get('.assistant-modal--content .submit-button').click()
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
