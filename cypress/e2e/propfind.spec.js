@@ -9,7 +9,10 @@ const user = randUser()
 
 // Retries fail because folders / files already exist.
 describe('Text PROPFIND extension ', { retries: 0 }, function () {
-	const richWorkspace = 'nc:rich-workspace'
+	const PROPERTY_WORKSPACE = 'nc:rich-workspace'
+	const PROPERTY_WORKSPACE_FILE = 'nc:rich-workspace-file'
+	const PROPERTY_WORKSPACE_FLAT = 'nc:rich-workspace-flat'
+	const PROPERTY_WORKSPACE_FILE_FLAT = 'nc:rich-workspace-file-flat'
 
 	before(function () {
 		cy.createUser(user)
@@ -17,6 +20,9 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 
 	beforeEach(function () {
 		cy.login(user)
+		cy.deleteFile('/Readme.md')
+		cy.deleteFile('/workspace-flat')
+		cy.deleteFile('/workspace')
 	})
 
 	describe('with workspaces enabled', function () {
@@ -24,36 +30,60 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 			cy.configureText('workspace_enabled', 1)
 		})
 
-		// Android app relies on this to detect rich workspace availability
 		it('always adds rich workspace property', function () {
+			const properties = [
+				PROPERTY_WORKSPACE_FLAT,
+				PROPERTY_WORKSPACE_FILE_FLAT,
+			]
 			cy.uploadFile('empty.md', 'text/markdown', '/Readme.md')
-			// FIXME: Ideally we do not need a page context for those tests at all
-			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
 			cy.visit('/apps/dashboard')
-			cy.propfindFolder('/').should('have.property', richWorkspace, '')
-			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
-			cy.propfindFolder('/').should(
+			cy.propfindFolder('/', 0, properties).should(
 				'have.property',
-				richWorkspace,
+				PROPERTY_WORKSPACE_FLAT,
+				'',
+			)
+			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
+			cy.propfindFolder('/', 0, properties).should(
+				'have.property',
+				PROPERTY_WORKSPACE_FLAT,
 				'## Hello world\n',
 			)
 			cy.deleteFile('/Readme.md')
-			cy.propfindFolder('/').should('have.property', richWorkspace, '')
+			cy.propfindFolder('/', 0, properties).should(
+				'have.property',
+				PROPERTY_WORKSPACE_FLAT,
+				'',
+			)
 		})
 
-		// Android app relies on this when navigating nested folders
-		it('adds rich workspace property to nested folders', function () {
-			cy.createFolder('/workspace')
-			// FIXME: Ideally we do not need a page context for those tests at all
-			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
+		it('never adds rich workspace property to nested folders for flat properties', function () {
+			const properties = [
+				PROPERTY_WORKSPACE_FLAT,
+				PROPERTY_WORKSPACE_FILE_FLAT,
+			]
 			cy.visit('/apps/dashboard')
-			cy.propfindFolder('/', 1)
+			cy.createFolder('/workspace-flat')
+			cy.propfindFolder('/', 1, properties)
 				.then((results) => results.pop())
-				.should('have.property', richWorkspace, '')
+				.should('have.property', PROPERTY_WORKSPACE_FLAT, '')
+			cy.uploadFile('test.md', 'text/markdown', '/workspace-flat/Readme.md')
+			cy.propfindFolder('/', 1, properties)
+				.then((results) => results.pop())
+				.should('have.property', PROPERTY_WORKSPACE_FLAT, '')
+		})
+
+		// Android app relies on this to detect rich workspace availability in subfolders properly
+		it('adds rich workspace property to nested folders for the default properties', function () {
+			const properties = [PROPERTY_WORKSPACE, PROPERTY_WORKSPACE_FILE]
+			cy.createFolder('/workspace')
+			cy.visit('/apps/dashboard')
+			cy.propfindFolder('/', 1, properties)
+				.then((results) => results.pop())
+				.should('have.property', PROPERTY_WORKSPACE, '')
 			cy.uploadFile('test.md', 'text/markdown', '/workspace/Readme.md')
-			cy.propfindFolder('/', 1)
+			cy.propfindFolder('/', 1, properties)
 				.then((results) => results.pop())
-				.should('have.property', richWorkspace, '## Hello world\n')
+				.should('have.property', PROPERTY_WORKSPACE, '## Hello world\n')
 		})
 	})
 
@@ -66,13 +96,19 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 			// FIXME: Ideally we do not need a page context for those tests at all
 			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
 			cy.visit('/apps/dashboard')
-			cy.propfindFolder('/').should('not.have.property', richWorkspace)
+			cy.propfindFolder('/', 1, [
+				PROPERTY_WORKSPACE_FLAT,
+				PROPERTY_WORKSPACE_FILE_FLAT,
+			]).should('not.have.property', PROPERTY_WORKSPACE_FLAT)
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
-			cy.propfindFolder('/').should('not.have.property', richWorkspace)
+			cy.propfindFolder('/', 1, [
+				PROPERTY_WORKSPACE_FLAT,
+				PROPERTY_WORKSPACE_FILE_FLAT,
+			]).should('not.have.property', PROPERTY_WORKSPACE_FLAT)
 			cy.createFolder('/without-workspace')
 			cy.propfindFolder('/', 1)
 				.then((results) => results.pop())
-				.should('not.have.property', richWorkspace)
+				.should('not.have.property', PROPERTY_WORKSPACE_FLAT)
 		})
 	})
 })
