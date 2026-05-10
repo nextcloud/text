@@ -14,6 +14,8 @@ describe('Commonmark', () => {
 		21, 31, 201, 344, 474, 475, 476, 490, 493, 523, 535, 642, 643,
 		// contain comments
 		309, 308,
+		// wiki image link (![[...]]) intentionally renders different from CommonMark
+		589,
 	]
 
 	const normalize = (str) => {

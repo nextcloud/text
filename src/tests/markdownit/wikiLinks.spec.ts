@@ -36,3 +36,29 @@ describe('wiki image links (markdown-it)', () => {
 		expect(markdownit.render('![[foo\nbar]]')).not.to.contain('data-wiki-image')
 	})
 })
+
+describe('wiki text links (markdown-it)', () => {
+	it('renders a simple wiki link', () => {
+		expect(markdownit.render('[[WikiLink]]')).to.equal(
+			'<p><a href="WikiLink" data-wiki-link="true">WikiLink</a></p>\n',
+		)
+	})
+
+	it('renders a wiki link with display text', () => {
+		expect(markdownit.render('[[Target|Display Text]]')).to.equal(
+			'<p><a href="Target" data-wiki-link="true">Display Text</a></p>\n',
+		)
+	})
+
+	it('does not match an empty wiki link [[]]', () => {
+		expect(markdownit.render('[[]]')).not.to.contain('data-wiki-link')
+	})
+
+	it('does not match a partial opening [[', () => {
+		expect(markdownit.render('[[no closing')).not.to.contain('data-wiki-link')
+	})
+
+	it('does not match a wiki link with a newline inside', () => {
+		expect(markdownit.render('[[foo\nbar]]')).not.to.contain('data-wiki-link')
+	})
+})

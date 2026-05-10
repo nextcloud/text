@@ -10,6 +10,7 @@ exports[`Link extension integrated in the editor > Should only update link the a
             {
               "attrs": {
                 "href": "updated.de",
+                "isWikiLink": false,
                 "title": null,
               },
               "type": "link",
@@ -23,6 +24,7 @@ exports[`Link extension integrated in the editor > Should only update link the a
             {
               "attrs": {
                 "href": "not-example.org",
+                "isWikiLink": false,
                 "title": null,
               },
               "type": "link",
@@ -49,6 +51,7 @@ exports[`Link extension integrated in the editor > should insert new link if non
             {
               "attrs": {
                 "href": "example.org",
+                "isWikiLink": false,
                 "title": null,
               },
               "type": "link",
@@ -71,6 +74,7 @@ exports[`Link extension integrated in the editor > should insert new link if non
             {
               "attrs": {
                 "href": "https://example.org",
+                "isWikiLink": false,
                 "title": null,
               },
               "type": "link",
@@ -106,6 +110,7 @@ exports[`Link extension integrated in the editor > should update link if anchor 
             {
               "attrs": {
                 "href": "updated.de",
+                "isWikiLink": false,
                 "title": null,
               },
               "type": "link",
