@@ -18,19 +18,6 @@ const ImageInline = TiptapImage.extend({
 
 	selectable: false,
 
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			isWikiLink: {
-				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-image') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
-			},
-		}
-	},
-
 	parseHTML() {
 		return [
 			{
@@ -63,11 +50,7 @@ const ImageInline = TiptapImage.extend({
 	},
 
 	toMarkdown(state, node, parent, index) {
-		if (node.attrs.isWikiLink) {
-			state.write(`![[${node.attrs.src}]]`)
-		} else {
-			return defaultMarkdownSerializer.nodes.image(state, node, parent, index)
-		}
+		return defaultMarkdownSerializer.nodes.image(state, node, parent, index)
 	},
 })
 

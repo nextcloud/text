@@ -85,16 +85,6 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('Hello\n\n![test](foo)')).toBe(
 			'Hello\n\n![test](foo)',
 		)
-		// Wiki-style image links (issue #4795)
-		expect(markdownThroughEditor('![[wiki style image.png]]')).toBe(
-			'![[wiki style image.png]]',
-		)
-		expect(markdownThroughEditor('text ![[wiki style image.png]] more')).toBe(
-			'text ![[wiki style image.png]] more',
-		)
-		expect(markdownThroughEditor('Hello\n\n![[wiki style image.png]]')).toBe(
-			'Hello\n\n![[wiki style image.png]]',
-		)
 	})
 	test('special characters', () => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
