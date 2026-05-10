@@ -211,26 +211,6 @@ describe('Markdown extension integrated in the editor', () => {
 		expect(text).toBe('Hello\n\nexample@example.com')
 		editor.destroy()
 	})
-
-	it('serializes a wiki text link as [[target]]', () => {
-		const editor = createCustomEditor(
-			'<p><a href="WikiLink" data-wiki-link="true">WikiLink</a></p>',
-			[Markdown, Link],
-		)
-		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('[[WikiLink]]')
-		editor.destroy()
-	})
-
-	it('serializes a wiki text link with display text as [[target|display]]', () => {
-		const editor = createCustomEditor(
-			'<p><a href="target" data-wiki-link="true">display</a></p>',
-			[Markdown, Link],
-		)
-		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('[[target|display]]')
-		editor.destroy()
-	})
 })
 
 const copyEditorContent = (editor, nodeType = null) => {

@@ -4,12 +4,9 @@
  */
 
 import type { ExtendedRegExpMatchArray } from '@tiptap/core'
-import type { MarkdownSerializerState } from 'prosemirror-markdown'
-import type { Mark, Node } from '@tiptap/pm/model'
 import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
-import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
 
@@ -109,13 +106,6 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			},
 			title: {
 				default: null,
-			},
-			isWikiLink: {
-				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-link') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ?  { 'data-wiki-link': 'true' } : {},
 			},
 		}
 	},
@@ -248,35 +238,6 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 
 		// Add our own click handler plugin
 		return [...plugins, linkClicking()]
-	},
-
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
-	toMarkdown: {
-		open(state: MarkdownSerializerState, mark: Mark, parent: Node, index: number) {
-			if (!mark.attrs.isWikiLink) {
-				return defaultMarkdownSerializer.marks.link.open(state, mark, parent, index)
-			}
-			const href = mark.attrs.href as string
-			// Collect the display text of this mark's span to decide the form
-			let innerText = ''
-			parent.descendants((child, _pos) => {
-				if (!mark.isInSet(child.marks)) {
-					return false
-				}
-				if (child.isText) {
-					innerText += child.text
-				}
-			})
-			return innerText === href ? `[[` : `[[${href}|`
-		},
-		close(state: MarkdownSerializerState, mark: Mark, _parent: Node, _index: number) {
-			if (!mark.attrs.isWikiLink) {
-				return defaultMarkdownSerializer.marks.link.close(state, mark, _parent, _index)
-			}
-			return ']]'
-		},
-		mixable: true,
-		expelEnclosingWhitespace: false,
 	},
 })
 

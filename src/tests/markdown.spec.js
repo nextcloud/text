@@ -74,13 +74,6 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe(
 			'[text with `code` inside](foo)',
 		)
-		// Wiki-style links (issue #4795)
-		expect(markdownThroughEditor('[[WikiLink]]')).toBe(
-			'[[WikiLink]]',
-		)
-		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe(
-			'text [[wikiLink]] more',
-		)
 	})
 	test('images', () => {
 		// Inline images
