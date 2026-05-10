@@ -14,6 +14,8 @@ import type MarkdownIt from 'markdown-it'
  *
  * A `data-wiki-image` or `data-wiki-link` attribute is set so the ProseMirror
  * serializer can round-trip the syntax back to the wiki style link/image syntax.
+ *
+ * @param md - The markdown-it instance to extend
  */
 export default function wikiLinks(md: MarkdownIt): void {
 	// Parse wiki image links `![[filename]]`
@@ -93,7 +95,7 @@ export default function wikiLinks(md: MarkdownIt): void {
 
 		// Reject targets containing characters that conflict with CommonMark inline syntax
 		// ([, ], * are not valid in file names on most systems anyway)
-		if (/[\[\]*]/.test(target)) return false
+		if (/[[\]*]/.test(target)) return false
 
 		if (silent) return true
 
