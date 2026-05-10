@@ -10,7 +10,6 @@ import vitePreprocessor from 'cypress-vite'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
-	projectId: 'hx9gqy',
 	viewportWidth: 1280,
 	viewportHeight: 900,
 	trashAssetsBeforeRuns: true,
@@ -66,5 +65,5 @@ export default defineConfig({
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
-	numTestsKeptInMemory: 5,
+	numTestsKeptInMemory: 0,
 })
