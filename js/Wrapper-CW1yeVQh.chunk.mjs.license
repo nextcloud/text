@@ -432,7 +432,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.5.10
 	- license: MIT
 - uuid
-	- version: 11.1.0
+	- version: 11.1.1
 	- license: MIT
 - vue
 	- version: 2.7.16
