@@ -96,6 +96,7 @@ import {
 	FILE,
 	HOOK_MENTION_SEARCH,
 	IS_MOBILE,
+	OPEN_LINK_HANDLER,
 } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
@@ -121,6 +122,7 @@ import {
 	serializePlainText,
 } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
+import { openLink as defaultOpenLink } from './../helpers/links.js'
 import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -245,6 +247,9 @@ export default defineComponent({
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
 		const mentionSearch = inject(HOOK_MENTION_SEARCH)
+		const openLinkHandler = inject(OPEN_LINK_HANDLER, {
+			openLink: defaultOpenLink,
+		})
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,
@@ -252,6 +257,7 @@ export default defineComponent({
 					extensions,
 					isEmbedded: props.isEmbedded,
 					mentionSearch,
+					openLink: openLinkHandler.openLink,
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)

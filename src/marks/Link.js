@@ -32,6 +32,7 @@ const Link = TipTapLink.extend({
 		return {
 			...this.parent?.(),
 			relativePath: null,
+			openLink: undefined,
 		}
 	},
 
@@ -182,7 +183,7 @@ const Link = TipTapLink.extend({
 			})
 
 		// Custom click handler plugins
-		return [...plugins, linkClicking()]
+		return [...plugins, linkClicking(this.options.openLink)]
 	},
 
 	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
