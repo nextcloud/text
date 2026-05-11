@@ -45,12 +45,14 @@ const createRichEditor = ({
 	relativePath,
 	isEmbedded = false,
 	mentionSearch = undefined,
+	openLink = undefined,
 }: {
 	extensions?: Extension[]
 	connection?: Connection
 	relativePath?: string
 	isEmbedded?: boolean
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
+	openLink?: (href: string) => void
 } = {}) => {
 	return new Editor({
 		editorProps,
@@ -60,6 +62,7 @@ const createRichEditor = ({
 				relativePath,
 				isEmbedded,
 				mentionSearch,
+				openLink,
 			}),
 			FocusTrap,
 			...extensions,

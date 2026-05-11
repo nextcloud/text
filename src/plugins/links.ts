@@ -137,8 +137,14 @@ export const linkClickingKey = new PluginKey('textHandleClickLink')
  * - Open link in new tab on middle click rather than pasting.
  * - Only open link on ctrl/cmd + left click.
  *   We use the link bubble otherwise.
+ *
+ * @param openLink - the openLink callback function
  */
-export function linkClicking() {
+export function linkClicking(
+	openLink: (href: string) => void = (href) => {
+		window.open(href, '_blank')
+	},
+) {
 	return new Plugin({
 		key: linkClickingKey,
 		props: {
@@ -155,6 +161,7 @@ export function linkClicking() {
 					) {
 						event.preventDefault()
 						event.stopImmediatePropagation()
+						// Open link in new tab on middle click (ignore custom link handler on purpose)
 						window.open(linkEl.href, '_blank')
 					}
 				},
@@ -187,8 +194,8 @@ export function linkClicking() {
 							// Open anchor links directly
 							location.href = linkEl.href
 						} else if (event.ctrlKey || event.metaKey) {
-							// Open link in new tab on Ctrl/Cmd + left click
-							window.open(linkEl.href, '_blank')
+							// Open link directly on Ctrl/Cmd + left click
+							openLink(linkEl.href)
 						}
 					}
 				},
