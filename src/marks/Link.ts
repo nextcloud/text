@@ -11,7 +11,7 @@ import type { Mark, Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
-import { linkClicking } from '../plugins/links.js'
+import { linkClicking } from '../plugins/links'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 

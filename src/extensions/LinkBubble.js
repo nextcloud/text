@@ -4,7 +4,7 @@
  */
 
 import { Extension } from '@tiptap/core'
-import { hideLinkBubble, linkBubble } from '../plugins/links.js'
+import { hideLinkBubble, linkBubble } from '../plugins/links.ts'
 
 const LinkBubble = Extension.create({
 	name: 'linkViewBubble',
