@@ -75,11 +75,11 @@ div.ProseMirror {
 				background-color: var(--color-primary-element);
 				border-color: var(--color-primary-element);
 			}
-			> label > p {
+			> .task-item-content > p {
 				color: var(--color-text-maxcontrast);
 			}
 		}
-		label {
+		.task-item-content {
 			display: block;
 			flex-grow: 1;
 			max-width: calc(100% - 28px);

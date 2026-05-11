@@ -62,7 +62,7 @@ const TaskItem = TipTapTaskItem.extend({
 			'li',
 			mergeAttributes(HTMLAttributes, listAttributes),
 			['input', checkboxAttributes],
-			['label', 0],
+			['div', { class: 'task-item-content' }, 0],
 		]
 	},
 
