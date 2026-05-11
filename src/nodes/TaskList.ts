@@ -3,16 +3,22 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
 import { mergeAttributes } from '@tiptap/core'
 import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
+import { toggleListCommand } from '../commands'
 
 const TaskList = TiptapTaskList.extend({
-	parseHTML: [
-		{
-			priority: 100,
-			tag: 'ul.contains-task-list',
-		},
-	],
+	parseHTML() {
+		return [
+			{
+				priority: 100,
+				tag: 'ul.contains-task-list',
+			},
+		]
+	},
 
 	renderHTML({ HTMLAttributes }) {
 		return [
@@ -39,8 +45,16 @@ const TaskList = TiptapTaskList.extend({
 		}
 	},
 
-	toMarkdown: (state, node) => {
+	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
+	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
+	},
+
+	addCommands() {
+		return {
+			...this.parent?.(),
+			toggleTaskList: toggleListCommand('taskList', 'taskItem'),
+		}
 	},
 })
 
