@@ -10,7 +10,7 @@ import {
 	markdownThroughEditorHtml,
 } from '../testHelpers/markdown.js'
 import Markdown from './../../extensions/Markdown.js'
-import TaskItem from './../../nodes/TaskItem.js'
+import TaskItem from './../../nodes/TaskItem.ts'
 import TaskList from './../../nodes/TaskList.ts'
 
 describe('TaskItem extension', () => {
