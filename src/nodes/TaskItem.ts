@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
 import { mergeAttributes, wrappingInputRule } from '@tiptap/core'
 import { TaskItem as TipTapTaskItem } from '@tiptap/extension-list'
 import { Plugin } from '@tiptap/pm/state'
@@ -13,6 +16,7 @@ const TaskItem = TipTapTaskItem.extend({
 		return {
 			nested: true,
 			HTMLAttributes: {},
+			taskListTypeName: 'taskList',
 		}
 	},
 
@@ -21,55 +25,59 @@ const TaskItem = TipTapTaskItem.extend({
 	content: 'paragraph block*',
 
 	addAttributes() {
-		const adjust = { ...this.parent() }
+		const adjust = { ...this.parent?.() }
 		adjust.checked.parseHTML = (el) => {
-			return el.querySelector('input[type=checkbox]')?.checked
+			return (el.querySelector('input[type=checkbox]') as HTMLInputElement)
+				?.checked
 		}
 		return adjust
 	},
 
-	parseHTML: [
-		{
-			priority: 101,
-			tag: 'li',
-			getAttrs: (el) => {
-				const checkbox = el.querySelector('input[type=checkbox]')
-				return checkbox
+	parseHTML() {
+		return [
+			{
+				priority: 101,
+				tag: 'li',
+				getAttrs: (el) => {
+					const checkbox = el.querySelector('input[type=checkbox]')
+					return checkbox
+				},
+				context: 'taskList/',
 			},
-			context: 'taskList/',
-		},
-	],
+		]
+	},
 
 	renderHTML({ node, HTMLAttributes }) {
-		const listAttributes = { class: 'task-list-item checkbox-item' }
+		const listAttributes = {
+			class: `task-list-item checkbox-item${node.attrs.checked ? ' checked' : ''}`,
+		} as const
 		const checkboxAttributes = {
 			type: 'checkbox',
 			class: '',
 			contenteditable: false,
-		}
-		if (node.attrs.checked) {
-			checkboxAttributes.checked = true
-			listAttributes.class += ' checked'
-		}
+			...(node.attrs.checked ? { checked: true } : {}),
+		} as const
+
 		return [
 			'li',
 			mergeAttributes(HTMLAttributes, listAttributes),
 			['input', checkboxAttributes],
-			['label', 0],
+			['div', { class: 'task-item-content' }, 0],
 		]
 	},
 
 	// overwrite the parent node view so renderHTML gets used
-	addNodeView: false,
+	addNodeView: () => null,
 
-	toMarkdown: (state, node) => {
+	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
+	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.write(`[${node.attrs.checked ? 'x' : ' '}] `)
 		state.renderContent(node)
 	},
 
 	addInputRules() {
 		return [
-			...this.parent(),
+			...(this.parent?.() || []),
 			wrappingInputRule({
 				find: /^\s*([-+*])\s(\[(x|X|\s)?\])\s$/,
 				type: this.type,
@@ -92,10 +100,13 @@ const TaskItem = TipTapTaskItem.extend({
 							left: event.clientX,
 							top: event.clientY,
 						})
+						if (!coordinates) {
+							return
+						}
 						const position = state.doc.resolve(coordinates.pos)
 						const parentList = findParentNodeClosestToPos(
 							position,
-							function (node) {
+							function (node: Node) {
 								return (
 									node.type === schema.nodes.taskItem
 									|| node.type === schema.nodes.listItem
@@ -103,7 +114,8 @@ const TaskItem = TipTapTaskItem.extend({
 							},
 						)
 						const isListClicked =
-							event.target.tagName.toLowerCase() === 'li'
+							event.target instanceof Element
+							&& event.target.tagName.toLowerCase() === 'li'
 						if (
 							!isListClicked
 							|| !parentList

@@ -7,7 +7,7 @@ import { ListItem, OrderedList } from '@tiptap/extension-list'
 /* eslint-enable import/no-named-as-default */
 import Markdown from './../../../src/extensions/Markdown.js'
 import BulletList from './../../../src/nodes/BulletList.ts'
-import TaskItem from './../../../src/nodes/TaskItem.js'
+import TaskItem from './../../../src/nodes/TaskItem.ts'
 import TaskList from './../../../src/nodes/TaskList.ts'
 import { createCustomEditor } from './../../support/components.js'
 import { expectMarkdown, loadMarkdown, runCommands } from './helpers.js'
