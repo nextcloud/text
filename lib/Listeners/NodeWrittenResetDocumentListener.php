@@ -39,6 +39,12 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 		if (!$node instanceof File) {
 			return;
 		}
+		try {
+			$node->getId();
+		} catch (NotFoundException $e) {
+			// Handle non existing node (during creation).
+			return;
+		}
 		if (!$this->documentService->getDocument($node->getId())) {
 			return;
 		}
