@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { openLink } from '../helpers/links.js'
 import { logger } from '../helpers/logger.js'
 
 export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
@@ -11,7 +10,6 @@ export const IS_MOBILE = Symbol('editor:is-mobile')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
-export const OPEN_LINK_HANDLER = Symbol('editor:open-link-handler')
 export const HOOK_MENUBAR_LINK_CUSTOM_ACTION = Symbol('menubar:link-custom-action')
 
 export const useIsMobileMixin = {
@@ -52,16 +50,6 @@ export const useMentionHook = {
 		$mentionHookSearch: {
 			from: HOOK_MENTION_SEARCH,
 			default: true,
-		},
-	},
-}
-export const useOpenLinkHandler = {
-	inject: {
-		$openLinkHandler: {
-			from: OPEN_LINK_HANDLER,
-			default: {
-				openLink,
-			},
 		},
 	},
 }

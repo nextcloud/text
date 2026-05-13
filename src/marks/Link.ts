@@ -11,7 +11,7 @@ import type { Mark, Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
-import { linkClicking } from '../plugins/links.js'
+import { linkClicking } from '../plugins/links'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
@@ -33,6 +33,7 @@ const extractHrefFromMarkdownLink = (match: ExtendedRegExpMatchArray) => {
 
 export interface RelativePathLinkOptions extends LinkOptions {
 	relativePath?: string
+	openLink?: (href: string) => void
 }
 
 const parentDefaults: LinkOptions = {
@@ -98,6 +99,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		return {
 			...this.parent?.(),
 			relativePath: undefined,
+			openLink: undefined,
 			...parentDefaults,
 		}
 	},
@@ -247,7 +249,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			.filter((plugin) => !plugin.props.handleClick)
 
 		// Add our own click handler plugin
-		return [...plugins, linkClicking()]
+		return [...plugins, linkClicking(this.options.openLink)]
 	},
 
 	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API

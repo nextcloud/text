@@ -31,6 +31,7 @@ import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../../composables/useEditorWidth.ts'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
@@ -82,9 +83,11 @@ export default {
 	emits: ['update:content'],
 
 	setup(props) {
+		const { openLinkHandler } = useOpenLinkHandler()
 		const extensions = [
 			RichText.configure({
 				extensions: [UndoRedo],
+				openLink: openLinkHandler.openLink,
 			}),
 			FocusTrap,
 		]

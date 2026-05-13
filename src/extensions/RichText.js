@@ -69,6 +69,7 @@ export default Extension.create({
 			relativePath: null,
 			isEmbedded: false,
 			mentionSearch: undefined,
+			openLink: undefined,
 		}
 	},
 
@@ -131,6 +132,7 @@ export default Extension.create({
 				openOnClick: true,
 				shouldAutoLink: (href) => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,
+				openLink: this.options.openLink,
 			}),
 			LinkBubble,
 			this.options.editing

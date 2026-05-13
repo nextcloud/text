@@ -335,12 +335,14 @@ test('conflict dialog is sticky when scrolling', async ({
 	const pushPromise = page.waitForRequest(/push/)
 	await editor.typeHeading('Long content\n')
 	await pushPromise
-	await setOffline()
 
 	for (let i = 1; i < 8; i++) {
 		await editor.typeHeading(`Section ${i}`)
 		await editor.type('\n\nLorem ipsum dolor sit amet.\n\n')
 	}
+
+	await setOffline()
+	await editor.type('unsaved changes')
 	await close()
 
 	await setOnline()
