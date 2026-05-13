@@ -25,17 +25,17 @@ import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
 import { UndoRedo } from '@tiptap/extensions'
-import { inject, provide, watch } from 'vue'
+import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../../composables/useEditorWidth.ts'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import { openLink as defaultOpenLink } from '../../helpers/links.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
-import { ATTACHMENT_RESOLVER, OPEN_LINK_HANDLER } from '../Editor.provider.ts'
+import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 
@@ -83,9 +83,7 @@ export default {
 	emits: ['update:content'],
 
 	setup(props) {
-		const openLinkHandler = inject(OPEN_LINK_HANDLER, {
-			openLink: defaultOpenLink,
-		})
+		const { openLinkHandler } = useOpenLinkHandler()
 		const extensions = [
 			RichText.configure({
 				extensions: [UndoRedo],

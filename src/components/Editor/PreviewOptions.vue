@@ -72,8 +72,8 @@ import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
-import { useOpenLinkHandler } from '../Editor.provider.ts'
 
 export default {
 	name: 'PreviewOptions',
@@ -92,7 +92,7 @@ export default {
 		OpenIcon,
 	},
 
-	mixins: [CopyToClipboardMixin, useOpenLinkHandler],
+	mixins: [CopyToClipboardMixin],
 
 	props: {
 		type: {
@@ -103,6 +103,11 @@ export default {
 			type: String,
 			default: '',
 		},
+	},
+
+	setup() {
+		const { openLinkHandler } = useOpenLinkHandler()
+		return { openLinkHandler }
 	},
 
 	data() {
@@ -127,7 +132,7 @@ export default {
 		},
 		openLink() {
 			if (!this.href) return
-			this.$openLinkHandler.openLink(this.href)
+			this.openLinkHandler.openLink(this.href)
 		},
 		async copyLink() {
 			await this.copyToClipboard(this.href)
