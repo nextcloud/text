@@ -37,6 +37,7 @@ class UserApiController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	#[RequireDocumentSession]
 	public function index(string $filter = '', int $limit = 5): DataResponse {
+		$limit = min($limit, 50);
 		$sessions = $this->sessionService->getAllSessions($this->getSession()->getDocumentId());
 
 		$users = [];
