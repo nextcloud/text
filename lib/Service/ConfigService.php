@@ -25,18 +25,18 @@ class ConfigService {
 	}
 
 	public function isOpenReadOnlyEnabled(): bool {
-		return $this->appConfig->getValueString(Application::APP_NAME, 'open_read_only_enabled', '0') === '1';
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'open_read_only_enabled');
 	}
 
 	public function isRichEditingEnabled(): bool {
-		return ($this->appConfig->getValueString(Application::APP_NAME, 'rich_editing_enabled', '1') === '1');
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'rich_editing_enabled', true);
 	}
 
 	public function isRichWorkspaceAvailable(): bool {
 		if ($this->config->getSystemValueBool('enable_non-accessible_features', true) === false) {
 			return false;
 		}
-		return $this->appConfig->getValueString(Application::APP_NAME, 'workspace_available', '1') === '1';
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'workspace_available', true);
 	}
 
 	public function isRichWorkspaceEnabledForUser(?string $userId): bool {

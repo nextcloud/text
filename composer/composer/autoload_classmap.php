@@ -9,6 +9,7 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'OCA\\Text\\AppInfo\\Application' => $baseDir . '/../lib/AppInfo/Application.php',
     'OCA\\Text\\Command\\ResetDocument' => $baseDir . '/../lib/Command/ResetDocument.php',
+    'OCA\\Text\\ConfigLexicon' => $baseDir . '/../lib/ConfigLexicon.php',
     'OCA\\Text\\Controller\\AiController' => $baseDir . '/../lib/Controller/AiController.php',
     'OCA\\Text\\Controller\\AttachmentController' => $baseDir . '/../lib/Controller/AttachmentController.php',
     'OCA\\Text\\Controller\\ISessionAwareController' => $baseDir . '/../lib/Controller/ISessionAwareController.php',
