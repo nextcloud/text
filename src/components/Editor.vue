@@ -270,7 +270,7 @@ export default defineComponent({
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
-		const mentionSearch = inject(HOOK_MENTION_SEARCH)
+		const mentionSearch = inject(HOOK_MENTION_SEARCH, undefined)
 		const { openLinkHandler } = useOpenLinkHandler()
 		const editor = isRichEditor
 			? createRichEditor({
