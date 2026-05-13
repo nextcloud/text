@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
+import type { ResolvedPos } from '@tiptap/pm/model'
+import type { Command } from '@tiptap/pm/state'
+
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
@@ -12,25 +16,27 @@ import { activeLinkFromSelection } from './linkHelpers.js'
 
 /* Set resolved to be the active element (if it has a link mark)
  *
- * @params {ResolvedPos} resolved position of the action
+ * @params resolved - resolved position of the action
  */
-export const setActiveLink = (resolved) => (state, dispatch) => {
-	const mark = resolved.marks().find((m) => m.type.name === 'link')
-	if (!mark) {
-		return false
+export const setActiveLink =
+	(resolved: ResolvedPos): Command =>
+	(state, dispatch) => {
+		const mark = resolved.marks().find((m) => m.type.name === 'link')
+		if (!mark) {
+			return false
+		}
+		const nodeStart = resolved.pos - resolved.textOffset
+		const active = { mark, nodeStart }
+		if (dispatch) {
+			dispatch(state.tr.setMeta(linkBubbleKey, { active }))
+		}
+		return true
 	}
-	const nodeStart = resolved.pos - resolved.textOffset
-	const active = { mark, nodeStart }
-	if (dispatch) {
-		dispatch(state.tr.setMeta(linkBubbleKey, { active }))
-	}
-	return true
-}
 
 /* Hide the link bubble by setting active state to null
  *
  */
-export const hideLinkBubble = (state, dispatch) => {
+export const hideLinkBubble: Command = (state, dispatch) => {
 	const pluginState = linkBubbleKey.getState(state)
 	if (!pluginState?.active) {
 		return false
@@ -44,10 +50,12 @@ export const hideLinkBubble = (state, dispatch) => {
 export const linkBubbleKey = new PluginKey('linkBubble')
 /**
  * Prosemirror link bubble plugin
- * @param {object} options - options for the link bubble plugin view
+ *
+ * @param options - options for the link bubble plugin view
+ * @param options.editor - the editor
  */
-export function linkBubble(options) {
-	const linkBubblePlugin = new Plugin({
+export function linkBubble(options: { editor: Editor }) {
+	const linkBubblePlugin: Plugin = new Plugin({
 		key: linkBubbleKey,
 		state: {
 			init: () => ({ active: null }),
@@ -79,7 +87,7 @@ export function linkBubble(options) {
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
 			const noHistory = transactions.every(
-				(tr) => tr.meta.addToHistory === false,
+				(tr) => tr.getMeta('addToHistory') === false,
 			)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
@@ -129,16 +137,23 @@ export const linkClickingKey = new PluginKey('textHandleClickLink')
  * - Open link in new tab on middle click rather than pasting.
  * - Only open link on ctrl/cmd + left click.
  *   We use the link bubble otherwise.
+ *
+ * @param openLink - the openLink callback function
  */
-export function linkClicking() {
+export function linkClicking(
+	openLink: (href: string) => void = (href) => {
+		window.open(href, '_blank')
+	},
+) {
 	return new Plugin({
 		key: linkClickingKey,
 		props: {
 			handleDOMEvents: {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
+					const linkEl = (event.target as Element | null)?.closest('a')
 					if (
-						event.target.closest('a')
+						linkEl
 						&& event.button === 1
 						&& !event.ctrlKey
 						&& !event.metaKey
@@ -146,16 +161,15 @@ export function linkClicking() {
 					) {
 						event.preventDefault()
 						event.stopImmediatePropagation()
-
-						const linkElement = event.target.closest('a')
-						window.open(linkElement.href, '_blank')
+						// Open link in new tab on middle click (ignore custom link handler on purpose)
+						window.open(linkEl.href, '_blank')
 					}
 				},
 				// Prevent paste into links
 				// On Linux, middle click pastes, which breaks "open in new tab" on middle click
 				// Pasting into links will break the link anyway, so just disable it altogether.
 				paste: (view, event) => {
-					if (event.target.closest('a')) {
+					if ((event.target as Element | null)?.closest('a')) {
 						event.stopPropagation()
 						event.preventDefault()
 						event.stopImmediatePropagation()
@@ -163,7 +177,7 @@ export function linkClicking() {
 				},
 				// Prevent open link for text-only links on left click. Required for read-only mode.
 				click: (view, event) => {
-					const linkEl = event.target.closest('a')
+					const linkEl = (event.target as Element | null)?.closest('a')
 					// Only text-only links need special handling (e.g. don't handle links inside preview or mermaid diagrams)
 					if (
 						!linkEl
@@ -176,12 +190,12 @@ export function linkClicking() {
 						// Stop browser from opening the link
 						event.preventDefault()
 
-						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
+						if (isLinkToSelfWithHash(linkEl.href)) {
 							// Open anchor links directly
-							location.href = linkEl.attributes.href.value
+							location.href = linkEl.href
 						} else if (event.ctrlKey || event.metaKey) {
-							// Open link in new tab on Ctrl/Cmd + left click
-							window.open(linkEl.href, '_blank')
+							// Open link directly on Ctrl/Cmd + left click
+							openLink(linkEl.href)
 						}
 					}
 				},

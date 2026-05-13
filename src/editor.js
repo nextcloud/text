@@ -11,9 +11,9 @@ import {
 	HOOK_MENTION_INSERT,
 	HOOK_MENTION_SEARCH,
 	HOOK_MENUBAR_LINK_CUSTOM_ACTION,
-	OPEN_LINK_HANDLER,
 } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
+import { OPEN_LINK_HANDLER } from './composables/useOpenLinkHandler.ts'
 import { encodeAttachmentFilename } from './helpers/attachmentFilename.ts'
 import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import

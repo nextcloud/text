@@ -5,7 +5,7 @@
 
 import { EditorState, Plugin } from '@tiptap/pm/state'
 import { schema } from 'prosemirror-schema-basic'
-import { hideLinkBubble, linkBubble, setActiveLink } from '../../plugins/links.js'
+import { hideLinkBubble, linkBubble, setActiveLink } from '../../plugins/links.ts'
 
 describe('linkBubble prosemirror plugin', () => {
 	test('signature', () => {

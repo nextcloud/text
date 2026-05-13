@@ -43,6 +43,7 @@ const createRichEditor = ({
 	relativePath,
 	isEmbedded = false,
 	mentionSearch = undefined,
+	openLink = undefined,
 } = {}) => {
 	return new Editor({
 		editorProps,
@@ -52,6 +53,7 @@ const createRichEditor = ({
 				relativePath,
 				isEmbedded,
 				mentionSearch,
+				openLink,
 			}),
 			FocusTrap,
 			...extensions,

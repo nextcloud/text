@@ -97,7 +97,7 @@ import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
-import { useOpenLinkHandler } from '../Editor.provider.ts'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
@@ -116,8 +116,6 @@ export default {
 		PencilOutlineIcon,
 	},
 
-	mixins: [useOpenLinkHandler],
-
 	props: {
 		editor: {
 			type: Object,
@@ -127,6 +125,11 @@ export default {
 			type: String,
 			default: null,
 		},
+	},
+
+	setup() {
+		const { openLinkHandler } = useOpenLinkHandler()
+		return { openLinkHandler }
 	},
 
 	data() {
@@ -191,7 +194,7 @@ export default {
 		},
 
 		openLink(href) {
-			this.$openLinkHandler.openLink(href)
+			this.openLinkHandler.openLink(href)
 		},
 
 		onReferenceListLoaded() {

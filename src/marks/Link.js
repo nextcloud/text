@@ -6,7 +6,7 @@
 import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
-import { linkClicking } from '../plugins/links.js'
+import { linkClicking } from '../plugins/links.ts'
 import { domHref, parseHref } from './../helpers/links.js'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
@@ -32,6 +32,7 @@ const Link = TipTapLink.extend({
 		return {
 			...this.parent?.(),
 			relativePath: null,
+			openLink: undefined,
 		}
 	},
 
@@ -182,7 +183,7 @@ const Link = TipTapLink.extend({
 			})
 
 		// Custom click handler plugins
-		return [...plugins, linkClicking()]
+		return [...plugins, linkClicking(this.options.openLink)]
 	},
 
 	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API

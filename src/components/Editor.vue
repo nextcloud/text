@@ -91,6 +91,7 @@ import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
+import { useOpenLinkHandler } from '../composables/useOpenLinkHandler.ts'
 import {
 	ATTACHMENT_RESOLVER,
 	FILE,
@@ -244,7 +245,8 @@ export default defineComponent({
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
-		const mentionSearch = inject(HOOK_MENTION_SEARCH)
+		const mentionSearch = inject(HOOK_MENTION_SEARCH, undefined)
+		const { openLinkHandler } = useOpenLinkHandler()
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,
@@ -252,6 +254,7 @@ export default defineComponent({
 					extensions,
 					isEmbedded: props.isEmbedded,
 					mentionSearch,
+					openLink: openLinkHandler.openLink,
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)

@@ -72,6 +72,7 @@ import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
 export default {
@@ -104,6 +105,11 @@ export default {
 		},
 	},
 
+	setup() {
+		const { openLinkHandler } = useOpenLinkHandler()
+		return { openLinkHandler }
+	},
+
 	data() {
 		return {
 			open: false,
@@ -126,7 +132,7 @@ export default {
 		},
 		openLink() {
 			if (!this.href) return
-			window.open(this.href, '_blank').focus()
+			this.openLinkHandler.openLink(this.href)
 		},
 		async copyLink() {
 			await this.copyToClipboard(this.href)
