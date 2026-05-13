@@ -11,9 +11,11 @@ describe('Commonmark', () => {
 		// we interpret this as front matter
 		96, 98,
 		// contain HTML
-		21, 31, 201, 344, 474, 475, 476, 490, 493, 523, 535, 642, 643,
+		21, 31, 201, 344, 475, 476, 477, 491, 494, 524, 536, 642, 643,
 		// contain comments
 		309, 308,
+		// wiki image link (![[...]]) intentionally renders different from CommonMark
+		590,
 	]
 
 	const normalize = (str) => {
@@ -27,8 +29,8 @@ describe('Commonmark', () => {
 
 	// special treatment because we use markdown-it-image-figures
 	const figureImageMarkdownTests = [
-		516, 519, 530, 571, 572, 573, 574, 575, 576, 577, 579, 580, 581, 582, 583,
-		584, 585, 587, 588, 590,
+		517, 520, 531, 572, 573, 574, 575, 576, 577, 578, 580, 581, 582, 583, 584,
+		585, 586, 588, 589, 591,
 	]
 
 	spec.forEach((entry) => {

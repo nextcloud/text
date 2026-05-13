@@ -18,6 +18,7 @@ import preview from './preview.js'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
 import underline from './underline.js'
+import wikiLinks from './wikiLinks.ts'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
@@ -32,6 +33,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(preview)
 	.use(keepSyntax)
 	.use(markdownitMentions)
+	.use(wikiLinks)
 	.use(implicitFigures)
 	.use(mathematics)
 	.use(multimdTable, {

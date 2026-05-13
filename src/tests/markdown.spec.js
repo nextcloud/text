@@ -74,6 +74,11 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe(
 			'[text with `code` inside](foo)',
 		)
+		// Wiki-style links (issue #4795)
+		expect(markdownThroughEditor('[[WikiLink]]')).toBe('[[WikiLink]]')
+		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe(
+			'text [[wikiLink]] more',
+		)
 	})
 	test('images', () => {
 		// Inline images
@@ -84,6 +89,16 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
 		expect(markdownThroughEditor('Hello\n\n![test](foo)')).toBe(
 			'Hello\n\n![test](foo)',
+		)
+		// Wiki-style image links (issue #4795)
+		expect(markdownThroughEditor('![[wiki style image.png]]')).toBe(
+			'![[wiki style image.png]]',
+		)
+		expect(markdownThroughEditor('text ![[wiki style image.png]] more')).toBe(
+			'text ![[wiki style image.png]] more',
+		)
+		expect(markdownThroughEditor('Hello\n\n![[wiki style image.png]]')).toBe(
+			'Hello\n\n![[wiki style image.png]]',
 		)
 	})
 	test('special characters', () => {
