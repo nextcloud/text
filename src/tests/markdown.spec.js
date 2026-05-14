@@ -55,6 +55,13 @@ describe('Markdown though editor', () => {
 	})
 	test('ol', () => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
+		expect(markdownThroughEditor('0. foo\n1. bar')).toBe('0. foo\n1. bar')
+		// regression test for #4828
+		expect(markdownThroughEditor('42. foo\n43. bar')).toBe('42. foo\n43. bar')
+		// for now we enforce sequential order in ordered lists
+		expect(markdownThroughEditor('2. foo\n19. bar\n2. baz')).toBe(
+			'2. foo\n3. bar\n4. baz',
+		)
 	})
 	test('paragraph', () => {
 		// Test whitespace characters are untouched
