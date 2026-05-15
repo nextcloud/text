@@ -1,0 +1,2 @@
+var e,t;function i(){if(t)return e;t=1;function r(n){const s={className:"attr",begin:/"(\\.|[^\\"\r\n])*"(?=\s*:)/,relevance:1.01},l={match:/[{}[\],:]/,className:"punctuation",relevance:0},a=["true","false","null"],c={scope:"literal",beginKeywords:a.join(" ")};return{name:"JSON",aliases:["jsonc"],keywords:{literal:a},contains:[s,l,n.QUOTE_STRING_MODE,c,n.C_NUMBER_MODE,n.C_LINE_COMMENT_MODE,n.C_BLOCK_COMMENT_MODE],illegal:"\\S"}}return e=r,e}export{i as r};
+//# sourceMappingURL=json-XlEqPaRc.chunk.mjs.map
