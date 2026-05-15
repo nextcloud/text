@@ -14,7 +14,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.0.0
 	- license: AGPL-3.0-or-later
 - text
-	- version: 8.0.0-dev.0
+	- version: 9.0.0-dev.0
 	- license: AGPL-3.0-or-later
 - typescript-event-target
 	- version: 1.1.2
