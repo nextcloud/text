@@ -161,7 +161,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 	},
 
 	addInputRules() {
-		const linkInputRegex = /(?:^|\s)\[([\w|\s|-]+)\]\((?<href>.+?)\)$/gm
+		const linkInputRegex = /(?:^|\s)\[([^[\]]+)\]\((?<href>.+?)\)$/gm
 		return [
 			markInputRule({
 				find: linkInputRegex,
