@@ -18,3 +18,16 @@ test('applies code mark input rule with preceding character (#5483)', async ({
 	await expect(editor.el.locator('code')).toHaveText('code')
 	await expect(editor.el.locator('p').first()).toHaveText('hello inline (code)')
 })
+
+test('applies link mark input rule with dot in text (#7872)', async ({
+	editor,
+	open,
+}) => {
+	await open()
+	await editor.type('[example.org](https://example.org)')
+	await expect(editor.el.locator('a').first()).toHaveText('example.org')
+	await expect(editor.el.locator('a').first()).toHaveAttribute(
+		'href',
+		'https://example.org',
+	)
+})
