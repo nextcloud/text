@@ -340,8 +340,9 @@ div.ProseMirror {
 
 	table {
 		border-spacing: 0;
-		// Needs to be sync with `.table-add-row` button width in `TableView.vue`
-		width: calc(100% - (2 * var(--clickable-area-small)) - 8px);
+		// Needs to be in sync with `.table-add-row` button width in `TableView.vue`
+		--table-width-offset: calc(var(--clickable-area-small) + 4px);
+		width: calc(100% - var(--table-width-offset));
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
 		margin-bottom: calc(var(--clickable-area-small) + 8px);
