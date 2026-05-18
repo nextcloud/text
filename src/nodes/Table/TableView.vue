@@ -27,7 +27,9 @@
 				{{ t('text', 'Delete this table') }}
 			</NcActionButton>
 		</NcActions>
-		<NodeViewContent class="content" as="table" />
+		<div class="table-scroll">
+			<NodeViewContent class="content" as="table" />
+		</div>
 		<NcButton
 			v-if="isEditable"
 			class="table-add-column"
@@ -50,7 +52,6 @@
 				<TableAddRowAfter />
 			</template>
 		</NcButton>
-		<div class="clearfix" />
 	</NodeViewWrapper>
 </template>
 
@@ -143,7 +144,6 @@ export default {
 <style scoped lang="scss">
 .table-wrapper {
 	position: relative;
-	overflow-x: auto;
 
 	&.focused,
 	&:hover {
@@ -153,7 +153,13 @@ export default {
 		}
 	}
 
+	.table-scroll {
+		overflow-x: auto;
+		width: calc(100% - var(--clickable-area-small) - 4px);
+	}
+
 	.table-settings {
+		z-index: 3;
 		padding-left: 3px;
 		opacity: 0.5;
 		position: absolute;
@@ -187,20 +193,13 @@ export default {
 		position: absolute;
 		left: 0;
 		bottom: 4px;
-		// Needs to be in sync with table width in `prosemirror.css`
-		width: calc(100% - (2 * var(--clickable-area-small)) - 8px) !important;
+		// Needs to be in sync with `table` in `prosemirror.scss`
+		--table-width-offset: calc(var(--clickable-area-small) + 4px);
+		width: calc(100% - (2 * var(--table-width-offset))) !important;
 
 		&:hover {
 			opacity: 1;
 		}
 	}
-}
-
-.clearfix {
-	clear: both;
-}
-
-table {
-	float: left;
 }
 </style>
