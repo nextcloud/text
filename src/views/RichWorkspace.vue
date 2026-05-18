@@ -25,7 +25,8 @@
 			active
 			rich-workspace
 			@ready="ready = true"
-			@focus="onFocus" />
+			@focus="onFocus"
+			@blur="onBlur" />
 	</div>
 </template>
 
@@ -112,8 +113,8 @@ export default {
 		focus(newValue) {
 			if (!newValue) {
 				document
-					.querySelector('#rich-workspace .text-editor__main')
-					.scrollTo(0, 0)
+					.querySelector('#rich-workspace .content-wrapper')
+					?.scrollTo(0, 0)
 			}
 		},
 		shouldRender(value) {
@@ -149,6 +150,14 @@ export default {
 			this.focus = true
 			this.hideMenu = false
 			this.unlistenKeydownEvents()
+		},
+		onBlur(event) {
+			// If focus moved to something inside the workspace (e.g. menubar), don't collapse
+			if (this.$el.contains(event?.relatedTarget)) {
+				return
+			}
+			this.focus = false
+			this.hideMenu = true
 		},
 		reset() {
 			this.file = null
