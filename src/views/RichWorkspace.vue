@@ -294,9 +294,13 @@ export default {
 
 #rich-workspace:deep(.editor__content-wrapper) {
 	overflow: scroll !important;
-	max-height: calc(40vh - 50px);
+	max-height: calc(30vh - 50px);
 	padding-left: 10px;
 	padding-bottom: 10px;
+}
+
+#rich-workspace.focus:deep(.editor__content-wrapper) {
+	max-height: calc(40vh - 50px);
 }
 
 #rich-workspace:deep(.text-editor__wrapper .ProseMirror) {
