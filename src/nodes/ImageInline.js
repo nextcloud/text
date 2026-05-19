@@ -4,7 +4,7 @@
  */
 
 import TiptapImage from '@tiptap/extension-image'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import ImageView from './ImageView.vue'
 

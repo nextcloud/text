@@ -59,7 +59,7 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { Folder, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'

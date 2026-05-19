@@ -104,7 +104,7 @@ import NcActionLink from '@nextcloud/vue/components/NcActionLink'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import debounce from 'debounce'
 
 import { t } from '@nextcloud/l10n'

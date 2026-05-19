@@ -4,7 +4,7 @@
  */
 
 import { Node, isNodeActive, mergeAttributes } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { typesAvailable } from './../markdownit/callouts.js'
 
 import Callout from './Callout.vue'

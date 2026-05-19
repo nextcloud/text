@@ -4,7 +4,7 @@
  */
 
 import { mergeAttributes, Node } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import DetailsContentView from './DetailsContent.vue'
 
 const DetailsContent = Node.create({
