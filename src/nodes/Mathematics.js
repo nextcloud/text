@@ -7,7 +7,7 @@ import {
 	BlockMath as TiptapBlockMath,
 	InlineMath as TiptapInlineMath,
 } from '@tiptap/extension-mathematics'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import MathematicsView from './MathematicsView.vue'
 
 const MathInline = TiptapInlineMath.extend({

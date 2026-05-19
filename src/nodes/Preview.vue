@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
 
 export default {

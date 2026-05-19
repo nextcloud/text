@@ -4,7 +4,7 @@
  */
 
 import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import codeBlockShortcuts from './CodeBlock/codeBlockShortcuts.js'
 import CodeBlockView from './CodeBlock/CodeBlockView.vue'
 
