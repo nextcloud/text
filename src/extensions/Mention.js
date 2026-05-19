@@ -5,7 +5,7 @@
 
 import { mergeAttributes } from '@tiptap/core'
 import TipTapMention from '@tiptap/extension-mention'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import Mention from './Mention.vue'
 
 export default TipTapMention.extend({

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import Table from './Table/Table.js'
 import TableCaption from './Table/TableCaption.js'
 import TableCell from './Table/TableCell.js'

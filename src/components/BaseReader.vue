@@ -15,7 +15,7 @@
 
 <script>
 import { Editor } from '@tiptap/core'
-import { EditorContent } from '@tiptap/vue-2'
+import { EditorContent } from '@tiptap/vue-3'
 import { inject, watch } from 'vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'

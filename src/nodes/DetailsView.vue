@@ -20,7 +20,7 @@
 
 <script>
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue'
 
 export default {

@@ -4,7 +4,7 @@
  */
 
 import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import DetailsContent from './DetailsContent.js'
 import DetailsSummary from './DetailsSummary.js'
 import DetailsView from './DetailsView.vue'

@@ -30,7 +30,7 @@
 import axios from '@nextcloud/axios'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
 import { t } from '@nextcloud/l10n'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { defineComponent } from 'vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'

@@ -17,7 +17,7 @@
 
 <script>
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import { EditorContent } from '@tiptap/vue-2'
+import { EditorContent } from '@tiptap/vue-3'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import FloatingButtons from './FloatingButtons.vue'

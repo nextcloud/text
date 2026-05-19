@@ -7,7 +7,7 @@ import { t } from '@nextcloud/l10n'
 import {
 	getLinkWithPicker,
 	searchProvider,
-} from '@nextcloud/vue/dist/Components/NcRichText.js'
+} from '@nextcloud/vue/components/NcRichText'
 import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 import { getIsActive } from '../../Menu/utils.js'
