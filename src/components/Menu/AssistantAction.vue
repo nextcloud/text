@@ -280,7 +280,7 @@ export default {
 		this.editor.on('selectionUpdate', this.onSelection)
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},

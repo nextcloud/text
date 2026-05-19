@@ -59,7 +59,7 @@ export default {
 		return { editor, useTableOfContents }
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor?.destroy()
 	},
 }

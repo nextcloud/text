@@ -489,9 +489,9 @@ export default defineComponent({
 			this.listenEditorEvents()
 		}
 	},
-	async beforeDestroy() {
+	async beforeUnmount() {
 		this._isBeingDestroyed = true
-		logger.debug('beforeDestroy')
+		logger.debug('beforeUnmount')
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
