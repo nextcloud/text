@@ -18,7 +18,7 @@ import { loadState } from '@nextcloud/initial-state'
 import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 import { t } from '@nextcloud/l10n'
-import Vue from 'vue'
+import { createApp } from 'vue'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -121,13 +121,10 @@ export const FilesWorkspaceHeader = {
 		const path = latestFolder.path || ''
 
 		// Create a new instance of the RichWorkspace component
-		FilesHeaderRichWorkspaceInstance = new Vue({
-			extends: FilesHeaderRichWorkspaceView,
-			propsData: {
-				content,
-				hasRichWorkspace,
-				path,
-			},
+		FilesHeaderRichWorkspaceInstance = createApp(FilesHeaderRichWorkspaceView, {
+			content,
+			hasRichWorkspace,
+			path,
 		}).$mount(el)
 
 		window.FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceInstance
