@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import { reactive } from 'vue'
 import Editor from '../components/Editor.js'
 
 import { logger } from '../helpers/logger.ts'
 
-const log = Vue.observable({
+const log = reactive({
 	messages: [],
 	mtime: 0,
 })

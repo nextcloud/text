@@ -4,7 +4,7 @@
  */
 
 import { emit, subscribe } from '@nextcloud/event-bus'
-import { createApp, defineAsyncComponent } from 'vue'
+import { createApp, defineAsyncComponent, reactive } from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
@@ -100,7 +100,7 @@ class TextEditorEmbed {
 
 	setContent(content) {
 		// Update reactive prop for MarkdownContentEditor
-		this.#vm.$set(this.#data, 'content', content)
+		this.#data.content = content
 		// Call setContent for file based Editor
 		this.#getEditorComponent()?.setContent?.(content)
 		return this
@@ -136,12 +136,12 @@ class TextEditorEmbed {
 	}
 
 	setReadOnly(value) {
-		this.#vm.$set(this.#data, 'readOnly', value)
+		this.#data.readOnly = value
 		return this
 	}
 
 	updateReadonlyBarProps(value) {
-		this.#vm.$set(this.#data, 'readonlyBarProps', value)
+		this.#data.readonlyBarProps = value
 		return this
 	}
 
@@ -276,7 +276,7 @@ window.OCA.Text.createEditor = async function ({
 	)
 	const Editor = defineAsyncComponent(() => import('./components/Editor.js'))
 
-	const data = Vue.observable({
+	const data = reactive({
 		readonlyBarProps: readonlyBar.props,
 		readOnly,
 		content,
@@ -384,7 +384,7 @@ window.OCA.Text.createTable = async function ({
 		() => import('./components/Editor/PlainTableContentEditor.vue'),
 	)
 
-	const data = Vue.observable({
+	const data = reactive({
 		readOnly,
 		content,
 	})
