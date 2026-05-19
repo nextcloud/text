@@ -19,13 +19,12 @@
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
-		<template v-for="child in children">
+		<template v-for="child in children"
+			:key="`child-${child.key}`">
 			<NcActionSeparator
-				v-if="child.isSeparator"
-				:key="`child-${child.key}`" />
+				v-if="child.isSeparator" />
 			<ActionListItem
 				v-else
-				:key="`child-${child.key}`"
 				:active="currentChild?.key === child.key"
 				is-item
 				:action-entry="child"
