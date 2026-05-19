@@ -125,7 +125,7 @@ export default {
 		this.onUpdate({ editor: this.editor })
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.off('update', this.onUpdate)
 	},
 
