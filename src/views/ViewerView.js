@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue, { defineComponent } from 'vue'
+import { createApp, defineComponent } from 'vue'
 import ViewerComponent from '../components/ViewerComponent.vue'
 
 // The vue instance used inside text constructed with the import above.
@@ -23,7 +23,7 @@ export default defineComponent({
 	render: (h) => h('div'),
 	props: ViewerComponent.props,
 	mounted() {
-		innerVue = new Vue({
+		innerVue = createApp({
 			render: (h) => {
 				return h(ViewerComponent, {
 					attrs: this.$attrs,
