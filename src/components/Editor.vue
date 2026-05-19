@@ -43,9 +43,9 @@
 					<MenuBar
 						v-if="renderMenus"
 						ref="menubar"
+						v-model="menubarLoaded"
 						:is-hidden="hideMenu"
-						:open-read-only="openReadOnlyEnabled"
-						:loaded.sync="menubarLoaded">
+						:open-read-only="openReadOnlyEnabled" >
 						<Status
 							:document="document"
 							:dirty="dirty"
