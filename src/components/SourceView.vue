@@ -31,18 +31,18 @@ import axios from '@nextcloud/axios'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import PlainTextReader from './PlainTextReader.vue'
 
-export default {
+export default defineComponent({
 	name: 'SourceView',
 	components: {
-		NcButton: Vue.extend(NcButton),
-		PencilOutlineIcon: Vue.extend(PencilOutlineIcon),
-		PlainTextReader: Vue.extend(PlainTextReader),
-		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
+		NcButton,
+		PencilOutlineIcon,
+		PlainTextReader,
+		MarkdownContentEditor,
 	},
 	inject: ['isEmbedded'],
 	props: {
@@ -125,7 +125,7 @@ export default {
 		},
 		t,
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .source-viewer {
