@@ -4,9 +4,9 @@
 -->
 <template>
 	<NcActions
+		v-model="open"
 		data-text-link-options="select"
 		class="link-options"
-		:open.sync="open"
 		@open="onOpen">
 		<template #icon>
 			<DotsVerticalIcon :size="20" />
