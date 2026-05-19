@@ -4,7 +4,7 @@
  */
 
 import { emit, subscribe } from '@nextcloud/event-bus'
-import Vue, { defineAsyncComponent } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
@@ -283,7 +283,7 @@ window.OCA.Text.createEditor = async function ({
 
 	const sessionEditor = fileId && useSession
 
-	const vm = new Vue({
+	const vm = createApp({
 		provide() {
 			return {
 				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
@@ -386,7 +386,7 @@ window.OCA.Text.createTable = async function ({
 		content,
 	})
 
-	const vm = new Vue({
+	const vm = createApp({
 		data() {
 			return data
 		},
