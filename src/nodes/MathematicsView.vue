@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewWrapper } from '@tiptap/vue-3'
 import katex from 'katex'
 import ShowMathModal from '../components/Math/ShowMathModal.vue'
 

@@ -4,7 +4,7 @@
  */
 
 import { Node, getMarkRange, getNodeType, isNodeActive } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 
 import Preview from './Preview.vue'

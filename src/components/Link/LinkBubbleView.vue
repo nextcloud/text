@@ -92,7 +92,7 @@
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
