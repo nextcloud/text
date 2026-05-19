@@ -138,7 +138,7 @@ export default {
 
 		this.listenKeydownEvents()
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
 		unsubscribe('files:node:created', this.onFileCreated)

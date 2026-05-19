@@ -78,7 +78,7 @@ const BaseActionEntry = {
 		// Initially set the tabindex
 		this.setTabIndexOnButton()
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.off('update', this.$_updateState)
 		this.editor.off('selectionUpdate', this.$_updateState)
 	},

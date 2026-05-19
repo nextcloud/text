@@ -34,7 +34,7 @@ export default defineComponent({
 		})
 		innerVue.$mount(this.$el)
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		innerVue.$destroy()
 	},
 })
