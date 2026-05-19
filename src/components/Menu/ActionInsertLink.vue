@@ -52,8 +52,8 @@
 		</NcActionButton>
 		<NcActionInput
 			v-if="isInputMode"
+			v-model="href"
 			type="text"
-			:value.sync="href"
 			:data-text-action-entry="`${actionEntry.key}-input`"
 			@submit="linkWebsite">
 			<template #icon>

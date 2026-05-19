@@ -69,9 +69,9 @@
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
 			<NcTextField
 				ref="hrefField"
+				v-model="newHref"
 				name="newHref"
 				:label="t('text', 'URL')"
-				:value.sync="newHref"
 				@keyup.enter.prevent="updateLink" />
 		</div>
 

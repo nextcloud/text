@@ -32,7 +32,7 @@
 				<ul>
 					<GuestNameDialog
 						v-if="showGuestNameDialog"
-						:session.sync="currentGuestSession" />
+						v-model="currentGuestSession" />
 					<li
 						v-for="session in sessionList"
 						:key="session.id"
