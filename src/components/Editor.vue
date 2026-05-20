@@ -758,8 +758,8 @@ export default defineComponent({
 			this.emit('focus')
 		},
 
-		onBlur() {
-			this.emit('blur')
+		onBlur({ event }) {
+			this.emit('blur', event)
 		},
 
 		onKeyboardSave() {
