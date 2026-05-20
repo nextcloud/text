@@ -7,7 +7,10 @@
 	<NodeViewWrapper
 		data-text-el="table-view"
 		class="table-wrapper"
-		:class="{ focused: isFocused }">
+		:class="{ focused: isFocused, editable: isEditable }">
+		<div class="table-scroll">
+			<NodeViewContent class="content" as="table" />
+		</div>
 		<NcActions
 			v-if="isEditable"
 			force-menu
@@ -27,9 +30,6 @@
 				{{ t('text', 'Delete this table') }}
 			</NcActionButton>
 		</NcActions>
-		<div class="table-scroll">
-			<NodeViewContent class="content" as="table" />
-		</div>
 		<NcButton
 			v-if="isEditable"
 			class="table-add-column"
@@ -155,19 +155,33 @@ export default {
 
 	.table-scroll {
 		overflow-x: auto;
-		width: calc(100% - var(--clickable-area-small) - 4px);
+	}
+
+	&.editable {
+		.table-scroll {
+			width: calc(100% - var(--clickable-area-small) - 4px);
+		}
 	}
 
 	.table-settings {
 		z-index: 3;
 		padding-left: 3px;
-		opacity: 0.5;
 		position: absolute;
 		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
 		right: calc(var(--clickable-area-small) + 4px);
+		background-color: var(--color-main-background);
 
-		&:hover {
-			opacity: 1;
+		:deep(button) {
+			opacity: 0.5;
+		}
+
+		&:hover,
+		&:active,
+		&:focus,
+		&:focus-within {
+			:deep(button) {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -192,10 +206,8 @@ export default {
 		opacity: 0.5;
 		position: absolute;
 		left: 0;
-		bottom: 4px;
-		// Needs to be in sync with `table` in `prosemirror.scss`
-		--table-width-offset: calc(var(--clickable-area-small) + 4px);
-		width: calc(100% - (2 * var(--table-width-offset))) !important;
+		bottom: calc(2 * var(--default-grid-baseline));
+		width: calc(100% - var(--clickable-area-small) - 4px) !important;
 
 		&:hover {
 			opacity: 1;

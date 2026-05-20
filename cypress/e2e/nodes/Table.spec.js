@@ -115,7 +115,7 @@ describe('table plugin', () => {
 		cy.getContent().type('Line 1\nLine 2\nLine 3')
 
 		cy.getContent()
-			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1) .content')
+			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1)')
 			.then(($el) => {
 				expect($el.get(0).innerHTML).to.equal(
 					'<p dir="ltr">Line 1</p><p dir="ltr">Line 2</p><p dir="ltr">Line 3</p>',
