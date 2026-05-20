@@ -19,6 +19,40 @@ test('Shows Readme.md', async ({ open, editor }) => {
 	await expect(editor.getHeading({ name: 'Folder description' })).toBeVisible()
 })
 
+test.describe('Scroll reset on blur', () => {
+	test.use({
+		fileContent:
+			'# Title\n\n' + Array(30).fill('A paragraph of text.').join('\n\n'),
+	})
+
+	test('Scrolls back to top when focus is lost', async ({
+		open,
+		page,
+		editor,
+	}) => {
+		await open()
+		await editor.el.click()
+		const heading = editor.getHeading({ name: 'Title' })
+		await expect(page.locator('#rich-workspace')).toHaveClass(/focus/)
+		await expect(heading).toBeInViewport()
+
+		// Scroll down withhin the content wrapper
+		await page
+			.locator('#rich-workspace .editor__content-wrapper')
+			.evaluate((el) => {
+				el.scrollTop = 400
+			})
+		await expect(heading).not.toBeInViewport()
+
+		// Blur by clicking outside the workspace
+		await page
+			.getByRole('navigation', { name: 'Current directory path' })
+			.click()
+		await expect(page.locator('#rich-workspace')).not.toHaveClass(/focus/)
+		await expect(heading).toBeInViewport()
+	})
+})
+
 test('Hides in a different folder', async ({ editor, open, page, user }) => {
 	await createFolder({ name: 'Other folder', owner: user })
 	await open()
