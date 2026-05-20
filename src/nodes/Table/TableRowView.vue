@@ -1,13 +1,13 @@
 <!--
-  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-cell" as="td" :dir="dir" :style="align">
-		<div class="container">
-			<NodeViewContent class="content" />
-			<NcActions v-if="isEditable" data-text-table-actions="row" size="small">
+	<NodeViewWrapper data-text-el="table-row" as="tr">
+		<NodeViewContent class="table-row-cells" />
+		<td v-if="isEditable" class="row-actions">
+			<NcActions v-if="isDataRow" data-text-table-actions="row" size="small">
 				<NcActionButton
 					data-text-table-action="add-row-before"
 					close-after-click
@@ -36,7 +36,7 @@
 					{{ t('text', 'Delete this row') }}
 				</NcActionButton>
 			</NcActions>
-		</div>
+		</td>
 	</NodeViewWrapper>
 </template>
 
@@ -52,114 +52,115 @@ import {
 } from '../../components/icons.js'
 
 export default {
-	name: 'TableCellView',
+	name: 'TableRowView',
 	components: {
 		NcActionButton,
 		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
-		TableAddRowBefore,
 		TableAddRowAfter,
+		TableAddRowBefore,
 		TrashCan,
 	},
+
 	props: {
 		editor: {
 			type: Object,
 			required: true,
 		},
+
 		getPos: {
 			type: Function,
 			required: true,
 		},
+
+		node: {
+			type: Object,
+			required: true,
+		},
 	},
+
 	data() {
 		return {
 			isEditable: false,
 		}
 	},
+
 	computed: {
-		align() {
-			return { 'text-align': this.node.attrs.align }
-		},
-		dir() {
-			return this.node.attrs.dir || ''
+		isDataRow() {
+			return this.node.type.name === 'tableRow'
 		},
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
 	},
+
 	methods: {
 		deleteRow() {
 			this.editor
 				.chain()
 				.focus()
-				.setTextSelection(this.getPos())
+				.setTextSelection(this.getPos() + 1)
 				.deleteRow()
 				.run()
 		},
+
 		addRowBefore() {
 			this.editor
 				.chain()
 				.focus()
-				.setTextSelection(this.getPos())
+				.setTextSelection(this.getPos() + 1)
 				.addRowBefore()
 				.run()
 		},
+
 		addRowAfter() {
 			this.editor
 				.chain()
 				.focus()
-				.setTextSelection(this.getPos())
+				.setTextSelection(this.getPos() + 1)
 				.addRowAfter()
 				.run()
 		},
+
 		t,
 	},
 }
 </script>
 
 <style scoped lang="scss">
-td {
-	position: relative;
+.table-row-cells {
+	display: contents;
+}
 
-	.container {
-		display: flex;
-		flex-wrap: wrap;
-	}
-
-	.content {
-		flex: 1 1 0;
-		margin: 0;
-		padding: calc(
-				(var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2
-			)
-			0.75em;
-	}
+td.row-actions {
+	position: sticky;
+	right: 0;
+	z-index: 4;
+	background-color: var(--color-main-background);
+	width: calc(var(--clickable-area-small) + var(--default-grid-baseline));
+	padding: 0;
+	// Required to prevent focus outline from being cut off
+	padding-right: 2px;
+	padding-left: var(--default-grid-baseline);
+	vertical-align: middle;
+	border: none;
+	border-radius: 0;
 
 	.action-item {
-		position: absolute;
-		right: calc((var(--clickable-area-small) * -1) - 4px);
-		flex: 0 1 auto;
-		display: none;
-		top: calc((var(--default-clickable-area) - var(--clickable-area-small)) / 2);
+		opacity: 0.5;
 	}
 
-	&:last-child {
+	&:hover,
+	&:active,
+	&:focus,
+	&:focus-within {
 		.action-item {
-			display: block;
-			opacity: 50%;
-		}
-
-		&:hover,
-		&:active,
-		&:focus,
-		&:focus-within {
-			.action-item {
-				opacity: 100%;
-			}
+			opacity: 1;
 		}
 	}
 }
