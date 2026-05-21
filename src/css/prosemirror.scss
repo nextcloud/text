@@ -340,11 +340,10 @@ div.ProseMirror {
 
 	table {
 		border-spacing: 0;
-		// Needs to be sync with `.table-add-row` button width in `TableView.vue`
-		width: calc(100% - (2 * var(--clickable-area-small)) - 8px);
+		width: 100%;
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
-		margin-bottom: calc(var(--clickable-area-small) + 8px);
+		margin-bottom: calc(var(--clickable-area-small) + 12px);
 		& + * {
 			margin-top: 1em;
 		}
@@ -365,6 +364,8 @@ div.ProseMirror {
 		td {
 			border-top: 0;
 			color: var(--color-main-text);
+			position: relative;
+			padding: calc((var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2) 0.75em;
 
 			p:last-child {
 				margin-bottom: 0;
@@ -439,10 +440,4 @@ div.ProseMirror {
 .tippy-content div {
 	box-sizing: border-box;
 	visibility: visible !important;
-}
-
-div.ProseMirror[contenteditable='false'] {
-	table {
-		width: 100%;
-	}
 }
