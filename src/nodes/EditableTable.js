@@ -7,11 +7,11 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Table from './Table/Table.js'
 import TableCaption from './Table/TableCaption.js'
 import TableCell from './Table/TableCell.js'
-import TableCellView from './Table/TableCellView.vue'
 import TableHeader from './Table/TableHeader.js'
 import TableHeaderView from './Table/TableHeaderView.vue'
 import TableHeadRow from './Table/TableHeadRow.js'
 import TableRow from './Table/TableRow.js'
+import TableRowView from './Table/TableRowView.vue'
 import TableView from './Table/TableView.vue'
 
 /**
@@ -35,10 +35,10 @@ export default Table.extend({
 	addExtensions() {
 		return [
 			TableCaption,
-			extendNodeWithView(TableCell, TableCellView),
+			TableCell,
 			extendNodeWithView(TableHeader, TableHeaderView),
 			TableHeadRow,
-			TableRow,
+			extendNodeWithView(TableRow, TableRowView),
 		]
 	},
 })
