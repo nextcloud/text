@@ -103,6 +103,10 @@
 					width: 100%;
 				}
 
+				.table-wrapper.editable .table-scroll {
+					width: 100%;
+				}
+
 				// Add some borders below header and between columns
 				th {
 					color: black !important;
@@ -115,6 +119,11 @@
 				td {
 					border-width: 1px !important;
 					border-color: gray !important;
+				}
+
+				td.row-actions {
+					// hide last column with row actions
+					display: none;
 				}
 			}
 			.container-suggestions {
