@@ -122,7 +122,7 @@ export default {
 			}
 			return (
 				templates
-					// Exclude "New text file" as it doesn't make much sense from a text file
+					// Exclude "Text document" as it doesn't make much sense from a text file
 					.filter((t) => !(t.app === 'text' && t.extension === '.md'))
 			)
 		},
