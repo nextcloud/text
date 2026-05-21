@@ -74,13 +74,6 @@
 			:has-connection-issue="displayConnectionIssue"
 			:has-indexed-db-conflict="!!indexedDbConflictContent"
 			@reconnect="reconnect" />
-		<Translate
-			:show="translateModal"
-			:content="translateContent"
-			:file-id="fileId"
-			@insert-content="translateInsert"
-			@replace-content="translateReplace"
-			@close="hideTranslate" />
 	</div>
 </template>
 
@@ -140,7 +133,6 @@ import MainContainer from './Editor/MainContainer.vue'
 import Status from './Editor/Status.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import MenuBar from './Menu/MenuBar.vue'
-import Translate from './Modal/Translate.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import SuggestionsBar from './SuggestionsBar.vue'
 
@@ -157,7 +149,6 @@ export default defineComponent({
 		MenuBar,
 		Reader: () => import('./Reader.vue'),
 		Status,
-		Translate,
 		SuggestionsBar,
 	},
 	mixins: [isMobile],
@@ -359,8 +350,6 @@ export default defineComponent({
 			draggedOver: false,
 
 			contentWrapper: null,
-			translateModal: false,
-			translateContent: '',
 			indexedDbConflictContent: '',
 		}
 	},
@@ -475,7 +464,6 @@ export default defineComponent({
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
-		subscribe('text:translate-modal:show', this.showTranslateModal)
 		exposeForDebugging(this)
 
 		await this.whenSynced
@@ -511,7 +499,6 @@ export default defineComponent({
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
-		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.saveService.save()])
@@ -884,32 +871,8 @@ export default defineComponent({
 			this.setEditable(this.editMode)
 		},
 
-		showTranslateModal(e) {
-			this.translateContent = e.content
-			this.translateModal = true
-		},
-		hideTranslate() {
-			this.translateModal = false
-		},
 		applyCommand(fn) {
 			this.editor.commands.command(fn)
-		},
-		translateInsert(content) {
-			this.applyCommand(({ tr, commands }) => {
-				return commands.insertContentAt(tr.selection.to, content)
-			})
-			this.translateModal = false
-		},
-		translateReplace(content) {
-			this.applyCommand(({ tr, commands }) => {
-				const selection = tr.selection
-				const range = {
-					from: selection.from,
-					to: selection.to,
-				}
-				return commands.insertContentAt(range, content)
-			})
-			this.translateModal = false
 		},
 
 		saveBeforeUnload() {

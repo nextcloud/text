@@ -153,7 +153,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
-import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
@@ -234,8 +234,7 @@ export default {
 			STATUS_UNKNOWN,
 
 			showTaskList: false,
-			canTranslate:
-				loadState('text', 'translation_languages', []).from?.length > 0,
+			canTranslate: loadState('text', 'translation_available', false),
 		}
 	},
 	computed: {
@@ -343,15 +342,37 @@ export default {
 			})
 		},
 		openTranslateDialog() {
-			let selectAll = false
-			if (!this.selection.trim().length) {
-				this.editor.commands.selectAll()
-				selectAll = true
-			}
-			emit('text:translate-modal:show', { content: this.selection || '' })
-			if (selectAll) {
-				this.editor.commands.setTextSelection(0)
-			}
+			const { selection, doc } = this.editor.state
+			const hasSelection = selection.from !== selection.to
+
+			const inputText = hasSelection
+				? doc.textBetween(selection.from, selection.to, ' ')
+				: doc.textBetween(0, doc.content.size, ' ')
+
+			const replaceRange = hasSelection
+				? { from: selection.from, to: selection.to }
+				: null
+
+			window.OCA.Assistant.openAssistantForm({
+				appId: 'text',
+				customId: this.identifier,
+				taskType: 'core:text2text:translate',
+				inputs: { input: inputText },
+				isInsideViewer: true,
+				closeOnResult: false,
+				actionButtons: [
+					{
+						variant: 'primary',
+						title: t('text', 'Insert'),
+						label: t('text', 'Insert'),
+						onClick: (task) => {
+							this.translateInsert(task, replaceRange)
+						},
+					},
+				],
+			}).finally(() => {
+				this.fetchTasks()
+			})
 		},
 		async openResult(task) {
 			window.OCA.Assistant.openAssistantTask(task, {
@@ -398,6 +419,21 @@ export default {
 			const taskIndex = this.tasks.findIndex((t) => t.id === task.id)
 			if (taskIndex > -1) {
 				this.$delete(this.tasks, taskIndex)
+			}
+		},
+		async translateInsert(task, replaceRange) {
+			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
+			const content = isMarkdown
+				? markdownit.render(task.output.output)
+				: task.output.output
+			if (replaceRange) {
+				this.editor.commands.insertContentAt(replaceRange, content)
+			} else {
+				this.editor.commands.insertContent(content)
+			}
+
+			if (this.fileId) {
+				await markFileAsAiGenerated(this.fileId)
 			}
 		},
 		t,

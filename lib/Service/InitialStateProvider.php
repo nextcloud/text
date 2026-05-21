@@ -56,15 +56,10 @@ class InitialStateProvider {
 		);
 
 		$taskTypes = $this->taskProcessingManager->getAvailableTaskTypes();
-		$fromLanguages = $taskTypes['core:text2text:translate']['inputShapeEnumValues']['origin_language'] ?? [];
-		$toLanguages = $taskTypes['core:text2text:translate']['inputShapeEnumValues']['target_language'] ?? [];
 
 		$this->initialState->provideInitialState(
-			'translation_languages',
-			[
-				'from' => $fromLanguages,
-				'to' => $toLanguages,
-			]
+			'translation_available',
+			isset($taskTypes['core:text2text:translate']),
 		);
 
 		$filteredTypes = array_filter($taskTypes, static function (string $taskType) {

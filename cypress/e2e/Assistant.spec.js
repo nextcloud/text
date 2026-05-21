@@ -81,9 +81,10 @@ describe('Assistant', () => {
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
 
-		cy.get('[data-cy="translate-input"]').should('be.visible').focus()
+		cy.get('.assistant-modal--content #input-input').type('Hello World', {
+			force: true,
+		})
 
-		cy.get('[data-cy="translate-input"]').should('be.focused')
-		cy.get('[data-cy="translate-input"]').type('Hello World')
+		cy.get('.assistant-modal--content button').contains('Translate').click()
 	})
 })
