@@ -10,11 +10,11 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "រក្សាទុក",
     "Translate" : "Translate",
-    "to" : "ទៅ",
     "Edit" : "កែប្រែ",
     "Upload" : "ផ្ទុក​ឡើង",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
-    "Choose" : "ជ្រើស"
+    "Choose" : "ជ្រើស",
+    "to" : "ទៅ"
 },
 "nplurals=1; plural=0;");

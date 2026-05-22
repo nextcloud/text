@@ -29,7 +29,6 @@ OC.L10N.register(
     "Save" : "Saqlash",
     "Translate" : "Tarjima",
     "Nextcloud Assistant" : "Next bulut yordamchisi",
-    "to" : "пф",
     "Edit" : "Tahrirlash",
     "Upload" : "Yuklash",
     "Source code" : "Manba kodi",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Option" : "Variant",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
-    "Choose {file}" : " {file}ta tanlash"
+    "Choose {file}" : " {file}ta tanlash",
+    "to" : "пф"
 },
 "nplurals=1; plural=0;");

@@ -19,13 +19,13 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "Saxla",
     "Translate" : "Translate",
-    "to" : "doğru",
-    "Replace" : "Əvəz edin",
     "Edit" : "Dəyişiklik et",
     "Upload" : "Serverə yüklə",
     "Done" : "Edildi",
     "Details" : "Detallar",
     "Choose" : "Seç",
-    "Choose {file}" : "{file} seçin"
+    "Choose {file}" : "{file} seçin",
+    "to" : "doğru",
+    "Replace" : "Əvəz edin"
 },
 "nplurals=2; plural=(n != 1);");

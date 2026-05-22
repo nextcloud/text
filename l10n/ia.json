@@ -15,10 +15,10 @@
     "URL" : "URL",
     "Save" : "Salveguardar",
     "Translate" : "Translate",
-    "to" : "a",
     "Edit" : "Modificar",
     "Upload" : "Incargar",
     "Done" : "Preste",
-    "Details" : "Detalios"
+    "Details" : "Detalios",
+    "to" : "a"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

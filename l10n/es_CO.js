@@ -29,14 +29,14 @@ OC.L10N.register(
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
     "Delete task" : "Eliminar tarea",
-    "Select language" : "Selecciona el idioma",
-    "to" : "para",
-    "Replace" : "Reemplazar",
     "Edit" : "Editar",
     "Upload" : "Cargar",
     "Source code" : "Código fuente",
     "Details" : "Detalles",
     "Choose" : "Seleccionar",
-    "Add folder description" : "Agregar una descripción a la carpeta"
+    "Add folder description" : "Agregar una descripción a la carpeta",
+    "Select language" : "Selecciona el idioma",
+    "to" : "para",
+    "Replace" : "Reemplazar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

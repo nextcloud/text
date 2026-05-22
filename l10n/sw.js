@@ -53,12 +53,6 @@ OC.L10N.register(
     "Translate" : "Tafsiri",
     "Nextcloud Assistant" : "Msaidizi wa Nextcloud",
     "Delete task" : "Futa jukumu",
-    "Translation failed" : "Utafsiri umeshindikana",
-    "Translate from" : "Translate from",
-    "Select language" : "Chagua lugha",
-    "to" : "kwa",
-    "Translate to" : "Translate to",
-    "Replace" : "Replace",
     "Edit" : "Hariri",
     "Upload" : "Pakia",
     "Copy code block" : "Copy code block",
@@ -80,6 +74,12 @@ OC.L10N.register(
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
     "Add folder description" : "Add folder description",
-    "Copied to the clipboard" : "Copied to the clipboard"
+    "Copied to the clipboard" : "Copied to the clipboard",
+    "Translation failed" : "Utafsiri umeshindikana",
+    "Translate from" : "Translate from",
+    "Select language" : "Chagua lugha",
+    "to" : "kwa",
+    "Translate to" : "Translate to",
+    "Replace" : "Replace"
 },
 "nplurals=2; plural=(n != 1);");

@@ -27,7 +27,6 @@
     "Save" : "Saqlash",
     "Translate" : "Tarjima",
     "Nextcloud Assistant" : "Next bulut yordamchisi",
-    "to" : "пф",
     "Edit" : "Tahrirlash",
     "Upload" : "Yuklash",
     "Source code" : "Manba kodi",
@@ -39,6 +38,7 @@
     "Option" : "Variant",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
-    "Choose {file}" : " {file}ta tanlash"
+    "Choose {file}" : " {file}ta tanlash",
+    "to" : "пф"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

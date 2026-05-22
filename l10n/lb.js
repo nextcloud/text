@@ -12,10 +12,10 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "Späicheren",
     "Translate" : "Iwwersetzen",
-    "to" : "bis",
     "Edit" : "Änneren",
     "Upload" : "Eroplueden",
     "Details" : "Detailer",
-    "Choose" : "Auswielen"
+    "Choose" : "Auswielen",
+    "to" : "bis"
 },
 "nplurals=2; plural=(n != 1);");

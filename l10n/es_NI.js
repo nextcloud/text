@@ -22,13 +22,13 @@ OC.L10N.register(
     "Save" : "Guardar",
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
-    "Select language" : "Seleccionar idioma",
-    "to" : "para",
-    "Replace" : "Reemplazar",
     "Edit" : "Editar",
     "Upload" : "Cargar",
     "Source code" : "Código fuente",
     "Details" : "Detalles",
-    "Choose" : "Seleccionar"
+    "Choose" : "Seleccionar",
+    "Select language" : "Seleccionar idioma",
+    "to" : "para",
+    "Replace" : "Reemplazar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
