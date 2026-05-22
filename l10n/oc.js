@@ -48,11 +48,9 @@ OC.L10N.register(
     "Cancel" : "Anullar",
     "URL" : "URL",
     "Save" : "Enregistrar",
+    "Insert" : "Inserir",
     "Translate" : "Translate",
     "Remaining actions" : "Mai d’accions",
-    "Select language" : "Causir lenga",
-    "to" : "a",
-    "Insert" : "Inserir",
     "Edit" : "Modificar",
     "Upload" : "Telecargament",
     "Source code" : "Còdi font",
@@ -67,6 +65,8 @@ OC.L10N.register(
     "Insert link" : "Inserir un ligam",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Choose" : "Causir"
+    "Choose" : "Causir",
+    "Select language" : "Causir lenga",
+    "to" : "a"
 },
 "nplurals=2; plural=(n > 1);");

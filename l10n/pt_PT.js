@@ -46,8 +46,6 @@ OC.L10N.register(
     "Save" : "Guardar",
     "Translate" : "Traduzir",
     "Delete task" : "Eliminar tarefa",
-    "to" : "Para",
-    "Replace" : "Substitua",
     "Edit" : "Editar",
     "Upload" : "Enviar",
     "Source code" : "Código fonte",
@@ -63,6 +61,8 @@ OC.L10N.register(
     "Formatting" : "Formação ",
     "Choose" : "Escolher",
     "Choose {file}" : "Escolher {file}",
-    "Add folder description" : "Adicionar descrição da pasta"
+    "Add folder description" : "Adicionar descrição da pasta",
+    "to" : "Para",
+    "Replace" : "Substitua"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

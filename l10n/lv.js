@@ -40,9 +40,6 @@ OC.L10N.register(
     "Save" : "Saglabāt",
     "Update link" : "Atjaunināt saiti",
     "Translate" : "Tulkot",
-    "Select language" : "Atlasīt valodu",
-    "to" : "kam",
-    "Replace" : "Aizvietot",
     "Edit" : "Labot",
     "Upload" : "Augšupielādēt",
     "Insert Table" : "Ievietot tabulu",
@@ -52,6 +49,9 @@ OC.L10N.register(
     "Insert link" : "Ievietot saiti",
     "Command" : "Komanda",
     "Choose" : "Izvēlēties",
-    "Add folder description" : "Pievienot mapes aprakstu"
+    "Add folder description" : "Pievienot mapes aprakstu",
+    "Select language" : "Atlasīt valodu",
+    "to" : "kam",
+    "Replace" : "Aizvietot"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

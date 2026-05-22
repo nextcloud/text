@@ -15,11 +15,11 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "সংরক্ষণ",
     "Translate" : "Translate",
-    "to" : "প্রতি",
     "Edit" : "সম্পাদনা",
     "Upload" : "আপলোড",
     "Done" : "শেষ হলো",
     "Details" : "বিসতারিত",
-    "Choose" : "বেছে নিন"
+    "Choose" : "বেছে নিন",
+    "to" : "প্রতি"
 },
 "nplurals=2; plural=(n != 1);");

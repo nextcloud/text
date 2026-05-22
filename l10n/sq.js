@@ -32,15 +32,15 @@ OC.L10N.register(
     "Save" : "Ruaje",
     "Formatting help" : "Ndihmë formatimi",
     "Translate" : "Përkthe",
-    "Select language" : "Zgjidh gjuhën",
-    "to" : "te",
-    "Replace" : "Mbishkruaj",
     "Edit" : "Përpuno",
     "Upload" : "Ngarkoni",
     "Insert Table" : "Fut tabelë",
     "Source code" : "Kodi burim",
     "Done" : "U bë",
     "Details" : "Detajet",
-    "Choose" : "Zgjidhni"
+    "Choose" : "Zgjidhni",
+    "Select language" : "Zgjidh gjuhën",
+    "to" : "te",
+    "Replace" : "Mbishkruaj"
 },
 "nplurals=2; plural=(n != 1);");

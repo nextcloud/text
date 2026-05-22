@@ -44,8 +44,6 @@ OC.L10N.register(
     "Save" : "Konservi",
     "Formatting help" : "Helpo pri tekstaranĝo",
     "Translate" : "Traduku",
-    "to" : "al",
-    "Replace" : "Anstataŭigi",
     "Edit" : "Modifi",
     "Upload" : "Alŝuti",
     "Done" : "Farita",
@@ -57,6 +55,8 @@ OC.L10N.register(
     "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Choose" : "Elekti",
-    "Choose {file}" : "Elekti {file}"
+    "Choose {file}" : "Elekti {file}",
+    "to" : "al",
+    "Replace" : "Anstataŭigi"
 },
 "nplurals=2; plural=(n != 1);");

@@ -16,11 +16,11 @@ OC.L10N.register(
     "Cancel" : "Sguir dheth",
     "Save" : "Sàbhail",
     "Translate" : "Eadar-theangaich",
-    "Replace" : "Cuir ’na àite",
     "Edit" : "Deasaich",
     "Upload" : "Luchdaich suas",
     "Source code" : "Bun-tùs",
     "Details" : "Mion-fhiosrachadh",
-    "Choose" : "Tagh"
+    "Choose" : "Tagh",
+    "Replace" : "Cuir ’na àite"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");

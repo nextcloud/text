@@ -83,6 +83,7 @@
     "Update link" : "Anovar l'enllaz",
     "Open the Smart Picker" : "Abrir el selector intelixente",
     "Insert result" : "Inxertar un resultáu",
+    "Insert" : "Inxertar",
     "Nextcloud Assistant result copied" : "Copióse'l resutláu del asistente de Nextcloud",
     "Could not copy result to clipboard" : "Nun se pudo copiar el resultáu nel cartafueyu",
     "Translate" : "Traducir",
@@ -94,9 +95,6 @@
     "_%n char_::_%n chars_" : ["%n caráuteres","%n caráuteres"],
     "Remaining actions" : "Aiciones que falten",
     "Editor actions" : "Aiciones del editor",
-    "to" : "pa",
-    "Replace" : "Trocar",
-    "Insert" : "Inxertar",
     "Edit" : "Editar",
     "No emoji found" : "Nun s'atopó nengún fustaxe",
     "No command found" : "Nun s'atopó nengún comandu",
@@ -112,12 +110,12 @@
     "Both" : "Dambos",
     "Failed to load" : "Nun se pue cargar",
     "Delete this image" : "Desaniciar esta imaxe",
-    "Add row before" : "Amestar una filera enantes",
-    "Add row after" : "Amestar una filera dempués",
-    "Delete this row" : "Desaniciar esta filera",
     "Add column before" : "Amestar una columna enantes",
     "Add column after" : "Amestar una columna dempués",
     "Delete this column" : "Desaniciar esta columna",
+    "Add row before" : "Amestar una filera enantes",
+    "Add row after" : "Amestar una filera dempués",
+    "Delete this row" : "Desaniciar esta filera",
     "Delete this table" : "Desaniciar esta tabla",
     "Show folder description" : "Amosar la descripción de les carpetes",
     "Done" : "Fecho",
@@ -142,6 +140,8 @@
     "Copied to the clipboard" : "Copióse nel cartafueyu",
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
     "Close outline view" : "Zarrar la visualización d'esquemes",
-    "Outline" : "Esquema"
+    "Outline" : "Esquema",
+    "to" : "pa",
+    "Replace" : "Trocar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
