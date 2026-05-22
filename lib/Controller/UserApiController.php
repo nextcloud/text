@@ -15,7 +15,9 @@ use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Collaboration\AutoComplete\AutoCompleteFilterEvent;
 use OCP\Collaboration\Collaborators\ISearch;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Share\IShare;
@@ -29,6 +31,7 @@ class UserApiController extends ApiController implements ISessionAwareController
 		private SessionService $sessionService,
 		private ISearch $collaboratorSearch,
 		private IUserManager $userManager,
+		private IEventDispatcher $dispatcher,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -57,6 +60,20 @@ class UserApiController extends ApiController implements ISessionAwareController
 		if (!$this->getSession()->isGuest()) {
 			// Add other users to the autocomplete list
 			[$result] = $this->collaboratorSearch->search($filter, [IShare::TYPE_USER], false, $limit, 0);
+
+			$event = new AutoCompleteFilterEvent(
+				$result,
+				$filter,
+				'user',
+				null,
+				null,
+				[IShare::TYPE_USER],
+				$limit,
+			);
+			$this->dispatcher->dispatchTyped($event);
+			/** @var mixed $result */
+			$result = $event->getResults();
+
 			$userSearch = array_merge($result['users'], $result['exact']['users']);
 
 			foreach ($userSearch as ['label' => $label, 'value' => $value]) {
