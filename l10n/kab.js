@@ -25,13 +25,6 @@ OC.L10N.register(
     "Delete task" : "Kkes tawuri",
     "_%n word_::_%n words_" : ["%n n wawal","%n n wawalen"],
     "_%n char_::_%n chars_" : ["%n n usekkil","%n n isekkilen"],
-    "Translate from {language}" : "Suqel seg {language}",
-    "Translate to {language}" : "Suqel ar {language}",
-    "Translation failed" : "Tecceḍ tsuqilt",
-    "Translate from" : "Suqel seg",
-    "Select language" : "Fren tutlayt",
-    "Translate to" : "Suqel ar",
-    "Replace" : "Semselsi",
     "Edit" : "Ẓreg",
     "Upload" : "Sili",
     "Done" : "Immed",
@@ -41,6 +34,13 @@ OC.L10N.register(
     "Option" : "Taxtiṛt",
     "Choose" : "Fren",
     "Choose {file}" : "Fren {file}",
-    "Add folder description" : "Rnu aglam i ukaram"
+    "Add folder description" : "Rnu aglam i ukaram",
+    "Translate from {language}" : "Suqel seg {language}",
+    "Translate to {language}" : "Suqel ar {language}",
+    "Translation failed" : "Tecceḍ tsuqilt",
+    "Translate from" : "Suqel seg",
+    "Select language" : "Fren tutlayt",
+    "Translate to" : "Suqel ar",
+    "Replace" : "Semselsi"
 },
 "nplurals=2; plural=(n != 1);");

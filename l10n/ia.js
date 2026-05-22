@@ -17,10 +17,10 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "Salveguardar",
     "Translate" : "Translate",
-    "to" : "a",
     "Edit" : "Modificar",
     "Upload" : "Incargar",
     "Done" : "Preste",
-    "Details" : "Detalios"
+    "Details" : "Detalios",
+    "to" : "a"
 },
 "nplurals=2; plural=(n != 1);");

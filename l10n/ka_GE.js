@@ -22,14 +22,14 @@ OC.L10N.register(
     "Save" : "შენახვა",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Translate" : "გადათარგმნეთ",
-    "Select language" : "აირჩიეთ ენა",
-    "to" : "ვის",
-    "Replace" : "ჩანაცვლება",
     "Edit" : "ცვლილება",
     "Upload" : "ატვირთვა",
     "Source code" : "კოდი",
     "Done" : "დასრულდა",
     "Details" : "დეტალები",
-    "Choose" : "აირჩიეთ"
+    "Choose" : "აირჩიეთ",
+    "Select language" : "აირჩიეთ ენა",
+    "to" : "ვის",
+    "Replace" : "ჩანაცვლება"
 },
 "nplurals=2; plural=(n!=1);");

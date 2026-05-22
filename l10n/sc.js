@@ -56,9 +56,6 @@ OC.L10N.register(
     "Formatting help" : "Ghia pro sa formatatzione",
     "Translate" : "Borta",
     "Delete task" : "Cantzella faina",
-    "Select language" : "Seletziona una limba",
-    "to" : "a",
-    "Replace" : "Càmbia cun àteru",
     "Edit" : "Modìfica ",
     "Upload" : "Càrriga",
     "Source code" : "Còdighe fonte",
@@ -75,6 +72,9 @@ OC.L10N.register(
     "Select file or folder to link to" : "Seletziona un'archìviu o una cartella de ligongiare",
     "Choose" : "Sèbera",
     "Choose {file}" : "Sèbera {file}",
-    "Add folder description" : "Agiunghe una descritzione de sa cartella"
+    "Add folder description" : "Agiunghe una descritzione de sa cartella",
+    "Select language" : "Seletziona una limba",
+    "to" : "a",
+    "Replace" : "Càmbia cun àteru"
 },
 "nplurals=2; plural=(n != 1);");

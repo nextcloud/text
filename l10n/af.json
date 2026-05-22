@@ -31,7 +31,6 @@
     "Blockquote" : "Blokaanhaling",
     "Cancel" : "Cancel",
     "Save" : "Stoor",
-    "to" : "aan",
     "Edit" : "Wysig",
     "Upload" : "Oplaai",
     "Headings" : "Koppe",
@@ -40,6 +39,7 @@
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "Details" : "Besonderhede",
-    "Choose" : "Kies"
+    "Choose" : "Kies",
+    "to" : "aan"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

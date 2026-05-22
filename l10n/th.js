@@ -27,14 +27,14 @@ OC.L10N.register(
     "Save" : "บันทึก",
     "Translate" : "แปลภาษา",
     "Delete task" : "ลบงาน",
-    "to" : "ถึง",
-    "Replace" : "แทนที่",
     "Edit" : "แก้ไข",
     "Upload" : "อัปโหลด",
     "Source code" : "โค้ดต้นฉบับ",
     "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ",
     "Choose" : "เลือก",
-    "Choose {file}" : "เลือก {file}"
+    "Choose {file}" : "เลือก {file}",
+    "to" : "ถึง",
+    "Replace" : "แทนที่"
 },
 "nplurals=1; plural=0;");

@@ -35,8 +35,6 @@ OC.L10N.register(
     "Save" : "Salvează",
     "Formatting help" : "Ajutor pentru formatare",
     "Translate" : "Tradu",
-    "to" : "către",
-    "Replace" : "Înlocuiește",
     "Edit" : "Editează",
     "Upload" : "Încărcare",
     "Source code" : "Cod sursă",
@@ -47,6 +45,8 @@ OC.L10N.register(
     "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
     "Choose" : "Alege",
     "Choose {file}" : "Selectați {file}",
-    "Add folder description" : "Adăugați descrierea directorului"
+    "Add folder description" : "Adăugați descrierea directorului",
+    "to" : "către",
+    "Replace" : "Înlocuiește"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
