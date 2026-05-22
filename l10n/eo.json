@@ -42,8 +42,6 @@
     "Save" : "Konservi",
     "Formatting help" : "Helpo pri tekstaranĝo",
     "Translate" : "Traduku",
-    "to" : "al",
-    "Replace" : "Anstataŭigi",
     "Edit" : "Modifi",
     "Upload" : "Alŝuti",
     "Done" : "Farita",
@@ -55,6 +53,8 @@
     "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Choose" : "Elekti",
-    "Choose {file}" : "Elekti {file}"
+    "Choose {file}" : "Elekti {file}",
+    "to" : "al",
+    "Replace" : "Anstataŭigi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

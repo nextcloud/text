@@ -46,11 +46,9 @@
     "Cancel" : "Anullar",
     "URL" : "URL",
     "Save" : "Enregistrar",
+    "Insert" : "Inserir",
     "Translate" : "Translate",
     "Remaining actions" : "Mai d’accions",
-    "Select language" : "Causir lenga",
-    "to" : "a",
-    "Insert" : "Inserir",
     "Edit" : "Modificar",
     "Upload" : "Telecargament",
     "Source code" : "Còdi font",
@@ -65,6 +63,8 @@
     "Insert link" : "Inserir un ligam",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Choose" : "Causir"
+    "Choose" : "Causir",
+    "Select language" : "Causir lenga",
+    "to" : "a"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

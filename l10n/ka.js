@@ -36,11 +36,6 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Nextcloud Assistant" : "Nextcloud-ის ასისტენტი",
     "Delete task" : "Delete task",
-    "Translate from" : "Translate from",
-    "Select language" : "Select language",
-    "to" : "to",
-    "Translate to" : "Translate to",
-    "Replace" : "Replace",
     "Edit" : "Edit",
     "Upload" : "Upload",
     "Copy code block" : "Copy code block",
@@ -54,6 +49,11 @@ OC.L10N.register(
     "Formatting" : "Formatting",
     "Select file or folder to link to" : "Select file or folder to link to",
     "Choose" : "Choose",
-    "Choose {file}" : "Choose {file}"
+    "Choose {file}" : "Choose {file}",
+    "Translate from" : "Translate from",
+    "Select language" : "Select language",
+    "to" : "to",
+    "Translate to" : "Translate to",
+    "Replace" : "Replace"
 },
 "nplurals=2; plural=(n!=1);");

@@ -73,8 +73,6 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Trợ lý Nextcloud",
     "Show result" : "Hiển thị kết quả",
     "Delete task" : "Xóa nhiệm vụ",
-    "to" : "đến",
-    "Replace" : "Thay thế",
     "Edit" : "Chỉnh sửa",
     "Upload" : "Tải lên",
     "Source code" : "Mã nguồn",
@@ -95,6 +93,8 @@ OC.L10N.register(
     "Choose" : "Chọn",
     "Choose {file}" : "Chọn {file}",
     "Close outline view" : "Đóng chế độ xem phác thảo",
-    "Outline" : "Đường viền"
+    "Outline" : "Đường viền",
+    "to" : "đến",
+    "Replace" : "Thay thế"
 },
 "nplurals=1; plural=0;");

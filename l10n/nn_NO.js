@@ -14,12 +14,12 @@ OC.L10N.register(
     "URL" : "URL",
     "Save" : "Lagre",
     "Translate" : "Translate",
-    "Select language" : "Vel språk",
-    "to" : "til",
-    "Replace" : "Erstatt",
     "Edit" : "Endra",
     "Upload" : "Last opp",
     "Details" : "Detaljar",
-    "Choose" : "Vel"
+    "Choose" : "Vel",
+    "Select language" : "Vel språk",
+    "to" : "til",
+    "Replace" : "Erstatt"
 },
 "nplurals=2; plural=(n != 1);");

@@ -58,12 +58,9 @@ OC.L10N.register(
     "Save" : "שמירה",
     "Formatting help" : "עזרה בסידור בתבנית",
     "Update link" : "עדכן את הקישור",
+    "Insert" : "הכנסה",
     "Translate" : "תרגום",
     "Delete task" : "מחיקת משימה",
-    "Select language" : "בחירת שפה",
-    "to" : "סיום",
-    "Replace" : "החלפה",
-    "Insert" : "הכנסה",
     "Edit" : "עריכה",
     "Upload" : "העלאה",
     "Source code" : "קוד מקור",
@@ -79,6 +76,9 @@ OC.L10N.register(
     "Insert attachment" : "הוספת קובץ מצורף",
     "Command" : "פקודה",
     "Formatting" : "עיצוב",
-    "Choose" : "בחר"
+    "Choose" : "בחר",
+    "Select language" : "בחירת שפה",
+    "to" : "סיום",
+    "Replace" : "החלפה"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

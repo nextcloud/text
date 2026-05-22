@@ -33,7 +33,6 @@ OC.L10N.register(
     "Blockquote" : "Blokaanhaling",
     "Cancel" : "Cancel",
     "Save" : "Stoor",
-    "to" : "aan",
     "Edit" : "Wysig",
     "Upload" : "Oplaai",
     "Headings" : "Koppe",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "Details" : "Besonderhede",
-    "Choose" : "Kies"
+    "Choose" : "Kies",
+    "to" : "aan"
 },
 "nplurals=2; plural=(n != 1);");
