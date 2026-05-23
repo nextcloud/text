@@ -4,8 +4,8 @@
  */
 
 import { emojiSearch } from '@nextcloud/vue/functions/emoji'
-import createSuggestions from '../suggestions.js'
 import EmojiList from './EmojiList.vue'
+import createSuggestions from '../suggestions.js'
 
 export default () =>
 	createSuggestions({

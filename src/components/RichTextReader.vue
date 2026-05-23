@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { RichText } from './../extensions/index.js'
 import BaseReader from './BaseReader.vue'
+import { RichText } from './../extensions/index.js'
 
 export default {
 	name: 'RichTextReader',

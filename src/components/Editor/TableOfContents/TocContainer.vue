@@ -27,12 +27,12 @@
 <script setup>
 import { emit } from '@nextcloud/event-bus'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
-import { provideIntersectionObserver } from '../../../composables/useVisibility.ts'
 import TableOfContents from './TableOfContents.vue'
 import TocDesktop from './TocDesktop.vue'
 import TocMobile from './TocMobile.vue'
 import TocOutline from './TocOutline.vue'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
+import { provideIntersectionObserver } from '../../../composables/useVisibility.ts'
 
 provideIntersectionObserver()
 const { displayToc, headings } = useEditorHeadings()

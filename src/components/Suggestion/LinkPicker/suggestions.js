@@ -8,12 +8,12 @@ import {
 	getLinkWithPicker,
 	searchProvider,
 } from '@nextcloud/vue/components/NcRichText'
+import LinkPickerList from './LinkPickerList.vue'
 import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 import { getIsActive } from '../../Menu/utils.js'
 import createSuggestions from '../suggestions.js'
 import { getMenuEntries } from './../../Menu/entries.ts'
-import LinkPickerList from './LinkPickerList.vue'
 
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')

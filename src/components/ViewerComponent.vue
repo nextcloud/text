@@ -28,8 +28,8 @@
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
-import Editor from './Editor.js'
 import SourceView from './SourceView.vue'
+import Editor from './Editor.js'
 
 export default defineComponent({
 	name: 'ViewerComponent',

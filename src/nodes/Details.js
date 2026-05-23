@@ -5,9 +5,9 @@
 
 import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import DetailsView from './DetailsView.vue'
 import DetailsContent from './DetailsContent.js'
 import DetailsSummary from './DetailsSummary.js'
-import DetailsView from './DetailsView.vue'
 
 /**
  * Get first details node from parent nodes of a resolved position

@@ -42,11 +42,11 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import { defineComponent } from 'vue'
+import ActionList from './ActionList.vue'
+import ActionSingle from './ActionSingle.vue'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useMenuEntries } from '../../composables/useMenuEntries.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import ActionList from './ActionList.vue'
-import ActionSingle from './ActionSingle.vue'
 import ToolBarLogic from './ToolBarLogic.js'
 
 export default defineComponent({
