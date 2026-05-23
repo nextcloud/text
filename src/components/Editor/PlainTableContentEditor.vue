@@ -4,20 +4,18 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :contentLoaded="true">
 		<MainContainer>
-			<ContentContainer :read-only="readOnly" />
+			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
 
 <script>
 import { Editor } from '@tiptap/core'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
-/* eslint-disable import/no-named-as-default */
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
+/* eslint-disable import/no-named-as-default */
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
@@ -26,6 +24,8 @@ import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { EDITOR_UPLOAD } from '../Editor.provider.ts'
 import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 
 export default {
 	name: 'PlainTableContentEditor',
@@ -36,11 +36,13 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		readOnly: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	emits: ['update:content'],
 
 	setup(props) {

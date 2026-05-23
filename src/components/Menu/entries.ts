@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit } from '@nextcloud/event-bus'
+import { loadState } from '@nextcloud/initial-state'
+import { t } from '@nextcloud/l10n'
+import { type AnyCommands, type Editor } from '@tiptap/core'
+import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	CodeBrackets,
 	CodeTags,
@@ -43,12 +48,6 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
-
-import { emit } from '@nextcloud/event-bus'
-import { loadState } from '@nextcloud/initial-state'
-import { t } from '@nextcloud/l10n'
-import { type AnyCommands, type Editor } from '@tiptap/core'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { MODIFIERS } from './keys.js'
 
 type ClickContext = {
@@ -111,7 +110,10 @@ export const readOnlyDoneEntries: MenuEntry[] = [
 	},
 ]
 
-export const getAssistantMenuEntries = (): MenuEntry[] => {
+/**
+ *
+ */
+export function getAssistantMenuEntries(): MenuEntry[] {
 	const assistantMenuEntry: MenuEntry = {
 		key: 'assistant',
 		label: t('text', 'Nextcloud Assistant'),
@@ -124,7 +126,11 @@ export const getAssistantMenuEntries = (): MenuEntry[] => {
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 
-export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
+/**
+ *
+ * @param isRichWorkspace
+ */
+export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',

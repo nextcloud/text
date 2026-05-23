@@ -8,7 +8,13 @@ import { Document } from '@tiptap/extension-document'
 import { Text } from '@tiptap/extension-text'
 import Paragraph from '../../src/nodes/Paragraph.js'
 
-export const createCustomEditor = ({ content, extensions }) => {
+/**
+ *
+ * @param root0
+ * @param root0.content
+ * @param root0.extensions
+ */
+export function createCustomEditor({ content, extensions }) {
 	return new Editor({
 		content,
 		extensions: [Document, Paragraph, Text, ...extensions],

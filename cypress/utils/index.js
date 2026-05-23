@@ -5,7 +5,11 @@
 
 import { User } from '@nextcloud/e2e-test-server/cypress'
 
-export const getSearchParams = (url) => {
+/**
+ *
+ * @param url
+ */
+export function getSearchParams(url) {
 	return url.split(/[?&]/).reduce((acc, cur) => {
 		const parts = cur.split('=')
 		parts[1] && (acc[parts[0]] = parts[1])
@@ -31,9 +35,13 @@ export function initUserAndFiles(user, ...files) {
 	})
 }
 
-export const randHash = () =>
-	Math.random()
+/**
+ *
+ */
+export function randHash() {
+	return Math.random()
 		.toString(36)
 		.replace(/[^a-z]+/g, '')
 		.slice(0, 10)
+}
 export const randUser = () => new User(randHash(), randHash())

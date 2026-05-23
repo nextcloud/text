@@ -4,6 +4,7 @@
  */
 
 import type { Locator, Page } from '@playwright/test'
+
 import { expect } from '@playwright/test'
 
 export class EditorSection {
@@ -19,7 +20,6 @@ export class EditorSection {
 	public readonly suggestionsContainer: Locator
 	public readonly suggestions: Locator
 
-	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('.editor').first()
 		this.menubar = this.el.getByRole('region')

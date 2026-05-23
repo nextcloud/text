@@ -119,7 +119,7 @@ describe('Workspace', function () {
 			cy.visitTestFolder()
 			cy.openWorkspace().type('Callout')
 		})
-		// eslint-disable-next-line cypress/no-async-tests
+
 		it('create callout', function () {
 			cy.wrap(types).each((type) => {
 				cy.log(`creating ${type} callout`)

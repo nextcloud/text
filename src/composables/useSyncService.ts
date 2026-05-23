@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Connection, InitialData } from './useConnection'
+
 import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
 import { SyncService } from '../services/SyncService'
-import type { Connection, InitialData } from './useConnection'
 
 const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
 
 /**
  * Define a sync service and provide it to child components
+ *
  * @param connection Connection to the text api.
  * @param openConnection Function to open the connection.
  */
@@ -26,7 +28,10 @@ export function provideSyncService(
 	return { syncService }
 }
 
-export const useSyncService = () => {
+/**
+ *
+ */
+export function useSyncService() {
 	const syncService = inject(syncServiceKey) as SyncService
 	return { syncService }
 }

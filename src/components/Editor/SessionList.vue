@@ -5,7 +5,7 @@
 
 <template>
 	<NcPopover
-		:no-focus-trap="!showGuestNameDialog"
+		:noFocusTrap="!showGuestNameDialog"
 		class="session-list"
 		placement="bottom">
 		<template #trigger="{ attrs }">
@@ -71,6 +71,7 @@ export default {
 		NcButton,
 		NcPopover,
 	},
+
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
@@ -78,21 +79,26 @@ export default {
 			useSessions(syncService)
 		return { currentGuestSession, currentSession, sessions, isPublic }
 	},
+
 	computed: {
 		label() {
 			return t('text', 'Active people')
 		},
+
 		sessionList() {
 			return this.showGuestNameDialog ? this.remoteSessions : this.sessions
 		},
+
 		remoteSessions() {
 			return this.sessions.filter(
 				(session) => session.id !== this.currentSession?.id,
 			)
 		},
+
 		showGuestNameDialog() {
 			return this.isPublic && this.currentGuestSession
 		},
+
 		avatarStyle() {
 			return (session) => {
 				return {
@@ -104,10 +110,12 @@ export default {
 				}
 			}
 		},
+
 		sessionsForTriggerButton() {
 			return this.remoteSessions.slice(0, 3)
 		},
 	},
+
 	methods: {
 		t,
 		displayNameOrGuestName: (session) => {

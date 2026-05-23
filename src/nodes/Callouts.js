@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, isNodeActive, mergeAttributes } from '@tiptap/core'
+import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { typesAvailable } from './../markdownit/callouts.js'
-
 import Callout from './Callout.vue'
 
 export default Node.create({

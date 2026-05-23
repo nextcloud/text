@@ -3,17 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable no-unused-expressions */
-
+// https://github.com/import-js/eslint-plugin-import/issues/1739
+/* eslint-disable-next-line import/no-unresolved */
+import testData from '../../fixtures/Preview.md?raw'
 import Markdown from './../../../src/extensions/Markdown.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import Preview from './../../../src/nodes/Preview.js'
 import { createCustomEditor } from './../../support/components.js'
 import { expectMarkdown, loadMarkdown, runCommands } from './helpers.js'
-
-// https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable-next-line import/no-unresolved */
-import testData from '../../fixtures/Preview.md?raw'
 
 describe('Preview extension', { retries: 0 }, () => {
 	const editor = createCustomEditor({
@@ -179,10 +176,10 @@ describe('Markdown tests for Previews in the editor', { retries: 0 }, () => {
 		}
 		it(description, () => {
 			expect(spec).to.include('\n')
-			/* eslint-disable no-unused-expressions */
+
 			expect(input).to.be.ok
 			expect(output).to.be.ok
-			/* eslint-enable no-unused-expressions */
+
 			loadMarkdown(editor, input)
 			runCommands(editor)
 			expectMarkdown(editor, output.replace(/\n*$/, ''))

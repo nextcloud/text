@@ -6,19 +6,14 @@
 import { test as baseTest } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import { markdownThroughEditor } from '../testHelpers/markdown.js'
-
 import markdownit from '../../markdownit/index.js'
-
+import output from '../fixtures/tables/basic/table.html?raw'
 // Eslint does not know about ?raw suffix it seems.
 /* eslint-disable import/no-unresolved */
-import output from '../fixtures/tables/basic/table.html?raw'
 import input from '../fixtures/tables/basic/table.md?raw'
 import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
 import handbook from '../fixtures/tables/handbook/handbook.html?raw'
 import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
-/* eslint-enable import/no-unresolved */
-
 import {
 	br,
 	expectDocument,
@@ -29,6 +24,8 @@ import {
 	thead,
 	tr,
 } from '../testHelpers/builders.js'
+/* eslint-enable import/no-unresolved */
+import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
 	editor: async ({ task: _ }, use) => {
@@ -272,7 +269,7 @@ describe('Table extension', () => {
 	})
 })
 
-const getHeaderCell = (editor, targetIndex = 0) => {
+function getHeaderCell(editor, targetIndex = 0) {
 	let cell
 	editor.state.doc.descendants((node, pos) => {
 		if (!['tableHeadRow', 'tableRow'].includes(node.type.name)) {
@@ -288,7 +285,7 @@ const getHeaderCell = (editor, targetIndex = 0) => {
 	return cell
 }
 
-const getBodyColumnValues = (editor, columnIndex) => {
+function getBodyColumnValues(editor, columnIndex) {
 	const values = []
 	editor.state.doc.descendants((node) => {
 		if (node.type.name !== 'tableRow') {
@@ -302,6 +299,6 @@ const getBodyColumnValues = (editor, columnIndex) => {
 	return values
 }
 
-const formatHTML = (html) => {
+function formatHTML(html) {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
 }

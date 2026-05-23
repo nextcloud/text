@@ -4,14 +4,20 @@
  */
 
 import type { OpenData } from '../apis/connect'
+import type { Step, SyncService } from './SyncService'
+
 import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
 import { logger } from '../helpers/logger.js'
 import { stepsFromOpenData } from '../helpers/yjs'
 import getNotifyBus from './NotifyService'
-import type { Step, SyncService } from './SyncService'
 
 // Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
-const debug = (message: string, context?: Record<string, unknown>) => {
+/**
+ *
+ * @param message
+ * @param context
+ */
+function debug(message: string, context?: Record<string, unknown>) {
 	if (window.OCA?.Text?.logWebSocketPolyfill) {
 		logger.debug(message, context)
 	}

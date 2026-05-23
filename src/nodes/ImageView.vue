@@ -101,7 +101,7 @@
 				<div class="image__modal">
 					<ShowImageModal
 						:images="embeddedImageList"
-						:start-index="imageIndex"
+						:startIndex="imageIndex"
 						:show="showImageModal"
 						@close="showImageModal = false" />
 				</div>
@@ -163,9 +163,11 @@ export default {
 		ShowImageModal,
 		NodeViewWrapper,
 	},
+
 	directives: {
 		ClickOutside,
 	},
+
 	mixins: [useAttachmentResolver],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
@@ -192,6 +194,7 @@ export default {
 			loadIntersectionObserver: null,
 		}
 	},
+
 	computed: {
 		attachmentType() {
 			if (this.attachment) {
@@ -200,15 +203,19 @@ export default {
 				return null
 			}
 		},
+
 		isMediaAttachment() {
 			return this.attachmentType === 'media'
 		},
+
 		showDeleteIcon() {
 			return this.isEditable && this.showIcons
 		},
+
 		showImageDeleteIcon() {
 			return this.showDeleteIcon && !this.isMediaAttachment
 		},
+
 		canDisplayImage() {
 			if (this.failed && this.loaded) {
 				return true
@@ -216,9 +223,11 @@ export default {
 
 			return this.loaded && this.imageLoaded
 		},
+
 		canDisplayPlaceholder() {
 			return this.imageHeight > 0
 		},
+
 		blurhashSize() {
 			if (this.imageWidth > 0 && this.imageHeight > 0) {
 				const ratio = this.imageWidth / this.imageHeight
@@ -235,20 +244,24 @@ export default {
 			}
 			return {}
 		},
+
 		src: {
 			get() {
 				return this.node.attrs.src || ''
 			},
+
 			set(src) {
 				this.updateAttributes({
 					src,
 				})
 			},
 		},
+
 		alt: {
 			get() {
 				return this.node.attrs.alt ? this.node.attrs.alt : ''
 			},
+
 			set(alt) {
 				this.updateAttributes({
 					alt,
@@ -256,6 +269,7 @@ export default {
 			},
 		},
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', ({ editor }) => {
@@ -268,6 +282,7 @@ export default {
 			}
 		})
 	},
+
 	mounted() {
 		this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
 		this.loadAttachmentMetadata()
@@ -298,10 +313,12 @@ export default {
 			this.loadIntersectionObserver.observe(this.$el)
 		})
 	},
+
 	beforeUnmount() {
 		this.loadIntersectionObserver?.disconnect()
 		this.resizeObserver?.disconnect()
 	},
+
 	methods: {
 		setupResizeObserver() {
 			if (!this.$refs.wrapper) return
@@ -315,6 +332,7 @@ export default {
 
 			this.resizeObserver.observe(this.$refs.wrapper)
 		},
+
 		async loadAttachmentMetadata() {
 			try {
 				this.attachment = await this.attachmentPromise
@@ -333,6 +351,7 @@ export default {
 				logger.debug('Failed to load attachment metadata', { err })
 			}
 		},
+
 		async loadPreview() {
 			if (!this.attachment) {
 				this.attachment = await this.attachmentPromise
@@ -357,6 +376,7 @@ export default {
 				img.src = this.attachment.previewUrl
 			})
 		},
+
 		onImageLoadFailure(err) {
 			this.failed = true
 			this.imageLoaded = false
@@ -369,11 +389,13 @@ export default {
 
 			this.$emit('error', { error: err, src: this.src })
 		},
+
 		updateAlt(event) {
 			this.updateAttributes({
 				alt: event.target.value,
 			})
 		},
+
 		onLoaded() {
 			this.loaded = true
 			this.$nextTick(() => {
@@ -382,6 +404,7 @@ export default {
 				}
 			})
 		},
+
 		async updateEmbeddedImageList() {
 			this.embeddedImageList = []
 			// Get all images that succeeded to load
@@ -404,6 +427,7 @@ export default {
 				}
 			}
 		},
+
 		handleAttachmentClick() {
 			// Open in viewer if possible
 			if (
@@ -424,6 +448,7 @@ export default {
 			// Download file
 			window.location.assign(this.attachment.fullUrl)
 		},
+
 		async handleImageClick() {
 			await this.updateEmbeddedImageList()
 			this.imageIndex = this.embeddedImageList.findIndex(
@@ -439,10 +464,12 @@ export default {
 				showError(t('text', 'Could not find image in attachments list.'))
 			}
 		},
+
 		onDelete() {
 			emit('text:image-node:delete', this.imageUrl)
 			this.deleteNode()
 		},
+
 		t,
 	},
 }

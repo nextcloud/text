@@ -4,23 +4,32 @@
  */
 
 import type { ExtendedRegExpMatchArray } from '@tiptap/core'
-import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
-import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import type { Mark, Node } from '@tiptap/pm/model'
 import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
+import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
+import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { linkClicking } from '../plugins/links'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
-const extractHrefFromMatch = (match: ExtendedRegExpMatchArray) => {
+/**
+ *
+ * @param match
+ */
+function extractHrefFromMatch(match: ExtendedRegExpMatchArray) {
 	return { href: match.groups?.href }
 }
 
-const extractHrefFromMarkdownLink = (match: ExtendedRegExpMatchArray) => {
+/**
+ *
+ * @param match
+ */
+function extractHrefFromMarkdownLink(match: ExtendedRegExpMatchArray) {
 	/**
 	 * Removes the last capture group from the match to satisfy
 	 * Tiptap markInputRule expectation of having the content as
@@ -81,6 +90,7 @@ declare module '@tiptap/core' {
 		text_link: {
 			/**
 			 * Set a link mark or insert the link (when nothing is selected)
+			 *
 			 * @param text The text in the link
 			 * @param attrs The link attributes
 			 * @example editor.commands.insertOrSetLink('hello', { href: 'https://tiptap.dev' })

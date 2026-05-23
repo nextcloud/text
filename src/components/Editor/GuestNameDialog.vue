@@ -76,7 +76,10 @@ watch(
 		}
 	},
 )
-const setGuestName = async () => {
+/**
+ *
+ */
+async function setGuestName() {
 	if (!connection.value) {
 		showError(t('text', 'Not connected. Cannot update guest name.'))
 		return

@@ -8,9 +8,9 @@
 		<div class="status-wrapper">
 			<SyncStatus
 				:idle="idle"
-				:sync-error="syncError"
-				:has-connection-issue="hasConnectionIssue"
-				:has-indexed-db-conflict="hasIndexedDbConflict"
+				:syncError="syncError"
+				:hasConnectionIssue="hasConnectionIssue"
+				:hasIndexedDbConflict="hasIndexedDbConflict"
 				@reconnect="$emit('reconnect')" />
 			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
@@ -44,18 +44,22 @@ export default {
 			type: Boolean,
 			required: true,
 		},
+
 		lock: {
 			type: Object,
 			default: null,
 		},
+
 		syncError: {
 			type: Object,
 			default: null,
 		},
+
 		hasConnectionIssue: {
 			type: Boolean,
 			required: true,
 		},
+
 		hasIndexedDbConflict: {
 			type: Boolean,
 			default: false,

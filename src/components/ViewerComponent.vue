@@ -6,18 +6,18 @@
 <template>
 	<Editor
 		v-if="!useSourceView"
-		:file-id="fileid"
-		:relative-path="filename"
+		:fileId="fileid"
+		:relativePath="filename"
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
-		:share-token="shareToken"
+		:shareToken="shareToken"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime" />
 	<SourceView
 		v-else
 		:fileid="fileid"
 		:filename="filename"
-		:is-encrypted="isEncrypted"
+		:isEncrypted="isEncrypted"
 		:mime="mime"
 		:source="source"
 		v-bind="$attrs"
@@ -37,51 +37,62 @@ export default defineComponent({
 		SourceView,
 		Editor,
 	},
+
 	provide() {
 		return {
 			isEmbedded: this.isEmbedded,
 		}
 	},
+
 	inheritAttrs: false,
 	props: {
 		filename: {
 			type: String,
 			default: null,
 		},
+
 		fileid: {
 			type: Number,
 			default: null,
 		},
+
 		active: {
 			type: Boolean,
 			default: false,
 		},
+
 		autofocus: {
 			type: Boolean,
 			default: true,
 		},
+
 		shareToken: {
 			type: String,
 			default: () => getSharingToken(),
 		},
+
 		mime: {
 			type: String,
 			default: null,
 		},
+
 		source: {
 			type: String,
 			default: undefined,
 		},
+
 		isEmbedded: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
 		}
 	},
+
 	computed: {
 		/** @return {boolean} */
 		useSourceView() {
@@ -110,13 +121,16 @@ export default defineComponent({
 		async onLoaded() {
 			this.$emit('update:loaded', true)
 		},
+
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
 		},
+
 		t,
 	},
 })
 </script>
+
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
 	top: 0;
@@ -133,6 +147,7 @@ export default defineComponent({
 	}
 }
 </style>
+
 <style lang="scss">
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px

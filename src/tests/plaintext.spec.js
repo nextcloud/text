@@ -7,7 +7,7 @@ import { createPlainEditor, serializePlainText } from './../EditorFactory.ts'
 import spec from './fixtures/spec.js'
 import xssFuzzVectors from './fixtures/xssFuzzVectors.js'
 
-const escapeHTML = (s) => {
+function escapeHTML(s) {
 	// prettier-ignore
 	return s.toString()
 		.split('&').join('&amp;')
@@ -17,7 +17,7 @@ const escapeHTML = (s) => {
 		.split("'").join('&#039;')
 }
 
-const plaintextThroughEditor = (markdown) => {
+function plaintextThroughEditor(markdown) {
 	const content = '<pre>\n' + escapeHTML(markdown) + '</pre>'
 	const tiptap = createPlainEditor()
 	tiptap.commands.setContent(content)

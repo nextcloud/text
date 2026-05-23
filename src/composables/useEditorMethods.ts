@@ -4,13 +4,18 @@
  */
 
 import type { Editor } from '@tiptap/core'
-import escapeHtml from 'escape-html'
 import type { AwarenessUser } from '../extensions/CollaborationCaret.ts'
+
+import escapeHtml from 'escape-html'
 import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
-import { isUser, type Session } from '../services/SyncService'
+import { type Session, isUser } from '../services/SyncService'
 
-export const useEditorMethods = (editor: Editor) => {
+/**
+ *
+ * @param editor
+ */
+export function useEditorMethods(editor: Editor) {
 	const setEditable = (val: boolean) => {
 		if (editor && editor.isEditable !== val) {
 			editor.setEditable(val)

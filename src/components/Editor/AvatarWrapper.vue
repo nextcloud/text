@@ -8,10 +8,10 @@
 		<NcAvatar
 			v-if="session.userId"
 			:user="session.userId"
-			:is-guest="false"
-			:disable-menu="true"
-			hide-status
-			:disable-tooltip="true" />
+			:isGuest="false"
+			:disableMenu="true"
+			hideStatus
+			:disableTooltip="true" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
 			<template v-if="session.guestName">
 				{{ guestInitial }}
@@ -31,12 +31,14 @@ export default {
 		NcAvatar,
 		AccountOutlineIcon,
 	},
+
 	props: {
 		session: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	computed: {
 		sessionAvatarStyle() {
 			return {
@@ -44,6 +46,7 @@ export default {
 				'border-color': this.session.color,
 			}
 		},
+
 		sessionBackgroundStyle() {
 			return {
 				'background-color': this.session.userId
@@ -51,6 +54,7 @@ export default {
 					: 'var(--color-background-dark)',
 			}
 		},
+
 		guestInitial() {
 			return this.session.guestName === ''
 				? '?'

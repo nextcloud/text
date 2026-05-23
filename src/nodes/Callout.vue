@@ -26,25 +26,28 @@ const ICONS_MAP = {
 }
 
 export default {
-	// eslint-disable-next-line vue/match-component-file-name
 	name: 'Callout',
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,
 	},
+
 	props: {
 		node: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	computed: {
 		icon() {
 			return ICONS_MAP[this.type] || Info
 		},
+
 		type() {
 			return this.node.attrs.type || 'info'
 		},
+
 		dir() {
 			return this.node.attrs.dir || ''
 		},

@@ -192,7 +192,7 @@ describe('Front matter support', function () {
 			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
-			// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 			cy.wait(250)
 			cy.getContent().type('invalid{enter}{enter}')
 
@@ -207,7 +207,7 @@ describe('Front matter support', function () {
 			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
-			// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 			cy.wait(250)
 			// Tab key does not work in cypress, using spaces instead
 			cy.getContent().type('flowchart LR{enter}    entry{enter}')

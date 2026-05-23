@@ -3,21 +3,29 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
 import type { Doc } from 'yjs'
-import { getDocumentState } from '../helpers/yjs'
-import { SaveService } from '../services/SaveService'
 import type { SyncService } from '../services/SyncService.ts'
 import type { Connection } from './useConnection.ts'
 
+import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
+import { getDocumentState } from '../helpers/yjs'
+import { SaveService } from '../services/SaveService'
+
 const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
 
-export const provideSaveService = (
+/**
+ *
+ * @param connection
+ * @param syncService
+ * @param serialize
+ * @param ydoc
+ */
+export function provideSaveService(
 	connection: ShallowRef<Connection | undefined>,
 	syncService: SyncService,
 	serialize: () => string,
 	ydoc: Doc,
-) => {
+) {
 	const saveService = new SaveService({
 		connection,
 		syncService,
@@ -28,7 +36,10 @@ export const provideSaveService = (
 	return { saveService }
 }
 
-export const useSaveService = () => {
+/**
+ *
+ */
+export function useSaveService() {
 	const saveService = inject(saveServiceKey) as SaveService
 	return { saveService }
 }

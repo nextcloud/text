@@ -4,9 +4,7 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<NcCheckboxRadioSwitch
-			v-model="showWorkspace"
-			@update:checked="toggle">
+		<NcCheckboxRadioSwitch v-model="showWorkspace" @update:checked="toggle">
 			{{ t('text', 'Show folder description') }}
 		</NcCheckboxRadioSwitch>
 	</div>
@@ -24,11 +22,13 @@ export default {
 	components: {
 		NcCheckboxRadioSwitch,
 	},
+
 	data() {
 		return {
 			showWorkspace: OCA.Text.RichWorkspaceEnabled,
 		}
 	},
+
 	methods: {
 		toggle() {
 			// FIXME: save to app config
@@ -46,6 +46,7 @@ export default {
 				})
 			}
 		},
+
 		t,
 	},
 }

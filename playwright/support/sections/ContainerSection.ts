@@ -13,7 +13,6 @@ import type { Locator, Page } from '@playwright/test'
 export class ContainerSection {
 	public readonly el: Locator
 
-	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('#editor-container').first()
 	}

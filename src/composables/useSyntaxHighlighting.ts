@@ -8,6 +8,7 @@ import { extensionHighlight } from '../helpers/mappings'
 
 /**
  * Determine the language of the file and load the syntax highlighting
+ *
  * @param isRichEditor Is the editor a rich editor?
  * @param props Props of the editor component.
  * @param props.relativePath Relative path to the file.
