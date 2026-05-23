@@ -21,11 +21,13 @@
 			</NcButton>
 		</div>
 		<SessionList v-if="networkOnline && !hasConnectionIssue">
-			<p slot="lastSaved" class="last-saved">
-				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
-			</p>
+			<template #lastSaved>
+				<p class="last-saved">
+					{{ t('text', 'Last saved') }}: {{ lastSavedString }}
+				</p>
+			</template>
 		</SessionList>
-		<OfflineState v-else :offline-since="offlineSince" />
+		<OfflineState v-else :offlineSince="offlineSince" />
 	</div>
 </template>
 
@@ -58,14 +60,17 @@ export default {
 			type: Boolean,
 			required: true,
 		},
+
 		dirty: {
 			type: Boolean,
 			required: true,
 		},
+
 		document: {
 			type: Object,
 			default: null,
 		},
+
 		syncError: {
 			type: Object,
 			default: null,
@@ -86,12 +91,14 @@ export default {
 					: t('text', 'Offline, changes will be saved when online')
 			}
 			return this.dirtyStateIndicator
-				? t('text', 'Saving …')
+				? t('text', 'Saving …')
 				: t('text', 'Saved')
 		},
+
 		dirtyStateIndicator() {
 			return this.dirty
 		},
+
 		lastSavedStatusTooltip() {
 			let message = t('text', 'Last saved {lastSave}', {
 				lastSave: this.lastSavedString,
@@ -113,6 +120,7 @@ export default {
 				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISION
 			)
 		},
+
 		saveStatusClass() {
 			if (
 				(this.dirtyStateIndicator && !this.networkOnline)
@@ -122,9 +130,10 @@ export default {
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
 		},
+
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
-			/* eslint-disable-next-line no-unused-expressions */
+
 			this.refreshMoment
 			const timestamp = this.document?.lastSavedVersionTime
 			return timestamp ? moment(timestamp * 1000).fromNow() : ''
@@ -137,6 +146,7 @@ export default {
 				this.saveService.forceSave()
 			}
 		},
+
 		t,
 	},
 }

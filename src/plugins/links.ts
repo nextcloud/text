@@ -18,9 +18,12 @@ import { activeLinkFromSelection } from './linkHelpers.js'
  *
  * @params resolved - resolved position of the action
  */
-export const setActiveLink =
-	(resolved: ResolvedPos): Command =>
-	(state, dispatch) => {
+/**
+ *
+ * @param resolved
+ */
+export function setActiveLink(resolved: ResolvedPos): Command {
+	return (state, dispatch) => {
 		const mark = resolved.marks().find((m) => m.type.name === 'link')
 		if (!mark) {
 			return false
@@ -32,6 +35,7 @@ export const setActiveLink =
 		}
 		return true
 	}
+}
 
 /* Hide the link bubble by setting active state to null
  *

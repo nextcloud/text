@@ -8,7 +8,7 @@
 		size="large"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting and shortcuts')"
-		:close-on-click-outside="true"
+		:closeOnClickOutside="true"
 		@closing="$emit('close')">
 		<h2>{{ t('text', 'Formatting and shortcuts') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
@@ -291,6 +291,7 @@ export default {
 	components: {
 		NcDialog,
 	},
+
 	data() {
 		return {
 			formatted: {
@@ -305,23 +306,28 @@ export default {
 				blockQuote: true,
 				codeBlock: true,
 			},
+
 			ctrlOrModKey: TRANSLATIONS[MODIFIERS.Mod],
 		}
 	},
+
 	computed: {
 		isFormatted() {
 			return (style) => this.formatted[style]
 		},
+
 		// Cache the output of `isMobilePlatform()`
 		isMobileCached() {
 			return this.isMobilePlatform()
 		},
 	},
+
 	methods: {
 		t,
 		toggleFormatted(style) {
 			this.formatted[style] = !this.formatted[style]
 		},
+
 		isMobilePlatform,
 	},
 }

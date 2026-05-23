@@ -7,11 +7,11 @@
 	<div id="direct-editor" :class="{ 'icon-loading': saving }">
 		<Editor
 			ref="editor"
-			:initial-session="initialSession"
-			:file-id="initial.fileId"
+			:initialSession="initialSession"
+			:fileId="initial.fileId"
 			:active="true"
 			:mime="initial.mimetype"
-			:is-direct-editing="true"
+			:isDirectEditing="true"
 			@ready="loaded">
 			<template v-if="isMobile" #header>
 				<button class="icon-share" @click="share" />
@@ -24,7 +24,6 @@
 <script>
 import { reactive } from 'vue'
 import Editor from '../components/Editor.js'
-
 import { logger } from '../helpers/logger.ts'
 
 const log = reactive({
@@ -32,7 +31,12 @@ const log = reactive({
 	mtime: 0,
 })
 
-const callMobileMessage = (messageName, attributes) => {
+/**
+ *
+ * @param messageName
+ * @param attributes
+ */
+function callMobileMessage(messageName, attributes) {
 	logger.debug(`callMobileMessage ${messageName}`, { attributes })
 	let message = messageName
 	if (typeof attributes !== 'undefined') {
@@ -90,10 +94,12 @@ export default {
 			saving: false,
 		}
 	},
+
 	computed: {
 		initialSession() {
 			return JSON.parse(this.initial.session) || null
 		},
+
 		isMobile() {
 			return (
 				window.DirectEditingMobileInterface
@@ -103,9 +109,11 @@ export default {
 			)
 		},
 	},
+
 	beforeMount() {
 		callMobileMessage('loading')
 	},
+
 	mounted() {
 		document
 			.querySelector('meta[name="viewport"]')
@@ -119,6 +127,7 @@ export default {
 			this.reload()
 		})
 	},
+
 	methods: {
 		async close() {
 			this.saving = true
@@ -127,12 +136,15 @@ export default {
 				callMobileMessage('close')
 			}, 0)
 		},
+
 		share() {
 			callMobileMessage('share')
 		},
+
 		loaded() {
 			callMobileMessage('loaded')
 		},
+
 		reload() {
 			callMobileMessage('reload')
 		},

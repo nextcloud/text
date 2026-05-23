@@ -11,9 +11,9 @@
 		<Component
 			:is="readerComponent"
 			:content="content"
-			:file-id="fileid"
-			:read-only="true"
-			:show-menu-bar="false" />
+			:fileId="fileid"
+			:readOnly="true"
+			:showMenuBar="false" />
 		<NcButton
 			v-if="isEmbedded"
 			class="toggle-interactive"
@@ -44,34 +44,41 @@ export default defineComponent({
 		PlainTextReader,
 		MarkdownContentEditor,
 	},
+
 	inject: ['isEmbedded'],
 	props: {
 		filename: {
 			type: String,
 			default: null,
 		},
+
 		fileid: {
 			type: Number,
 			default: null,
 		},
+
 		mime: {
 			type: String,
 			default: null,
 		},
+
 		source: {
 			type: String,
 			default: undefined,
 		},
+
 		isEncrypted: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			content: '',
 		}
 	},
+
 	computed: {
 		isMarkdown() {
 			return (
@@ -106,6 +113,7 @@ export default defineComponent({
 			}
 			this.$emit('loaded', true)
 		},
+
 		async fetchDecryptedContent() {
 			const client = getClient()
 			const response = await client.getFileContents(
@@ -123,10 +131,12 @@ export default defineComponent({
 				}
 			})
 		},
+
 		t,
 	},
 })
 </script>
+
 <style lang="scss" scoped>
 .source-viewer {
 	display: block;

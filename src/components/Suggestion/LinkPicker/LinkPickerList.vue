@@ -29,16 +29,19 @@ export default {
 	components: {
 		SuggestionListWrapper,
 	},
+
 	props: {
 		items: {
 			type: Array,
 			required: true,
 		},
+
 		command: {
 			type: Function,
 			required: true,
 		},
 	},
+
 	methods: {
 		t,
 		onKeyDown({ event }) {
@@ -48,6 +51,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .link-picker__item {
 	display: flex;

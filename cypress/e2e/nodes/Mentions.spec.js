@@ -12,7 +12,7 @@ const currentUser = user
 
 const fileName = 'empty.md'
 
-const createFileWithMention = (target, userToMention) => {
+function createFileWithMention(target, userToMention) {
 	const content = `Hello @[${userToMention}](mention://user/${userToMention})`
 	cy.createFile(target, content).then(() => cy.reloadFileList())
 }

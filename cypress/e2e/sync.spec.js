@@ -206,7 +206,7 @@ describe('Sync', () => {
 	it('close triggers one close request', () => {
 		cy.closeFile()
 		// Wait to make sure there is enough time for all close requests to run
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 		cy.wait(100)
 		// reuse @close intercepted in closeFile()
 		cy.get('@close.all').should('have.length', 1)

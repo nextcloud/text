@@ -4,7 +4,7 @@
 -->
 <template>
 	<NextcloudVueNcActionButton
-		close-after-click
+		closeAfterClick
 		data-text-action-entry="formatting-help"
 		v-on="$listeners">
 		<template #icon>
@@ -25,12 +25,13 @@ export default defineComponent({
 	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
 	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
 	// Hotfix - rename the component to NcActionButton because it represents and renders it.
-	// eslint-disable-next-line vue/match-component-file-name
+
 	name: 'NcActionButton',
 	components: {
 		NextcloudVueNcActionButton,
 		Help,
 	},
+
 	methods: {
 		t,
 	},

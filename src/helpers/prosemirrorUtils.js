@@ -11,7 +11,12 @@
 // const predicate = node => node.type === schema.nodes.blockquote;
 // const parent = findParentNodeClosestToPos(state.doc.resolve(5), predicate);
 // ```
-export const findParentNodeClosestToPos = ($pos, predicate) => {
+/**
+ *
+ * @param $pos
+ * @param predicate
+ */
+export function findParentNodeClosestToPos($pos, predicate) {
 	for (let i = $pos.depth; i > 0; i--) {
 		const node = $pos.node(i)
 		if (predicate(node)) {
@@ -30,7 +35,12 @@ export const findParentNodeClosestToPos = ($pos, predicate) => {
 // ```javascript
 // const children = flatten(node);
 // ```
-export const flatten = (node, descend = true) => {
+/**
+ *
+ * @param node
+ * @param descend
+ */
+export function flatten(node, descend = true) {
 	if (!node) {
 		throw new Error('Invalid "node" parameter')
 	}
@@ -49,7 +59,13 @@ export const flatten = (node, descend = true) => {
 // ```javascript
 // const textNodes = findChildren(node, child => child.isText, false);
 // ```
-export const findChildren = (node, predicate, descend) => {
+/**
+ *
+ * @param node
+ * @param predicate
+ * @param descend
+ */
+export function findChildren(node, predicate, descend) {
 	if (!node) {
 		throw new Error('Invalid "node" parameter')
 	} else if (!predicate) {

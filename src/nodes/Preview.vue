@@ -21,7 +21,7 @@
 			:text="node.attrs.href"
 			:limit="1"
 			:interactive="!extension.options.isEmbedded"
-			:display-fallback="true" />
+			:displayFallback="true" />
 	</NodeViewWrapper>
 </template>
 

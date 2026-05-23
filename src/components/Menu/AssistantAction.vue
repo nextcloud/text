@@ -12,7 +12,7 @@
 			:data-text-action-entry="actionEntry.key"
 			:name="actionEntry.label"
 			:open="menuOpen"
-			force-menu
+			forceMenu
 			@update:open="
 				(open) => {
 					menuOpen = menuOpen || open
@@ -24,7 +24,7 @@
 			<NcActionButton
 				v-for="type in taskTypes"
 				:key="type.id"
-				close-after-click
+				closeAfterClick
 				@click="openAssistantForm(type.id)">
 				<template #icon>
 					<PencilOutlineIcon
@@ -46,7 +46,7 @@
 			<NcActionButton
 				v-if="canTranslate"
 				data-cy="open-translate"
-				close-after-click
+				closeAfterClick
 				@click="openTranslateDialog">
 				<template #icon>
 					<TranslateVariant :size="20" />
@@ -56,7 +56,7 @@
 			<NcActionSeparator />
 			<NcActionButton
 				:disabled="tasks.length < 1"
-				close-after-click
+				closeAfterClick
 				@click="showTaskList = true">
 				<template #icon>
 					<NcLoadingIcon v-if="loading" :size="20" />
@@ -68,7 +68,7 @@
 		<component
 			:is="badgeStateIcon"
 			v-if="badgeStateIcon"
-			fill-color="var(--color-text-maxcontrast)"
+			fillColor="var(--color-text-maxcontrast)"
 			:size="16"
 			class="assistant-action--badge" />
 
@@ -86,7 +86,7 @@
 						:key="task.id"
 						:name="task.title"
 						:bold="false"
-						:force-display-actions="true"
+						:forceDisplayActions="true"
 						@click="() => openResult(task)">
 						<template #subname>
 							{{ task.input.input }}
@@ -212,6 +212,7 @@ export default {
 		NcLoadingIcon,
 		NcModal,
 	},
+
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	setup() {
@@ -219,6 +220,7 @@ export default {
 		const { fileId } = useFileProps()
 		return { editor, fileId }
 	},
+
 	data() {
 		return {
 			menuOpen: false,
@@ -237,10 +239,12 @@ export default {
 			canTranslate: loadState('text', 'translation_available', false),
 		}
 	},
+
 	computed: {
 		identifier() {
 			return 'text-file:' + this.fileId
 		},
+
 		badgeStateIcon() {
 			if (
 				this.tasks.filter(
@@ -263,10 +267,12 @@ export default {
 
 			return null
 		},
+
 		taskTypeIds() {
 			return this.taskTypes.map((type) => type.id)
 		},
 	},
+
 	watch: {
 		async menuOpen(isOpen) {
 			if (isOpen && this.tasks.length === 0) {
@@ -276,14 +282,17 @@ export default {
 			}
 		},
 	},
+
 	beforeMount() {
 		this.editor.on('selectionUpdate', this.onSelection)
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
+
 	beforeUnmount() {
 		this.editor.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
+
 	methods: {
 		async fetchTasks() {
 			const result = await axios.get(
@@ -304,6 +313,7 @@ export default {
 				})
 				.sort((a, b) => b.id - a.id)
 		},
+
 		async checkNotification(event) {
 			if (
 				event.notification.app !== 'assistant'
@@ -313,10 +323,12 @@ export default {
 			}
 			await this.fetchTasks()
 		},
+
 		onSelection() {
 			const { selection, doc } = this.editor.state
 			this.selection = doc.textBetween(selection.from, selection.to, ' ')
 		},
+
 		async openAssistantForm(taskType = null) {
 			await window.OCA.Assistant.openAssistantForm({
 				appId: 'text',
@@ -341,6 +353,7 @@ export default {
 				this.fetchTasks()
 			})
 		},
+
 		openTranslateDialog() {
 			const { selection, doc } = this.editor.state
 			const hasSelection = selection.from !== selection.to
@@ -374,6 +387,7 @@ export default {
 				this.fetchTasks()
 			})
 		},
+
 		async openResult(task) {
 			window.OCA.Assistant.openAssistantTask(task, {
 				isInsideViewer: true,
@@ -389,6 +403,7 @@ export default {
 				],
 			})
 		},
+
 		async insertResult(task) {
 			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
 			const content = isMarkdown
@@ -400,6 +415,7 @@ export default {
 			}
 			this.showTaskList = false
 		},
+
 		async copyResult(task) {
 			try {
 				await navigator.clipboard.writeText(task.output.output)
@@ -410,6 +426,7 @@ export default {
 				showError(t('text', 'Could not copy result to clipboard'))
 			}
 		},
+
 		async deleteTask(task) {
 			try {
 				await axios.delete(generateOcsUrl(`/taskprocessing/task/${task.id}`))
@@ -421,6 +438,7 @@ export default {
 				this.$delete(this.tasks, taskIndex)
 			}
 		},
+
 		async translateInsert(task, replaceRange) {
 			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
 			const content = isMarkdown
@@ -436,6 +454,7 @@ export default {
 				await markFileAsAiGenerated(this.fileId)
 			}
 		},
+
 		t,
 	},
 }

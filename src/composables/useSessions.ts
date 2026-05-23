@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { OpenData } from '../apis/connect'
+import type { SyncService } from '../services/SyncService'
+
 import {
+	type ShallowRef,
 	computed,
 	onMounted,
 	onUnmounted,
@@ -11,14 +15,11 @@ import {
 	ref,
 	shallowRef,
 	watch,
-	type ShallowRef,
 } from 'vue'
-import type { OpenData } from '../apis/connect'
 import {
+	type Session,
 	COLLABORATOR_DISCONNECT_TIME,
 	isGuest,
-	SyncService,
-	type Session,
 } from '../services/SyncService'
 import { useConnection } from './useConnection'
 

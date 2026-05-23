@@ -42,12 +42,14 @@ export default defineComponent({
 		PinOutlineIcon,
 		NcButton,
 	},
+
 	data() {
 		return {
 			keep: false,
 			isClosing: false,
 		}
 	},
+
 	computed: {
 		buttonTitle() {
 			return this.keep
@@ -55,18 +57,21 @@ export default defineComponent({
 				: t('text', 'Pin table of contents')
 		},
 	},
+
 	methods: {
 		onMouseleave() {
 			if (!this.keep) {
 				this.close()
 			}
 		},
+
 		onAnimationend(event) {
 			if (event.animationName === 'fadeOutRight' && this.isClosing) {
 				this.isClosing = false
 				this.$emit('close')
 			}
 		},
+
 		onButtonClick() {
 			if (this.keep) {
 				this.keep = false
@@ -79,9 +84,11 @@ export default defineComponent({
 				emit('text:toc:pin', { fileId: this.$file.fileId, keep: this.keep })
 			}
 		},
+
 		close() {
 			this.isClosing = true
 		},
+
 		t,
 	},
 })

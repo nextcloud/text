@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 			() => import('./views/FilesSettings.vue'),
 		)
 
-		const el = document.createElement("div");
+		const el = document.createElement('div')
 		const app = createApp(FilesSettings).mount(el)
 		window.OCA.Files.Settings.register(
 			new window.OCA.Files.Settings.Setting('text', {

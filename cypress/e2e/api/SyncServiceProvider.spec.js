@@ -85,7 +85,7 @@ describe('Sync service provider', function () {
 		})
 		cy.wait('@sync')
 		cy.wait('@sync')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
@@ -131,7 +131,7 @@ describe('Sync service provider', function () {
 			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.wait('@alive')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyC')).to.be.eq('valueC')
@@ -157,7 +157,7 @@ describe('Sync service provider', function () {
 			sourceMap.set('keyA', 'valueA')
 			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 		cy.wait(60000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
@@ -185,7 +185,7 @@ describe('Sync service provider', function () {
 		})
 		cy.wait('@sync')
 		cy.wait('@sync')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')

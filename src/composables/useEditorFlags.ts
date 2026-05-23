@@ -5,7 +5,7 @@
 
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
-import { inject, type InjectionKey, provide } from 'vue'
+import { type InjectionKey, inject, provide } from 'vue'
 
 export interface EditorFlags {
 	isPublic: boolean
@@ -19,7 +19,11 @@ interface Props {
 	mime: string
 }
 export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags>
-export const provideEditorFlags = (props: Props) => {
+/**
+ *
+ * @param props
+ */
+export function provideEditorFlags(props: Props) {
 	const isPublic = props.isDirectEditing || isPublicShare()
 	const isRichWorkspace = props.richWorkspace ?? false
 	const isRichEditor =
@@ -34,7 +38,10 @@ export const provideEditorFlags = (props: Props) => {
 	})
 	return { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
 }
-export const useEditorFlags = () => {
+/**
+ *
+ */
+export function useEditorFlags() {
 	const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } = inject(
 		editorFlagsKey,
 		{

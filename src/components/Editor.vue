@@ -14,26 +14,26 @@
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<CollisionResolveDialog
 			v-if="isResolvingConflict"
-			:other-version="otherVersion"
-			:reader-source="indexedDbConflictContent ? 'local' : 'server'"
+			:otherVersion="otherVersion"
+			:readerSource="indexedDbConflictContent ? 'local' : 'server'"
 			@resolved="resolved()" />
 		<Wrapper
 			v-if="displayed"
-			:is-resolving-conflict="isResolvingConflict"
-			:content-loaded="contentLoaded"
-			@read-only-toggled="readOnlyToggled">
+			:isResolvingConflict="isResolvingConflict"
+			:contentLoaded="contentLoaded"
+			@readOnlyToggled="readOnlyToggled">
 			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
 				<template v-if="readOnly || (openReadOnlyEnabled && !editMode)">
 					<slot name="readonlyBar">
 						<ReadonlyBar
-							:is-hidden="hideMenu"
-							:open-read-only="openReadOnlyEnabled">
+							:isHidden="hideMenu"
+							:openReadOnly="openReadOnlyEnabled">
 							<Status
 								:document="document"
 								:dirty="dirty"
-								:sync-error="syncError"
-								:has-connection-issue="displayConnectionIssue" />
+								:syncError="syncError"
+								:hasConnectionIssue="displayConnectionIssue" />
 							<slot name="header" />
 						</ReadonlyBar>
 					</slot>
@@ -44,13 +44,13 @@
 						v-if="renderMenus"
 						ref="menubar"
 						v-model="menubarLoaded"
-						:is-hidden="hideMenu"
-						:open-read-only="openReadOnlyEnabled" >
+						:isHidden="hideMenu"
+						:openReadOnly="openReadOnlyEnabled">
 						<Status
 							:document="document"
 							:dirty="dirty"
-							:sync-error="syncError"
-							:has-connection-issue="displayConnectionIssue" />
+							:syncError="syncError"
+							:hasConnectionIssue="displayConnectionIssue" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -58,21 +58,21 @@
 				<ContentContainer
 					v-show="contentLoaded"
 					ref="contentWrapper"
-					:read-only="!editMode" />
+					:readOnly="!editMode" />
 				<SuggestionsBar
 					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
 			</MainContainer>
 			<Reader
 				v-if="isResolvingConflict"
 				:content="otherVersion"
-				:is-rich-editor="isRichEditor" />
+				:isRichEditor="isRichEditor" />
 		</Wrapper>
 		<DocumentStatus
 			:idle="idle"
 			:lock="document?.lock"
-			:sync-error="syncError"
-			:has-connection-issue="displayConnectionIssue"
-			:has-indexed-db-conflict="!!indexedDbConflictContent"
+			:syncError="syncError"
+			:hasConnectionIssue="displayConnectionIssue"
+			:hasIndexedDbConflict="!!indexedDbConflictContent"
 			@reconnect="reconnect" />
 	</div>
 </template>
@@ -81,35 +81,27 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
+import { loadState } from '@nextcloud/initial-state'
+import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
-import { Doc, logUpdate } from 'yjs'
-import Autofocus from '../extensions/Autofocus.js'
-
-import { provideEditor } from '../composables/useEditor.ts'
-import { provideEditorFlags } from '../composables/useEditorFlags.ts'
-import { useOpenLinkHandler } from '../composables/useOpenLinkHandler.ts'
-import {
-	ATTACHMENT_RESOLVER,
-	HOOK_MENTION_SEARCH,
-	IS_MOBILE,
-} from './Editor.provider.ts'
-import ReadonlyBar from './Menu/ReadonlyBar.vue'
-
-import { loadState } from '@nextcloud/initial-state'
-import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
+import { Doc, logUpdate } from 'yjs'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
+import { provideEditor } from '../composables/useEditor.ts'
+import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../composables/useEditorHeadings.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideFileProps } from '../composables/useFileProps.ts'
 import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
+import { useOpenLinkHandler } from '../composables/useOpenLinkHandler.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
+import Autofocus from '../extensions/Autofocus.js'
 import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
 import { logger } from '../helpers/logger.ts'
@@ -127,12 +119,18 @@ import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
+import {
+	ATTACHMENT_RESOLVER,
+	HOOK_MENTION_SEARCH,
+	IS_MOBILE,
+} from './Editor.provider.ts'
 import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import Status from './Editor/Status.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import MenuBar from './Menu/MenuBar.vue'
+import ReadonlyBar from './Menu/ReadonlyBar.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import SuggestionsBar from './SuggestionsBar.vue'
 
@@ -151,6 +149,7 @@ export default defineComponent({
 		Status,
 		SuggestionsBar,
 	},
+
 	mixins: [isMobile],
 
 	provide() {
@@ -170,46 +169,57 @@ export default defineComponent({
 
 		return val
 	},
+
 	inject: {
 		isEmbedded: { default: false },
 	},
+
 	props: {
 		richWorkspace: {
 			type: Boolean,
 			default: false,
 		},
+
 		initialSession: {
 			type: Object,
 			default: null,
 		},
+
 		relativePath: {
 			type: String,
 			default: '',
 		},
+
 		fileId: {
 			type: Number,
 			default: null,
 		},
+
 		active: {
 			type: Boolean,
 			default: false,
 		},
+
 		autofocus: {
 			type: Boolean,
 			default: true,
 		},
+
 		shareToken: {
 			type: String,
 			default: null,
 		},
+
 		mime: {
 			type: String,
 			default: null,
 		},
+
 		hideMenu: {
 			type: Boolean,
 			default: false,
 		},
+
 		isDirectEditing: {
 			type: Boolean,
 			default: false,
@@ -353,10 +363,12 @@ export default defineComponent({
 			indexedDbConflictContent: '',
 		}
 	},
+
 	computed: {
 		isResolvingConflict() {
 			return this.hasSyncCollision && !this.readOnly
 		},
+
 		hasSyncCollision() {
 			return (
 				Boolean(this.indexedDbConflictContent)
@@ -364,12 +376,15 @@ export default defineComponent({
 					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
+
 		otherVersion() {
 			return this.indexedDbConflictContent || this.syncError.data.outsideChange
 		},
+
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
 		},
+
 		hasOutdatedDocument() {
 			return (
 				this.syncError
@@ -377,17 +392,21 @@ export default defineComponent({
 				&& this.syncError.data.status === 412
 			)
 		},
+
 		currentDirectory() {
 			return this.relativePath
 				? this.relativePath.split('/').slice(0, -1).join('/')
 				: '/'
 		},
+
 		displayed() {
 			return (this.connection && this.active) || this.syncError
 		},
+
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
 		},
+
 		renderRichEditorMenus() {
 			return (
 				this.contentLoaded
@@ -396,22 +415,27 @@ export default defineComponent({
 				&& !this.readOnly
 			)
 		},
+
 		renderMenus() {
 			return this.contentLoaded && !this.syncError
 		},
+
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
 		},
+
 		indexedDbConflictKey() {
 			return `text-indexeddb-conflict-${this.fileId}`
 		},
 	},
+
 	watch: {
 		displayed() {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
 		},
+
 		dirty(val) {
 			if (val) {
 				window.addEventListener('beforeunload', this.saveBeforeUnload)
@@ -419,12 +443,14 @@ export default defineComponent({
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
 			}
 		},
+
 		displayConnectionIssue(val) {
 			if (val) {
 				this.emit('sync-service:error')
 			}
 			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
 		},
+
 		async hasOutdatedDocument(val) {
 			if (!val) {
 				return
@@ -453,6 +479,7 @@ export default defineComponent({
 			}
 		},
 	},
+
 	async mounted() {
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
@@ -469,6 +496,7 @@ export default defineComponent({
 		await this.whenSynced
 		this.checkIndexedDbConflict()
 	},
+
 	created() {
 		// The following can be useful for debugging ydoc updates
 		this.ydoc.on('update', function (update, origin, doc, tr) {
@@ -489,6 +517,7 @@ export default defineComponent({
 			this.listenEditorEvents()
 		}
 	},
+
 	async beforeUnmount() {
 		this._isBeingDestroyed = true
 		logger.debug('beforeUnmount')
@@ -506,6 +535,7 @@ export default defineComponent({
 		await this.close()
 		removeFromDebugging(this)
 	},
+
 	methods: {
 		initSession() {
 			this.listenSyncServiceEvents()
@@ -585,6 +615,7 @@ export default defineComponent({
 					source: generateRemoteUrl(
 						`dav/files/${session.userId}${this.relativePath}`,
 					),
+
 					mime: this.mime,
 				})
 				fetchNode(node)
@@ -706,7 +737,7 @@ export default defineComponent({
 				}
 				this.emit('ready')
 			}
-			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
+			if (Object.hasOwn(state, 'dirty')) {
 				if (state.dirty) {
 					// ignore initial loading and other automated changes before first user change
 					if (this.editor.can().undo() || this.editor.can().redo()) {

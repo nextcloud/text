@@ -4,6 +4,7 @@
  */
 
 import type { Editor } from '@tiptap/core'
+
 import { shallowMount } from '@vue/test-utils'
 import { expect, test } from 'vitest'
 import { nextTick, shallowRef } from 'vue'
@@ -24,7 +25,7 @@ const text2 = 'Level 2 heading'
 const content = `<h1>${text1}</h1>\n<h2>${text2}</h2>`
 
 const createEditor = (content = '') => createCustomEditor(content, [Heading])
-const mountWithEditor = (editor: Editor, displayToc = false) => {
+function mountWithEditor(editor: Editor, displayToc = false) {
 	const { headings, displayToc: displayTocRef } = provideEditorHeadings(editor)
 	displayTocRef.value = displayToc
 

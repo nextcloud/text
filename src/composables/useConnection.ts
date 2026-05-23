@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
-import { open, type OpenData } from '../apis/connect'
 import type { Document, Session } from '../services/SyncService'
+
+import { type InjectionKey, type ShallowRef, inject, provide, shallowRef } from 'vue'
+import { type OpenData, open } from '../apis/connect'
 
 export interface Connection {
 	documentId: number
@@ -36,6 +37,7 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
 
 /**
  * Handle the connection to the text api and provide it to child components
+ *
  * @param props Props of the editor component.
  * @param props.fileId Fileid of the file.
  * @param props.relativePath Relative path to the file.
@@ -78,7 +80,10 @@ export function provideConnection(
 	return { connection, openConnection, openData }
 }
 
-export const useConnection = () => {
+/**
+ *
+ */
+export function useConnection() {
 	const connection = inject(connectionKey)
 	const openData = inject(openDataKey)
 	return { connection, openData }
@@ -86,6 +91,7 @@ export const useConnection = () => {
 
 /**
  * Get the connection and additional data from the initial session if available.
+ *
  * @param props Props of the editor component
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing

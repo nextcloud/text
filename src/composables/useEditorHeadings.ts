@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { emit, subscribe } from '@nextcloud/event-bus'
 import type { Editor } from '@tiptap/core'
+
+import { emit, subscribe } from '@nextcloud/event-bus'
 import {
+	type InjectionKey,
+	type Ref,
+	type ShallowRef,
 	inject,
 	provide,
 	ref,
 	shallowRef,
-	type InjectionKey,
-	type Ref,
-	type ShallowRef,
 } from 'vue'
 import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 
@@ -35,7 +36,11 @@ export const headingsKey = Symbol('text:headings') as InjectionKey<
 >
 export const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boolean>>
 
-export const provideEditorHeadings = (editor: Editor) => {
+/**
+ *
+ * @param editor
+ */
+export function provideEditorHeadings(editor: Editor) {
 	const headings = shallowRef<Heading[]>([])
 	const displayToc = ref<boolean>(false)
 
@@ -64,7 +69,10 @@ export const provideEditorHeadings = (editor: Editor) => {
 	return { displayToc, headings, updateHeadings }
 }
 
-export const useEditorHeadings = () => {
+/**
+ *
+ */
+export function useEditorHeadings() {
 	const headings = inject(headingsKey)
 	const displayToc = inject(displayTocKey)
 	return { displayToc, headings }

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
 import { expect } from '@playwright/test'
 import { test as base } from './upload-file'
-import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
 import { User } from './User'
 
 export interface SharedFileFixture {
@@ -19,7 +19,7 @@ export interface SharedFileFixture {
  */
 export const test = base.extend<SharedFileFixture>({
 
-	// eslint-disable-next-line no-empty-pattern
+	 
 	owner: async ({ browser, baseURL }, use) => {
 		const account = await createRandomUser()
 		// Important: make sure we authenticate in a clean environment by unsetting storage state.

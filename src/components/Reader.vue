@@ -20,6 +20,7 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		isRichEditor: {
 			type: Boolean,
 			default: true,

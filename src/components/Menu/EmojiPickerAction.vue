@@ -7,7 +7,7 @@
 		class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
 		:container="menuIDSelector"
-		@select-data="addEmoji">
+		@selectData="addEmoji">
 		<div>
 			<NcButton
 				class="entry-action__button"
@@ -34,6 +34,7 @@ export default {
 		NcEmojiPicker,
 		NcButton,
 	},
+
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	methods: {

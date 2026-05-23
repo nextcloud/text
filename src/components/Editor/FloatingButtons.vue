@@ -8,7 +8,7 @@
 		:editor="editor"
 		class="floating-buttons"
 		:class="{ heading: isHeadingNode }"
-		:on-node-change="onNodeChange">
+		:onNodeChange="onNodeChange">
 		<NcButton
 			variant="tertiary-no-background"
 			size="small"
@@ -73,6 +73,7 @@ export default {
 			this.node = node
 			this.pos = pos
 		},
+
 		onOpenSmartPicker() {
 			if (!this.node || this.pos === -1) {
 				return
@@ -89,6 +90,7 @@ export default {
 			const pos = emptyNode ? this.pos + 1 : this.pos + this.node.nodeSize
 			this.editor.chain().insertContentAt(pos, '/').focus().run()
 		},
+
 		t,
 	},
 }

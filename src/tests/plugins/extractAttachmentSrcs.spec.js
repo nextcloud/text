@@ -33,7 +33,7 @@ describe('extractAttachmentSrcs', () => {
 	})
 })
 
-const prepareDoc = (content) => {
+function prepareDoc(content) {
 	const editor = createCustomEditor(content, [Image])
 	const doc = editor.state.doc
 	editor.destroy()

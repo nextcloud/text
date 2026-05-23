@@ -6,7 +6,11 @@
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 
-export const buildFilePicker = (startPath) => {
+/**
+ *
+ * @param startPath
+ */
+export function buildFilePicker(startPath) {
 	return getFilePickerBuilder(t('text', 'Select file or folder to link to'))
 		.startAt(startPath)
 		.allowDirectories(true)

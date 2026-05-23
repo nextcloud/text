@@ -6,8 +6,8 @@
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import TrackState from './tracking/TrackState.js'
 import { Span } from './tracking/models.js'
+import TrackState from './tracking/TrackState.js'
 
 const UserColor = Extension.create({
 	name: 'users',

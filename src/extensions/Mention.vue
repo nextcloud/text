@@ -7,7 +7,7 @@
 	<NodeViewWrapper as="span" class="mention" contenteditable="false">
 		<NcUserBubble
 			:user="node.attrs.id"
-			:display-name="username"
+			:displayName="username"
 			:primary="isCurrentUser"
 			class="mention-user-bubble">
 			@{{ username }}
@@ -26,6 +26,7 @@ export default {
 		NcUserBubble,
 		NodeViewWrapper,
 	},
+
 	props: {
 		updateAttributes: {
 			type: Function,
@@ -37,11 +38,13 @@ export default {
 			required: true,
 		},
 	},
+
 	data() {
 		return {
 			username: this.node.attrs.label,
 		}
 	},
+
 	computed: {
 		isCurrentUser() {
 			return this.node.attrs.id === getCurrentUser()?.uid
@@ -49,6 +52,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 /* This is required to properly render the bubble text (which seems linke a browser bug) */
 .text-editor__wrapper div.ProseMirror .mention[contenteditable='false'] :deep(*) {

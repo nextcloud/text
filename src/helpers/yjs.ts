@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { OpenData } from '../apis/connect'
+import type { Step } from '../services/SyncService'
+
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
-import type { OpenData } from '../apis/connect'
-import type { Step } from '../services/SyncService'
 import { messageSync } from '../services/y-websocket.js'
 import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
 
@@ -16,6 +17,7 @@ import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
  * Get Document state encode as base64.
  *
  * Used to store yjs state on the server.
+ *
  * @param ydoc - encode state of this doc
  */
 export function getDocumentState(ydoc: Y.Doc): string {
@@ -86,6 +88,7 @@ function documentStateToUpdateMessage(documentState: string): Uint8Array {
  * Apply a step to the ydoc.
  *
  * Only used in tests right now.
+ *
  * @param ydoc - encode state of this doc
  * @param step - step data
  * @param step.data - array of base64 encoded yjs sync update messages
