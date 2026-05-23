@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { useEditorUpload } from '../Editor.provider.ts'
 import MediaHandler from './MediaHandler.vue'
+import { useEditorUpload } from '../Editor.provider.ts'
 
 export default {
 	name: 'MainContainer',

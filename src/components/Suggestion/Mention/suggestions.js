@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import MentionList from './MentionList.vue'
 import { emitMention, getUsers } from '../../../apis/mention.ts'
 import createSuggestions from '../suggestions.js'
-import MentionList from './MentionList.vue'
 
 export default ({ connection, options }) =>
 	createSuggestions({

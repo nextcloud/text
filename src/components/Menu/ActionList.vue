@@ -35,9 +35,9 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import debounce from 'debounce'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
-import debounce from 'debounce'
 import ActionListItem from './ActionListItem.vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'

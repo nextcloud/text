@@ -97,9 +97,9 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import PreviewOptions from '../Editor/PreviewOptions.vue'
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
-import PreviewOptions from '../Editor/PreviewOptions.vue'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 

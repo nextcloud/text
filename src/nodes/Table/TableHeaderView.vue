@@ -100,10 +100,10 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
 import NcActions from '@nextcloud/vue/components/NcActions'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,

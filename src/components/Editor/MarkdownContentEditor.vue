@@ -23,6 +23,11 @@ import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 /* eslint-disable import/no-named-as-default */
+import MenuBar from '../Menu/MenuBar.vue'
+import ReadonlyBar from '../Menu/ReadonlyBar.vue'
+import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
@@ -33,11 +38,6 @@ import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
-import MenuBar from '../Menu/MenuBar.vue'
-import ReadonlyBar from '../Menu/ReadonlyBar.vue'
-import ContentContainer from './ContentContainer.vue'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
 
 export default {
 	name: 'MarkdownContentEditor',
