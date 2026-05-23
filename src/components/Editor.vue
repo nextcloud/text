@@ -89,6 +89,16 @@ import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
 import { Doc, logUpdate } from 'yjs'
+import CollisionResolveDialog from './CollisionResolveDialog.vue'
+import ContentContainer from './Editor/ContentContainer.vue'
+import DocumentStatus from './Editor/DocumentStatus.vue'
+import MainContainer from './Editor/MainContainer.vue'
+import Status from './Editor/Status.vue'
+import Wrapper from './Editor/Wrapper.vue'
+import MenuBar from './Menu/MenuBar.vue'
+import ReadonlyBar from './Menu/ReadonlyBar.vue'
+import SkeletonLoading from './SkeletonLoading.vue'
+import SuggestionsBar from './SuggestionsBar.vue'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { provideEditor } from '../composables/useEditor.ts'
@@ -119,21 +129,11 @@ import markdownit from './../markdownit/index.js'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
-import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import {
 	ATTACHMENT_RESOLVER,
 	HOOK_MENTION_SEARCH,
 	IS_MOBILE,
 } from './Editor.provider.ts'
-import ContentContainer from './Editor/ContentContainer.vue'
-import DocumentStatus from './Editor/DocumentStatus.vue'
-import MainContainer from './Editor/MainContainer.vue'
-import Status from './Editor/Status.vue'
-import Wrapper from './Editor/Wrapper.vue'
-import MenuBar from './Menu/MenuBar.vue'
-import ReadonlyBar from './Menu/ReadonlyBar.vue'
-import SkeletonLoading from './SkeletonLoading.vue'
-import SuggestionsBar from './SuggestionsBar.vue'
 
 export default defineComponent({
 	name: 'Editor',

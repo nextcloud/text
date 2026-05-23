@@ -16,8 +16,8 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import NextcloudVueNcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { defineComponent } from 'vue'
+import NextcloudVueNcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { Help } from '../icons.js'
 
 export default defineComponent({

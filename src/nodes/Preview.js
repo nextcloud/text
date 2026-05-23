@@ -5,8 +5,8 @@
 
 import { getMarkRange, getNodeType, isNodeActive, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 import Preview from './Preview.vue'
+import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 
 export default Node.create({
 	name: 'preview',

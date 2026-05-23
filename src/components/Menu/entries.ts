@@ -7,6 +7,10 @@ import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { type AnyCommands, type Editor } from '@tiptap/core'
+import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
+import ActionInsertLink from './ActionInsertLink.vue'
+import AssistantAction from './AssistantAction.vue'
+import EmojiPickerAction from './EmojiPickerAction.vue'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	CodeBrackets,
@@ -44,10 +48,6 @@ import {
 	UnfoldMoreHorizontal,
 	Warn,
 } from '../icons.js'
-import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
-import ActionInsertLink from './ActionInsertLink.vue'
-import AssistantAction from './AssistantAction.vue'
-import EmojiPickerAction from './EmojiPickerAction.vue'
 import { MODIFIERS } from './keys.js'
 
 type ClickContext = {

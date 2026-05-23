@@ -5,8 +5,8 @@
 
 import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import { typesAvailable } from './../markdownit/callouts.js'
 import Callout from './Callout.vue'
+import { typesAvailable } from './../markdownit/callouts.js'
 
 export default Node.create({
 	name: 'callout',
