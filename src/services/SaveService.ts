@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
-
-import type { ShallowRef } from 'vue'
 import { save, saveViaSendBeacon } from '../apis/save'
-import type { Connection } from '../composables/useConnection.ts'
 import { logger } from '../helpers/logger.js'
-import { ERROR_TYPE, type SyncService } from './SyncService'
+import { type SyncService, ERROR_TYPE } from './SyncService'
 
 /**
  * Interval to save the serialized document and the document state
  *
- * @type {number} time in ms
+ * time in ms
  */
 const AUTOSAVE_INTERVAL = 30000
 

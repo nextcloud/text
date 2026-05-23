@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Connection } from '../composables/useConnection'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
+import { type ShallowRef, unref } from 'vue'
 
 /**
  * Upload an attachment to the server.
+ *
  * @param connection the active connection.
  * @param file upload this file.
  */
@@ -34,6 +36,7 @@ export function uploadAttachment(
 
 /**
  * Create a new attachment based on the given template
+ *
  * @param connection the active connection
  * @param template create the attachment based on this
  * @param template.app app to create the attachment with
@@ -55,6 +58,7 @@ export function createAttachment(
 
 /**
  * Create a new attachment based on the given template
+ *
  * @param connection the active connection
  * @param filePath path to the file on the server.
  */

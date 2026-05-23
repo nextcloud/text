@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import type { Connection } from '../composables/useConnection'
 import type { Document, GuestSession, Session } from '../services/SyncService'
+
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export interface OpenParams {
 	fileId?: number
@@ -28,6 +29,7 @@ export interface OpenData {
 
 /**
  * Open editing connection to the document
+ *
  * @param params Parameters identifying the document
  */
 export async function open(
@@ -52,6 +54,7 @@ export async function open(
 
 /**
  * Update the guest name
+ *
  * @param guestName the name to use for the local user
  * @param connection connection to update the guest name for
  */
@@ -76,6 +79,7 @@ export async function update(
 
 /**
  * Close the connection
+ *
  * @param connection connection to close
  */
 export async function close(connection: Connection) {

@@ -6,10 +6,10 @@
 <template>
 	<div class="placeholder-main placeholder-main-text">
 		<!-- Placeholder animation -->
-		<template v-for="(suffix, gradientIndex) in ['-regular', '-reverse']"
+		<template
+			v-for="(suffix, gradientIndex) in ['-regular', '-reverse']"
 			:key="'gradient-' + suffix">
-			<svg
-				:class="'placeholder-gradient placeholder-gradient' + suffix">
+			<svg :class="'placeholder-gradient placeholder-gradient' + suffix">
 				<defs>
 					<linearGradient :id="'placeholder-gradient' + suffix">
 						<stop
@@ -30,8 +30,7 @@
 				</defs>
 			</svg>
 
-			<ul
-				:class="'placeholder-list placeholder-list' + suffix">
+			<ul :class="'placeholder-list placeholder-list' + suffix">
 				<li v-for="index in count" :key="'placeholder' + suffix + index">
 					<svg
 						class="text-placeholder"

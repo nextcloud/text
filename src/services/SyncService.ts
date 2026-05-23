@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable jsdoc/valid-types */
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection'
 
 import mitt from 'mitt'
-
-import type { ShallowRef } from 'vue'
-import { close, type OpenData } from '../apis/connect'
+import { type OpenData, close } from '../apis/connect'
 import { push } from '../apis/sync'
-import type { Connection } from '../composables/useConnection'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps'
 import { documentStateToStep } from '../helpers/yjs'
@@ -21,7 +19,6 @@ import PollingBackend from './PollingBackend'
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
  *
- * @type {number}
  */
 const IDLE_TIMEOUT = 1440
 
@@ -83,6 +80,7 @@ export type Session = UserSession | GuestSession
 
 /**
  * Test if a session is a guest session
+ *
  * @param session to test.
  */
 export function isGuest(session: Session): session is GuestSession {
@@ -91,6 +89,7 @@ export function isGuest(session: Session): session is GuestSession {
 
 /**
  * Test if a session is a logged in user session
+ *
  * @param session to test.
  */
 export function isUser(session: Session): session is UserSession {

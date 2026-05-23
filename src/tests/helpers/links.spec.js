@@ -7,7 +7,6 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { domHref, parseHref } from '../../helpers/links.js'
 
 // import loadState so we can mock it
-// eslint-disable-next-line no-unused-vars
 
 global.OCA = {
 	Viewer: {

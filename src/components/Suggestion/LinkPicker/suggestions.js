@@ -18,13 +18,21 @@ import LinkPickerList from './LinkPickerList.vue'
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
 
-const filterOut = (e) => {
+/**
+ *
+ * @param e
+ */
+function filterOut(e) {
 	return ['undo', 'redo', 'outline', 'emoji-picker'].indexOf(e.key) > -1
 }
 
 const important = ['task-list', 'table']
 
-const isValidUrl = (url) => {
+/**
+ *
+ * @param url
+ */
+function isValidUrl(url) {
 	try {
 		return Boolean(new URL(url))
 	} catch (e) {
@@ -32,14 +40,22 @@ const isValidUrl = (url) => {
 	}
 }
 
-const sortImportantFirst = (list) => {
+/**
+ *
+ * @param list
+ */
+function sortImportantFirst(list) {
 	return [
 		...list.filter((e) => important.indexOf(e.key) > -1),
 		...list.filter((e) => important.indexOf(e.key) === -1),
 	]
 }
 
-const formattingSuggestions = (query) => {
+/**
+ *
+ * @param query
+ */
+function formattingSuggestions(query) {
 	const menuEntries = getMenuEntries(false, false)
 	return sortImportantFirst(
 		[

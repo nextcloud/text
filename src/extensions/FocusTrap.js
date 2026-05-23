@@ -7,13 +7,22 @@ import { Extension } from '@tiptap/core'
 
 let ownPaused = false
 
-const checkHasExtension = (editor, extensionName) => {
+/**
+ *
+ * @param editor
+ * @param extensionName
+ */
+function checkHasExtension(editor, extensionName) {
 	return editor.extensionManager.extensions.some(
 		(extension) => extension.name === extensionName,
 	)
 }
 
-const checkHasListExtension = (editor) => {
+/**
+ *
+ * @param editor
+ */
+function checkHasListExtension(editor) {
 	return (
 		checkHasExtension(editor, 'bulletList')
 		|| checkHasExtension(editor, 'orderedList')
@@ -21,7 +30,12 @@ const checkHasListExtension = (editor) => {
 	)
 }
 
-const toggleFocusTrap = ({ editor }) => {
+/**
+ *
+ * @param root0
+ * @param root0.editor
+ */
+function toggleFocusTrap({ editor }) {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
@@ -42,7 +56,12 @@ const toggleFocusTrap = ({ editor }) => {
 	}
 }
 
-const unpauseFocusTrap = ({ editor }) => {
+/**
+ *
+ * @param root0
+ * @param root0.editor
+ */
+function unpauseFocusTrap({ editor }) {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 

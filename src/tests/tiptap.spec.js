@@ -6,7 +6,7 @@
 import { createRichEditor } from '../EditorFactory.ts'
 import markdownit from '../markdownit/index.js'
 
-const renderedHTML = (markdown) => {
+function renderedHTML(markdown) {
 	const editor = createRichEditor()
 	editor.commands.setContent(markdownit.render(markdown))
 	// Remove TrailingNode

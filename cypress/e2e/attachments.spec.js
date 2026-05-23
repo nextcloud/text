@@ -53,7 +53,7 @@ function fixedEncodeURIComponent(str) {
  *
  * @param {string} actionName position of the action to be clicked
  */
-const clickOnAttachmentAction = (actionName) => {
+function clickOnAttachmentAction(actionName) {
 	cy.getActionEntry('insert-attachment').click()
 
 	return cy.get('.v-popper__wrapper .open').getActionEntry(actionName).click()
@@ -68,7 +68,7 @@ const clickOnAttachmentAction = (actionName) => {
  * @param {number|undefined} index index of the attachment in the document
  * @param {boolean} isImage is the attachment an image or a media file?
  */
-const checkAttachment = (documentId, fileName, fileId, index, isImage = true) => {
+function checkAttachment(documentId, fileName, fileId, index, isImage = true) {
 	const encodedName = fixedEncodeURIComponent(fileName)
 	const src = `.attachments.${documentId}/${encodedName}`
 
@@ -136,12 +136,12 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
  * @param {boolean} isImage is the attachment an image or a media file?
  * @param {Function} check function used to check document for attachment
  */
-const waitForRequestAndCheckAttachment = (
+function waitForRequestAndCheckAttachment(
 	requestAlias,
 	index,
 	isImage = true,
 	check = checkAttachment,
-) => {
+) {
 	return cy.wait('@' + requestAlias).then((req) => {
 		// the name of the created file on NC side is returned in the response
 		const fileId = req.response.body.id

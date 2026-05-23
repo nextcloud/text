@@ -38,6 +38,7 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		updateAttributes: {
 			type: Function,
 			required: true,
@@ -51,7 +52,7 @@ export default {
 	},
 
 	watch: {
-		'node.attrs.openDetails'() {
+		'node.attrs.openDetails': function () {
 			this.openByAttr()
 		},
 	},
@@ -64,6 +65,7 @@ export default {
 		toggleOpen() {
 			this.open = !this.open
 		},
+
 		openByAttr() {
 			if (this.node.attrs.openDetails) {
 				this.open = true

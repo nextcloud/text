@@ -9,8 +9,9 @@
 // https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments
 // https://github.com/blog/1825-task-lists-in-all-markdown-documents
 
-import MarkdownIt from 'markdown-it'
-import StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
+import type MarkdownIt from 'markdown-it'
+import type StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
+
 import Token from 'markdown-it/lib/token.mjs'
 
 interface TaskListsOptions {

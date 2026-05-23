@@ -12,6 +12,9 @@ import {
 import { readFileSync } from 'fs'
 import { execSync } from 'node:child_process'
 
+/**
+ *
+ */
 async function start() {
 	const appinfo = readFileSync('appinfo/info.xml').toString()
 	const maxVersion = appinfo.match(
@@ -31,6 +34,9 @@ async function start() {
 	})
 }
 
+/**
+ *
+ */
 async function stop() {
 	process.stderr.write('Stopping Nextcloud server…\n')
 	await stopNextcloud()

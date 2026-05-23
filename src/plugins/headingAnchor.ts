@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { t } from '@nextcloud/l10n'
 import type { Node } from '@tiptap/pm/model'
-import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
-import { Decoration, DecorationSet, EditorView } from '@tiptap/pm/view'
+import type { Transaction } from '@tiptap/pm/state'
+import type { EditorView } from '@tiptap/pm/view'
 import type { Heading } from '../composables/useEditorHeadings'
+
+import { t } from '@nextcloud/l10n'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import extractHeadings from './extractHeadings'
 
 export const headingAnchorPluginKey = new PluginKey('headingAnchor')
@@ -21,7 +24,7 @@ interface HeadingAnchorState {
  * Heading anchor decorations ProseMirror plugin
  * Add anchor tags with a unique id to all headings.
  *
- * @return {Plugin<DecorationSet>}
+ * @return
  */
 export default function headingAnchor() {
 	return new Plugin({
@@ -65,7 +68,7 @@ export default function headingAnchor() {
  * @param tr - current transaction
  * @param headings - array of headings
  *
- * @return {false|DecorationSet}
+ * @return
  */
 function mapDecorations(
 	value: HeadingAnchorState,
@@ -87,8 +90,8 @@ function mapDecorations(
 /**
  * Check if the headings provided are equivalent.
  *
- * @param {Array} current - array of headings
- * @param {Array} prev - headings to compare against
+ * @param current - array of headings
+ * @param prev - headings to compare against
  */
 function headingsChanged(current: Heading[], prev: Heading[]) {
 	return current.length !== prev.length || current.some(isDifferentFrom(prev))
@@ -97,18 +100,21 @@ function headingsChanged(current: Heading[], prev: Heading[]) {
 /**
  * Check if headings are different - i.e. have different id or level
  *
- * @param {Array} other - headings to compare against
+ * @param other - headings to compare against
  *
  * Returns a function to be used in a call to Array#some.
  * The returned function takes a heading and an index (as provided by iterators)
  * and compares the id and level of the heading to the one in `other` with the same index.
  */
-const isDifferentFrom = (other: Heading[]) => (heading: Heading, i: number) => {
-	return heading.id !== other[i].id || heading.level !== other[i].level
+function isDifferentFrom(other: Heading[]) {
+	return (heading: Heading, i: number) => {
+		return heading.id !== other[i].id || heading.level !== other[i].level
+	}
 }
 
 /**
  * Create anchor decorations for the given headings
+ *
  * @param doc - prosemirror doc
  * @param headings - headings structure in the doc
  */
@@ -119,6 +125,7 @@ function anchorDecorations(doc: Node, headings: Heading[]) {
 
 /**
  * Create a decoration for the given heading
+ *
  * @param heading to decorate
  */
 function decorationForHeading(heading: Heading) {
@@ -129,6 +136,7 @@ function decorationForHeading(heading: Heading) {
 
 /**
  * Returns a toDom function that creates an anchor element for the given heading
+ *
  * @param heading to generate anchor for
  */
 function headingToDom(heading: Heading) {
@@ -153,7 +161,8 @@ function headingToDom(heading: Heading) {
 
 /**
  * Handle click on an anchor - scroll into view and change location hash.
- * @param {PointerEvent} event click that triggered the function
+ *
+ * @param event click that triggered the function
  */
 function handleClick(event: PointerEvent) {
 	event.stopPropagation()

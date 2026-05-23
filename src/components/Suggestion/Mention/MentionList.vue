@@ -20,9 +20,8 @@
 </template>
 
 <script>
-import { NcAutoCompleteResult } from '@nextcloud/vue'
-
 import { t } from '@nextcloud/l10n'
+import { NcAutoCompleteResult } from '@nextcloud/vue'
 import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 
 export default {
@@ -30,16 +29,19 @@ export default {
 		NcAutoCompleteResult,
 		SuggestionListWrapper,
 	},
+
 	props: {
 		items: {
 			type: Array,
 			required: true,
 		},
+
 		command: {
 			type: Function,
 			required: true,
 		},
 	},
+
 	methods: {
 		t,
 		onKeyDown({ event }) {

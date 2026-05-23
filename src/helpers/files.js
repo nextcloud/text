@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import TextSvg from '@mdi/svg/svg/text.svg?raw'
 import { getCurrentUser } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -14,15 +15,15 @@ import {
 	Permission,
 } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
-
-import TextSvg from '@mdi/svg/svg/text.svg?raw'
-
 import { t } from '@nextcloud/l10n'
 import { createApp } from 'vue'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
-export const addMenuRichWorkspace = () => {
+/**
+ *
+ */
+export function addMenuRichWorkspace() {
 	const descriptionFile =
 		'Readme' + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
@@ -88,7 +89,12 @@ let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
-const enabled = (_, view) => {
+/**
+ *
+ * @param _
+ * @param view
+ */
+function enabled(_, view) {
 	return ['files', 'favorites', 'public-share', 'personal'].includes(view.id)
 }
 

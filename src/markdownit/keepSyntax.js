@@ -35,17 +35,14 @@ export default function keepSyntax(md) {
 						block.children.splice(
 							j,
 							1,
-							Object.assign({}, token, {
-								content: token.content.slice(0, index),
-							}),
-							Object.assign({}, open),
-							Object.assign({}, token, {
+							{ ...token, content: token.content.slice(0, index) },
+							{ ...open },
+							{
+								...token,
 								content: token.content.slice(index, contentNext),
-							}),
-							Object.assign({}, close),
-							Object.assign({}, token, {
-								content: token.content.slice(contentNext),
-							}),
+							},
+							{ ...close },
+							{ ...token, content: token.content.slice(contentNext) },
 						)
 						j += 3
 					}

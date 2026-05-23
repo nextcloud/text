@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
+import type { Transaction } from '@tiptap/pm/state'
+
 import {
-	Extension,
 	combineTransactionSteps,
+	Extension,
 	findChildrenInRange,
 	getChangedRanges,
 } from '@tiptap/core'
-import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 
 const RTL = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC'
 const LTR =

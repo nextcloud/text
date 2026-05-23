@@ -12,7 +12,10 @@ import {
 } from '../components/Menu/entries'
 import { useEditorFlags } from './useEditorFlags'
 
-export const useMenuEntries = () => {
+/**
+ *
+ */
+export function useMenuEntries() {
 	const { isRichWorkspace } = useEditorFlags()
 
 	const assistantMenuEntries = getAssistantMenuEntries()

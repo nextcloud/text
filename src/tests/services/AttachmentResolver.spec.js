@@ -13,7 +13,7 @@ const sessionToken = 'mySessionToken'
 const a1name = 'group pic.jpg'
 const a1nameEncoded = 'group%20pic.jpg'
 const a2name = 'archive.tar.gz'
-const initAttachmentResolver = (args) => {
+function initAttachmentResolver(args) {
 	const attachmentList = [
 		{
 			fileId: 1234,

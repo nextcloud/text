@@ -14,7 +14,7 @@
 			v-if="showModal"
 			:show="showModal"
 			:latex="node.attrs.latex"
-			:is-block="isBlock"
+			:isBlock="isBlock"
 			@close="onClose"
 			@save="onSave" />
 	</NodeViewWrapper>
@@ -33,14 +33,17 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		editor: {
 			type: Object,
 			required: true,
 		},
+
 		updateAttributes: {
 			type: Function,
 			required: true,
 		},
+
 		deleteNode: {
 			type: Function,
 			required: true,
@@ -57,6 +60,7 @@ export default {
 		isBlock() {
 			return this.node.type.name === 'blockMath'
 		},
+
 		wrapperClass() {
 			return this.isBlock ? 'katex-display' : 'katex'
 		},

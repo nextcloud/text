@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { initUserAndFiles, randUser } from '../../utils/index.js'
-import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
-import { createCustomEditor } from './../../support/components.js'
-
-import Markdown, {
-	createMarkdownSerializer,
-} from './../../../src/extensions/Markdown.js'
-import markdownit from './../../../src/markdownit/index.js'
-import EditableTable from './../../../src/nodes/EditableTable.js'
-
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/Table.md?raw'
+import { initUserAndFiles, randUser } from '../../utils/index.js'
+import Markdown, {
+	createMarkdownSerializer,
+} from './../../../src/extensions/Markdown.js'
+import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
+import markdownit from './../../../src/markdownit/index.js'
+import EditableTable from './../../../src/nodes/EditableTable.js'
+import { createCustomEditor } from './../../support/components.js'
 
 const user = randUser()
 const fileName = 'empty.md'
@@ -164,10 +162,10 @@ describe('Table extension integrated in the editor', () => {
 		}
 		it(description, () => {
 			expect(spec).to.include('\n')
-			/* eslint-disable no-unused-expressions */
+
 			expect(input).to.be.ok
 			expect(output).to.be.ok
-			/* eslint-enable no-unused-expressions */
+
 			loadMarkdown(input)
 			runCommands()
 			expectMarkdown(output.replace(/\n*$/, ''))
@@ -195,10 +193,7 @@ describe('Table extension integrated in the editor', () => {
 	const findCommand = () => {
 		const doc = editor.state.doc
 		return findChildren(doc, (child) => {
-			return (
-				child.isText
-				&& Object.prototype.hasOwnProperty.call(editor.commands, child.text)
-			)
+			return child.isText && Object.hasOwn(editor.commands, child.text)
 		})[0]
 	}
 

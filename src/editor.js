@@ -16,6 +16,7 @@ import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provi
 import { OPEN_LINK_HANDLER } from './composables/useOpenLinkHandler.ts'
 import { encodeAttachmentFilename } from './helpers/attachmentFilename.ts'
 import { openLink } from './helpers/links.js'
+
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 

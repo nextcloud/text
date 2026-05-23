@@ -30,12 +30,14 @@ export default {
 		FloatingButtons,
 		TocContainer,
 	},
+
 	props: {
 		readOnly: {
 			type: Boolean,
 			required: true,
 		},
 	},
+
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
@@ -49,6 +51,7 @@ export default {
 			useTableOfContents,
 		}
 	},
+
 	computed: {
 		showFloatingButtons() {
 			return (

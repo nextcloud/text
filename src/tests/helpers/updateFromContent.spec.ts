@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Connection } from '../../composables/useConnection.js'
+
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { describe, expect, it } from 'vitest'
 import * as Y from 'yjs'
-import type { Connection } from '../../composables/useConnection.js'
 import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { updateFromContent } from '../../helpers/updateFromContent'

@@ -33,6 +33,7 @@ export default defineComponent({
 	methods: {
 		/**
 		 * Update the disabled state of an menu entry
+		 *
 		 * @param {string} menuKey The key of the menu entry that changed
 		 * @param {boolean} state The new disabled state
 		 */
@@ -77,6 +78,7 @@ export default defineComponent({
 
 		/**
 		 * Handle navigation in toolbar
+		 *
 		 * @param {KeyboardEvent} event The keyup event
 		 */
 		handleToolbarNavigation(event) {

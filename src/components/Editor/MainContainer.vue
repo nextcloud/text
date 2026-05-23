@@ -21,6 +21,7 @@ export default {
 	components: {
 		MediaHandler,
 	},
+
 	mixins: [useEditorUpload],
 }
 </script>

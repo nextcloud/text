@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :contentLoaded="true">
 		<MainContainer>
 			<template v-if="showMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -12,20 +12,17 @@
 					<ReadonlyBar />
 				</slot>
 			</template>
-			<ContentContainer :read-only="readOnly" />
+			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
 
 <script>
-import { Editor } from '@tiptap/core'
-import MenuBar from '../Menu/MenuBar.vue'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
-/* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
+import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
+/* eslint-disable import/no-named-as-default */
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
@@ -36,8 +33,11 @@ import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
+import MenuBar from '../Menu/MenuBar.vue'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -59,31 +59,38 @@ export default {
 			type: Number,
 			default: null,
 		},
+
 		content: {
 			type: String,
 			required: true,
 		},
+
 		readOnly: {
 			type: Boolean,
 			default: false,
 		},
+
 		relativePath: {
 			type: String,
 			default: '',
 		},
+
 		shareToken: {
 			type: String,
 			default: null,
 		},
+
 		showMenuBar: {
 			type: Boolean,
 			default: true,
 		},
+
 		noLazyImages: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	emits: ['update:content'],
 
 	setup(props) {

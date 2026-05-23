@@ -4,6 +4,8 @@
  */
 
 import {
+	type InjectionKey,
+	type Ref,
 	computed,
 	inject,
 	nextTick,
@@ -12,8 +14,6 @@ import {
 	provide,
 	readonly,
 	shallowRef,
-	type InjectionKey,
-	type Ref,
 } from 'vue'
 import { logger } from '../helpers/logger'
 import { useEditor } from './useEditor'
@@ -31,7 +31,10 @@ const intersectionObserverOptions = {
 	threshold: 0,
 }
 
-export const provideIntersectionObserver = () => {
+/**
+ *
+ */
+export function provideIntersectionObserver() {
 	// Vue2 does not support reactive sets.
 	// So the shallow ref needs to be explicitely written every time the set changes.
 	const visibleIds = shallowRef<Set<string>>(new Set())
@@ -59,7 +62,11 @@ export const provideIntersectionObserver = () => {
 	provide(visibleIdsKey, visibleIds)
 }
 
-export const useVisibility = (id: string) => {
+/**
+ *
+ * @param id
+ */
+export function useVisibility(id: string) {
 	const { editor } = useEditor()
 	const intersectionObserver = inject(intersectionObserverKey)!
 	const visibleIds = inject(visibleIdsKey)!

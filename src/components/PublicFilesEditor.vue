@@ -6,10 +6,10 @@
 <template>
 	<NcModal v-if="active" :name="fileName" @close="close">
 		<Editor
-			:file-id="fileId"
-			:relative-path="relativePath"
+			:fileId="fileId"
+			:relativePath="relativePath"
 			:active="active"
-			:share-token="shareToken"
+			:shareToken="shareToken"
 			:mime="mimeType" />
 	</NcModal>
 </template>
@@ -23,28 +23,34 @@ export default {
 		NcModal,
 		Editor: () => import('./Editor.js'),
 	},
+
 	props: {
 		fileId: {
 			type: Number,
 			default: null,
 		},
+
 		relativePath: {
 			type: String,
 			default: null,
 		},
+
 		active: {
 			type: Boolean,
 			default: false,
 		},
+
 		shareToken: {
 			type: String,
 			default: null,
 		},
+
 		mimeType: {
 			type: String,
 			default: null,
 		},
 	},
+
 	computed: {
 		fileName() {
 			return this.relativePath.substring(
@@ -52,6 +58,7 @@ export default {
 			)
 		},
 	},
+
 	methods: {
 		close() {
 			this.$emit('close')

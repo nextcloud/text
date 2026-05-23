@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.ts'
 import type { Document, Session, Step } from '../services/SyncService.ts'
+
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
+import { type ShallowRef, unref } from 'vue'
 
 interface PushData {
 	version: number
@@ -26,6 +27,7 @@ interface PushResponse {
 
 /**
  * Send data to the server
+ *
  * @param connection the active connection
  * @param data data to push to the server
  */
@@ -62,6 +64,7 @@ interface SyncResponse {
 
 /**
  * Receive updates from the server
+ *
  * @param connection the active connection
  * @param data data to push to the server
  * @param data.version Changes up to this version are already known.

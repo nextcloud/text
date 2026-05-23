@@ -9,24 +9,46 @@
  * These will then be picked up by the mathematics nodes.
  */
 
-import { tex } from '@mdit/plugin-tex'
 import type MarkdownIt from 'markdown-it'
 
-const escapeHtml = (unsafe: string) =>
-	unsafe
+import { tex } from '@mdit/plugin-tex'
+
+/**
+ *
+ * @param unsafe
+ */
+function escapeHtml(unsafe: string) {
+	return unsafe
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
 		.replace(/"/g, '&quot;')
 		.replace(/'/g, '&#039;')
+}
 
-const renderBlock = (content: string) =>
-	`<div data-type="block-math" data-latex="${escapeHtml(content)}"></div>`
+/**
+ *
+ * @param content
+ */
+function renderBlock(content: string) {
+	return `<div data-type="block-math" data-latex="${escapeHtml(content)}"></div>`
+}
 
-const renderInline = (content: string) =>
-	`<span data-type="inline-math" data-latex="${escapeHtml(content)}">${escapeHtml(content)}</span>`
+/**
+ *
+ * @param content
+ */
+function renderInline(content: string) {
+	return `<span data-type="inline-math" data-latex="${escapeHtml(content)}">${escapeHtml(content)}</span>`
+}
 
-const render = (content: string, displayMode: boolean) =>
-	displayMode ? renderBlock(content) : renderInline(content)
+/**
+ *
+ * @param content
+ * @param displayMode
+ */
+function render(content: string, displayMode: boolean) {
+	return displayMode ? renderBlock(content) : renderInline(content)
+}
 
 export default (md: MarkdownIt) => md.use(tex, { render })

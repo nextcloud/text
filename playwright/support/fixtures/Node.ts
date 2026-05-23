@@ -3,12 +3,87 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, type Page } from '@playwright/test'
-import type { User } from './User'
+import type { Page } from '@playwright/test'
+import type { User } from './User.ts'
 
+import { expect } from '@playwright/test'
+
+const ocsHeaders = {
+	Accept: 'application/json, text/plain, */*'
+}
+
+export class Node {
+	public readonly id: number
+	public readonly name: string
+	private readonly page: Page
+
+	constructor({ id, name, page }: { id: number, name: string, page: Page }) {
+		this.id = id
+		this.name = name
+		this.page = page
+	}
+
+	async open() {
+		// loading the file list may take a while
+		const timeout = 15_000
+		await this.page.goto(`f/${this.id}`)
+		await expect(this.page.getByLabel(this.name, { exact: true }))
+			.toBeVisible({ timeout })
+	}
+
+	async move(newName: string) {
+		await this.page.request.fetch(
+			`/remote.php/webdav/${this.name}`,
+			{
+				headers: {
+					Destination: `/remote.php/webdav/${newName}`,
+				},
+				method: 'MOVE',
+			}
+		)
+		return new Node({ ...this, page: this.page, name: newName })
+	}
+
+	async shareLink() {
+		// const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
+		const shareType = 3
+		const path = `/${this.name}`
+		const response = await this.page.request.post(
+			'/ocs/v2.php/apps/files_sharing/api/v1/shares',
+			{
+				data: { shareType, path },
+				headers: ocsHeaders,
+			}
+		)
+		const { ocs } = await response.json() as { ocs: { data: { token: string, id: number } } }
+		return ocs.data
+	}
+
+	async shareEditableLink() {
+		const { token, id } = await this.shareLink()
+		// Same permissions makeing the share editable in the UI would set
+		// 1 = read; 2 = write; 16 = share;
+		const permissions = 19
+		await this.page.request.put(
+			`/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
+			{
+				data: { permissions },
+				headers: ocsHeaders,
+			}
+		)
+		return { token, id }
+	}
+
+	async getContent() {
+		const response = await this.page.request.get(`/remote.php/webdav/${this.name}`)
+		return response.text()
+	}
+
+}
 
 /**
  * Upload a file to the cloud.
+ *
  * @param options options for the file upload
  * @param options.name Name of the file
  * @param options.content File content
@@ -42,6 +117,7 @@ export async function uploadFile({ name, content = '', owner, mtime }: {
 
 /**
  * Create a folder in the cloud.
+ *
  * @param options options for the file upload
  * @param options.name Name of the file
  * @param options.owner User who uploads the file
@@ -61,72 +137,3 @@ export async function createFolder({ name, owner }: {
 	return new Node({ id, name, page: owner.page })
 }
 
-const ocsHeaders = {
-	Accept: 'application/json, text/plain, */*'
-}
-
-export class Node {
-	public readonly id: number
-	public readonly name: string
-	private readonly page: Page
-
-	constructor({ id, name, page }: { id: number, name: string, page: Page }) {
-		this.id = id
-		this.name = name
-		this.page = page
-	}
-
-	async open() {
-		// loading the file list may take a while
-		const timeout = 15_000
-		await this.page.goto(`f/${this.id}`)
-		await expect(this.page.getByLabel(this.name, { exact: true }))
-			.toBeVisible({ timeout })
-	}
-
-	async move(newName: string) {
-		await this.page.request.fetch(
-			`/remote.php/webdav/${this.name}`,
-			{
-			headers: {
-				Destination: `/remote.php/webdav/${newName}`,
-			},
-			method: 'MOVE',
-		})
-		return new Node({ ...this, page: this.page, name: newName })
-	}
-
-	async shareLink() {
-		// const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
-		const shareType = 3
-		const path = `/${this.name}`
-		const response = await this.page.request.post(
-			'/ocs/v2.php/apps/files_sharing/api/v1/shares',
-			{
-				data: { shareType, path },
-				headers: ocsHeaders,
-			})
-		const { ocs } = await response.json() as { ocs: { data: { token: string, id: number } } }
-		return ocs.data
-	}
-
-	async shareEditableLink() {
-		const { token, id } = await this.shareLink()
-		// Same permissions makeing the share editable in the UI would set
-		// 1 = read; 2 = write; 16 = share;
-		const permissions = 19
-		await this.page.request.put(
-			`/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
-			{
-				data: { permissions },
-				headers: ocsHeaders,
-			})
-		return { token, id }
-	}
-
-	async getContent() {
-		const response = await this.page.request.get(`/remote.php/webdav/${this.name}`)
-		return response.text()
-	}
-
-}
