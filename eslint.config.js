@@ -13,4 +13,16 @@ export default defineConfig(
 			pluginCypress.configs.globals,
 		],
 	},
+	{
+		name: 'vitest-globals',
+		files: ['src/tests/**'],
+		languageOptions: {
+			globals: {
+				describe: "readonly",
+				expect: "readonly",
+				it: "readonly",
+				test: "readonly",
+			},
+		},
+	},
 )
