@@ -10,7 +10,7 @@
 			<NcActions v-if="isDataRow" data-text-table-actions="row" size="small">
 				<NcActionButton
 					data-text-table-action="add-row-before"
-					close-after-click
+					closeAfterClick
 					@click="addRowBefore">
 					<template #icon>
 						<TableAddRowBefore />
@@ -19,7 +19,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="add-row-after"
-					close-after-click
+					closeAfterClick
 					@click="addRowAfter">
 					<template #icon>
 						<TableAddRowAfter />
@@ -28,7 +28,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="remove-row"
-					close-after-click
+					closeAfterClick
 					@click="deleteRow">
 					<template #icon>
 						<TrashCan />

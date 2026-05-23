@@ -5,36 +5,70 @@
 
 import { MODIFIERS, TRANSLATIONS } from './keys.js'
 
-const getEntryClasses = (actionEntry, isActive) => {
+/**
+ *
+ * @param actionEntry
+ * @param isActive
+ */
+function getEntryClasses(actionEntry, isActive) {
 	return {
 		'is-active': isActive,
 		[`action-menu-${actionEntry.key}`]: true,
 	}
 }
 
-const keysString = (keyChar, modifiers = []) => {
+/**
+ *
+ * @param keyChar
+ * @param modifiers
+ */
+function keysString(keyChar, modifiers = []) {
 	return modifiers
 		.map((mod) => TRANSLATIONS[mod])
 		.concat(keyChar.toUpperCase())
 		.join('+')
 }
 
-const getKeyshortcuts = ({ keyChar, keyModifiers = [] }) => {
+/**
+ *
+ * @param root0
+ * @param root0.keyChar
+ * @param root0.keyModifiers
+ */
+function getKeyshortcuts({ keyChar, keyModifiers = [] }) {
 	return keyModifiers
 		.map((mod) => MODIFIERS[mod])
 		.concat(keyChar)
 		.join('+')
 }
 
-const getKeys = (isMobile, { keyChar, keyModifiers }) => {
+/**
+ *
+ * @param isMobile
+ * @param root0
+ * @param root0.keyChar
+ * @param root0.keyModifiers
+ */
+function getKeys(isMobile, { keyChar, keyModifiers }) {
 	return !isMobile && keyChar ? `(${keysString(keyChar, keyModifiers)})` : ''
 }
 
-const isDisabled = (actionEntry, editor) => {
+/**
+ *
+ * @param actionEntry
+ * @param editor
+ */
+function isDisabled(actionEntry, editor) {
 	return actionEntry.action && !actionEntry.action(editor.can(), editor)
 }
 
-const getIsActive = ({ isActive }, editor) => {
+/**
+ *
+ * @param root0
+ * @param root0.isActive
+ * @param editor
+ */
+function getIsActive({ isActive }, editor) {
 	if (!isActive) {
 		return false
 	}
@@ -61,7 +95,11 @@ const getIsActive = ({ isActive }, editor) => {
 	return false
 }
 
-const getActionType = (actionEntry) => {
+/**
+ *
+ * @param actionEntry
+ */
+function getActionType(actionEntry) {
 	// isActive stores the value changing on active state change (on click)
 
 	// If it is an array, the button is a submenu button.
@@ -85,7 +123,12 @@ const getActionType = (actionEntry) => {
 	return 'button'
 }
 
-const getActionState = (actionEntry, editor) => {
+/**
+ *
+ * @param actionEntry
+ * @param editor
+ */
+function getActionState(actionEntry, editor) {
 	const active = getIsActive(actionEntry, editor)
 
 	return {

@@ -106,6 +106,7 @@ export default {
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
 		},
+
 		uploadTitle() {
 			if (!this.networkOnline) {
 				return t('text', 'Disabled because you are currently offline.')
@@ -164,6 +165,7 @@ export default {
 			const EMPTY_DOCUMENT_SIZE = 4
 			this.isEmptyContent = editor.state.doc.nodeSize <= EMPTY_DOCUMENT_SIZE
 		},
+
 		t,
 	},
 }

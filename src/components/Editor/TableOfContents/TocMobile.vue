@@ -22,6 +22,7 @@ export default defineComponent({
 	components: {
 		NcModal,
 	},
+
 	methods: {
 		t,
 	},

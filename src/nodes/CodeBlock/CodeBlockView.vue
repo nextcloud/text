@@ -27,8 +27,8 @@
 					:aria-label="t('text', 'Code block options')">
 					<NcActionInput
 						:label="t('text', 'Code block language')"
-						:value="type"
-						:show-trailing-button="false"
+						:modelValue="type"
+						:showTrailingButton="false"
 						:placeholder="t('text', 'e.g. php, javascript, json…')"
 						@input="updateLanguage">
 						<template #icon>
@@ -40,7 +40,7 @@
 
 					<NcActionButton
 						v-if="supportPreview"
-						close-after-click
+						closeAfterClick
 						@click="viewMode = 'code'">
 						<template #icon>
 							<CodeBraces :size="20" />
@@ -49,7 +49,7 @@
 					</NcActionButton>
 					<NcActionButton
 						v-if="supportPreview"
-						close-after-click
+						closeAfterClick
 						@click="viewMode = 'preview'">
 						<template #icon>
 							<EyeOutlineIcon :size="20" />
@@ -58,7 +58,7 @@
 					</NcActionButton>
 					<NcActionButton
 						v-if="supportPreview"
-						close-after-click
+						closeAfterClick
 						@click="viewMode = 'side-by-side'">
 						<template #icon>
 							<ViewSplitVertical :size="20" />
@@ -81,9 +81,8 @@
 			</div>
 		</div>
 		<div :class="{ 'split-view': showCode && showPreview }">
-			<pre
-				v-show="showCode"
-				class="split-view__code"><NodeViewContent spellcheck="false"
+			<pre v-show="showCode" class="split-view__code"><NodeViewContent
+spellcheck="false"
 				as="code"
 				:contenteditable="isEditable" /></pre>
 			<div
@@ -97,6 +96,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import { useIsDarkTheme } from '@nextcloud/vue'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
@@ -106,10 +106,7 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import debounce from 'debounce'
-
-import { t } from '@nextcloud/l10n'
 import { v4 as uuidv4 } from 'uuid'
-
 import Check from 'vue-material-design-icons/Check.vue'
 import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
@@ -117,7 +114,6 @@ import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import Help from 'vue-material-design-icons/HelpCircleOutline.vue'
 import MarkerIcon from 'vue-material-design-icons/Marker.vue'
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
-
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
 export default {
@@ -139,17 +135,20 @@ export default {
 		NodeViewWrapper,
 		NodeViewContent,
 	},
+
 	mixins: [CopyToClipboardMixin],
 	props: {
 		node: {
 			type: Object,
 			required: true,
 		},
+
 		editor: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	setup() {
 		const isDarkTheme = useIsDarkTheme()
 		return {
@@ -159,6 +158,7 @@ export default {
 			t,
 		}
 	},
+
 	data() {
 		return {
 			isEditable: false,
@@ -166,16 +166,20 @@ export default {
 			targetId: 'mermaid-view-' + uuidv4(),
 		}
 	},
+
 	computed: {
 		hasCode() {
 			return this.node?.textContent
 		},
+
 		type() {
 			return this.node?.attrs?.language || ''
 		},
+
 		supportPreview() {
 			return ['mermaid'].includes(this.type)
 		},
+
 		showCode() {
 			return (
 				!this.supportPreview
@@ -183,12 +187,14 @@ export default {
 				|| this.viewMode === 'side-by-side'
 			)
 		},
+
 		showPreview() {
 			return (
 				this.supportPreview
 				&& (this.viewMode === 'preview' || this.viewMode === 'side-by-side')
 			)
 		},
+
 		defaultMode() {
 			if (this.isEditable) {
 				return 'side-by-side'
@@ -196,33 +202,40 @@ export default {
 				return this.supportPreview() ? 'code' : 'preview'
 			}
 		},
+
 		renderMermaidDebounced() {
 			return debounce(this.renderMermaid, 250)
 		},
 	},
+
 	watch: {
 		'node.textContent': {
 			handler() {
 				this.renderMermaidDebounced()
 			},
+
 			immediate: true,
 		},
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
 	},
+
 	methods: {
 		async copyCode() {
 			await this.copyToClipboard(this.node?.textContent)
 		},
+
 		updateLanguage(event) {
 			this.updateAttributes({
 				language: event.target.value,
 			})
 		},
+
 		async renderMermaid() {
 			if (!this.supportPreview) {
 				this.viewMode = 'code'

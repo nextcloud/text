@@ -134,7 +134,7 @@ function parseDetails(
 }
 
 /**
- * @param {object} md - Markdown object
+ * @param md - Markdown object
  */
 export default function details(md: MarkdownIt) {
 	md.block.ruler.before('fence', 'details', parseDetails, {

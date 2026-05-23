@@ -5,6 +5,7 @@
 
 import type { Node } from '@tiptap/pm/model'
 import type { Heading } from '../composables/useEditorHeadings'
+
 import { slugify } from './slug.js'
 
 /**

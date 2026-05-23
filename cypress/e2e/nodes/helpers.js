@@ -39,10 +39,7 @@ export function runCommands(editor) {
 function findCommand(editor) {
 	const doc = editor.state.doc
 	return findChildren(doc, (child) => {
-		return (
-			child.isText
-			&& Object.prototype.hasOwnProperty.call(editor.commands, child.text)
-		)
+		return child.isText && Object.hasOwn(editor.commands, child.text)
 	})[0]
 }
 

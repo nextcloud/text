@@ -4,16 +4,17 @@
  */
 import type { Emitter } from 'mitt'
 import type { OpenData } from '../apis/connect'
-import { sync } from '../apis/sync'
 import type { Connection } from '../composables/useConnection'
+
+import { sync } from '../apis/sync'
 import { logger } from '../helpers/logger.js'
 import getNotifyBus, { type EventTypes } from './NotifyService'
 import {
 	type Document,
-	ERROR_TYPE,
 	type Session,
 	type Step,
 	type SyncService,
+	ERROR_TYPE,
 } from './SyncService.js'
 
 /**

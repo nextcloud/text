@@ -24,14 +24,14 @@ import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import {
+	type InjectionKey,
+	type Ref,
 	computed,
 	inject,
 	provide,
 	readonly,
 	ref,
 	watch,
-	type InjectionKey,
-	type Ref,
 } from 'vue'
 import { useEditorFlags } from './useEditorFlags'
 
@@ -70,7 +70,11 @@ function maxWidthSetOutsideOfText() {
 	return Boolean(alreadySet) && alreadySet !== setByText
 }
 
-export const provideEditorWidth = (useTableOfContents = true) => {
+/**
+ *
+ * @param useTableOfContents
+ */
+export function provideEditorWidth(useTableOfContents = true) {
 	const isMobile = useIsMobile()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
@@ -108,7 +112,10 @@ export const provideEditorWidth = (useTableOfContents = true) => {
 	return { applyEditorWidth }
 }
 
-export const useEditorWidth = () => {
+/**
+ *
+ */
+export function useEditorWidth() {
 	const isMobile = useIsMobile()
 	const { isRichWorkspace } = useEditorFlags()
 

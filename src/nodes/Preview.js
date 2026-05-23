@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, getMarkRange, getNodeType, isNodeActive } from '@tiptap/core'
+import { getMarkRange, getNodeType, isNodeActive, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
-
 import Preview from './Preview.vue'
 
 export default Node.create({
@@ -199,6 +198,7 @@ function previewAttributesFromSelection(state) {
 
 /**
  * Is the active node one of typeOrName with the given attributes
+ *
  * @param {object|string} typeOrName type or name of the preview node type
  * @param {object} attributes attributes of the node
  * @param {object} state current editor state
@@ -227,6 +227,7 @@ function previewPossible(state) {
 
 /**
  * Does the node contain more content than the first child
+ *
  * @param {object} node node to inspect
  * @return {boolean}
  */
@@ -239,6 +240,7 @@ function hasOtherContent(node) {
 
 /**
  * Get the link href of the given node
+ *
  * @param {object} node to inspect
  * @return {string} The href of the link mark of the node
  */

@@ -4,9 +4,9 @@
  */
 
 import { test as baseTest } from '@playwright/test'
+import { ContainerSection } from '../sections/ContainerSection'
 import { EditorSection } from '../sections/EditorSection'
 import { ReaderSection } from '../sections/ReaderSection'
-import { ContainerSection } from '../sections/ContainerSection'
 
 interface EditorFixture {
 	editor: EditorSection

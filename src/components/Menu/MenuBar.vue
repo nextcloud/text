@@ -38,17 +38,17 @@
 				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
-				:action-entry="actionEntry"
-				:can-be-focussed="activeMenuEntry === index"
+				:actionEntry="actionEntry"
+				:canBeFocussed="activeMenuEntry === index"
 				@disabled="disableMenuEntry(actionEntry.key, $event)"
 				@click="activeMenuEntry = index" />
 
 			<!-- The remaining actions -->
 			<ActionList
 				ref="remainingEntries"
-				:action-entry="hiddenEntries"
-				:can-be-focussed="activeMenuEntry === visibleEntries.length"
-				:force-enabled="true"
+				:actionEntry="hiddenEntries"
+				:canBeFocussed="activeMenuEntry === visibleEntries.length"
+				:forceEnabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
 					<WidthToggle />
@@ -65,11 +65,10 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
 import { ref } from 'vue'
-
-import { t } from '@nextcloud/l10n'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useMenuEntries } from '../../composables/useMenuEntries.ts'
@@ -95,6 +94,7 @@ export default {
 		CharacterCount,
 		WidthToggle,
 	},
+
 	extends: ToolBarLogic,
 	mixins: [useIsMobileMixin],
 	provide() {
@@ -108,11 +108,13 @@ export default {
 
 		return val
 	},
+
 	props: {
 		isHidden: {
 			type: Boolean,
 			default: false,
 		},
+
 		openReadOnly: {
 			type: Boolean,
 			default: false,
@@ -147,12 +149,14 @@ export default {
 					? [...this.menuEntries]
 					: [...this.menuEntries, ...this.assistantMenuEntries]
 			).filter((entry) => !!entry),
+
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
 			resize: null,
 		}
 	},
+
 	computed: {
 		visibleEntryKeys() {
 			// if entry has no priority, we assume it always will be visible (priority: 0)
@@ -161,12 +165,14 @@ export default {
 				.map((e) => e.key)
 				.slice(0, this.iconsLimit)
 		},
+
 		visibleEntries() {
 			// only entries from `visibleEntryKeys but in original order
 			return this.entries.filter((entry) => {
 				return this.visibleEntryKeys.includes(entry.key)
 			})
 		},
+
 		hiddenEntries() {
 			const remainingEntries = this.entries.filter((entry) => {
 				// reverse logic from visibleEntries
@@ -209,11 +215,13 @@ export default {
 				children: entries,
 			}
 		},
+
 		iconWidth() {
 			const style = this.menubar && getComputedStyle(this.menubar)
 			const clickableArea = style?.getPropertyValue('--default-clickable-area')
 			return parseInt(clickableArea) || 34
 		},
+
 		iconsLimit() {
 			// leave some buffer - this is necessary so the bar does not wrap during resizing
 			const spaceToFill = this.width - 4
@@ -223,12 +231,14 @@ export default {
 			return slots - 1
 		},
 	},
+
 	mounted() {
 		this.$nextTick(() => {
 			this.isReady = true
 			this.$emit('update:loaded', true)
 		})
 	},
+
 	methods: {
 		showHelp() {
 			this.displayHelp = true
@@ -237,6 +247,7 @@ export default {
 		hideHelp() {
 			this.displayHelp = false
 		},
+
 		t,
 	},
 }

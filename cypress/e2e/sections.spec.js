@@ -8,7 +8,7 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 const fileName = 'empty.md'
 
-const clickMenubarTableOfContents = () => {
+function clickMenubarTableOfContents() {
 	cy.getActionEntry('headings').click()
 
 	cy.get('.v-popper__wrapper .open').getActionEntry('outline').click()

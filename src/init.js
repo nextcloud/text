@@ -7,6 +7,7 @@ import { registerFileListHeader } from '@nextcloud/files'
 import { registerDavProperty } from '@nextcloud/files/dav'
 import { loadState } from '@nextcloud/initial-state'
 import { addMenuRichWorkspace, FilesWorkspaceHeader } from './helpers/files.js'
+
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 

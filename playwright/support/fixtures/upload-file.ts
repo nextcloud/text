@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from './random-user'
-import { Node } from './Node'
+import type { Node } from './Node'
+
 import { ViewerSection } from '../sections/ViewerSection'
+import { test as base } from './random-user'
 
 export interface UploadFileFixture {
 	file: Node

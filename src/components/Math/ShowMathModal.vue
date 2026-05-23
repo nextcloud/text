@@ -14,7 +14,7 @@
 			<NcButton @click="$emit('close')">
 				{{ t('text', 'Cancel') }}
 			</NcButton>
-			<NcButton type="primary" @click="save">
+			<NcButton variant="primary" @click="save">
 				{{ t('text', 'Save') }}
 			</NcButton>
 		</template>
@@ -34,26 +34,31 @@ export default {
 		NcTextArea,
 		NcButton,
 	},
+
 	props: {
 		show: {
 			type: Boolean,
 			required: true,
 		},
+
 		latex: {
 			type: String,
 			required: true,
 		},
+
 		isBlock: {
 			type: Boolean,
 			required: true,
 		},
 	},
+
 	emits: ['close', 'save'],
 	data() {
 		return {
 			localLatex: this.latex,
 		}
 	},
+
 	computed: {
 		dialogTitle() {
 			if (this.isBlock) {
@@ -68,10 +73,12 @@ export default {
 			return t('text', 'Edit inline formula')
 		},
 	},
+
 	methods: {
 		save() {
 			this.$emit('save', this.localLatex)
 		},
+
 		t,
 	},
 }

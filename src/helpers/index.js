@@ -9,7 +9,11 @@
  * @param callback
  */
 
-const documentReady = function (callback) {
+/**
+ *
+ * @param callback
+ */
+function documentReady(callback) {
 	const fn = () => setTimeout(callback, 0)
 	if (
 		document.attachEvent

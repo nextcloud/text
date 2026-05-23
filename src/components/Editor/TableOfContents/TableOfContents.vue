@@ -17,8 +17,8 @@
 import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 import TableOfContentsEntry from './TableOfContentsEntry.vue'
 
-const { headings } = useEditorHeadings()
 const emit = defineEmits(['heading-clicked'])
+const { headings } = useEditorHeadings()
 </script>
 
 <style lang="scss" scoped>

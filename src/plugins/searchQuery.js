@@ -48,20 +48,31 @@ export function searchQuery() {
 	})
 }
 
-export const setSearchQuery =
-	(query, matchAll) =>
-	({ tr }) => {
+/**
+ *
+ * @param query
+ * @param matchAll
+ */
+export function setSearchQuery(query, matchAll) {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { query, matchAll })
 	}
+}
 
-export const nextMatch =
-	() =>
-	({ tr }) => {
+/**
+ *
+ */
+export function nextMatch() {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { match: 1 })
 	}
+}
 
-export const previousMatch =
-	() =>
-	({ tr }) => {
+/**
+ *
+ */
+export function previousMatch() {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { match: -1 })
 	}
+}

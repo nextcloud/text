@@ -233,7 +233,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 })
 
-const copyEditorContent = (editor, nodeType = null) => {
+function copyEditorContent(editor, nodeType = null) {
 	if (nodeType) {
 		editor.state.doc.descendants((node, pos) => {
 			if (node.type === nodeType) {

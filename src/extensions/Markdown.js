@@ -24,7 +24,7 @@
 import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
 import transformPastedHTML from './transformPastedHTML.js'
 
@@ -121,7 +121,13 @@ const Markdown = Extension.create({
 	},
 })
 
-const createMarkdownSerializer = ({ nodes, marks }) => {
+/**
+ *
+ * @param root0
+ * @param root0.nodes
+ * @param root0.marks
+ */
+function createMarkdownSerializer({ nodes, marks }) {
 	return {
 		serializer: new MarkdownSerializer(
 			extractNodesToMarkdown(nodes),
@@ -136,7 +142,13 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 	}
 }
 
-const clipboardSerializer = ({ nodes, marks }) => {
+/**
+ *
+ * @param root0
+ * @param root0.nodes
+ * @param root0.marks
+ */
+function clipboardSerializer({ nodes, marks }) {
 	return {
 		serializer: new MarkdownSerializer(
 			extractNodesToMarkdown(nodes),
@@ -151,7 +163,11 @@ const clipboardSerializer = ({ nodes, marks }) => {
 	}
 }
 
-const extractToPlaintext = (marks) => {
+/**
+ *
+ * @param marks
+ */
+function extractToPlaintext(marks) {
 	const blankMark = {
 		open: '',
 		close: '',
@@ -166,7 +182,11 @@ const extractToPlaintext = (marks) => {
 	return Object.fromEntries(markEntries)
 }
 
-const extractToMarkdown = (nodesOrMarks) => {
+/**
+ *
+ * @param nodesOrMarks
+ */
+function extractToMarkdown(nodesOrMarks) {
 	const nodeOrMarkEntries = Object.entries(nodesOrMarks)
 		.map(([name, nodeOrMark]) => [name, nodeOrMark.spec.toMarkdown])
 		.filter(([, toMarkdown]) => toMarkdown)
@@ -174,19 +194,31 @@ const extractToMarkdown = (nodesOrMarks) => {
 	return Object.fromEntries(nodeOrMarkEntries)
 }
 
-const extractNodesToMarkdown = (nodes) => {
+/**
+ *
+ * @param nodes
+ */
+function extractNodesToMarkdown(nodes) {
 	const defaultNodes = convertNames(defaultMarkdownSerializer.nodes)
 	const nodesToMarkdown = extractToMarkdown(nodes)
 	return { ...defaultNodes, ...nodesToMarkdown }
 }
 
-const extractMarksToMarkdown = (marks) => {
+/**
+ *
+ * @param marks
+ */
+function extractMarksToMarkdown(marks) {
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
 	const marksToMarkdown = extractToMarkdown(marks)
 	return { ...defaultMarks, ...marksToMarkdown }
 }
 
-const convertNames = (object) => {
+/**
+ *
+ * @param object
+ */
+function convertNames(object) {
 	const convert = (name) => {
 		return name.replace(/_(\w)/g, (_m, letter) => letter.toUpperCase())
 	}

@@ -5,16 +5,15 @@
 
 import { ListItem, OrderedList } from '@tiptap/extension-list'
 /* eslint-enable import/no-named-as-default */
+// https://github.com/import-js/eslint-plugin-import/issues/1739
+/* eslint-disable-next-line import/no-unresolved */
+import testData from '../../fixtures/ListItem.md?raw'
 import Markdown from './../../../src/extensions/Markdown.js'
 import BulletList from './../../../src/nodes/BulletList.ts'
 import TaskItem from './../../../src/nodes/TaskItem.ts'
 import TaskList from './../../../src/nodes/TaskList.ts'
 import { createCustomEditor } from './../../support/components.js'
 import { expectMarkdown, loadMarkdown, runCommands } from './helpers.js'
-
-// https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable-next-line import/no-unresolved */
-import testData from '../../fixtures/ListItem.md?raw'
 
 describe('ListItem extension integrated in the editor', () => {
 	const editor = createCustomEditor({
@@ -37,10 +36,10 @@ describe('ListItem extension integrated in the editor', () => {
 		}
 		it(description, () => {
 			expect(spec).to.include('\n')
-			/* eslint-disable no-unused-expressions */
+
 			expect(input).to.be.ok
 			expect(output).to.be.ok
-			/* eslint-enable no-unused-expressions */
+
 			loadMarkdown(editor, input)
 			runCommands(editor)
 			expectMarkdown(editor, output.replace(/\n*$/, ''))

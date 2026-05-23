@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import debounce from 'debounce'
-
 import type { ShallowRef } from 'vue'
-import { save, saveViaSendBeacon } from '../apis/save'
 import type { Connection } from '../composables/useConnection.ts'
-import { logger } from '../helpers/logger.js'
 import type { SyncService } from './SyncService'
+
+import debounce from 'debounce'
+import { save, saveViaSendBeacon } from '../apis/save'
+import { logger } from '../helpers/logger.js'
 
 /**
  * Interval to save the serialized document and the document state
  *
- * @type {number} time in ms
+ * time in ms
  */
 const AUTOSAVE_INTERVAL = 30000
 

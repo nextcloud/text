@@ -39,16 +39,19 @@ export default {
 	components: {
 		NcButton,
 	},
+
 	props: {
 		otherVersion: {
 			type: String,
 			required: true,
 		},
+
 		readerSource: {
 			type: String,
 			required: true,
 		},
 	},
+
 	setup(props) {
 		if (!['local', 'server'].includes(props.readerSource)) {
 			logger.warn('Invalid reader source', props)
@@ -63,6 +66,7 @@ export default {
 				'text',
 				'Keep my local changes and overwrite the remote version',
 			),
+
 			server: t('text', 'Discard my local changes and use the remote version'),
 		}
 		return {
@@ -75,11 +79,13 @@ export default {
 			t,
 		}
 	},
+
 	data() {
 		return {
 			clicked: false,
 		}
 	},
+
 	methods: {
 		useEditorVersion() {
 			this.clicked = true
@@ -89,6 +95,7 @@ export default {
 			})
 			this.setEditable(!this.readOnly)
 		},
+
 		useReaderVersion() {
 			this.clicked = true
 			this.setEditable(!this.readOnly)

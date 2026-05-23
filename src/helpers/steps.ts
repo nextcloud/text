@@ -4,10 +4,12 @@
  */
 
 import type { Session, Step } from '../services/SyncService'
+
 import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService'
 
 /**
  * Get the recent awareness messages as steps
+ *
  * @param sessions to process.
  */
 export function awarenessSteps(sessions: Session[]): Step[] {

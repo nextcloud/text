@@ -82,7 +82,7 @@
 			:text="sanitizedHref"
 			:limit="1"
 			:interactive="false"
-			:display-fallback="true"
+			:displayFallback="true"
 			class="link-view-bubble__reference-list"
 			@loaded="onReferenceListLoaded" />
 	</div>
@@ -91,13 +91,12 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
@@ -123,6 +122,7 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		href: {
 			type: String,
 			default: null,
@@ -283,6 +283,7 @@ export default {
 				.run()
 			this.stopEdit()
 		},
+
 		t,
 	},
 }

@@ -16,11 +16,11 @@ test.beforeEach(async ({ open }) => {
 })
 
 let composingData = ''
-const withKeyboardEvents = async (
+async function withKeyboardEvents(
 	el: Locator,
 	key: string,
 	callback: () => Promise<void>,
-) => {
+) {
 	composingData += key
 	await el.dispatchEvent('keydown', { key })
 	await callback()

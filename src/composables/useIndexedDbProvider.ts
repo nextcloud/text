@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Doc } from 'yjs'
+
 import { readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
-import type { Doc } from 'yjs'
 import { logger } from '../helpers/logger.js'
 
 /**
  * Initialize a indexed db provider for the given ydoc
+ *
  * @param props Props of the editor component.
  * @param props.fileId Fileid of the file.
  * @param ydoc Document to sync via the provider
@@ -35,6 +37,7 @@ export function useIndexedDbProvider(
 
 	/**
 	 * Set the dirty flag to indicate (no) unsaved changes.
+	 *
 	 * @param val truethy if there are unsaved changes.
 	 */
 	function setDirty(val: boolean) {
@@ -59,6 +62,7 @@ export function useIndexedDbProvider(
 
 	/**
 	 * Set the base version etag for the current connection.
+	 *
 	 * @param val the base version etag as returned by open.
 	 */
 	function setBaseVersionEtag(val: string) {

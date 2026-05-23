@@ -103,7 +103,7 @@ describe('search plugin', () => {
 	})
 })
 
-const testSearch = (content, query, expectedSearchResults) => {
+function testSearch(content, query, expectedSearchResults) {
 	const editor = createCustomEditor(content, [Mentions])
 	const doc = editor.state.doc
 	const searched = runSearch(doc, query)

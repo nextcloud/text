@@ -36,7 +36,6 @@ export default function (html) {
  *
  * @param {Document} doc Html document to process
  * @param {Function} fn Function to run
- *
  */
 function forAllTextNodes(doc, fn) {
 	const nodeIterator = doc.createNodeIterator(doc.body, NodeFilter.SHOW_TEXT)
@@ -52,7 +51,6 @@ function forAllTextNodes(doc, fn) {
  * Check if newlines need to be collapsed based on the applied style
  *
  * @param {Text} textNode Text to check the style for
- *
  */
 function collapseWhiteSpace(textNode) {
 	// Values of `white-space` css that will collapse newline whitespace

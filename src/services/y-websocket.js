@@ -22,7 +22,7 @@ import * as url from 'lib0/url'
 import * as authProtocol from 'y-protocols/auth'
 import * as awarenessProtocol from 'y-protocols/awareness'
 import * as syncProtocol from 'y-protocols/sync'
-import * as Y from 'yjs' // eslint-disable-line
+import * as Y from 'yjs'
 
 export const messageSync = 0
 export const messageQueryAwareness = 3
@@ -31,6 +31,7 @@ export const messageAuth = 2
 
 /**
  *                       encoder,          decoder,          provider,          emitSynced, messageType
+ *
  * @type {Array<function(encoding.Encoder, decoding.Decoder, WebsocketProvider, boolean,    number):void>}
  */
 const messageHandlers = []
@@ -135,8 +136,9 @@ const messageReconnectTimeout = 70000
  * @param {WebsocketProvider} provider
  * @param {string} reason
  */
-const permissionDeniedHandler = (provider, reason) =>
-	console.warn(`Permission denied to access ${provider.url}.\n${reason}`)
+function permissionDeniedHandler(provider, reason) {
+	return console.warn(`Permission denied to access ${provider.url}.\n${reason}`)
+}
 
 /**
  * @param {WebsocketProvider} provider
@@ -144,7 +146,7 @@ const permissionDeniedHandler = (provider, reason) =>
  * @param {boolean} emitSynced
  * @return {encoding.Encoder}
  */
-const readMessage = (provider, buf, emitSynced) => {
+function readMessage(provider, buf, emitSynced) {
 	const decoder = decoding.createDecoder(buf)
 	const encoder = encoding.createEncoder()
 	const messageType = decoding.readVarUint(decoder)
@@ -160,7 +162,7 @@ const readMessage = (provider, buf, emitSynced) => {
 /**
  * @param {WebsocketProvider} provider
  */
-const setupWS = (provider) => {
+function setupWS(provider) {
 	if (provider.shouldConnect && provider.ws === null) {
 		const websocket = new provider._WS(provider.url, provider.protocols)
 		websocket.binaryType = 'arraybuffer'
@@ -248,7 +250,7 @@ const setupWS = (provider) => {
  * @param {WebsocketProvider} provider
  * @param {ArrayBuffer} buf
  */
-const broadcastMessage = (provider, buf) => {
+function broadcastMessage(provider, buf) {
 	const ws = provider.ws
 	if (provider.wsconnected && ws && ws.readyState === ws.OPEN) {
 		ws.send(buf)
@@ -312,6 +314,7 @@ export class WebsocketProvider extends Observable {
 		/**
 		 * The specified url parameters. This can be safely updated. The changed parameters will be used
 		 * when a new connection is established.
+		 *
 		 * @type {{[key: string]: string}}
 		 */
 		this.params = params
@@ -341,6 +344,7 @@ export class WebsocketProvider extends Observable {
 		this.wsLastMessageReceived = 0
 		/**
 		 * Whether to connect to other peers or not
+		 *
 		 * @type {boolean}
 		 */
 		this.shouldConnect = connect
@@ -381,6 +385,7 @@ export class WebsocketProvider extends Observable {
 		}
 		/**
 		 * Listens to Yjs updates and sends them to remote peers (ws and broadcastchannel)
+		 *
 		 * @param {Uint8Array} _update
 		 * @param {any} origin
 		 * @param {Y.Doc} doc
@@ -399,6 +404,7 @@ export class WebsocketProvider extends Observable {
 		/**
 		 * Send an awareness update message when local awareness changes
 		 * modified to only send update about this client.
+		 *
 		 * @param {any} changed
 		 * @param {any} _origin
 		 */

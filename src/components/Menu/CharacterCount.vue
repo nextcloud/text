@@ -24,9 +24,11 @@ export default defineComponent({
 		AlphabeticalVariant,
 		NcActionText,
 	},
+
 	props: {
 		visible: Boolean,
 	},
+
 	setup() {
 		const { editor } = useEditor()
 		const countString = ref('')
@@ -44,9 +46,11 @@ export default defineComponent({
 		}
 		return { countString, refresh }
 	},
+
 	watch: {
 		visible: 'refresh',
 	},
+
 	created() {
 		this.refresh()
 	},

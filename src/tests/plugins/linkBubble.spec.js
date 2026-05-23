@@ -67,7 +67,7 @@ describe('linkBubble prosemirror plugin', () => {
 })
 
 // simulate the data flow in prosemirror
-const createFlow = (initialState) => {
+function createFlow(initialState) {
 	let state = initialState
 	return {
 		get state() {
@@ -79,7 +79,7 @@ const createFlow = (initialState) => {
 	}
 }
 
-const createState = (options = {}) => {
+function createState(options = {}) {
 	return EditorState.create({
 		schema,
 		...options,
