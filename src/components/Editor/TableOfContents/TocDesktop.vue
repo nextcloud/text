@@ -30,8 +30,8 @@
 <script lang="ts">
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import { defineComponent } from 'vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import PinOutlineIcon from 'vue-material-design-icons/PinOutline.vue'
 

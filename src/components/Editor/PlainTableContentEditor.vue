@@ -16,6 +16,9 @@ import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 /* eslint-disable import/no-named-as-default */
+import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
@@ -23,9 +26,6 @@ import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { EDITOR_UPLOAD } from '../Editor.provider.ts'
-import ContentContainer from './ContentContainer.vue'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
 
 export default {
 	name: 'PlainTableContentEditor',

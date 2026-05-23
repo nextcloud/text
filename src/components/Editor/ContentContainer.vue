@@ -18,10 +18,10 @@
 <script>
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-3'
-import { useEditor } from '../../composables/useEditor.ts'
-import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import FloatingButtons from './FloatingButtons.vue'
 import TocContainer from './TableOfContents/TocContainer.vue'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 
 export default {
 	name: 'ContentContainer',

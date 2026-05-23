@@ -34,8 +34,8 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import { DragHandle } from '@tiptap/extension-drag-handle-vue-3'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import { useEditor } from '../../composables/useEditor.ts'

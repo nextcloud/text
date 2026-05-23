@@ -17,10 +17,10 @@
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-3'
 import { inject, watch } from 'vue'
+import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
-import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 
 export default {
 	name: 'BaseReader',

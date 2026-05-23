@@ -8,8 +8,8 @@ import TiptapImage from '@tiptap/extension-image'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
-import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
 import ImageView from './ImageView.vue'
+import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
 
 const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')

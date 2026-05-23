@@ -55,12 +55,12 @@ import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
+import AvatarWrapper from './AvatarWrapper.vue'
+import GuestNameDialog from './GuestNameDialog.vue'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useSessions } from '../../composables/useSessions.ts'
 import { useSyncService } from '../../composables/useSyncService.ts'
 import { COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
-import AvatarWrapper from './AvatarWrapper.vue'
-import GuestNameDialog from './GuestNameDialog.vue'
 
 export default {
 	name: 'SessionList',

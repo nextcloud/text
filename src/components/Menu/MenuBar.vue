@@ -66,22 +66,22 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
 import { ref } from 'vue'
-import { useEditor } from '../../composables/useEditor.ts'
-import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { useMenuEntries } from '../../composables/useMenuEntries.ts'
-import { useIsMobileMixin } from '../Editor.provider.ts'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import HelpModal from '../HelpModal.vue'
-import { DotsHorizontal } from '../icons.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
+import WidthToggle from './WidthToggle.vue'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useMenuEntries } from '../../composables/useMenuEntries.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import { DotsHorizontal } from '../icons.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
-import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'MenuBar',

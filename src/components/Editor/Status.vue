@@ -36,12 +36,12 @@ import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
+import OfflineState from './OfflineState.vue'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 import { ERROR_TYPE } from '../../services/SyncService.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import OfflineState from './OfflineState.vue'
 
 export default {
 	name: 'Status',

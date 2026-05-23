@@ -136,13 +136,13 @@
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
-import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import { NodeViewWrapper } from '@tiptap/vue-3'
 import ClickOutside from 'vue-click-outside'
+import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
-import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { logger } from '../helpers/logger.ts'
 
 class LoadImageError extends Error {

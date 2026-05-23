@@ -37,8 +37,8 @@ import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
-import Editor from '../components/Editor.js'
 import RichTextReader from '../components/RichTextReader.vue'
+import Editor from '../components/Editor.js'
 
 const IS_PUBLIC = isPublicShare()
 const WORKSPACE_URL = generateOcsUrl(
@@ -223,7 +223,7 @@ export default {
 				})
 		},
 
-		showRichWorkspace(event) {
+		showRichWorkspace() {
 			this.enabled = true
 		},
 

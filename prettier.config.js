@@ -11,7 +11,6 @@ import nextcloud from '@nextcloud/prettier-config'
  */
 const config = {
 	...nextcloud,
-	plugins: [...nextcloud.plugins, 'prettier-plugin-organize-imports'],
 }
 
 export default config
