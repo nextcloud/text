@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type CDPSession,
+import type { CDPSession } from '@playwright/test'
 
-test as base } from '@playwright/test'
+import { test as base } from '@playwright/test'
 
 interface OfflineFixture {
 	setOffline: () => Promise<void>

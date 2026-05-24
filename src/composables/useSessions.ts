@@ -5,9 +5,10 @@
 
 import type { OpenData } from '../apis/connect'
 import type { SyncService } from '../services/SyncService'
+import type { ShallowRef } from 'vue'
+import type { Session } from '../services/SyncService'
 
 import {
-	type ShallowRef,
 	computed,
 	onMounted,
 	onUnmounted,
@@ -16,11 +17,7 @@ import {
 	shallowRef,
 	watch,
 } from 'vue'
-import {
-	type Session,
-	COLLABORATOR_DISCONNECT_TIME,
-	isGuest,
-} from '../services/SyncService'
+import { COLLABORATOR_DISCONNECT_TIME, isGuest } from '../services/SyncService'
 import { useConnection } from './useConnection'
 
 /**

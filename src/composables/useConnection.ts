@@ -4,9 +4,12 @@
  */
 
 import type { Document, Session } from '../services/SyncService'
+import type { InjectionKey, ShallowRef } from 'vue'
+import type { OpenData } from '../apis/connect'
 
-import { type InjectionKey, type ShallowRef, inject, provide, shallowRef } from 'vue'
-import { type OpenData, open } from '../apis/connect'
+
+import { inject, provide, shallowRef } from 'vue'
+import { open } from '../apis/connect'
 
 export interface Connection {
 	documentId: number

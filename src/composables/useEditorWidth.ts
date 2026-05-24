@@ -18,21 +18,14 @@
  *
  */
 
+import type { InjectionKey, Ref } from 'vue'
+
 import axios from '@nextcloud/axios'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import {
-	type InjectionKey,
-	type Ref,
-	computed,
-	inject,
-	provide,
-	readonly,
-	ref,
-	watch,
-} from 'vue'
+import { computed, inject, provide, readonly, ref, watch } from 'vue'
 import { useEditorFlags } from './useEditorFlags'
 
 // Keep the current value around when leaving the editor and reopening

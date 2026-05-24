@@ -5,9 +5,10 @@
 
 import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection'
+import type { OpenData } from '../apis/connect'
 
 import mitt from 'mitt'
-import { type OpenData, close } from '../apis/connect'
+import { close } from '../apis/connect'
 import { push } from '../apis/sync'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps'
