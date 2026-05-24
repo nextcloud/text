@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type Content, type Extensions, Editor } from '@tiptap/core'
+import type { Content, Extensions } from '@tiptap/core'
+
+import { Editor } from '@tiptap/core'
 import { Document } from '@tiptap/extension-document'
 import { Text } from '@tiptap/extension-text'
 import Paragraph from '../../nodes/Paragraph'

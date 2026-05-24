@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { InjectionKey } from 'vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
-import { type InjectionKey, inject, provide } from 'vue'
+import { inject, provide } from 'vue'
 
 export interface EditorFlags {
 	isPublic: boolean

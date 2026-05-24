@@ -4,8 +4,9 @@
  */
 
 import type { Editor } from '@tiptap/core'
+import type { InjectionKey } from 'vue'
 
-import { type InjectionKey, inject, provide } from 'vue'
+import { inject, provide } from 'vue'
 
 export const editorKey = Symbol('tiptap:editor') as InjectionKey<Editor>
 /**

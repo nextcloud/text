@@ -4,8 +4,9 @@
  */
 
 import type { EditorSection } from '../support/sections/EditorSection'
+import type { Locator } from '@playwright/test'
 
-import { type Locator, expect, mergeTests } from '@playwright/test'
+import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor'
 import { test as randomUserTest } from '../support/fixtures/random-user'
 import { test as uploadFileTest } from '../support/fixtures/upload-file'

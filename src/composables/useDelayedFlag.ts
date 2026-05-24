@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type Ref, ref, watch } from 'vue'
+import type { Ref } from 'vue'
+
+import { ref, watch } from 'vue'
 
 /**
  * Delay the changing of the boolean

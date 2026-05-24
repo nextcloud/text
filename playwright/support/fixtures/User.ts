@@ -4,8 +4,8 @@
  */
 
 import type { User as Account } from '@nextcloud/e2e-test-server'
+import type { Page } from '@playwright/test'
 
-import { type Page } from '@playwright/test'
 import { uploadFile } from './Node'
 
 export class User {

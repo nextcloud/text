@@ -4,17 +4,10 @@
  */
 
 import type { Editor } from '@tiptap/core'
+import type { InjectionKey, Ref, ShallowRef } from 'vue'
 
 import { emit, subscribe } from '@nextcloud/event-bus'
-import {
-	type InjectionKey,
-	type Ref,
-	type ShallowRef,
-	inject,
-	provide,
-	ref,
-	shallowRef,
-} from 'vue'
+import { inject, provide, ref, shallowRef } from 'vue'
 import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 
 declare module '@nextcloud/event-bus' {
