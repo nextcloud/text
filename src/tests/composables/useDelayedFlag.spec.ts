@@ -5,7 +5,7 @@
 
 import { afterEach, expect, test, vi } from 'vitest'
 import { nextTick, ref, watch } from 'vue'
-import { useDelayedFlag } from '../../composables/useDelayedFlag'
+import { useDelayedFlag } from '../../composables/useDelayedFlag.ts'
 
 afterEach(() => {
 	vi.useRealTimers()

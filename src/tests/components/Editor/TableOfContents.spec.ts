@@ -11,14 +11,14 @@ import { nextTick, shallowRef } from 'vue'
 import TableOfContents from '../../../components/Editor/TableOfContents/TableOfContents.vue'
 import TocContainer from '../../../components/Editor/TableOfContents/TocContainer.vue'
 import TocOutline from '../../../components/Editor/TableOfContents/TocOutline.vue'
-import { editorKey } from '../../../composables/useEditor'
+import { editorKey } from '../../../composables/useEditor.ts'
 import {
 	displayTocKey,
 	headingsKey,
 	provideEditorHeadings,
 } from '../../../composables/useEditorHeadings'
 import Heading from '../../../nodes/Heading.js'
-import createCustomEditor from '../../testHelpers/createCustomEditor'
+import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 
 const text1 = 'Level 1 heading'
 const text2 = 'Level 2 heading'

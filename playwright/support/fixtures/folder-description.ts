@@ -4,7 +4,7 @@
  */
 
 import { expect } from '@playwright/test'
-import { test as base } from './upload-file'
+import { test as base } from './upload-file.ts'
 
 export interface FolderDescriptionFixture {
 	fileName: string

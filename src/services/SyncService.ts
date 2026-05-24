@@ -4,17 +4,17 @@
  */
 
 import type { ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
-import type { OpenData } from '../apis/connect'
+import type { OpenData } from '../apis/connect.ts'
+import type { Connection } from '../composables/useConnection.ts'
 
 import mitt from 'mitt'
-import { close } from '../apis/connect'
-import { push } from '../apis/sync'
+import { close } from '../apis/connect.ts'
+import { push } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
-import { awarenessSteps } from '../helpers/steps'
+import { awarenessSteps } from '../helpers/steps.ts'
 import { documentStateToStep } from '../helpers/yjs'
-import Outbox from './Outbox'
-import PollingBackend from './PollingBackend'
+import Outbox from './Outbox.ts'
+import PollingBackend from './PollingBackend.ts'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle

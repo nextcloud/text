@@ -26,7 +26,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { computed, inject, provide, readonly, ref, watch } from 'vue'
-import { useEditorFlags } from './useEditorFlags'
+import { useEditorFlags } from './useEditorFlags.ts'
 
 // Keep the current value around when leaving the editor and reopening
 let valueSingleton = loadState('text', 'is_full_width_editor', false)

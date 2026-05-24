@@ -4,7 +4,7 @@
  */
 
 import { loadSyntaxHighlight } from '../EditorFactory.js'
-import { extensionHighlight } from '../helpers/mappings'
+import { extensionHighlight } from '../helpers/mappings.ts'
 
 /**
  * Determine the language of the file and load the syntax highlighting

@@ -13,7 +13,7 @@ import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
-import { linkClicking } from '../plugins/links'
+import { linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 

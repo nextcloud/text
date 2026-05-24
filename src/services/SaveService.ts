@@ -8,9 +8,9 @@ import type { Connection } from '../composables/useConnection.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
-import { save, saveViaSendBeacon } from '../apis/save'
+import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { type SyncService, ERROR_TYPE } from './SyncService'
+import { type SyncService, ERROR_TYPE } from './SyncService.ts'
 
 /**
  * Interval to save the serialized document and the document state
