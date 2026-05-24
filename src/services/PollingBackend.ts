@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { Emitter } from 'mitt'
-import type { OpenData } from '../apis/connect'
-import type { Connection } from '../composables/useConnection'
-import type { EventTypes } from './NotifyService'
+import type { OpenData } from '../apis/connect.ts'
+import type { Connection } from '../composables/useConnection.ts'
+import type { EventTypes } from './NotifyService.ts'
 import type { Document, Session, Step, SyncService } from './SyncService.js'
 
-import { sync } from '../apis/sync'
+import { sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
-import getNotifyBus from './NotifyService'
+import getNotifyBus from './NotifyService.ts'
 import { ERROR_TYPE } from './SyncService.js'
 
 /**

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import createCustomEditor from '../testHelpers/createCustomEditor'
-import Highlight from './../../marks/Highlight'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
+import Highlight from './../../marks/Highlight.ts'
 
 describe('Highlight extension unit', () => {
 	it('exposes toMarkdown function', () => {

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.ts'
 import type { Document, Session, Step } from '../services/SyncService.ts'
-import type { ShallowRef } from 'vue'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'

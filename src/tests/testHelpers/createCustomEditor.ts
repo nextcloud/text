@@ -8,7 +8,7 @@ import type { Content, Extensions } from '@tiptap/core'
 import { Editor } from '@tiptap/core'
 import { Document } from '@tiptap/extension-document'
 import { Text } from '@tiptap/extension-text'
-import Paragraph from '../../nodes/Paragraph'
+import Paragraph from '../../nodes/Paragraph.ts'
 
 /**
  *

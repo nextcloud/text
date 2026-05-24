@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { OpenData } from '../apis/connect'
-import type { SyncService } from '../services/SyncService'
 import type { ShallowRef } from 'vue'
-import type { Session } from '../services/SyncService'
+import type { OpenData } from '../apis/connect.ts'
+import type { SyncService } from '../services/SyncService.ts'
+import type { Session } from '../services/SyncService.ts'
 
 import {
 	computed,
@@ -17,8 +17,8 @@ import {
 	shallowRef,
 	watch,
 } from 'vue'
-import { COLLABORATOR_DISCONNECT_TIME, isGuest } from '../services/SyncService'
-import { useConnection } from './useConnection'
+import { COLLABORATOR_DISCONNECT_TIME, isGuest } from '../services/SyncService.ts'
+import { useConnection } from './useConnection.ts'
 
 /**
  * Get the sessions from the sync service.

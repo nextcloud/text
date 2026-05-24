@@ -15,8 +15,8 @@ import {
 	readonly,
 	shallowRef,
 } from 'vue'
-import { logger } from '../helpers/logger'
-import { useEditor } from './useEditor'
+import { logger } from '../helpers/logger.ts'
+import { useEditor } from './useEditor.ts'
 
 export const intersectionObserverKey = Symbol(
 	'text:intersection_observer',

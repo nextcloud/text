@@ -4,7 +4,7 @@
  */
 
 import { BulletList as TiptapBulletList } from '@tiptap/extension-list'
-import { listInputRule, toggleListCommand } from '../commands'
+import { listInputRule, toggleListCommand } from '../commands/index.ts'
 
 /* We want to allow for `* [ ]` as an input rule for bullet lists.
  * Therefore the list input rules need to check the input

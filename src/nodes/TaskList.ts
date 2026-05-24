@@ -8,7 +8,7 @@ import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { mergeAttributes } from '@tiptap/core'
 import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
-import { toggleListCommand } from '../commands'
+import { toggleListCommand } from '../commands/index.ts'
 
 const TaskList = TiptapTaskList.extend({
 	parseHTML() {
