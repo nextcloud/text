@@ -6,8 +6,9 @@
 import type { Doc } from 'yjs'
 import type { SyncService } from '../services/SyncService.ts'
 import type { Connection } from './useConnection.ts'
+import type { InjectionKey, ShallowRef } from 'vue'
 
-import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
+import { inject, provide } from 'vue'
 import { getDocumentState } from '../helpers/yjs'
 import { SaveService } from '../services/SaveService'
 

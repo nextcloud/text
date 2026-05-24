@@ -5,11 +5,12 @@
 
 import type { Connection } from '../composables/useConnection'
 import type { Document } from '../services/SyncService'
+import type { ShallowRef } from 'vue'
 
 import { getRequestToken } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { type ShallowRef, unref } from 'vue'
+import { unref } from 'vue'
 
 interface SaveData {
 	version: number
