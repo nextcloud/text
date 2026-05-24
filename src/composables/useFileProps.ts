@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type InjectionKey, inject, provide } from 'vue'
+import type { InjectionKey } from 'vue'
+
+import { inject, provide } from 'vue'
 
 interface FileProps {
 	fileId?: number

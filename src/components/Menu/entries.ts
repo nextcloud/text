@@ -2,11 +2,11 @@
  * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { AnyCommands, Editor } from '@tiptap/core'
 
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { type AnyCommands, type Editor } from '@tiptap/core'
 import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
