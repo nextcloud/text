@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { InjectionKey, ShallowRef } from 'vue'
 import type { Doc } from 'yjs'
 import type { SyncService } from '../services/SyncService.ts'
 import type { Connection } from './useConnection.ts'
-import type { InjectionKey, ShallowRef } from 'vue'
 
 import { inject, provide } from 'vue'
 import { getDocumentState } from '../helpers/yjs'
-import { SaveService } from '../services/SaveService'
+import { SaveService } from '../services/SaveService.ts'
 
 const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
 

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Session, Step } from '../services/SyncService'
+import type { Session, Step } from '../services/SyncService.ts'
 
-import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService'
+import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService.ts'
 
 /**
  * Get the recent awareness messages as steps

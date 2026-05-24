@@ -4,7 +4,7 @@
  */
 
 import type { Node } from '@tiptap/pm/model'
-import type { Heading } from '../composables/useEditorHeadings'
+import type { Heading } from '../composables/useEditorHeadings.ts'
 
 import { slugify } from './slug.js'
 

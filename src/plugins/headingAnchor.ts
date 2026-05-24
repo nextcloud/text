@@ -6,12 +6,12 @@
 import type { Node } from '@tiptap/pm/model'
 import type { Transaction } from '@tiptap/pm/state'
 import type { EditorView } from '@tiptap/pm/view'
-import type { Heading } from '../composables/useEditorHeadings'
+import type { Heading } from '../composables/useEditorHeadings.ts'
 
 import { t } from '@nextcloud/l10n'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import extractHeadings from './extractHeadings'
+import extractHeadings from './extractHeadings.ts'
 
 export const headingAnchorPluginKey = new PluginKey('headingAnchor')
 

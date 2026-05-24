@@ -3,6 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { initialize } from './oca.text'
+import { initialize } from './oca.text.ts'
 
 initialize()

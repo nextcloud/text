@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { OpenData } from '../apis/connect'
-import type { Step } from '../services/SyncService'
+import type { OpenData } from '../apis/connect.ts'
+import type { Step } from '../services/SyncService.ts'
 
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
 import { messageSync } from '../services/y-websocket.js'
-import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
+import { decodeArrayBuffer, encodeArrayBuffer } from './base64.ts'
 
 /**
  * Get Document state encode as base64.

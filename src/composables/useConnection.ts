@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Document, Session } from '../services/SyncService'
 import type { InjectionKey, ShallowRef } from 'vue'
-import type { OpenData } from '../apis/connect'
-
+import type { OpenData } from '../apis/connect.ts'
+import type { Document, Session } from '../services/SyncService.ts'
 
 import { inject, provide, shallowRef } from 'vue'
-import { open } from '../apis/connect'
+import { open } from '../apis/connect.ts'
 
 export interface Connection {
 	documentId: number

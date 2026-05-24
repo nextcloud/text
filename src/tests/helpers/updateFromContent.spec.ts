@@ -10,7 +10,7 @@ import { describe, expect, it } from 'vitest'
 import * as Y from 'yjs'
 import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import { updateFromContent } from '../../helpers/updateFromContent'
+import { updateFromContent } from '../../helpers/updateFromContent.ts'
 
 describe('apply content', () => {
 	it('applies content to an empty doc', () => {

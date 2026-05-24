@@ -6,7 +6,7 @@
 import type { User as Account } from '@nextcloud/e2e-test-server'
 import type { Page } from '@playwright/test'
 
-import { uploadFile } from './Node'
+import { uploadFile } from './Node.ts'
 
 export class User {
 
