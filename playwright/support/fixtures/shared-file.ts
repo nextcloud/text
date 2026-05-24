@@ -5,8 +5,8 @@
 
 import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
 import { expect } from '@playwright/test'
-import { test as base } from './upload-file'
-import { User } from './User'
+import { test as base } from './upload-file.ts'
+import { User } from './User.ts'
 
 export interface SharedFileFixture {
 	owner: User
@@ -19,7 +19,7 @@ export interface SharedFileFixture {
  */
 export const test = base.extend<SharedFileFixture>({
 
-	 
+
 	owner: async ({ browser, baseURL }, use) => {
 		const account = await createRandomUser()
 		// Important: make sure we authenticate in a clean environment by unsetting storage state.

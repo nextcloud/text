@@ -4,9 +4,9 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
-import { test as editorTest } from '../../support/fixtures/editor'
-import { test as folderDescriptionTest } from '../../support/fixtures/folder-description'
-import { createFolder } from '../../support/fixtures/Node'
+import { test as editorTest } from '../../support/fixtures/editor.ts'
+import { test as folderDescriptionTest } from '../../support/fixtures/folder-description.ts'
+import { createFolder } from '../../support/fixtures/Node.ts'
 
 const test = mergeTests(editorTest, folderDescriptionTest)
 

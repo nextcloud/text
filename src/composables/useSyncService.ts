@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Connection, InitialData } from './useConnection'
 import type { InjectionKey, ShallowRef } from 'vue'
+import type { Connection, InitialData } from './useConnection.ts'
 
 import { inject, provide } from 'vue'
-import { SyncService } from '../services/SyncService'
+import { SyncService } from '../services/SyncService.ts'
 
 const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
 

@@ -5,10 +5,10 @@
 
 import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.ts'
-import type { SyncService } from './SyncService'
+import type { SyncService } from './SyncService.ts'
 
 import debounce from 'debounce'
-import { save, saveViaSendBeacon } from '../apis/save'
+import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
 
 /**

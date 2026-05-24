@@ -5,13 +5,13 @@
 
 import type { Extension } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
-import type { Connection } from './composables/useConnection'
+import type { Connection } from './composables/useConnection.ts'
 
 import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
-import { logger } from './helpers/logger'
+import { logger } from './helpers/logger.ts'
 
 import 'proxy-polyfill'
 

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { OpenData } from '../apis/connect'
-import type { Step, SyncService } from './SyncService'
+import type { OpenData } from '../apis/connect.ts'
+import type { Step, SyncService } from './SyncService.ts'
 
-import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
+import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.ts'
 import { logger } from '../helpers/logger.js'
-import { stepsFromOpenData } from '../helpers/yjs'
-import getNotifyBus from './NotifyService'
+import { stepsFromOpenData } from '../helpers/yjs.ts'
+import getNotifyBus from './NotifyService.ts'
 
 // Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
 /**

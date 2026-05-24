@@ -5,7 +5,7 @@
 
 import MarkdownIt from 'markdown-it'
 import { describe, expect, it } from 'vitest'
-import mathematics from '../../markdownit/mathematics'
+import mathematics from '../../markdownit/mathematics.ts'
 import stripIndent from './stripIndent.js'
 
 describe('mathematics extension', () => {
