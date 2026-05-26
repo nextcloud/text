@@ -328,8 +328,6 @@ class DocumentService {
 		return $this->stepMapper->find($documentId, $lastVersion);
 	}
 
-
-
 	/**
 	 * @throws DocumentSaveConflictException
 	 * @throws InvalidPathException

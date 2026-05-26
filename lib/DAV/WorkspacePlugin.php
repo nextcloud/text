@@ -58,7 +58,6 @@ class WorkspacePlugin extends ServerPlugin {
 		$this->server->on('propFind', [$this, 'propFind']);
 	}
 
-
 	public function propFind(PropFind $propFind, INode $node) {
 		if (!array_intersect([
 			self::WORKSPACE_PROPERTY,
