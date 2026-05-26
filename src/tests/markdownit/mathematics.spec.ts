@@ -13,11 +13,9 @@ describe('mathematics extension', () => {
 		const rendered = MarkdownIt('commonmark')
 			.use(mathematics)
 			.render('Here is some math: $1 + 1 = 2$.')
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<p>Here is some math:
-			<span data-type="inline-math" data-latex="1 + 1 = 2">1 + 1 = 2</span>.</p>`),
-		)
+			<span data-type="inline-math" data-latex="1 + 1 = 2">1 + 1 = 2</span>.</p>`))
 	})
 
 	it('renders block math', () => {
@@ -27,22 +25,18 @@ $$
 1 + 1 + 1 = 3
 $$
 .`)
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<p>Here is some more math:</p>
 			<div data-type="block-math" data-latex="1 + 1 + 1 = 3"></div>
-			<p>.</p>`),
-		)
+			<p>.</p>`))
 	})
 
 	it('escapes html', () => {
 		const rendered = MarkdownIt('commonmark')
 			.use(mathematics)
 			.render('Here is some html: $<div>aaargh</div>$.')
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<p>Here is some html:
-			<span data-type="inline-math" data-latex="&lt;div&gt;aaargh&lt;/div&gt;">&lt;div&gt;aaargh&lt;/div&gt;</span>.</p>`),
-		)
+			<span data-type="inline-math" data-latex="&lt;div&gt;aaargh&lt;/div&gt;">&lt;div&gt;aaargh&lt;/div&gt;</span>.</p>`))
 	})
 })

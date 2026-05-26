@@ -70,15 +70,13 @@ function callMobileMessage(messageName, attributes) {
 		&& window.webkit.messageHandlers
 		&& window.webkit.messageHandlers.DirectEditingMobileInterface
 	) {
-		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(
-			message,
-		)
+		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(message)
 	}
 
 	window.postMessage(message)
 }
 
-window.addEventListener('message', function (message) {
+window.addEventListener('message', function(message) {
 	log.messages.push(message.data)
 	logger.debug('postMessage', { message })
 })

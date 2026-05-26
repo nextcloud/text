@@ -18,9 +18,7 @@ import {
 import { logger } from '../helpers/logger.ts'
 import { useEditor } from './useEditor.ts'
 
-export const intersectionObserverKey = Symbol(
-	'text:intersection_observer',
-) as InjectionKey<IntersectionObserver>
+export const intersectionObserverKey = Symbol('text:intersection_observer') as InjectionKey<IntersectionObserver>
 export const visibleIdsKey = Symbol('text:visibile_ids') as InjectionKey<
 	Ref<Set<string>>
 >

@@ -6,23 +6,23 @@
 import { initUserAndFiles, randUser } from '../utils/index.js'
 const user = randUser()
 
-describe('Open test.md in viewer', function () {
+describe('Open test.md in viewer', function() {
 	const getViewer = () => cy.get('#viewer')
 
-	before(function () {
+	before(function() {
 		initUserAndFiles(user, 'test.md', 'empty.md')
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.visit('/apps/files')
 	})
 
-	it('See test.md in the list', function () {
+	it('See test.md in the list', function() {
 		cy.getFile('test.md').should('be.visible')
 	})
 
-	it('Open the viewer on file click', function () {
+	it('Open the viewer on file click', function() {
 		cy.openFile('test.md')
 
 		cy.log('Inspect viewer')
@@ -44,7 +44,7 @@ describe('Open test.md in viewer', function () {
 		cy.getActionEntry('bold').should('be.visible')
 	})
 
-	it('Open an empty file', function () {
+	it('Open an empty file', function() {
 		cy.openFile('empty.md')
 
 		cy.log('Inspect viewer')
@@ -65,13 +65,13 @@ describe('Open test.md in viewer', function () {
 		cy.getActionEntry('bold').should('be.visible')
 	})
 
-	it('Closes the editor', function () {
+	it('Closes the editor', function() {
 		cy.openFile('test.md')
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
 	})
 
-	it('Can use tab keys for list in the viewer', function () {
+	it('Can use tab keys for list in the viewer', function() {
 		// This used to break with the focus trap that the viewer modal has
 		cy.openFile('empty.md')
 
@@ -79,9 +79,7 @@ describe('Open test.md in viewer', function () {
 
 		// Ignore TypeError thrown by cypress keydown + keyup
 		cy.on('uncaught:exception', (err) => {
-			return !err.message.includes(
-				"Cannot read properties of undefined (reading 'toLowerCase')",
-			)
+			return !err.message.includes("Cannot read properties of undefined (reading 'toLowerCase')")
 		})
 
 		// Cypress does not have native tab key support, though this seems to work

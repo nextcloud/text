@@ -28,9 +28,9 @@ export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags
 export function provideEditorFlags(props: Props) {
 	const isPublic = props.isDirectEditing || isPublicShare()
 	const isRichWorkspace = props.richWorkspace ?? false
-	const isRichEditor =
-		loadState('text', 'rich_editing_enabled', true)
-		&& props.mime === 'text/markdown'
+	const isRichEditor
+		= loadState('text', 'rich_editing_enabled', true)
+			&& props.mime === 'text/markdown'
 	const useTableOfContents = isRichEditor && !isRichWorkspace
 	provide(editorFlagsKey, {
 		isPublic,

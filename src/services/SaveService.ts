@@ -10,7 +10,7 @@ import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { type SyncService, ERROR_TYPE } from './SyncService.ts'
+import { type SyncService,ERROR_TYPE } from './SyncService.ts'
 
 /**
  * Interval to save the serialized document and the document state
@@ -76,7 +76,7 @@ class SaveService {
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
-				e as { response?: { status?: number; data?: { error?: string } } }
+				e as { response?: { status?: number, data?: { error?: string } } }
 			).response
 			if (response?.status === 403) {
 				// Document is now read-only; permissionChange from sync will update the UI

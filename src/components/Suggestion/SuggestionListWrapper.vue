@@ -76,7 +76,7 @@ export default {
 			return (
 				this.selectedIndex * this.itemHeight >= this.$el.scrollTop
 				&& (this.selectedIndex + 1) * this.itemHeight
-					<= this.$el.scrollTop + this.$el.clientHeight
+				<= this.$el.scrollTop + this.$el.clientHeight
 			)
 		},
 
@@ -119,8 +119,8 @@ export default {
 			}
 
 			if (event.key === 'ArrowUp') {
-				this.selectedIndex =
-					(this.selectedIndex + this.items.length - 1) % this.items.length
+				this.selectedIndex
+					= (this.selectedIndex + this.items.length - 1) % this.items.length
 				if (!this.itemInsideScrollView) {
 					this.$el.scrollTop = this.selectedIndex * this.itemHeight
 				}
@@ -130,9 +130,9 @@ export default {
 			if (event.key === 'ArrowDown') {
 				this.selectedIndex = (this.selectedIndex + 1) % this.items.length
 				if (!this.itemInsideScrollView) {
-					this.$el.scrollTop =
-						(this.selectedIndex + 1) * this.itemHeight
-						- this.$el.clientHeight
+					this.$el.scrollTop
+						= (this.selectedIndex + 1) * this.itemHeight
+							- this.$el.clientHeight
 				}
 				return true
 			}

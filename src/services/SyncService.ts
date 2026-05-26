@@ -110,16 +110,16 @@ export declare type EventTypes = {
 	opened: OpenData
 
 	/* received new steps */
-	sync: { document?: object; steps: Step[] }
+	sync: { document?: object, steps: Step[] }
 
 	/* state changed (dirty) */
-	stateChange: { initialLoading?: boolean; dirty?: boolean }
+	stateChange: { initialLoading?: boolean, dirty?: boolean }
 
 	/* error */
-	error: { type: ErrorType; data?: object }
+	error: { type: ErrorType, data?: object }
 
 	/* Events for session and document meta data */
-	change: { sessions: Session[]; document: Document }
+	change: { sessions: Session[], document: Document }
 
 	/* Emitted after successful save */
 	save: object
@@ -190,9 +190,9 @@ class SyncService {
 		this.backend?.resetRefetchTimer()
 	}
 
-	#emitError(error: { response?: object; code?: string }) {
-		const eventData =
-			!error.response || error.code === 'ECONNABORTED'
+	#emitError(error: { response?: object, code?: string }) {
+		const eventData
+			= !error.response || error.code === 'ECONNABORTED'
 				? { type: ERROR_TYPE.CONNECTION_FAILED, data: {} }
 				: { type: ERROR_TYPE.LOAD_ERROR, data: error.response }
 		this.bus.emit('error', eventData)
@@ -309,9 +309,7 @@ class SyncService {
 		if (this.version < versionAfter) {
 			// Steps up to version where emitted but it looks like they were not processed.
 			// Otherwise the WebsocketPolyfill would have increased the version counter.
-			console.warn(
-				`Failed to process steps leading up to version ${versionAfter}.`,
-			)
+			console.warn(`Failed to process steps leading up to version ${versionAfter}.`)
 		}
 		this.#lastStepPush = Date.now()
 	}
@@ -319,9 +317,7 @@ class SyncService {
 	checkIdle() {
 		const lastPushMinutesAgo = (Date.now() - this.#lastStepPush) / 1000 / 60
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
-			logger.debug(
-				`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`,
-			)
+			logger.debug(`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`)
 			this.bus.emit('idle')
 			return true
 		}

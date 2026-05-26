@@ -13,9 +13,7 @@ import { listInputRule, toggleListCommand } from '../commands/index.ts'
  */
 const BulletList = TiptapBulletList.extend({
 	parseHTML() {
-		return this.parent?.()?.map((rule) =>
-			Object.assign(rule, { preserveWhitespace: true }),
-		)
+		return this.parent?.()?.map((rule) => Object.assign(rule, { preserveWhitespace: true }))
 	},
 
 	addAttributes() {

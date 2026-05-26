@@ -13,9 +13,7 @@ let ownPaused = false
  * @param extensionName
  */
 function checkHasExtension(editor, extensionName) {
-	return editor.extensionManager.extensions.some(
-		(extension) => extension.name === extensionName,
-	)
+	return editor.extensionManager.extensions.some((extension) => extension.name === extensionName)
 }
 
 /**
@@ -39,11 +37,11 @@ function toggleFocusTrap({ editor }) {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
-	const possibleEditorTabCommand =
-		(checkHasListExtension(editor) && editor.can().sinkListItem('listItem'))
-		|| (checkHasExtension(editor, 'table') && editor.can().goToNextCell())
-		|| (checkHasExtension(editor, 'table') && editor.can().goToPreviousCell())
-		|| (checkHasExtension(editor, 'codeBlock') && editor.isActive('codeBlock'))
+	const possibleEditorTabCommand
+		= (checkHasListExtension(editor) && editor.can().sinkListItem('listItem'))
+			|| (checkHasExtension(editor, 'table') && editor.can().goToNextCell())
+			|| (checkHasExtension(editor, 'table') && editor.can().goToPreviousCell())
+			|| (checkHasExtension(editor, 'codeBlock') && editor.isActive('codeBlock'))
 
 	if (possibleEditorTabCommand) {
 		activeTrap?.pause()

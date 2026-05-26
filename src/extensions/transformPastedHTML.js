@@ -19,7 +19,7 @@
  *
  * @param {string} html Pasted html content
  */
-export default function (html) {
+export default function(html) {
 	const parser = new DOMParser()
 	const doc = parser.parseFromString(html, 'text/html')
 	forAllTextNodes(doc, (textNode) => {

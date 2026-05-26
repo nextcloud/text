@@ -12,7 +12,7 @@ afterEach(() => {
 })
 
 test('useDelayedFlag defaults to provided ref value', () => {
-	;[true, false].forEach((val) => {
+	[true, false].forEach((val) => {
 		const { delayed } = useDelayedFlag(ref(val))
 		expect(delayed.value).toBe(val)
 	})

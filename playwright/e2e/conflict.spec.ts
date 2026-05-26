@@ -182,11 +182,9 @@ test('[conflict] automatic resolution if no unsaved changes', async ({
 		timeout: 10_000,
 	})
 	await expect(reader.content).not.toBeVisible()
-	await expect(
-		container.getButton({
-			name: /Keep my local changes and overwrite the remote version/,
-		}),
-	).not.toBeVisible()
+	await expect(container.getButton({
+		name: /Keep my local changes and overwrite the remote version/,
+	})).not.toBeVisible()
 })
 
 test('readonly session hides conflict dialog', async ({
@@ -217,11 +215,9 @@ test('readonly session hides conflict dialog', async ({
 	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
 		timeout: 10_000,
 	})
-	await expect(
-		container.getButton({
-			name: /Keep my local changes and overwrite the remote version/,
-		}),
-	).not.toBeVisible()
+	await expect(container.getButton({
+		name: /Keep my local changes and overwrite the remote version/,
+	})).not.toBeVisible()
 })
 
 test('no conflict when uploading identical content with unsaved changes', async ({
@@ -312,11 +308,9 @@ test('no conflict when uploading identical content with local unsaved changes af
 		timeout: 10_000,
 	})
 	await expect(reader.content).not.toBeVisible()
-	await expect(
-		container.getButton({
-			name: /Keep my local changes and overwrite the remote version/,
-		}),
-	).not.toBeVisible()
+	await expect(container.getButton({
+		name: /Keep my local changes and overwrite the remote version/,
+	})).not.toBeVisible()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 })
 
@@ -358,10 +352,8 @@ test('conflict dialog is sticky when scrolling', async ({
 	// Scroll down
 	await reader.getHeading({ name: 'Section 7' }).scrollIntoViewIfNeeded()
 
-	await expect(
-		container.getButton({
-			name: /Keep my local changes and overwrite the remote version/,
-		}),
-	).toBeVisible()
+	await expect(container.getButton({
+		name: /Keep my local changes and overwrite the remote version/,
+	})).toBeVisible()
 	await expect(page.locator('.document-status')).toBeVisible()
 })

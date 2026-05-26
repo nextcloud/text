@@ -73,12 +73,11 @@ export function linkBubble(options: { editor: Editor }) {
 			},
 		},
 
-		view: (view) =>
-			new LinkBubblePluginView({
-				view,
-				options,
-				plugin: linkBubblePlugin,
-			}),
+		view: (view) => new LinkBubblePluginView({
+			view,
+			options,
+			plugin: linkBubblePlugin,
+		}),
 
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
@@ -90,9 +89,7 @@ export function linkBubble(options: { editor: Editor }) {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
-			const noHistory = transactions.every(
-				(tr) => tr.getMeta('addToHistory') === false,
-			)
+			const noHistory = transactions.every((tr) => tr.getMeta('addToHistory') === false)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
@@ -144,11 +141,9 @@ export const linkClickingKey = new PluginKey('textHandleClickLink')
  *
  * @param openLink - the openLink callback function
  */
-export function linkClicking(
-	openLink: (href: string) => void = (href) => {
-		window.open(href, '_blank')
-	},
-) {
+export function linkClicking(openLink: (href: string) => void = (href) => {
+	window.open(href, '_blank')
+}) {
 	return new Plugin({
 		key: linkClickingKey,
 		props: {

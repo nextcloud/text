@@ -50,9 +50,7 @@ export default class AttachmentResolver {
 		// Native attachment
 		const directoryRegexp = /^\.attachments\.\d+\//
 		if (src.match(directoryRegexp)) {
-			const imageFileName = decodeURIComponent(
-				src.replace(directoryRegexp, '').split('?')[0],
-			)
+			const imageFileName = decodeURIComponent(src.replace(directoryRegexp, '').split('?')[0])
 
 			// Wait until attachment list got fetched (initialized by constructor)
 			await this.#initAttachmentListPromise

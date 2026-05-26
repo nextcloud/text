@@ -60,9 +60,7 @@ describe('table plugin', () => {
 			cy.getContent()
 				.find('table tr:first-child th:first-child button')
 				.click()
-			cy.get(
-				`[data-text-table-action="align-column-${align}"] [role="menuitemradio"]`,
-			).click()
+			cy.get(`[data-text-table-action="align-column-${align}"] [role="menuitemradio"]`).click()
 			// Check header has correct text align and text is preserved
 			cy.getContent()
 				.find('table tr:first-child th:first-child')
@@ -80,9 +78,7 @@ describe('table plugin', () => {
 		cy.getActionEntry('table').click()
 
 		cy.getContent().find('table tr:first-child th:first-child button').click()
-		cy.get(
-			'[data-text-table-action="align-column-center"] [role="menuitemradio"]',
-		).click()
+		cy.get('[data-text-table-action="align-column-center"] [role="menuitemradio"]').click()
 
 		// Test before adding a row
 		cy.getContent()
@@ -104,7 +100,7 @@ describe('table plugin', () => {
 			.each((td) => cy.wrap(td).should('have.css', 'text-align', 'center'))
 	})
 
-	it('Creates table and add multilines', function () {
+	it('Creates table and add multilines', function() {
 		cy.getActionEntry('table').click()
 		cy.getContent()
 			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1)')
@@ -115,9 +111,7 @@ describe('table plugin', () => {
 		cy.getContent()
 			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1)')
 			.then(($el) => {
-				expect($el.get(0).innerHTML).to.equal(
-					'<p dir="ltr">Line 1</p><p dir="ltr">Line 2</p><p dir="ltr">Line 3</p>',
-				)
+				expect($el.get(0).innerHTML).to.equal('<p dir="ltr">Line 1</p><p dir="ltr">Line 2</p><p dir="ltr">Line 3</p>')
 			})
 	})
 

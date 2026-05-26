@@ -260,8 +260,8 @@ export default defineComponent({
 			hasConnectionIssue,
 			offlineReadonlyDelay * 1000,
 		)
-		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
-			provideEditorFlags(props)
+		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
+			= provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
@@ -300,10 +300,7 @@ export default defineComponent({
 		const { setEditable, updateUser } = useEditorMethods(editor)
 
 		const serialize = isRichEditor
-			? () =>
-					createMarkdownSerializer(editor.schema).serialize(
-						editor.state.doc,
-					)
+			? () => createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
 			: () => serializePlainText(editor.state.doc)
 
 		const { saveService } = provideSaveService(
@@ -506,7 +503,7 @@ export default defineComponent({
 
 	created() {
 		// The following can be useful for debugging ydoc updates
-		this.ydoc.on('update', function (update, origin, doc, tr) {
+		this.ydoc.on('update', function(update, origin, doc, tr) {
 			if (window.OCA.Text.logYjsUpdates) {
 				logger.debug('ydoc update', {
 					update,
@@ -621,9 +618,7 @@ export default defineComponent({
 				const node = new File({
 					id: this.fileId,
 					root: `/files/${session.userId}`,
-					source: generateRemoteUrl(
-						`dav/files/${session.userId}${this.relativePath}`,
-					),
+					source: generateRemoteUrl(`dav/files/${session.userId}${this.relativePath}`),
 
 					mime: this.mime,
 				})
@@ -651,9 +646,7 @@ export default defineComponent({
 				if (this.dirty) {
 					this.saveService
 						.save()
-						.catch((err) =>
-							logger.error('Failed to save offline changes', { err }),
-						)
+						.catch((err) => logger.error('Failed to save offline changes', { err }))
 					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
 				}
 			})
@@ -685,10 +678,10 @@ export default defineComponent({
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue =
-				this.syncService.backend.fetcher === 0
-				|| !this.syncProvider?.wsconnected
-				|| this.syncService.pushError > 0
+			this.hasConnectionIssue
+				= this.syncService.backend.fetcher === 0
+					|| !this.syncProvider?.wsconnected
+					|| this.syncService.pushError > 0
 			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.syncService.sendStepsNow()
@@ -731,12 +724,10 @@ export default defineComponent({
 				this.readOnly = true
 				this.editMode = false
 				this.setEditable(this.editMode)
-				showWarning(
-					t(
-						'text',
-						'Your editing permissions have been revoked. The document is now read-only.',
-					),
-				)
+				showWarning(t(
+					'text',
+					'Your editing permissions have been revoked. The document is now read-only.',
+				))
 				this.emit('push:forbidden')
 				return
 			}
@@ -795,16 +786,12 @@ export default defineComponent({
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.setEditable(this.editMode)
 			if (readOnly) {
-				showWarning(
-					t(
-						'text',
-						'Your editing permissions have been revoked. The document is now read-only.',
-					),
-				)
+				showWarning(t(
+					'text',
+					'Your editing permissions have been revoked. The document is now read-only.',
+				))
 			} else {
-				showWarning(
-					t('text', 'You now have edit permissions for this document.'),
-				)
+				showWarning(t('text', 'You now have edit permissions for this document.'))
 			}
 		},
 
@@ -845,13 +832,9 @@ export default defineComponent({
 			logger.debug('closing')
 			await this.syncService
 				.sendRemainingSteps()
-				.catch((err) =>
-					logger.warn('Failed to send remaining steps', { err }),
-				)
+				.catch((err) => logger.warn('Failed to send remaining steps', { err }))
 			logger.debug('sent remaining steps')
-			await this.disconnect().catch((err) =>
-				logger.warn('Failed to disconnect', { err }),
-			)
+			await this.disconnect().catch((err) => logger.warn('Failed to disconnect', { err }))
 			if (this.editor) {
 				try {
 					this.unlistenEditorEvents()

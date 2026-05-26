@@ -88,9 +88,7 @@ export default {
 
 			// Emit initial content
 			try {
-				const markdown = createMarkdownSerializer(
-					this.editor.schema,
-				).serialize(this.editor.state.doc)
+				const markdown = createMarkdownSerializer(this.editor.schema).serialize(this.editor.state.doc)
 				this.emit('create:content', {
 					json: this.editor.state.doc,
 					markdown,
@@ -101,9 +99,7 @@ export default {
 		})
 		this.editor.on('update', ({ editor }) => {
 			try {
-				const markdown = createMarkdownSerializer(editor.schema).serialize(
-					editor.state.doc,
-				)
+				const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
 				this.emit('update:content', {
 					json: editor.state.doc,
 					markdown,

@@ -6,9 +6,9 @@
 import { describe, expect, it } from 'vitest'
 import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 
-describe('Yjs', function () {
+describe('Yjs', function() {
 	// Only tests that Yjs allows to apply steps in wrong order
-	it('applies step in wrong order', function () {
+	it('applies step in wrong order', function() {
 		const source = new Doc()
 		const target = new Doc()
 		const sourceMap = source.getMap()
@@ -43,7 +43,7 @@ describe('Yjs', function () {
 		expect(targetMap.get('keyC')).to.be.eq('valueC')
 	})
 
-	it('detect empty updates', function () {
+	it('detect empty updates', function() {
 		const source = new Doc()
 		const update0 = encodeStateAsUpdate(source)
 		expect(update0).toMatchInlineSnapshot(`

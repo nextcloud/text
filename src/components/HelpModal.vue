@@ -130,9 +130,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="noborder ellipsis">…</td>
-					<td class="noborder ellipsis">…</td>
-					<td v-if="!isMobileCached" class="ellipsis noborder">…</td>
+					<td class="noborder ellipsis">
+						…
+					</td>
+					<td class="noborder ellipsis">
+						…
+					</td>
+					<td v-if="!isMobileCached" class="ellipsis noborder">
+						…
+					</td>
 				</tr>
 				<tr>
 					<td class="noborder ellipsis_bottom">

@@ -11,7 +11,7 @@
 		<template #default="{ item }">
 			<div class="link-picker__item" :data-key="item.key">
 				<compoent :is="item.icon" v-if="typeof item.icon !== 'string'" />
-				<img v-else :src="item.icon" />
+				<img v-else :src="item.icon">
 				<div>{{ item.label }}</div>
 			</div>
 		</template>

@@ -20,7 +20,7 @@
 			type="file"
 			accept="*/*"
 			multiple
-			@change="onAttachmentUploadFilePicked" />
+			@change="onAttachmentUploadFilePicked">
 		<slot />
 	</div>
 </template>
@@ -161,11 +161,9 @@ export default {
 				.catch((error) => {
 					logger.error('Uploading attachment failed', { error })
 					if (error.response?.data.error) {
-						showError(
-							t('text', 'Uploading attachment failed: {error}', {
-								error: error.response.data.error,
-							}),
-						)
+						showError(t('text', 'Uploading attachment failed: {error}', {
+							error: error.response.data.error,
+						}))
 					} else {
 						showError(t('text', 'Uploading attachment failed.'))
 					}
@@ -246,12 +244,12 @@ export default {
 			)
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src =
-				dirname
-				+ '/'
-				+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
+			const src
+				= dirname
+					+ '/'
+					+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
+						return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+					})
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
 			const alt = sanitizedName.replaceAll(/[[\]]/g, '')

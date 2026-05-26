@@ -7,12 +7,12 @@ import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-describe('The user mention API', function () {
-	before(function () {
+describe('The user mention API', function() {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 			.as('fileId')
@@ -21,17 +21,17 @@ describe('The user mention API', function () {
 			.as('connection')
 	})
 
-	it('has a valid connection', function () {
+	it('has a valid connection', function() {
 		cy.get('@connection').its('documentId').should('equal', this.fileId)
 		cy.closeConnection(this.connection)
 	})
 
-	it('fetches users with valid session', function () {
+	it('fetches users with valid session', function() {
 		cy.sessionUsers(this.connection).its('status').should('eq', 200)
 		cy.closeConnection(this.connection)
 	})
 
-	it('rejects invalid sessions', function () {
+	it('rejects invalid sessions', function() {
 		cy.sessionUsers(this.connection, { sessionToken: 'invalid' })
 			.its('status')
 			.should('eq', 403)
@@ -44,7 +44,7 @@ describe('The user mention API', function () {
 		cy.closeConnection(this.connection)
 	})
 
-	it('rejects closed sessions', function () {
+	it('rejects closed sessions', function() {
 		cy.closeConnection(this.connection)
 		cy.sessionUsers(this.connection).its('status').should('eq', 403)
 	})

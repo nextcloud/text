@@ -23,11 +23,11 @@ window.OCA.Text.editorComponents = editorComponents
  * Print debug info for all editor components as a warning.
  */
 export function debugYjs() {
-	const intro =
-		'Editor Yjs debug data. Copy the objects above that start with "fileId".'
+	const intro
+		= 'Editor Yjs debug data. Copy the objects above that start with "fileId".'
 	const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-	const introFirefox =
-		'- In Firefox, right-click on the object and select "Copy object".'
+	const introFirefox
+		= '- In Firefox, right-click on the object and select "Copy object".'
 	const styleBold = 'font-weight: bold;'
 	const styleItalic = 'font-weight: normal; font-style: italic;'
 

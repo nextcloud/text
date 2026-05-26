@@ -247,10 +247,7 @@ export default {
 
 		badgeStateIcon() {
 			if (
-				this.tasks.filter(
-					(t) =>
-						t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING,
-				).length > 0
+				this.tasks.filter((t) => t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING).length > 0
 			) {
 				return ClockOutline
 			}
@@ -295,15 +292,11 @@ export default {
 
 	methods: {
 		async fetchTasks() {
-			const result = await axios.get(
-				generateOcsUrl('/taskprocessing/tasks/app/text')
-					+ '?customId='
-					+ this.identifier,
-			)
+			const result = await axios.get(generateOcsUrl('/taskprocessing/tasks/app/text')
+				+ '?customId='
+				+ this.identifier)
 
-			const filteredTasks = result.data.ocs.data.tasks.filter((t) =>
-				this.taskTypeIds.includes(t.type),
-			)
+			const filteredTasks = result.data.ocs.data.tasks.filter((t) => this.taskTypeIds.includes(t.type))
 			this.tasks = filteredTasks
 				.map((task) => {
 					return {

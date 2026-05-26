@@ -53,9 +53,7 @@ export default {
 
 	computed: {
 		fileName() {
-			return this.relativePath.substring(
-				this.relativePath.lastIndexOf('/') + 1,
-			)
+			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
 		},
 	},
 

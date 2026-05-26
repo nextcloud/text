@@ -28,9 +28,7 @@ async function loadSyntaxHighlight(language: string) {
 		try {
 			logger.debug('Loading language ' + language)
 			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(
-				`../node_modules/highlight.js/lib/languages/${language}.js`
-			)
+			const syntax = await import(`../node_modules/highlight.js/lib/languages/${language}.js`)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
@@ -98,7 +96,7 @@ function createRichEditor({
 function createPlainEditor({
 	language = 'plaintext',
 	extensions = [],
-}: { language?: string; extensions?: Extension[] } = {}) {
+}: { language?: string, extensions?: Extension[] } = {}) {
 	return new Editor({
 		editorProps,
 		extensions: [

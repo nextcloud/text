@@ -9,7 +9,7 @@ import type { User } from './User.ts'
 import { expect } from '@playwright/test'
 
 const ocsHeaders = {
-	Accept: 'application/json, text/plain, */*'
+	Accept: 'application/json, text/plain, */*',
 }
 
 export class Node {
@@ -39,7 +39,7 @@ export class Node {
 					Destination: `/remote.php/webdav/${newName}`,
 				},
 				method: 'MOVE',
-			}
+			},
 		)
 		return new Node({ ...this, page: this.page, name: newName })
 	}
@@ -53,7 +53,7 @@ export class Node {
 			{
 				data: { shareType, path },
 				headers: ocsHeaders,
-			}
+			},
 		)
 		const { ocs } = await response.json() as { ocs: { data: { token: string, id: number } } }
 		return ocs.data
@@ -69,7 +69,7 @@ export class Node {
 			{
 				data: { permissions },
 				headers: ocsHeaders,
-			}
+			},
 		)
 		return { token, id }
 	}
@@ -78,7 +78,6 @@ export class Node {
 		const response = await this.page.request.get(`/remote.php/webdav/${this.name}`)
 		return response.text()
 	}
-
 }
 
 /**
@@ -136,4 +135,3 @@ export async function createFolder({ name, owner }: {
 	const id = parseInt(response.headers()['oc-fileid'])
 	return new Node({ id, name, page: owner.page })
 }
-

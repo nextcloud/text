@@ -52,7 +52,7 @@ export default {
 	},
 
 	watch: {
-		'node.attrs.openDetails': function () {
+		'node.attrs.openDetails': function() {
 			this.openByAttr()
 		},
 	},

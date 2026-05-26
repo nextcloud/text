@@ -108,9 +108,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text on both sides', ({ editor }) => {
-		editor.commands.setContent(
-			'<p>before <a href="https://example.org">link</a> after</p>',
-		)
+		editor.commands.setContent('<p>before <a href="https://example.org">link</a> after</p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()
@@ -120,9 +118,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text before only', ({ editor }) => {
-		editor.commands.setContent(
-			'<p>before <a href="https://example.org">link</a></p>',
-		)
+		editor.commands.setContent('<p>before <a href="https://example.org">link</a></p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()
@@ -132,9 +128,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text after only', ({ editor }) => {
-		editor.commands.setContent(
-			'<p><a href="https://example.org">link</a> after</p>',
-		)
+		editor.commands.setContent('<p><a href="https://example.org">link</a> after</p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()
