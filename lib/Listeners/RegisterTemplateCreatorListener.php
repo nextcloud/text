@@ -6,7 +6,6 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-
 namespace OCA\Text\Listeners;
 
 use OCA\Text\AppInfo\Application;
@@ -42,7 +41,6 @@ class RegisterTemplateCreatorListener implements IEventListener {
 			$markdownFile->setActionLabel($this->l10n->t('Create new text file'));
 			return $markdownFile;
 		});
-
 
 	}
 }

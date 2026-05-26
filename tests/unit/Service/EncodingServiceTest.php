@@ -58,7 +58,6 @@ class LabelServiceTest extends TestCase {
 		mb_detect_order($originalOrder);
 	}
 
-
 	public function dataFileEncodings(): array {
 		return [
 			['./tests/data/iso-8859-15.txt', 'ISO-8859-15'],

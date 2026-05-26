@@ -48,7 +48,6 @@ class ConfigService {
 
 	public function isNotifyPushSyncEnabled(): bool {
 		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push', true);
-
 	}
 
 	public function isFullWidthEditor(?string $userId): bool {
