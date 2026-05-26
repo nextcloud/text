@@ -102,8 +102,7 @@ const Details = Node.create({
 	addCommands() {
 		return {
 			setDetails:
-				() =>
-				({ commands, state, chain }) => {
+				() => ({ commands, state, chain }) => {
 					const { schema, selection } = state
 					const { $from, $to } = selection
 					const blockRange = $from.blockRange($to)
@@ -113,9 +112,7 @@ const Details = Node.create({
 
 					const slice = state.doc.slice(blockRange.start, blockRange.end)
 					if (
-						!schema.nodes.detailsContent.contentMatch.matchFragment(
-							slice.content,
-						)
+						!schema.nodes.detailsContent.contentMatch.matchFragment(slice.content)
 					) {
 						return false
 					}
@@ -145,8 +142,7 @@ const Details = Node.create({
 						.run()
 				},
 			unsetDetails:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					const { schema, selection } = state
 					const details = detailsParentInfo(selection.$from, schema)
 					if (!details) {
@@ -172,8 +168,7 @@ const Details = Node.create({
 						.run()
 				},
 			toggleDetails:
-				() =>
-				({ commands, state }) => {
+				() => ({ commands, state }) => {
 					if (!isNodeActive(state, this.name)) {
 						return commands.setDetails()
 					}

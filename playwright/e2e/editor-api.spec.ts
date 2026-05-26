@@ -81,9 +81,7 @@ fileTest.describe(
 					readOnly: true,
 				})
 
-				await expect(page.locator(`#${containerId}`)).toContainText(
-					'some content',
-				)
+				await expect(page.locator(`#${containerId}`)).toContainText('some content')
 
 				const content = page.locator(`#${containerId} .ProseMirror`)
 				await content.click()

@@ -99,9 +99,7 @@ const Markdown = Extension.create({
 								|| slice.content.firstChild?.childCount > 1
 							) {
 								// Selected several nodes or several children of one block node
-								return clipboardSerializer(
-									this.editor.schema,
-								).serialize(slice.content)
+								return clipboardSerializer(this.editor.schema).serialize(slice.content)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
@@ -193,9 +191,7 @@ function extractToPlaintext(marks) {
 		expelEnclosingWhitespace: true,
 	}
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
-	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(
-		([name, _mark]) => [name, blankMark],
-	)
+	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(([name, _mark]) => [name, blankMark])
 
 	return Object.fromEntries(markEntries)
 }
@@ -240,9 +236,7 @@ function convertNames(object) {
 	const convert = (name) => {
 		return name.replace(/_(\w)/g, (_m, letter) => letter.toUpperCase())
 	}
-	return Object.fromEntries(
-		Object.entries(object).map(([name, value]) => [convert(name), value]),
-	)
+	return Object.fromEntries(Object.entries(object).map(([name, value]) => [convert(name), value]))
 }
 
 export { createMarkdownSerializer }

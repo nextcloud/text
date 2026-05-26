@@ -54,12 +54,8 @@ const fullEditorWidthMobile = '100%'
  * If both values are set and match we assume text is handling the width.
  */
 function maxWidthSetOutsideOfText() {
-	const alreadySet = getComputedStyle(document.body).getPropertyValue(
-		'--text-editor-max-width',
-	)
-	const setByText = document.documentElement.style.getPropertyValue(
-		'--text-editor-max-width',
-	)
+	const alreadySet = getComputedStyle(document.body).getPropertyValue('--text-editor-max-width')
+	const setByText = document.documentElement.style.getPropertyValue('--text-editor-max-width')
 	return Boolean(alreadySet) && alreadySet !== setByText
 }
 
@@ -86,15 +82,9 @@ export function provideEditorWidth(useTableOfContents = true) {
 	const defaultFullEditorWidthDesktop = useTableOfContents
 		? fullEditorWidthDesktopEnhanced
 		: fullEditorWidthDesktop
-	const defaultEditorWidth = computed(() =>
-		isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop,
-	)
-	const fullEditorWidth = computed(() =>
-		isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop,
-	)
-	const width = computed(() =>
-		isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value,
-	)
+	const defaultEditorWidth = computed(() => isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop)
+	const fullEditorWidth = computed(() => isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop)
+	const width = computed(() => isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value)
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',

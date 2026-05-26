@@ -16,7 +16,7 @@ interface OfflineFixture {
  *
  * @param client
  */
-async function setClientOnline (client: CDPSession): Promise<void> {
+async function setClientOnline(client: CDPSession): Promise<void> {
 	await client.send('Network.emulateNetworkConditions', {
 		offline: false,
 		latency: 0,
@@ -30,7 +30,7 @@ async function setClientOnline (client: CDPSession): Promise<void> {
  *
  * @param client
  */
-async function setClientOffline (client: CDPSession): Promise<void> {
+async function setClientOffline(client: CDPSession): Promise<void> {
 	await client.send('Network.enable')
 	await client.send('Network.emulateNetworkConditions', {
 		offline: true,
@@ -46,11 +46,11 @@ async function setClientOffline (client: CDPSession): Promise<void> {
 export const test = base.extend<OfflineFixture>({
 	setOffline: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
-		await use (() => setClientOffline(client))
+		await use(() => setClientOffline(client))
 		await setClientOnline(client)
 	},
 	setOnline: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
-		await use (() => setClientOnline(client))
+		await use(() => setClientOnline(client))
 	},
 })

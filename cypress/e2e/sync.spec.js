@@ -16,12 +16,8 @@ describe('Sync', () => {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 		cy.visit('/apps/files')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
-			'sync',
-		)
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as(
-			'save',
-		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as('save')
 		cy.openTestFile()
 		cy.wait('@sync', { timeout: 10000 })
 		cy.getContent().find('h2').should('contain', 'Hello world')
@@ -70,9 +66,7 @@ describe('Sync', () => {
 		)
 		cy.intercept('**/apps/text/session/*/*', (req) => req.continue()).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
-			'syncAfterRecovery',
-		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('syncAfterRecovery')
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
 			'not.contain',
@@ -186,9 +180,7 @@ describe('Sync', () => {
 
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' }).as(
-			'create',
-		)
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' }).as('create')
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')

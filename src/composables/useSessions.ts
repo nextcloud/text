@@ -57,9 +57,7 @@ export function useSessions(syncService: SyncService) {
 			.filter(uniqueUserId)
 
 		// Make sure we get our own session updated
-		const currentUpdatedSession = sessions.value.find(
-			(session) => session.id === currentSession.value?.id,
-		)
+		const currentUpdatedSession = sessions.value.find((session) => session.id === currentSession.value?.id)
 		if (currentUpdatedSession) {
 			currentSession.value = currentUpdatedSession
 		}

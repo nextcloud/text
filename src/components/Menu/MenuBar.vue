@@ -124,8 +124,8 @@ export default {
 	setup() {
 		const editor = useEditor()
 		const { isPublic, isRichEditor, isRichWorkspace } = useEditorFlags()
-		const { assistantMenuEntries, menuEntries, readOnlyDoneEntries } =
-			useMenuEntries()
+		const { assistantMenuEntries, menuEntries, readOnlyDoneEntries }
+			= useMenuEntries()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
 		return {

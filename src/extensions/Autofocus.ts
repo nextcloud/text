@@ -45,11 +45,8 @@ export default Extension.create<AutofocusOptions>({
 	addCommands() {
 		return {
 			autofocus:
-				() =>
-				({ commands }) => {
-					const pos = localStorage.getItem(
-						'text-lastPos-' + this.options.fileId,
-					)
+				() => ({ commands }) => {
+					const pos = localStorage.getItem('text-lastPos-' + this.options.fileId)
 					if (pos) {
 						return commands.focus(Number(pos))
 					}

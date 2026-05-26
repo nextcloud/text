@@ -53,8 +53,8 @@ export function useLinkFile({
 		}
 		const url = new URL(generateUrl(`/f/${node.id}`), window.origin)
 		setLink(url.href, node.displayname)
-		startPath.value =
-			node.path + (node.type === 'folder' ? `/${node.basename}/` : '')
+		startPath.value
+			= node.path + (node.type === 'folder' ? `/${node.basename}/` : '')
 	}
 
 	return { linkFile }

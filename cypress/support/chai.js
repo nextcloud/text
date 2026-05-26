@@ -4,7 +4,7 @@
  */
 
 export default (_chai) => {
-	_chai.Assertion.addMethod('inViewport', function () {
+	_chai.Assertion.addMethod('inViewport', function() {
 		const subject = this._obj
 
 		const height = Cypress.$(cy.state('window')).height()
@@ -13,9 +13,9 @@ export default (_chai) => {
 
 		this.assert(
 			rect.top < height
-				&& rect.bottom > 0
-				&& rect.right <= width
-				&& rect.left >= 0,
+			&& rect.bottom > 0
+			&& rect.right <= width
+			&& rect.left >= 0,
 			'expected #{this} to be in the viewport',
 			'expected #{this} to not be in the viewport',
 			this._obj,

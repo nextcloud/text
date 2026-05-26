@@ -24,8 +24,8 @@ const FILE_ACTION_IDENTIFIER = 'Edit with text app'
  *
  */
 export function addMenuRichWorkspace() {
-	const descriptionFile =
-		'Readme' + '.' + loadState('text', 'default_file_extension')
+	const descriptionFile
+		= 'Readme' + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
@@ -48,14 +48,12 @@ export function addMenuRichWorkspace() {
 			const contentNames = content.map((node) => node.basename)
 
 			if (contentNames.includes(descriptionFile)) {
-				showError(
-					t('text', '"{name}" already exist!', { name: descriptionFile }),
-				)
+				showError(t('text', '"{name}" already exist!', { name: descriptionFile }))
 				return
 			}
 
-			const source =
-				context.encodedSource + '/' + encodeURIComponent(descriptionFile)
+			const source
+				= context.encodedSource + '/' + encodeURIComponent(descriptionFile)
 			const response = await axios({
 				method: 'PUT',
 				url: source,
@@ -121,8 +119,8 @@ export const FilesWorkspaceHeader = {
 			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace =
-			!!latestFolder.attributes['rich-workspace-file-flat']
+		const hasRichWorkspace
+			= !!latestFolder.attributes['rich-workspace-file-flat']
 		const content = latestFolder.attributes['rich-workspace-flat'] || ''
 		const path = latestFolder.path || ''
 
@@ -143,11 +141,11 @@ export const FilesWorkspaceHeader = {
 			return
 		}
 
-		const hasRichWorkspace =
-			!!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
+		const hasRichWorkspace
+			= !!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
 		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
-		FilesHeaderRichWorkspaceInstance.content =
-			folder.attributes['rich-workspace-flat'] || ''
+		FilesHeaderRichWorkspaceInstance.content
+			= folder.attributes['rich-workspace-flat'] || ''
 		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
 	},
 }

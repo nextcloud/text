@@ -18,9 +18,7 @@ const UserColor = Extension.create({
 			color: (clientID) => {
 				return (
 					'#'
-					+ Math.floor(
-						Math.abs(Math.sin(clientID) * 16777215) % 16777215,
-					).toString(16)
+					+ Math.floor(Math.abs(Math.sin(clientID) * 16777215) % 16777215).toString(16)
 					+ 'aa'
 				)
 			},

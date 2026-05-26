@@ -19,7 +19,7 @@ export default function keepSyntax(md) {
 
 		for (let i = 0; i < state.tokens.length; i++) {
 			const block = state.tokens[i]
-			if (block.type !== 'inline') continue
+			if (block.type !== 'inline') { continue }
 
 			for (let j = 0; j < block.children.length; j++) {
 				const token = block.children[j]
@@ -29,8 +29,8 @@ export default function keepSyntax(md) {
 						const index = match.groups.linestart
 							? match.index + 1
 							: match.index
-						const matchChars =
-							match.groups.linestart ?? match.groups.special
+						const matchChars
+							= match.groups.linestart ?? match.groups.special
 						const contentNext = index + matchChars.length
 						block.children.splice(
 							j,

@@ -155,10 +155,10 @@ class TextEditorEmbed {
 	}
 
 	replaceAttachmentFilename(pageId, oldName, newName) {
-		const oldSrc =
-			'.attachments.' + pageId + '/' + encodeAttachmentFilename(oldName)
-		const newSrc =
-			'.attachments.' + pageId + '/' + encodeAttachmentFilename(newName)
+		const oldSrc
+			= '.attachments.' + pageId + '/' + encodeAttachmentFilename(oldName)
+		const newSrc
+			= '.attachments.' + pageId + '/' + encodeAttachmentFilename(newName)
 		const { view, state } = this.#getEditorComponent().editor
 		const { doc, schema, tr } = state
 		let modified = false
@@ -210,11 +210,11 @@ class TextEditorEmbed {
 	debugYjs() {
 		const yjsData = this.#getEditorComponent().debugYjsData()
 
-		const intro =
-			'Editor Yjs debug data. Copy the object below that starts with "clientId".'
+		const intro
+			= 'Editor Yjs debug data. Copy the object below that starts with "clientId".'
 		const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-		const introFirefox =
-			'- In Firefox, right-click on the object and select "Copy object".'
+		const introFirefox
+			= '- In Firefox, right-click on the object and select "Copy object".'
 		const styleBold = 'font-weight: bold;'
 		const styleItalic = 'font-weight: normal; font-style: italic;'
 		console.warn(JSON.stringify(yjsData, null, ' '))
@@ -237,7 +237,7 @@ class TextEditorEmbed {
 }
 
 window.OCA.Text.apiVersion = apiVersion
-window.OCA.Text.createEditor = async function ({
+window.OCA.Text.createEditor = async function({
 	// Element to render the editor to
 	el,
 
@@ -272,9 +272,7 @@ window.OCA.Text.createEditor = async function ({
 	onSearch = undefined,
 	onAttachmentsUpdated = ({ attachmentSrcs }) => {},
 }) {
-	const MarkdownContentEditor = defineAsyncComponent(
-		() => import('./components/Editor/MarkdownContentEditor.vue'),
-	)
+	const MarkdownContentEditor = defineAsyncComponent(() => import('./components/Editor/MarkdownContentEditor.vue'))
 	const Editor = defineAsyncComponent(() => import('./components/Editor.js'))
 
 	const data = reactive({
@@ -335,10 +333,8 @@ window.OCA.Text.createEditor = async function ({
 						},
 						on: {
 							ready: () => vm.$emit('ready'),
-							'create:content': (content) =>
-								vm.$emit('create:content', content),
-							'update:content': (content) =>
-								vm.$emit('update:content', content),
+							'create:content': (content) => vm.$emit('create:content', content),
+							'update:content': (content) => vm.$emit('update:content', content),
 						},
 						scopedSlots,
 					})
@@ -368,7 +364,7 @@ window.OCA.Text.createEditor = async function ({
 		.render(el)
 }
 
-window.OCA.Text.createTable = async function ({
+window.OCA.Text.createTable = async function({
 	// Element to render the editor to
 	el,
 
@@ -381,9 +377,7 @@ window.OCA.Text.createTable = async function ({
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 }) {
-	const PlainTableContentEditor = defineAsyncComponent(
-		() => import('./components/Editor/PlainTableContentEditor.vue'),
-	)
+	const PlainTableContentEditor = defineAsyncComponent(() => import('./components/Editor/PlainTableContentEditor.vue'))
 
 	const data = reactive({
 		readOnly,

@@ -182,23 +182,19 @@ class PollingBackend {
 	}
 
 	_handleError(e: {
-		response?: { status: number; data: ConflictData }
+		response?: { status: number, data: ConflictData }
 		code?: string
 	}) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				this.increaseRefetchTimer()
-				logger.error(
-					'[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED',
-				)
+				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 				this.#syncService.bus.emit('error', {
 					type: ERROR_TYPE.CONNECTION_FAILED,
 					data: {},
 				})
 			} else {
-				logger.error(
-					`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`,
-				)
+				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
 		} else if (e.response.status === 409) {
 			// Still apply the steps to update our version of the document

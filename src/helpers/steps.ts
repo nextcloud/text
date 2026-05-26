@@ -13,8 +13,8 @@ import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService.ts'
  * @param sessions to process.
  */
 export function awarenessSteps(sessions: Session[]): Step[] {
-	const lastContactThreshold =
-		Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME
+	const lastContactThreshold
+		= Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME
 	return sessions
 		.filter((s) => s.lastContact > lastContactThreshold)
 		.filter((s) => Boolean(s.lastAwarenessMessage))

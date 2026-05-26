@@ -16,11 +16,10 @@ describe('Init function', () => {
 		SyncService.prototype.hasActiveConnection = vi.fn()
 		return { SyncService }
 	})
-	const mockSyncService = () =>
-		new SyncService({
-			connection: shallowRef(undefined),
-			openConnection: vi.fn(),
-		})
+	const mockSyncService = () => new SyncService({
+		connection: shallowRef(undefined),
+		openConnection: vi.fn(),
+	})
 
 	it('returns a websocket polyfill class', () => {
 		const syncService = mockSyncService()

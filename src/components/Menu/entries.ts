@@ -60,23 +60,23 @@ type LabelContext = {
 	displayToc: boolean
 }
 
-type MenuEntry =
-	| {
-			key: string
-			label?: string | ((context: LabelContext) => string)
-			icon?: object
-			forceLabel?: boolean
-			keyChar?: string
-			keyModifiers?: string[]
-			action?: (command: AnyCommands, editor?: Editor | null) => void
-			isActive?: string | string[] | object
-			component?: object
-			click?: (context?: ClickContext) => void
-			priority?: number
-			visible?: boolean
-			children?: MenuEntry[]
-			isSeparator?: boolean
-	  }
+type MenuEntry
+	= | {
+		key: string
+		label?: string | ((context: LabelContext) => string)
+		icon?: object
+		forceLabel?: boolean
+		keyChar?: string
+		keyModifiers?: string[]
+		action?: (command: AnyCommands, editor?: Editor | null) => void
+		isActive?: string | string[] | object
+		component?: object
+		click?: (context?: ClickContext) => void
+		priority?: number
+		visible?: boolean
+		children?: MenuEntry[]
+		isSeparator?: boolean
+	}
 	| undefined
 
 export const outlineEntries: MenuEntry[] = [
@@ -120,9 +120,9 @@ export function getAssistantMenuEntries(): MenuEntry[] {
 		component: AssistantAction,
 		priority: 7,
 	}
-	const hasAssistantTaskTypes =
-		loadState('text', 'taskprocessing', []).length > 0
-		|| loadState('text', 'translation_available', false)
+	const hasAssistantTaskTypes
+		= loadState('text', 'taskprocessing', []).length > 0
+			|| loadState('text', 'translation_available', false)
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 

@@ -75,8 +75,7 @@ export default Node.create({
 			 *
 			 */
 			setPreview:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					if (!previewPossible(state)) {
 						return false
 					}
@@ -131,8 +130,7 @@ export default Node.create({
 			 *
 			 */
 			unsetPreview:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					return (
 						isActive(this.name, this.attributes, state)
 						&& chain().setNode('paragraph').run()
@@ -146,8 +144,7 @@ export default Node.create({
 			 * @param {string|null} title - the link title (optional)
 			 */
 			insertPreview:
-				(link, title = '') =>
-				({ state, chain }) => {
+				(link, title = '') => ({ state, chain }) => {
 					title = title.trim() || link
 					return chain()
 						.insertContent({

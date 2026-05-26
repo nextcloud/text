@@ -96,8 +96,6 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ fileId, user, currentDirectory })
 		const attachment = await resolver.resolve(src)
 		expect(attachment.isImage).toBe(true)
-		expect(attachment.previewUrl).toBe(
-			'http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png',
-		)
+		expect(attachment.previewUrl).toBe('http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
 	})
 })

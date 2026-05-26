@@ -55,9 +55,7 @@ describe('Assistant', () => {
 
 		cy.get('.assistant-modal--content button').contains('Get notified').click()
 
-		cy.get('.assistant-modal--content button .bell-ring-outline-icon').should(
-			'be.visible',
-		)
+		cy.get('.assistant-modal--content button .bell-ring-outline-icon').should('be.visible')
 
 		cy.get('.assistant-modal--content .close-button').click()
 		cy.getActionEntry('assistant').click()
