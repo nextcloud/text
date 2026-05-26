@@ -60,9 +60,7 @@ describe('Sync service', () => {
 		service.bus.on('opened', openHandler)
 		await service.open()
 		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
-		expect(openHandler).toHaveBeenCalledWith(
-			expect.objectContaining({ session: initialData.session }),
-		)
+		expect(openHandler).toHaveBeenCalledWith(expect.objectContaining({ session: initialData.session }))
 		expect(openData.value?.hasOwner).toBe(true)
 	})
 })

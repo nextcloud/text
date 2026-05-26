@@ -20,11 +20,11 @@ test('Editor container grows vertically', async ({ editor }) => {
 	const editorBox = (await editor.el.boundingBox())!
 	const menubarBox = (await editor.menubar.boundingBox())!
 	const contentBox = (await editor.content.boundingBox())!
-	const suggestionsContainerBox =
-		(await editor.suggestionsContainer.boundingBox())!
+	const suggestionsContainerBox
+		= (await editor.suggestionsContainer.boundingBox())!
 
-	const expectedContentHeight =
-		editorBox.height - menubarBox.height - suggestionsContainerBox.height
+	const expectedContentHeight
+		= editorBox.height - menubarBox.height - suggestionsContainerBox.height
 
 	// Allow up to 2px tolerance for borders etc.
 	expect(Math.abs(expectedContentHeight - contentBox.height)).toBeLessThan(2)

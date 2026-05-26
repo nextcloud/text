@@ -124,10 +124,8 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			},
 			isWikiLink: {
 				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-link') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-link': 'true' } : {},
+				parseHTML: (element) => element.getAttribute('data-wiki-link') === 'true',
+				renderHTML: (attrs) => attrs.isWikiLink ? { 'data-wiki-link': 'true' } : {},
 			},
 		}
 	},
@@ -185,8 +183,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		return {
 			...this.parent?.(),
 			insertOrSetLink:
-				(text, attrs) =>
-				({ state, commands }) => {
+				(text, attrs) => ({ state, commands }) => {
 					// Check if any text is selected,
 					// if not insert the link using the given text property
 					if (state.selection.empty) {
@@ -287,7 +284,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					innerText += child.text
 				}
 			})
-			return innerText === href ? `[[` : `[[${href}|`
+			return innerText === href ? '[[' : `[[${href}|`
 		},
 		close(
 			state: MarkdownSerializerState,

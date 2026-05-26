@@ -81,10 +81,10 @@ export default {
 
 			// Node has no children or just text children and no text content
 			const { schema } = this.editor
-			const emptyNode =
-				this.node.textContent.trim() === ''
-				&& (this.node.children.length === 0
-					|| this.node.children.every((n) => n.type === schema.nodes.text))
+			const emptyNode
+				= this.node.textContent.trim() === ''
+					&& (this.node.children.length === 0
+						|| this.node.children.every((n) => n.type === schema.nodes.text))
 
 			// Insert at the end of the node
 			const pos = emptyNode ? this.pos + 1 : this.pos + this.node.nodeSize

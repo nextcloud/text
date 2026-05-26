@@ -16,18 +16,14 @@ const workspaceAvailable = loadState('text', 'workspace_available')
 document.addEventListener('DOMContentLoaded', async () => {
 	if (workspaceAvailable && window.OCA && window.OCA.Files?.Settings) {
 		const { createApp, defineAsyncComponent } = await import('vue')
-		const FilesSettings = defineAsyncComponent(
-			() => import('./views/FilesSettings.vue'),
-		)
+		const FilesSettings = defineAsyncComponent(() => import('./views/FilesSettings.vue'))
 
 		const el = document.createElement('div')
 		const app = createApp(FilesSettings).mount(el)
-		window.OCA.Files.Settings.register(
-			new window.OCA.Files.Settings.Setting('text', {
-				el: () => {
-					return app.$el
-				},
-			}),
-		)
+		window.OCA.Files.Settings.register(new window.OCA.Files.Settings.Setting('text', {
+			el: () => {
+				return app.$el
+			},
+		}))
 	}
 })

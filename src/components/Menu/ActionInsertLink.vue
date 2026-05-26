@@ -177,9 +177,7 @@ export default {
 		 */
 		linkWebsite(event) {
 			if (event?.type === 'submit') {
-				const href = [...event.target.elements].filter(
-					(e) => e?.type === 'text',
-				)[0].value
+				const href = [...event.target.elements].filter((e) => e?.type === 'text')[0].value
 				this.menuOpen = false
 				this.isInputMode = false
 				this.href = ''

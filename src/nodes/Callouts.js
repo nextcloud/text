@@ -34,9 +34,7 @@ export default Node.create({
 				parseHTML: (element) => {
 					return (
 						element.getAttribute('data-callout')
-						|| typesAvailable.find((type) =>
-							element.classList.contains(type),
-						)
+						|| typesAvailable.find((type) => element.classList.contains(type))
 						|| (element.classList.contains('warning') && 'warn')
 					)
 				},
@@ -89,13 +87,11 @@ export default Node.create({
 	addCommands() {
 		return {
 			setCallout:
-				(attributes) =>
-				({ commands }) => {
+				(attributes) => ({ commands }) => {
 					return commands.wrapIn(this.name, attributes)
 				},
 			toggleCallout:
-				(attributes) =>
-				({ commands, state }) => {
+				(attributes) => ({ commands, state }) => {
 					if (!isNodeActive(state, this.name)) {
 						return commands.setCallout(attributes)
 					}
@@ -107,8 +103,7 @@ export default Node.create({
 					return commands.unsetCallout()
 				},
 			unsetCallout:
-				() =>
-				({ commands }) => {
+				() => ({ commands }) => {
 					return commands.lift(this.name)
 				},
 		}

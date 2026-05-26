@@ -34,8 +34,7 @@ const FrontMatter = TiptapCodeBlock.extend({
 		]
 	},
 	toMarkdown: (state, node) => {
-		if (!state.out.match(/^\s*/))
-			throw Error('FrontMatter must be the first node of the document!')
+		if (!state.out.match(/^\s*/)) { throw Error('FrontMatter must be the first node of the document!') }
 		const text = node.textContent
 		// Make sure the front matter fences are longer than any dash sequence within it
 		const dashes = text.match(/-{3,}/gm)
@@ -57,8 +56,7 @@ const FrontMatter = TiptapCodeBlock.extend({
 				find: /^---$/g,
 				handler: ({ state, range, chain }) => {
 					if (range.from === 1) {
-						if (state.doc.resolve(1).parent.type.name === this.name)
-							return false
+						if (state.doc.resolve(1).parent.type.name === this.name) { return false }
 						chain().deleteRange(range).insertContentAt(0, {
 							type: this.name,
 						})

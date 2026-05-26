@@ -234,9 +234,7 @@ export default {
 						return task.output.output
 					}
 					await new Promise((resolve) => setTimeout(resolve, 2000))
-					const taskResponse = await axios.get(
-						generateOcsUrl(`taskprocessing/task/${task.id}`),
-					)
+					const taskResponse = await axios.get(generateOcsUrl(`taskprocessing/task/${task.id}`))
 					return getTaskOutput(taskResponse.data.ocs.data.task)
 				}
 				this.result = await getTaskOutput(task)

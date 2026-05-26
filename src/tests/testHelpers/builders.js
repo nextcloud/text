@@ -51,10 +51,10 @@ function createDocumentString(node) {
 				return attrs[key] === null
 					? undefined
 					: key
-							+ '='
-							+ (typeof attrs[key] === 'string'
-								? `"${attrs[key]}"`
-								: attrs[key])
+						+ '='
+						+ (typeof attrs[key] === 'string'
+							? `"${attrs[key]}"`
+							: attrs[key])
 			})
 			.filter((v) => !!v)
 			.join(',')
@@ -63,17 +63,14 @@ function createDocumentString(node) {
 
 	const stringifyNode = (node) => {
 		const name = node.type.name
-		if (name === 'text')
-			return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"'
+		if (name === 'text') { return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"' }
 
 		const children = node.content.content.map(createDocumentString)
 		return name + extractAttributes(node) + '(' + children.join(',') + ')'
 	}
 
 	// First extract marks and place them like nodes in the string
-	const marks = node.marks.map(
-		(mark) => mark.type.name + extractAttributes(mark) + '(',
-	)
+	const marks = node.marks.map((mark) => mark.type.name + extractAttributes(mark) + '(')
 	return marks.join('') + stringifyNode(node) + ')'.repeat(marks.length)
 }
 
@@ -93,7 +90,5 @@ function createDocumentString(node) {
 export function expectDocument(subject, expected) {
 	expect(typeof subject).toBe('object')
 	expect(typeof expected).toBe('object')
-	expect(createDocumentString(subject)).toBe(
-		createDocumentString(doc(expected, p())),
-	)
+	expect(createDocumentString(subject)).toBe(createDocumentString(doc(expected, p())))
 }

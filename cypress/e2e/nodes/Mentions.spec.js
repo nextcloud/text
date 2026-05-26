@@ -56,9 +56,7 @@ describe('Test mentioning users', () => {
 
 	it('Select a user will insert the mention', () => {
 		const autocompleteReauestAlias = 'fetchUsersList'
-		cy.intercept({ method: 'POST', url: '**/users' }).as(
-			autocompleteReauestAlias,
-		)
+		cy.intercept({ method: 'POST', url: '**/users' }).as(autocompleteReauestAlias)
 
 		cy.isolateTest({
 			sourceFile: fileName,
@@ -70,9 +68,7 @@ describe('Test mentioning users', () => {
 		cy.openFile(fileName, { force: true })
 
 		cy.get('.text-editor__content div[contenteditable="true"]').clear()
-		cy.get('.text-editor__content div[contenteditable="true"]').type(
-			`@${mention.substring(0, 3)}`,
-		)
+		cy.get('.text-editor__content div[contenteditable="true"]').type(`@${mention.substring(0, 3)}`)
 
 		return cy.wait(`@${autocompleteReauestAlias}`).then(() => {
 			cy.intercept({ method: 'PUT', url: '**/mention' }).as('putMention')

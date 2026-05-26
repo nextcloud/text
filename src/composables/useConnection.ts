@@ -63,15 +63,15 @@ export function provideConnection(
 	const openConnection = async () => {
 		const baseVersionEtag = await getBaseVersionEtag()
 		const guestName = localStorage.getItem('nick') ?? ''
-		const { connection: opened, data } =
-			openInitialSession(props, baseVersionEtag)
-			|| (await open({
-				fileId: props.fileId,
-				guestName,
-				token: props.shareToken,
-				filePath: props.relativePath,
-				baseVersionEtag,
-			}))
+		const { connection: opened, data }
+			= openInitialSession(props, baseVersionEtag)
+				|| (await open({
+					fileId: props.fileId,
+					guestName,
+					token: props.shareToken,
+					filePath: props.relativePath,
+					baseVersionEtag,
+				}))
 		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
@@ -111,9 +111,7 @@ function openInitialSession(
 	if (props.initialSession) {
 		const { document, session } = props.initialSession
 		if (baseVersionEtag && baseVersionEtag !== document.baseVersionEtag) {
-			throw new ConflictError(
-				'Base version etag did not match when opening initial session.',
-			)
+			throw new ConflictError('Base version etag did not match when opening initial session.')
 		}
 		const connection = {
 			documentId: document.id,

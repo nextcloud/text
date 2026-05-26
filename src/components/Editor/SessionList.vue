@@ -75,8 +75,8 @@ export default {
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
-		const { currentGuestSession, currentSession, sessions } =
-			useSessions(syncService)
+		const { currentGuestSession, currentSession, sessions }
+			= useSessions(syncService)
 		return { currentGuestSession, currentSession, sessions, isPublic }
 	},
 
@@ -90,9 +90,7 @@ export default {
 		},
 
 		remoteSessions() {
-			return this.sessions.filter(
-				(session) => session.id !== this.currentSession?.id,
-			)
+			return this.sessions.filter((session) => session.id !== this.currentSession?.id)
 		},
 
 		showGuestNameDialog() {

@@ -48,23 +48,18 @@ function normalizeCells(row: Row, columnWidths: number[]): Cell[] {
 		// Append newline to single-line cells with a block node
 		if (
 			normalizedCell.lines.length === 1
-			&& [...normalizedCell.nodeTypes].some((type) =>
-				singleLineBlockNodeTypes.has(type),
-			)
+			&& [...normalizedCell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
 		) {
 			normalizedCell.lines.push('')
 			row.length = Math.max(row.length, 2)
 		}
 
 		// Normalize cells to have the same number of lines
-		while (normalizedCell.lines.length < row.length)
-			normalizedCell.lines.push('')
+		while (normalizedCell.lines.length < row.length) { normalizedCell.lines.push('') }
 		// Normalize lines in cell to have the same length
 		normalizedCell.lines.forEach((line, lineIdx) => {
 			if (
-				[...normalizedCell.nodeTypes].some(
-					(type) => !alignNodeTypes.has(type),
-				)
+				[...normalizedCell.nodeTypes].some((type) => !alignNodeTypes.has(type))
 			) {
 				// Enforced left alignment.
 				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])

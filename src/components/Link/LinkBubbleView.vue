@@ -221,9 +221,9 @@ export default {
 		},
 
 		onReferenceListLoaded() {
-			this.referenceTitle =
-				this.$refs.referencelist.firstReference?.openGraphObject?.name
-				?? null
+			this.referenceTitle
+				= this.$refs.referencelist.firstReference?.openGraphObject?.name
+					?? null
 		},
 
 		setPreview() {

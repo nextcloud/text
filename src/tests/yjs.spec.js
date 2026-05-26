@@ -71,13 +71,12 @@ describe('recorded session', () => {
 	})
 
 	test('sync messages types', () => {
-		const syncsOfType = (type) =>
-			sync.filter((step) => {
-				const buf = decodeArrayBuffer(step)
-				const decoder = decoding.createDecoder(buf)
-				decoding.readVarUint(decoder)
-				return decoding.peekVarUint(decoder) === type
-			})
+		const syncsOfType = (type) => sync.filter((step) => {
+			const buf = decodeArrayBuffer(step)
+			const decoder = decoding.createDecoder(buf)
+			decoding.readVarUint(decoder)
+			return decoding.peekVarUint(decoder) === type
+		})
 		const step1s = syncsOfType(syncProtocol.messageYjsSyncStep1)
 		const step2s = syncsOfType(syncProtocol.messageYjsSyncStep2)
 		const updates = syncsOfType(syncProtocol.messageYjsUpdate)
@@ -162,9 +161,7 @@ describe('recorded session', () => {
 		// Pending structs detected and only first charcter visible in content
 		syncSteps.map((step) => processStep(ydoc, step))
 		expect(ydoc.store.pendingStructs).not.toBeNull()
-		expect(serializer.serialize(tiptap.state.doc)).toEqual(
-			fullDocumentContent.slice(0, 1),
-		)
+		expect(serializer.serialize(tiptap.state.doc)).toEqual(fullDocumentContent.slice(0, 1))
 
 		// Apply missing steps 2-5
 		for (const [i, step] of missingSteps.entries()) {
@@ -172,9 +169,7 @@ describe('recorded session', () => {
 			if (i < missingSteps.length - 1) {
 				// Each step except the last, one more character gets visible in content
 				expect(ydoc.store.pendingStructs).not.toBeNull()
-				expect(serializer.serialize(tiptap.state.doc)).toEqual(
-					fullDocumentContent.slice(0, i + 2),
-				)
+				expect(serializer.serialize(tiptap.state.doc)).toEqual(fullDocumentContent.slice(0, i + 2))
 			}
 		}
 

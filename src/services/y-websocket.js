@@ -124,9 +124,7 @@ messageHandlers[messageAuth] = (
 	_emitSynced,
 	_messageType,
 ) => {
-	authProtocol.readAuthMessage(decoder, provider.doc, (_ydoc, reason) =>
-		permissionDeniedHandler(provider, reason),
-	)
+	authProtocol.readAuthMessage(decoder, provider.doc, (_ydoc, reason) => permissionDeniedHandler(provider, reason))
 }
 
 // @todo - this should depend on awareness.outdatedTime
@@ -191,9 +189,7 @@ function setupWS(provider) {
 				// update awareness (all users except local left)
 				awarenessProtocol.removeAwarenessStates(
 					provider.awareness,
-					Array.from(provider.awareness.getStates().keys()).filter(
-						(client) => client !== provider.doc.clientID,
-					),
+					Array.from(provider.awareness.getStates().keys()).filter((client) => client !== provider.doc.clientID),
 					provider,
 				)
 				provider.emit('status', [
@@ -438,7 +434,7 @@ export class WebsocketProvider extends Observable {
 				if (
 					this.wsconnected
 					&& messageReconnectTimeout
-						< time.getUnixTime() - this.wsLastMessageReceived
+					< time.getUnixTime() - this.wsLastMessageReceived
 				) {
 					// no message received in a long time - not even your own awareness
 					// updates (which are updated every 15 seconds)

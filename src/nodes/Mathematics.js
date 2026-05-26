@@ -25,8 +25,7 @@ const MathInline = TiptapInlineMath.extend({
 	addCommands() {
 		return {
 			insertInlineMath:
-				(options) =>
-				({ commands }) => {
+				(options) => ({ commands }) => {
 					const latex = options?.latex || ''
 					return commands.insertContent({
 						type: this.name,
@@ -56,8 +55,7 @@ const MathBlock = TiptapBlockMath.extend({
 	addCommands() {
 		return {
 			insertBlockMath:
-				(options) =>
-				({ commands }) => {
+				(options) => ({ commands }) => {
 					const latex = options?.latex || ''
 					return commands.insertContent({
 						type: this.name,

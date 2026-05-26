@@ -20,9 +20,7 @@ const ACTION_CREATE_NEW_WHITEBOARD_FILE = 'insert-attachment-add-whiteboard-0'
  */
 function attachFile(name, requestAlias = null) {
 	if (requestAlias) {
-		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(
-			requestAlias,
-		)
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(requestAlias)
 	}
 	return cy
 		.getEditor()
@@ -305,9 +303,7 @@ describe('Test all attachment insertion methods', () => {
 		cy.openFile(filename)
 
 		const requestAlias = 'uploadRTLORequest'
-		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(
-			requestAlias,
-		)
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(requestAlias)
 
 		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE).then(() => {
 			cy.getEditor()
@@ -332,9 +328,7 @@ describe('Test all attachment insertion methods', () => {
 				// real file extension instead of the visually spoofed one.
 				const strippedName = fileName.replaceAll('\u202e', '')
 				const encodedName = fixedEncodeURIComponent(strippedName)
-				cy.get(
-					`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`,
-				).should('exist')
+				cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`).should('exist')
 			})
 		})
 		cy.closeFile()
@@ -355,9 +349,7 @@ describe('Test all attachment insertion methods', () => {
 
 		cy.log('Create a new text file as an attachment')
 		const requestAlias = 'create-attachment-request'
-		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(
-			requestAlias,
-		)
+		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(requestAlias)
 		clickOnAttachmentAction(ACTION_CREATE_NEW_WHITEBOARD_FILE).then(() => {
 			return waitForRequestAndCheckAttachment(
 				requestAlias,

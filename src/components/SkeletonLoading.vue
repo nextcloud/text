@@ -58,9 +58,7 @@
 <script>
 const bodyStyles = window.getComputedStyle(document.body)
 const colorPlaceholderDark = bodyStyles.getPropertyValue('--color-placeholder-dark')
-const colorPlaceholderLight = bodyStyles.getPropertyValue(
-	'--color-placeholder-light',
-)
+const colorPlaceholderLight = bodyStyles.getPropertyValue('--color-placeholder-light')
 
 export default {
 	name: 'SkeletonLoading',

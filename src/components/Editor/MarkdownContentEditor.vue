@@ -141,9 +141,7 @@ export default {
 			this.$parent.$emit('ready')
 		})
 		this.editor.on('update', ({ editor }) => {
-			const markdown = createMarkdownSerializer(editor.schema).serialize(
-				editor.state.doc,
-			)
+			const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
 			this.emit('update:content', {
 				json: editor.state.doc,
 				markdown,

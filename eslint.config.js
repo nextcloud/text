@@ -1,11 +1,9 @@
 import { recommended } from '@nextcloud/eslint-config'
-import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import pluginCypress from 'eslint-plugin-cypress'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig(
 	...recommended,
-	eslintConfigPrettier,
 	globalIgnores(['src/tests/fixtures/*']),
 	{
 		files: ['cypress/**/*.js'],

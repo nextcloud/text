@@ -27,8 +27,8 @@ export function useEditorMethods(editor: Editor) {
 		content: string,
 		options: { addToHistory?: boolean },
 	) => void = (content, { addToHistory = true } = {}) => {
-		const hasMarkdownContent =
-			editor.extensionManager.extensions.includes(Markdown)
+		const hasMarkdownContent
+			= editor.extensionManager.extensions.includes(Markdown)
 		const html = hasMarkdownContent
 			? markdownit.render(content) + '<p/>'
 			: `<pre>${escapeHtml(content)}</pre>`

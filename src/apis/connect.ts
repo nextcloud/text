@@ -32,9 +32,7 @@ export interface OpenData {
  *
  * @param params Parameters identifying the document
  */
-export async function open(
-	params: OpenParams,
-): Promise<{ connection: Connection; data: OpenData }> {
+export async function open(params: OpenParams): Promise<{ connection: Connection, data: OpenData }> {
 	const _baseUrl = params.token
 		? generateUrl('/apps/text/public')
 		: generateUrl('/apps/text')

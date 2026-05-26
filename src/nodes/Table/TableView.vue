@@ -136,9 +136,7 @@ export default {
 			this.editor
 				.chain()
 				.focus()
-				.setTextSelection(
-					this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1,
-				)
+				.setTextSelection(this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1)
 				.addRowAfter()
 				.setTextSelection(this.getPos() + this.node.nodeSize + 1)
 				.run()

@@ -60,23 +60,23 @@ type LabelContext = {
 	displayToc: boolean
 }
 
-type MenuEntry =
-	| {
-			key: string
-			label?: string | ((context: LabelContext) => string)
-			icon?: object
-			forceLabel?: boolean
-			keyChar?: string
-			keyModifiers?: string[]
-			action?: (command: AnyCommands, editor?: Editor | null) => void
-			isActive?: string | string[] | object
-			component?: object
-			click?: (context?: ClickContext) => void
-			priority?: number
-			visible?: boolean
-			children?: MenuEntry[]
-			isSeparator?: boolean
-	  }
+type MenuEntry
+	= | {
+		key: string
+		label?: string | ((context: LabelContext) => string)
+		icon?: object
+		forceLabel?: boolean
+		keyChar?: string
+		keyModifiers?: string[]
+		action?: (command: AnyCommands, editor?: Editor | null) => void
+		isActive?: string | string[] | object
+		component?: object
+		click?: (context?: ClickContext) => void
+		priority?: number
+		visible?: boolean
+		children?: MenuEntry[]
+		isSeparator?: boolean
+	}
 	| undefined
 
 export const outlineEntries: MenuEntry[] = [

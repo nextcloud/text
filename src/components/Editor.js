@@ -18,8 +18,7 @@ export default defineComponent({
 				})
 			}
 		})
-		return () =>
-			!reloading.value
+		return () => !reloading.value
 			&& h(Editor, {
 				attrs,
 				props,
