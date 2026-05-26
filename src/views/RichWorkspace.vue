@@ -74,11 +74,6 @@ export default {
 			required: true,
 		},
 
-		active: {
-			type: Boolean,
-			default: true,
-		},
-
 		hasRichWorkspace: {
 			type: Boolean,
 			default: false,
