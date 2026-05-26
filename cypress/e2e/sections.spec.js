@@ -17,11 +17,11 @@ function clickMenubarTableOfContents() {
 let currentFolder
 
 describe('Content Sections', () => {
-	before(function () {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.clearAllSessionStorage()
 		cy.login(user)
 		cy.createTestFolder().then((folderName) => {
@@ -110,9 +110,7 @@ describe('Content Sections', () => {
 		it('toc via sidebar', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
-			cy.getContent().type(
-				'# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n',
-			)
+			cy.getContent().type('# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
 			cy.closeFile()
 				.then(() => cy.openFile(fileName, { force: true }))
 				.then(clickMenubarTableOfContents)

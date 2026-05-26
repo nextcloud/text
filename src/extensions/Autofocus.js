@@ -33,11 +33,8 @@ export default Extension.create({
 	addCommands() {
 		return {
 			autofocus:
-				() =>
-				({ commands, editor }) => {
-					const pos = sessionStorage.getItem(
-						'text-lastPos-' + this.options.fileId,
-					)
+				() => ({ commands, editor }) => {
+					const pos = sessionStorage.getItem('text-lastPos-' + this.options.fileId)
 					if (pos) {
 						return commands.focus(pos)
 					}

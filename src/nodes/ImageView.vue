@@ -31,7 +31,7 @@
 									:src="imageUrl"
 									:alt="alt"
 									class="image__main"
-									@load="onLoaded" />
+									@load="onLoaded">
 								<div class="metadata">
 									<span class="name">{{ alt }}</span>
 									<span class="size">{{ attachmentSize }}</span>
@@ -55,7 +55,7 @@
 								:alt="alt"
 								class="image__main"
 								@click="handleImageClick"
-								@load="onLoaded" />
+								@load="onLoaded">
 						</div>
 					</template>
 					<template v-else>
@@ -81,7 +81,7 @@
 								class="image__caption__input"
 								:value="alt"
 								@blur="updateAlt"
-								@keyup="updateAlt" />
+								@keyup="updateAlt">
 							<div
 								v-if="showImageDeleteIcon"
 								contenteditable="false"
@@ -121,7 +121,7 @@
 							:value="alt"
 							:disabled="!isEditable"
 							@blur="updateAlt"
-							@keyup.enter="updateAlt" />
+							@keyup.enter="updateAlt">
 					</div>
 				</transition>
 			</div>
@@ -231,8 +231,8 @@ export default {
 		blurhashSize() {
 			if (this.imageWidth > 0 && this.imageHeight > 0) {
 				const ratio = this.imageWidth / this.imageHeight
-				const newWidth =
-					this.wrapperWidth - 12 > this.imageWidth
+				const newWidth
+					= this.wrapperWidth - 12 > this.imageWidth
 						? this.imageWidth
 						: this.wrapperWidth - 12
 				const newHeight = newWidth / ratio
@@ -315,7 +315,7 @@ export default {
 
 	methods: {
 		setupResizeObserver() {
-			if (!this.$refs.wrapper) return
+			if (!this.$refs.wrapper) { return }
 
 			this.resizeObserver = new ResizeObserver((entries) => {
 				const width = entries[0].contentRect.width
@@ -402,18 +402,12 @@ export default {
 		async updateEmbeddedImageList() {
 			this.embeddedImageList = []
 			// Get all images that succeeded to load
-			const imageViews = Array.from(
-				document.querySelectorAll(
-					'figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view',
-				),
-			)
+			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view'))
 			for (const imgv of imageViews) {
 				const src = imgv.getAttribute('data-src')
 				if (!this.embeddedImageList.find((i) => i.src === src)) {
 					// Don't add duplicates (e.g. when several editors are loaded in HTML document)
-					const attachment = await this.$attachmentResolver.resolve(
-						imgv.getAttribute('data-src'),
-					)
+					const attachment = await this.$attachmentResolver.resolve(imgv.getAttribute('data-src'))
 					this.embeddedImageList.push({
 						src,
 						...attachment,
@@ -445,9 +439,7 @@ export default {
 
 		async handleImageClick() {
 			await this.updateEmbeddedImageList()
-			this.imageIndex = this.embeddedImageList.findIndex(
-				(i) => i.src === this.src,
-			)
+			this.imageIndex = this.embeddedImageList.findIndex((i) => i.src === this.src)
 			if (this.imageIndex !== -1) {
 				this.showImageModal = true
 			} else {

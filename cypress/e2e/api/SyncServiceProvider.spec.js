@@ -11,14 +11,14 @@ import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-describe('Sync service provider', function () {
+describe('Sync service provider', function() {
 	let fileId
 
-	before(function () {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md').then((id) => {
 			fileId = id
@@ -33,7 +33,7 @@ describe('Sync service provider', function () {
 			.as('targetProvider')
 	})
 
-	afterEach(function () {
+	afterEach(function() {
 		cy.get('@sourceProvider').invoke('destroy')
 		cy.get('@targetProvider').invoke('destroy')
 	})
@@ -69,15 +69,11 @@ describe('Sync service provider', function () {
 		})
 	}
 
-	it('recovers from a dropped message', function () {
+	it('recovers from a dropped message', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as(
-			'push',
-		)
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
-			'sync',
-		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
@@ -143,15 +139,11 @@ describe('Sync service provider', function () {
 	 * Counts the amount of push and sync requests in one minute.
 	 * Skipped per default, useful for comparison before/after changes to SyncProvider or PollingBackend.
 	 */
-	it.skip('is not too chatty', function () {
+	it.skip('is not too chatty', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as(
-			'push',
-		)
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
-			'sync',
-		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
@@ -168,16 +160,12 @@ describe('Sync service provider', function () {
 		cy.get('@sync.all').its('length').should('be.lessThan', 60)
 	})
 
-	it('syncs even when initial state was present', function () {
+	it('syncs even when initial state was present', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
 		sourceMap.set('unrelated', 'value')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as(
-			'push',
-		)
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
-			'sync',
-		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')

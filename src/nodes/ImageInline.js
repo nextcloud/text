@@ -23,10 +23,8 @@ const ImageInline = TiptapImage.extend({
 			...this.parent?.(),
 			isWikiLink: {
 				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-image') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
+				parseHTML: (element) => element.getAttribute('data-wiki-image') === 'true',
+				renderHTML: (attrs) => attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
 			},
 		}
 	},

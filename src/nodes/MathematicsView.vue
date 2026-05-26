@@ -9,7 +9,7 @@
 		:data-type="isBlock ? 'block-math' : 'inline-math'"
 		:data-latex="node.attrs.latex"
 		:class="wrapperClass">
-		<span ref="mathEl" @click="onMathClick"></span>
+		<span ref="mathEl" @click="onMathClick" />
 		<ShowMathModal
 			v-if="showModal"
 			:show="showModal"
@@ -89,7 +89,7 @@ export default {
 		},
 
 		onMathClick() {
-			if (!this.editor.isEditable) return
+			if (!this.editor.isEditable) { return }
 			this.showModal = true
 		},
 

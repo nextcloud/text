@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-header" as="th" :dir="dir" :style="align">
+	<NodeViewWrapper
+		data-text-el="table-header"
+		as="th"
+		:dir="dir"
+		:style="align">
 		<div>
 			<NodeViewContent class="content" />
 			<NcActions

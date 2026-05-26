@@ -37,40 +37,18 @@ describe('TaskItem extension', () => {
 		expect(markdownThroughEditor('* [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('- [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('- [x] [asd](sdf)')
-		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe(
-			'- [ ] foo\n- [x] bar',
-		)
-		expect(
-			markdownThroughEditor(
-				'- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim',
-			),
-		).toBe('- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim')
+		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('- [ ] foo\n- [x] bar')
+		expect(markdownThroughEditor('- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim')).toBe('- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim')
 		expect(markdownThroughEditor('- [X] asd')).toBe('- [x] asd')
 		expect(markdownThroughEditor('-   [X] asd')).toBe('- [x] asd')
 	})
 
 	it('serializes HTML to markdown', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>',
-			),
-		).toBe('- [x] foo')
-		expect(
-			markdownThroughEditorHtml(
-				'<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>',
-			),
-		).toBe('- [ ] test')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('- [x] foo')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('- [ ] test')
 		// First text node becomes first paragraph in taskItem
-		expect(
-			markdownThroughEditorHtml(
-				'<ul class="contains-task-list"><li><input type="checkbox" checked />test<h2>Headline</h2><p><strong>content</strong></p></li></ul>',
-			),
-		).toBe('- [x] test\n\n  ## Headline\n\n  **content**')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked />test<h2>Headline</h2><p><strong>content</strong></p></li></ul>')).toBe('- [x] test\n\n  ## Headline\n\n  **content**')
 		// Second block element stays indented (stays part of taskItem)
-		expect(
-			markdownThroughEditorHtml(
-				'<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>',
-			),
-		).toBe('- [x] Test\n\n  # Block level headline')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('- [x] Test\n\n  # Block level headline')
 	})
 })

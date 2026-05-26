@@ -16,9 +16,7 @@ export interface AwarenessUser {
  */
 function showCaretLabel(clientId: number) {
 	setTimeout(() => {
-		const el = document.getElementById(
-			`collaboration-carets__label__${clientId}`,
-		)
+		const el = document.getElementById(`collaboration-carets__label__${clientId}`)
 		if (!el) {
 			return
 		}
@@ -73,7 +71,7 @@ const CollaborationCaret = TiptapCollaborationCaret.extend({
 		this.options.provider.awareness.on(
 			'change',
 			(
-				{ added, updated }: { added: number[]; updated: number[] },
+				{ added, updated }: { added: number[], updated: number[] },
 				origin: unknown,
 			) => {
 				if (origin !== 'local') {

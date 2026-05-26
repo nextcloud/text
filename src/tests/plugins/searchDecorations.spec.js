@@ -60,9 +60,9 @@ describe('search plugin', () => {
 	})
 
 	it('finds matches in separate blocks', () => {
-		const doc =
-			'<p>cat dinosaur bird dog cat</p>'
-			+ '<p>dinosaur cat bird <i>dinosaur cat</i></p>'
+		const doc
+			= '<p>cat dinosaur bird dog cat</p>'
+				+ '<p>dinosaur cat bird <i>dinosaur cat</i></p>'
 
 		const expected = {
 			results: [
@@ -79,8 +79,8 @@ describe('search plugin', () => {
 	})
 
 	it('finds matches with mentions', () => {
-		const doc =
-			'<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
+		const doc
+			= '<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
 
 		const expected = {
 			results: [
@@ -93,8 +93,8 @@ describe('search plugin', () => {
 	})
 
 	it('finds matches with mentions with @', () => {
-		const doc =
-			'<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
+		const doc
+			= '<p>janes task, mention <span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span></p>'
 
 		const expected = {
 			results: [{ from: 21, to: 22, mention: true }],
@@ -108,8 +108,6 @@ function testSearch(content, query, expectedSearchResults) {
 	const doc = editor.state.doc
 	const searched = runSearch(doc, query)
 	expect(searched).toHaveProperty('results', expectedSearchResults.results)
-	expect(highlightResults(doc, searched.results)).toEqual(
-		highlightResults(doc, expectedSearchResults.results),
-	)
+	expect(highlightResults(doc, searched.results)).toEqual(highlightResults(doc, expectedSearchResults.results))
 	editor.destroy()
 }

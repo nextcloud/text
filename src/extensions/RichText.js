@@ -160,9 +160,7 @@ export default Extension.create({
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
-			...defaultExtensions.filter(
-				(e) => e && !additionalExtensionNames.includes(e.name),
-			),
+			...defaultExtensions.filter((e) => e && !additionalExtensionNames.includes(e.name)),
 			...this.options.extensions,
 		]
 	},

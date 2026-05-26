@@ -155,14 +155,12 @@ export function highlightResults(doc, results) {
 	}
 
 	results.forEach((result) => {
-		decorations.push(
-			Decoration.inline(result.from, result.to, {
-				'data-text-el': 'search-decoration',
-				style: result.mention
-					? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
-					: 'background-color: #ead637; color: black; border-radius: 2px;',
-			}),
-		)
+		decorations.push(Decoration.inline(result.from, result.to, {
+			'data-text-el': 'search-decoration',
+			style: result.mention
+				? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
+				: 'background-color: #ead637; color: black; border-radius: 2px;',
+		}))
 	})
 
 	return DecorationSet.create(doc, decorations)

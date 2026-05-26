@@ -134,7 +134,7 @@ export default function initWebSocketPolyfill(
 		#onNotifyPush({
 			messageBody,
 		}: {
-			messageBody: { documentId: number; steps: string[] }
+			messageBody: { documentId: number, steps: string[] }
 		}) {
 			debug('WebSocketPolyfill#onNotifyPush', messageBody)
 			if (messageBody.documentId !== fileId) {

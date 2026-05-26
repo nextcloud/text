@@ -38,8 +38,8 @@ export function provideEditorHeadings(editor: Editor) {
 	const displayToc = ref<boolean>(false)
 
 	const updateHeadings = () => {
-		headings.value =
-			headingAnchorPluginKey.getState(editor.state)?.headings ?? []
+		headings.value
+			= headingAnchorPluginKey.getState(editor.state)?.headings ?? []
 	}
 	updateHeadings() // Initial sync on setup
 	editor.on('update', ({ transaction }) => {

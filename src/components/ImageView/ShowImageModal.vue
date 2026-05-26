@@ -17,7 +17,7 @@
 		@previous="showPreviousImage"
 		@close="$emit('close')">
 		<div class="modal__content">
-			<img :src="currentImage.previewUrl" />
+			<img :src="currentImage.previewUrl">
 		</div>
 	</NcModal>
 </template>
@@ -68,13 +68,13 @@ export default {
 
 	methods: {
 		showNextImage() {
-			this.currentImageIndex =
-				(this.currentImageIndex + 1) % this.images.length
+			this.currentImageIndex
+				= (this.currentImageIndex + 1) % this.images.length
 		},
 
 		showPreviousImage() {
-			this.currentImageIndex =
-				this.currentImageIndex <= 0
+			this.currentImageIndex
+				= this.currentImageIndex <= 0
 					? this.images.length - 1
 					: this.currentImageIndex - 1
 		},

@@ -42,9 +42,7 @@ describe('Table extension', () => {
 	})
 
 	it('simple md table is preserved through editor', () => {
-		expect(markdownThroughEditor('a|b\n-|-\n1|2\n')).toBe(
-			'| a | b |\n|---|---|\n| 1 | 2 |\n',
-		)
+		expect(markdownThroughEditor('a|b\n-|-\n1|2\n')).toBe('| a | b |\n|---|---|\n| 1 | 2 |\n')
 	})
 
 	it('md table with single-line block node in body cell is preserved through editor', () => {
@@ -183,8 +181,8 @@ describe('Table extension', () => {
 	test('parse from HTML: only one row always regarded as header row (required in markdown tables)', ({
 		editor,
 	}) => {
-		const editorHtml =
-			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></table></div><p></p>'
+		const editorHtml
+			= '<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></table></div><p></p>'
 		const tables = [
 			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead></table>',
 			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead></table>',
@@ -203,8 +201,8 @@ describe('Table extension', () => {
 	test('parse from HTML: first row is header, second is body row with several thead/tbody and th/td combinations', ({
 		editor,
 	}) => {
-		const editorHtml =
-			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td dir="ltr"><p dir="ltr">a</p></td><td dir="ltr"><p dir="ltr">b</p></td></tr></table></div><p></p>'
+		const editorHtml
+			= '<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td dir="ltr"><p dir="ltr">a</p></td><td dir="ltr"><p dir="ltr">b</p></td></tr></table></div><p></p>'
 		const tables = [
 			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tbody><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
 			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead><tbody><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
@@ -225,11 +223,7 @@ describe('Table extension', () => {
 	test('sorts table body rows in ascending order by selected column', ({
 		editor,
 	}) => {
-		editor.commands.setContent(
-			markdownit.render(
-				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
-			),
-		)
+		editor.commands.setContent(markdownit.render('| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n'))
 
 		let cell
 		cell = getHeaderCell(editor, 0)
@@ -248,11 +242,7 @@ describe('Table extension', () => {
 	test('sorts table body rows in descending order by selected column', ({
 		editor,
 	}) => {
-		editor.commands.setContent(
-			markdownit.render(
-				'| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n',
-			),
-		)
+		editor.commands.setContent(markdownit.render('| col0 | col1 |\n|---|---|\n| 2 | b |\n| 10 | a |\n| 1 | c |\n'))
 
 		let cell
 		cell = getHeaderCell(editor, 0)

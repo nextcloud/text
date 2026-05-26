@@ -13,13 +13,11 @@ describe('multimd-table extension', () => {
 | --- | --- |
 | cell1 | cell2 |
 `)
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<table>
 			<thead><tr><th>header1</th><th>header2</th></tr></thead>
 			<tbody><tr><td>cell1</td><td>cell2</td></tr></tbody>
-			</table>`),
-		)
+			</table>`))
 	})
 
 	it('renders table with line breaks', () => {
@@ -28,13 +26,11 @@ describe('multimd-table extension', () => {
 | --- | --- |
 | cell1<br>second line | cell2 |
 `)
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<table>
 			<thead><tr><th>header1</th><th>header2</th></tr></thead>
 			<tbody><tr><td>cell1<br data-syntax="html" />second line</td><td>cell2</td></tr></tbody>
-			</table>`),
-		)
+			</table>`))
 	})
 
 	it('renders mulitline with alignment, paragraph, list, codeblock and image', () => {
@@ -50,8 +46,7 @@ describe('multimd-table extension', () => {
 |  2| cell3             | cell4         |
 |  3|                   | cell5         |
 `)
-		expect(stripIndent(rendered)).toBe(
-			stripIndent(`
+		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<table>
 			<thead><tr>
 				<th style="text-align:right">#</th>
@@ -80,7 +75,6 @@ describe('multimd-table extension', () => {
 				<td>cell5</td>
 			</tr>
 			</tbody>
-			</table>`),
-		)
+			</table>`))
 	})
 })

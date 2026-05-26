@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<NcDialog v-if="show" :name="dialogTitle" size="large" @closing="$emit('close')">
+	<NcDialog
+		v-if="show"
+		:name="dialogTitle"
+		size="large"
+		@closing="$emit('close')">
 		<NcTextArea
 			v-model="localLatex"
 			:label="t('text', 'LaTeX formula')"

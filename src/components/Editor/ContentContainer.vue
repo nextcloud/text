@@ -41,8 +41,8 @@ export default {
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { isRichEditor, isRichWorkspace, useTableOfContents } =
-			useEditorFlags()
+		const { isRichEditor, isRichWorkspace, useTableOfContents }
+			= useEditorFlags()
 		return {
 			editor,
 			isMobile,

@@ -158,9 +158,7 @@ export default {
 		},
 
 		checkStateOfChildren() {
-			this.hasEnabledChild = this.children.some((child) =>
-				this.isChildEnabled(child),
-			)
+			this.hasEnabledChild = this.children.some((child) => this.isChildEnabled(child))
 		},
 
 		isChildEnabled(child) {

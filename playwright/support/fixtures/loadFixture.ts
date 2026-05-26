@@ -4,11 +4,11 @@
  */
 
 import { readFileSync } from 'fs'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 /**
  * Load a fixture file from playwright/support/fixtures/files directory
@@ -16,5 +16,5 @@ const __dirname = dirname(__filename);
  * @param filename Name of the file
  */
 export function loadFixture(filename: string) {
-	 return readFileSync(`${__dirname}/files/${filename}`, 'utf-8')
+	return readFileSync(`${__dirname}/files/${filename}`, 'utf-8')
 }

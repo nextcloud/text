@@ -86,8 +86,8 @@ const BaseActionEntry = {
 		},
 		setTabIndexOnButton() {
 			/** @type {HTMLButtonElement} */
-			const button =
-				this.$el.tagName.toLowerCase() === 'button'
+			const button
+				= this.$el.tagName.toLowerCase() === 'button'
 					? this.$el
 					: this.$el.querySelector('button')
 
@@ -102,8 +102,8 @@ const BaseActionEntry = {
 		 */
 		focusButton() {
 			/** @type {HTMLButtonElement} */
-			const button =
-				this.$el.tagName.toLowerCase() === 'button'
+			const button
+				= this.$el.tagName.toLowerCase() === 'button'
 					? this.$el
 					: this.$el.querySelector('button')
 			button.focus()
