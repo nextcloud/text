@@ -169,7 +169,7 @@ class WorkspaceController extends OCSController {
 				$file = $this->workspaceService->getFile($folder);
 				if ($file === null) {
 					$token = $this->directEditingManager->create(
-						$path . '/' . $this->workspaceService->getSupportedFilenames()[0],
+						$path . '/' . WorkspaceService::DEFAULT_FILENAME,
 						Application::APP_NAME,
 						TextDocumentCreator::CREATOR_ID
 					);
