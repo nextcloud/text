@@ -63,6 +63,8 @@ export default defineComponent({
 
 		autofocus: {
 			type: Boolean,
+			// This is a public interface for Viewer we cannot change for now.
+			// eslint-disable-next-line vue/no-boolean-default
 			default: true,
 		},
 
