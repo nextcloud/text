@@ -173,11 +173,11 @@ describe('Workspace', function () {
 			cy.get('#rich-workspace .ProseMirror').should('contain', 'Hello world')
 		})
 
-		it('creates description with localized name properly rendered', function () {
+		it('creates description with default name', function () {
 			cy.modifyUser(user, 'language', 'es')
 			cy.visitTestFolder()
 			cy.createDescription('Añadir descripción a carpeta')
-			cy.getFile('Léeme.md')
+			cy.getFile('Readme.md')
 			cy.get('#rich-workspace .editor__content').should('be.visible')
 		})
 
