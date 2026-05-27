@@ -60,6 +60,7 @@ OC.L10N.register(
     "Some code" : "Некој код",
     "Link" : "Линк",
     "Insert emoji" : "Вметни емотикон",
+    "Smart picker" : "Паметен избирач",
     "Action" : "Акција",
     "Undo" : "Назад",
     "Redo" : "Напред",
