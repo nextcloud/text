@@ -135,7 +135,7 @@ const registerFileActionFallback = () => {
 
 export const addMenuRichWorkspace = () => {
 	const descriptionFile =
-		t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+		'Readme' + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),

@@ -19,10 +19,13 @@ use OCP\IL10N;
 class WorkspaceService {
 	private IL10N $l10n;
 
+	public const DEFAULT_FILENAME = 'Readme.md';
+
 	private const SUPPORTED_STATIC_FILENAMES = [
-		'Readme.md',
+		self::DEFAULT_FILENAME,
 		'README.md',
-		'readme.md'
+		'readme.md',
+		'.Readme.md',
 	];
 
 	public function __construct(IL10N $l10n) {
