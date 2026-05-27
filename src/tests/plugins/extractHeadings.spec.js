@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import Details from '../../nodes/Details.js'
 import Heading from '../../nodes/Heading.js'
 import extractHeadings from '../../plugins/extractHeadings.ts'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
@@ -35,6 +36,20 @@ describe('extractHeadings', () => {
 		expect(headings).toEqual([])
 	})
 
+	it('ignores headings inside a details block', () => {
+		const content = `
+			<h1>Visible heading</h1>
+			<details>
+				<summary>Details summary</summary>
+				<div data-type="detailsContent"><h1>Hidden heading</h1></div>
+			</details>
+		`
+		const doc = prepareDoc(content, [Details])
+		const headings = extractHeadings(doc)
+		expect(headings).toHaveLength(1)
+		expect(headings[0].text).toBe('Visible heading')
+	})
+
 	it('creates unique ids with a counter', () => {
 		const content = `
 			<h1>Level 1 heading</h1>
@@ -46,8 +61,8 @@ describe('extractHeadings', () => {
 	})
 })
 
-const prepareDoc = (content) => {
-	const editor = createCustomEditor(content, [Heading])
+const prepareDoc = (content, extraExtensions = []) => {
+	const editor = createCustomEditor(content, [Heading, ...extraExtensions])
 	const doc = editor.state.doc
 	editor.destroy()
 	return doc
