@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { Blockquote } from '@tiptap/extension-blockquote'
 import Details from '../../nodes/Details.js'
 import Heading from '../../nodes/Heading.js'
 import extractHeadings from '../../plugins/extractHeadings.ts'
@@ -45,6 +46,19 @@ describe('extractHeadings', () => {
 			</details>
 		`
 		const doc = prepareDoc(content, [Details])
+		const headings = extractHeadings(doc)
+		expect(headings).toHaveLength(1)
+		expect(headings[0].text).toBe('Visible heading')
+	})
+
+	it('ignores headings inside a block quote block', () => {
+		const content = `
+			<h1>Visible heading</h1>
+			<blockquote>
+				<h1>Quoted heading</h1>
+			</blockquote>
+		`
+		const doc = prepareDoc(content, [Blockquote])
 		const headings = extractHeadings(doc)
 		expect(headings).toHaveLength(1)
 		expect(headings[0].text).toBe('Visible heading')
