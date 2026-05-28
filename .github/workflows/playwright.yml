@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  playwright:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
@@ -66,3 +66,12 @@ jobs:
           name: playwright-report_shard${{ matrix.shardIndex }}
           path: test-results/
           retention-days: 7
+
+  summary:
+    runs-on: ubuntu-latest-low
+    needs: playwright
+    if: always()
+    name: playwright-summary
+    steps:
+      - name: Summary status
+        run: if ${{ needs.playwright.result != 'success' && needs.playwright.result != 'skipped' }}; then exit 1; fi
