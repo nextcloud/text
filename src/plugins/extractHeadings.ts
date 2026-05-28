@@ -31,8 +31,8 @@ export default function extractHeadings(doc: Node) {
 	}
 
 	doc.descendants((node, offset) => {
-		// Don't descent into detials blocks - their headings are hidden
-		if (node.type.name === 'details') {
+		// Don't descent into details/blockquote nodes - their headings are hidden
+		if (node.type.name === 'details' || node.type.name === 'blockquote') {
 			return false
 		}
 		if (node.type.name !== 'heading') {
