@@ -66,6 +66,7 @@ const extensionHighlight: Record<string, string> = {
 	md: 'markdown',
 	mkdown: 'markdown',
 	mkd: 'markdown',
+	log: 'plaintext',
 	nginxconf: 'nginx',
 	m: 'objectivec',
 	mm: 'objectivec',
