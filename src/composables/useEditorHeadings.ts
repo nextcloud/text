@@ -10,12 +10,6 @@ import { emit, subscribe } from '@nextcloud/event-bus'
 import { inject, provide, ref, shallowRef } from 'vue'
 import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 
-declare module '@nextcloud/event-bus' {
-	export interface NextcloudEvents {
-		'text:toc:toggle': { visible: boolean } | void
-	}
-}
-
 export type Heading = {
 	id: string
 	level: number
