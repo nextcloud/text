@@ -53,6 +53,7 @@ class WorkspaceServiceTest extends TestCase {
 			['docs/Readme.md', $readmeEntry],
 			['docs/README.md', $uppercaseEntry],
 			['docs/readme.md', false],
+			['docs/.Readme.md', false],
 		]);
 
 		$folder->expects($this->once())
@@ -81,6 +82,7 @@ class WorkspaceServiceTest extends TestCase {
 			['docs/Readme.md', $directoryEntry],
 			['docs/README.md', false],
 			['docs/readme.md', false],
+			['docs/.Readme.md', false],
 		]);
 
 		$folder->expects($this->never())->method('get');
