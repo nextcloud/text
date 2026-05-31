@@ -22,7 +22,6 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
-/* eslint-disable import/no-named-as-default */
 import MenuBar from '../Menu/MenuBar.vue'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'

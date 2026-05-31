@@ -160,14 +160,16 @@ export class TextEditorEmbed {
 		const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
 		const styleBold = 'font-weight: bold;'
 		const styleItalic = 'font-weight: normal; font-style: italic;'
+		// eslint-disable-next-line no-console
 		console.warn(JSON.stringify(yjsData, null, ' '))
+		// eslint-disable-next-line no-console
 		console.warn(
 			'%c%s\n%c%s\n%s',
 			styleBold,
 			intro,
 			styleItalic,
 			introChrome,
-			introFirefox
+			introFirefox,
 		)
 	}
 

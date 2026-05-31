@@ -15,7 +15,6 @@
 import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
-/* eslint-disable import/no-named-as-default */
 import ContentContainer from './ContentContainer.vue'
 import MainContainer from './MainContainer.vue'
 import Wrapper from './Wrapper.vue'
