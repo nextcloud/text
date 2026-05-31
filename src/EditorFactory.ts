@@ -18,8 +18,7 @@ import 'proxy-polyfill'
 const lowlight = createLowlight()
 
 /**
- *
- * @param language
+ * @param language to load the syntax highlighting for
  */
 async function loadSyntaxHighlight(language: string) {
 	const list = hljs.listLanguages()
@@ -27,7 +26,6 @@ async function loadSyntaxHighlight(language: string) {
 	if (!lowlight.listLanguages().includes(language)) {
 		try {
 			logger.debug('Loading language ' + language)
-			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(`../node_modules/highlight.js/lib/languages/${language}.js`)
 			lowlight.register(language, syntax.default)
 		} catch (error) {

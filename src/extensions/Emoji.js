@@ -5,7 +5,6 @@
 
 import { Node } from '@tiptap/core'
 import { PluginKey } from '@tiptap/pm/state'
-// eslint-disable-next-line import/no-named-as-default
 import Suggestion from '@tiptap/suggestion'
 
 export const EmojiPluginKey = new PluginKey('emoji')

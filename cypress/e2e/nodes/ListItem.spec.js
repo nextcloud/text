@@ -4,7 +4,6 @@
  */
 
 import { ListItem, OrderedList } from '@tiptap/extension-list'
-/* eslint-enable import/no-named-as-default */
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/ListItem.md?raw'

@@ -6,7 +6,6 @@
 import { loadState } from '@nextcloud/initial-state'
 import { initialize } from './oca.text.ts'
 
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
 initialize()

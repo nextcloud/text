@@ -9,7 +9,6 @@ import EditableTable from './../nodes/EditableTable.js'
 import Paragraph from './../nodes/Paragraph.js'
 import PlainTableDocument from './../nodes/PlainTableDocument.js'
 import Keymap from './Keymap.js'
-/* eslint-disable import/no-named-as-default */
 import Markdown from './Markdown.js'
 
 export default Extension.create({
