@@ -25,7 +25,6 @@ import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import { EDITOR_UPLOAD } from '../Editor.provider.ts'
 
 export default {
 	name: 'PlainTableContentEditor',
@@ -73,7 +72,6 @@ export default {
 			useTableOfContents: false,
 		})
 		provide(editorWidthKey, null)
-		provide(EDITOR_UPLOAD, false)
 		return { editor, setContent }
 	},
 

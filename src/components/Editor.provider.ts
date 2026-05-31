@@ -35,7 +35,7 @@ export const useEditorUpload = {
 	inject: {
 		$editorUpload: {
 			from: EDITOR_UPLOAD,
-			default: true,
+			default: false,
 		},
 	},
 }
