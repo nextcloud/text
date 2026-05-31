@@ -13,6 +13,7 @@ declare global {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		OCA: Record<string, any>
 		OCP: Nextcloud.v29.OCP
+		_oc_debug: boolean
 	}
 
 	const appVersion: string
