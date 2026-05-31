@@ -138,11 +138,10 @@ export default {
 		this.updateHeadings()
 		this.editor.on('create', () => {
 			this.$emit('ready')
-			this.$parent.$emit('ready')
 		})
 		this.editor.on('update', ({ editor }) => {
 			const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
-			this.emit('update:content', {
+			this.$emit('update:content', {
 				json: editor.state.doc,
 				markdown,
 			})
@@ -160,26 +159,8 @@ export default {
 	beforeUnmount() {
 		this.editor.destroy()
 	},
-
-	methods: {
-		/**
-		 * Wrapper to emit events on our own and the parent component
-		 *
-		 * The parent might be either the root component of src/editor.js or Viewer.vue which collectives currently uses
-		 *
-		 * Ideally this would be done in a generic way in the src/editor.js API abstraction, but it seems
-		 * that there is no proper way to pass any received event along in vue, the only option I've found
-		 * in https://github.com/vuejs/vue/issues/230 feels too hacky to me, so we just emit twice for now
-		 *
-		 * @param {string} event The event name
-		 * @param {any} data The data to pass along
-		 */
-		emit(event, data) {
-			this.$emit(event, data)
-			this.$parent?.$emit(event, data)
-		},
-	},
 }
+
 </script>
 
 <style lang="scss">
