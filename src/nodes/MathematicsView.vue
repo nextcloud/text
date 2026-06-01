@@ -89,7 +89,9 @@ export default {
 		},
 
 		onMathClick() {
-			if (!this.editor.isEditable) { return }
+			if (!this.editor.isEditable) {
+				return
+			}
 			this.showModal = true
 		},
 

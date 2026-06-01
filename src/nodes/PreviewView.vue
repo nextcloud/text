@@ -31,7 +31,7 @@ import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
 
 export default {
-	name: 'Preview',
+	name: 'PreviewView',
 
 	components: {
 		NodeViewWrapper,
