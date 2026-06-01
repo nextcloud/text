@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable @stylistic/max-statements-per-line */
+
 import type MarkdownIt from 'markdown-it'
 
 /**

@@ -19,7 +19,9 @@ export default function keepSyntax(md) {
 
 		for (let i = 0; i < state.tokens.length; i++) {
 			const block = state.tokens[i]
-			if (block.type !== 'inline') { continue }
+			if (block.type !== 'inline') {
+				continue
+			}
 
 			for (let j = 0; j < block.children.length; j++) {
 				const token = block.children[j]
