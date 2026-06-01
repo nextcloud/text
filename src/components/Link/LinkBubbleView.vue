@@ -12,8 +12,9 @@
 			</div>
 			<!-- open link -->
 			<NcButton
-				:title="t('text', 'Open link')"
-				:aria-label="t('text', 'Open link')"
+				:disabled="!isSafeHref"
+				:title="openLinkTitle"
+				:aria-label="openLinkTitle"
 				variant="tertiary"
 				@click="openLink(href)">
 				<template #icon>
@@ -98,6 +99,7 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
+import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
@@ -169,6 +171,27 @@ export default {
 			} catch {
 				return false
 			}
+		},
+
+		isSafeHref() {
+			try {
+				const url = new URL(this.href, window.location)
+				return !!this.href && PROTOCOLS_TO_LINK_TO.includes(url.protocol)
+			} catch {
+				return false
+			}
+		},
+
+		openLinkTitle() {
+			if (this.isSafeHref) {
+				return t('text', 'Open link')
+			}
+
+			if (!this.href) {
+				return t('text', 'No link available to open')
+			}
+
+			return t('text', 'Cannot open links with unsafe protocols')
 		},
 	},
 
