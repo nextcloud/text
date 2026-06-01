@@ -12,7 +12,7 @@ import { close } from '../apis/connect.ts'
 import { push } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps.ts'
-import { documentStateToStep } from '../helpers/yjs'
+import { documentStateToStep } from '../helpers/yjs.ts'
 import Outbox from './Outbox.ts'
 import PollingBackend from './PollingBackend.ts'
 
@@ -171,7 +171,7 @@ class SyncService {
 			return
 		}
 		if (!this.connection.value) {
-			console.error('Opened the connection but now it is undefined')
+			logger.error('Opened the connection but now it is undefined')
 			return
 		}
 		this.backend = new PollingBackend(this, this.connection.value, data)
@@ -306,7 +306,7 @@ class SyncService {
 		if (this.version < versionAfter) {
 			// Steps up to version where emitted but it looks like they were not processed.
 			// Otherwise the WebsocketPolyfill would have increased the version counter.
-			console.warn(`Failed to process steps leading up to version ${versionAfter}.`)
+			logger.warn(`Failed to process steps leading up to version ${versionAfter}.`)
 		}
 		this.#lastStepPush = Date.now()
 	}
