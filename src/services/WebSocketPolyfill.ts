@@ -11,11 +11,11 @@ import { logger } from '../helpers/logger.js'
 import { stepsFromOpenData } from '../helpers/yjs.ts'
 import getNotifyBus from './NotifyService.ts'
 
-// Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
 /**
+ * Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
  *
- * @param message
- * @param context
+ * @param message to log
+ * @param context data to include in the log
  */
 function debug(message: string, context?: Record<string, unknown>) {
 	if (window.OCA?.Text?.logWebSocketPolyfill) {
@@ -33,7 +33,6 @@ export default function initWebSocketPolyfill(
 	fileId: number,
 ) {
 	return class WebSocketPolyfill {
-		#url
 		binaryType: 'blob' | 'arraybuffer' = 'blob'
 		onmessage?: (message: MessageEvent) => void
 		onerror?: (error: Event) => void
@@ -47,7 +46,6 @@ export default function initWebSocketPolyfill(
 		constructor(url: string) {
 			this.#notifyPushBus = getNotifyBus()
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
-			this.#url = url
 			debug('WebSocketPolyfill#constructor', { url, fileId })
 
 			this.#onOpened = (data: OpenData) => {
