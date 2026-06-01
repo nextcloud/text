@@ -12,15 +12,14 @@ import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 import { activeLinkFromSelection } from './linkHelpers.js'
 
+export const linkBubbleKey = new PluginKey('linkBubble')
+
 // Commands
 
-/* Set resolved to be the active element (if it has a link mark)
- *
- * @params resolved - resolved position of the action
- */
 /**
+ * Set resolved to be the active element (if it has a link mark)
  *
- * @param resolved
+ * @param resolved - resolved position of the action
  */
 export function setActiveLink(resolved: ResolvedPos): Command {
 	return (state, dispatch) => {
@@ -51,7 +50,6 @@ export const hideLinkBubble: Command = (state, dispatch) => {
 	return true
 }
 
-export const linkBubbleKey = new PluginKey('linkBubble')
 /**
  * Prosemirror link bubble plugin
  *
