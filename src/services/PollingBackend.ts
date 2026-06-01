@@ -98,7 +98,7 @@ class PollingBackend {
 
 	connect() {
 		if (this.fetcher) {
-			console.error('Trying to connect, but already connected')
+			logger.error('Trying to connect, but already connected')
 			return
 		}
 		this.#initialLoadingFinished = false
@@ -122,7 +122,7 @@ class PollingBackend {
 		}
 
 		if (!this.fetcher) {
-			console.error('No inverval but triggered')
+			logger.error('No inverval but triggered')
 			return
 		}
 

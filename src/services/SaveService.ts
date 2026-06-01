@@ -82,11 +82,14 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		saveViaSendBeacon(this.connection.value, {
+		const success = saveViaSendBeacon(this.connection.value, {
 			version: this.version,
 			autosaveContent: this.serialize(),
 			documentState: this.getDocumentState(),
-		}) && logger.debug('[SaveService] saved using sendBeacon')
+		})
+		if (success) {
+			logger.debug('[SaveService] saved using sendBeacon')
+		}
 	}
 
 	forceSave() {
