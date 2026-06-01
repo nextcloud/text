@@ -11,11 +11,12 @@ import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
 import markdownit from '../markdownit/index.js'
 
 /**
+ * Apply an update to the ydoc that will change it to match content
  *
- * @param ydoc
- * @param content
- * @param root0
- * @param root0.isRichEditor
+ * @param ydoc document to update
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
  */
 export function setInitialYjsState(
 	ydoc: Doc,

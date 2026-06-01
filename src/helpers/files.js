@@ -17,6 +17,7 @@ import {
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { createApp } from 'vue'
+import { logger } from './logger.ts'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -88,9 +89,10 @@ let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
 /**
+ * Helper function to check if the workspace header should be enabled
  *
- * @param _
- * @param view
+ * @param {object} _ current folder (unused)
+ * @param {string} view current view
  */
 function enabled(_, view) {
 	return ['files', 'favorites', 'public-share', 'personal'].includes(view.id)
@@ -116,7 +118,7 @@ export const FilesWorkspaceHeader = {
 		// If an instance already exists, destroy it before creating a new one
 		if (FilesHeaderRichWorkspaceInstance) {
 			FilesHeaderRichWorkspaceInstance.$destroy()
-			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
+			logger.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
 		const hasRichWorkspace
@@ -137,7 +139,7 @@ export const FilesWorkspaceHeader = {
 	updated(folder, view) {
 		latestFolder = folder
 		if (!FilesHeaderRichWorkspaceInstance) {
-			console.error('No vue instance found for FilesWorkspaceHeader')
+			logger.error('No vue instance found for FilesWorkspaceHeader')
 			return
 		}
 
