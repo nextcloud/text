@@ -170,6 +170,7 @@ export default {
 
 	mixins: [useAttachmentResolver],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
+	emits: ['error'],
 	data() {
 		return {
 			attachment: null,
@@ -315,8 +316,9 @@ export default {
 
 	methods: {
 		setupResizeObserver() {
-			if (!this.$refs.wrapper) { return }
-
+			if (!this.$refs.wrapper) {
+				return
+			}
 			this.resizeObserver = new ResizeObserver((entries) => {
 				const width = entries[0].contentRect.width
 				if (width > 0) {
@@ -443,7 +445,7 @@ export default {
 			if (this.imageIndex !== -1) {
 				this.showImageModal = true
 			} else {
-				console.error(
+				logger.error(
 					'Could not find image in attachments list',
 					this.attachment,
 				)

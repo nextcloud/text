@@ -114,6 +114,7 @@ import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import Help from 'vue-material-design-icons/HelpCircleOutline.vue'
 import MarkerIcon from 'vue-material-design-icons/Marker.vue'
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
+import { logger } from '../../helpers/logger.ts'
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
 export default {
@@ -266,7 +267,7 @@ export default {
 				}
 				this.$refs.preview.innerHTML = svg
 			} catch (e) {
-				console.debug('Invalid mermaid source', e)
+				logger.debug('Invalid mermaid source', e)
 				if (this.viewMode === 'preview') {
 					this.viewMode = this.isEditable ? 'side-by-side' : 'code'
 				}

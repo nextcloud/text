@@ -5,7 +5,7 @@
 
 import { getMarkRange, getNodeType, isNodeActive, Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import Preview from './Preview.vue'
+import PreviewView from './PreviewView.vue'
 import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 
 export default Node.create({
@@ -57,7 +57,7 @@ export default Node.create({
 	},
 
 	addNodeView() {
-		return VueNodeViewRenderer(Preview)
+		return VueNodeViewRenderer(PreviewView)
 	},
 
 	toMarkdown: (state, node) => {
@@ -143,7 +143,7 @@ export default Node.create({
 			 * @param {string} link - the link URL
 			 */
 			insertPreview:
-				(link) => ({ state, chain }) => {
+				(link) => ({ chain }) => {
 					return chain()
 						.insertContent({
 							type: 'preview',

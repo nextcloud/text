@@ -35,7 +35,7 @@ import {
 	Underline,
 } from './../marks/index.js'
 import BulletList from './../nodes/BulletList.ts'
-import Callouts from './../nodes/Callouts.js'
+import Callouts from '../nodes/Callout.js'
 import CodeBlock from './../nodes/CodeBlock.js'
 import Details from './../nodes/Details.js'
 import EditableTable from './../nodes/EditableTable.js'
