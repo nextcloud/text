@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable no-console */
+
 /**
  * Setup OCA.Text.debugYjs() and expose editor component in OCA.Text.editorComponents
  */

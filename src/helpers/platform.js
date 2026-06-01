@@ -10,7 +10,9 @@
  */
 export function isMobilePlatform() {
 	// Use client hints if already available
-	if (navigator?.userAgentData?.mobile !== undefined) { return navigator.userAgentData.mobile }
+	if (navigator?.userAgentData?.mobile !== undefined) {
+		return navigator.userAgentData.mobile
+	}
 
 	// use regex to match userAgent (required for Safari and Firefox in 2022)
 	const mobileDevices = [
