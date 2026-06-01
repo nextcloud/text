@@ -26,7 +26,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
 	.enable('table')
 	.use(taskLists, { enable: true, labelAfter: true })
-	.use(frontMatter, (fm) => {})
+	.use(frontMatter, () => {})
 	.use(splitMixedLists) // needs task Lists to be used first.
 	.use(underline)
 	.use(hardbreak)
@@ -47,7 +47,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	})
 
 // Render front matter tokens
-markdownit.renderer.rules.front_matter = (tokens, idx, options) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
+markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
 
 // Render horizontal rules with markup attribute
 markdownit.renderer.rules.hr = (tokens, idx) =>

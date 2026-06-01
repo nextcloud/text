@@ -15,7 +15,7 @@ import { tex } from '@mdit/plugin-tex'
 
 /**
  *
- * @param unsafe
+ * @param unsafe string to escape
  */
 function escapeHtml(unsafe: string) {
 	return unsafe
@@ -28,7 +28,7 @@ function escapeHtml(unsafe: string) {
 
 /**
  *
- * @param content
+ * @param content latex to be rendered
  */
 function renderBlock(content: string) {
 	return `<div data-type="block-math" data-latex="${escapeHtml(content)}"></div>`
@@ -36,7 +36,7 @@ function renderBlock(content: string) {
 
 /**
  *
- * @param content
+ * @param content latex to be rendered
  */
 function renderInline(content: string) {
 	return `<span data-type="inline-math" data-latex="${escapeHtml(content)}">${escapeHtml(content)}</span>`
@@ -44,8 +44,8 @@ function renderInline(content: string) {
 
 /**
  *
- * @param content
- * @param displayMode
+ * @param content latex to be rendered
+ * @param displayMode will render as block, otherwise inline.
  */
 function render(content: string, displayMode: boolean) {
 	return displayMode ? renderBlock(content) : renderInline(content)

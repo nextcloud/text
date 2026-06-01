@@ -119,7 +119,7 @@ function parseDetails(
 		token.content = t.content
 	}
 
-	token = state.push('details_summary', 'summary', -1)
+	state.push('details_summary', 'summary', -1)
 
 	state.md.block.tokenize(state, startLine + startLineCount, nextLine)
 
