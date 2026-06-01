@@ -35,7 +35,7 @@ function detailsParentInfo(resolvedPos, schema) {
  */
 function childFromNode(node, nodeType) {
 	const childNodes = []
-	node.descendants((childNode, i) => {
+	node.descendants((childNode) => {
 		if (childNode.type === nodeType) {
 			childNodes.push(childNode)
 			return false
@@ -102,7 +102,7 @@ const Details = Node.create({
 	addCommands() {
 		return {
 			setDetails:
-				() => ({ commands, state, chain }) => {
+				() => ({ state, chain }) => {
 					const { schema, selection } = state
 					const { $from, $to } = selection
 					const blockRange = $from.blockRange($to)
