@@ -13,13 +13,14 @@ import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
+import { logger } from '../helpers/logger.ts'
 import { linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
 /**
  *
- * @param match
+ * @param match to extract href from
  */
 function extractHrefFromMatch(match: ExtendedRegExpMatchArray) {
 	return { href: match.groups?.href }
@@ -27,7 +28,7 @@ function extractHrefFromMatch(match: ExtendedRegExpMatchArray) {
 
 /**
  *
- * @param match
+ * @param match with multiple capture groups
  */
 function extractHrefFromMarkdownLink(match: ExtendedRegExpMatchArray) {
 	/**
@@ -93,6 +94,7 @@ declare module '@tiptap/core' {
 			 *
 			 * @param text The text in the link
 			 * @param attrs The link attributes
+			 * @param attrs.href The actual url
 			 * @example editor.commands.insertOrSetLink('hello', { href: 'https://tiptap.dev' })
 			 */
 			insertOrSetLink: (
@@ -171,7 +173,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
 				? domHref(mark, this.options.relativePath)
 				: '#'
-		} catch (error) {
+		} catch {
 			href = '#'
 		}
 		return [
@@ -260,10 +262,10 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			'Mod-k': () => {
 				const { empty } = this.editor.state.selection
 				if (empty) {
-					console.debug('empty selection')
+					logger.debug('empty selection')
 					return false
 				}
-				console.debug('toggle link for selection')
+				logger.debug('toggle link for selection')
 				return this.editor.commands.toggleLink({ href: '' })
 			},
 		}
