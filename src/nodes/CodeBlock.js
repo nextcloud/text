@@ -24,7 +24,7 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 		]
 	},
 
-	toMarkdown(state, node, parent, index) {
+	toMarkdown(state, node) {
 		// @tiptap/pm/markdown uses `params` instead of `language` attribute
 		node.attrs.params = node.attrs.language
 

@@ -26,7 +26,7 @@ const ICONS_MAP = {
 }
 
 export default {
-	name: 'Callout',
+	name: 'CalloutView',
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,

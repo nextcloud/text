@@ -26,9 +26,8 @@ import TableRow from './TableRow.js'
  * @param {object} schema - schema of the editor
  * @param {number} rowsCount - number of rows in the table
  * @param {number} colsCount - number of cols in the table
- * @param {object} cellContent - currently unused
  */
-function createTable(schema, rowsCount, colsCount, cellContent) {
+function createTable(schema, rowsCount, colsCount) {
 	const headerCells = []
 	const cells = []
 	for (let index = 0; index < colsCount; index += 1) {
@@ -137,7 +136,9 @@ export default Table.extend({
 					.run(),
 			insertTable:
 				() => ({ tr, dispatch, editor }) => {
-					if (isInTable(tr)) { return false }
+					if (isInTable(tr)) {
+						return false
+					}
 					const node = createTable(editor.schema, 3, 3, true)
 					if (dispatch) {
 						const offset = tr.selection.anchor + 1
@@ -149,10 +150,14 @@ export default Table.extend({
 				},
 			// move to the next node after the table from the last cell
 			leaveTable:
-				() => ({ tr, dispatch, editor }) => {
-					if (!isInTable(tr)) { return false }
+				() => ({ tr, dispatch }) => {
+					if (!isInTable(tr)) {
+						return false
+					}
 					const { $head, empty } = tr.selection
-					if (!empty) { return false }
+					if (!empty) {
+						return false
+					}
 					// the selection can temporarily be inside the table but outside of cells.
 					const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
 					if (dispatch) {
@@ -163,10 +168,14 @@ export default Table.extend({
 					return true
 				},
 			goToNextRow:
-				() => ({ tr, dispatch, editor }) => {
-					if (!isInTable(tr)) { return false }
+				() => ({ tr, dispatch }) => {
+					if (!isInTable(tr)) {
+						return false
+					}
 					const cell = findSameCellInNextRow(selectionCell(tr))
-					if (cell == null) { return }
+					if (cell === null) {
+						return
+					}
 					if (dispatch) {
 						const $cell = tr.doc.resolve(cell)
 						const selection = TextSelection.between(
@@ -219,7 +228,9 @@ export default Table.extend({
 						return true
 					})
 
-					if (!table || tablePos === null || columnIndex < 0) { return false }
+					if (!table || tablePos === null || columnIndex < 0) {
+						return false
+					}
 
 					const bodyRows = []
 					const nonBodyChildren = []
@@ -230,7 +241,9 @@ export default Table.extend({
 						}
 						nonBodyChildren.push(child)
 					})
-					if (bodyRows.length < 2) { return true }
+					if (bodyRows.length < 2) {
+						return true
+					}
 
 					// check if all rows have a cell at the column index and that the cell doesn't have colspan or rowspan
 					const canSortRows = bodyRows.every((row) => {
@@ -243,7 +256,9 @@ export default Table.extend({
 							&& (targetCell.attrs.rowspan ?? 1) === 1
 						)
 					})
-					if (!canSortRows) { return false }
+					if (!canSortRows) {
+						return false
+					}
 
 					// sort the rows based on the content of the cell at the column index
 					const collator = new Intl.Collator(undefined, {
@@ -267,7 +282,9 @@ export default Table.extend({
 						})
 
 					const hasChangedOrder = sortedRows.some(({ index }, sortedIndex) => index !== sortedIndex)
-					if (!hasChangedOrder) { return true }
+					if (!hasChangedOrder) {
+						return true
+					}
 
 					const sortedTable = table.type.createChecked(
 						table.attrs,

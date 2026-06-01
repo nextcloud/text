@@ -59,7 +59,7 @@ const Image = TiptapImage.extend({
 			new Plugin({
 				key: imageFileDropPluginKey,
 				props: {
-					handleDrop: (view, event, slice) => {
+					handleDrop: (view, event) => {
 						// only catch the drop if it contains files
 						if (
 							event.dataTransfer.files
@@ -80,7 +80,7 @@ const Image = TiptapImage.extend({
 							return true
 						}
 					},
-					handlePaste: (view, event, slice) => {
+					handlePaste: (view, event) => {
 						// only catch the paste if it contains files
 						if (
 							event.clipboardData.files

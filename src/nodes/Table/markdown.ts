@@ -55,7 +55,9 @@ function normalizeCells(row: Row, columnWidths: number[]): Cell[] {
 		}
 
 		// Normalize cells to have the same number of lines
-		while (normalizedCell.lines.length < row.length) { normalizedCell.lines.push('') }
+		while (normalizedCell.lines.length < row.length) {
+			normalizedCell.lines.push('')
+		}
 		// Normalize lines in cell to have the same length
 		normalizedCell.lines.forEach((line, lineIdx) => {
 			if (
@@ -137,18 +139,11 @@ function headerRowToMarkdown(
 	row.cells.forEach((cell, cellIdx) => {
 		// Separator alignment
 		const separatorWidth = columnWidths[cellIdx] + 2
-		let separator = ''
-		switch (cell.align) {
-			case 'center':
-				separator = ':' + state.repeat('-', separatorWidth - 2) + ':'
-				break
-			case 'right':
-				separator = state.repeat('-', separatorWidth - 1) + ':'
-				break
-			default:
-				separator = state.repeat('-', separatorWidth)
-				break
-		}
+		const separator = cell.align === 'center'
+			? ':' + state.repeat('-', separatorWidth - 2) + ':'
+			: cell.align === 'right'
+				? state.repeat('-', separatorWidth - 1) + ':'
+				: state.repeat('-', separatorWidth)
 		state.write(separator)
 		state.write('|')
 	})
