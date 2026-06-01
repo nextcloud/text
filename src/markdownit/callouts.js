@@ -9,7 +9,7 @@ export const typesAvailable = ['info', 'warn', 'error', 'success']
 
 /**
  *
- * @param type
+ * @param {string} type one of 'info', 'warn', 'error' and 'success'
  */
 function buildRender(type) {
 	return (tokens, idx, options, env, slf) => {

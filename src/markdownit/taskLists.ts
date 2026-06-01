@@ -123,7 +123,7 @@ function isTodoItem(tokens: Token[], index: number): boolean {
  * @param options - taskLists plugin options
  */
 function todoify(token: Token, options: TaskListsOptions): void {
-	if (token.children == null) {
+	if (token.children === null) {
 		return
 	}
 
