@@ -95,7 +95,7 @@ export function runSearch(doc, query, options) {
 		? query.trim().slice(1).toLowerCase()
 		: query.trim().toLowerCase()
 
-	doc.descendants((node, offset, _position) => {
+	doc.descendants((node, offset) => {
 		// Add decorations for text matches
 		if (node.isText) {
 			const matches = node.text.matchAll(new RegExp(query, 'gi'))

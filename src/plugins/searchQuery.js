@@ -49,9 +49,10 @@ export function searchQuery() {
 }
 
 /**
+ * Set the search query
  *
- * @param query
- * @param matchAll
+ * @param {string} query to search for
+ * @param {boolean | undefined} matchAll show all occurances
  */
 export function setSearchQuery(query, matchAll) {
 	return ({ tr }) => {

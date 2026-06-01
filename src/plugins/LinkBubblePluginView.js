@@ -79,7 +79,7 @@ class LinkBubblePluginView {
 		})
 	}
 
-	update(view, oldState) {
+	update(view) {
 		const { active } = this.plugin.getState(view.state)
 		if (view.composing) {
 			return
@@ -101,7 +101,7 @@ class LinkBubblePluginView {
 		let referenceEl
 		try {
 			referenceEl = view.nodeDOM(nodeStart)
-		} catch (e) {
+		} catch {
 			// Prevent throwing error at rerouting in `openLink()`
 			return
 		}
