@@ -5,12 +5,13 @@
 
 import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.ts'
+import type { SyncService } from './SyncService.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { type SyncService,ERROR_TYPE } from './SyncService.ts'
+import { ERROR_TYPE } from './SyncService.ts'
 
 /**
  * Interval to save the serialized document and the document state
@@ -99,11 +100,14 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		saveViaSendBeacon(this.connection.value, {
+		const success = saveViaSendBeacon(this.connection.value, {
 			version: this.version,
 			autosaveContent: this.serialize(),
 			documentState: this.getDocumentState(),
-		}) && logger.debug('[SaveService] saved using sendBeacon')
+		})
+		if (success) {
+			logger.debug('[SaveService] saved using sendBeacon')
+		}
 	}
 
 	forceSave() {

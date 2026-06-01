@@ -10,8 +10,9 @@ import { getClient, getDefaultPropfind, resultToNode } from '@nextcloud/files/da
 export const client = getClient()
 
 /**
+ * Get a node from the server
  *
- * @param node
+ * @param node to get
  */
 export async function fetchNode(node: Node): Promise<Node> {
 	const propfindPayload = getDefaultPropfind()

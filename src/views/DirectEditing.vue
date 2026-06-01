@@ -32,9 +32,10 @@ const log = reactive({
 })
 
 /**
+ * Send a message to the host app
  *
- * @param messageName
- * @param attributes
+ * @param {string} messageName name of the message
+ * @param {object} attributes attributes to send
  */
 function callMobileMessage(messageName, attributes) {
 	logger.debug(`callMobileMessage ${messageName}`, { attributes })
@@ -45,11 +46,11 @@ function callMobileMessage(messageName, attributes) {
 			Values: attributes,
 		}
 	}
-	let attributesString = null
+	const attributesString = null
 	try {
 		attributesString = JSON.stringify(attributes)
-	} catch (e) {
-		attributesString = null
+	} catch {
+		/* Continue without attributeString null */
 	}
 
 	// Forward to mobile handler
