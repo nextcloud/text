@@ -10,11 +10,12 @@ import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
 import markdownit from '../markdownit/index.js'
 
 /**
+ * Compute an update that changes baseDoc to have content
  *
- * @param baseDoc
- * @param content
- * @param root0
- * @param root0.isRichEditor
+ * @param baseDoc document to start with
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
  */
 export function updateFromContent(
 	baseDoc: Doc,
@@ -31,11 +32,12 @@ export function updateFromContent(
 }
 
 /**
+ * Change the document to have the given content
  *
- * @param doc
- * @param content
- * @param root0
- * @param root0.isRichEditor
+ * @param doc document to update
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
  */
 function setContent(
 	doc: Doc,

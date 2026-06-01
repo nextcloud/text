@@ -171,7 +171,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		try {
 			const url = new URL(mark.attrs.href, window.location.href)
 			href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
-				? domHref(mark, this.options.relativePath)
+				? domHref(mark)
 				: '#'
 		} catch {
 			href = '#'
