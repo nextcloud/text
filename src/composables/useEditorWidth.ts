@@ -61,7 +61,7 @@ function maxWidthSetOutsideOfText() {
 
 /**
  *
- * @param hasTableOfContents
+ * @param hasTableOfContents does the editor have a table of contents
  */
 export function provideEditorWidth(hasTableOfContents = true) {
 	const isMobile = useIsMobile()

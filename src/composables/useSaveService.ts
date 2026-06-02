@@ -9,17 +9,17 @@ import type { SyncService } from '../services/SyncService.ts'
 import type { Connection } from './useConnection.ts'
 
 import { inject, provide } from 'vue'
-import { getDocumentState } from '../helpers/yjs'
+import { getDocumentState } from '../helpers/yjs.ts'
 import { SaveService } from '../services/SaveService.ts'
 
 const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
 
 /**
  *
- * @param connection
- * @param syncService
- * @param serialize
- * @param ydoc
+ * @param connection to the api
+ * @param syncService mostly used for the event bus and events
+ * @param serialize to extract the document markdown content
+ * @param ydoc to extract the document state from
  */
 export function provideSaveService(
 	connection: ShallowRef<Connection | undefined>,

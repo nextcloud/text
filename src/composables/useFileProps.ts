@@ -16,7 +16,7 @@ export const filePropsKey = Symbol('tiptap:file:props') as InjectionKey<FileProp
 
 /**
  *
- * @param props
+ * @param props to get the file props from
  */
 export function provideFileProps(props: FileProps) {
 	provide(filePropsKey, {
