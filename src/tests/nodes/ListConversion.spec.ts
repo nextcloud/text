@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, expect, it } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
@@ -140,7 +141,9 @@ describe('markdown serialization of mixed list types', () => {
 		// find inner paragraph
 		let innerPos = -1
 		editor.state.doc.descendants((node, pos) => {
-			if (node.type.name === 'paragraph' && node.textContent === 'inner') { innerPos = pos + 1 }
+			if (node.type.name === 'paragraph' && node.textContent === 'inner') {
+				innerPos = pos + 1
+			}
 		})
 		editor.commands.setTextSelection(innerPos)
 		editor.commands.toggleTaskList()
