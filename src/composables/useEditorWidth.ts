@@ -61,9 +61,9 @@ function maxWidthSetOutsideOfText() {
 
 /**
  *
- * @param useTableOfContents
+ * @param hasTableOfContents
  */
-export function provideEditorWidth(useTableOfContents = true) {
+export function provideEditorWidth(hasTableOfContents = true) {
 	const isMobile = useIsMobile()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
@@ -76,10 +76,10 @@ export function provideEditorWidth(useTableOfContents = true) {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const defaultEditorWidthDesktop = useTableOfContents
+	const defaultEditorWidthDesktop = hasTableOfContents
 		? editorWidthDesktopEnhanced
 		: editorWidthDesktop
-	const defaultFullEditorWidthDesktop = useTableOfContents
+	const defaultFullEditorWidthDesktop = hasTableOfContents
 		? fullEditorWidthDesktopEnhanced
 		: fullEditorWidthDesktop
 	const defaultEditorWidth = computed(() => isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop)

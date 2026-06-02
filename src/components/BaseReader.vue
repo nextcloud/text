@@ -9,7 +9,7 @@
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<TocContainer v-if="useTableOfContents" />
+		<TocContainer v-if="hasTableOfContents" />
 	</div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
 		const editor = new Editor({ extensions: extensions() })
 		provideEditor(editor)
 
-		const { useTableOfContents } = useEditorFlags()
+		const { hasTableOfContents } = useEditorFlags()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		watch(
 			() => props.content,
@@ -56,7 +56,7 @@ export default {
 		// Render the initial content last as it may render Vue components
 		// that break the vue context of this setup function.
 		setContent(props.content, { addToHistory: false })
-		return { editor, useTableOfContents }
+		return { editor, hasTableOfContents }
 	},
 
 	beforeUnmount() {

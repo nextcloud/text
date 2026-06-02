@@ -68,7 +68,7 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
-			useTableOfContents: false,
+			hasTableOfContents: false,
 		})
 		provide(editorWidthKey, null)
 		return { editor, setContent }
