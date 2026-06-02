@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import transformPastedHTML from './../../extensions/transformPastedHTML.js'
+import transformPastedHTML from '../../extensions/transformPastedHTML.ts'
 
 describe('transformPastedHTML', () => {
 	// alias so the strings line up nicely

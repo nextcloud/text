@@ -34,7 +34,7 @@ const KeepSyntax = Mark.create({
 	onUpdate() {
 		const tr = this.editor.state.tr
 
-		this.editor.state.doc.descendants((node, pos, parent, index) => {
+		this.editor.state.doc.descendants((node, pos) => {
 			if (
 				node.marks.findIndex((mark) => mark.type.name === this.name) !== -1
 			) {
