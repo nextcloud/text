@@ -34,6 +34,7 @@ import { defineComponent } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import PinOutlineIcon from 'vue-material-design-icons/PinOutline.vue'
+import { useFileProps } from '../../../composables/useFileProps.ts'
 
 export default defineComponent({
 	name: 'TocDesktop',
@@ -41,6 +42,13 @@ export default defineComponent({
 		CloseIcon,
 		PinOutlineIcon,
 		NcButton,
+	},
+
+	emits: ['close'],
+
+	setup() {
+		const { fileId } = useFileProps()
+		return { fileId }
 	},
 
 	data() {
@@ -65,7 +73,7 @@ export default defineComponent({
 			}
 		},
 
-		onAnimationend(event) {
+		onAnimationend(event: { animationName: string }) {
 			if (event.animationName === 'fadeOutRight' && this.isClosing) {
 				this.isClosing = false
 				this.$emit('close')
@@ -80,8 +88,8 @@ export default defineComponent({
 				this.keep = true
 			}
 
-			if (this.$file?.fileId) {
-				emit('text:toc:pin', { fileId: this.$file.fileId, keep: this.keep })
+			if (this.fileId) {
+				emit('text:toc:pin', { fileId: this.fileId, keep: this.keep })
 			}
 		},
 
