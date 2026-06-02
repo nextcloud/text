@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineExpose, useTemplateRef } from 'vue'
+import { useTemplateRef } from 'vue'
 import MarkdownContentEditor from '../components/Editor/MarkdownContentEditor.vue'
 
 const {
