@@ -11,7 +11,7 @@ import { inject, provide } from 'vue'
 export const editorKey = Symbol('tiptap:editor') as InjectionKey<Editor>
 /**
  *
- * @param editor
+ * @param editor to provide
  */
 export function provideEditor(editor: Editor) {
 	provide(editorKey, editor)

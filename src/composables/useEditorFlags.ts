@@ -23,7 +23,7 @@ interface Props {
 export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags>
 /**
  *
- * @param props
+ * @param props to compute the editor flags from
  */
 export function provideEditorFlags(props: Props) {
 	const isPublic = props.isDirectEditing || isPublicShare()

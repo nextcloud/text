@@ -62,7 +62,7 @@ export function provideIntersectionObserver() {
 
 /**
  *
- * @param id
+ * @param id of the html element in the viewers dom
  */
 export function useVisibility(id: string) {
 	const { editor } = useEditor()

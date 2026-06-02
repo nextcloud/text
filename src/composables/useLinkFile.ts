@@ -18,9 +18,9 @@ import { buildFilePicker } from '../helpers/filePicker.js'
 
 /**
  *
- * @param root0
- * @param root0.editor
- * @param root0.relativePath
+ * @param options options
+ * @param options.editor the editor
+ * @param options.relativePath relative path of the file
  */
 export function useLinkFile({
 	editor,
