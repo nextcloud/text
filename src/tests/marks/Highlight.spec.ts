@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, expect, it } from 'vitest'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 import Highlight from './../../marks/Highlight.ts'
 
