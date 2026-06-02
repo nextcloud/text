@@ -260,7 +260,7 @@ export default defineComponent({
 			hasConnectionIssue,
 			offlineReadonlyDelay * 1000,
 		)
-		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
+		const { isPublic, isRichEditor, isRichWorkspace, hasTableOfContents }
 			= provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
@@ -292,7 +292,7 @@ export default defineComponent({
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)
 
-		const { applyEditorWidth } = provideEditorWidth(useTableOfContents)
+		const { applyEditorWidth } = provideEditorWidth(hasTableOfContents)
 		applyEditorWidth()
 
 		provideEditorHeadings(editor)
