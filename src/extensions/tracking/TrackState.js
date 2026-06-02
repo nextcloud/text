@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable @stylistic/max-statements-per-line */
+
 import { Span } from './models.js'
 
 /*
@@ -101,7 +103,7 @@ export default class TrackState {
 	// Apply a transform to this state
 	applyTransform(transform) {
 		const clientID
-			= transform.getMeta('clientID') ?? transform.steps.map((item) => 'self')
+			= transform.getMeta('clientID') ?? transform.steps.map(() => 'self')
 		const newBlame = updateBlameMap(this.blameMap, transform, clientID)
 		// Create a new state—since these are part of the editor state, a
 		// persistent data structure, they must not be mutated.

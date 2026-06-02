@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable jsdoc/require-param-type */
+/* eslint-disable jsdoc/require-param-description */
+
 import { Extension } from '@tiptap/core'
 
 let ownPaused = false
@@ -56,10 +59,8 @@ function toggleFocusTrap({ editor }) {
 
 /**
  *
- * @param root0
- * @param root0.editor
  */
-function unpauseFocusTrap({ editor }) {
+function unpauseFocusTrap() {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
