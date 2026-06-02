@@ -11,7 +11,7 @@
 			role="document"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<TocContainer v-if="useTableOfContents" />
+		<TocContainer v-if="hasTableOfContents" />
 	</div>
 </template>
 
@@ -41,14 +41,14 @@ export default {
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { isRichEditor, isRichWorkspace, useTableOfContents }
+		const { isRichEditor, isRichWorkspace, hasTableOfContents }
 			= useEditorFlags()
 		return {
 			editor,
 			isMobile,
 			isRichEditor,
 			isRichWorkspace,
-			useTableOfContents,
+			hasTableOfContents,
 		}
 	},
 

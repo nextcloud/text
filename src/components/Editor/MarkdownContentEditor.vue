@@ -119,7 +119,7 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
-			useTableOfContents: true,
+			hasTableOfContents: true,
 		})
 		provideEditor(editor)
 
