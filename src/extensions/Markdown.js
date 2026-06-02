@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable jsdoc/require-param-type */
+/* eslint-disable jsdoc/require-param-description */
+
 /*
  * Tiptap extension to ease customize the serialization to markdown
  *
@@ -26,7 +29,7 @@ import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
-import transformPastedHTML from './transformPastedHTML.js'
+import transformPastedHTML from './transformPastedHTML.ts'
 
 const Markdown = Extension.create({
 	name: 'markdown',
@@ -120,10 +123,11 @@ const Markdown = Extension.create({
 })
 
 /**
+ * Create a markdown serializer based on the schema
  *
- * @param root0
- * @param root0.nodes
- * @param root0.marks
+ * @param schema
+ * @param schema.nodes
+ * @param schema.marks
  */
 function createMarkdownSerializer({ nodes, marks }) {
 	return {
@@ -173,7 +177,7 @@ function extractToPlaintext(marks) {
 		expelEnclosingWhitespace: true,
 	}
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
-	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(([name, _mark]) => [name, blankMark])
+	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(([name]) => [name, blankMark])
 
 	return Object.fromEntries(markEntries)
 }

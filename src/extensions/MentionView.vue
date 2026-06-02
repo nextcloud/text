@@ -18,21 +18,16 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { NodeViewWrapper } from '@tiptap/vue-3'
-import NcUserBubble from '@nextcloud/vue/components/NcUserBubble'
+// import NcUserBubble from '@nextcloud/vue/components/NcUserBubble'
 
 export default {
-	name: 'Mention',
+	name: 'MentionView',
 	components: {
 		NcUserBubble,
 		NodeViewWrapper,
 	},
 
 	props: {
-		updateAttributes: {
-			type: Function,
-			required: true,
-		},
-
 		node: {
 			type: Object,
 			required: true,

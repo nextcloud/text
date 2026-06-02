@@ -17,13 +17,13 @@
  * At the same time we need to preserve whitespace inside `<pre>` tags
  * and the like.
  *
- * @param {string} html Pasted html content
+ * @param html Pasted html content
  */
-export default function(html) {
+export default function(html: string) {
 	const parser = new DOMParser()
 	const doc = parser.parseFromString(html, 'text/html')
 	forAllTextNodes(doc, (textNode) => {
-		if (collapseWhiteSpace(textNode)) {
+		if (collapseWhiteSpace(textNode) && textNode.textContent) {
 			textNode.textContent = textNode.textContent.replaceAll('\n', ' ')
 		}
 	})
@@ -34,14 +34,14 @@ export default function(html) {
  *
  * Run function for all text nodes in the document.
  *
- * @param {Document} doc Html document to process
- * @param {Function} fn Function to run
+ * @param doc Html document to process
+ * @param fn Function to run
  */
-function forAllTextNodes(doc, fn) {
+function forAllTextNodes(doc: Document, fn: (node: Text) => void) {
 	const nodeIterator = doc.createNodeIterator(doc.body, NodeFilter.SHOW_TEXT)
 	let currentNode = nodeIterator.nextNode()
 	while (currentNode) {
-		fn(currentNode)
+		fn(currentNode as Text)
 		currentNode = nodeIterator.nextNode()
 	}
 }
@@ -50,9 +50,9 @@ function forAllTextNodes(doc, fn) {
  *
  * Check if newlines need to be collapsed based on the applied style
  *
- * @param {Text} textNode Text to check the style for
+ * @param textNode Text to check the style for
  */
-function collapseWhiteSpace(textNode) {
+function collapseWhiteSpace(textNode: Text) {
 	// Values of `white-space` css that will collapse newline whitespace
 	// See https://developer.mozilla.org/en-US/docs/Web/CSS/white-space#values
 	const COLLAPSING_WHITE_SPACE_VALUES = ['normal', 'nowrap']
