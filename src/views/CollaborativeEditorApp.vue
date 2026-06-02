@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineExpose, useTemplateRef } from 'vue'
+import { useTemplateRef } from 'vue'
 import Editor from '../components/Editor.js'
 
 const {
