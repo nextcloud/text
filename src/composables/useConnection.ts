@@ -92,6 +92,16 @@ export function useConnection() {
 }
 
 /**
+ * Mimic axios error for a conflict while creating the session.
+ *
+ * This will be emitted from the SyncService
+ * and trigger conflict handling in Editor.vue
+ */
+class ConflictError extends Error {
+	response = { status: 412 }
+}
+
+/**
  * Get the connection and additional data from the initial session if available.
  *
  * @param props Props of the editor component
@@ -123,14 +133,4 @@ function openInitialSession(
 		}
 		return { connection, data: props.initialSession }
 	}
-}
-
-/**
- * Mimic axios error for a conflict while creating the session.
- *
- * This will be emitted from the SyncService
- * and trigger conflict handling in Editor.vue
- */
-class ConflictError extends Error {
-	response = { status: 412 }
 }
