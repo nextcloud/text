@@ -228,7 +228,10 @@ export default {
 			this.editor.chain().focus().insertPreview(href).run()
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
-			const sanitizedName = name.replaceAll('\u202E', '')
+			const sanitizedName = name.replace(
+				/[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g,
+				'',
+			)
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 			const src =
