@@ -14,7 +14,7 @@ import { isUser } from '../services/SyncService.ts'
 
 /**
  *
- * @param editor
+ * @param editor to apply methods to
  */
 export function useEditorMethods(editor: Editor) {
 	const setEditable = (val: boolean) => {

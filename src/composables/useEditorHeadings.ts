@@ -25,7 +25,7 @@ export const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boole
 
 /**
  *
- * @param editor
+ * @param editor instance to extract headings from
  */
 export function provideEditorHeadings(editor: Editor) {
 	const headings = shallowRef<Heading[]>([])
