@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang='ts'>
+import type { ComponentInstance, ShallowRef } from 'vue'
+
 import { useTemplateRef } from 'vue'
 import MarkdownContentEditor from '../components/Editor/MarkdownContentEditor.vue'
 
@@ -47,7 +49,7 @@ const emit = defineEmits<{
 	(e: 'update:content', content: { markdown: string }): void
 }>()
 
-const editorContainer = useTemplateRef('editor-container')
+const editorContainer = useTemplateRef('editor-container') as Readonly<ShallowRef<ComponentInstance<typeof MarkdownContentEditor>>>
 defineExpose({ editorContainer })
 
 </script>
