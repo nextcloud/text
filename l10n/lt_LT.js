@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "Rodyti / slėpti turinį",
     "Alt" : "Alt",
     "Open link" : "Atverti nuorodą",
+    "No link available to open" : "Nėra nuorodos, kurią būtų galima atidaryti",
+    "Cannot open links with unsafe protocols" : "Negalima atidaryti nuorodų su nesaugiais protokolais",
     "Edit link" : "Redaguoti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
     "Cancel" : "Atsisakyti",
