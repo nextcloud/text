@@ -5,7 +5,7 @@
 
 <template>
 	<NcModal v-if="active" :name="fileName" @close="close">
-		<Editor
+		<EditorReloader
 			:fileId="fileId"
 			:relativePath="relativePath"
 			:active="active"
@@ -21,7 +21,7 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		Editor: () => import('./Editor.js'),
+		EditorReloader: () => import('./EditorReloader.vue'),
 	},
 
 	props: {

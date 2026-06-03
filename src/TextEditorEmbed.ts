@@ -10,9 +10,9 @@ import { encodeAttachmentFilename } from './helpers/attachmentFilename.ts'
 
 interface EditorComponent {
 	editor: Editor
-	debugYjsData: () => void
-	setContent: (content: string) => void
-	save: () => void
+	debugYjsData?: () => void
+	setContent: (content: string, options?: { addToHistory: boolean | undefined }) => void
+	save?: () => void
 }
 
 type DataType = Reactive<{
@@ -153,8 +153,10 @@ export class TextEditorEmbed {
 	}
 
 	debugYjs() {
-		const yjsData = this.#editorComponent.debugYjsData()
-
+		const yjsData = this.#editorComponent.debugYjsData?.()
+		if (!yjsData) {
+			return
+		}
 		const intro = 'Editor Yjs debug data. Copy the object below that starts with "clientId".'
 		const introChrome = '- In Chrome, select "Copy" at the end of the line.'
 		const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
@@ -211,7 +213,7 @@ export class TextEditorEmbedBuilder {
 		el.innerHTML = ''
 		const element = document.createElement('div')
 		el.appendChild(element)
-		const mounted = this.#app.mount(element)
+		const mounted = this.#app.mount(element) as MountedType
 		return new TextEditorEmbed(this.#app, data, mounted)
 	}
 }

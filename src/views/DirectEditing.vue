@@ -5,7 +5,7 @@
 
 <template>
 	<div id="direct-editor" :class="{ 'icon-loading': saving }">
-		<Editor
+		<EditorReloader
 			ref="editor"
 			:initialSession="initialSession"
 			:fileId="initial.fileId"
@@ -17,13 +17,13 @@
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
 			</template>
-		</Editor>
+		</EditorReloader>
 	</div>
 </template>
 
 <script>
 import { reactive } from 'vue'
-import Editor from '../components/Editor.js'
+import EditorReloader from '../components/EditorReloader.vue'
 import { logger } from '../helpers/logger.ts'
 
 const log = reactive({
@@ -84,7 +84,7 @@ window.addEventListener('message', function(message) {
 
 export default {
 	name: 'DirectEditing',
-	components: { Editor },
+	components: { EditorReloader },
 	data() {
 		return {
 			initial: OCP.InitialState.loadState('text', 'file'),

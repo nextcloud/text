@@ -12,7 +12,7 @@
 			v-if="!loaded || !ready"
 			:content="content"
 			class="rich-workspace--preview" />
-		<Editor
+		<EditorReloader
 			v-if="file"
 			v-show="ready"
 			:key="file.path"
@@ -37,8 +37,8 @@ import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
+import EditorReloader from '../components/EditorReloader.vue'
 import RichTextReader from '../components/RichTextReader.vue'
-import Editor from '../components/Editor.js'
 
 const IS_PUBLIC = isPublicShare()
 const WORKSPACE_URL = generateOcsUrl(
@@ -60,7 +60,7 @@ export default {
 	name: 'RichWorkspace',
 	components: {
 		RichTextReader,
-		Editor,
+		EditorReloader,
 	},
 
 	props: {
