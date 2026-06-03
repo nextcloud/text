@@ -644,6 +644,7 @@ export default defineComponent({
 		onSave() {
 			if (this.fileNode) {
 				this.fileNode.mtime = new Date()
+				this.fileNode.size = new Blob([this.serialize()]).size
 				emit('files:node:updated', this.fileNode)
 			}
 			this.$nextTick(() => {
