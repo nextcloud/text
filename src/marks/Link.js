@@ -9,7 +9,7 @@ import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { linkClicking } from '../plugins/links.ts'
 import { domHref, parseHref } from './../helpers/links.js'
 
-const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
+export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
 const extractHrefFromMatch = (match) => {
 	return { href: match.groups.href }
