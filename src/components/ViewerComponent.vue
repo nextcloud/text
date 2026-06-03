@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Editor
+	<EditorReloader
 		v-if="!useSourceView"
 		:fileId="fileid"
 		:relativePath="filename"
@@ -28,14 +28,14 @@
 <script>
 import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
+import EditorReloader from './EditorReloader.vue'
 import SourceView from './SourceView.vue'
-import Editor from './Editor.js'
 
 export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		SourceView,
-		Editor,
+		EditorReloader,
 	},
 
 	provide() {

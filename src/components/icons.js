@@ -72,8 +72,9 @@ import MDI_Web from 'vue-material-design-icons/Web.vue'
 const DEFAULT_ICON_SIZE = 20
 
 /**
+ * Prepare icon with our default size
  *
- * @param original
+ * @param {import('vue').Component} original from vue-material-design-icons
  */
 function makeIcon(original) {
 	return {
