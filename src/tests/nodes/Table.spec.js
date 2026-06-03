@@ -25,7 +25,8 @@ import {
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
-	editor: async (_, use) => {
+	// eslint-disable-next-line no-empty-pattern
+	editor: async ({}, use) => {
 		const editor = createRichEditor()
 		await use(editor)
 		editor.destroy()
