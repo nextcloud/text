@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "Visa/dölj översikt",
     "Alt" : "Alt",
     "Open link" : "Öppna länken",
+    "No link available to open" : "Ingen länk tillgänglig att öppna",
+    "Cannot open links with unsafe protocols" : "Kan inte öppna länkar med osäkra protokoll",
     "Edit link" : "Redigera länk",
     "Save changes" : "Spara ändringar",
     "Cancel" : "Avbryt",

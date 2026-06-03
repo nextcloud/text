@@ -116,6 +116,8 @@
     "Toggle outline" : "Gliederung umschalten",
     "Alt" : "Alt",
     "Open link" : "Link öffnen",
+    "No link available to open" : "Kein Link zum Öffnen verfügbar",
+    "Cannot open links with unsafe protocols" : "Links mit unsicheren Protokollen können nicht geöffnet werden",
     "Edit link" : "Link bearbeiten",
     "Save changes" : "Änderungen speichern",
     "Cancel" : "Abbrechen",
