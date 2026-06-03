@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "Özeti aç/kapat",
     "Alt" : "Alt",
     "Open link" : "Bağlantıyı aç",
+    "No link available to open" : "Açılabilecek bir bağlantı yok",
+    "Cannot open links with unsafe protocols" : "Güvenli olmayan iletişim kuralları kullanan bağlantılar açılamaz",
     "Edit link" : "Bağlantıyı düzenle",
     "Save changes" : "Değişiklikleri kaydet",
     "Cancel" : "İptal",

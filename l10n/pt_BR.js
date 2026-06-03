@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "Alternar estrutura",
     "Alt" : "Alt",
     "Open link" : "Abrir link",
+    "No link available to open" : "Não há nenhum link disponível para abrir",
+    "Cannot open links with unsafe protocols" : "Não é possível abrir links com protocolos não seguros",
     "Edit link" : "Editar link",
     "Save changes" : "Salvar alterações",
     "Cancel" : "Cancelar",
