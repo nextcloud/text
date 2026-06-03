@@ -372,7 +372,7 @@ class DocumentService {
 		}
 
 		if ($this->isReadOnly($file, $shareToken)) {
-			return $document;
+			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
 		$this->assertNoOutsideConflict($document, $file, $force);
@@ -596,6 +596,13 @@ class DocumentService {
 	}
 
 	public function isReadOnlyCached(Session $session, ?string $shareToken = null): bool {
+		// since public share permissions can change while a guest tab is open,
+		// stale session cache is avoided and always re-evaluate.
+		if ($shareToken !== null) {
+			$file = $this->getFileForSession($session, $shareToken);
+			return $this->isReadOnly($file, $shareToken);
+		}
+
 		$cacheKey = 'read-only-' . $session->getId();
 		$isReadOnly = $this->cache->get($cacheKey);
 		if ($isReadOnly === null) {
@@ -609,15 +616,13 @@ class DocumentService {
 	}
 
 	public function isReadOnly(File $file, ?string $token): bool {
-		$readOnly = true;
+		$readOnly = !$file->isUpdateable();
 		if ($token !== null) {
 			try {
 				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
-				$readOnly = false;
 			} catch (NotFoundException $e) {
+				$readOnly = true;
 			}
-		} else {
-			$readOnly = !$file->isUpdateable();
 		}
 
 		$lockInfo = $this->getLockInfo($file);
