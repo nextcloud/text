@@ -7,7 +7,6 @@
 	<transition name="fade">
 		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
 			<NcButton
-				ref="linkFileOrFolder"
 				variant="secondary"
 				size="normal"
 				class="suggestions--button"
@@ -67,6 +66,7 @@ import { useFileProps } from '../composables/useFileProps.ts'
 import { useLinkFile } from '../composables/useLinkFile.ts'
 import { useNetworkState } from '../composables/useNetworkState.ts'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
+import { logger } from '../helpers/logger.ts'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
@@ -146,7 +146,7 @@ export default {
 					}
 				})
 				.catch((error) => {
-					console.error('Smart picker promise rejected', error)
+					logger.error('Smart picker promise rejected', error)
 				})
 		},
 

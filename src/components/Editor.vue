@@ -42,7 +42,6 @@
 				<template v-else>
 					<MenuBar
 						v-if="renderMenus"
-						ref="menubar"
 						v-model="menubarLoaded"
 						:isHidden="hideMenu"
 						:openReadOnly="openReadOnlyEnabled">
@@ -220,6 +219,8 @@ export default defineComponent({
 			default: false,
 		},
 
+		// used in useEditorFlags
+		// eslint-disable-next-line vue/no-unused-properties
 		isDirectEditing: {
 			type: Boolean,
 			default: false,
@@ -651,7 +652,7 @@ export default defineComponent({
 			this.setEditable(this.editMode)
 		},
 
-		onCreate({ editor }) {
+		onCreate() {
 			const proseMirrorMarkdown = this.serialize()
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
@@ -668,7 +669,7 @@ export default defineComponent({
 			})
 		},
 
-		onSync({ steps, document }) {
+		onSync({ document }) {
 			this.hasConnectionIssue
 				= this.syncService.backend.fetcher === 0
 					|| !this.syncProvider?.wsconnected

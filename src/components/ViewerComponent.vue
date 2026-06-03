@@ -89,6 +89,8 @@ export default defineComponent({
 		},
 	},
 
+	emits: ['update:loaded'],
+
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
