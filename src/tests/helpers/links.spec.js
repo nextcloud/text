@@ -33,7 +33,7 @@ vi.mock('@nextcloud/initial-state', async (importOriginal) => {
 	return {
 		...mod,
 		// replace some exports
-		loadState: (_app, key) => app,
+		loadState: () => app,
 	}
 })
 

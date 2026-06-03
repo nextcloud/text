@@ -15,7 +15,7 @@ import Link from './../../marks/Link.ts'
 import Preview from './../../nodes/Preview.js'
 
 const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
+	editor: async (_, use) => {
 		const editor = createCustomEditor('', [Markdown, Preview, Link])
 		await use(editor)
 		editor.destroy()
