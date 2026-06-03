@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 
 import type { ShallowRef } from 'vue'
 import { save, saveViaSendBeacon } from '../apis/save'
 import type { Connection } from '../composables/useConnection.ts'
 import { logger } from '../helpers/logger.js'
-import type { SyncService } from './SyncService'
+import { ERROR_TYPE, type SyncService } from './SyncService'
 
 /**
  * Interval to save the serialized document and the document state
@@ -74,6 +75,16 @@ class SaveService {
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
+			const response = (e as { response?: { status?: number, data?: { error?: string } } }).response
+			if (response?.status === 412) {
+				this.emit('error', {
+					type: ERROR_TYPE.LOAD_ERROR,
+					data: response,
+				})
+				if (response.data?.error) {
+					showError(response.data.error)
+				}
+			}
 			throw e
 		}
 	}
