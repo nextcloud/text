@@ -25,7 +25,7 @@ export function useEditorMethods(editor: Editor) {
 
 	const setContent: (
 		content: string,
-		options: { addToHistory?: boolean },
+		options?: { addToHistory?: boolean },
 	) => void = (content, { addToHistory = true } = {}) => {
 		const hasMarkdownContent
 			= editor.extensionManager.extensions.includes(Markdown)

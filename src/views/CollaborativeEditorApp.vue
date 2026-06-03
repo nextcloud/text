@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Editor
+	<EditorReloader
 		ref="editor-container"
 		:fileId
 		:relativePath="filePath"
@@ -18,12 +18,14 @@
 		<template v-if="readonlyBarComponent" #readonlyBar>
 			<component :is="readonlyBarComponent" v-bind="readonlyBarProps" />
 		</template>
-	</Editor>
+	</EditorReloader>
 </template>
 
 <script setup lang='ts'>
+import type { ComponentInstance, ShallowRef } from 'vue'
+
 import { useTemplateRef } from 'vue'
-import Editor from '../components/Editor.js'
+import EditorReloader from '../components/EditorReloader.vue'
 
 const {
 	fileId = undefined,
@@ -47,7 +49,7 @@ const emit = defineEmits<{
 	(e: 'update:content', content: { markdown: string }): void
 }>()
 
-const editorContainer = useTemplateRef('editor-container')
+const editorContainer = useTemplateRef('editor-container') as Readonly<ShallowRef<ComponentInstance<typeof EditorReloader>>>
 defineExpose({ editorContainer })
 
 </script>
