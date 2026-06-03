@@ -73,6 +73,8 @@ export default defineComponent({
 		},
 	},
 
+	emits: ['edit', 'loaded'],
+
 	data() {
 		return {
 			content: '',

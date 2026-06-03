@@ -51,6 +51,8 @@ export default {
 		},
 	},
 
+	emits: ['close'],
+
 	computed: {
 		fileName() {
 			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)

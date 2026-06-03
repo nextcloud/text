@@ -52,6 +52,8 @@ export default {
 		},
 	},
 
+	emits: ['resolved'],
+
 	setup(props) {
 		if (!['local', 'server'].includes(props.readerSource)) {
 			logger.warn('Invalid reader source', props)

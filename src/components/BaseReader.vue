@@ -21,6 +21,7 @@ import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { logger } from '../helpers/logger.ts'
 
 export default {
 	name: 'BaseReader',
@@ -47,7 +48,7 @@ export default {
 		watch(
 			() => props.content,
 			(content) => {
-				console.warn({ content })
+				logger.warn('Content changed. Updating', { content })
 				setContent(content)
 			},
 		)
