@@ -16,7 +16,7 @@ import {
 	displayTocKey,
 	headingsKey,
 	provideEditorHeadings,
-} from '../../../composables/useEditorHeadings'
+} from '../../../composables/useEditorHeadings.ts'
 import Heading from '../../../nodes/Heading.js'
 import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 
