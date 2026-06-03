@@ -68,12 +68,12 @@ describe('Commonmark', () => {
 
 	spec.forEach((entry) => {
 		// We do not support HTML
-		if (entry.section === 'HTML blocks' || entry.section === 'Raw HTML') { return }
-
+		if (entry.section === 'HTML blocks' || entry.section === 'Raw HTML') {
+			return
+		}
 		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
 			return
 		}
-
 		test('commonmark parsing ' + entry.example, () => {
 			let expected = entry.markdown.includes('__')
 				? entry.html

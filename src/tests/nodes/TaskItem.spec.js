@@ -38,7 +38,7 @@ describe('TaskItem extension', () => {
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('- [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('- [x] [asd](sdf)')
 		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('- [ ] foo\n- [x] bar')
-		expect(markdownThroughEditor('- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim')).toBe('- [x] foo\n' + '  - [ ] bar\n' + '  - [x] baz\n' + '- [ ] bim')
+		expect(markdownThroughEditor('- [x] foo\n  - [ ] bar\n  - [x] baz\n- [ ] bim')).toBe('- [x] foo\n  - [ ] bar\n  - [x] baz\n- [ ] bim')
 		expect(markdownThroughEditor('- [X] asd')).toBe('- [x] asd')
 		expect(markdownThroughEditor('-   [X] asd')).toBe('- [x] asd')
 	})
