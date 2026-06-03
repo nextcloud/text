@@ -31,9 +31,9 @@ class TextDocumentCreatorTest extends \PHPUnit\Framework\TestCase {
 	public function testGetName(): void {
 		$this->l10n->expects($this->once())
 			->method('t')
-			->with('text document')
-			->willReturn('text document');
-		$this->assertEquals('text document', $this->textDocumentCreator->getName());
+			->with('Text document')
+			->willReturn('Text document');
+		$this->assertEquals('Text document', $this->textDocumentCreator->getName());
 	}
 
 	public function testGetDefaultExtension(): void {
