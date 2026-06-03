@@ -110,7 +110,7 @@ export default {
 		--callout-border: var(--color-element-success);
 	}
 	
-	// DQuestion variable
+	// Question variable
 	&--question {
 	    --callout-border: #184cbd;
 	}
