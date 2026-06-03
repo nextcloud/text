@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "切換輪廓",
     "Alt" : "Alt",
     "Open link" : "開啟連結",
+    "No link available to open" : "沒有可開啟的連結",
+    "Cannot open links with unsafe protocols" : "無法開啟使用不安全通訊協定的連結",
     "Edit link" : "編輯連結",
     "Save changes" : "保存變更",
     "Cancel" : "取消",

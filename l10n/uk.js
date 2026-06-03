@@ -118,6 +118,8 @@ OC.L10N.register(
     "Toggle outline" : "Перемкнути подання",
     "Alt" : "Alt",
     "Open link" : "Відкрити посилання",
+    "No link available to open" : "Відсутнє посилання для переходу",
+    "Cannot open links with unsafe protocols" : "Неможливо відкривати посилання із небезпечним протоколом",
     "Edit link" : "Редагувати ярлик",
     "Save changes" : "Зберегти зміни",
     "Cancel" : "Скасувати",
