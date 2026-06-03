@@ -50,10 +50,10 @@ function createDocumentString(node: Node) {
 				return attrs[key] === null
 					? undefined
 					: key
-							+ '='
-							+ (typeof attrs[key] === 'string'
-								? `"${attrs[key]}"`
-								: attrs[key])
+						+ '='
+						+ (typeof attrs[key] === 'string'
+							? `"${attrs[key]}"`
+							: attrs[key])
 			})
 			.filter((v) => !!v)
 			.join(',')
@@ -72,9 +72,7 @@ function createDocumentString(node: Node) {
 	}
 
 	// First extract marks and place them like nodes in the string
-	const marks = node.marks.map(
-		(mark) => mark.type.name + extractAttributes(mark) + '(',
-	)
+	const marks = node.marks.map((mark) => mark.type.name + extractAttributes(mark) + '(')
 	return marks.join('') + stringifyNode(node) + ')'.repeat(marks.length)
 }
 
@@ -94,7 +92,5 @@ function createDocumentString(node: Node) {
 export function expectDocument(subject: Node, expected: Node) {
 	expect(typeof subject).toBe('object')
 	expect(typeof expected).toBe('object')
-	expect(createDocumentString(subject)).toBe(
-		createDocumentString(doc(expected, p())),
-	)
+	expect(createDocumentString(subject)).toBe(createDocumentString(doc(expected, p())))
 }
