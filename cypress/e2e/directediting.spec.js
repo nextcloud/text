@@ -23,8 +23,8 @@ function enterContentAndClose() {
 	cy.wait('@closeRequest')
 }
 
-describe('direct editing', function () {
-	before(function () {
+describe('direct editing', function() {
+	before(function() {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 

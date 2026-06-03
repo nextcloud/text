@@ -6,7 +6,7 @@
 <template>
 	<NcActionCheckbox
 		v-if="canToggleWidth"
-		:checked="isFullWidth"
+		:modelValue="isFullWidth"
 		@update:checked="setFullWidth">
 		{{ t('text', 'Full width editor') }}
 	</NcActionCheckbox>

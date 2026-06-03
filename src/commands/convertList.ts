@@ -60,15 +60,11 @@ function convertListType(
  * @param listTypeName - the target list type
  * @param itemTypeName - the target item type
  */
-export const toggleListCommand =
-	(listTypeName: string, itemTypeName: string) =>
-	() =>
-	({ editor, state, tr, dispatch, commands }: CommandProps): boolean => {
+export function toggleListCommand(listTypeName: string, itemTypeName: string) {
+	return () => ({ editor, state, tr, dispatch, commands }: CommandProps): boolean => {
 		const { extensions } = editor.extensionManager
 
-		const parentList = findParentNode((node) =>
-			isList(node.type.name, extensions),
-		)(state.selection)
+		const parentList = findParentNode((node) => isList(node.type.name, extensions))(state.selection)
 
 		const listType = state.schema.nodes[listTypeName]!
 		const itemType = state.schema.nodes[itemTypeName]!
@@ -90,3 +86,4 @@ export const toggleListCommand =
 
 		return commands.toggleList(listType, itemType)
 	}
+}

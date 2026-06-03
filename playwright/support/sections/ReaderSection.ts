@@ -14,7 +14,6 @@ export class ReaderSection {
 	public readonly el: Locator
 	public readonly content: Locator
 
-	// eslint-disable-next-line no-useless-constructor
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('#read-only-editor').first()
 		this.content = this.el.getByRole('textbox')

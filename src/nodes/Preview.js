@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, getMarkRange, getNodeType, isNodeActive } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { getMarkRange, getNodeType, isNodeActive, Node } from '@tiptap/core'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import PreviewView from './PreviewView.vue'
 import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
-
-import Preview from './Preview.vue'
 
 export default Node.create({
 	name: 'preview',
@@ -58,7 +57,7 @@ export default Node.create({
 	},
 
 	addNodeView() {
-		return VueNodeViewRenderer(Preview)
+		return VueNodeViewRenderer(PreviewView)
 	},
 
 	toMarkdown: (state, node) => {
@@ -76,8 +75,7 @@ export default Node.create({
 			 *
 			 */
 			setPreview:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					if (!previewPossible(state)) {
 						return false
 					}
@@ -132,8 +130,7 @@ export default Node.create({
 			 *
 			 */
 			unsetPreview:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					return (
 						isActive(this.name, this.attributes, state)
 						&& chain().setNode('paragraph').run()
@@ -146,8 +143,7 @@ export default Node.create({
 			 * @param {string} link - the link URL
 			 */
 			insertPreview:
-				(link) =>
-				({ state, chain }) => {
+				(link) => ({ chain }) => {
 					return chain()
 						.insertContent({
 							type: 'preview',
@@ -199,6 +195,7 @@ function previewAttributesFromSelection(state) {
 
 /**
  * Is the active node one of typeOrName with the given attributes
+ *
  * @param {object|string} typeOrName type or name of the preview node type
  * @param {object} attributes attributes of the node
  * @param {object} state current editor state
@@ -227,6 +224,7 @@ function previewPossible(state) {
 
 /**
  * Does the node contain more content than the first child
+ *
  * @param {object} node node to inspect
  * @return {boolean}
  */
@@ -239,6 +237,7 @@ function hasOtherContent(node) {
 
 /**
  * Get the link href of the given node
+ *
  * @param {object} node to inspect
  * @return {string} The href of the link mark of the node
  */

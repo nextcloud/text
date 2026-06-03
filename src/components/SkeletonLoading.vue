@@ -6,10 +6,10 @@
 <template>
 	<div class="placeholder-main placeholder-main-text">
 		<!-- Placeholder animation -->
-		<template v-for="(suffix, gradientIndex) in ['-regular', '-reverse']">
-			<svg
-				:key="'gradient' + suffix"
-				:class="'placeholder-gradient placeholder-gradient' + suffix">
+		<template
+			v-for="(suffix, gradientIndex) in ['-regular', '-reverse']"
+			:key="'gradient-' + suffix">
+			<svg :class="'placeholder-gradient placeholder-gradient' + suffix">
 				<defs>
 					<linearGradient :id="'placeholder-gradient' + suffix">
 						<stop
@@ -30,9 +30,7 @@
 				</defs>
 			</svg>
 
-			<ul
-				:key="'list' + suffix"
-				:class="'placeholder-list placeholder-list' + suffix">
+			<ul :class="'placeholder-list placeholder-list' + suffix">
 				<li v-for="index in count" :key="'placeholder' + suffix + index">
 					<svg
 						class="text-placeholder"
@@ -60,9 +58,7 @@
 <script>
 const bodyStyles = window.getComputedStyle(document.body)
 const colorPlaceholderDark = bodyStyles.getPropertyValue('--color-placeholder-dark')
-const colorPlaceholderLight = bodyStyles.getPropertyValue(
-	'--color-placeholder-light',
-)
+const colorPlaceholderLight = bodyStyles.getPropertyValue('--color-placeholder-light')
 
 export default {
 	name: 'SkeletonLoading',

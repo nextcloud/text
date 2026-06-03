@@ -48,20 +48,32 @@ export function searchQuery() {
 	})
 }
 
-export const setSearchQuery =
-	(query, matchAll) =>
-	({ tr }) => {
+/**
+ * Set the search query
+ *
+ * @param {string} query to search for
+ * @param {boolean | undefined} matchAll show all occurances
+ */
+export function setSearchQuery(query, matchAll) {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { query, matchAll })
 	}
+}
 
-export const nextMatch =
-	() =>
-	({ tr }) => {
+/**
+ *
+ */
+export function nextMatch() {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { match: 1 })
 	}
+}
 
-export const previousMatch =
-	() =>
-	({ tr }) => {
+/**
+ *
+ */
+export function previousMatch() {
+	return ({ tr }) => {
 		return tr.setMeta('searchQuery', { match: -1 })
 	}
+}

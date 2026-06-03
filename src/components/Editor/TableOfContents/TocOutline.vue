@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 import TocOutlineEntry from './TocOutlineEntry.vue'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 
 const { headings } = useEditorHeadings()
 </script>

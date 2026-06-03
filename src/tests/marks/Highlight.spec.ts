@@ -3,21 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import createCustomEditor from '../testHelpers/createCustomEditor'
-import Highlight from './../../marks/Highlight'
+import { describe, expect, it } from 'vitest'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
+import Highlight from './../../marks/Highlight.ts'
 
 describe('Highlight extension unit', () => {
 	it('exposes toMarkdown function', () => {
 		// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 		const toMarkdown = Highlight.config.toMarkdown
-		expect(JSON.stringify(toMarkdown)).to.equal(
-			JSON.stringify({
-				open: '==',
-				close: '==',
-				mixable: true,
-				expelEnclosingWhitespace: true,
-			}),
-		)
+		expect(JSON.stringify(toMarkdown)).to.equal(JSON.stringify({
+			open: '==',
+			close: '==',
+			mixable: true,
+			expelEnclosingWhitespace: true,
+		}))
 	})
 })
 

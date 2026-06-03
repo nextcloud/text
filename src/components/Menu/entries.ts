@@ -2,7 +2,16 @@
  * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { AnyCommands, Editor } from '@tiptap/core'
 
+import { emit } from '@nextcloud/event-bus'
+import { loadState } from '@nextcloud/initial-state'
+import { t } from '@nextcloud/l10n'
+import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
+import ActionInsertLink from './ActionInsertLink.vue'
+import AssistantAction from './AssistantAction.vue'
+import EmojiPickerAction from './EmojiPickerAction.vue'
+import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	CodeBrackets,
 	CodeTags,
@@ -39,16 +48,6 @@ import {
 	UnfoldMoreHorizontal,
 	Warn,
 } from '../icons.js'
-import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
-import ActionInsertLink from './ActionInsertLink.vue'
-import AssistantAction from './AssistantAction.vue'
-import EmojiPickerAction from './EmojiPickerAction.vue'
-
-import { emit } from '@nextcloud/event-bus'
-import { loadState } from '@nextcloud/initial-state'
-import { t } from '@nextcloud/l10n'
-import { type AnyCommands, type Editor } from '@tiptap/core'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { MODIFIERS } from './keys.js'
 
 type ClickContext = {
@@ -61,23 +60,23 @@ type LabelContext = {
 	displayToc: boolean
 }
 
-type MenuEntry =
-	| {
-			key: string
-			label?: string | ((context: LabelContext) => string)
-			icon?: object
-			forceLabel?: boolean
-			keyChar?: string
-			keyModifiers?: string[]
-			action?: (command: AnyCommands, editor?: Editor | null) => void
-			isActive?: string | string[] | object
-			component?: object
-			click?: (context?: ClickContext) => void
-			priority?: number
-			visible?: boolean
-			children?: MenuEntry[]
-			isSeparator?: boolean
-	  }
+type MenuEntry
+	= | {
+		key: string
+		label?: string | ((context: LabelContext) => string)
+		icon?: object
+		forceLabel?: boolean
+		keyChar?: string
+		keyModifiers?: string[]
+		action?: (command: AnyCommands, editor?: Editor | null) => void
+		isActive?: string | string[] | object
+		component?: object
+		click?: (context?: ClickContext) => void
+		priority?: number
+		visible?: boolean
+		children?: MenuEntry[]
+		isSeparator?: boolean
+	}
 	| undefined
 
 export const outlineEntries: MenuEntry[] = [
@@ -111,7 +110,10 @@ export const readOnlyDoneEntries: MenuEntry[] = [
 	},
 ]
 
-export const getAssistantMenuEntries = (): MenuEntry[] => {
+/**
+ *
+ */
+export function getAssistantMenuEntries(): MenuEntry[] {
 	const assistantMenuEntry: MenuEntry = {
 		key: 'assistant',
 		label: t('text', 'Nextcloud Assistant'),
@@ -122,7 +124,11 @@ export const getAssistantMenuEntries = (): MenuEntry[] => {
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 
-export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
+/**
+ *
+ * @param isRichWorkspace
+ */
+export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',

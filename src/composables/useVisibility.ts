@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { InjectionKey, Ref } from 'vue'
+
 import {
 	computed,
 	inject,
@@ -12,15 +14,11 @@ import {
 	provide,
 	readonly,
 	shallowRef,
-	type InjectionKey,
-	type Ref,
 } from 'vue'
-import { logger } from '../helpers/logger'
-import { useEditor } from './useEditor'
+import { logger } from '../helpers/logger.ts'
+import { useEditor } from './useEditor.ts'
 
-export const intersectionObserverKey = Symbol(
-	'text:intersection_observer',
-) as InjectionKey<IntersectionObserver>
+export const intersectionObserverKey = Symbol('text:intersection_observer') as InjectionKey<IntersectionObserver>
 export const visibleIdsKey = Symbol('text:visibile_ids') as InjectionKey<
 	Ref<Set<string>>
 >
@@ -31,7 +29,10 @@ const intersectionObserverOptions = {
 	threshold: 0,
 }
 
-export const provideIntersectionObserver = () => {
+/**
+ *
+ */
+export function provideIntersectionObserver() {
 	// Vue2 does not support reactive sets.
 	// So the shallow ref needs to be explicitely written every time the set changes.
 	const visibleIds = shallowRef<Set<string>>(new Set())
@@ -59,7 +60,11 @@ export const provideIntersectionObserver = () => {
 	provide(visibleIdsKey, visibleIds)
 }
 
-export const useVisibility = (id: string) => {
+/**
+ *
+ * @param id of the html element in the viewers dom
+ */
+export function useVisibility(id: string) {
 	const { editor } = useEditor()
 	const intersectionObserver = inject(intersectionObserverKey)!
 	const visibleIds = inject(visibleIdsKey)!

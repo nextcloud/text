@@ -8,16 +8,16 @@
 		v-if="show"
 		size="large"
 		:name="currentImage.name"
-		:out-transition="true"
-		:has-next="true"
-		:has-previous="true"
-		:close-button-contained="false"
+		:outTransition="true"
+		:hasNext="true"
+		:hasPrevious="true"
+		:closeButtonContained="false"
 		:dark="true"
 		@next="showNextImage"
 		@previous="showPreviousImage"
 		@close="$emit('close')">
 		<div class="modal__content">
-			<img :src="currentImage.previewUrl" />
+			<img :src="currentImage.previewUrl">
 		</div>
 	</NcModal>
 </template>
@@ -30,43 +30,51 @@ export default {
 	components: {
 		NcModal,
 	},
+
 	props: {
 		images: {
 			type: Array,
 			required: true,
 		},
+
 		startIndex: {
 			type: Number,
 			default: 0,
 		},
+
 		show: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			currentImageIndex: 0,
 		}
 	},
+
 	computed: {
 		currentImage() {
 			return this.images[this.currentImageIndex]
 		},
 	},
+
 	watch: {
 		startIndex(val) {
 			this.currentImageIndex = val
 		},
 	},
+
 	methods: {
 		showNextImage() {
-			this.currentImageIndex =
-				(this.currentImageIndex + 1) % this.images.length
+			this.currentImageIndex
+				= (this.currentImageIndex + 1) % this.images.length
 		},
+
 		showPreviousImage() {
-			this.currentImageIndex =
-				this.currentImageIndex <= 0
+			this.currentImageIndex
+				= this.currentImageIndex <= 0
 					? this.images.length - 1
 					: this.currentImageIndex - 1
 		},

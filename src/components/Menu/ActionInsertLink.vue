@@ -52,8 +52,8 @@
 		</NcActionButton>
 		<NcActionInput
 			v-if="isInputMode"
+			v-model="href"
 			type="text"
-			:value.sync="href"
 			:data-text-action-entry="`${actionEntry.key}-input`"
 			@submit="linkWebsite">
 			<template #icon>
@@ -87,14 +87,12 @@
 
 <script>
 import { loadState } from '@nextcloud/initial-state'
+import { t } from '@nextcloud/l10n'
+import { getMarkAttributes, isActive } from '@tiptap/core'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActions from '@nextcloud/vue/components/NcActions'
-import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-
-import { getMarkAttributes, isActive } from '@tiptap/core'
-
-import { t } from '@nextcloud/l10n'
+import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import { useLinkFile } from '../../composables/useLinkFile.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
@@ -115,6 +113,7 @@ export default {
 		Web,
 		Shape,
 	},
+
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	inject: {
@@ -123,6 +122,7 @@ export default {
 			default: null,
 		},
 	},
+
 	setup() {
 		const base = BaseActionEntry.setup()
 		const { networkOnline } = useNetworkState()
@@ -134,6 +134,7 @@ export default {
 			networkOnline,
 		}
 	},
+
 	data: () => {
 		return {
 			href: '',
@@ -144,10 +145,12 @@ export default {
 				loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
+
 	computed: {
 		activeClass() {
 			return this.state.active ? 'is-active' : ''
 		},
+
 		hasMenubarLinkCustomAction() {
 			return (
 				typeof this.menubarLinkCustomAction?.action === 'function'
@@ -155,6 +158,7 @@ export default {
 			)
 		},
 	},
+
 	methods: {
 		/**
 		 * Open dialog and ask user which file to link to
@@ -173,9 +177,7 @@ export default {
 		 */
 		linkWebsite(event) {
 			if (event?.type === 'submit') {
-				const href = [...event.target.elements].filter(
-					(e) => e?.type === 'text',
-				)[0].value
+				const href = [...event.target.elements].filter((e) => e?.type === 'text')[0].value
 				this.menuOpen = false
 				this.isInputMode = false
 				this.href = ''
@@ -188,6 +190,7 @@ export default {
 			}
 			this.isInputMode = true
 		},
+
 		/**
 		 * Save user entered URL as a link markup
 		 * Triggered when the user submits the ActionInput
@@ -215,6 +218,7 @@ export default {
 			chain.insertOrSetLink(text, { href })
 			chain.focus().run()
 		},
+
 		/**
 		 * Remove link markup at current position
 		 * Triggered by the "remove link" button
@@ -223,6 +227,7 @@ export default {
 			this.editor?.chain().unsetLink().focus().run()
 			this.menuOpen = false
 		},
+
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then((link) => {
@@ -232,6 +237,7 @@ export default {
 					console.error('Smart picker promise rejected', error)
 				})
 		},
+
 		linkCustomAction() {
 			this.menubarLinkCustomAction
 				.action()
@@ -242,6 +248,7 @@ export default {
 					console.error('Custom link action promise rejected', error)
 				})
 		},
+
 		insertLink(link) {
 			if (!link) {
 				return
@@ -253,6 +260,7 @@ export default {
 				chain.setLink({ href: link }).focus().run()
 			}
 		},
+
 		t,
 	},
 }

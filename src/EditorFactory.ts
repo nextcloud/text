@@ -3,29 +3,30 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import 'proxy-polyfill'
+import type { Extension } from '@tiptap/core'
+import type { Node } from '@tiptap/pm/model'
+import type { Connection } from './composables/useConnection.ts'
 
-import { Editor, Extension } from '@tiptap/core'
+import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
-
-import type { Node } from '@tiptap/pm/model'
-import type { Connection } from './composables/useConnection'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
-import { logger } from './helpers/logger'
+import { logger } from './helpers/logger.ts'
+
+import 'proxy-polyfill'
 
 const lowlight = createLowlight()
 
-const loadSyntaxHighlight = async (language: string) => {
+/**
+ * @param language to load the syntax highlighting for
+ */
+async function loadSyntaxHighlight(language: string) {
 	const list = hljs.listLanguages()
 	logger.debug('Supported languages', { list })
 	if (!lowlight.listLanguages().includes(language)) {
 		try {
 			logger.debug('Loading language ' + language)
-			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(
-				`../node_modules/highlight.js/lib/languages/${language}.js`
-			)
+			const syntax = await import(`../node_modules/highlight.js/lib/languages/${language}.js`)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
@@ -39,7 +40,17 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({
+/**
+ *
+ * @param root0
+ * @param root0.extensions
+ * @param root0.connection
+ * @param root0.relativePath
+ * @param root0.isEmbedded
+ * @param root0.mentionSearch
+ * @param root0.openLink
+ */
+function createRichEditor({
 	extensions = [],
 	connection,
 	relativePath,
@@ -53,7 +64,7 @@ const createRichEditor = ({
 	isEmbedded?: boolean
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
 	openLink?: (href: string) => void
-} = {}) => {
+} = {}) {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -70,10 +81,16 @@ const createRichEditor = ({
 	})
 }
 
-const createPlainEditor = ({
+/**
+ *
+ * @param root0
+ * @param root0.language
+ * @param root0.extensions
+ */
+function createPlainEditor({
 	language = 'plaintext',
 	extensions = [],
-}: { language?: string; extensions?: Extension[] } = {}) => {
+}: { language?: string, extensions?: Extension[] } = {}) {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -88,7 +105,11 @@ const createPlainEditor = ({
 	})
 }
 
-const serializePlainText = (doc: Node) => {
+/**
+ *
+ * @param doc
+ */
+function serializePlainText(doc: Node) {
 	return doc.textContent
 }
 

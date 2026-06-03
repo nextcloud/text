@@ -29,8 +29,8 @@
 				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
-				:action-entry="actionEntry"
-				:can-be-focussed="activeMenuEntry === index"
+				:actionEntry="actionEntry"
+				:canBeFocussed="activeMenuEntry === index"
 				@disabled="disableMenuEntry(actionEntry.key, $event)" />
 		</div>
 		<div class="text-readonly-bar__slot">
@@ -40,14 +40,13 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-
 import { t } from '@nextcloud/l10n'
+import { defineComponent } from 'vue'
+import ActionList from './ActionList.vue'
+import ActionSingle from './ActionSingle.vue'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useMenuEntries } from '../../composables/useMenuEntries.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import ActionList from './ActionList.vue'
-import ActionSingle from './ActionSingle.vue'
 import ToolBarLogic from './ToolBarLogic.js'
 
 export default defineComponent({
@@ -67,6 +66,7 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+
 		openReadOnly: {
 			type: Boolean,
 			default: false,
@@ -90,6 +90,7 @@ export default defineComponent({
 			entries: this.openReadOnly
 				? [...this.readOnlyEditEntries, ...this.outlineEntries]
 				: [...this.outlineEntries],
+
 			isReady: false,
 		}
 	},

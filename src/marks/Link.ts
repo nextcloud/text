@@ -4,22 +4,32 @@
  */
 
 import type { ExtendedRegExpMatchArray } from '@tiptap/core'
-import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
-import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import type { Mark, Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
+import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
+import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
-import { linkClicking } from '../plugins/links'
+import { logger } from '../helpers/logger.ts'
+import { linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
-const extractHrefFromMatch = (match: ExtendedRegExpMatchArray) => {
+/**
+ *
+ * @param match to extract href from
+ */
+function extractHrefFromMatch(match: ExtendedRegExpMatchArray) {
 	return { href: match.groups?.href }
 }
 
-const extractHrefFromMarkdownLink = (match: ExtendedRegExpMatchArray) => {
+/**
+ *
+ * @param match with multiple capture groups
+ */
+function extractHrefFromMarkdownLink(match: ExtendedRegExpMatchArray) {
 	/**
 	 * Removes the last capture group from the match to satisfy
 	 * Tiptap markInputRule expectation of having the content as
@@ -80,8 +90,10 @@ declare module '@tiptap/core' {
 		text_link: {
 			/**
 			 * Set a link mark or insert the link (when nothing is selected)
+			 *
 			 * @param text The text in the link
 			 * @param attrs The link attributes
+			 * @param attrs.href The actual url
 			 * @example editor.commands.insertOrSetLink('hello', { href: 'https://tiptap.dev' })
 			 */
 			insertOrSetLink: (
@@ -114,10 +126,8 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			},
 			isWikiLink: {
 				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-link') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-link': 'true' } : {},
+				parseHTML: (element) => element.getAttribute('data-wiki-link') === 'true',
+				renderHTML: (attrs) => attrs.isWikiLink ? { 'data-wiki-link': 'true' } : {},
 			},
 		}
 	},
@@ -142,9 +152,9 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		try {
 			const url = new URL(mark.attrs.href, window.location.href)
 			href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
-				? domHref(mark, this.options.relativePath)
+				? domHref(mark)
 				: '#'
-		} catch (error) {
+		} catch {
 			href = '#'
 		}
 		return [
@@ -175,8 +185,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		return {
 			...this.parent?.(),
 			insertOrSetLink:
-				(text, attrs) =>
-				({ state, commands }) => {
+				(text, attrs) => ({ state, commands }) => {
 					// Check if any text is selected,
 					// if not insert the link using the given text property
 					if (state.selection.empty) {
@@ -234,10 +243,10 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			'Mod-k': () => {
 				const { empty } = this.editor.state.selection
 				if (empty) {
-					console.debug('empty selection')
+					logger.debug('empty selection')
 					return false
 				}
-				console.debug('toggle link for selection')
+				logger.debug('toggle link for selection')
 				return this.editor.commands.toggleLink({ href: '' })
 			},
 		}
@@ -277,7 +286,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					innerText += child.text
 				}
 			})
-			return innerText === href ? `[[` : `[[${href}|`
+			return innerText === href ? '[[' : `[[${href}|`
 		},
 		close(
 			state: MarkdownSerializerState,

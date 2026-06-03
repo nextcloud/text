@@ -4,28 +4,26 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :contentLoaded="true">
 		<MainContainer>
-			<ContentContainer :read-only="readOnly" />
+			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
 
 <script>
 import { Editor } from '@tiptap/core'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
-/* eslint-disable import/no-named-as-default */
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
+import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import { EDITOR_UPLOAD } from '../Editor.provider.ts'
-import ContentContainer from './ContentContainer.vue'
 
 export default {
 	name: 'PlainTableContentEditor',
@@ -36,11 +34,13 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		readOnly: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	emits: ['update:content'],
 
 	setup(props) {
@@ -68,10 +68,9 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
-			useTableOfContents: false,
+			hasTableOfContents: false,
 		})
 		provide(editorWidthKey, null)
-		provide(EDITOR_UPLOAD, false)
 		return { editor, setContent }
 	},
 
@@ -86,9 +85,7 @@ export default {
 
 			// Emit initial content
 			try {
-				const markdown = createMarkdownSerializer(
-					this.editor.schema,
-				).serialize(this.editor.state.doc)
+				const markdown = createMarkdownSerializer(this.editor.schema).serialize(this.editor.state.doc)
 				this.emit('create:content', {
 					json: this.editor.state.doc,
 					markdown,
@@ -99,9 +96,7 @@ export default {
 		})
 		this.editor.on('update', ({ editor }) => {
 			try {
-				const markdown = createMarkdownSerializer(editor.schema).serialize(
-					editor.state.doc,
-				)
+				const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
 				this.emit('update:content', {
 					json: editor.state.doc,
 					markdown,
@@ -112,7 +107,7 @@ export default {
 		})
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.destroy()
 	},
 

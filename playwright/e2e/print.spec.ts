@@ -5,10 +5,10 @@
 
 import { expect, mergeTests } from '@playwright/test'
 import { hostname } from 'os'
-import { test as editorTest } from '../support/fixtures/editor'
-import { loadFixture } from '../support/fixtures/loadFixture'
-import { test as sharedFileTest } from '../support/fixtures/shared-file'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import { test as editorTest } from '../support/fixtures/editor.ts'
+import { loadFixture } from '../support/fixtures/loadFixture.ts'
+import { test as sharedFileTest } from '../support/fixtures/shared-file.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const fileTest = mergeTests(editorTest, uploadFileTest)
 const shareTest = mergeTests(editorTest, sharedFileTest)

@@ -106,16 +106,16 @@ const TaskItem = TipTapTaskItem.extend({
 						const position = state.doc.resolve(coordinates.pos)
 						const parentList = findParentNodeClosestToPos(
 							position,
-							function (node: Node) {
+							function(node: Node) {
 								return (
 									node.type === schema.nodes.taskItem
 									|| node.type === schema.nodes.listItem
 								)
 							},
 						)
-						const isListClicked =
-							event.target instanceof Element
-							&& event.target.tagName.toLowerCase() === 'li'
+						const isListClicked
+							= event.target instanceof Element
+								&& event.target.tagName.toLowerCase() === 'li'
 						if (
 							!isListClicked
 							|| !parentList

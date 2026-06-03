@@ -5,7 +5,7 @@
 
 import { expect, mergeTests } from '@playwright/test'
 import { test } from '../support/fixtures/editor-api'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const fileTest = mergeTests(uploadFileTest, test)
 
@@ -81,9 +81,7 @@ fileTest.describe(
 					readOnly: true,
 				})
 
-				await expect(page.locator(`#${containerId}`)).toContainText(
-					'some content',
-				)
+				await expect(page.locator(`#${containerId}`)).toContainText('some content')
 
 				const content = page.locator(`#${containerId} .ProseMirror`)
 				await content.click()

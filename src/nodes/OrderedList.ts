@@ -7,7 +7,7 @@ import type { Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { OrderedList as TiptapOrderedList } from '@tiptap/extension-list'
-import { toggleListCommand } from '../commands'
+import { toggleListCommand } from '../commands/index.ts'
 
 const OrderedList = TiptapOrderedList.extend({
 	addAttributes() {

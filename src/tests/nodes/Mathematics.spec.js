@@ -12,7 +12,7 @@ import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
+	editor: async (_, use) => {
 		const editor = createRichEditor()
 		await use(editor)
 		editor.destroy()
@@ -42,9 +42,7 @@ describe('Mathematics nodes', () => {
 		})
 
 		test('inline formula with complex LaTeX', () => {
-			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe(
-				'$\\sum_{i=1}^n i$',
-			)
+			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe('$\\sum_{i=1}^n i$')
 		})
 
 		test('inline formula with fractions', () => {
@@ -56,9 +54,7 @@ describe('Mathematics nodes', () => {
 		})
 
 		test('inline formula in text', () => {
-			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe(
-				'The formula $E=mc^2$ is famous.',
-			)
+			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe('The formula $E=mc^2$ is famous.')
 		})
 	})
 

@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { inject, type InjectionKey, provide } from 'vue'
+import type { InjectionKey } from 'vue'
+
+import { inject, provide } from 'vue'
 
 interface FileProps {
 	fileId?: number
@@ -12,13 +14,20 @@ interface FileProps {
 
 export const filePropsKey = Symbol('tiptap:file:props') as InjectionKey<FileProps>
 
-export const provideFileProps = (props: FileProps) => {
+/**
+ *
+ * @param props to get the file props from
+ */
+export function provideFileProps(props: FileProps) {
 	provide(filePropsKey, {
 		fileId: props.fileId,
 		relativePath: props.relativePath,
 	})
 }
 
-export const useFileProps = () => {
+/**
+ *
+ */
+export function useFileProps() {
 	return inject(filePropsKey) || {}
 }

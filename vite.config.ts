@@ -48,7 +48,6 @@ const config = createAppConfig(
 				khroma: 'MIT',
 			},
 		},
-		thirdPartyLicense: false,
 		config: {
 			base: process.env.BASE,
 			resolve: {

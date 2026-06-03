@@ -11,8 +11,8 @@
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:model-value="actionType !== 'button' ? state.active : undefined"
-		close-after-click
+		:modelValue="actionType !== 'button' ? state.active : undefined"
+		closeAfterClick
 		v-on="$listeners"
 		@click="runAction">
 		<template #icon>
@@ -31,7 +31,7 @@ export default {
 	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
 	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
 	// Hotfix - rename the component to NcActionButton because it represents and renders it.
-	// eslint-disable-next-line vue/match-component-file-name
+
 	name: 'NcActionButton',
 
 	components: {

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import { Danger, Info, Positive, Warn } from '../components/icons.js'
 
 const ICONS_MAP = {
@@ -26,25 +26,28 @@ const ICONS_MAP = {
 }
 
 export default {
-	// eslint-disable-next-line vue/match-component-file-name
-	name: 'Callout',
+	name: 'CalloutView',
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,
 	},
+
 	props: {
 		node: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	computed: {
 		icon() {
 			return ICONS_MAP[this.type] || Info
 		},
+
 		type() {
 			return this.node.attrs.type || 'info'
 		},
+
 		dir() {
 			return this.node.attrs.dir || ''
 		},

@@ -4,10 +4,10 @@
  */
 
 import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import DetailsView from './DetailsView.vue'
 import DetailsContent from './DetailsContent.js'
 import DetailsSummary from './DetailsSummary.js'
-import DetailsView from './DetailsView.vue'
 
 /**
  * Get first details node from parent nodes of a resolved position
@@ -35,7 +35,7 @@ function detailsParentInfo(resolvedPos, schema) {
  */
 function childFromNode(node, nodeType) {
 	const childNodes = []
-	node.descendants((childNode, i) => {
+	node.descendants((childNode) => {
 		if (childNode.type === nodeType) {
 			childNodes.push(childNode)
 			return false
@@ -102,8 +102,7 @@ const Details = Node.create({
 	addCommands() {
 		return {
 			setDetails:
-				() =>
-				({ commands, state, chain }) => {
+				() => ({ state, chain }) => {
 					const { schema, selection } = state
 					const { $from, $to } = selection
 					const blockRange = $from.blockRange($to)
@@ -113,9 +112,7 @@ const Details = Node.create({
 
 					const slice = state.doc.slice(blockRange.start, blockRange.end)
 					if (
-						!schema.nodes.detailsContent.contentMatch.matchFragment(
-							slice.content,
-						)
+						!schema.nodes.detailsContent.contentMatch.matchFragment(slice.content)
 					) {
 						return false
 					}
@@ -145,8 +142,7 @@ const Details = Node.create({
 						.run()
 				},
 			unsetDetails:
-				() =>
-				({ state, chain }) => {
+				() => ({ state, chain }) => {
 					const { schema, selection } = state
 					const details = detailsParentInfo(selection.$from, schema)
 					if (!details) {
@@ -172,8 +168,7 @@ const Details = Node.create({
 						.run()
 				},
 			toggleDetails:
-				() =>
-				({ commands, state }) => {
+				() => ({ commands, state }) => {
 					if (!isNodeActive(state, this.name)) {
 						return commands.setDetails()
 					}

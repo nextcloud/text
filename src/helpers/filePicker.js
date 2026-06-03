@@ -6,12 +6,17 @@
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 
-export const buildFilePicker = (startPath) => {
+/**
+ * Create a file picker with our defaults
+ *
+ * @param {string} startPath path to start from
+ */
+export function buildFilePicker(startPath) {
 	return getFilePickerBuilder(t('text', 'Select file or folder to link to'))
 		.startAt(startPath)
 		.allowDirectories(true)
 		.setMultiSelect(false)
-		.setButtonFactory((nodes, path) => {
+		.setButtonFactory((nodes) => {
 			const buttons = []
 			const node = nodes?.[0]?.attributes?.displayName || nodes?.[0]?.basename
 			const isRoot = nodes?.[0]?.root === nodes?.[0]?.attributes?.filename

@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { InjectionKey } from 'vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
-import { inject, type InjectionKey, provide } from 'vue'
+import { inject, provide } from 'vue'
 
 export interface EditorFlags {
 	isPublic: boolean
 	isRichEditor: boolean
 	isRichWorkspace: boolean
-	useTableOfContents: boolean
+	hasTableOfContents: boolean
 }
 interface Props {
 	isDirectEditing: boolean
@@ -19,30 +21,37 @@ interface Props {
 	mime: string
 }
 export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags>
-export const provideEditorFlags = (props: Props) => {
+/**
+ *
+ * @param props to compute the editor flags from
+ */
+export function provideEditorFlags(props: Props) {
 	const isPublic = props.isDirectEditing || isPublicShare()
 	const isRichWorkspace = props.richWorkspace ?? false
-	const isRichEditor =
-		loadState('text', 'rich_editing_enabled', true)
-		&& props.mime === 'text/markdown'
-	const useTableOfContents = isRichEditor && !isRichWorkspace
+	const isRichEditor
+		= loadState('text', 'rich_editing_enabled', true)
+			&& props.mime === 'text/markdown'
+	const hasTableOfContents = isRichEditor && !isRichWorkspace
 	provide(editorFlagsKey, {
 		isPublic,
 		isRichEditor,
 		isRichWorkspace,
-		useTableOfContents,
+		hasTableOfContents,
 	})
-	return { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
+	return { isPublic, isRichEditor, isRichWorkspace, hasTableOfContents }
 }
-export const useEditorFlags = () => {
-	const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } = inject(
+/**
+ *
+ */
+export function useEditorFlags() {
+	const { isPublic, isRichEditor, isRichWorkspace, hasTableOfContents } = inject(
 		editorFlagsKey,
 		{
 			isPublic: false,
 			isRichEditor: false,
 			isRichWorkspace: false,
-			useTableOfContents: false,
+			hasTableOfContents: false,
 		},
 	)
-	return { isPublic, isRichEditor, isRichWorkspace, useTableOfContents }
+	return { isPublic, isRichEditor, isRichWorkspace, hasTableOfContents }
 }

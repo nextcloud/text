@@ -7,16 +7,16 @@ import { initUserAndFiles, randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-describe('Front matter support', function () {
-	before(function () {
+describe('Front matter support', function() {
+	before(function() {
 		initUserAndFiles(user, 'codeblock.md', 'empty.md')
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 	})
 
-	it('See existing code block', function () {
+	it('See existing code block', function() {
 		cy.isolateTest({ sourceFile: 'codeblock.md' })
 		cy.openFile('codeblock.md').then(() => {
 			// Plain text block
@@ -57,13 +57,11 @@ describe('Front matter support', function () {
 				.find('code')
 				.eq(1)
 				.invoke('text')
-				.then((code) =>
-					cy.window().then((win) => {
-						win.navigator.clipboard.readText().then((copiedCode) => {
-							expect(copiedCode).to.equal(code)
-						})
-					}),
-				)
+				.then((code) => cy.window().then((win) => {
+					win.navigator.clipboard.readText().then((copiedCode) => {
+						expect(copiedCode).to.equal(code)
+					})
+				}))
 
 			// Remove language
 			cy.getContent()
@@ -114,7 +112,7 @@ describe('Front matter support', function () {
 		})
 	})
 
-	it('Show a code block in a public read only link', function () {
+	it('Show a code block in a public read only link', function() {
 		cy.shareFile('/codeblock.md')
 			.then((token) => {
 				cy.logout()
@@ -162,7 +160,7 @@ describe('Front matter support', function () {
 			})
 	})
 
-	it('Add a code block', function () {
+	it('Add a code block', function() {
 		cy.isolateTest({ sourceFile: 'codeblock.md' })
 		cy.openFile('codeblock.md').then(() => {
 			cy.clearContent()
@@ -172,7 +170,7 @@ describe('Front matter support', function () {
 		})
 	})
 
-	it('See a mermaid diagram', function () {
+	it('See a mermaid diagram', function() {
 		cy.isolateTest({ sourceFile: 'codeblock.md' })
 		cy.openFile('codeblock.md').then(() => {
 			cy.getContent()
@@ -186,13 +184,13 @@ describe('Front matter support', function () {
 		})
 	})
 
-	it('Add an invalid mermaid block', function () {
+	it('Add an invalid mermaid block', function() {
 		cy.isolateTest()
 		cy.openFile('empty.md').then(() => {
 			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
-			// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 			cy.wait(250)
 			cy.getContent().type('invalid{enter}{enter}')
 
@@ -201,13 +199,13 @@ describe('Front matter support', function () {
 		})
 	})
 
-	it('Add a valid mermaid block', function () {
+	it('Add a valid mermaid block', function() {
 		cy.isolateTest()
 		cy.openFile('empty.md').then(() => {
 			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
-			// eslint-disable-next-line cypress/no-unnecessary-waiting
+
 			cy.wait(250)
 			// Tab key does not work in cypress, using spaces instead
 			cy.getContent().type('flowchart LR{enter}    entry{enter}')

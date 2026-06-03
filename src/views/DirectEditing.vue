@@ -5,34 +5,39 @@
 
 <template>
 	<div id="direct-editor" :class="{ 'icon-loading': saving }">
-		<Editor
+		<EditorReloader
 			ref="editor"
-			:initial-session="initialSession"
-			:file-id="initial.fileId"
+			:initialSession="initialSession"
+			:fileId="initial.fileId"
 			:active="true"
 			:mime="initial.mimetype"
-			:is-direct-editing="true"
+			:isDirectEditing="true"
 			@ready="loaded">
 			<template v-if="isMobile" #header>
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
 			</template>
-		</Editor>
+		</EditorReloader>
 	</div>
 </template>
 
 <script>
-import Vue from 'vue'
-import Editor from '../components/Editor.js'
-
+import { reactive } from 'vue'
+import EditorReloader from '../components/EditorReloader.vue'
 import { logger } from '../helpers/logger.ts'
 
-const log = Vue.observable({
+const log = reactive({
 	messages: [],
 	mtime: 0,
 })
 
-const callMobileMessage = (messageName, attributes) => {
+/**
+ * Send a message to the host app
+ *
+ * @param {string} messageName name of the message
+ * @param {object} attributes attributes to send
+ */
+function callMobileMessage(messageName, attributes) {
 	logger.debug(`callMobileMessage ${messageName}`, { attributes })
 	let message = messageName
 	if (typeof attributes !== 'undefined') {
@@ -41,11 +46,11 @@ const callMobileMessage = (messageName, attributes) => {
 			Values: attributes,
 		}
 	}
-	let attributesString = null
+	const attributesString = null
 	try {
 		attributesString = JSON.stringify(attributes)
-	} catch (e) {
-		attributesString = null
+	} catch {
+		/* Continue without attributeString null */
 	}
 
 	// Forward to mobile handler
@@ -66,22 +71,20 @@ const callMobileMessage = (messageName, attributes) => {
 		&& window.webkit.messageHandlers
 		&& window.webkit.messageHandlers.DirectEditingMobileInterface
 	) {
-		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(
-			message,
-		)
+		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(message)
 	}
 
 	window.postMessage(message)
 }
 
-window.addEventListener('message', function (message) {
+window.addEventListener('message', function(message) {
 	log.messages.push(message.data)
 	logger.debug('postMessage', { message })
 })
 
 export default {
 	name: 'DirectEditing',
-	components: { Editor },
+	components: { EditorReloader },
 	data() {
 		return {
 			initial: OCP.InitialState.loadState('text', 'file'),
@@ -90,10 +93,12 @@ export default {
 			saving: false,
 		}
 	},
+
 	computed: {
 		initialSession() {
 			return JSON.parse(this.initial.session) || null
 		},
+
 		isMobile() {
 			return (
 				window.DirectEditingMobileInterface
@@ -103,9 +108,11 @@ export default {
 			)
 		},
 	},
+
 	beforeMount() {
 		callMobileMessage('loading')
 	},
+
 	mounted() {
 		document
 			.querySelector('meta[name="viewport"]')
@@ -119,6 +126,7 @@ export default {
 			this.reload()
 		})
 	},
+
 	methods: {
 		async close() {
 			this.saving = true
@@ -127,12 +135,15 @@ export default {
 				callMobileMessage('close')
 			}, 0)
 		},
+
 		share() {
 			callMobileMessage('share')
 		},
+
 		loaded() {
 			callMobileMessage('loaded')
 		},
+
 		reload() {
 			callMobileMessage('reload')
 		},

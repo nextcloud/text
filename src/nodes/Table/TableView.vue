@@ -13,7 +13,7 @@
 		</div>
 		<NcActions
 			v-if="isEditable"
-			force-menu
+			forceMenu
 			size="small"
 			data-text-table-actions="settings"
 			class="table-settings">
@@ -22,7 +22,7 @@
 			</template>
 			<NcActionButton
 				data-text-table-action="delete"
-				close-after-click
+				closeAfterClick
 				@click="deleteNode">
 				<template #icon>
 					<TrashCan />
@@ -57,10 +57,10 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
 	TableAddColumnAfter,
 	TableAddRowAfter,
@@ -81,26 +81,31 @@ export default {
 		TableSettings,
 		TrashCan,
 	},
+
 	props: {
 		editor: {
 			type: Object,
 			required: true,
 		},
+
 		deleteNode: {
 			type: Function,
 			required: true,
 		},
+
 		node: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	data() {
 		return {
 			isEditable: false,
 			isFocused: false,
 		}
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('selectionUpdate', ({ editor }) => {
@@ -113,6 +118,7 @@ export default {
 			this.isEditable = editor.isEditable
 		})
 	},
+
 	methods: {
 		addColumnAfter() {
 			const headerRowNode = this.node.firstChild
@@ -124,18 +130,18 @@ export default {
 				.setTextSelection(this.getPos() + headerRowNode.nodeSize)
 				.run()
 		},
+
 		addRowAfter() {
 			const lastRowNode = this.node.lastChild
 			this.editor
 				.chain()
 				.focus()
-				.setTextSelection(
-					this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1,
-				)
+				.setTextSelection(this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1)
 				.addRowAfter()
 				.setTextSelection(this.getPos() + this.node.nodeSize + 1)
 				.run()
 		},
+
 		t,
 	},
 }

@@ -13,8 +13,8 @@
 
 <script>
 import { translatePlural as n } from '@nextcloud/l10n'
-import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { defineComponent, ref } from 'vue'
+import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { useEditor } from '../../composables/useEditor.ts'
 import { AlphabeticalVariant } from '../icons.js'
 
@@ -24,9 +24,11 @@ export default defineComponent({
 		AlphabeticalVariant,
 		NcActionText,
 	},
+
 	props: {
 		visible: Boolean,
 	},
+
 	setup() {
 		const { editor } = useEditor()
 		const countString = ref('')
@@ -44,9 +46,11 @@ export default defineComponent({
 		}
 		return { countString, refresh }
 	},
+
 	watch: {
 		visible: 'refresh',
 	},
+
 	created() {
 		this.refresh()
 	},

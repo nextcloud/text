@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable no-console */
+
 /**
  * Setup OCA.Text.debugYjs() and expose editor component in OCA.Text.editorComponents
  */
@@ -23,11 +25,11 @@ window.OCA.Text.editorComponents = editorComponents
  * Print debug info for all editor components as a warning.
  */
 export function debugYjs() {
-	const intro =
-		'Editor Yjs debug data. Copy the objects above that start with "fileId".'
+	const intro
+		= 'Editor Yjs debug data. Copy the objects above that start with "fileId".'
 	const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-	const introFirefox =
-		'- In Firefox, right-click on the object and select "Copy object".'
+	const introFirefox
+		= '- In Firefox, right-click on the object and select "Copy object".'
 	const styleBold = 'font-weight: bold;'
 	const styleItalic = 'font-weight: normal; font-style: italic;'
 
@@ -51,6 +53,7 @@ if (!window.OCA.Text.debugYjs) {
 
 /**
  * Expose editor component in OCA.Text.editorComponents
+ *
  * @param component - the editor component to include in debug output
  */
 export function exposeForDebugging(component: object) {
@@ -59,6 +62,7 @@ export function exposeForDebugging(component: object) {
 
 /**
  * Drop editor component from OCA.Text.editorComponents
+ *
  * @param component - the editor component to remove from debug output
  */
 export function removeFromDebugging(component: object) {

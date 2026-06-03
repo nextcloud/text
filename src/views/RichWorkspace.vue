@@ -12,18 +12,18 @@
 			v-if="!loaded || !ready"
 			:content="content"
 			class="rich-workspace--preview" />
-		<Editor
+		<EditorReloader
 			v-if="file"
 			v-show="ready"
 			:key="file.path"
-			:file-id="file.id"
-			:relative-path="file.path"
-			:share-token="shareToken"
+			:fileId="file.id"
+			:relativePath="file.path"
+			:shareToken="shareToken"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
-			:hide-menu="hideMenu"
+			:hideMenu="hideMenu"
 			active
-			rich-workspace
+			richWorkspace
 			@ready="ready = true"
 			@focus="onFocus"
 			@blur="onBlur" />
@@ -37,8 +37,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
-
-import Editor from '../components/Editor.js'
+import EditorReloader from '../components/EditorReloader.vue'
 import RichTextReader from '../components/RichTextReader.vue'
 
 const IS_PUBLIC = isPublicShare()
@@ -47,8 +46,8 @@ const WORKSPACE_URL = generateOcsUrl(
 	2,
 )
 const descriptionFile = 'Readme' + '.' + loadState('text', 'default_file_extension')
-const translatedDescriptionFile =
-	t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+const translatedDescriptionFile
+	= t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 const SUPPORTED_STATIC_FILENAMES = [
 	translatedDescriptionFile,
 	descriptionFile,
@@ -61,26 +60,26 @@ export default {
 	name: 'RichWorkspace',
 	components: {
 		RichTextReader,
-		Editor,
+		EditorReloader,
 	},
+
 	props: {
 		content: {
 			type: String,
 			default: '',
 		},
+
 		path: {
 			type: String,
 			required: true,
 		},
-		active: {
-			type: Boolean,
-			default: true,
-		},
+
 		hasRichWorkspace: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
 	data() {
 		return {
 			// Keep track of a local copy of the hasRichWorkspace state as it might change after initial rendering (e.g. when adding/removing the readme)
@@ -97,21 +96,26 @@ export default {
 			enabled: window?.OCA?.Text?.RichWorkspaceEnabled,
 		}
 	},
+
 	computed: {
 		shareToken() {
 			return getSharingToken()
 		},
+
 		shouldRender() {
 			return this.enabled && this.localHasRichWorkspace
 		},
 	},
+
 	watch: {
 		path() {
 			this.reset()
 		},
+
 		ready() {
 			this.shouldAutofocus = false
 		},
+
 		focus(newValue) {
 			if (!newValue) {
 				document
@@ -119,15 +123,18 @@ export default {
 					?.scrollTo(0, 0)
 			}
 		},
+
 		shouldRender(value) {
 			if (value) {
 				this.getFileInfo()
 			}
 		},
+
 		hasRichWorkspace(value) {
 			this.localHasRichWorkspace = value
 		},
 	},
+
 	mounted() {
 		this.localHasRichWorkspace = this.hasRichWorkspace
 		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
@@ -138,7 +145,8 @@ export default {
 
 		this.listenKeydownEvents()
 	},
-	beforeDestroy() {
+
+	beforeUnmount() {
 		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
 		unsubscribe('files:node:created', this.onFileCreated)
@@ -147,12 +155,14 @@ export default {
 
 		this.unlistenKeydownEvents()
 	},
+
 	methods: {
 		onFocus() {
 			this.focus = true
 			this.hideMenu = false
 			this.unlistenKeydownEvents()
 		},
+
 		onBlur(event) {
 			// If focus moved to something inside the workspace (e.g. menubar), don't collapse
 			if (this.$el.contains(event?.relatedTarget)) {
@@ -161,6 +171,7 @@ export default {
 			this.focus = false
 			this.hideMenu = true
 		},
+
 		reset() {
 			this.file = null
 			this.focus = false
@@ -171,6 +182,7 @@ export default {
 				}
 			})
 		},
+
 		getFileInfo() {
 			this.file = null
 			this.ready = false
@@ -205,34 +217,42 @@ export default {
 					return false
 				})
 		},
-		showRichWorkspace(event) {
+
+		showRichWorkspace() {
 			this.enabled = true
 		},
+
 		hideRichWorkspace() {
 			this.enabled = false
 		},
+
 		listenKeydownEvents() {
 			window.addEventListener('keydown', this.onKeydown)
 		},
+
 		unlistenKeydownEvents() {
 			window.removeEventListener('keydown', this.onKeydown)
 		},
+
 		onKeydown(e) {
 			if (e.key === 'Tab') {
 				this.hideMenu = false
 			}
 		},
+
 		onFileCreated(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
 				this.shouldAutofocus = this.enabled
 				this.localHasRichWorkspace = true
 			}
 		},
+
 		onFileDeleted(node) {
 			if (node.path === this.file?.path) {
 				this.localHasRichWorkspace = false
 			}
 		},
+
 		onFileRenamed(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
 				this.localHasRichWorkspace = true
@@ -243,6 +263,7 @@ export default {
 				this.localHasRichWorkspace = false
 			}
 		},
+
 		t,
 	},
 }

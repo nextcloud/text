@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
+import { unref } from 'vue'
 
 /**
  * Let Nextcloud know someone was mentioned
+ *
  * @param mention user id of the person that was mentioned
  * @param scope scope the user was mentioned in
  * @param options options
@@ -44,6 +47,7 @@ const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
 /**
  * Look up user names to mention
+ *
  * @param filter string to look for in the user names
  * @param options options
  * @param options.connection connection to the text editing session

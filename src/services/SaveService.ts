@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import debounce from 'debounce'
-
 import type { ShallowRef } from 'vue'
-import { save, saveViaSendBeacon } from '../apis/save'
 import type { Connection } from '../composables/useConnection.ts'
+import type { SyncService } from './SyncService.ts'
+
+import debounce from 'debounce'
+import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import type { SyncService } from './SyncService'
 
 /**
  * Interval to save the serialized document and the document state
  *
- * @type {number} time in ms
+ * time in ms
  */
 const AUTOSAVE_INTERVAL = 30000
 
@@ -82,11 +82,14 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		saveViaSendBeacon(this.connection.value, {
+		const success = saveViaSendBeacon(this.connection.value, {
 			version: this.version,
 			autosaveContent: this.serialize(),
 			documentState: this.getDocumentState(),
-		}) && logger.debug('[SaveService] saved using sendBeacon')
+		})
+		if (success) {
+			logger.debug('[SaveService] saved using sendBeacon')
+		}
 	}
 
 	forceSave() {

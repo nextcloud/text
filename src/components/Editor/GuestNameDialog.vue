@@ -44,16 +44,16 @@
 <script setup>
 import { showError, showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
+import { ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
-import { ref, watch } from 'vue'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
+import AvatarWrapper from './AvatarWrapper.vue'
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import AvatarWrapper from './AvatarWrapper.vue'
 
 const props = defineProps({
 	session: {
@@ -76,7 +76,10 @@ watch(
 		}
 	},
 )
-const setGuestName = async () => {
+/**
+ *
+ */
+async function setGuestName() {
 	if (!connection.value) {
 		showError(t('text', 'Not connected. Cannot update guest name.'))
 		return

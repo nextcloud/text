@@ -40,6 +40,7 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+
 		contentLoaded: {
 			type: Boolean,
 			default: true,

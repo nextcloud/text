@@ -8,9 +8,9 @@
 		<div class="status-wrapper">
 			<SyncStatus
 				:idle="idle"
-				:sync-error="syncError"
-				:has-connection-issue="hasConnectionIssue"
-				:has-indexed-db-conflict="hasIndexedDbConflict"
+				:syncError="syncError"
+				:hasConnectionIssue="hasConnectionIssue"
+				:hasIndexedDbConflict="hasIndexedDbConflict"
 				@reconnect="$emit('reconnect')" />
 			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
@@ -25,8 +25,8 @@
 import { t } from '@nextcloud/l10n'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import LockOutlineIcon from 'vue-material-design-icons/LockOutline.vue'
-import isMobile from '../../mixins/isMobile.js'
 import SyncStatus from './DocumentStatus/SyncStatus.vue'
+import isMobile from '../../mixins/isMobile.js'
 
 export default {
 	name: 'DocumentStatus',
@@ -44,18 +44,22 @@ export default {
 			type: Boolean,
 			required: true,
 		},
+
 		lock: {
 			type: Object,
 			default: null,
 		},
+
 		syncError: {
 			type: Object,
 			default: null,
 		},
+
 		hasConnectionIssue: {
 			type: Boolean,
 			required: true,
 		},
+
 		hasIndexedDbConflict: {
 			type: Boolean,
 			default: false,

@@ -9,10 +9,13 @@ import {
 	outlineEntries,
 	readOnlyDoneEntries,
 	readOnlyEditEntries,
-} from '../components/Menu/entries'
-import { useEditorFlags } from './useEditorFlags'
+} from '../components/Menu/entries.ts'
+import { useEditorFlags } from './useEditorFlags.ts'
 
-export const useMenuEntries = () => {
+/**
+ *
+ */
+export function useMenuEntries() {
 	const { isRichWorkspace } = useEditorFlags()
 
 	const assistantMenuEntries = getAssistantMenuEntries()

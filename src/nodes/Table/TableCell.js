@@ -62,9 +62,8 @@ export default TableCell.extend({
 							for (let depth = $pos.depth; depth >= 0; depth--) {
 								const ancestor = $pos.node(depth)
 								if (ancestor.type.name === 'tableCell') {
-									console.warn(
-										'Detected nested table, filtering out transaction',
-									)
+									// eslint-disable-next-line no-console
+									console.warn('Detected nested table, filtering out transaction')
 									hasNestedTable = true
 								}
 							}
@@ -112,13 +111,12 @@ export default TableCell.extend({
 							}
 						}
 
+						// eslint-disable-next-line no-console
 						console.warn('Nested tables are not supported')
-						alert(
-							t(
-								'text',
-								'A table was pasted into a table. Nested tables are not supported.',
-							),
-						)
+						alert(t(
+							'text',
+							'A table was pasted into a table. Nested tables are not supported.',
+						))
 
 						const newSlice = new Slice(Fragment.empty, 0, 0)
 						return newSlice

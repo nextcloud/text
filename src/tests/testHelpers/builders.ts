@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node } from '@tiptap/pm/model'
+import type { Mark, Node } from '@tiptap/pm/model'
+
 import { builders } from 'prosemirror-test-builder'
 import { expect } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.ts'
 
 /**
  * Get node builders from the default rich editor.
- * @return {object}
  */
 export function getBuilders() {
 	const editor = createRichEditor()
@@ -39,11 +39,10 @@ export const thead = getBuilders().thead
 
 /**
  * Create string representation of prosemirror / TipTap Node with attributes
- * @param {Node} node to serialize
- * @return {string}
+ * @param node to serialize
  */
-function createDocumentString(node) {
-	const extractAttributes = (node) => {
+function createDocumentString(node: Node) {
+	const extractAttributes = (node: Node | Mark) => {
 		const attrs = node.attrs || {}
 		const attrString = Object.keys(attrs)
 			.map((key) => {
@@ -61,12 +60,14 @@ function createDocumentString(node) {
 		return attrString ? `<${attrString}>` : ''
 	}
 
-	const stringifyNode = (node) => {
+	const stringifyNode = (node: Node) => {
 		const name = node.type.name
-		if (name === 'text')
-			return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"'
+		if (name === 'text') {
+			const text = node.text ?? ''
+			return `"${text.replace('"', '\\"').replace('\n', '\\n')}"`
+		}
 
-		const children = node.content.content.map(createDocumentString)
+		const children: string[] = node.content.content.map(createDocumentString)
 		return name + extractAttributes(node) + '(' + children.join(',') + ')'
 	}
 
@@ -80,8 +81,8 @@ function createDocumentString(node) {
 /**
  * Compare given document from editor with builders
  *
- * @param {Node} subject The editor document
- * @param {Node} expected The expected document
+ * @param subject The editor document
+ * @param expected The expected document
  * @example
  * const editor = createRichEditor()
  * expectDocument(editor.state.doc, table(
@@ -90,7 +91,7 @@ function createDocumentString(node) {
  *   )
  * ))
  */
-export function expectDocument(subject, expected) {
+export function expectDocument(subject: Node, expected: Node) {
 	expect(typeof subject).toBe('object')
 	expect(typeof expected).toBe('object')
 	expect(createDocumentString(subject)).toBe(

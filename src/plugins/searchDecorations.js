@@ -95,7 +95,7 @@ export function runSearch(doc, query, options) {
 		? query.trim().slice(1).toLowerCase()
 		: query.trim().toLowerCase()
 
-	doc.descendants((node, offset, _position) => {
+	doc.descendants((node, offset) => {
 		// Add decorations for text matches
 		if (node.isText) {
 			const matches = node.text.matchAll(new RegExp(query, 'gi'))
@@ -155,14 +155,12 @@ export function highlightResults(doc, results) {
 	}
 
 	results.forEach((result) => {
-		decorations.push(
-			Decoration.inline(result.from, result.to, {
-				'data-text-el': 'search-decoration',
-				style: result.mention
-					? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
-					: 'background-color: #ead637; color: black; border-radius: 2px;',
-			}),
-		)
+		decorations.push(Decoration.inline(result.from, result.to, {
+			'data-text-el': 'search-decoration',
+			style: result.mention
+				? 'outline: 2px solid #ead637; background-color: #ead637; color: black; border-radius: 2px;'
+				: 'background-color: #ead637; color: black; border-radius: 2px;',
+		}))
 	})
 
 	return DecorationSet.create(doc, decorations)

@@ -3,18 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { Emitter } from 'mitt'
-import type { OpenData } from '../apis/connect'
-import { sync } from '../apis/sync'
-import type { Connection } from '../composables/useConnection'
+import type { OpenData } from '../apis/connect.ts'
+import type { Connection } from '../composables/useConnection.ts'
+import type { EventTypes } from './NotifyService.ts'
+import type { Document, Session, Step, SyncService } from './SyncService.js'
+
+import { sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
-import getNotifyBus, { type EventTypes } from './NotifyService'
-import {
-	type Document,
-	ERROR_TYPE,
-	type Session,
-	type Step,
-	type SyncService,
-} from './SyncService.js'
+import getNotifyBus from './NotifyService.ts'
+import { ERROR_TYPE } from './SyncService.js'
 
 /**
  * Minimum inverval to refetch the document changes in ms.
@@ -101,7 +98,7 @@ class PollingBackend {
 
 	connect() {
 		if (this.fetcher) {
-			console.error('Trying to connect, but already connected')
+			logger.error('Trying to connect, but already connected')
 			return
 		}
 		this.#initialLoadingFinished = false
@@ -125,7 +122,7 @@ class PollingBackend {
 		}
 
 		if (!this.fetcher) {
-			console.error('No inverval but triggered')
+			logger.error('No inverval but triggered')
 			return
 		}
 
@@ -174,23 +171,19 @@ class PollingBackend {
 	}
 
 	_handleError(e: {
-		response?: { status: number; data: ConflictData }
+		response?: { status: number, data: ConflictData }
 		code?: string
 	}) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				this.increaseRefetchTimer()
-				logger.error(
-					'[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED',
-				)
+				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 				this.#syncService.bus.emit('error', {
 					type: ERROR_TYPE.CONNECTION_FAILED,
 					data: {},
 				})
 			} else {
-				logger.error(
-					`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`,
-				)
+				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
 		} else if (e.response.status === 409) {
 			// Still apply the steps to update our version of the document

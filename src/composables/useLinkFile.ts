@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
+import type { FileStat, ResponseDataDetailed } from 'webdav'
+
 import {
 	defaultRootPath,
 	getClient,
@@ -10,18 +13,22 @@ import {
 	resultToNode,
 } from '@nextcloud/files/dav'
 import { generateUrl } from '@nextcloud/router'
-import type { Editor } from '@tiptap/core'
 import { ref } from 'vue'
-import type { FileStat, ResponseDataDetailed } from 'webdav'
 import { buildFilePicker } from '../helpers/filePicker.js'
 
-export const useLinkFile = ({
+/**
+ *
+ * @param options options
+ * @param options.editor the editor
+ * @param options.relativePath relative path of the file
+ */
+export function useLinkFile({
 	editor,
 	relativePath,
 }: {
 	editor: Editor
 	relativePath?: string
-}) => {
+}) {
 	const parentPath = (relativePath ?? '/').split('/').slice(0, -1).join('/')
 	const startPath = ref(parentPath)
 	const setLink = (url: string, text: string) => {
@@ -30,6 +37,7 @@ export const useLinkFile = ({
 
 	/**
 	 * Open dialog and ask user which file to link to
+	 *
 	 * @param event click that triggered the call.
 	 */
 	const linkFile = async (event: MouseEvent) => {
@@ -45,8 +53,8 @@ export const useLinkFile = ({
 		}
 		const url = new URL(generateUrl(`/f/${node.id}`), window.origin)
 		setLink(url.href, node.displayname)
-		startPath.value =
-			node.path + (node.type === 'folder' ? `/${node.basename}/` : '')
+		startPath.value
+			= node.path + (node.type === 'folder' ? `/${node.basename}/` : '')
 	}
 
 	return { linkFile }
@@ -54,6 +62,7 @@ export const useLinkFile = ({
 
 /**
  * Pick a file with the file picker and return the node
+ *
  * @param startPath path to start the file picker on
  */
 async function pickFile(startPath: string) {

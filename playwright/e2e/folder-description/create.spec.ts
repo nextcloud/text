@@ -4,8 +4,8 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
-import { test as editorTest } from '../../support/fixtures/editor'
-import { test as randomUserTest } from '../../support/fixtures/random-user'
+import { test as editorTest } from '../../support/fixtures/editor.ts'
+import { test as randomUserTest } from '../../support/fixtures/random-user.ts'
 
 const test = mergeTests(editorTest, randomUserTest)
 
@@ -16,12 +16,8 @@ test('from new menu', async ({ page, editor }) => {
 	await editor.content.click()
 	await editor.typeHeading('Hello world')
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
-	await expect(
-		page.locator('#rich-workspace .text-editor .text-editor__wrapper'),
-	).toBeVisible()
-	await expect(
-		page
-			.locator('[data-cy-files-list-row-name="Readme.md"]')
-			.getByLabel('Actions'),
-	).toBeVisible()
+	await expect(page.locator('#rich-workspace .text-editor .text-editor__wrapper')).toBeVisible()
+	await expect(page
+		.locator('[data-cy-files-list-row-name="Readme.md"]')
+		.getByLabel('Actions')).toBeVisible()
 })

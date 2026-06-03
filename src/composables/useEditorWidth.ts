@@ -18,22 +18,15 @@
  *
  */
 
+import type { InjectionKey, Ref } from 'vue'
+
 import axios from '@nextcloud/axios'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import {
-	computed,
-	inject,
-	provide,
-	readonly,
-	ref,
-	watch,
-	type InjectionKey,
-	type Ref,
-} from 'vue'
-import { useEditorFlags } from './useEditorFlags'
+import { computed, inject, provide, readonly, ref, watch } from 'vue'
+import { useEditorFlags } from './useEditorFlags.ts'
 
 // Keep the current value around when leaving the editor and reopening
 let valueSingleton = loadState('text', 'is_full_width_editor', false)
@@ -61,16 +54,16 @@ const fullEditorWidthMobile = '100%'
  * If both values are set and match we assume text is handling the width.
  */
 function maxWidthSetOutsideOfText() {
-	const alreadySet = getComputedStyle(document.body).getPropertyValue(
-		'--text-editor-max-width',
-	)
-	const setByText = document.documentElement.style.getPropertyValue(
-		'--text-editor-max-width',
-	)
+	const alreadySet = getComputedStyle(document.body).getPropertyValue('--text-editor-max-width')
+	const setByText = document.documentElement.style.getPropertyValue('--text-editor-max-width')
 	return Boolean(alreadySet) && alreadySet !== setByText
 }
 
-export const provideEditorWidth = (useTableOfContents = true) => {
+/**
+ *
+ * @param hasTableOfContents does the editor have a table of contents
+ */
+export function provideEditorWidth(hasTableOfContents = true) {
 	const isMobile = useIsMobile()
 	// keep style that is already set - for example by collectives
 	if (maxWidthSetOutsideOfText()) {
@@ -83,21 +76,15 @@ export const provideEditorWidth = (useTableOfContents = true) => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const defaultEditorWidthDesktop = useTableOfContents
+	const defaultEditorWidthDesktop = hasTableOfContents
 		? editorWidthDesktopEnhanced
 		: editorWidthDesktop
-	const defaultFullEditorWidthDesktop = useTableOfContents
+	const defaultFullEditorWidthDesktop = hasTableOfContents
 		? fullEditorWidthDesktopEnhanced
 		: fullEditorWidthDesktop
-	const defaultEditorWidth = computed(() =>
-		isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop,
-	)
-	const fullEditorWidth = computed(() =>
-		isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop,
-	)
-	const width = computed(() =>
-		isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value,
-	)
+	const defaultEditorWidth = computed(() => isMobile.value ? editorWidthMobile : defaultEditorWidthDesktop)
+	const fullEditorWidth = computed(() => isMobile.value ? fullEditorWidthMobile : defaultFullEditorWidthDesktop)
+	const width = computed(() => isFullWidth.value ? fullEditorWidth.value : defaultEditorWidth.value)
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',
@@ -108,7 +95,10 @@ export const provideEditorWidth = (useTableOfContents = true) => {
 	return { applyEditorWidth }
 }
 
-export const useEditorWidth = () => {
+/**
+ *
+ */
+export function useEditorWidth() {
 	const isMobile = useIsMobile()
 	const { isRichWorkspace } = useEditorFlags()
 

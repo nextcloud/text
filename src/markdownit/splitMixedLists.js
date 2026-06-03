@@ -64,7 +64,7 @@ function splitListAt(tokens, index, TokenConstructor) {
 /**
  * @param {Array} tokens - all the tokens in the doc
  * @param {number} parentIndex - index of the parent in the tokens array
- * @param {Function} predicate - test function returned child needs to pass
+ * @param {() => boolean} predicate - test function returned child needs to pass
  */
 function findChildOf(tokens, parentIndex, predicate) {
 	const searchLevel = tokens[parentIndex].level + 1

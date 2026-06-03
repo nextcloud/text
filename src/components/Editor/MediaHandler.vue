@@ -20,7 +20,7 @@
 			type="file"
 			accept="*/*"
 			multiple
-			@change="onAttachmentUploadFilePicked" />
+			@change="onAttachmentUploadFilePicked">
 		<slot />
 	</div>
 </template>
@@ -31,18 +31,16 @@ import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { ref } from 'vue'
 import {
 	createAttachment,
 	insertAttachmentFile,
 	uploadAttachment,
 } from '../../apis/attach.ts'
-import { logger } from '../../helpers/logger.ts'
-
+import { useConnection } from '../../composables/useConnection.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
-
-import { ref } from 'vue'
-import { useConnection } from '../../composables/useConnection.ts'
+import { logger } from '../../helpers/logger.ts'
 import {
 	ACTION_ATTACHMENT_PROMPT,
 	ACTION_CHOOSE_LOCAL_ATTACHMENT,
@@ -74,6 +72,7 @@ export default {
 
 		return val
 	},
+
 	setup() {
 		const { connection } = useConnection()
 		const isMobile = useIsMobile()
@@ -88,6 +87,7 @@ export default {
 			startPath,
 		}
 	},
+
 	data() {
 		return {
 			draggedOver: false,
@@ -97,27 +97,33 @@ export default {
 			},
 		}
 	},
+
 	methods: {
 		setDraggedOver(val, event) {
 			if (event.dataTransfer.types.includes('Files')) {
 				this.draggedOver = val
 			}
 		},
+
 		onPaste(e) {
 			this.uploadAttachmentFiles(e.detail.files)
 		},
+
 		onEditorDrop(e) {
 			this.uploadAttachmentFiles(e.detail.files, e.detail.position)
 		},
+
 		onAttachmentUploadFilePicked(event) {
 			this.uploadAttachmentFiles(event.target.files)
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
 			event.target.value = ''
 		},
+
 		chooseLocalFile() {
 			this.$refs.attachmentFileInput.click()
 		},
+
 		async uploadAttachmentFiles(files, position = null) {
 			if (!files) {
 				return
@@ -138,6 +144,7 @@ export default {
 					this.state.isUploadingAttachments = false
 				})
 		},
+
 		async uploadAttachmentFile(file, position = null) {
 			this.state.isUploadingAttachments = true
 
@@ -154,11 +161,9 @@ export default {
 				.catch((error) => {
 					logger.error('Uploading attachment failed', { error })
 					if (error.response?.data.error) {
-						showError(
-							t('text', 'Uploading attachment failed: {error}', {
-								error: error.response.data.error,
-							}),
-						)
+						showError(t('text', 'Uploading attachment failed: {error}', {
+							error: error.response.data.error,
+						}))
 					} else {
 						showError(t('text', 'Uploading attachment failed.'))
 					}
@@ -167,6 +172,7 @@ export default {
 					this.state.isUploadingAttachments = false
 				})
 		},
+
 		showAttachmentPrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
@@ -185,6 +191,7 @@ export default {
 				this.startPath,
 			)
 		},
+
 		insertFromPath(filePath) {
 			this.startPath = getDir(filePath)
 
@@ -208,6 +215,7 @@ export default {
 					this.state.isUploadingAttachments = false
 				})
 		},
+
 		createAttachment(template) {
 			this.state.isUploadingAttachments = true
 			return createAttachment(this.connection, template)
@@ -222,11 +230,13 @@ export default {
 					this.state.isUploadingAttachments = false
 				})
 		},
+
 		insertAttachmentPreview(fileId) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
 			this.editor.chain().focus().insertPreview(href).run()
 		},
+
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
 			const sanitizedName = name.replace(
 				/[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g,
@@ -234,12 +244,12 @@ export default {
 			)
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src =
-				dirname
-				+ '/'
-				+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
+			const src
+				= dirname
+					+ '/'
+					+ encodeURIComponent(sanitizedName).replace(/[!'()*]/g, (c) => {
+						return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+					})
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
 			const alt = sanitizedName.replaceAll(/[[\]]/g, '')

@@ -77,9 +77,7 @@ describe('Markdown extension integrated in the editor', () => {
 			[Markdown, Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe(
-			'![Hello](test)\n\nhello',
-		)
+		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)\n\nhello')
 		editor.destroy()
 	})
 
@@ -89,9 +87,7 @@ describe('Markdown extension integrated in the editor', () => {
 			[Markdown, Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe(
-			'inline image ![Hello](test) inside text',
-		)
+		expect(serializer.serialize(editor.state.doc)).toBe('inline image ![Hello](test) inside text')
 		editor.destroy()
 	})
 
@@ -233,7 +229,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 })
 
-const copyEditorContent = (editor, nodeType = null) => {
+function copyEditorContent(editor, nodeType = null) {
 	if (nodeType) {
 		editor.state.doc.descendants((node, pos) => {
 			if (node.type === nodeType) {

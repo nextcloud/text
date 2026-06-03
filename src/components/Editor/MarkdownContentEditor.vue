@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :contentLoaded="true">
 		<MainContainer>
 			<template v-if="showMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -12,20 +12,21 @@
 					<ReadonlyBar />
 				</slot>
 			</template>
-			<ContentContainer :read-only="readOnly" />
+			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
 	</Wrapper>
 </template>
 
 <script>
-import { Editor } from '@tiptap/core'
-import MenuBar from '../Menu/MenuBar.vue'
-import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
-/* eslint-disable import/no-named-as-default */
 import { getCurrentUser } from '@nextcloud/auth'
+import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
+import MenuBar from '../Menu/MenuBar.vue'
+import ReadonlyBar from '../Menu/ReadonlyBar.vue'
+import ContentContainer from './ContentContainer.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
@@ -36,8 +37,6 @@ import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
-import ReadonlyBar from '../Menu/ReadonlyBar.vue'
-import ContentContainer from './ContentContainer.vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -59,27 +58,33 @@ export default {
 			type: Number,
 			default: null,
 		},
+
 		content: {
 			type: String,
 			required: true,
 		},
+
 		readOnly: {
 			type: Boolean,
 			default: false,
 		},
+
 		relativePath: {
 			type: String,
 			default: '',
 		},
+
 		shareToken: {
 			type: String,
 			default: null,
 		},
+
 		showMenuBar: {
 			type: Boolean,
 			default: true,
 		},
 	},
+
 	emits: ['update:content'],
 
 	setup(props) {
@@ -114,7 +119,7 @@ export default {
 			isPublic: false,
 			isRichEditor: true,
 			isRichWorkspace: false,
-			useTableOfContents: true,
+			hasTableOfContents: true,
 		})
 		provideEditor(editor)
 
@@ -132,13 +137,10 @@ export default {
 		this.updateHeadings()
 		this.editor.on('create', () => {
 			this.$emit('ready')
-			this.$parent.$emit('ready')
 		})
 		this.editor.on('update', ({ editor }) => {
-			const markdown = createMarkdownSerializer(editor.schema).serialize(
-				editor.state.doc,
-			)
-			this.emit('update:content', {
+			const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
+			this.$emit('update:content', {
 				json: editor.state.doc,
 				markdown,
 			})
@@ -153,29 +155,11 @@ export default {
 		}
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.destroy()
 	},
-
-	methods: {
-		/**
-		 * Wrapper to emit events on our own and the parent component
-		 *
-		 * The parent might be either the root component of src/editor.js or Viewer.vue which collectives currently uses
-		 *
-		 * Ideally this would be done in a generic way in the src/editor.js API abstraction, but it seems
-		 * that there is no proper way to pass any received event along in vue, the only option I've found
-		 * in https://github.com/vuejs/vue/issues/230 feels too hacky to me, so we just emit twice for now
-		 *
-		 * @param {string} event The event name
-		 * @param {any} data The data to pass along
-		 */
-		emit(event, data) {
-			this.$emit(event, data)
-			this.$parent?.$emit(event, data)
-		},
-	},
 }
+
 </script>
 
 <style lang="scss">

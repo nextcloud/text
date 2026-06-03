@@ -1,12 +1,11 @@
+import { logger } from './helpers/logger.ts'
+import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
-
-import { logger } from './helpers/logger.ts'
-import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
 /**
  * Wrapper for async registration of ViewerComponent.

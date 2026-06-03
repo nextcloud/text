@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import TextSvg from '@mdi/svg/svg/text.svg?raw'
 import { getCurrentUser } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -14,17 +15,18 @@ import {
 	Permission,
 } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
-
-import TextSvg from '@mdi/svg/svg/text.svg?raw'
-
 import { t } from '@nextcloud/l10n'
-import Vue from 'vue'
+import { createApp } from 'vue'
+import { logger } from './logger.ts'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
-export const addMenuRichWorkspace = () => {
-	const descriptionFile =
-		'Readme' + '.' + loadState('text', 'default_file_extension')
+/**
+ *
+ */
+export function addMenuRichWorkspace() {
+	const descriptionFile
+		= 'Readme' + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
@@ -47,14 +49,12 @@ export const addMenuRichWorkspace = () => {
 			const contentNames = content.map((node) => node.basename)
 
 			if (contentNames.includes(descriptionFile)) {
-				showError(
-					t('text', '"{name}" already exist!', { name: descriptionFile }),
-				)
+				showError(t('text', '"{name}" already exist!', { name: descriptionFile }))
 				return
 			}
 
-			const source =
-				context.encodedSource + '/' + encodeURIComponent(descriptionFile)
+			const source
+				= context.encodedSource + '/' + encodeURIComponent(descriptionFile)
 			const response = await axios({
 				method: 'PUT',
 				url: source,
@@ -88,7 +88,13 @@ let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
-const enabled = (_, view) => {
+/**
+ * Helper function to check if the workspace header should be enabled
+ *
+ * @param {object} _ current folder (unused)
+ * @param {string} view current view
+ */
+function enabled(_, view) {
 	return ['files', 'favorites', 'public-share', 'personal'].includes(view.id)
 }
 
@@ -112,22 +118,19 @@ export const FilesWorkspaceHeader = {
 		// If an instance already exists, destroy it before creating a new one
 		if (FilesHeaderRichWorkspaceInstance) {
 			FilesHeaderRichWorkspaceInstance.$destroy()
-			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
+			logger.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace =
-			!!latestFolder.attributes['rich-workspace-file-flat']
+		const hasRichWorkspace
+			= !!latestFolder.attributes['rich-workspace-file-flat']
 		const content = latestFolder.attributes['rich-workspace-flat'] || ''
 		const path = latestFolder.path || ''
 
 		// Create a new instance of the RichWorkspace component
-		FilesHeaderRichWorkspaceInstance = new Vue({
-			extends: FilesHeaderRichWorkspaceView,
-			propsData: {
-				content,
-				hasRichWorkspace,
-				path,
-			},
+		FilesHeaderRichWorkspaceInstance = createApp(FilesHeaderRichWorkspaceView, {
+			content,
+			hasRichWorkspace,
+			path,
 		}).$mount(el)
 
 		window.FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceInstance
@@ -136,15 +139,15 @@ export const FilesWorkspaceHeader = {
 	updated(folder, view) {
 		latestFolder = folder
 		if (!FilesHeaderRichWorkspaceInstance) {
-			console.error('No vue instance found for FilesWorkspaceHeader')
+			logger.error('No vue instance found for FilesWorkspaceHeader')
 			return
 		}
 
-		const hasRichWorkspace =
-			!!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
+		const hasRichWorkspace
+			= !!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
 		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
-		FilesHeaderRichWorkspaceInstance.content =
-			folder.attributes['rich-workspace-flat'] || ''
+		FilesHeaderRichWorkspaceInstance.content
+			= folder.attributes['rich-workspace-flat'] || ''
 		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
 	},
 }

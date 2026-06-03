@@ -11,9 +11,9 @@
 		<Component
 			:is="readerComponent"
 			:content="content"
-			:file-id="fileid"
-			:read-only="true"
-			:show-menu-bar="false" />
+			:fileId="fileid"
+			:readOnly="true"
+			:showMenuBar="false" />
 		<NcButton
 			v-if="isEmbedded"
 			class="toggle-interactive"
@@ -30,48 +30,57 @@
 import axios from '@nextcloud/axios'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
 import { t } from '@nextcloud/l10n'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import Vue from 'vue'
+import { defineComponent } from 'vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import PlainTextReader from './PlainTextReader.vue'
 
-export default {
+export default defineComponent({
 	name: 'SourceView',
 	components: {
-		NcButton: Vue.extend(NcButton),
-		PencilOutlineIcon: Vue.extend(PencilOutlineIcon),
-		PlainTextReader: Vue.extend(PlainTextReader),
-		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
+		NcButton,
+		PencilOutlineIcon,
+		PlainTextReader,
+		MarkdownContentEditor,
 	},
+
 	inject: ['isEmbedded'],
 	props: {
 		filename: {
 			type: String,
 			default: null,
 		},
+
 		fileid: {
 			type: Number,
 			default: null,
 		},
+
 		mime: {
 			type: String,
 			default: null,
 		},
+
 		source: {
 			type: String,
 			default: undefined,
 		},
+
 		isEncrypted: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
+	emits: ['edit', 'loaded'],
+
 	data() {
 		return {
 			content: '',
 		}
 	},
+
 	computed: {
 		isMarkdown() {
 			return (
@@ -106,6 +115,7 @@ export default {
 			}
 			this.$emit('loaded', true)
 		},
+
 		async fetchDecryptedContent() {
 			const client = getClient()
 			const response = await client.getFileContents(
@@ -123,10 +133,12 @@ export default {
 				}
 			})
 		},
+
 		t,
 	},
-}
+})
 </script>
+
 <style lang="scss" scoped>
 .source-viewer {
 	display: block;

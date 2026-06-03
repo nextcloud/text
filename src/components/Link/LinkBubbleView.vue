@@ -69,9 +69,9 @@
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
 			<NcTextField
 				ref="hrefField"
+				v-model="newHref"
 				name="newHref"
 				:label="t('text', 'URL')"
-				:value.sync="newHref"
 				@keyup.enter.prevent="updateLink" />
 		</div>
 
@@ -82,7 +82,7 @@
 			:text="sanitizedHref"
 			:limit="1"
 			:interactive="false"
-			:display-fallback="true"
+			:displayFallback="true"
 			class="link-view-bubble__reference-list"
 			@loaded="onReferenceListLoaded" />
 	</div>
@@ -91,16 +91,15 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
+import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-
+import PreviewOptions from '../Editor/PreviewOptions.vue'
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
 import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
-import PreviewOptions from '../Editor/PreviewOptions.vue'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -123,6 +122,7 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		href: {
 			type: String,
 			default: null,
@@ -221,9 +221,9 @@ export default {
 		},
 
 		onReferenceListLoaded() {
-			this.referenceTitle =
-				this.$refs.referencelist.firstReference?.openGraphObject?.name
-				?? null
+			this.referenceTitle
+				= this.$refs.referencelist.firstReference?.openGraphObject?.name
+					?? null
 		},
 
 		setPreview() {
@@ -283,6 +283,7 @@ export default {
 				.run()
 			this.stopEdit()
 		},
+
 		t,
 	},
 }

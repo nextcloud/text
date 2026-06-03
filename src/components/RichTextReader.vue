@@ -6,12 +6,12 @@
 <template>
 	<BaseReader
 		:content="content"
-		@click-link="(e, a) => $emit('click-link', e, a)" />
+		@clickLink="(e, a) => $emit('click-link', e, a)" />
 </template>
 
 <script>
-import { RichText } from './../extensions/index.js'
 import BaseReader from './BaseReader.vue'
+import { RichText } from './../extensions/index.js'
 
 export default {
 	name: 'RichTextReader',
@@ -33,6 +33,8 @@ export default {
 			required: true,
 		},
 	},
+
+	emits: ['click-link'],
 }
 </script>
 

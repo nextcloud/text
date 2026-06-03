@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from './random-user'
+import { test as base } from './random-user.ts'
 
 const containerId = 'test-editor-api'
 
 export interface EditorApiFixture {
 	createEditor: (options: {
-		type: 'editor' | 'table',
-		content?: string,
-		fileId?: number,
-		readOnly?: boolean,
+		type: 'editor' | 'table'
+		content?: string
+		fileId?: number
+		readOnly?: boolean
 	}) => Promise<void>
 	containerId: string
 }
@@ -25,15 +25,12 @@ export interface EditorApiFixture {
  */
 export const test = base.extend<EditorApiFixture>({
 	createEditor: async ({ page }, use) => {
-		const createEditor = async (
-			options: {
-				type: 'editor' | 'table',
-				content?: string,
-				fileId?: number,
-				readOnly?: boolean,
-			},
-		) => {
-
+		const createEditor = async (options: {
+			type: 'editor' | 'table'
+			content?: string
+			fileId?: number
+			readOnly?: boolean
+		}) => {
 			await page.evaluate(
 				async ({ containerId, type, content, fileId, readOnly }) => {
 					const container = document.createElement('div')

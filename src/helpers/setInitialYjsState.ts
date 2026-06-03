@@ -10,11 +10,19 @@ import { applyUpdate, Doc, encodeStateAsUpdate, XmlFragment } from 'yjs'
 import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
 import markdownit from '../markdownit/index.js'
 
-export const setInitialYjsState = (
+/**
+ * Apply an update to the ydoc that will change it to match content
+ *
+ * @param ydoc document to update
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
+ */
+export function setInitialYjsState(
 	ydoc: Doc,
 	content: string,
 	{ isRichEditor }: { isRichEditor: boolean },
-) => {
+) {
 	const html = isRichEditor
 		? markdownit.render(content) + '<p/>'
 		: `<pre>${escapeHtml(content)}</pre>`
@@ -34,7 +42,7 @@ export const setInitialYjsState = (
 		// it to the server immediately, however this would require read only sessions to be able
 		// to still push a state
 		baseDoc.clientID = 0
-		const type = /** @type {XmlFragment} */ baseDoc.get('default', XmlFragment)
+		const type = baseDoc.get('default', XmlFragment)
 		if (!type.doc) {
 			// This should not happen but is aligned with the upstream implementation
 			// https://github.com/yjs/y-prosemirror/blob/8db24263770c2baaccb08e08ea9ef92dbcf8a9da/src/lib.js#L209

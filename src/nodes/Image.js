@@ -6,10 +6,10 @@
 import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
-import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
 import ImageView from './ImageView.vue'
+import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
 
 const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')
@@ -22,10 +22,8 @@ const Image = TiptapImage.extend({
 			...this.parent?.(),
 			isWikiLink: {
 				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-image') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
+				parseHTML: (element) => element.getAttribute('data-wiki-image') === 'true',
+				renderHTML: (attrs) => attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
 			},
 		}
 	},
@@ -61,7 +59,7 @@ const Image = TiptapImage.extend({
 			new Plugin({
 				key: imageFileDropPluginKey,
 				props: {
-					handleDrop: (view, event, slice) => {
+					handleDrop: (view, event) => {
 						// only catch the drop if it contains files
 						if (
 							event.dataTransfer.files
@@ -82,7 +80,7 @@ const Image = TiptapImage.extend({
 							return true
 						}
 					},
-					handlePaste: (view, event, slice) => {
+					handlePaste: (view, event) => {
 						// only catch the paste if it contains files
 						if (
 							event.clipboardData.files

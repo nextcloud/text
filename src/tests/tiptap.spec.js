@@ -6,7 +6,7 @@
 import { createRichEditor } from '../EditorFactory.ts'
 import markdownit from '../markdownit/index.js'
 
-const renderedHTML = (markdown) => {
+function renderedHTML(markdown) {
 	const editor = createRichEditor()
 	editor.commands.setContent(markdownit.render(markdown))
 	// Remove TrailingNode
@@ -23,15 +23,11 @@ describe('TipTap', () => {
 
 	it('render hardbreak', () => {
 		const markdown = 'Hard line break  \nNext Paragraph'
-		expect(renderedHTML(markdown)).toEqual(
-			'<p dir="ltr">Hard line break<br>Next Paragraph</p>',
-		)
+		expect(renderedHTML(markdown)).toEqual('<p dir="ltr">Hard line break<br>Next Paragraph</p>')
 	})
 
 	it('render taskList', () => {
 		const markdown = '* [ ] item 1\n'
-		expect(renderedHTML(markdown)).toEqual(
-			'<ul class="contains-task-list"><li dir="ltr" data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><div class="task-item-content"><p dir="ltr">item 1</p></div></li></ul>',
-		)
+		expect(renderedHTML(markdown)).toEqual('<ul class="contains-task-list"><li dir="ltr" data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><div class="task-item-content"><p dir="ltr">item 1</p></div></li></ul>')
 	})
 })

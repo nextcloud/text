@@ -14,11 +14,11 @@
 </template>
 
 <script setup>
-import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 import TableOfContentsEntry from './TableOfContentsEntry.vue'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 
-const { headings } = useEditorHeadings()
 const emit = defineEmits(['heading-clicked'])
+const { headings } = useEditorHeadings()
 </script>
 
 <style lang="scss" scoped>

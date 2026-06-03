@@ -24,9 +24,7 @@ export const useAttachmentResolver = {
 			from: ATTACHMENT_RESOLVER,
 			default: {
 				resolve(src: string) {
-					logger.warn(
-						'No attachment resolver provided. Some attachment sources cannot be resolved.',
-					)
+					logger.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
 					return [src]
 				},
 			},
@@ -37,7 +35,7 @@ export const useEditorUpload = {
 	inject: {
 		$editorUpload: {
 			from: EDITOR_UPLOAD,
-			default: true,
+			default: false,
 		},
 	},
 }

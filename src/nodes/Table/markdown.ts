@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node } from '@tiptap/pm/model'
-import { MarkdownSerializerState } from 'prosemirror-markdown'
+import type { Node } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 
 type Cell = {
@@ -47,23 +48,20 @@ function normalizeCells(row: Row, columnWidths: number[]): Cell[] {
 		// Append newline to single-line cells with a block node
 		if (
 			normalizedCell.lines.length === 1
-			&& [...normalizedCell.nodeTypes].some((type) =>
-				singleLineBlockNodeTypes.has(type),
-			)
+			&& [...normalizedCell.nodeTypes].some((type) => singleLineBlockNodeTypes.has(type))
 		) {
 			normalizedCell.lines.push('')
 			row.length = Math.max(row.length, 2)
 		}
 
 		// Normalize cells to have the same number of lines
-		while (normalizedCell.lines.length < row.length)
+		while (normalizedCell.lines.length < row.length) {
 			normalizedCell.lines.push('')
+		}
 		// Normalize lines in cell to have the same length
 		normalizedCell.lines.forEach((line, lineIdx) => {
 			if (
-				[...normalizedCell.nodeTypes].some(
-					(type) => !alignNodeTypes.has(type),
-				)
+				[...normalizedCell.nodeTypes].some((type) => !alignNodeTypes.has(type))
 			) {
 				// Enforced left alignment.
 				normalizedCell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
@@ -141,18 +139,11 @@ function headerRowToMarkdown(
 	row.cells.forEach((cell, cellIdx) => {
 		// Separator alignment
 		const separatorWidth = columnWidths[cellIdx] + 2
-		let separator = ''
-		switch (cell.align) {
-			case 'center':
-				separator = ':' + state.repeat('-', separatorWidth - 2) + ':'
-				break
-			case 'right':
-				separator = state.repeat('-', separatorWidth - 1) + ':'
-				break
-			default:
-				separator = state.repeat('-', separatorWidth)
-				break
-		}
+		const separator = cell.align === 'center'
+			? ':' + state.repeat('-', separatorWidth - 2) + ':'
+			: cell.align === 'right'
+				? state.repeat('-', separatorWidth - 1) + ':'
+				: state.repeat('-', separatorWidth)
 		state.write(separator)
 		state.write('|')
 	})

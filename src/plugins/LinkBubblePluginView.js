@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { VueRenderer } from '@tiptap/vue-2'
+import { VueRenderer } from '@tiptap/vue-3'
 import tippy from 'tippy.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 import { domHref } from '../helpers/links.js'
@@ -79,7 +79,7 @@ class LinkBubblePluginView {
 		})
 	}
 
-	update(view, oldState) {
+	update(view) {
 		const { active } = this.plugin.getState(view.state)
 		if (view.composing) {
 			return
@@ -101,7 +101,7 @@ class LinkBubblePluginView {
 		let referenceEl
 		try {
 			referenceEl = view.nodeDOM(nodeStart)
-		} catch (e) {
+		} catch {
 			// Prevent throwing error at rerouting in `openLink()`
 			return
 		}

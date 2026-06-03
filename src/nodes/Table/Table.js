@@ -26,9 +26,8 @@ import TableRow from './TableRow.js'
  * @param {object} schema - schema of the editor
  * @param {number} rowsCount - number of rows in the table
  * @param {number} colsCount - number of cols in the table
- * @param {object} cellContent - currently unused
  */
-function createTable(schema, rowsCount, colsCount, cellContent) {
+function createTable(schema, rowsCount, colsCount) {
 	const headerCells = []
 	const cells = []
 	for (let index = 0; index < colsCount; index += 1) {
@@ -83,8 +82,7 @@ export default Table.extend({
 		return {
 			...this.parent(),
 			addRowAfter:
-				() =>
-				({ chain, dispatch }) => {
+				() => ({ chain, dispatch }) => {
 					return chain()
 						.command(({ state }) => addRowAfter(state, dispatch))
 						.command(({ state, tr }) => {
@@ -112,36 +110,35 @@ export default Table.extend({
 						.run()
 				},
 			addRowBefore:
-				() =>
-				({ chain, dispatch }) =>
-					chain()
-						.command(({ state }) => addRowBefore(state, dispatch))
-						.command(({ state, tr }) => {
-							const { tableStart, table, top } = selectedRect(state)
-							if (dispatch) {
-								const lastRow = table.child(top)
-								const newRow = table.child(top - 1)
-								let pos = tableStart + 1
-								for (let i = 0; i < top - 1; i++) {
-									pos += table.child(i).nodeSize
-								}
-
-								for (let i = 0; i < lastRow.childCount; i++) {
-									tr.setNodeAttribute(
-										pos,
-										'align',
-										lastRow.child(i).attrs.align,
-									)
-									pos += newRow.child(i).nodeSize
-								}
+				() => ({ chain, dispatch }) => chain()
+					.command(({ state }) => addRowBefore(state, dispatch))
+					.command(({ state, tr }) => {
+						const { tableStart, table, top } = selectedRect(state)
+						if (dispatch) {
+							const lastRow = table.child(top)
+							const newRow = table.child(top - 1)
+							let pos = tableStart + 1
+							for (let i = 0; i < top - 1; i++) {
+								pos += table.child(i).nodeSize
 							}
-							return true
-						})
-						.run(),
+
+							for (let i = 0; i < lastRow.childCount; i++) {
+								tr.setNodeAttribute(
+									pos,
+									'align',
+									lastRow.child(i).attrs.align,
+								)
+								pos += newRow.child(i).nodeSize
+							}
+						}
+						return true
+					})
+					.run(),
 			insertTable:
-				() =>
-				({ tr, dispatch, editor }) => {
-					if (isInTable(tr)) return false
+				() => ({ tr, dispatch, editor }) => {
+					if (isInTable(tr)) {
+						return false
+					}
 					const node = createTable(editor.schema, 3, 3, true)
 					if (dispatch) {
 						const offset = tr.selection.anchor + 1
@@ -153,11 +150,14 @@ export default Table.extend({
 				},
 			// move to the next node after the table from the last cell
 			leaveTable:
-				() =>
-				({ tr, dispatch, editor }) => {
-					if (!isInTable(tr)) return false
+				() => ({ tr, dispatch }) => {
+					if (!isInTable(tr)) {
+						return false
+					}
 					const { $head, empty } = tr.selection
-					if (!empty) return false
+					if (!empty) {
+						return false
+					}
 					// the selection can temporarily be inside the table but outside of cells.
 					const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
 					if (dispatch) {
@@ -168,11 +168,14 @@ export default Table.extend({
 					return true
 				},
 			goToNextRow:
-				() =>
-				({ tr, dispatch, editor }) => {
-					if (!isInTable(tr)) return false
+				() => ({ tr, dispatch }) => {
+					if (!isInTable(tr)) {
+						return false
+					}
 					const cell = findSameCellInNextRow(selectionCell(tr))
-					if (cell == null) return
+					if (cell === null) {
+						return
+					}
 					if (dispatch) {
 						const $cell = tr.doc.resolve(cell)
 						const selection = TextSelection.between(
@@ -184,8 +187,7 @@ export default Table.extend({
 					return true
 				},
 			sortColumn:
-				(direction = 'asc', cell = null) =>
-				({ state, tr, dispatch }) => {
+				(direction = 'asc', cell = null) => ({ state, tr, dispatch }) => {
 					if (
 						cell?.type?.name !== 'tableCell'
 						&& cell?.type?.name !== 'tableHeader'
@@ -226,7 +228,9 @@ export default Table.extend({
 						return true
 					})
 
-					if (!table || tablePos === null || columnIndex < 0) return false
+					if (!table || tablePos === null || columnIndex < 0) {
+						return false
+					}
 
 					const bodyRows = []
 					const nonBodyChildren = []
@@ -237,7 +241,9 @@ export default Table.extend({
 						}
 						nonBodyChildren.push(child)
 					})
-					if (bodyRows.length < 2) return true
+					if (bodyRows.length < 2) {
+						return true
+					}
 
 					// check if all rows have a cell at the column index and that the cell doesn't have colspan or rowspan
 					const canSortRows = bodyRows.every((row) => {
@@ -250,7 +256,9 @@ export default Table.extend({
 							&& (targetCell.attrs.rowspan ?? 1) === 1
 						)
 					})
-					if (!canSortRows) return false
+					if (!canSortRows) {
+						return false
+					}
 
 					// sort the rows based on the content of the cell at the column index
 					const collator = new Intl.Collator(undefined, {
@@ -265,18 +273,18 @@ export default Table.extend({
 							key: row.child(columnIndex).textContent.trim(),
 						}))
 						.sort((a, b) => {
-							const keyCompare =
-								collator.compare(a.key, b.key) * sortDirection
+							const keyCompare
+								= collator.compare(a.key, b.key) * sortDirection
 							if (keyCompare !== 0) {
 								return keyCompare
 							}
 							return a.index - b.index
 						})
 
-					const hasChangedOrder = sortedRows.some(
-						({ index }, sortedIndex) => index !== sortedIndex,
-					)
-					if (!hasChangedOrder) return true
+					const hasChangedOrder = sortedRows.some(({ index }, sortedIndex) => index !== sortedIndex)
+					if (!hasChangedOrder) {
+						return true
+					}
 
 					const sortedTable = table.type.createChecked(
 						table.attrs,
@@ -321,8 +329,7 @@ export default Table.extend({
 			 * <Tab> inside a table cell
 			 * Jump to next cell or outside table if already in last cell
 			 */
-			Tab: () =>
-				this.editor.commands.goToNextCell()
+			Tab: () => this.editor.commands.goToNextCell()
 				|| this.editor.commands.leaveTable(),
 		}
 	},

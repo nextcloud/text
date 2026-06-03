@@ -6,12 +6,12 @@
 import { randUser } from '../utils/index.js'
 const user = randUser()
 
-describe('Workspace', function () {
-	before(function () {
+describe('Workspace', function() {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		// Some tests modify the language.
 		// Make sure it's the default otherwise.
@@ -20,7 +20,7 @@ describe('Workspace', function () {
 		cy.createTestFolder().as('testFolder')
 	})
 
-	it('Initializes the workspace without errors', function () {
+	it('Initializes the workspace without errors', function() {
 		cy.visitTestFolder({
 			onBeforeLoad: (win) => cy.spy(win.console, 'error').as('consoleError'),
 		})
@@ -29,7 +29,7 @@ describe('Workspace', function () {
 		})
 	})
 
-	it('creates headings via submenu', function () {
+	it('creates headings via submenu', function() {
 		cy.visitTestFolder()
 		cy.openWorkspace().type('Heading')
 		cy.getContent().type('{selectall}')
@@ -48,7 +48,7 @@ describe('Workspace', function () {
 		})
 	})
 
-	it('creates lists', function () {
+	it('creates lists', function() {
 		cy.visitTestFolder()
 		cy.openWorkspace().type('List me')
 		cy.getContent().type('{selectall}')
@@ -59,14 +59,14 @@ describe('Workspace', function () {
 		].forEach(([button, tag]) => testListButton(button, tag, 'List me'))
 	})
 
-	it('takes README.md into account', function () {
+	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/README.md`)
 		cy.visitTestFolder()
 		cy.getFile('README.md')
 		cy.get('#rich-workspace .ProseMirror').should('contain', 'Hello world')
 	})
 
-	it('emoji picker', function () {
+	it('emoji picker', function() {
 		cy.visitTestFolder()
 		cy.openWorkspace().type("# Let's smile together{enter}## ")
 
@@ -77,7 +77,7 @@ describe('Workspace', function () {
 		cy.getEditor().find('h2').contains('😀')
 	})
 
-	it('file links', function () {
+	it('file links', function() {
 		cy.createFolder(`${this.testFolder}/sub-folder`)
 		cy.createFolder(`${this.testFolder}/sub-folder/alpha`)
 
@@ -112,15 +112,15 @@ describe('Workspace', function () {
 		cy.getModal().find('button.header-close').click()
 	})
 
-	describe('callouts', function () {
+	describe('callouts', function() {
 		const types = ['info', 'warn', 'error', 'success']
 
-		beforeEach(function () {
+		beforeEach(function() {
 			cy.visitTestFolder()
 			cy.openWorkspace().type('Callout')
 		})
-		// eslint-disable-next-line cypress/no-async-tests
-		it('create callout', function () {
+
+		it('create callout', function() {
 			cy.wrap(types).each((type) => {
 				cy.log(`creating ${type} callout`)
 
@@ -141,7 +141,7 @@ describe('Workspace', function () {
 			})
 		})
 
-		it('toggle callouts', function () {
+		it('toggle callouts', function() {
 			const [first, ...rest] = types
 
 			// enable callout
@@ -160,8 +160,8 @@ describe('Workspace', function () {
 		})
 	})
 
-	describe('localize', function () {
-		it('takes localized file name into account', function () {
+	describe('localize', function() {
+		it('takes localized file name into account', function() {
 			cy.modifyUser(user, 'language', 'de_DE')
 			cy.uploadFile(
 				'test.md',
@@ -173,7 +173,7 @@ describe('Workspace', function () {
 			cy.get('#rich-workspace .ProseMirror').should('contain', 'Hello world')
 		})
 
-		it('creates description with default name', function () {
+		it('creates description with default name', function() {
 			cy.modifyUser(user, 'language', 'es')
 			cy.visitTestFolder()
 			cy.createDescription('Añadir descripción a carpeta')
@@ -181,7 +181,7 @@ describe('Workspace', function () {
 			cy.get('#rich-workspace .editor__content').should('be.visible')
 		})
 
-		it('ignores localized file name in other language', function () {
+		it('ignores localized file name in other language', function() {
 			cy.modifyUser(user, 'language', 'fr')
 			cy.uploadFile(
 				'test.md',
@@ -194,8 +194,8 @@ describe('Workspace', function () {
 		})
 	})
 
-	describe('create Readme.md', function () {
-		const checkContent = function () {
+	describe('create Readme.md', function() {
+		const checkContent = function() {
 			const txt = Cypress.currentTest.title
 
 			cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
@@ -204,21 +204,21 @@ describe('Workspace', function () {
 			cy.getContent().should('contain', txt)
 		}
 
-		beforeEach(function () {
+		beforeEach(function() {
 			cy.visitTestFolder()
 		})
 
-		it('click', function () {
+		it('click', function() {
 			cy.openWorkspace().click()
 			checkContent()
 		})
 
-		it('enter', function () {
+		it('enter', function() {
 			cy.openWorkspace().type('{enter}')
 			checkContent()
 		})
 
-		it('spacebar', function () {
+		it('spacebar', function() {
 			cy.openWorkspace().trigger('keyup', {
 				keyCode: 32,
 				which: 32,

@@ -5,11 +5,11 @@
 
 <template>
 	<NcModal v-if="active" :name="fileName" @close="close">
-		<Editor
-			:file-id="fileId"
-			:relative-path="relativePath"
+		<EditorReloader
+			:fileId="fileId"
+			:relativePath="relativePath"
 			:active="active"
-			:share-token="shareToken"
+			:shareToken="shareToken"
 			:mime="mimeType" />
 	</NcModal>
 </template>
@@ -21,37 +21,44 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		Editor: () => import('./Editor.js'),
+		EditorReloader: () => import('./EditorReloader.vue'),
 	},
+
 	props: {
 		fileId: {
 			type: Number,
 			default: null,
 		},
+
 		relativePath: {
 			type: String,
 			default: null,
 		},
+
 		active: {
 			type: Boolean,
 			default: false,
 		},
+
 		shareToken: {
 			type: String,
 			default: null,
 		},
+
 		mimeType: {
 			type: String,
 			default: null,
 		},
 	},
+
+	emits: ['close'],
+
 	computed: {
 		fileName() {
-			return this.relativePath.substring(
-				this.relativePath.lastIndexOf('/') + 1,
-			)
+			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
 		},
 	},
+
 	methods: {
 		close() {
 			this.$emit('close')

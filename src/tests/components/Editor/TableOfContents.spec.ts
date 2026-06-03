@@ -4,27 +4,28 @@
  */
 
 import type { Editor } from '@tiptap/core'
+
 import { shallowMount } from '@vue/test-utils'
 import { expect, test } from 'vitest'
 import { nextTick, shallowRef } from 'vue'
 import TableOfContents from '../../../components/Editor/TableOfContents/TableOfContents.vue'
 import TocContainer from '../../../components/Editor/TableOfContents/TocContainer.vue'
 import TocOutline from '../../../components/Editor/TableOfContents/TocOutline.vue'
-import { editorKey } from '../../../composables/useEditor'
+import { editorKey } from '../../../composables/useEditor.ts'
 import {
 	displayTocKey,
 	headingsKey,
 	provideEditorHeadings,
-} from '../../../composables/useEditorHeadings'
+} from '../../../composables/useEditorHeadings.ts'
 import Heading from '../../../nodes/Heading.js'
-import createCustomEditor from '../../testHelpers/createCustomEditor'
+import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 
 const text1 = 'Level 1 heading'
 const text2 = 'Level 2 heading'
 const content = `<h1>${text1}</h1>\n<h2>${text2}</h2>`
 
 const createEditor = (content = '') => createCustomEditor(content, [Heading])
-const mountWithEditor = (editor: Editor, displayToc = false) => {
+function mountWithEditor(editor: Editor, displayToc = false) {
 	const { headings, displayToc: displayTocRef } = provideEditorHeadings(editor)
 	displayTocRef.value = displayToc
 

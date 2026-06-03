@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from './random-user'
-import { Node } from './Node'
-import { ViewerSection } from '../sections/ViewerSection'
+import type { Node } from './Node.ts'
+
+import { ViewerSection } from '../sections/ViewerSection.ts'
+import { test as base } from './random-user.ts'
 
 export interface UploadFileFixture {
 	file: Node
@@ -27,9 +28,8 @@ export const test = base.extend<UploadFileFixture>({
 	oldVersions: [[], { option: true }],
 
 	file: async ({ fileContent, fileName, oldVersions, user }, use) => {
-		const uploadVersion =
-			(opts: { content?: string, mtime?: number }) =>
-				user.uploadFile({ name: fileName, ...opts })
+		const uploadVersion
+			= (opts: { content?: string, mtime?: number }) => user.uploadFile({ name: fileName, ...opts })
 		for (const version of oldVersions) {
 			await uploadVersion(version)
 		}

@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createRichEditor } from '../../EditorFactory'
+import { describe, expect, it } from 'vitest'
+import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
@@ -56,9 +57,7 @@ describe('List type conversion', () => {
 		})
 		it('converts all items when toggling taskList → bulletList', () => {
 			const editor = createRichEditor()
-			editor.commands.setContent(
-				markdownit.render('- [ ] item 1\n- [x] item 2\n'),
-			)
+			editor.commands.setContent(markdownit.render('- [ ] item 1\n- [x] item 2\n'))
 			editor.commands.focus('start')
 			editor.commands.toggleBulletList()
 			const list = editor.state.doc.firstChild!
@@ -129,14 +128,10 @@ describe('List type conversion', () => {
 describe('markdown serialization of mixed list types', () => {
 	// Pure round-trips — no conversion involved
 	it('preserves bullet list with nested task list through editor', () => {
-		expect(markdownThroughEditor('- outer\n  - [ ] inner')).to.equal(
-			'- outer\n  - [ ] inner',
-		)
+		expect(markdownThroughEditor('- outer\n  - [ ] inner')).to.equal('- outer\n  - [ ] inner')
 	})
 	it('preserves task list with nested bullet list through editor', () => {
-		expect(markdownThroughEditor('- [ ] outer\n  - inner')).to.equal(
-			'- [ ] outer\n  - inner',
-		)
+		expect(markdownThroughEditor('- [ ] outer\n  - inner')).to.equal('- [ ] outer\n  - inner')
 	})
 
 	// Post-conversion serialization — verifies convertListType preserves bullet attr
@@ -146,15 +141,14 @@ describe('markdown serialization of mixed list types', () => {
 		// find inner paragraph
 		let innerPos = -1
 		editor.state.doc.descendants((node, pos) => {
-			if (node.type.name === 'paragraph' && node.textContent === 'inner')
+			if (node.type.name === 'paragraph' && node.textContent === 'inner') {
 				innerPos = pos + 1
+			}
 		})
 		editor.commands.setTextSelection(innerPos)
 		editor.commands.toggleTaskList()
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).to.equal(
-			'- outer\n  * [ ] inner',
-		)
+		expect(serializer.serialize(editor.state.doc)).to.equal('- outer\n  * [ ] inner')
 		editor.destroy()
 	})
 })

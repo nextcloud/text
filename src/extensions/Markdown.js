@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable jsdoc/require-param-type */
+/* eslint-disable jsdoc/require-param-description */
+
 /*
  * Tiptap extension to ease customize the serialization to markdown
  *
@@ -24,9 +27,9 @@
 import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
-import transformPastedHTML from './transformPastedHTML.js'
+import transformPastedHTML from './transformPastedHTML.ts'
 
 const Markdown = Extension.create({
 	name: 'markdown',
@@ -99,9 +102,7 @@ const Markdown = Extension.create({
 								|| slice.content.firstChild?.childCount > 1
 							) {
 								// Selected several nodes or several children of one block node
-								return clipboardSerializer(
-									this.editor.schema,
-								).serialize(slice.content)
+								return clipboardSerializer(this.editor.schema).serialize(slice.content)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
@@ -121,7 +122,14 @@ const Markdown = Extension.create({
 	},
 })
 
-const createMarkdownSerializer = ({ nodes, marks }) => {
+/**
+ * Create a markdown serializer based on the schema
+ *
+ * @param schema
+ * @param schema.nodes
+ * @param schema.marks
+ */
+function createMarkdownSerializer({ nodes, marks }) {
 	return {
 		serializer: new MarkdownSerializer(
 			extractNodesToMarkdown(nodes),
@@ -136,7 +144,13 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 	}
 }
 
-const clipboardSerializer = ({ nodes, marks }) => {
+/**
+ *
+ * @param root0
+ * @param root0.nodes
+ * @param root0.marks
+ */
+function clipboardSerializer({ nodes, marks }) {
 	return {
 		serializer: new MarkdownSerializer(
 			extractNodesToMarkdown(nodes),
@@ -151,7 +165,11 @@ const clipboardSerializer = ({ nodes, marks }) => {
 	}
 }
 
-const extractToPlaintext = (marks) => {
+/**
+ *
+ * @param marks
+ */
+function extractToPlaintext(marks) {
 	const blankMark = {
 		open: '',
 		close: '',
@@ -159,14 +177,16 @@ const extractToPlaintext = (marks) => {
 		expelEnclosingWhitespace: true,
 	}
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
-	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(
-		([name, _mark]) => [name, blankMark],
-	)
+	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(([name]) => [name, blankMark])
 
 	return Object.fromEntries(markEntries)
 }
 
-const extractToMarkdown = (nodesOrMarks) => {
+/**
+ *
+ * @param nodesOrMarks
+ */
+function extractToMarkdown(nodesOrMarks) {
 	const nodeOrMarkEntries = Object.entries(nodesOrMarks)
 		.map(([name, nodeOrMark]) => [name, nodeOrMark.spec.toMarkdown])
 		.filter(([, toMarkdown]) => toMarkdown)
@@ -174,25 +194,35 @@ const extractToMarkdown = (nodesOrMarks) => {
 	return Object.fromEntries(nodeOrMarkEntries)
 }
 
-const extractNodesToMarkdown = (nodes) => {
+/**
+ *
+ * @param nodes
+ */
+function extractNodesToMarkdown(nodes) {
 	const defaultNodes = convertNames(defaultMarkdownSerializer.nodes)
 	const nodesToMarkdown = extractToMarkdown(nodes)
 	return { ...defaultNodes, ...nodesToMarkdown }
 }
 
-const extractMarksToMarkdown = (marks) => {
+/**
+ *
+ * @param marks
+ */
+function extractMarksToMarkdown(marks) {
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
 	const marksToMarkdown = extractToMarkdown(marks)
 	return { ...defaultMarks, ...marksToMarkdown }
 }
 
-const convertNames = (object) => {
+/**
+ *
+ * @param object
+ */
+function convertNames(object) {
 	const convert = (name) => {
 		return name.replace(/_(\w)/g, (_m, letter) => letter.toUpperCase())
 	}
-	return Object.fromEntries(
-		Object.entries(object).map(([name, value]) => [convert(name), value]),
-	)
+	return Object.fromEntries(Object.entries(object).map(([name, value]) => [convert(name), value]))
 }
 
 export { createMarkdownSerializer }
