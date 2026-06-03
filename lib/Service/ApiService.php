@@ -261,6 +261,10 @@ class ApiService {
 			} catch (LockedException) {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
+		} catch (NotPermittedException) {
+			return new DataResponse([
+				'error' => $this->l10n->t('Read-only permission cannot save document changes. Please reload the page.')
+			], Http::STATUS_PRECONDITION_FAILED);
 		} catch (NotFoundException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
