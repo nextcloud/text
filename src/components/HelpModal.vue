@@ -298,6 +298,8 @@ export default {
 		NcDialog,
 	},
 
+	emits: ['close'],
+
 	data() {
 		return {
 			formatted: {
