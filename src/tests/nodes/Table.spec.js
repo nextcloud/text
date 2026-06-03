@@ -8,8 +8,6 @@ import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 import output from '../fixtures/tables/basic/table.html?raw'
-// Eslint does not know about ?raw suffix it seems.
-/* eslint-disable import/no-unresolved */
 import input from '../fixtures/tables/basic/table.md?raw'
 import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
 import handbook from '../fixtures/tables/handbook/handbook.html?raw'
@@ -24,11 +22,10 @@ import {
 	thead,
 	tr,
 } from '../testHelpers/builders.js'
-/* eslint-enable import/no-unresolved */
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
+	editor: async (_, use) => {
 		const editor = createRichEditor()
 		await use(editor)
 		editor.destroy()
@@ -261,7 +258,7 @@ describe('Table extension', () => {
 
 function getHeaderCell(editor, targetIndex = 0) {
 	let cell
-	editor.state.doc.descendants((node, pos) => {
+	editor.state.doc.descendants((node) => {
 		if (!['tableHeadRow', 'tableRow'].includes(node.type.name)) {
 			return true
 		}

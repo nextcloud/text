@@ -9,7 +9,7 @@ import { nextTick } from 'vue'
 import RichTextReader from '../../components/RichTextReader.vue'
 
 const test = baseTest.extend({
-	content: ({ task: _ }, use) => use(''),
+	content: (_, use) => use(''),
 	wrapper: async ({ content }, use) => {
 		const wrapper = mount(RichTextReader, { propsData: { content } })
 		await nextTick()

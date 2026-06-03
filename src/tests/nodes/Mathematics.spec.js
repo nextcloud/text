@@ -12,7 +12,7 @@ import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
+	editor: async (_, use) => {
 		const editor = createRichEditor()
 		await use(editor)
 		editor.destroy()
