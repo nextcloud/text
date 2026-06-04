@@ -39,7 +39,7 @@ const { displayToc, headings } = useEditorHeadings()
 const isMobile = useIsMobile()
 /**
  *
- * @param visible
+ * @param {boolean} visible - desired visibility
  */
 function setDisplayToc(visible) {
 	emit('text:toc:toggle', { visible })

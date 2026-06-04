@@ -56,6 +56,8 @@ export default {
 		},
 	},
 
+	emits: ['reconnect'],
+
 	computed: {
 		card() {
 			if (this.isLoadingError) {

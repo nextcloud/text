@@ -40,12 +40,9 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-
-		contentLoaded: {
-			type: Boolean,
-			default: true,
-		},
 	},
+
+	emits: ['readOnlyToggled'],
 
 	setup() {
 		const { isRichEditor, isRichWorkspace } = useEditorFlags()
@@ -54,7 +51,7 @@ export default {
 
 	methods: {
 		readOnlyToggle() {
-			this.$emit('read-only-toggled')
+			this.$emit('readOnlyToggled')
 		},
 	},
 }

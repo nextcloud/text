@@ -24,6 +24,7 @@ import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import { editorWidthKey } from '../../composables/useEditorWidth.ts'
 import { FocusTrap, PlainTable } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { logger } from '../../helpers/logger.ts'
 
 export default {
 	name: 'PlainTableContentEditor',
@@ -41,7 +42,7 @@ export default {
 		},
 	},
 
-	emits: ['update:content'],
+	emits: ['ready', 'update:content'],
 
 	setup(props) {
 		const extensions = [PlainTable, UndoRedo, FocusTrap]
@@ -91,7 +92,7 @@ export default {
 					markdown,
 				})
 			} catch (error) {
-				console.error('Error serializing table:', error)
+				logger.error('Error serializing table:', error)
 			}
 		})
 		this.editor.on('update', ({ editor }) => {
@@ -102,7 +103,7 @@ export default {
 					markdown,
 				})
 			} catch (error) {
-				console.error('Error serializing table:', error)
+				logger.error('Error serializing table:', error)
 			}
 		})
 	},
@@ -116,7 +117,7 @@ export default {
 		 * Wrapper to emit events on our own and the parent component
 		 *
 		 * @param {string} event The event name
-		 * @param {any} data The data to pass along
+		 * @param {object} data The data to pass along
 		 */
 		emit(event, data) {
 			this.$emit(event, data)

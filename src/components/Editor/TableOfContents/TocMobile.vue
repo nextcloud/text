@@ -23,6 +23,8 @@ export default defineComponent({
 		NcModal,
 	},
 
+	emits: ['close'],
+
 	methods: {
 		t,
 	},

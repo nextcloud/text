@@ -38,7 +38,7 @@ export const useActionCreateAttachmentMixin = {
 	inject: {
 		$callCreateAttachment: {
 			from: ACTION_CREATE_ATTACHMENT,
-			default: () => (template) => {},
+			default: () => () => {},
 		},
 	},
 }
