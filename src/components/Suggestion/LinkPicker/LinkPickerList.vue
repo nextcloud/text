@@ -10,7 +10,7 @@
 		@select="(item) => $emit('select', item)">
 		<template #default="{ item }">
 			<div class="link-picker__item" :data-key="item.key">
-				<compoent :is="item.icon" v-if="typeof item.icon !== 'string'" />
+				<component :is="item.icon" v-if="typeof item.icon !== 'string'" />
 				<img v-else :src="item.icon">
 				<div>{{ item.label }}</div>
 			</div>
@@ -41,6 +41,8 @@ export default {
 			required: true,
 		},
 	},
+
+	emits: ['select'],
 
 	methods: {
 		t,
