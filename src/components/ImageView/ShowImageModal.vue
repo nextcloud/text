@@ -48,6 +48,8 @@ export default {
 		},
 	},
 
+	emits: ['close'],
+
 	data() {
 		return {
 			currentImageIndex: 0,

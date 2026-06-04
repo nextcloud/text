@@ -106,6 +106,8 @@ export default {
 		},
 	},
 
+	emits: ['toggle', 'open', 'delete'],
+
 	setup() {
 		const { openLinkHandler } = useOpenLinkHandler()
 		return { openLinkHandler }
@@ -134,7 +136,9 @@ export default {
 		},
 
 		openLink() {
-			if (!this.href) { return }
+			if (!this.href) {
+				return
+			}
 			this.openLinkHandler.openLink(this.href)
 		},
 

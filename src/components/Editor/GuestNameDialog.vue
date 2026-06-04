@@ -54,6 +54,7 @@ import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { logger } from '../../helpers/logger.ts'
 
 const props = defineProps({
 	session: {
@@ -93,13 +94,13 @@ async function setGuestName() {
 		try {
 			localStorage.setItem('nick', session.guestName)
 		} catch (e) {
-			console.warn('Could not store guest name in local storage.', e)
+			logger.warn('Could not store guest name in local storage.', e)
 		}
 		emit('update:session', session)
 		updateUser(session)
 	} catch (error) {
 		loading.value = false
-		console.warn('Failed to update the session', { error })
+		logger.warn('Failed to update the session', { error })
 		showWarning(t('text', 'Failed to update the guest name.'))
 		guestName.value = previousGuestName
 	}

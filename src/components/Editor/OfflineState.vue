@@ -52,7 +52,7 @@ export default {
 
 		offlineTime() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
-
+			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 			this.refreshMoment
 			return moment(this.offlineSince).fromNow()
 		},
