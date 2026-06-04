@@ -45,9 +45,9 @@ const WORKSPACE_URL = generateOcsUrl(
 	'apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace',
 	2,
 )
-const descriptionFile = 'Readme' + '.' + loadState('text', 'default_file_extension')
-const translatedDescriptionFile
-	= t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+const defaultExtension = loadState('text', 'default_file_extension')
+const descriptionFile = 'Readme.' + defaultExtension
+const translatedDescriptionFile = t('text', 'Readme') + '.' + defaultExtension
 const SUPPORTED_STATIC_FILENAMES = [
 	translatedDescriptionFile,
 	descriptionFile,
