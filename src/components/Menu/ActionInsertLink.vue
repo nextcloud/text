@@ -41,7 +41,6 @@
 		</NcActionButton>
 		<NcActionButton
 			v-if="!isUsingDirectEditing"
-			ref="buttonFile"
 			:disabled="!networkOnline"
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFileAndCloseMenu">
@@ -96,6 +95,7 @@ import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import { useLinkFile } from '../../composables/useLinkFile.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
+import { logger } from '../../helpers/logger.ts'
 import { HOOK_MENUBAR_LINK_CUSTOM_ACTION } from '../Editor.provider.ts'
 import { Folder, LinkOff, Loading, Shape, Web } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
@@ -234,7 +234,7 @@ export default {
 					this.insertLink(link)
 				})
 				.catch((error) => {
-					console.error('Smart picker promise rejected', error)
+					logger.error('Smart picker promise rejected', error)
 				})
 		},
 
@@ -245,7 +245,7 @@ export default {
 					this.insertLink(result)
 				})
 				.catch((error) => {
-					console.error('Custom link action promise rejected', error)
+					logger.error('Custom link action promise rejected', error)
 				})
 		},
 
