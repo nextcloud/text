@@ -84,7 +84,7 @@ export const outlineEntries: MenuEntry[] = [
 		key: 'outline',
 		forceLabel: true,
 		icon: FormatListBulleted,
-		click: () => emit('text:toc:toggle', {}),
+		click: () => emit('text:toc:toggle', undefined),
 		label: ({ displayToc }) => {
 			return displayToc ? t('text', 'Hide outline') : t('text', 'Show outline')
 		},
@@ -232,7 +232,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 				{
 					key: 'outline',
 					icon: FormatListBulleted,
-					click: () => emit('text:toc:toggle', {}),
+					click: () => emit('text:toc:toggle', undefined),
 					visible: !isRichWorkspace,
 					label: ({ displayToc }) => {
 						return displayToc
