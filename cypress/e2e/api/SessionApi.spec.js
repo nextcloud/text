@@ -87,7 +87,7 @@ describe('The session Api', function() {
 
 		it('responds to queries with updates and responses', function() {
 			const version = 0
-			Object.entries(messages).forEach(([type, sample]) => {
+			Object.entries(messages).forEach(([, sample]) => {
 				cy.pushSteps({ connection, steps: [sample], version })
 			})
 			cy.pushSteps({ connection, steps: [messages.query], version }).then((response) => {
@@ -174,7 +174,7 @@ describe('The session Api', function() {
 				filePath = `/${name}.md`
 			})
 			cy.uploadTestFile()
-				.then((_id) => {
+				.then(() => {
 					return cy.shareFile(filePath, { edit: true })
 				})
 				.then((token) => {

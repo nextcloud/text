@@ -4,7 +4,6 @@
  */
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/Preview.md?raw'
 import Markdown from './../../../src/extensions/Markdown.js'
 import { Italic, Link } from './../../../src/marks/index.js'

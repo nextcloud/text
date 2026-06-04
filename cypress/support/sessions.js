@@ -18,7 +18,7 @@ Cypress.Commands.add(
 	'failToCreateTextSession',
 	(fileId, baseVersionEtag = null, options = {}) => {
 		return open({ fileId, ...options, baseVersionEtag }).then(
-			(_response) => {
+			() => {
 				throw new Error('Expected request to fail - but it succeeded!')
 			},
 			(err) => err.response,
@@ -37,7 +37,7 @@ Cypress.Commands.add(
 	'failToPushSteps',
 	({ connection, steps, version, awareness = '' }) => {
 		return push(connection, { steps, version, awareness }).then(
-			(_response) => {
+			() => {
 				throw new Error('Expected request to fail - but it succeeded!')
 			},
 			(err) => err.response,
@@ -51,7 +51,7 @@ Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 
 Cypress.Commands.add('failToSyncSteps', (connection, options = { version: 0 }) => {
 	return sync(connection, options).then(
-		(_response) => {
+		() => {
 			throw new Error('Expected request to fail - but it succeeded!')
 		},
 		(err) => err.response,
@@ -64,7 +64,7 @@ Cypress.Commands.add('save', (connection, options = { version: 0 }) => {
 
 Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
 	return save(connection, options).then(
-		(_response) => {
+		() => {
 			throw new Error('Expected request to fail - but it succeeded!')
 		},
 		(err) => err.response,

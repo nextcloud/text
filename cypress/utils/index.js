@@ -7,7 +7,7 @@ import { User } from '@nextcloud/e2e-test-server/cypress'
 
 /**
  *
- * @param url
+ * @param {string} url to extract params from.
  */
 export function getSearchParams(url) {
 	return url.split(/[?&]/).reduce((acc, cur) => {
