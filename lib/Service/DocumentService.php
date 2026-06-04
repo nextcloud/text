@@ -207,7 +207,8 @@ class DocumentService {
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
-		$readOnly = $this->isReadOnlyCached($session, $shareToken);
+		$file = $this->getFileForSession($session, $shareToken);
+		$readOnly = $this->isReadOnly($file, $shareToken);
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
 		$documentState = null;
@@ -593,26 +594,6 @@ class DocumentService {
 			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
-	}
-
-	public function isReadOnlyCached(Session $session, ?string $shareToken = null): bool {
-		// since public share permissions can change while a guest tab is open,
-		// stale session cache is avoided and always re-evaluate.
-		if ($shareToken !== null) {
-			$file = $this->getFileForSession($session, $shareToken);
-			return $this->isReadOnly($file, $shareToken);
-		}
-
-		$cacheKey = 'read-only-' . $session->getId();
-		$isReadOnly = $this->cache->get($cacheKey);
-		if ($isReadOnly === null) {
-			$file = $this->getFileForSession($session, $shareToken);
-			$isReadOnly = $this->isReadOnly($file, $shareToken);
-			$this->cache->set($cacheKey, $isReadOnly, 60 * 5);
-			return $isReadOnly;
-		}
-
-		return $isReadOnly;
 	}
 
 	public function isReadOnly(File $file, ?string $token): bool {

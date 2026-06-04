@@ -79,7 +79,13 @@ class SaveService {
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
-			const response = (e as { response?: { status?: number, data?: { error?: string } } }).response
+			const response = (
+				e as { response?: { status?: number; data?: { error?: string } } }
+			).response
+			if (response?.status === 403) {
+				// Document is now read-only; permissionChange from sync will update the UI
+				return
+			}
 			if (response?.status === 412) {
 				this.emit('error', {
 					type: ERROR_TYPE.LOAD_ERROR,
