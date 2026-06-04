@@ -85,7 +85,7 @@ export default {
 		},
 	},
 
-	emits: ['update:content'],
+	emits: ['ready', 'update:content'],
 
 	setup(props) {
 		const { openLinkHandler } = useOpenLinkHandler()

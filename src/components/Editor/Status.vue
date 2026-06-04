@@ -133,7 +133,7 @@ export default {
 
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
-
+			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 			this.refreshMoment
 			const timestamp = this.document?.lastSavedVersionTime
 			return timestamp ? moment(timestamp * 1000).fromNow() : ''

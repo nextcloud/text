@@ -99,7 +99,8 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
-import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
+import { logger } from '../../helpers/logger.ts'
+import * as Link from '../../marks/Link.ts'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -176,7 +177,7 @@ export default {
 		isSafeHref() {
 			try {
 				const url = new URL(this.href, window.location)
-				return !!this.href && PROTOCOLS_TO_LINK_TO.includes(url.protocol)
+				return !!this.href && Link.PROTOCOLS_TO_LINK_TO.includes(url.protocol)
 			} catch {
 				return false
 			}
@@ -263,7 +264,7 @@ export default {
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			console.debug('selection', selection)
+			logger.debug('selection', selection)
 			this.editor
 				.chain()
 				.extendMarkRange('link')

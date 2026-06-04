@@ -32,7 +32,7 @@ const { editor } = useEditor()
 
 /**
  *
- * @param id
+ * @param {string} id attribute of elemet to go to
  */
 function goto(id) {
 	const el = editor.view.dom.querySelector(`#${id}`)

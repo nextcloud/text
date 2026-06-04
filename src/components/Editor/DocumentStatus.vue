@@ -66,6 +66,8 @@ export default {
 		},
 	},
 
+	emits: ['reconnect'],
+
 	computed: {
 		lockText() {
 			return t(
