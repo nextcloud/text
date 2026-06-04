@@ -14,7 +14,7 @@ interface OfflineFixture {
 
 /**
  *
- * @param client
+ * @param client to enable online
  */
 async function setClientOnline(client: CDPSession): Promise<void> {
 	await client.send('Network.emulateNetworkConditions', {
@@ -28,7 +28,7 @@ async function setClientOnline(client: CDPSession): Promise<void> {
 
 /**
  *
- * @param client
+ * @param client to turn offline
  */
 async function setClientOffline(client: CDPSession): Promise<void> {
 	await client.send('Network.enable')

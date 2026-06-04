@@ -4,16 +4,13 @@
  */
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/Table.md?raw'
 import { initUserAndFiles, randUser } from '../../utils/index.js'
-import Markdown, {
-	createMarkdownSerializer,
-} from './../../../src/extensions/Markdown.js'
-import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
+import Markdown from './../../../src/extensions/Markdown.js'
 import markdownit from './../../../src/markdownit/index.js'
 import EditableTable from './../../../src/nodes/EditableTable.js'
 import { createCustomEditor } from './../../support/components.js'
+import { expectMarkdown, runCommands } from './helpers.js'
 
 const user = randUser()
 const fileName = 'empty.md'
@@ -160,43 +157,9 @@ describe('Table extension integrated in the editor', () => {
 			expect(input).to.be.ok
 			expect(output).to.be.ok
 
-			loadMarkdown(input)
-			runCommands()
-			expectMarkdown(output.replace(/\n*$/, ''))
+			editor.commands.setContent(markdownit.render(input))
+			runCommands(editor)
+			expectMarkdown(editor, output.replace(/\n*$/, ''))
 		})
-	}
-
-	const loadMarkdown = (markdown) => {
-		editor.commands.setContent(markdownit.render(markdown))
-	}
-
-	const runCommands = () => {
-		let found
-		while ((found = findCommand())) {
-			const name = found.node.text
-			editor.commands.setTextSelection(found.pos)
-			editor.commands[name]()
-			const updated = findCommand()
-			if (updated) {
-				editor.commands.setTextSelection(updated.pos)
-				editor.commands.insertContent('did ')
-			}
-		}
-	}
-
-	const findCommand = () => {
-		const doc = editor.state.doc
-		return findChildren(doc, (child) => {
-			return child.isText && Object.hasOwn(editor.commands, child.text)
-		})[0]
-	}
-
-	const expectMarkdown = (markdown) => {
-		expect(getMarkdown().replace(/\n$/, '')).to.equal(markdown)
-	}
-
-	const getMarkdown = () => {
-		const serializer = createMarkdownSerializer(editor.schema)
-		return serializer.serialize(editor.state.doc)
 	}
 })

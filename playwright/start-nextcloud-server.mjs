@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
+/* global process */
+
 import {
 	configureNextcloud,
 	startNextcloud,
