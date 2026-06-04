@@ -11,8 +11,6 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "הרחבת PHP עצרה את העלאת הקובץ",
     "No file uploaded or file size exceeds maximum of %s" : "לא הועלה אף קובץ או שגודל הקובץ חרג מהסף המרבי של %s",
     "Nextcloud Text" : "טקסט Nextcloud",
-    "text document" : "מסמך טקסט",
-    "New text file" : "קובץ טקסט חדש",
     "File not found" : "קובץ לא נמצא",
     "Readme" : "הסבר",
     "Text" : "טקסט",
@@ -77,6 +75,8 @@ OC.L10N.register(
     "Command" : "פקודה",
     "Formatting" : "עיצוב",
     "Choose" : "בחר",
+    "text document" : "מסמך טקסט",
+    "New text file" : "קובץ טקסט חדש",
     "Select language" : "בחירת שפה",
     "to" : "סיום",
     "Replace" : "החלפה"

@@ -9,7 +9,6 @@ OC.L10N.register(
     "Missing a temporary folder" : "Falta una carpeta temporal",
     "Could not write file to disk" : "No fue posible escribir a disco",
     "A PHP extension stopped the file upload" : "Una extensión de PHP detuvo la carga del archivo",
-    "New text file" : "Nuevo archivo de texto",
     "File not found" : "Archivo no encontrado",
     "Text" : "Texto",
     "Guest" : "Invitado",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Details" : "Detalles",
     "Choose" : "Seleccionar",
     "Add folder description" : "Agregar una descripción a la carpeta",
+    "New text file" : "Nuevo archivo de texto",
     "Select language" : "Selecciona el idioma",
     "to" : "para",
     "Replace" : "Reemplazar"
