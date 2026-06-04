@@ -9,7 +9,7 @@ import tippy from 'tippy.js'
 export default ({
 	listComponent,
 	items = () => {},
-	command = ({ editor, range, props }) => {},
+	command = () => {},
 }) => ({
 	items,
 	command,
