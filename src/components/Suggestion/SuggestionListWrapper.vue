@@ -51,6 +51,8 @@ export default {
 		},
 	},
 
+	emits: ['select'],
+
 	data() {
 		return {
 			selectedIndex: 0,
