@@ -6,7 +6,7 @@
 	<NextcloudVueNcActionButton
 		closeAfterClick
 		data-text-action-entry="formatting-help"
-		v-on="$listeners">
+		v-bind="$attrs">
 		<template #icon>
 			<Help />
 		</template>

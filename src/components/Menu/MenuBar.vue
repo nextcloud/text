@@ -45,7 +45,6 @@
 
 			<!-- The remaining actions -->
 			<ActionList
-				ref="remainingEntries"
 				:actionEntry="hiddenEntries"
 				:canBeFocussed="activeMenuEntry === visibleEntries.length"
 				:forceEnabled="true"
@@ -120,6 +119,8 @@ export default {
 			default: false,
 		},
 	},
+
+	emits: ['update:loaded'],
 
 	setup() {
 		const editor = useEditor()

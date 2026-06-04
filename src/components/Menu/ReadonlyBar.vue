@@ -14,7 +14,6 @@
 			'is-mobile': $isMobile,
 		}">
 		<div
-			ref="menubar"
 			role="toolbar"
 			class="text-readonly-bar__entries"
 			:aria-label="t('text', 'Editor actions')">
@@ -27,7 +26,6 @@
 							: 'ActionSingle'
 				"
 				v-for="(actionEntry, index) in visibleEntries"
-				ref="menuEntries"
 				:key="actionEntry.key"
 				:actionEntry="actionEntry"
 				:canBeFocussed="activeMenuEntry === index"

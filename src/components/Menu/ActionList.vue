@@ -26,8 +26,8 @@
 				:active="currentChild?.key === child.key"
 				isItem
 				:actionEntry="child"
-				v-on="$listeners"
-				@trigged="onTrigger" />
+				v-bind="$attrs"
+				@triggered="onTrigger" />
 		</template>
 		<slot v-bind="{ visible }" name="lastAction" />
 	</NcActions>
@@ -59,6 +59,8 @@ export default {
 			default: false,
 		},
 	},
+
+	emits: ['triggered'],
 
 	data: () => ({
 		visible: false,
@@ -154,7 +156,7 @@ export default {
 				return
 			}
 			this.editor?.chain().focus().run()
-			this.$emit('trigged', entry)
+			this.$emit('triggered', entry)
 		},
 
 		checkStateOfChildren() {

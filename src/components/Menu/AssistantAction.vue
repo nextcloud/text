@@ -178,6 +178,7 @@ import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 import { markFileAsAiGenerated } from '../../apis/ai.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
+import { logger } from '../../helpers/logger.ts'
 import markdownit from '../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
@@ -415,7 +416,7 @@ export default {
 				showSuccess(t('text', 'Nextcloud Assistant result copied'))
 				this.showTaskList = false
 			} catch (error) {
-				console.error(error)
+				logger.error(error)
 				showError(t('text', 'Could not copy result to clipboard'))
 			}
 		},
@@ -424,11 +425,11 @@ export default {
 			try {
 				await axios.delete(generateOcsUrl(`/taskprocessing/task/${task.id}`))
 			} catch (e) {
-				console.error('Failed to delete task', e)
+				logger.error('Failed to delete task', e)
 			}
 			const taskIndex = this.tasks.findIndex((t) => t.id === task.id)
 			if (taskIndex > -1) {
-				this.$delete(this.tasks, taskIndex)
+				this.tasks.splice(taskIndex, 1)
 			}
 		},
 

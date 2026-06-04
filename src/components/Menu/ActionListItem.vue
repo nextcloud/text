@@ -13,7 +13,7 @@
 		:data-text-action-entry="actionEntry.key"
 		:modelValue="actionType !== 'button' ? state.active : undefined"
 		closeAfterClick
-		v-on="$listeners"
+		v-bind="$attrs"
 		@click="runAction">
 		<template #icon>
 			<component :is="icon" />
@@ -40,6 +40,8 @@ export default {
 
 	extends: BaseActionEntry,
 
+	emits: ['triggered'],
+
 	mounted() {
 		this.editor?.on('transaction', () => this.updateState())
 	},
@@ -57,7 +59,7 @@ export default {
 			}
 
 			this.$nextTick(() => {
-				this.$emit('trigged', { ...actionEntry })
+				this.$emit('triggered', { ...actionEntry })
 			})
 		},
 	},
