@@ -9,6 +9,7 @@ import {
 	searchProvider,
 } from '@nextcloud/vue/components/NcRichText'
 import LinkPickerList from './LinkPickerList.vue'
+import { logger } from '../../../helpers/logger.ts'
 import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 import { getIsActive } from '../../Menu/utils.js'
@@ -18,31 +19,24 @@ import { getMenuEntries } from './../../Menu/entries.ts'
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
 
-/**
- *
- * @param e
- */
-function filterOut(e) {
-	return ['undo', 'redo', 'outline', 'emoji-picker'].indexOf(e.key) > -1
-}
-
 const important = ['task-list', 'table']
+const excluded = ['undo', 'redo', 'outline', 'emoji-picker']
 
 /**
  *
- * @param url
+ * @param {string} url to check
  */
 function isValidUrl(url) {
 	try {
 		return Boolean(new URL(url))
-	} catch (e) {
+	} catch {
 		return false
 	}
 }
 
 /**
  *
- * @param list
+ * @param {Array} list of menu entries
  */
 function sortImportantFirst(list) {
 	return [
@@ -53,14 +47,14 @@ function sortImportantFirst(list) {
 
 /**
  *
- * @param query
+ * @param {string} query to filter by
  */
 function formattingSuggestions(query) {
 	const menuEntries = getMenuEntries(false, false)
 	return sortImportantFirst([
 		...menuEntries.find((e) => e.key === 'headings').children,
 		...menuEntries.find((e) => e.key === 'lists').children,
-		...menuEntries.filter((e) => e.action && !filterOut(e)),
+		...menuEntries.filter((e) => e.action && !excluded.includes(e.key)),
 		...menuEntries.find((e) => e.key === 'blocks').children,
 		{
 			...menuEntries.find((e) => e.key === 'emoji-picker'),
@@ -103,7 +97,7 @@ export default () => createSuggestions({
 					.run()
 			})
 			.catch((error) => {
-				console.error('Smart picker promise rejected', error)
+				logger.error('Smart picker promise rejected', error)
 			})
 	},
 	items: ({ editor, query }) => {
