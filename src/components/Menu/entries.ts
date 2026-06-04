@@ -84,7 +84,7 @@ export const outlineEntries: MenuEntry[] = [
 		key: 'outline',
 		forceLabel: true,
 		icon: FormatListBulleted,
-		click: () => emit('text:toc:toggle'),
+		click: () => emit('text:toc:toggle', {}),
 		label: ({ displayToc }) => {
 			return displayToc ? t('text', 'Hide outline') : t('text', 'Show outline')
 		},
@@ -126,7 +126,7 @@ export function getAssistantMenuEntries(): MenuEntry[] {
 
 /**
  *
- * @param isRichWorkspace
+ * @param isRichWorkspace is the editor a folder description
  */
 export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 	const menuEntries: MenuEntry[] = [
@@ -230,7 +230,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 				{
 					key: 'outline',
 					icon: FormatListBulleted,
-					click: () => emit('text:toc:toggle'),
+					click: () => emit('text:toc:toggle', {}),
 					visible: !isRichWorkspace,
 					label: ({ displayToc }) => {
 						return displayToc

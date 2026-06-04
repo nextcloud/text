@@ -16,6 +16,7 @@ import { translatePlural as n } from '@nextcloud/l10n'
 import { defineComponent, ref } from 'vue'
 import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { useEditor } from '../../composables/useEditor.ts'
+import { logger } from '../../helpers/logger.ts'
 import { AlphabeticalVariant } from '../icons.js'
 
 export default defineComponent({
@@ -42,7 +43,7 @@ export default defineComponent({
 			const words = n('text', '%n word', '%n words', wordCount)
 			const chars = n('text', '%n char', '%n chars', charCount)
 			countString.value = [words, chars].join(', ')
-			console.debug({ wordCount, charCount, countString: countString.value })
+			logger.debug({ wordCount, charCount, countString: countString.value })
 		}
 		return { countString, refresh }
 	},
