@@ -10,7 +10,6 @@ OC.L10N.register(
     "Could not write file to disk" : "Ne eblis skribi dosieron sur diskon",
     "A PHP extension stopped the file upload" : "PHP-modulo haltigis la dosieralŝuton",
     "No file uploaded or file size exceeds maximum of %s" : "Neniu dosiero alŝutita, aŭ dosiergrando transpasas la maksimumon %s",
-    "New text file" : "Nova tekstodosiero",
     "File not found" : "Netrovita dosiero",
     "Text" : "Teksto",
     "📝 Collaborative document editing" : "📝 Kunlabora dokumentmodifado",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Choose" : "Elekti",
     "Choose {file}" : "Elekti {file}",
+    "New text file" : "Nova tekstodosiero",
     "to" : "al",
     "Replace" : "Anstataŭigi"
 },
