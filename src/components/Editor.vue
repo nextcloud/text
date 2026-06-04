@@ -233,6 +233,20 @@ export default defineComponent({
 		},
 	},
 
+	emits: [
+		'blur',
+		'create:content',
+		'focus',
+		'ready',
+		'reload',
+		'sync-service:error',
+		'sync-service:idle',
+		'sync-service:save',
+		'sync-service:sync',
+		'update:content',
+		'update:loaded',
+	],
+
 	setup(props) {
 		const el = ref(null)
 		const { width } = useElementSize(el)
@@ -493,8 +507,6 @@ export default defineComponent({
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
 		subscribe('text:keyboard:save', this.onKeyboardSave)
-		subscribe('text:image-node:add', this.onAddImageNode)
-		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
 		exposeForDebugging(this)
 
@@ -808,14 +820,6 @@ export default defineComponent({
 			this.saveService.save()
 		},
 
-		onAddImageNode() {
-			this.emit('add-image-node')
-		},
-
-		onDeleteImageNode(imageUrl) {
-			this.emit('delete-image-node', imageUrl)
-		},
-
 		async save() {
 			await this.saveService.save()
 		},
@@ -856,7 +860,7 @@ export default defineComponent({
 		 * in https://github.com/vuejs/vue/issues/230 feels too hacky to me, so we just emit twice for now
 		 *
 		 * @param {string} event The event name
-		 * @param {any} data The data to pass along
+		 * @param {object} data The data to pass along
 		 */
 		emit(event, data) {
 			this.$emit(event, data)
