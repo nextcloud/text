@@ -28,7 +28,11 @@ export function runCommands(editor) {
 		const name = node.text
 		editor.commands.setTextSelection(pos)
 		editor.commands[name]()
-		editor.commands.insertContent('did ')
+		const updated = findCommand(editor)
+		if (updated) {
+			editor.commands.setTextSelection(updated.pos)
+			editor.commands.insertContent('did ')
+		}
 	}
 }
 

@@ -185,13 +185,13 @@ describe('test link marks', function() {
 
 			beforeEach(cy.clearContent)
 			it('Link website without selection', () => {
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					checkLinkWebsite(url, url)
 				})
 			})
 
 			it('Link website with selection', () => {
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkWebsite(url, text)
 				})
@@ -199,6 +199,7 @@ describe('test link marks', function() {
 		})
 
 		describe('link to local file', function() {
+			let fileId = null
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkFile = (filename, text, isFolder = false) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
@@ -217,15 +218,13 @@ describe('test link marks', function() {
 					.should('have.text', text === undefined ? filename : text)
 			}
 
-			let fileId = null
-
 			beforeEach(() => cy.clearContent())
 
 			it('without text', () => {
 				cy.getFileId(fileName).then((id) => {
 					fileId = id
 				})
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					checkLinkFile(fileName)
 					cy.get('.modal-header__name').should('include.text', fileName)
 				})
@@ -234,7 +233,7 @@ describe('test link marks', function() {
 				cy.getFileId(fileName).then((id) => {
 					fileId = id
 				})
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile(fileName, text)
 					cy.get('.modal-header__name').should('include.text', fileName)
@@ -244,7 +243,7 @@ describe('test link marks', function() {
 				cy.createFolder(`${window.__currentDirectory}/dummy folder`).then((folderId) => {
 					fileId = folderId
 				})
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile('dummy folder', text, true)
 				})

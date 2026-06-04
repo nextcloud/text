@@ -38,7 +38,7 @@ before(() => {
 	})
 })
 
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', (err) => {
 	// Old files scripts attempt to iterate through views
 	// which do not exist anymore since 28.
 	// TODO: Remove this once

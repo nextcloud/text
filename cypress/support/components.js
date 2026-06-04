@@ -10,9 +10,9 @@ import Paragraph from '../../src/nodes/Paragraph.js'
 
 /**
  *
- * @param root0
- * @param root0.content
- * @param root0.extensions
+ * @param {object} options for the editor
+ * @param {string} options.content to render
+ * @param {Array} options.extensions in addition to Document, Paragraph and Text
  */
 export function createCustomEditor({ content, extensions }) {
 	return new Editor({

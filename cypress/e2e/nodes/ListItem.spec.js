@@ -5,7 +5,6 @@
 
 import { ListItem, OrderedList } from '@tiptap/extension-list'
 // https://github.com/import-js/eslint-plugin-import/issues/1739
-/* eslint-disable-next-line import/no-unresolved */
 import testData from '../../fixtures/ListItem.md?raw'
 import Markdown from './../../../src/extensions/Markdown.js'
 import BulletList from './../../../src/nodes/BulletList.ts'
