@@ -174,9 +174,11 @@ class ApiService {
 			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
-		} catch (DoesNotExistException|NotPermittedException) {
+		} catch (DoesNotExistException) {
 			// Either no write access or session was removed in the meantime (#3875).
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
+		} catch (NotPermittedException) {
+			return new DataResponse(['error' => $this->l10n->t('This document is read-only.')], Http::STATUS_FORBIDDEN);
 		}
 		return new DataResponse($result);
 	}
@@ -214,6 +216,7 @@ class ApiService {
 
 			// ensure file is still present and accessible
 			$file = $this->documentService->getFileForSession($session, $shareToken);
+			$result['readOnly'] = $this->documentService->isReadOnly($file, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
@@ -264,7 +267,7 @@ class ApiService {
 		} catch (NotPermittedException) {
 			return new DataResponse([
 				'error' => $this->l10n->t('Read-only permission cannot save document changes. Please reload the page.')
-			], Http::STATUS_PRECONDITION_FAILED);
+			], Http::STATUS_FORBIDDEN);
 		} catch (NotFoundException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
