@@ -11,8 +11,6 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Un'estensione PHP at firmadu su carrigamentu de s'archìviu",
     "No file uploaded or file size exceeds maximum of %s" : "Perun'archìviu carrigadu o sa mannària de s'archìviu superat su màssimu de %s",
     "Nextcloud Text" : "Testu Nextcloud",
-    "text document" : "archìviu de testu",
-    "New text file" : "Archìviu de testu nou",
     "Create new text file" : "Crea un'archìviu de testu nou",
     "Editing session has expired. Please reload the page." : "Sessione de editzione iscadida. Torra a carrigare sa pàgina.",
     "File not found" : "Archìviu no agatadu",
@@ -73,6 +71,8 @@ OC.L10N.register(
     "Choose" : "Sèbera",
     "Choose {file}" : "Sèbera {file}",
     "Add folder description" : "Agiunghe una descritzione de sa cartella",
+    "text document" : "archìviu de testu",
+    "New text file" : "Archìviu de testu nou",
     "Select language" : "Seletziona una limba",
     "to" : "a",
     "Replace" : "Càmbia cun àteru"

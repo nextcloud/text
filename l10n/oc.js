@@ -10,7 +10,6 @@ OC.L10N.register(
     "Could not write file to disk" : "Escritura impossibla al disc",
     "A PHP extension stopped the file upload" : "Una extension PHP a arrestat lo mandadís de fichièr",
     "Nextcloud Text" : "Nextcloud Text",
-    "text document" : "document tèxt",
     "File not found" : "Fichièr pas trobat",
     "Readme" : "Readme",
     "Text" : "Tèxt",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
     "Choose" : "Causir",
+    "text document" : "document tèxt",
     "Select language" : "Causir lenga",
     "to" : "a"
 },

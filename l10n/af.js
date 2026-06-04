@@ -8,7 +8,6 @@ OC.L10N.register(
     "No file was uploaded" : "Geen lêer is opgelaai",
     "Missing a temporary folder" : "Ontbrekende tydelike gids",
     "A PHP extension stopped the file upload" : "’n PHP-uitbreiding het die oplaai gestaak",
-    "text document" : "teksdokument",
     "File not found" : "Lêer nie gevind nie",
     "Readme" : "Leesmy",
     "Text" : "Teks",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Heading 5" : "Kop 5",
     "Details" : "Besonderhede",
     "Choose" : "Kies",
+    "text document" : "teksdokument",
     "to" : "aan"
 },
 "nplurals=2; plural=(n != 1);");
