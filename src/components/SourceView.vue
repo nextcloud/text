@@ -12,8 +12,8 @@
 			:is="readerComponent"
 			:content="content"
 			:fileId="fileid"
-			:readOnly="true"
-			:showMenuBar="false" />
+			readOnly
+			hideMenuBar />
 		<NcButton
 			v-if="isEmbedded"
 			class="toggle-interactive"
