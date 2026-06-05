@@ -11,7 +11,7 @@
 		:container="menuIDSelector"
 		:aria-label="labelWithSelected"
 		:variant="state.active ? 'primary' : 'tertiary'"
-		:forceMenu="true"
+		forceMenu
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
 		:disabled="!isEnabled"

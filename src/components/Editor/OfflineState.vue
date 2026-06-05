@@ -8,7 +8,7 @@
 		<NcButton
 			:title="label"
 			:aria-label="label"
-			:disabled="true"
+			disabled
 			variant="tertiary"
 			class="offline-button">
 			<template #icon>

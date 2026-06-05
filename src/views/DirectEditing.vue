@@ -9,9 +9,9 @@
 			ref="editor"
 			:initialSession="initialSession"
 			:fileId="initial.fileId"
-			:active="true"
+			active
 			:mime="initial.mimetype"
-			:isDirectEditing="true"
+			isDirectEditing
 			@ready="loaded">
 			<template v-if="isMobile" #header>
 				<button class="icon-share" @click="share" />

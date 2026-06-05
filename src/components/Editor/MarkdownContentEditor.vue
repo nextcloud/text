@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper :contentLoaded="true">
+	<Wrapper contentLoaded>
 		<MainContainer>
 			<template v-if="!hideMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -66,7 +66,6 @@ export default {
 
 		readOnly: {
 			type: Boolean,
-			default: false,
 		},
 
 		relativePath: {

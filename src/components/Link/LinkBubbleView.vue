@@ -82,7 +82,7 @@
 			:text="sanitizedHref"
 			:limit="1"
 			:interactive="false"
-			:displayFallback="true"
+			displayFallback
 			class="link-view-bubble__reference-list"
 			@loaded="onReferenceListLoaded" />
 	</div>
