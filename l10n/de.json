@@ -9,6 +9,7 @@
     "A PHP extension stopped the file upload" : "Eine PHP-Erweiterung hat das Hochladen der Datei gestoppt",
     "No file uploaded or file size exceeds maximum of %s" : "Keine Datei hochgeladen oder die Dateigröße überschreitet %s",
     "Nextcloud Text" : "Nextcloud Text",
+    "Text document" : "Textdokument",
     "Create new text file" : "Neue Textdatei erstellen",
     "Editing session has expired. Please reload the page." : "Die Bearbeitungssitzung ist abgelaufen. Bitte die Seite neu laden.",
     "{user} has mentioned you in the text document {node}" : "{user} hat dich in dem Textdokument {node} erwähnt.",
