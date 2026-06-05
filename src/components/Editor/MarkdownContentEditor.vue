@@ -6,7 +6,7 @@
 <template>
 	<Wrapper :contentLoaded="true">
 		<MainContainer>
-			<template v-if="showMenuBar">
+			<template v-if="!hideMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
 				<slot v-else name="readonlyBar">
 					<ReadonlyBar />
@@ -79,9 +79,8 @@ export default {
 			default: null,
 		},
 
-		showMenuBar: {
+		hideMenuBar: {
 			type: Boolean,
-			default: true,
 		},
 	},
 
