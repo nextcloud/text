@@ -9,6 +9,7 @@ import type { Connection } from '../composables/useConnection.ts'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { unref } from 'vue'
+import { logger } from '../helpers/logger.ts'
 
 /**
  * Let Nextcloud know someone was mentioned
@@ -27,7 +28,7 @@ export function emitMention(
 	const con = unref(connection)
 	if (!con) {
 		const err = new Error('Disconnected. Could not notify user about mention.')
-		console.warn(err.message, { err, mention })
+		logger.warn(err.message, { err, mention })
 		return Promise.resolve()
 	}
 	const url = generateUrl(`apps/text/session/${con.documentId}/mention`)
@@ -60,7 +61,7 @@ export async function getUsers(
 	const con = unref(connection)
 	if (!con) {
 		const err = new Error('Disconnected. Could not lookup users to mention.')
-		console.warn(err.message, { err })
+		logger.warn(err.message, { err })
 		return Promise.resolve({})
 	}
 	const response = await axios.post(USERS_LIST_ENDPOINT_URL, { ...con, filter })
