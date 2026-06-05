@@ -8,11 +8,11 @@
 		v-if="show"
 		size="large"
 		:name="currentImage.name"
-		:outTransition="true"
-		:hasNext="true"
-		:hasPrevious="true"
+		outTransition
+		hasNext
+		hasPrevious
 		:closeButtonContained="false"
-		:dark="true"
+		dark
 		@next="showNextImage"
 		@previous="showPreviousImage"
 		@close="$emit('close')">

@@ -9,7 +9,7 @@
 		class="collision-resolve-dialog"
 		:class="{ 'icon-loading': clicked }">
 		<NcButton
-			:wide="true"
+			wide
 			size="large"
 			:disabled="clicked"
 			data-cy="useEditorVersion"
@@ -17,7 +17,7 @@
 			{{ textForSource[editorSource] }}
 		</NcButton>
 		<NcButton
-			:wide="true"
+			wide
 			:disabled="clicked"
 			data-cy="useReaderVersion"
 			@click="useReaderVersion">
