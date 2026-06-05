@@ -42,13 +42,13 @@ const editorProps = {
 
 /**
  *
- * @param root0
- * @param root0.extensions
- * @param root0.connection
- * @param root0.relativePath
- * @param root0.isEmbedded
- * @param root0.mentionSearch
- * @param root0.openLink
+ * @param options for the editor
+ * @param options.extensions additional tiptap extensions
+ * @param options.connection to the server api
+ * @param options.relativePath to the file
+ * @param options.isEmbedded wether the editor is embedded as a preview
+ * @param options.mentionSearch hook to perform searches for mentions
+ * @param options.openLink hook called when opening a link
  */
 function createRichEditor({
 	extensions = [],
@@ -83,9 +83,9 @@ function createRichEditor({
 
 /**
  *
- * @param root0
- * @param root0.language
- * @param root0.extensions
+ * @param options for the editor
+ * @param options.language for syntax highlighting, default: plaintext
+ * @param options.extensions additional tiptap extensions
  */
 function createPlainEditor({
 	language = 'plaintext',
@@ -107,7 +107,7 @@ function createPlainEditor({
 
 /**
  *
- * @param doc
+ * @param doc prosemirror document to serialize
  */
 function serializePlainText(doc: Node) {
 	return doc.textContent
