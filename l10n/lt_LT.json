@@ -9,6 +9,7 @@
     "A PHP extension stopped the file upload" : "PHP plėtinys sustabdė failo įkėlimą",
     "No file uploaded or file size exceeds maximum of %s" : "Neįkeltas joks failas arba failo dydis viršija maksimalų %s dydį",
     "Nextcloud Text" : "Nextcloud Tekstas",
+    "Text document" : "Tekstinis dokumentas",
     "Create new text file" : "Sukurti naują tekstinį failą",
     "Editing session has expired. Please reload the page." : "Redagavimo sesija baigėsi. Atnaujinkite puslapį.",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
