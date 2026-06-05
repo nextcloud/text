@@ -6,7 +6,7 @@
 <template>
 	<BaseReader
 		:content="content"
-		@clickLink="(e, a) => $emit('click-link', e, a)" />
+		@clickLink="(e, a) => $emit('clickLink', e, a)" />
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
 		},
 	},
 
-	emits: ['click-link'],
+	emits: ['clickLink'],
 }
 </script>
 
