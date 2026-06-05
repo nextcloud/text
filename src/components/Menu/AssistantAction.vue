@@ -86,7 +86,7 @@
 						:key="task.id"
 						:name="task.title"
 						:bold="false"
-						:forceDisplayActions="true"
+						forceDisplayActions
 						@click="() => openResult(task)">
 						<template #subname>
 							{{ task.input.input }}

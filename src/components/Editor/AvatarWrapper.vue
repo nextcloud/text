@@ -9,9 +9,9 @@
 			v-if="session.userId"
 			:user="session.userId"
 			:isGuest="false"
-			:disableMenu="true"
+			disableMenu
 			hideStatus
-			:disableTooltip="true" />
+			disableTooltip />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
 			<template v-if="session.guestName">
 				{{ guestInitial }}

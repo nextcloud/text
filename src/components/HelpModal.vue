@@ -8,7 +8,7 @@
 		size="large"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting and shortcuts')"
-		:closeOnClickOutside="true"
+		closeOnClickOutside
 		@closing="$emit('close')">
 		<h2>{{ t('text', 'Formatting and shortcuts') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>

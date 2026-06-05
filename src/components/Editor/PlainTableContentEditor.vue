@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper :contentLoaded="true">
+	<Wrapper contentLoaded>
 		<MainContainer>
 			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>

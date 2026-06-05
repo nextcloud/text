@@ -47,7 +47,7 @@
 			<ActionList
 				:actionEntry="hiddenEntries"
 				:canBeFocussed="activeMenuEntry === visibleEntries.length"
-				:forceEnabled="true"
+				forceEnabled
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
 					<WidthToggle />
