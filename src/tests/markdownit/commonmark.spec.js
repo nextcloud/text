@@ -33,6 +33,13 @@ describe('Commonmark', () => {
 		585, 586, 588, 589, 591,
 	]
 
+	const referenceLinkTests = [
+		23, 33, 192, 193, 194, 195, 196, 198, 200, 201, 202, 203, 204, 205, 206, 214,
+		215, 216, 217, 218, 514, 515, 516, 517, 518, 527, 528, 529, 530, 531, 532,
+		533, 534, 535, 539, 540, 541, 542, 543, 544, 549, 550, 553, 554, 555, 556,
+		557, 558, 559, 560, 561, 562, 564, 565, 566, 568, 569, 570, 571, 593,
+	]
+
 	spec.forEach((entry) => {
 		// We do not support HTML
 		if (entry.section === 'HTML blocks' || entry.section === 'Raw HTML') return
@@ -47,13 +54,21 @@ describe('Commonmark', () => {
 						.replace(/<strong>/g, '<u>')
 						.replace(/<\/strong>/g, '</u>')
 				: entry.html
+
 			if (figureImageMarkdownTests.indexOf(entry.example) !== -1) {
 				expected = expected
 					.replace(/<p>/g, '<figure>')
 					.replace(/<\/p>/g, '</figure>')
 			}
 
-			const rendered = markdownit.render(entry.markdown)
+			let rendered = markdownit.render(entry.markdown)
+
+			if (referenceLinkTests.indexOf(entry.example) !== -1) {
+				rendered = rendered.replace(
+					/ data-md-reference-label="[^"]+" data-md-reference-type="[a-z]+"/g,
+					'',
+				)
+			}
 
 			// Ignore special markup for untouched markdown
 			expect(normalize(rendered)).toBe(expected)
