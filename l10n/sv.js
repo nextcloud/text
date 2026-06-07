@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Ett PHP-tillägg stoppade filuppladdningen",
     "No file uploaded or file size exceeds maximum of %s" : "Ingen fil uppladdad eller filstorleken överstiger max %s",
     "Nextcloud Text" : "Nextcloud Text",
+    "Text document" : "Textdokument",
     "Create new text file" : "Skapa ny textfil",
     "Editing session has expired. Please reload the page." : "Sessionen för redigering har löpt ut. Vänligen ladda om sidan.",
     "{user} has mentioned you in the text document {node}" : "{user} har nämnt dig i textdokument {node}",
