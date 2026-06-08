@@ -273,6 +273,12 @@ export default {
 		this.loadAttachmentMetadata()
 		this.setupResizeObserver()
 
+		// Load image directly if lazy loading is disabled
+		if (this.extension?.options?.noLazyImages === true) {
+			this.loadPreview().catch(this.onImageLoadFailure)
+			return
+		}
+
 		this.$nextTick(() => {
 			// nextTick is necessary, intersection detection is slightly unreliable without it
 			const options = {
