@@ -59,10 +59,11 @@ class LinkBubblePluginView {
 
 		this.#component ||= new VueRenderer(LinkBubbleView, {
 			parent: this.options.editor.contentComponent,
-			propsData: {
+			props: {
 				editor: this.options.editor,
 				href: null,
 			},
+			editor: this.options.editor,
 		})
 
 		this.tippy = tippy(editorElement, {
