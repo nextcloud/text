@@ -21,7 +21,7 @@ const escapeHtml = (unsafe: string) =>
 		.replace(/'/g, '&#039;')
 
 const renderBlock = (content: string) =>
-	`<div data-type="block-math" data-latex="${escapeHtml(content)}" />`
+	`<div data-type="block-math" data-latex="${escapeHtml(content)}"></div>`
 
 const renderInline = (content: string) =>
 	`<span data-type="inline-math" data-latex="${escapeHtml(content)}">${escapeHtml(content)}</span>`
