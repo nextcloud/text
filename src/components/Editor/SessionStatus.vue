@@ -44,7 +44,7 @@ import { ERROR_TYPE } from '../../services/SyncService.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
-	name: 'Status',
+	name: 'SessionStatus',
 
 	components: {
 		NcButton,
