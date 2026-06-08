@@ -134,7 +134,7 @@ import {
 } from './Editor.provider.ts'
 
 export default defineComponent({
-	name: 'Editor',
+	name: 'CollaborativeEditor',
 	components: {
 		CollisionResolveDialog,
 		SkeletonLoading,
