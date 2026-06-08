@@ -4,11 +4,11 @@
 -->
 
 <template>
-	<Wrapper contentLoaded>
+	<EditorWrapper contentLoaded>
 		<MainContainer>
 			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
-	</Wrapper>
+	</EditorWrapper>
 </template>
 
 <script>
@@ -16,8 +16,8 @@ import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
 import { provide, watch } from 'vue'
 import ContentContainer from './ContentContainer.vue'
+import EditorWrapper from './EditorWrapper.vue'
 import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
@@ -28,7 +28,7 @@ import { logger } from '../../helpers/logger.ts'
 
 export default {
 	name: 'PlainTableContentEditor',
-	components: { ContentContainer, MainContainer, Wrapper },
+	components: { ContentContainer, MainContainer, EditorWrapper },
 
 	props: {
 		content: {

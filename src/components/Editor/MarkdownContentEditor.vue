@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Wrapper contentLoaded>
+	<EditorWrapper contentLoaded>
 		<MainContainer>
 			<template v-if="!hideMenuBar">
 				<MenuBar v-if="!readOnly" :autohide="false" />
@@ -14,7 +14,7 @@
 			</template>
 			<ContentContainer :readOnly="readOnly" />
 		</MainContainer>
-	</Wrapper>
+	</EditorWrapper>
 </template>
 
 <script>
@@ -25,8 +25,8 @@ import { provide, watch } from 'vue'
 import MenuBar from '../Menu/MenuBar.vue'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
+import EditorWrapper from './EditorWrapper.vue'
 import MainContainer from './MainContainer.vue'
-import Wrapper from './Wrapper.vue'
 import { provideEditor } from '../../composables/useEditor.ts'
 import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
 import { provideEditorHeadings } from '../../composables/useEditorHeadings.ts'
@@ -40,7 +40,7 @@ import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 
 export default {
 	name: 'MarkdownContentEditor',
-	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
+	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, EditorWrapper },
 	provide() {
 		const val = {}
 
