@@ -3,37 +3,54 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { ListItem } from '@tiptap/extension-list'
 import { describe, expect, it } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import Markdown from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
+import BulletList from '../../nodes/BulletList.ts'
+import OrderedList from '../../nodes/OrderedList.ts'
+import TaskItem from '../../nodes/TaskItem.ts'
+import TaskList from '../../nodes/TaskList.ts'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 import { markdownThroughEditor } from '../testHelpers/markdown.js'
+
+function createListEditor() {
+	return createCustomEditor('', [
+		BulletList,
+		ListItem,
+		Markdown,
+		OrderedList,
+		TaskItem,
+		TaskList,
+	])
+}
 
 describe('List type conversion', () => {
 	describe('editor.can() — menubar enabled state', () => {
 		it('toggleTaskList() returns true when cursor is inside a bulletList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- item\n'))
 			editor.commands.focus('start')
 			expect(editor.can().toggleTaskList()).to.equal(true)
 			editor.destroy()
 		})
 		it('toggleTaskList() returns true when cursor is inside an orderedList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('1. item\n'))
 			editor.commands.focus('start')
 			expect(editor.can().toggleTaskList()).to.equal(true)
 			editor.destroy()
 		})
 		it('toggleBulletList() returns true when cursor is inside a taskList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- [ ] item\n'))
 			editor.commands.focus('start')
 			expect(editor.can().toggleBulletList()).to.equal(true)
 			editor.destroy()
 		})
 		it('toggleOrderedList() returns true when cursor is inside a taskList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- [ ] item\n'))
 			editor.commands.focus('start')
 			expect(editor.can().toggleOrderedList()).to.equal(true)
@@ -42,7 +59,7 @@ describe('List type conversion', () => {
 	})
 	describe('conversion at top level', () => {
 		it('converts all items when toggling bulletList → taskList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- item 1\n- item 2\n'))
 			editor.commands.focus('start')
 			editor.commands.toggleTaskList()
@@ -56,7 +73,7 @@ describe('List type conversion', () => {
 			editor.destroy()
 		})
 		it('converts all items when toggling taskList → bulletList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- [ ] item 1\n- [x] item 2\n'))
 			editor.commands.focus('start')
 			editor.commands.toggleBulletList()
@@ -68,7 +85,7 @@ describe('List type conversion', () => {
 			editor.destroy()
 		})
 		it('converts all items when toggling orderedList → taskList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('1. item 1\n2. item 2\n'))
 			editor.commands.focus('start')
 			editor.commands.toggleTaskList()
@@ -80,7 +97,7 @@ describe('List type conversion', () => {
 	})
 	describe('conversion at nested level', () => {
 		it('converts only the innermost list when cursor is in a nested item', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- outer\n  - inner\n'))
 			// Position cursor inside the nested "inner" paragraph
 			let innerPos = -1
@@ -101,7 +118,7 @@ describe('List type conversion', () => {
 			editor.destroy()
 		})
 		it('can().toggleTaskList() returns true for a nested item inside a bulletList', () => {
-			const editor = createRichEditor()
+			const editor = createListEditor()
 			editor.commands.setContent(markdownit.render('- outer\n  - inner\n'))
 			let innerPos = -1
 			editor.state.doc.descendants((node, pos) => {
@@ -115,7 +132,7 @@ describe('List type conversion', () => {
 		})
 	})
 	it('preserves cursor position when converting bulletList → taskList', () => {
-		const editor = createRichEditor()
+		const editor = createListEditor()
 		editor.commands.setContent(markdownit.render('- item 1\n- item 2\n'))
 		editor.commands.focus('start')
 		const posBefore = editor.state.selection.from
@@ -136,7 +153,7 @@ describe('markdown serialization of mixed list types', () => {
 
 	// Post-conversion serialization — verifies convertListType preserves bullet attr
 	it('serializes correctly after converting nested bulletList → taskList', () => {
-		const editor = createRichEditor()
+		const editor = createListEditor()
 		editor.commands.setContent(markdownit.render('- outer\n  * inner\n'))
 		// find inner paragraph
 		let innerPos = -1
