@@ -21,7 +21,7 @@ export default ({
 			onStart: (props) => {
 				component = new VueRenderer(listComponent, {
 					parent: this,
-					propsData: props,
+					props,
 				})
 
 				if (!props.clientRect) {
