@@ -29,7 +29,7 @@
 						<ReadonlyBar
 							:isHidden="hideMenu"
 							:openReadOnly="openReadOnlyEnabled">
-							<Status
+							<SessionStatus
 								:document="document"
 								:dirty="dirty"
 								:syncError="syncError"
@@ -45,7 +45,7 @@
 						v-model="menubarLoaded"
 						:isHidden="hideMenu"
 						:openReadOnly="openReadOnlyEnabled">
-						<Status
+						<SessionStatus
 							:document="document"
 							:dirty="dirty"
 							:syncError="syncError"
@@ -92,7 +92,7 @@ import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import MainContainer from './Editor/MainContainer.vue'
-import Status from './Editor/Status.vue'
+import SessionStatus from './Editor/SessionStatus.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import MenuBar from './Menu/MenuBar.vue'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
@@ -147,7 +147,7 @@ export default defineComponent({
 		MenuBar,
 		RichTextReader: () => import('./RichTextReader.vue'),
 		PlainTextReader: () => import('./PlainTextReader.vue'),
-		Status,
+		SessionStatus,
 		SuggestionsBar,
 	},
 
