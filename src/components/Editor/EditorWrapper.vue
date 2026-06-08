@@ -17,10 +17,10 @@
 
 <script>
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { READ_ONLY_ACTIONS } from './Wrapper.provider.js'
+import { READ_ONLY_ACTIONS } from './EditorWrapper.provider.js'
 
 export default {
-	name: 'Wrapper',
+	name: 'EditorWrapper',
 	provide() {
 		const val = {}
 

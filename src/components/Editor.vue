@@ -17,7 +17,7 @@
 			:otherVersion="otherVersion"
 			:readerSource="indexedDbConflictContent ? 'local' : 'server'"
 			@resolved="resolved()" />
-		<Wrapper
+		<EditorWrapper
 			v-if="displayed"
 			:isResolvingConflict="isResolvingConflict"
 			:contentLoaded="contentLoaded"
@@ -65,7 +65,7 @@
 				:is="isRichEditor ? RichTextReader : PlainTextReader"
 				v-if="isResolvingConflict"
 				:content="otherVersion" />
-		</Wrapper>
+		</EditorWrapper>
 		<DocumentStatus
 			:idle="idle"
 			:lock="document?.lock"
@@ -90,9 +90,9 @@ import { Doc, logUpdate } from 'yjs'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
+import EditorWrapper from './Editor/EditorWrapper.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import SessionStatus from './Editor/SessionStatus.vue'
-import Wrapper from './Editor/Wrapper.vue'
 import MenuBar from './Menu/MenuBar.vue'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
@@ -139,7 +139,7 @@ export default defineComponent({
 		CollisionResolveDialog,
 		SkeletonLoading,
 		DocumentStatus,
-		Wrapper,
+		EditorWrapper,
 		MainContainer,
 		ReadonlyBar,
 		ContentContainer,

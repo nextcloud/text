@@ -7,7 +7,7 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import debounce from 'debounce'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
-import { useReadOnlyActions } from '../Editor/Wrapper.provider.js'
+import { useReadOnlyActions } from '../Editor/EditorWrapper.provider.js'
 import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
