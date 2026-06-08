@@ -61,10 +61,10 @@
 				<SuggestionsBar
 					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
 			</MainContainer>
-			<Reader
+			<Component
+				:is="isRichEditor ? RichTextReader : PlainTextReader"
 				v-if="isResolvingConflict"
-				:content="otherVersion"
-				:isRichEditor="isRichEditor" />
+				:content="otherVersion" />
 		</Wrapper>
 		<DocumentStatus
 			:idle="idle"
@@ -144,7 +144,8 @@ export default defineComponent({
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		Reader: () => import('./Reader.vue'),
+		RichTextReader: () => import('./RichTextReader.vue'),
+		PlainTextReader: () => import('./PlainTextReader.vue'),
 		Status,
 		SuggestionsBar,
 	},
