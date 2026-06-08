@@ -44,6 +44,7 @@ const createRichEditor = ({
 	isEmbedded = false,
 	mentionSearch = undefined,
 	openLink = undefined,
+	noLazyImages = false,
 } = {}) => {
 	return new Editor({
 		editorProps,
@@ -54,6 +55,7 @@ const createRichEditor = ({
 				isEmbedded,
 				mentionSearch,
 				openLink,
+				noLazyImages,
 			}),
 			FocusTrap,
 			...extensions,
