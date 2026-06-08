@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Editor
+	<CollaborativeEditor
 		v-if="!reloading"
 		v-bind="props"
 		@focus="$emit('focus')"
@@ -12,15 +12,15 @@
 		<template v-if="$slots.readonlyBar" #readonlyBar>
 			<slot name="readonlyBar" />
 		</template>
-	</Editor>
+	</CollaborativeEditor>
 </template>
 
 <script setup lang="ts">
 import type { ComponentInstance, ShallowRef } from 'vue'
 
 import { nextTick, ref, useTemplateRef, watch } from 'vue'
-import Editor from './Editor.vue'
-const props = defineProps(Editor.props)
+import CollaborativeEditor from './CollaborativeEditor.vue'
+const props = defineProps(CollaborativeEditor.props)
 defineEmits(['focus'])
 const reloading = ref(false)
 watch(reloading, (val) => {
@@ -31,7 +31,7 @@ watch(reloading, (val) => {
 	}
 })
 
-const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof Editor>>>
+const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof CollaborativeEditor>>>
 const { editor, debugYjsData, setContent, save } = editorComponent.value
 defineExpose({ editor, debugYjsData, setContent, save })
 </script>
