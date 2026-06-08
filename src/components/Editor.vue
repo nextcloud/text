@@ -218,6 +218,10 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		noLazyImages: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup(props) {
@@ -249,6 +253,7 @@ export default defineComponent({
 					relativePath: props.relativePath,
 					extensions,
 					isEmbedded: props.isEmbedded,
+					noLazyImages: props.noLazyImages,
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)

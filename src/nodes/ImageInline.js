@@ -31,6 +31,7 @@ const ImageInline = TiptapImage.extend({
 	addOptions() {
 		return {
 			...this.parent?.(),
+			noLazyImages: false,
 			inline: true,
 		}
 	},

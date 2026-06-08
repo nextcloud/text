@@ -98,8 +98,8 @@ export default Extension.create({
 				isEmbedded: this.options.isEmbedded,
 			}),
 			Underline,
-			Image,
-			ImageInline,
+			Image.configure({ noLazyImages: this.options.noLazyImages }),
+			ImageInline.configure({ noLazyImages: this.options.noLazyImages }),
 			Dropcursor.configure({
 				color: 'var(--color-primary-element)',
 				width: 2,

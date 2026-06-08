@@ -248,6 +248,7 @@ window.OCA.Text.createEditor = async function ({
 		props: null,
 	},
 	menubarLinkCustomAction = undefined,
+	noLazyImages = false,
 
 	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
