@@ -40,14 +40,14 @@ export default Extension.create<AutofocusOptions>({
 		}
 
 		const pos = editor.state.selection.$anchor.pos
-		sessionStorage.setItem('text-lastPos-' + this.options.fileId, String(pos))
+		localStorage.setItem('text-lastPos-' + this.options.fileId, String(pos))
 	},
 	addCommands() {
 		return {
 			autofocus:
 				() =>
 				({ commands }) => {
-					const pos = sessionStorage.getItem(
+					const pos = localStorage.getItem(
 						'text-lastPos-' + this.options.fileId,
 					)
 					if (pos) {
