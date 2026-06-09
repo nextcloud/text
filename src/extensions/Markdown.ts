@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable jsdoc/require-param-type */
 /* eslint-disable jsdoc/require-param-description */
 
 /*
@@ -24,12 +23,62 @@
  * https://github.com/ProseMirror/prosemirror-markdown#class-markdownserializer
  */
 
+import type { ParentConfig } from '@tiptap/core'
+import type { Mark, MarkType, Node, NodeType, Schema, Slice } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
+
 import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
 import transformPastedHTML from './transformPastedHTML.ts'
+
+// taken from prosemirror-markdown
+type MarkSerializerSpec = {
+	/// The string that should appear before a piece of content marked
+	/// by this mark, either directly or as a function that returns an
+	/// appropriate string.
+	open: string | ((state: MarkdownSerializerState, mark: Mark, parent: Node, index: number) => string)
+	/// The string that should appear after a piece of content marked by
+	/// this mark.
+	close: string | ((state: MarkdownSerializerState, mark: Mark, parent: Node, index: number) => string)
+	/// When `true`, this indicates that the order in which the mark's
+	/// opening and closing syntax appears relative to other mixable
+	/// marks can be varied. (For example, you can say `**a *b***` and
+	/// `*a **b***`, but not `` `a *b*` ``.)
+	mixable?: boolean
+	/// When enabled, causes the serializer to move enclosing whitespace
+	/// from inside the marks to outside the marks. This is necessary
+	/// for emphasis marks as CommonMark does not permit enclosing
+	/// whitespace inside emphasis marks, see:
+	/// http:///spec.commonmark.org/0.26/#example-330
+	expelEnclosingWhitespace?: boolean
+	/// Can be set to `false` to disable character escaping in a mark. A
+	/// non-escaping mark has to have the highest precedence (must
+	/// always be the innermost mark).
+	escape?: boolean
+}
+
+declare module '@tiptap/core' {
+	interface MarkConfig {
+		toMarkdown?: MarkSerializerSpec
+	}
+	interface NodeConfig<Options, Storage> {
+		toMarkdown?: (
+			this: {
+				name: string
+				options: Options
+				storage: Storage
+				parent: ParentConfig<NodeConfig<Options>>['toMarkdown']
+			},
+			state: MarkdownSerializerState,
+			node: Node,
+			parent: Node,
+			index: number,
+		) => void
+	}
+}
 
 const Markdown = Extension.create({
 	name: 'markdown',
@@ -76,7 +125,7 @@ const Markdown = Extension.create({
 					},
 					clipboardTextParser(str, $context, _, view) {
 						const parser = DOMParser.fromSchema(view.state.schema)
-						const doc = document.cloneNode(false)
+						const doc = document.cloneNode(false) as Document
 						const dom = doc.createElement('div')
 						if (shiftKey) {
 							// Treat double newlines as paragraph breaks when pasting as plaintext
@@ -96,20 +145,22 @@ const Markdown = Extension.create({
 						})
 					},
 					clipboardTextSerializer: (slice) => {
-						const traverseNodes = (slice) => {
+						const traverseNodes = (slice: Slice | Node) => {
 							if (
 								slice.content.childCount > 1
-								|| slice.content.firstChild?.childCount > 1
+								|| (slice.content.firstChild?.childCount ?? 0) > 1
 							) {
 								// Selected several nodes or several children of one block node
 								return clipboardSerializer(this.editor.schema).serialize(slice.content)
-							} else if (slice.isLeaf) {
-								return slice.textContent
-							} else {
+							} else if (slice.content.firstChild?.isLeaf) {
+								return slice.content.firstChild.textContent
+							} else if (slice.content.firstChild) {
 								// Only one block node selected, copy it's child content
 								// Required to not copy wrapping block node when selecting e.g. one table
 								// cell, one list item or the content of block quotes/callouts.
 								return traverseNodes(slice.content.firstChild)
+							} else {
+								return '' // empty fragment
 							}
 						}
 
@@ -129,15 +180,17 @@ const Markdown = Extension.create({
  * @param schema.nodes
  * @param schema.marks
  */
-function createMarkdownSerializer({ nodes, marks }) {
+function createMarkdownSerializer(schema: {
+	nodes: Record<string, NodeType>
+	marks: Record<string, MarkType>
+}) {
 	return {
 		serializer: new MarkdownSerializer(
-			extractNodesToMarkdown(nodes),
-			extractMarksToMarkdown(marks),
+			extractNodesToMarkdown(schema.nodes),
+			extractMarksToMarkdown(schema.marks),
 		),
-		serialize(content, options) {
+		serialize(content: Node) {
 			return this.serializer.serialize(content, {
-				...options,
 				tightLists: true,
 			})
 		},
@@ -146,19 +199,16 @@ function createMarkdownSerializer({ nodes, marks }) {
 
 /**
  *
- * @param root0
- * @param root0.nodes
- * @param root0.marks
+ * @param schema or the editorc
  */
-function clipboardSerializer({ nodes, marks }) {
+function clipboardSerializer(schema: Schema) {
 	return {
 		serializer: new MarkdownSerializer(
-			extractNodesToMarkdown(nodes),
-			extractToPlaintext(marks),
+			extractNodesToMarkdown(schema.nodes),
+			extractToPlaintext(schema.marks),
 		),
-		serialize(content, options) {
+		serialize(content: Node) {
 			return this.serializer.serialize(content, {
-				...options,
 				tightLists: true,
 			})
 		},
@@ -169,7 +219,7 @@ function clipboardSerializer({ nodes, marks }) {
  *
  * @param marks
  */
-function extractToPlaintext(marks) {
+function extractToPlaintext(marks: Record<string, MarkType>) {
 	const blankMark = {
 		open: '',
 		close: '',
@@ -186,7 +236,7 @@ function extractToPlaintext(marks) {
  *
  * @param nodesOrMarks
  */
-function extractToMarkdown(nodesOrMarks) {
+function extractToMarkdown(nodesOrMarks: Record<string, (NodeType | MarkType)>) {
 	const nodeOrMarkEntries = Object.entries(nodesOrMarks)
 		.map(([name, nodeOrMark]) => [name, nodeOrMark.spec.toMarkdown])
 		.filter(([, toMarkdown]) => toMarkdown)
@@ -198,7 +248,7 @@ function extractToMarkdown(nodesOrMarks) {
  *
  * @param nodes
  */
-function extractNodesToMarkdown(nodes) {
+function extractNodesToMarkdown(nodes: Record<string, NodeType>) {
 	const defaultNodes = convertNames(defaultMarkdownSerializer.nodes)
 	const nodesToMarkdown = extractToMarkdown(nodes)
 	return { ...defaultNodes, ...nodesToMarkdown }
@@ -208,21 +258,24 @@ function extractNodesToMarkdown(nodes) {
  *
  * @param marks
  */
-function extractMarksToMarkdown(marks) {
+function extractMarksToMarkdown(marks: Record<string, MarkType>) {
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
 	const marksToMarkdown = extractToMarkdown(marks)
 	return { ...defaultMarks, ...marksToMarkdown }
 }
 
+type NodeSerializerSpecs = typeof defaultMarkdownSerializer.nodes
+type MarkSerializerSpecs = typeof defaultMarkdownSerializer.marks
+
 /**
  *
- * @param object
+ * @param specs
  */
-function convertNames(object) {
-	const convert = (name) => {
+function convertNames(specs: NodeSerializerSpecs | MarkSerializerSpecs) {
+	const convert = (name: string) => {
 		return name.replace(/_(\w)/g, (_m, letter) => letter.toUpperCase())
 	}
-	return Object.fromEntries(Object.entries(object).map(([name, value]) => [convert(name), value]))
+	return Object.fromEntries(Object.entries(specs).map(([name, value]) => [convert(name), value]))
 }
 
 export { createMarkdownSerializer }

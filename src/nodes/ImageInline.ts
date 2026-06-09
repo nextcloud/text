@@ -2,15 +2,20 @@
  * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { ImageOptions as TiptapImageOptions } from '@tiptap/extension-image'
 
 import TiptapImage from '@tiptap/extension-image'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import ImageView from './ImageView.vue'
 
+interface ImageOptions extends TiptapImageOptions {
+	noLazyImages: boolean
+}
+
 // Inline image extension. Needed if markdown contains inline images.
 // Not supported to be created from our UI (we default to block images).
-const ImageInline = TiptapImage.extend({
+const ImageInline = TiptapImage.extend<ImageOptions>({
 	name: 'imageInline',
 
 	// Lower priority than (block) Image extension
@@ -41,7 +46,7 @@ const ImageInline = TiptapImage.extend({
 
 	addOptions() {
 		return {
-			...this.parent?.(),
+			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
 			inline: true,
 		}

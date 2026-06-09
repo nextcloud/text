@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { ImageOptions as TiptapImageOptions } from '@tiptap/extension-image'
+import type { Node } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
@@ -19,7 +21,7 @@ interface ImageOptions extends TiptapImageOptions {
 	noLazyImages: boolean
 }
 
-const Image = TiptapImage.extend <ImageOptions>({
+const Image = TiptapImage.extend<ImageOptions>({
 	selectable: false,
 
 	addAttributes() {
@@ -136,7 +138,7 @@ const Image = TiptapImage.extend <ImageOptions>({
 	},
 
 	/* Serializes an image node as a block image, so it ensures an image is always a block by itself */
-	toMarkdown(state, node, parent, index) {
+	toMarkdown(state: MarkdownSerializerState, node: Node, parent: Node, index: number) {
 		if (node.attrs.isWikiLink) {
 			state.write(`![[${node.attrs.src}]]`)
 		} else {

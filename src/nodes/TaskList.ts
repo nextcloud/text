@@ -45,7 +45,6 @@ const TaskList = TiptapTaskList.extend({
 		}
 	},
 
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
 	},
