@@ -88,7 +88,7 @@ import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
-import Autofocus from '../extensions/Autofocus.js'
+import Autofocus from '../extensions/Autofocus.ts'
 
 import { provideEditor } from '../composables/useEditor.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'

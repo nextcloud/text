@@ -5,7 +5,19 @@
 
 import { Extension } from '@tiptap/core'
 
-export default Extension.create({
+export interface AutofocusOptions {
+	fileId: number | null
+}
+
+declare module '@tiptap/core' {
+	interface Commands<ReturnType> {
+		autofocus: {
+			autofocus: () => ReturnType
+		}
+	}
+}
+
+export default Extension.create<AutofocusOptions>({
 	addOptions() {
 		return {
 			fileId: null,
@@ -28,18 +40,18 @@ export default Extension.create({
 		}
 
 		const pos = editor.state.selection.$anchor.pos
-		sessionStorage.setItem('text-lastPos-' + this.options.fileId, pos)
+		sessionStorage.setItem('text-lastPos-' + this.options.fileId, String(pos))
 	},
 	addCommands() {
 		return {
 			autofocus:
 				() =>
-				({ commands, editor }) => {
+				({ commands }) => {
 					const pos = sessionStorage.getItem(
 						'text-lastPos-' + this.options.fileId,
 					)
 					if (pos) {
-						return commands.focus(pos)
+						return commands.focus(Number(pos))
 					}
 
 					return commands.focus('start')
