@@ -128,10 +128,28 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 			extractMarksToMarkdown(marks),
 		),
 		serialize(content, options) {
-			return this.serializer.serialize(content, {
+			// Extend serialize options to carry reference definitions (populated by `toMarkdown` callbacks in link mark)
+			const referenceDefinitions = new Map()
+			const body = this.serializer.serialize(content, {
 				...options,
 				tightLists: true,
+				referenceDefinitions,
 			})
+
+			if (referenceDefinitions.size === 0) {
+				return body
+			}
+
+			// Render references at the end of the document
+			const referenceLines = [...referenceDefinitions.values()].map(
+				({ label, href, title }) => {
+					const titlePart = title ? ` "${title.replace(/"/g, '\\"')}"` : ''
+					return `[${label}]: ${href}${titlePart}`
+				},
+			)
+			return (
+				body.replace(/\s*$/, '') + '\n\n' + referenceLines.join('\n') + '\n'
+			)
 		},
 	}
 }

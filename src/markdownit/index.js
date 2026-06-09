@@ -16,6 +16,7 @@ import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
 import mathematics from './mathematics.ts'
 import preview from './preview.js'
+import referenceLinks from './referenceLinks.ts'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
 import underline from './underline.js'
@@ -35,6 +36,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(keepSyntax)
 	.use(markdownitMentions)
 	.use(wikiLinks)
+	.use(referenceLinks)
 	.use(implicitFigures)
 	.use(mark)
 	.use(mathematics)
