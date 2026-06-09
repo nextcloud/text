@@ -30,7 +30,7 @@ describe('Markdown extension unit', () => {
 	})
 
 	it('makes toMarkdown available in prose mirror schema', () => {
-		const editor = createCustomEditor('', [Markdown, Underline])
+		const editor = createCustomEditor('', [Underline])
 		const serializer = createMarkdownSerializer(editor.schema)
 		const underline = serializer.serializer.marks.underline
 		expect(underline).toEqual(Underline.config.toMarkdown)
@@ -43,7 +43,6 @@ describe('Markdown extension unit', () => {
 describe('Markdown extension integrated in the editor', () => {
 	it('serializes marks according to their spec', () => {
 		const editor = createCustomEditor('<p><u>Test</u></p>', [
-			Markdown,
 			Underline,
 		])
 		const serializer = createMarkdownSerializer(editor.schema)
@@ -54,7 +53,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('serializes nodes according to their spec', () => {
 		const editor = createCustomEditor(
 			'<p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></p>',
-			[Markdown, TaskList, TaskItem],
+			[TaskList, TaskItem],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('\n- [ ] Hello')
@@ -63,7 +62,6 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('serializes images with the default prosemirror way', () => {
 		const editor = createCustomEditor('<p><img alt="Hello" src="test"></p>', [
-			Markdown,
 			TiptapImage.configure({ inline: true }),
 		])
 		const serializer = createMarkdownSerializer(editor.schema)
@@ -74,7 +72,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('serializes block images with the default prosemirror way', () => {
 		const editor = createCustomEditor(
 			'<figure><img alt="Hello" src="test"></figure><p>hello</p>',
-			[Markdown, Image, ImageInline],
+			[Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)\n\nhello')
@@ -84,7 +82,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('serializes inline images with the default prosemirror way', () => {
 		const editor = createCustomEditor(
 			'<p>inline image <img alt="Hello" src="test"> inside text</p>',
-			[Markdown, Image, ImageInline],
+			[Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('inline image ![Hello](test) inside text')
@@ -94,7 +92,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies markdown syntax for task list if selected together with a paragraph', () => {
 		const editor = createCustomEditor(
 			'<p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></p>',
-			[Markdown, TaskList, TaskItem],
+			[TaskList, TaskItem],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('\n- [ ] Hello')
@@ -103,7 +101,6 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('copies just the content of a block node', () => {
 		const editor = createCustomEditor('<pre><code>Hello</code></pre>', [
-			Markdown,
 			CodeBlock,
 		])
 		const text = copyEditorContent(editor)
@@ -114,7 +111,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies just the content of a single list item', () => {
 		const editor = createCustomEditor(
 			'<p>paragraph1</p><ol><li><p>first</p></li></ol><p>paragraph2</p>',
-			[Markdown, ListItem, OrderedList],
+			[ListItem, OrderedList],
 		)
 		const text = copyEditorContent(editor, editor.schema.nodes.orderedList)
 		expect(text).toBe('first')
@@ -124,7 +121,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies markdown syntax for multiple list items', () => {
 		const editor = createCustomEditor(
 			'<p>paragraph1</p><ol><li><p>first</p></li><li><p>second</p></li></ol><p>paragraph2</p>',
-			[Markdown, ListItem, OrderedList],
+			[ListItem, OrderedList],
 		)
 		const text = copyEditorContent(editor, editor.schema.nodes.orderedList)
 		expect(text).toBe('1. first\n2. second')
@@ -134,7 +131,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies just the content of a single nested task list item', () => {
 		const editor = createCustomEditor(
 			'<blockquote><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></blockquote>',
-			[Markdown, Blockquote, TaskList, TaskItem],
+			[Blockquote, TaskList, TaskItem],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello')
@@ -144,7 +141,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies markdown syntax for multiple nested task list items', () => {
 		const editor = createCustomEditor(
 			'<blockquote><ul class="contains-task-list"><li><input type="checkbox">Hello</li><li><input type="checkbox">World</li></ul></blockquote>',
-			[Markdown, Blockquote, TaskList, TaskItem],
+			[Blockquote, TaskList, TaskItem],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('- [ ] Hello\n- [ ] World')
@@ -154,7 +151,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies address from blockquote to markdown', () => {
 		const editor = createCustomEditor(
 			'<blockquote><p>Hermannsreute 44A</p></blockquote>',
-			[Markdown, Blockquote],
+			[Blockquote],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hermannsreute 44A')
@@ -162,7 +159,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('copies version number without escape character', () => {
-		const editor = createCustomEditor('<p>Hello</p><p>28.0.4</p>', [Markdown])
+		const editor = createCustomEditor('<p>Hello</p><p>28.0.4</p>', [])
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello\n\n28.0.4')
 		editor.destroy()
@@ -171,7 +168,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies just content for table cell', () => {
 		const editor = createCustomEditor(
 			'<p>paragraph</p><table><tr><th>headercell</th></tr><tr><td>contentcell</td></tr></table>',
-			[Markdown, Table],
+			[Table],
 		)
 		const text = copyEditorContent(editor, editor.schema.nodes.tableCell)
 		expect(text).toBe('contentcell')
@@ -181,7 +178,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('copies markdown syntax for full table', () => {
 		const editor = createCustomEditor(
 			'<p>paragraph</p><table><tr><th>headercell</th></tr><tr><td>contentcell</td></tr></table>',
-			[Markdown, Table],
+			[Table],
 		)
 		const text = copyEditorContent(editor, editor.schema.nodes.table)
 		expect(text).toBe('| headercell  |\n|-------------|\n| contentcell |\n')
@@ -191,7 +188,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('strips bold, italic, and other marks from paragraph', () => {
 		const editor = createCustomEditor(
 			'<p><strong>Hello</strong></p><p><span style="text-decoration: underline;">lonely </span><em>world</em></p>',
-			[Markdown, Italic, Strong, Underline],
+			[Italic, Strong, Underline],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello\n\nlonely world')
@@ -201,7 +198,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('strips href and link formatting from email address', () => {
 		const editor = createCustomEditor(
 			'<p>Hello</p><p><a href="mailto:example@example.com">example@example.com</a></p>',
-			[Markdown, Link],
+			[Link],
 		)
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello\n\nexample@example.com')
@@ -211,7 +208,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('serializes a wiki text link as [[target]]', () => {
 		const editor = createCustomEditor(
 			'<p><a href="WikiLink" data-wiki-link="true">WikiLink</a></p>',
-			[Markdown, Link],
+			[Link],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('[[WikiLink]]')
@@ -221,7 +218,7 @@ describe('Markdown extension integrated in the editor', () => {
 	it('serializes a wiki text link with display text as [[target|display]]', () => {
 		const editor = createCustomEditor(
 			'<p><a href="target" data-wiki-link="true">display</a></p>',
-			[Markdown, Link],
+			[Link],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('[[target|display]]')

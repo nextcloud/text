@@ -158,7 +158,7 @@ export default Extension.create({
 			MathInline,
 			MathBlock,
 		] as const
-		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
+		const additionalExtensionNames = this.options.extensions.map((e: Extension) => e.name)
 		return [
 			...defaultExtensions.filter((e) => e && !additionalExtensionNames.includes(e.name)),
 			...this.options.extensions,

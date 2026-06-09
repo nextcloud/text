@@ -9,7 +9,6 @@ import Highlight from './../../marks/Highlight.ts'
 
 describe('Highlight extension unit', () => {
 	it('exposes toMarkdown function', () => {
-		// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 		const toMarkdown = Highlight.config.toMarkdown
 		expect(JSON.stringify(toMarkdown)).to.equal(JSON.stringify({
 			open: '==',

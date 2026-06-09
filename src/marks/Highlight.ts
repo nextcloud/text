@@ -6,7 +6,6 @@
 import TipTapHighlight from '@tiptap/extension-highlight'
 
 const Highlight = TipTapHighlight.extend({
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: {
 		open: '==',
 		close: '==',

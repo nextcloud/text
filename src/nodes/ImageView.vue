@@ -136,7 +136,7 @@
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
-import { NodeViewWrapper } from '@tiptap/vue-3'
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import ClickOutside from 'vue-click-outside'
 import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -169,7 +169,7 @@ export default {
 	},
 
 	mixins: [useAttachmentResolver],
-	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
+	props: nodeViewProps,
 	emits: ['error'],
 	data() {
 		return {

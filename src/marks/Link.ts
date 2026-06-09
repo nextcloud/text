@@ -280,7 +280,6 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		return [...plugins, linkClicking(this.options.openLink)]
 	},
 
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: {
 		open(
 			state: MarkdownSerializerState,

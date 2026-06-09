@@ -69,7 +69,6 @@ const TaskItem = TipTapTaskItem.extend({
 	// overwrite the parent node view so renderHTML gets used
 	addNodeView: () => null,
 
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.write(`[${node.attrs.checked ? 'x' : ' '}] `)
 		state.renderContent(node)

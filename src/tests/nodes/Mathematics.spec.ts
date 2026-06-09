@@ -4,6 +4,7 @@
  */
 
 import { getExtensionField } from '@tiptap/core'
+import { describe, expect } from 'vitest'
 import markdownit from '../../markdownit/index.js'
 import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
 import testEditor from '../testHelpers/testEditor.ts'
@@ -71,8 +72,8 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertInlineMath({ latex: '' })
 
 			// Inline nodes are inside paragraphs
-			const paragraph = editor.state.doc.firstChild
-			const mathNode = paragraph.firstChild
+			const paragraph = editor.state.doc.firstChild!
+			const mathNode = paragraph.firstChild!
 			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('')
 		})
@@ -90,8 +91,8 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertInlineMath({ latex })
 
 			// Inline nodes are inside paragraphs
-			const paragraph = editor.state.doc.firstChild
-			const mathNode = paragraph.firstChild
+			const paragraph = editor.state.doc.firstChild!
+			const mathNode = paragraph.firstChild!
 			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('E=mc^2')
 		})
@@ -101,7 +102,7 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertBlockMath({ latex: '' })
 
 			// Should have a blockMath node
-			const node = editor.state.doc.firstChild
+			const node = editor.state.doc.firstChild!
 			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('')
 		})
@@ -119,7 +120,7 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertBlockMath({ latex })
 
 			// Should have a blockMath node with the selected text
-			const node = editor.state.doc.firstChild
+			const node = editor.state.doc.firstChild!
 			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('E=mc^2')
 		})
