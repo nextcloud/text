@@ -3,7 +3,7 @@ import type { Editor, Extensions } from '@tiptap/core'
 import { test as baseTest } from 'vitest'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
-import createCustomEditor from './createCustomEditor.ts'
+import createCustomEditor from './createCustomEditor.js'
 
 export default baseTest.extend<{
 	editor: Editor
