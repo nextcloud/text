@@ -30,7 +30,7 @@ $$
 		expect(stripIndent(rendered)).toBe(
 			stripIndent(`
 			<p>Here is some more math:</p>
-			<div data-type="block-math" data-latex="1 + 1 + 1 = 3" />
+			<div data-type="block-math" data-latex="1 + 1 + 1 = 3"></div>
 			<p>.</p>`),
 		)
 	})
