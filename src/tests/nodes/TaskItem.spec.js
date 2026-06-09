@@ -4,29 +4,30 @@
  */
 
 import { getExtensionField } from '@tiptap/core'
-import createCustomEditor from '../testHelpers/createCustomEditor.ts'
-import {
-	markdownThroughEditor,
-	markdownThroughEditorHtml,
-} from '../testHelpers/markdown.js'
-import Markdown from './../../extensions/Markdown.js'
+import EditableTable from '../../nodes/EditableTable.js'
+import testEditor from '../testHelpers/testEditor.js'
+import RichText from './../../extensions/RichText.js'
 import TaskItem from './../../nodes/TaskItem.ts'
-import TaskList from './../../nodes/TaskList.ts'
+
+const test = testEditor.override('allExtensions', [
+	RichText.configure({
+		editing: false, // disable the Placeholder which needs a real browser
+		extensions: [EditableTable],
+	}),
+])
 
 describe('TaskItem extension', () => {
-	it('exposes toMarkdown function', () => {
+	test('exposes toMarkdown function', () => {
 		const toMarkdown = getExtensionField(TaskItem, 'toMarkdown', TaskItem)
 		expect(typeof toMarkdown).toEqual('function')
 	})
 
-	it('exposes the toMarkdown function in the prosemirror schema', () => {
-		const editor = createCustomEditor('', [Markdown, TaskList, TaskItem])
+	test('exposes the toMarkdown function in the prosemirror schema', ({ editor }) => {
 		const taskItem = editor.schema.nodes.taskItem
 		expect(taskItem.spec.toMarkdown).toBeDefined()
-		editor.destroy()
 	})
 
-	it('markdown syntax is preserved through editor', () => {
+	test('markdown syntax is preserved through editor', ({ markdownThroughEditor }) => {
 		// Invalid ones but should be syntactical unchanged
 		expect(markdownThroughEditor('- [F] asd')).toBe('- [F] asd')
 		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('- [ [asd](sdf)')
@@ -43,7 +44,7 @@ describe('TaskItem extension', () => {
 		expect(markdownThroughEditor('-   [X] asd')).toBe('- [x] asd')
 	})
 
-	it('serializes HTML to markdown', () => {
+	test('serializes HTML to markdown', ({ markdownThroughEditorHtml }) => {
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('- [x] foo')
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('- [ ] test')
 		// First text node becomes first paragraph in taskItem

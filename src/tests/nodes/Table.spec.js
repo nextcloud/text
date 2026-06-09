@@ -1,37 +1,26 @@
+/* eslint-disable @stylistic/function-paren-newline */
 /**
  * SPDX-FileCopyrightText: 2022-2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as baseTest } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.ts'
-import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { builders } from 'prosemirror-test-builder'
+import RichText from '../../extensions/RichText.js'
 import markdownit from '../../markdownit/index.js'
+import EditableTable from '../../nodes/EditableTable.js'
 import output from '../fixtures/tables/basic/table.html?raw'
 import input from '../fixtures/tables/basic/table.md?raw'
 import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
 import handbook from '../fixtures/tables/handbook/handbook.html?raw'
 import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
-import {
-	br,
-	expectDocument,
-	p,
-	table,
-	td,
-	th,
-	thead,
-	tr,
-} from '../testHelpers/builders.js'
-import { markdownThroughEditor } from '../testHelpers/markdown.js'
+import testEditor from '../testHelpers/testEditor.js'
 
-const test = baseTest.extend({
-	// eslint-disable-next-line no-empty-pattern
-	editor: async ({}, use) => {
-		const editor = createRichEditor()
-		await use(editor)
-		editor.destroy()
-	},
-})
+const test = testEditor.override('allExtensions', [
+	RichText.configure({
+		editing: false, // disable the Placeholder which needs a real browser
+		extensions: [EditableTable],
+	}),
+])
 
 describe('Table extension', () => {
 	test('Markdown-IT renders tables', () => {
@@ -39,11 +28,11 @@ describe('Table extension', () => {
 		expect(rendered).toBe(output)
 	})
 
-	it('simple md table is preserved through editor', () => {
+	test('simple md table is preserved through editor', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('a|b\n-|-\n1|2\n')).toBe('| a | b |\n|---|---|\n| 1 | 2 |\n')
 	})
 
-	it('md table with single-line block node in body cell is preserved through editor', () => {
+	test('md table with single-line block node in body cell is preserved through editor', ({ markdownThroughEditor }) => {
 		const table = `
 | header 1 | header 2 |
 |----------|----------|
@@ -54,7 +43,7 @@ describe('Table extension', () => {
 		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
-	it('complex md table with alignment, nested list, image and code block is preserved through editor', () => {
+	test('complex md table with alignment, nested list, image and code block is preserved through editor', ({ markdownThroughEditor }) => {
 		const table = `
 | # |           header1 | header2       |
 |--:|------------------:|---------------|
@@ -71,7 +60,7 @@ describe('Table extension', () => {
 		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
-	it('complex md table with callout, hr, blockquote and details in nested list is preserved through editor', () => {
+	test('complex md table with callout, hr, blockquote and details in nested list is preserved through editor', ({ markdownThroughEditor }) => {
 		const table = `
 | nested list1          | nested list 2                    |
 |-----------------------|----------------------------------|
@@ -100,11 +89,28 @@ describe('Table extension', () => {
 		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
-	test('Load into editor', ({ editor }) => {
+	test('Load into editor', ({ editor, expectDocument }) => {
 		editor.commands.setContent(markdownit.render(input))
 
+		const {
+			br,
+			p,
+			table,
+			td,
+			th,
+			thead,
+			tr,
+		} = builders(editor.schema, {
+			tr: { nodeType: 'tableRow' },
+			td: { nodeType: 'tableCell' },
+			th: { nodeType: 'tableHeader' },
+			em: { markType: 'italic' },
+			thead: { nodeType: 'tableHeadRow' },
+			br: { nodeType: 'hardBreak' },
+			p: { nodeType: 'paragraph' },
+		})
+
 		expectDocument(
-			editor.state.doc,
 			table(
 				thead(
 					th({ dir: 'ltr', align: 'center' }, 'heading'),
@@ -128,11 +134,28 @@ describe('Table extension', () => {
 		)
 	})
 
-	test('load html table with other structure', ({ editor }) => {
+	test('load html table with other structure', ({ editor, expectDocument }) => {
 		editor.commands.setContent(otherStructure.replace(/\n\s*/g, ''))
 
+		const {
+			br,
+			p,
+			table,
+			td,
+			th,
+			thead,
+			tr,
+		} = builders(editor.schema, {
+			tr: { nodeType: 'tableRow' },
+			td: { nodeType: 'tableCell' },
+			th: { nodeType: 'tableHeader' },
+			em: { markType: 'italic' },
+			thead: { nodeType: 'tableHeadRow' },
+			br: { nodeType: 'hardBreak' },
+			p: { nodeType: 'paragraph' },
+		})
+
 		expectDocument(
-			editor.state.doc,
 			table(
 				thead(
 					th({ dir: 'ltr', align: 'center' }, 'heading'),
@@ -161,19 +184,15 @@ describe('Table extension', () => {
 		expect(formatHTML(editor.getHTML())).toBe(formatHTML(handbookOut))
 	})
 
-	test('serialize from editor', ({ editor }) => {
+	test('serialize from editor', ({ editor, serializeMarkdown }) => {
 		editor.commands.setContent(markdownit.render(input))
-		const serializer = createMarkdownSerializer(editor.schema)
-
-		expect(serializer.serialize(editor.state.doc)).toBe(input)
+		expect(serializeMarkdown()).toBe(input)
 	})
 
-	test('serialize from editor without thead and tbody', ({ editor }) => {
+	test('serialize from editor without thead and tbody', ({ editor, serializeMarkdown }) => {
 		const markdownitHtml = output.replaceAll(/<\/?t(head|body)>\n/g, '')
 		editor.commands.setContent(markdownitHtml)
-		const serializer = createMarkdownSerializer(editor.schema)
-
-		expect(serializer.serialize(editor.state.doc)).toBe(input)
+		expect(serializeMarkdown()).toBe(input)
 	})
 
 	test('parse from HTML: only one row always regarded as header row (required in markdown tables)', ({
