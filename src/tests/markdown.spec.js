@@ -346,6 +346,12 @@ describe('Markdown serializer from html', () => {
 			'<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n',
 		)
 	})
+
+	test('math (content following math stays, #8654)', () => {
+		const test =
+			'Content above\n\n$$\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n$$\n\nContent below'
+		expect(markdownThroughEditor(test)).toBe(test)
+	})
 })
 
 describe('Trailing nodes', () => {
