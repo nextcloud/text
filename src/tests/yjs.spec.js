@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { Editor } from '@tiptap/core'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import * as decoding from 'lib0/decoding'
 import * as encoding from 'lib0/encoding'
 import * as syncProtocol from 'y-protocols/sync'
 import { Doc, encodeStateAsUpdate } from 'yjs'
-import { createRichEditor } from '../EditorFactory.ts'
 import { createMarkdownSerializer } from '../extensions/Markdown.js'
+import RichText from '../extensions/RichText.js'
 import { decodeArrayBuffer } from '../helpers/base64.ts'
+import EditableTable from '../nodes/EditableTable.js'
 import recorded from './fixtures/recorded.js'
 import stepsTwoClients from './fixtures/steps_two_clients.js'
 
@@ -152,8 +154,15 @@ describe('recorded session', () => {
 
 		// Create editor to access the content of the ydoc
 		const ydoc = new Doc()
-		const tiptap = createRichEditor({
-			extensions: [Collaboration.configure({ document: ydoc })],
+		const tiptap = new Editor({
+			content: '',
+			extensions: [RichText.configure({
+				editing: false,
+				extensions: [
+					Collaboration.configure({ document: ydoc }),
+					EditableTable,
+				],
+			})],
 		})
 		const serializer = createMarkdownSerializer(tiptap.schema)
 
