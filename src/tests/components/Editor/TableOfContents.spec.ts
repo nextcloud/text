@@ -5,8 +5,8 @@
 
 import type { Editor } from '@tiptap/core'
 
-import { shallowMount } from '@vue/test-utils'
-import { expect, test } from 'vitest'
+import { config, shallowMount } from '@vue/test-utils'
+import { afterAll, beforeAll, expect, test } from 'vitest'
 import { nextTick, shallowRef } from 'vue'
 import TableOfContents from '../../../components/Editor/TableOfContents/TableOfContents.vue'
 import TocContainer from '../../../components/Editor/TableOfContents/TocContainer.vue'
@@ -39,6 +39,14 @@ function mountWithEditor(editor: Editor, displayToc = false) {
 		},
 	})
 }
+
+beforeAll(() => {
+	config.global.renderStubDefaultSlot = true
+})
+
+afterAll(() => {
+	config.global.renderStubDefaultSlot = false
+})
 
 test('renders nothing for editor without headings', () => {
 	const editor = createEditor('no heading here')
