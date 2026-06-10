@@ -251,6 +251,7 @@ window.OCA.Text.createEditor = async function ({
 		props: null,
 	},
 	menubarLinkCustomAction = undefined,
+	noLazyImages = false,
 
 	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
@@ -324,6 +325,7 @@ window.OCA.Text.createEditor = async function ({
 							mime: 'text/markdown',
 							active: true,
 							autofocus,
+							noLazyImages,
 						},
 						scopedSlots,
 					})
@@ -334,6 +336,7 @@ window.OCA.Text.createEditor = async function ({
 							relativePath: filePath,
 							shareToken,
 							readOnly: data.readOnly,
+							noLazyImages,
 						},
 						scopedSlots,
 					})

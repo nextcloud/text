@@ -219,6 +219,10 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+		noLazyImages: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup(props) {
@@ -255,6 +259,7 @@ export default defineComponent({
 					isEmbedded: props.isEmbedded,
 					mentionSearch,
 					openLink: openLinkHandler.openLink,
+					noLazyImages: props.noLazyImages,
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)

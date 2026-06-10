@@ -79,6 +79,10 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		noLazyImages: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['update:content'],
 
@@ -88,6 +92,7 @@ export default {
 			RichText.configure({
 				extensions: [UndoRedo],
 				openLink: openLinkHandler.openLink,
+				noLazyImages: props.noLazyImages,
 			}),
 			FocusTrap,
 		]
