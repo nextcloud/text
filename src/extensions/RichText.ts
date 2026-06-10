@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { Extensions } from '@tiptap/core'
 
 import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
@@ -14,13 +15,6 @@ import { CharacterCount, Dropcursor, Gapcursor } from '@tiptap/extensions'
 import { common, createLowlight } from 'lowlight'
 import EmojiSuggestion from '../components/Suggestion/Emoji/suggestions.js'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
-import LinkBubble from '../extensions/LinkBubble.js'
-import LinkPicker from '../extensions/LinkPicker.js'
-import Markdown from '../extensions/Markdown.js'
-import Mention from '../extensions/Mention.js'
-import Search from '../extensions/Search.ts'
-import TextDirection from '../extensions/TextDirection.ts'
-import Typography from '../extensions/Typography.ts'
 import {
 	Code,
 	Highlight,
@@ -52,6 +46,13 @@ import TrailingNode from '../nodes/TrailingNode.js'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
 import Keymap from './Keymap.js'
+import LinkBubble from './LinkBubble.js'
+import LinkPicker from './LinkPicker.js'
+import Markdown from './Markdown.js'
+import Mention from './Mention.js'
+import Search from './Search.ts'
+import TextDirection from './TextDirection.ts'
+import Typography from './Typography.ts'
 
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
@@ -63,8 +64,8 @@ export default Extension.create({
 		return {
 			connection: null,
 			editing: true,
-			extensions: [],
-			relativePath: null,
+			extensions: [] as Extensions,
+			relativePath: undefined,
 			isEmbedded: false,
 			mentionSearch: undefined,
 			openLink: undefined,
@@ -134,11 +135,11 @@ export default Extension.create({
 				openLink: this.options.openLink,
 			}),
 			LinkBubble,
-			this.options.editing
-				? Placeholder.configure({
+			...(this.options.editing
+				? [ Placeholder.configure({
 						placeholder: t('text', "Start writing or type '/' to add…"),
-					})
-				: null,
+					})]
+				: []),
 			TrailingNode,
 			TextDirection.configure({
 				types: [
@@ -156,7 +157,7 @@ export default Extension.create({
 			Typography,
 			MathInline,
 			MathBlock,
-		]
+		] as const
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
 			...defaultExtensions.filter((e) => e && !additionalExtensionNames.includes(e.name)),

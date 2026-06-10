@@ -8,8 +8,8 @@ import tippy from 'tippy.js'
 
 export default ({
 	listComponent,
-	items = () => {},
-	command = () => {},
+	items,
+	command,
 }) => ({
 	items,
 	command,
