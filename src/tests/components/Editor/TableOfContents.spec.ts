@@ -30,10 +30,12 @@ function mountWithEditor(editor: Editor, displayToc = false) {
 	displayTocRef.value = displayToc
 
 	return shallowMount(TocContainer, {
-		provide: {
-			[editorKey as symbol]: shallowRef(editor),
-			[displayTocKey as symbol]: displayTocRef,
-			[headingsKey as symbol]: headings,
+		global: {
+			provide: {
+				[editorKey as symbol]: shallowRef(editor),
+				[displayTocKey as symbol]: displayTocRef,
+				[headingsKey as symbol]: headings,
+			},
 		},
 	})
 }
