@@ -46,6 +46,7 @@ const createRichEditor = ({
 	isEmbedded = false,
 	mentionSearch = undefined,
 	openLink = undefined,
+	noLazyImages = false,
 }: {
 	extensions?: Extension[]
 	connection?: Connection
@@ -53,6 +54,7 @@ const createRichEditor = ({
 	isEmbedded?: boolean
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
 	openLink?: (href: string) => void
+	noLazyImages?: boolean
 } = {}) => {
 	return new Editor({
 		editorProps,
@@ -63,6 +65,7 @@ const createRichEditor = ({
 				isEmbedded,
 				mentionSearch,
 				openLink,
+				noLazyImages,
 			}),
 			FocusTrap,
 			...extensions,
