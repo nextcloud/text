@@ -83,6 +83,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		noLazyImages: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['update:content'],
 
@@ -90,6 +94,7 @@ export default {
 		const extensions = [
 			RichText.configure({
 				extensions: [History],
+				noLazyImages: props.noLazyImages,
 			}),
 			FocusTrap,
 		]
