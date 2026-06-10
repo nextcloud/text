@@ -1,33 +1,51 @@
 import type { Extensions } from '@tiptap/core'
+import type { Doc } from 'yjs'
 
 import { Editor } from '@tiptap/core'
+import Collaboration from '@tiptap/extension-collaboration'
 import Document from '@tiptap/extension-document'
 import Text from '@tiptap/extension-text'
 import { builders } from 'prosemirror-test-builder'
 import { test as baseTest, expect } from 'vitest'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import Markdown from '../../extensions/Markdown.js'
+import RichText from '../../extensions/RichText.ts'
 import markdownit from '../../markdownit/index.js'
+import EditableTable from '../../nodes/EditableTable.js'
 import Paragraph from '../../nodes/Paragraph.js'
 import { createDocumentString } from './createDocumentString.ts'
 
 export default baseTest.extend<{
 	editor: Editor
 	extensions: Extensions // overwrite to add extensions to the defaults
-	allExtensions: Extensions // overwrite to replace set all extensions
+	allExtensions: Extensions // overwrite to replace all extensions
 	markdownThroughEditor: (input: string) => string
 	markdownThroughEditorHtml: (input: string) => string
 	serializeMarkdown: () => string
 	expectDocument: (doc: Node) => void
+	ydoc?: Doc // set to enable collaborative editing
 }>({
+	extensions: [],
+	ydoc: undefined,
 	editor: async ({ allExtensions }, use) => {
 		const editor = new Editor({ extensions: allExtensions })
 		await use(editor)
 		editor.destroy()
 	},
-	extensions: [],
-	allExtensions: async ({ extensions }, use) => {
-		await use([Markdown, Document, Text, Paragraph, ...extensions])
+	allExtensions: async ({ extensions, ydoc }, use) => {
+		if (extensions.length === 0) {
+			await use([
+				RichText.configure({
+					editing: false,
+					extensions: [
+						...(ydoc ? [Collaboration.configure({ document: ydoc })] : []),
+						EditableTable,
+					],
+				}),
+			])
+		} else {
+			await use([Markdown, Document, Text, Paragraph, ...extensions])
+		}
 	},
 	markdownThroughEditor: async ({ editor, serializeMarkdown }, use) => {
 		await use((markdown: string) => {

@@ -3,17 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import RichText from '../extensions/RichText.js'
 import markdownit from '../markdownit/index.js'
-import EditableTable from '../nodes/EditableTable.js'
 import testEditor from './testHelpers/testEditor.js'
 
-const test = testEditor.override('allExtensions', [
-	RichText.configure({
-		editing: false, // disable the Placeholder which needs a real browser
-		extensions: [EditableTable],
-	}),
-]).extend({
+const test = testEditor.extend({
 	renderedHTML: async ({ editor }, use) => {
 		await use((markdown) => {
 			editor.commands.setContent(markdownit.render(markdown))
