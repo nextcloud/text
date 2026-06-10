@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Editor } from '@tiptap/core'
-import { Collaboration } from '@tiptap/extension-collaboration'
 import * as decoding from 'lib0/decoding'
 import * as encoding from 'lib0/encoding'
 import * as syncProtocol from 'y-protocols/sync'
 import { Doc, encodeStateAsUpdate } from 'yjs'
-import { createMarkdownSerializer } from '../extensions/Markdown.js'
-import RichText from '../extensions/RichText.js'
-import { decodeArrayBuffer } from '../helpers/base64.ts'
-import EditableTable from '../nodes/EditableTable.js'
+import { decodeArrayBuffer } from '../helpers/base64.js'
 import recorded from './fixtures/recorded.js'
 import stepsTwoClients from './fixtures/steps_two_clients.js'
+import testEditor from './testHelpers/testEditor.js'
+
+const test = testEditor.override({
+	ydoc: new Doc(),
+})
 
 describe('recorded session', () => {
 	const flattened = recorded.flat()
@@ -145,32 +145,18 @@ describe('recorded session', () => {
 		expect(size(replies)).toBe(0)
 	})
 
-	test('detecting out of sync due to missing step via pending structs', () => {
+	test('detecting out of sync due to missing step via pending structs', ({ serializeMarkdown, ydoc }) => {
 		// 10 steps each inserting one character, alternating between two clients
 		const syncSteps = stepsTwoClients.flat()
 		const fullDocumentContent = 'abcdefghij'
 		// Remove steps 2-5 from syncSteps and store them in missingSteps
 		const missingSteps = syncSteps.splice(1, 4)
 
-		// Create editor to access the content of the ydoc
-		const ydoc = new Doc()
-		const tiptap = new Editor({
-			content: '',
-			extensions: [RichText.configure({
-				editing: false,
-				extensions: [
-					Collaboration.configure({ document: ydoc }),
-					EditableTable,
-				],
-			})],
-		})
-		const serializer = createMarkdownSerializer(tiptap.schema)
-
 		// Apply steps 1 and 6-10 (steps 2-5 are missing)
 		// Pending structs detected and only first charcter visible in content
 		syncSteps.map((step) => processStep(ydoc, step))
 		expect(ydoc.store.pendingStructs).not.toBeNull()
-		expect(serializer.serialize(tiptap.state.doc)).toEqual(fullDocumentContent.slice(0, 1))
+		expect(serializeMarkdown()).toEqual(fullDocumentContent.slice(0, 1))
 
 		// Apply missing steps 2-5
 		for (const [i, step] of missingSteps.entries()) {
@@ -178,13 +164,12 @@ describe('recorded session', () => {
 			if (i < missingSteps.length - 1) {
 				// Each step except the last, one more character gets visible in content
 				expect(ydoc.store.pendingStructs).not.toBeNull()
-				expect(serializer.serialize(tiptap.state.doc)).toEqual(fullDocumentContent.slice(0, i + 2))
+				expect(serializeMarkdown()).toEqual(fullDocumentContent.slice(0, i + 2))
 			}
 		}
 
 		// After all missing steps got applied, content is complete and no pending structs detected anymore
 		expect(ydoc.store.pendingStructs).toBeNull()
-		expect(serializer.serialize(tiptap.state.doc)).toEqual(fullDocumentContent)
-		tiptap.destroy()
+		expect(serializeMarkdown()).toEqual(fullDocumentContent)
 	})
 })

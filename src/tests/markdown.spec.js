@@ -3,18 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import RichText from '../extensions/RichText.js'
 import { typesAvailable } from '../markdownit/callouts.js'
 import markdownit from '../markdownit/index.js'
-import EditableTable from '../nodes/EditableTable.js'
 import testEditor from './testHelpers/testEditor.js'
 
-const test = testEditor.override('allExtensions', [
-	RichText.configure({
-		editing: false, // disable the Placeholder which needs a real browser
-		extensions: [EditableTable],
-	}),
-])
+const test = testEditor
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
@@ -226,10 +219,10 @@ describe('Markdown serializer from html', () => {
 		expect(markdownThroughEditorHtml('<details><summary><strong>summary</strong></summary><pre>code</pre></details>')).toBe('<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n')
 	})
 
-	test('math (content following math stays, #8654)', () => {
-		const test
+	test('math (content following math stays, #8654)', ({ markdownThroughEditor }) => {
+		const mathAndContent
 			= 'Content above\n\n$$\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n$$\n\nContent below'
-		expect(markdownThroughEditor(test)).toBe(test)
+		expect(markdownThroughEditor(mathAndContent)).toBe(mathAndContent)
 	})
 })
 
