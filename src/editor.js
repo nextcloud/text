@@ -324,6 +324,7 @@ window.OCA.Text.createEditor = async function ({
 							active: true,
 							autofocus,
 							showOutlineOutside: data.showOutlineOutside,
+							noLazyImages,
 						},
 						scopedSlots,
 					})
@@ -335,6 +336,7 @@ window.OCA.Text.createEditor = async function ({
 							shareToken,
 							readOnly: data.readOnly,
 							showOutlineOutside: data.showOutlineOutside,
+							noLazyImages,
 						},
 						scopedSlots,
 					})
