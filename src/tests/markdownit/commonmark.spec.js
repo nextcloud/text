@@ -24,6 +24,7 @@ describe('Commonmark', () => {
 			.replace(/<blockquote><\/blockquote>/g, '<blockquote>\n</blockquote>')
 			.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
 			.replace(/<br data-syntax=".{1,2}" \/>/g, '<br />\n')
+			.replace(/<hr data-markup="[*_-]+"/g, '<hr')
 			.replace(/<ul data-bullet="."/g, '<ul')
 	}
 
