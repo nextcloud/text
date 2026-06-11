@@ -64,6 +64,7 @@ export default Extension.create({
 			extensions: [],
 			relativePath: null,
 			isEmbedded: false,
+			noLazyImages: false,
 		}
 	},
 
