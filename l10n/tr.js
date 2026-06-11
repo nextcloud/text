@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Bir PHP eklentisi dosyanın yüklenmesini engelledi",
     "No file uploaded or file size exceeds maximum of %s" : "Herhangi bir dosya yüklenmedi ya da %s olan en büyük dosya boyutu sınırı aşıldı",
     "Nextcloud Text" : "Nextcloud Yazı",
+    "Text document" : "Yazı belgesi",
     "Create new text file" : "Yeni yazı dosyası oluştur",
     "Editing session has expired. Please reload the page." : "Düzenleme oturumunun süresi dolmuş. Lütfen sayfayı yeniden yükleyin.",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} yazı belgesinde sizi andı",
