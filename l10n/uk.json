@@ -9,6 +9,7 @@
     "A PHP extension stopped the file upload" : "Розширення PHP призупинило завантаження файлу",
     "No file uploaded or file size exceeds maximum of %s" : "Немає завантажених файлів або розмір файлу перевищує максимум %s",
     "Nextcloud Text" : "Nextcloud Text",
+    "Text document" : "Текстовий документ",
     "Create new text file" : "Створіть новий текстовий файл",
     "Editing session has expired. Please reload the page." : "Сесія редагування тексту закінчилася. Оновіть цю сторінку.",
     "{user} has mentioned you in the text document {node}" : "{user} згадав вас у текстовому документі {node}",
