@@ -2,8 +2,8 @@
 
 namespace OCA\Text\Tests;
 
-use OCA\Text\Db\Session;
 use OCA\Text\Db\Document;
+use OCA\Text\Db\Session;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
