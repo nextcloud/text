@@ -56,6 +56,7 @@ interface SyncResponse {
 		awareness: Record<string, string>
 		document: Document
 		sessions: Session[]
+		readOnly?: boolean
 	}
 }
 
