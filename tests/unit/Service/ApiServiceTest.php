@@ -2,6 +2,7 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Text\Db\Session;
 use OCA\Text\Db\Document;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
@@ -64,6 +65,29 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->method('getFileById')->willReturn($file);
 		$actual = $this->apiService->create(1234);
 		self::assertFalse($actual->getData()['hasOwner']);
+	}
+
+	public function testSaveWithNotPermittedException() {
+		$session = new Session();
+		$session->setDocumentId(123);
+
+		$document = new Document();
+
+		$file = $this->mockFile(123, 'admin');
+
+		$this->documentService->method('getFileForSession')->willReturn($file);
+		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());
+
+		$this->l10n->method('t')
+			->with('Read-only permission cannot save document changes. Please reload the page.')
+			->willReturn('Read-only permission cannot save document changes. Please reload the page.');
+
+		$response = $this->apiService->save($session, $document, 1, 'content', 'state');
+
+		self::assertEquals(\OCP\AppFramework\Http::STATUS_FORBIDDEN, $response->getStatus());
+		self::assertEquals('Read-only permission cannot save document changes. Please reload the page.',
+			$response->getData()['error']
+		);
 	}
 
 	private function mockFile(int $id, ?string $owner) {
