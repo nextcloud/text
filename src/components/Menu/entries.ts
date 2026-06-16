@@ -118,7 +118,9 @@ export const getAssistantMenuEntries = (): MenuEntry[] => {
 		component: AssistantAction,
 		priority: 7,
 	}
-	const hasAssistantTaskTypes = loadState('text', 'taskprocessing', []).length > 0
+	const hasAssistantTaskTypes =
+		loadState('text', 'taskprocessing', []).length > 0
+		|| loadState('text', 'translation_available', false)
 	return hasAssistantTaskTypes ? [assistantMenuEntry] : []
 }
 
