@@ -55,7 +55,7 @@ class DocumentService {
 	/**
 	 * Delay to wait for between autosave versions
 	 */
-	public const AUTOSAVE_MINIMUM_DELAY = 10;
+	public const int AUTOSAVE_MINIMUM_DELAY = 10;
 
 	private bool $saveFromText = false;
 

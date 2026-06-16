@@ -11,7 +11,7 @@ use OCP\AppFramework\Services\IInitialState;
 use OCP\TaskProcessing\IManager;
 
 class InitialStateProvider {
-	private const ASSISTANT_TASK_TYPES = [
+	private const array ASSISTANT_TASK_TYPES = [
 		'core:text2text',
 		'core:text2text:formalization',
 		'core:text2text:headline',

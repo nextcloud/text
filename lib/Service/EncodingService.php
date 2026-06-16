@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 class EncodingService {
-	public const COMMON_ENCODINGS = [ 'UTF-8', 'GB2312', 'GBK', 'BIG-5', 'SJIS-win', 'EUC-JP', 'Windows-1252', 'ISO-8859-15', 'ISO-8859-1', 'ASCII'];
+	public const array COMMON_ENCODINGS = [ 'UTF-8', 'GB2312', 'GBK', 'BIG-5', 'SJIS-win', 'EUC-JP', 'Windows-1252', 'ISO-8859-15', 'ISO-8859-1', 'ASCII'];
 
-	public const UTF_BOMs = [
+	public const array UTF_BOMs = [
 		'UTF-32BE' => "\x00\x00\xfe\xff",
 		'UTF-32LE' => "\xff\xfe\x00\x00",
 		'UTF-16BE' => "\xfe\xff",

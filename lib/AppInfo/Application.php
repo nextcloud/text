@@ -43,7 +43,7 @@ use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\Template\RegisterTemplateCreatorEvent;
 
 class Application extends App implements IBootstrap {
-	public const APP_NAME = 'text';
+	public const string APP_NAME = 'text';
 
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);

@@ -29,7 +29,7 @@ class Step extends Entity implements JsonSerializable {
 	 * To ensure that new steps always have a larger version than those that
 	 * used the version field, use the largest possible 32-bit integer value.
 	 */
-	public const VERSION_STORED_IN_ID = 2147483647;
+	public const int VERSION_STORED_IN_ID = 2147483647;
 
 	public $id = null;
 	protected string $data = '';

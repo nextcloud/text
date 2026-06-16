@@ -31,7 +31,7 @@ use Psr\Log\LoggerInterface;
 
 class AttachmentController extends ApiController implements ISessionAwareController {
 	use TSessionAwareController;
-	public const IMAGE_MIME_TYPES = [
+	public const array IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',
 		'image/jpg',
@@ -44,7 +44,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		'image/heic',
 		'image/heif',
 	];
-	public const BROWSER_SUPPORTED_IMAGE_MIME_TYPES = [
+	public const array BROWSER_SUPPORTED_IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',
 		'image/jpg',

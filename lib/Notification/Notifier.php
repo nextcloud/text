@@ -24,9 +24,9 @@ use OCP\Notification\INotifier;
 use OCP\Notification\UnknownNotificationException;
 
 class Notifier implements INotifier {
-	public const TYPE_MENTIONED = 'mentioned';
-	public const SUBJECT_MENTIONED_SOURCE_USER = 'sourceUser';
-	public const SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
+	public const string TYPE_MENTIONED = 'mentioned';
+	public const string SUBJECT_MENTIONED_SOURCE_USER = 'sourceUser';
+	public const string SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
 
 	public function __construct(
 		private IFactory $factory,

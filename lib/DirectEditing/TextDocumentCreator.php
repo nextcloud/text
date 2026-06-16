@@ -12,7 +12,7 @@ use OCP\IAppConfig;
 use OCP\IL10N;
 
 class TextDocumentCreator extends ACreateEmpty {
-	public const CREATOR_ID = 'textdocument';
+	public const string CREATOR_ID = 'textdocument';
 
 	/**
 	 * @var IL10N
