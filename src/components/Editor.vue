@@ -83,6 +83,7 @@
 
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
+import { showWarning } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'

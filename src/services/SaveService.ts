@@ -10,7 +10,7 @@ import type { ShallowRef } from 'vue'
 import { save, saveViaSendBeacon } from '../apis/save'
 import type { Connection } from '../composables/useConnection.ts'
 import { logger } from '../helpers/logger.js'
-import type { SyncService } from './SyncService.js'
+import { ERROR_TYPE, type SyncService } from './SyncService.js'
 
 /**
  * Interval to save the serialized document and the document state
