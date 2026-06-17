@@ -199,7 +199,8 @@ class DocumentService {
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
-		$readOnly = $this->isReadOnlyCached($session, $shareToken);
+		$file = $this->getFileForSession($session, $shareToken);
+		$readOnly = $this->isReadOnly($file, $shareToken);
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
 		$documentState = null;
@@ -361,7 +362,7 @@ class DocumentService {
 		$documentId = $document->getId();
 
 		if ($this->isReadOnly($file, $shareToken)) {
-			return $document;
+			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
 		$this->assertNoOutsideConflict($document, $file, $force);
@@ -577,29 +578,14 @@ class DocumentService {
 		throw new \InvalidArgumentException('No proper share data');
 	}
 
-	public function isReadOnlyCached(Session $session, ?string $shareToken = null): bool {
-		$cacheKey = 'read-only-' . $session->getId();
-		$isReadOnly = $this->cache->get($cacheKey);
-		if ($isReadOnly === null) {
-			$file = $this->getFileForSession($session, $shareToken);
-			$isReadOnly = $this->isReadOnly($file, $shareToken);
-			$this->cache->set($cacheKey, $isReadOnly, 60 * 5);
-			return $isReadOnly;
-		}
-
-		return $isReadOnly;
-	}
-
 	public function isReadOnly(File $file, ?string $token): bool {
-		$readOnly = true;
+		$readOnly = !$file->isUpdateable();
 		if ($token !== null) {
 			try {
 				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
-				$readOnly = false;
 			} catch (NotFoundException $e) {
+				$readOnly = true;
 			}
-		} else {
-			$readOnly = !$file->isUpdateable();
 		}
 
 		$lockInfo = $this->getLockInfo($file);

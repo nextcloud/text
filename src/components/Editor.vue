@@ -81,6 +81,7 @@
 
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
+import { showWarning } from '@nextcloud/dialogs'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
@@ -477,6 +478,7 @@ export default defineComponent({
 			bus.on('stateChange', this.onStateChange)
 			bus.on('idle', this.onIdle)
 			bus.on('save', this.onSave)
+			bus.on('permissionChange', this.onPermissionChange)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -488,6 +490,7 @@ export default defineComponent({
 			bus.off('stateChange', this.onStateChange)
 			bus.off('idle', this.onIdle)
 			bus.off('save', this.onSave)
+			bus.off('permissionChange', this.onPermissionChange)
 		},
 
 		reconnect() {
@@ -605,7 +608,15 @@ export default defineComponent({
 			}
 
 			if (type === ERROR_TYPE.PUSH_FORBIDDEN) {
-				this.hasConnectionIssue = true
+				this.readOnly = true
+				this.editMode = false
+				this.setEditable(this.editMode)
+				showWarning(
+					t(
+						'text',
+						'Your editing permissions have been revoked. The document is now read-only.',
+					),
+				)
 				this.emit('push:forbidden')
 				return
 			}
@@ -655,6 +666,24 @@ export default defineComponent({
 			this.$nextTick(() => {
 				this.emit('sync-service:save')
 			})
+		},
+
+		onPermissionChange({ readOnly }) {
+			this.readOnly = readOnly
+			this.editMode = !readOnly && !this.openReadOnlyEnabled
+			this.setEditable(this.editMode)
+			if (readOnly) {
+				showWarning(
+					t(
+						'text',
+						'Your editing permissions have been revoked. The document is now read-only.',
+					),
+				)
+			} else {
+				showWarning(
+					t('text', 'You now have edit permissions for this document.'),
+				)
+			}
 		},
 
 		onFocus() {
