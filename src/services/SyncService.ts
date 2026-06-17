@@ -129,6 +129,9 @@ export declare type EventTypes = {
 
 	/* Emitted if the connection has been closed */
 	close: void
+
+	/* Emitted if the read only state of the document has changed */
+	permissionChange: { readOnly: boolean }
 }
 
 class SyncService {
