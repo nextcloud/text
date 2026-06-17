@@ -207,16 +207,11 @@ class DocumentService {
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
-		$file = $this->getFileForSession($session, $shareToken);
-		$readOnly = $this->isReadOnly($file, $shareToken);
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
 		$documentState = null;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
-			if ($readOnly && $message->isUpdate()) {
-				continue;
-			}
 			// Filter out query steps as they would just trigger clients to send their steps again
 			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
 				$stepsIncludeQuery = true;
@@ -225,10 +220,10 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
-			if ($readOnly) {
-				throw new NotPermittedException('Read-only client tries to push steps with changes');
+			$file = $this->getFileForSession($session, $shareToken);
+			if (!$this->isReadOnly($file, $shareToken)) {
+				$this->insertSteps($document, $session, $stepsToInsert);
 			}
-			$this->insertSteps($document, $session, $stepsToInsert);
 		}
 
 		// By default, send all steps the user has not received yet.
