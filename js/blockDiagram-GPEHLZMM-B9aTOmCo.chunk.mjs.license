@@ -1,0 +1,11 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: es-toolkit developers
+
+This file is generated from multiple sources. Included packages:
+- es-toolkit
+	- version: 1.46.1
+	- license: MIT
+- mermaid
+	- version: 11.15.0
+	- license: MIT
