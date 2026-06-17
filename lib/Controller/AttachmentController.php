@@ -170,7 +170,6 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 
 	private function getUploadedFile(string $key): array {
 		$file = $this->request->getUploadedFile($key);
-		$error = null;
 		$phpFileUploadErrors = [
 			UPLOAD_ERR_OK => $this->l10n->t('The file was uploaded'),
 			UPLOAD_ERR_INI_SIZE => $this->l10n->t('The uploaded file exceeds the upload_max_filesize directive in php.ini'),
@@ -182,13 +181,12 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			UPLOAD_ERR_EXTENSION => $this->l10n->t('A PHP extension stopped the file upload'),
 		];
 
-		if (empty($file)) {
+		if ($file === null || empty($file)) {
 			$error = $this->l10n->t('No file uploaded or file size exceeds maximum of %s', [Util::humanFileSize(Util::uploadLimit())]);
+			throw new UploadException($error);
 		}
-		if (!empty($file) && array_key_exists('error', $file) && $file['error'] !== UPLOAD_ERR_OK) {
+		if (array_key_exists('error', $file) && $file['error'] !== UPLOAD_ERR_OK) {
 			$error = $phpFileUploadErrors[$file['error']];
-		}
-		if ($error !== null) {
 			throw new UploadException($error);
 		}
 		return $file;
