@@ -19,9 +19,9 @@ use OCP\IL10N;
 class WorkspaceService {
 	private IL10N $l10n;
 
-	public const DEFAULT_FILENAME = 'Readme.md';
+	public const string DEFAULT_FILENAME = 'Readme.md';
 
-	private const SUPPORTED_STATIC_FILENAMES = [
+	private const array SUPPORTED_STATIC_FILENAMES = [
 		self::DEFAULT_FILENAME,
 		'README.md',
 		'readme.md',

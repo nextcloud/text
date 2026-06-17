@@ -25,10 +25,10 @@ use Sabre\DAV\Server;
 use Sabre\DAV\ServerPlugin;
 
 class WorkspacePlugin extends ServerPlugin {
-	public const WORKSPACE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace';
-	public const WORKSPACE_FILE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace-file';
-	public const WORKSPACE_PROPERTY_FLAT = '{http://nextcloud.org/ns}rich-workspace-flat';
-	public const WORKSPACE_FILE_PROPERTY_FLAT = '{http://nextcloud.org/ns}rich-workspace-file-flat';
+	public const string WORKSPACE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace';
+	public const string WORKSPACE_FILE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace-file';
+	public const string WORKSPACE_PROPERTY_FLAT = '{http://nextcloud.org/ns}rich-workspace-flat';
+	public const string WORKSPACE_FILE_PROPERTY_FLAT = '{http://nextcloud.org/ns}rich-workspace-file-flat';
 
 	private Server $server;
 

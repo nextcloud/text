@@ -16,7 +16,7 @@ use OCP\Config\IUserConfig;
 use OCP\IRequest;
 
 class SettingsController extends Controller {
-	public const ACCEPTED_KEYS = [
+	public const array ACCEPTED_KEYS = [
 		'workspace_enabled',
 		'is_full_width_editor'
 	];

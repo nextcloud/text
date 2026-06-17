@@ -24,13 +24,13 @@ use InvalidArgumentException;
  */
 class YjsMessage {
 
-	public const YJS_MESSAGE_SYNC = 0;
-	public const YJS_MESSAGE_AWARENESS = 1;
-	public const YJS_MESSAGE_AWARENESS_QUERY = 3;
+	public const int YJS_MESSAGE_SYNC = 0;
+	public const int YJS_MESSAGE_AWARENESS = 1;
+	public const int YJS_MESSAGE_AWARENESS_QUERY = 3;
 
-	public const YJS_MESSAGE_SYNC_STEP1 = 0;
-	public const YJS_MESSAGE_SYNC_STEP2 = 1;
-	public const YJS_MESSAGE_SYNC_UPDATE = 2;
+	public const int YJS_MESSAGE_SYNC_STEP1 = 0;
+	public const int YJS_MESSAGE_SYNC_STEP2 = 1;
+	public const int YJS_MESSAGE_SYNC_UPDATE = 2;
 
 	private int $pos = 0;
 
