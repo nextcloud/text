@@ -60,6 +60,7 @@ interface PollData {
 	document: Document
 	sessions: Session[]
 	steps: Step[]
+	readOnly?: boolean
 }
 
 interface ConflictData extends PollData {
@@ -144,6 +145,16 @@ class PollingBackend {
 	_handleResponse({ data }: { data: PollData }) {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
+
+		if (data.readOnly !== undefined && data.readOnly !== this.#readOnly) {
+			this.#readOnly = data.readOnly
+			this.#syncService.bus.emit('permissionChange', {
+				readOnly: this.#readOnly,
+			})
+			if (data.readOnly) {
+				this.maximumReadOnlyTimer()
+			}
+		}
 
 		this.#syncService.bus.emit('change', { document, sessions })
 		this.#syncService.receiveSteps(data)
