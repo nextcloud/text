@@ -9,7 +9,13 @@
 
 name: REUSE Compliance Check
 
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - stable*
 
 permissions:
   contents: read
