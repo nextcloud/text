@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { ImageOptions as TiptapImageOptions } from '@tiptap/extension-image'
 
 import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
@@ -9,12 +10,16 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import ImageView from './ImageView.vue'
-import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
+import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.js'
 
 const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')
 
-const Image = TiptapImage.extend({
+interface ImageOptions extends TiptapImageOptions {
+	noLazyImages: boolean
+}
+
+const Image = TiptapImage.extend <ImageOptions>({
 	selectable: false,
 
 	addAttributes() {
@@ -46,7 +51,7 @@ const Image = TiptapImage.extend({
 
 	addOptions() {
 		return {
-			...this.parent?.(),
+			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
 		}
 	},
@@ -63,7 +68,8 @@ const Image = TiptapImage.extend({
 					handleDrop: (view, event) => {
 						// only catch the drop if it contains files
 						if (
-							event.dataTransfer.files
+							event.target
+							&& event.dataTransfer?.files
 							&& event.dataTransfer.files.length > 0
 						) {
 							const coordinates = view.posAtCoords({
@@ -74,7 +80,7 @@ const Image = TiptapImage.extend({
 								bubbles: true,
 								detail: {
 									files: event.dataTransfer.files,
-									position: coordinates.pos,
+									position: coordinates?.pos,
 								},
 							})
 							event.target.dispatchEvent(customEvent)
@@ -84,7 +90,8 @@ const Image = TiptapImage.extend({
 					handlePaste: (view, event) => {
 						// only catch the paste if it contains files
 						if (
-							event.clipboardData.files
+							event.target
+							&& event.clipboardData?.files
 							&& event.clipboardData.files.length > 0
 						) {
 							// let the editor wrapper catch this custom event
