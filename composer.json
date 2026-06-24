@@ -17,13 +17,13 @@
 		}
 	],
 	"require": {
-		"php": "^8.2"
+		"php": "^8.3"
 	},
 	"config": {
 		"optimize-autoloader": true,
 		"classmap-authoritative": true,
 		"platform": {
-			"php": "8.2"
+			"php": "8.3"
 		}
 	},
 	"scripts": {
