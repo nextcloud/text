@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
-  <file src="lib/Controller/WorkspaceController.php">
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[open]]></code>
-    </UndefinedInterfaceMethod>
-  </file>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass>
       <code><![CDATA[ServerPlugin]]></code>
     </UndefinedClass>
-  </file>
-  <file src="lib/DirectEditing/TextDirectEditor.php">
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[getToken]]></code>
-    </UndefinedInterfaceMethod>
   </file>
   <file src="lib/Service/EncodingService.php">
     <RiskyTruthyFalsyComparison>
