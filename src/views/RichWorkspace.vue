@@ -10,7 +10,7 @@
 		:class="{ focus: focus, dark: darkTheme }">
 		<RichTextReader
 			v-if="!loaded || !ready"
-			:content="content"
+			:content
 			class="rich-workspace--preview" />
 		<EditorReloader
 			v-if="file"
@@ -18,10 +18,10 @@
 			:key="file.path"
 			:fileId="file.id"
 			:relativePath="file.path"
-			:shareToken="shareToken"
+			:shareToken
 			:mime="file.mimetype"
-			:autofocus="autofocus"
-			:hideMenu="hideMenu"
+			:autofocus
+			:hideMenu
 			active
 			richWorkspace
 			@ready="ready = true"

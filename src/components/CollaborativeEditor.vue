@@ -203,7 +203,7 @@ export default defineComponent({
 
 		autofocus: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 
 		shareToken: {

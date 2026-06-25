@@ -11,7 +11,7 @@
 		:shareToken
 		mime="text/markdown"
 		active
-		:autofocus="!noAutofocus"
+		:autofocus
 		onReady="emit('ready')"
 		@create:content="(c: { markdown: string }) => emit('create:content', c)"
 		@update:content="(c: { markdown: string }) => emit('update:content', c)">
@@ -30,14 +30,14 @@ import EditorReloader from '../components/EditorReloader.vue'
 const {
 	fileId = undefined,
 	filePath = undefined,
-	noAutofocus = false,
+	autofocus = false,
 	readonlyBarComponent = undefined,
 	readonlyBarProps = {},
 	shareToken = undefined,
 } = defineProps<{
 	fileId?: number
 	filePath?: string
-	noAutofocus?: boolean
+	autofocus?: boolean
 	readonlyBarComponent?: string
 	readonlyBarProps?: object
 	shareToken?: string

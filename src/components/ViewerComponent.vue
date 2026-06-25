@@ -9,17 +9,17 @@
 		:fileId="fileid"
 		:relativePath="filename"
 		:active="active || isEmbedded"
-		:autofocus="autofocus"
-		:shareToken="shareToken"
+		:autofocus
+		:shareToken
 		:class="{ 'text-editor--embedding': isEmbedded }"
-		:mime="mime" />
+		:mime />
 	<SourceView
 		v-else
-		:fileid="fileid"
-		:filename="filename"
-		:isEncrypted="isEncrypted"
-		:mime="mime"
-		:source="source"
+		:fileid
+		:filename
+		:isEncrypted
+		:mime
+		:source
 		v-bind="$attrs"
 		@loaded="onLoaded"
 		@edit="toggleEdit" />

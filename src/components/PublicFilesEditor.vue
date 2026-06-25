@@ -6,10 +6,11 @@
 <template>
 	<NcModal v-if="active" :name="fileName" @close="close">
 		<EditorReloader
-			:fileId="fileId"
-			:relativePath="relativePath"
-			:active="active"
-			:shareToken="shareToken"
+			:fileId
+			:relativePath
+			:active
+			:shareToken
+			autofocus
 			:mime="mimeType" />
 	</NcModal>
 </template>
