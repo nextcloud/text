@@ -10,7 +10,6 @@ import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import ImageView from './ImageView.vue'
 import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.js'
 
@@ -138,12 +137,16 @@ const Image = TiptapImage.extend<ImageOptions>({
 	},
 
 	/* Serializes an image node as a block image, so it ensures an image is always a block by itself */
-	toMarkdown(state: MarkdownSerializerState, node: Node, parent: Node, index: number) {
+	toMarkdown(state: MarkdownSerializerState, node: Node) {
 		if (node.attrs.isWikiLink) {
 			state.write(`![[${node.attrs.src}]]`)
 		} else {
-			node.attrs.alt = node.attrs.alt.toString()
-			defaultMarkdownSerializer.nodes.image(state, node, parent, index)
+			const alt = node.attrs.alt?.toString() || ''
+			// same as in prosemirror-markdown, only with alt changes as above.
+			state.write('![' + state.esc(alt) + ']('
+				+ node.attrs.src.replace(/[()]/g, '\\$&')
+				+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '')
+				+ ')')
 		}
 		state.closeBlock(node)
 	},
