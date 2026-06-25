@@ -121,7 +121,7 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
 			active: true,
 			fileId: options.fileId,
 			mime: 'text/markdown',
-			noAutofocus: options.autofocus === false,
+			autofocus: options.autofocus ?? true,
 			readonlyBarComponent: options.readonlyBar?.component,
 			relativePath: options.filePath,
 			shareToken: options.shareToken,

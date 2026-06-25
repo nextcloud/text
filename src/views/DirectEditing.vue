@@ -7,9 +7,10 @@
 	<div id="direct-editor" :class="{ 'icon-loading': saving }">
 		<EditorReloader
 			ref="editor"
-			:initialSession="initialSession"
-			:fileId="initial.fileId"
+			:initialSession
+			fileId="initial.fileId"
 			active
+			autofocus
 			:mime="initial.mimetype"
 			isDirectEditing
 			@ready="loaded">
