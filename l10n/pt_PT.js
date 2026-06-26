@@ -58,6 +58,7 @@ OC.L10N.register(
     "Details" : "Detalhes",
     "Ctrl" : "Ctrl",
     "Formatting" : "Formação ",
+    "Select file or folder to link to" : "Selecione um arquivo ou pasta para vincular",
     "Choose" : "Escolher",
     "Choose {file}" : "Escolher {file}",
     "Add folder description" : "Adicionar descrição da pasta",
