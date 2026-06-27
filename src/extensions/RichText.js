@@ -64,6 +64,7 @@ export default Extension.create({
 			extensions: [],
 			relativePath: null,
 			isEmbedded: false,
+			mentionSearch: undefined,
 			noLazyImages: false,
 		}
 	},
@@ -112,6 +113,9 @@ export default Extension.create({
 			Mention.configure({
 				suggestion: MentionSuggestion({
 					connection: this.options.connection,
+					options: {
+						mentionSearch: this.options.mentionSearch,
+					},
 				}),
 			}),
 			Search,
