@@ -173,6 +173,8 @@ OC.L10N.register(
     "Left align column" : "Zarovnat sloupec doleva",
     "Center align column" : "Zarovnat sloupec na střed",
     "Right align column" : "Zarovnat sloupec doprava",
+    "Sort ascending" : "Řadit vzestupně",
+    "Sort descending" : "Řadit sestupně",
     "Add column before" : "Přidat sloupec před",
     "Add column after" : "Přidat sloupec za",
     "Delete this column" : "Smazat tento sloupec",

@@ -48,6 +48,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Upload" : "Enviar",
     "Source code" : "Código fonte",
+    "Diagram" : "Diagrama",
     "Show folder description" : "Mostrar descrição da pasta",
     "Done" : "Concluído",
     "Headings" : "Títulos",
