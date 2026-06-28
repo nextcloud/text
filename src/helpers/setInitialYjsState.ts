@@ -17,7 +17,7 @@ export const setInitialYjsState = (
 ) => {
 	const html = isRichEditor
 		? markdownit.render(content) + '<p/>'
-		: `<pre>${escapeHtml(content)}</pre>`
+		: `<pre>\n${escapeHtml(content)}</pre>`
 
 	const editor = isRichEditor ? createRichEditor() : createPlainEditor()
 	editor.commands.setContent(html)

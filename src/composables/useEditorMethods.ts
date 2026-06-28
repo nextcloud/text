@@ -25,7 +25,7 @@ export const useEditorMethods = (editor: Editor) => {
 			editor.extensionManager.extensions.includes(Markdown)
 		const html = hasMarkdownContent
 			? markdownit.render(content) + '<p/>'
-			: `<pre>${escapeHtml(content)}</pre>`
+			: `<pre>\n${escapeHtml(content)}</pre>`
 		editor
 			.chain()
 			.setContent(html, { emitUpdate: addToHistory })
