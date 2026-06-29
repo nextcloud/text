@@ -20,8 +20,11 @@ export default ({
 		return {
 			onStart: (props) => {
 				component = new VueRenderer(listComponent, {
-					parent: this,
-					props,
+					editor: props.editor,
+					props: {
+						...props,
+						onSelect: () => popup.length > 0 && popup[0].hide(),
+					},
 				})
 
 				if (!props.clientRect) {
@@ -36,10 +39,6 @@ export default ({
 					interactive: true,
 					trigger: 'manual',
 					placement: 'bottom-start',
-				})
-
-				component.ref.$on('select', () => {
-					popup.length > 0 && popup[0].hide()
 				})
 			},
 
