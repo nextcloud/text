@@ -72,7 +72,7 @@
 			:size="16"
 			class="assistant-action--badge" />
 
-		<NcModal v-model="showTaskList" :name="t('text', 'Assistant results')">
+		<NcModal v-if="showTaskList" :name="t('text', 'Assistant results')" @close="showTaskList = false">
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
 					<span class="assistant-bubble">
