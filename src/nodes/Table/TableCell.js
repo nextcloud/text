@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { mergeAttributes } from '@tiptap/core'
 import { TableCell } from '@tiptap/extension-table'
@@ -113,7 +114,7 @@ export default TableCell.extend({
 						}
 
 						console.warn('Nested tables are not supported')
-						alert(
+						showWarning(
 							t(
 								'text',
 								'A table was pasted into a table. Nested tables are not supported.',
