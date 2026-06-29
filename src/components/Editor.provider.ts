@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { shallowRef } from 'vue'
 import { logger } from '../helpers/logger.js'
 
 export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
@@ -18,16 +19,18 @@ export const useIsMobileMixin = {
 	},
 }
 
+const defaultAttachmentResolver = shallowRef({
+	resolve(src: string) {
+		logger.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
+		return [src]
+	},
+})
+
 export const useAttachmentResolver = {
 	inject: {
 		$attachmentResolver: {
 			from: ATTACHMENT_RESOLVER,
-			default: {
-				resolve(src: string) {
-					logger.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
-					return [src]
-				},
-			},
+			default: defaultAttachmentResolver,
 		},
 	},
 }

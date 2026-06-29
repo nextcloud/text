@@ -85,7 +85,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import { defineComponent, inject, ref, shallowRef, watch } from 'vue'
+import { defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
 import { Doc, logUpdate } from 'yjs'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
@@ -160,9 +160,6 @@ export default defineComponent({
 		// using getters we can always provide the
 		// actual values without being reactive
 		Object.defineProperties(val, {
-			[ATTACHMENT_RESOLVER]: {
-				get: () => this.$attachmentResolver,
-			},
 			[IS_MOBILE]: {
 				get: () => this.isMobile,
 			},
@@ -334,7 +331,11 @@ export default defineComponent({
 
 		provideFileProps(props)
 
+		const attachmentResolver = shallowRef(null)
+		provide(ATTACHMENT_RESOLVER, attachmentResolver)
+
 		return {
+			attachmentResolver,
 			awareness,
 			clearIndexedDb,
 			connection,
@@ -529,7 +530,6 @@ export default defineComponent({
 				logUpdate(update)
 			}
 		})
-		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
 			this.listenEditorEvents()
@@ -622,7 +622,7 @@ export default defineComponent({
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
-			this.$attachmentResolver = new AttachmentResolver({
+			this.attachmentResolver = new AttachmentResolver({
 				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
