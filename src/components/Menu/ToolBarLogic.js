@@ -92,8 +92,9 @@ export default defineComponent({
 				this.$refs.remainingEntries?.focusButton?.()
 			} else {
 				// The ref is in no order (ordered by the time they needed to mount), so we need to order them like they are shown on the menu
-				const entries = [...this.$refs.menuEntries].sort((a, b) => this.visibleEntries.findIndex(({ key }) => key === a.$vnode.data.key)
-					- this.visibleEntries.findIndex(({ key }) => key === b.$vnode.data.key))
+				const entries = [...this.$refs.menuEntryRefs]
+					.sort((a, b) => this.visibleEntries.findIndex(({ key }) => key === a.$.vnode.key)
+						- this.visibleEntries.findIndex(({ key }) => key === b.$.vnode.key))
 				entries[this.activeMenuEntry].focusButton()
 			}
 		},
