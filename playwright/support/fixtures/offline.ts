@@ -43,14 +43,16 @@ async function setClientOffline(client: CDPSession): Promise<void> {
 /**
  * setOffline will turn the network off for the rest of the test and then on again.
  */
-export const test = base.extend<OfflineFixture>({
-	setOffline: async ({ context, page }, use) => {
+export const test = base.extend<OfflineFixture & { _cdpClient: CDPSession }>({
+	_cdpClient: async ({ context, page }, use) => {
 		const client = await context.newCDPSession(page)
-		await use(() => setClientOffline(client))
-		await setClientOnline(client)
+		await use(client)
 	},
-	setOnline: async ({ context, page }, use) => {
-		const client = await context.newCDPSession(page)
-		await use(() => setClientOnline(client))
+	setOffline: async ({ _cdpClient }, use) => {
+		await use(() => setClientOffline(_cdpClient))
+		await setClientOnline(_cdpClient)
+	},
+	setOnline: async ({ _cdpClient }, use) => {
+		await use(() => setClientOnline(_cdpClient))
 	},
 })
