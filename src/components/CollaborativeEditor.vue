@@ -130,6 +130,7 @@ import AttachmentResolver from './../services/AttachmentResolver.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import {
 	ATTACHMENT_RESOLVER,
+	EDITOR_UPLOAD,
 	HOOK_MENTION_SEARCH,
 	IS_MOBILE,
 } from './Editor.provider.ts'
@@ -333,6 +334,7 @@ export default defineComponent({
 
 		const attachmentResolver = shallowRef(null)
 		provide(ATTACHMENT_RESOLVER, attachmentResolver)
+		provide(EDITOR_UPLOAD, true)
 
 		return {
 			attachmentResolver,
