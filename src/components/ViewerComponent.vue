@@ -107,8 +107,7 @@ export default defineComponent({
 		useSourceView() {
 			return (
 				this.source
-				&& (this.fileVersion
-					|| !this.fileid
+				&& (!this.fileid
 					|| this.isEmbedded
 					|| this.isEncrypted)
 				&& !this.hasToggledInteractiveEmbedding
