@@ -34,6 +34,7 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
+import { defineAsyncComponent } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import OfflineState from './OfflineState.vue'
@@ -50,7 +51,7 @@ export default {
 		NcButton,
 		NcSavingIndicatorIcon,
 		OfflineState,
-		SessionList: () => import('./SessionList.vue'),
+		SessionList: defineAsyncComponent(() => import('./SessionList.vue')),
 	},
 
 	mixins: [useIsMobileMixin, refreshMoment],
