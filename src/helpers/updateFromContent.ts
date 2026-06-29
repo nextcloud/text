@@ -30,7 +30,7 @@ const setContent = (
 ) => {
 	const html = isRichEditor
 		? markdownit.render(content) + '<p/>'
-		: `<pre>${escapeHtml(content)}</pre>`
+		: `<pre>\n${escapeHtml(content)}</pre>`
 	const editor = isRichEditor
 		? createRichEditor({
 				extensions: [Collaboration.configure({ document: doc })],
