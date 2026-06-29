@@ -7,6 +7,7 @@ import { ListItem } from '@tiptap/extension-list'
 import { describe, expect } from 'vitest'
 import markdownit from '../../markdownit/index.js'
 import BulletList from '../../nodes/BulletList.ts'
+import HardBreak from '../../nodes/HardBreak.js'
 import OrderedList from '../../nodes/OrderedList.ts'
 import TaskItem from '../../nodes/TaskItem.ts'
 import TaskList from '../../nodes/TaskList.ts'
@@ -14,6 +15,7 @@ import testEditor from '../testHelpers/testEditor.ts'
 
 const test = testEditor.override('extensions', [
 	BulletList,
+	HardBreak,
 	ListItem,
 	OrderedList,
 	TaskItem,
