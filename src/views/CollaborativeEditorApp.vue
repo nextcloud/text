@@ -12,7 +12,7 @@
 		mime="text/markdown"
 		active
 		:autofocus
-		onReady="emit('ready')"
+		@ready="emit('ready')"
 		@create:content="(c: { markdown: string }) => emit('create:content', c)"
 		@update:content="(c: { markdown: string }) => emit('update:content', c)">
 		<template v-if="readonlyBarComponent" #readonlyBar>
