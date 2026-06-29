@@ -37,6 +37,7 @@ import {
 	FormatSize,
 	FormatStrikethrough,
 	FormatUnderline,
+	Help,
 	Info,
 	LinkIcon,
 	Paperclip,
@@ -500,6 +501,15 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 					icon: Danger,
 					action: (command) => {
 						return command.toggleCallout({ type: 'error' })
+					},
+				},
+				{
+					key: 'callout-question',
+					label: t('text', 'Question callout'),
+					isActive: { name: 'callout', attributes: { type: 'question' } },
+					icon: Help,
+					action: (command) => {
+						return command.toggleCallout({ type: 'question' })
 					},
 				},
 			],
