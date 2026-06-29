@@ -39,6 +39,7 @@ const BaseActionEntry = {
 			actionType: getActionType(this.actionEntry),
 		}
 	},
+	emits: ['disabled'],
 	computed: {
 		label() {
 			const { label } = this.actionEntry

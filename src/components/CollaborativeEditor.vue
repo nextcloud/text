@@ -240,10 +240,10 @@ export default defineComponent({
 		'focus',
 		'ready',
 		'reload',
-		'sync-service:error',
-		'sync-service:idle',
-		'sync-service:save',
-		'sync-service:sync',
+		'syncService:error',
+		'syncService:idle',
+		'syncService:save',
+		'syncService:sync',
 		'update:content',
 		'update:loaded',
 	],
@@ -466,7 +466,7 @@ export default defineComponent({
 
 		displayConnectionIssue(val) {
 			if (val) {
-				this.emit('sync-service:error')
+				this.$emit('syncService:error')
 			}
 			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
 		},
@@ -508,7 +508,7 @@ export default defineComponent({
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
 		subscribe('text:keyboard:save', this.onKeyboardSave)
-		this.emit('update:loaded', true)
+		this.$emit('update:loaded', true)
 		exposeForDebugging(this)
 
 		await this.whenSynced
@@ -676,7 +676,7 @@ export default defineComponent({
 
 		onCreate() {
 			const proseMirrorMarkdown = this.serialize()
-			this.emit('create:content', {
+			this.$emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
 		},
@@ -686,7 +686,7 @@ export default defineComponent({
 				this.debugContent(editor)
 			}
 			const proseMirrorMarkdown = this.serialize()
-			this.emit('update:content', {
+			this.$emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
 		},
@@ -701,7 +701,7 @@ export default defineComponent({
 				this.syncService.sendStepsNow()
 			}
 			this.$nextTick(() => {
-				this.emit('sync-service:sync')
+				this.$emit('syncService:sync')
 			})
 			if (document) {
 				this.document = document
@@ -742,11 +742,11 @@ export default defineComponent({
 					'text',
 					'Your editing permissions have been revoked. The document is now read-only.',
 				))
-				this.emit('push:forbidden')
+				this.$emit('push:forbidden')
 				return
 			}
 
-			this.emit('ready')
+			this.$emit('ready')
 		},
 
 		onStateChange(state) {
@@ -757,7 +757,7 @@ export default defineComponent({
 						this.editor.commands.autofocus()
 					})
 				}
-				this.emit('ready')
+				this.$emit('ready')
 			}
 			if (Object.hasOwn(state, 'dirty')) {
 				if (state.dirty) {
@@ -780,7 +780,7 @@ export default defineComponent({
 			this.setEditable(this.editMode)
 
 			this.$nextTick(() => {
-				this.emit('sync-service:idle')
+				this.$emit('syncService:idle')
 			})
 		},
 
@@ -791,7 +791,7 @@ export default defineComponent({
 				emit('files:node:updated', this.fileNode)
 			}
 			this.$nextTick(() => {
-				this.emit('sync-service:save')
+				this.$emit('syncService:save')
 			})
 		},
 
@@ -810,11 +810,11 @@ export default defineComponent({
 		},
 
 		onFocus() {
-			this.emit('focus')
+			this.$emit('focus')
 		},
 
 		onBlur({ event }) {
-			this.emit('blur', event)
+			this.$emit('blur', event)
 		},
 
 		onKeyboardSave() {
@@ -849,23 +849,6 @@ export default defineComponent({
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
-		},
-
-		/**
-		 * Wrapper to emit events on our own and the parent component
-		 *
-		 * The parent might be either the root component of src/editor.js or Viewer.vue which collectives currently uses
-		 *
-		 * Ideally this would be done in a generic way in the src/editor.js API abstraction, but it seems
-		 * that there is no proper way to pass any received event along in vue, the only option I've found
-		 * in https://github.com/vuejs/vue/issues/230 feels too hacky to me, so we just emit twice for now
-		 *
-		 * @param {string} event The event name
-		 * @param {object} data The data to pass along
-		 */
-		emit(event, data) {
-			this.$emit(event, data)
-			this.$parent?.$emit(event, data)
 		},
 
 		/** @param {Event} event The passed event */
