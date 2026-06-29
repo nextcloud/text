@@ -6,6 +6,7 @@
 <template>
 	<CollaborativeEditor
 		v-if="!reloading"
+		ref="editor-component"
 		v-bind="props"
 		@focus="$emit('focus')"
 		@reload="reloading = true">
@@ -31,7 +32,19 @@ watch(reloading, (val) => {
 	}
 })
 
-const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof CollaborativeEditor>>>
-const { editor, debugYjsData, setContent, save } = editorComponent.value
-defineExpose({ editor, debugYjsData, setContent, save })
+const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof CollaborativeEditor | null>>>
+defineExpose({
+	get editor() {
+		return editorComponent.value?.editor
+	},
+	get debugYjsData() {
+		return editorComponent.value?.debugYjsData
+	},
+	get setContent() {
+		return editorComponent.value?.setContent
+	},
+	get save() {
+		return editorComponent.value?.save
+	},
+})
 </script>
