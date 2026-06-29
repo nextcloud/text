@@ -124,7 +124,7 @@
     "@vueuse/core": "^11.3.0",
     "cypress": "^15.16.0",
     "cypress-split": "^1.24.31",
-    "cypress-vite": "^1.10.0",
+    "cypress-vite": "^1.10.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^3.6.0",
     "identity-obj-proxy": "^3.0.0",
