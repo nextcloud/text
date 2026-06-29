@@ -5,6 +5,7 @@
 
 /* eslint-disable camelcase */
 
+import { h } from 'vue'
 import MDI_Warn from 'vue-material-design-icons/Alert.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
 import MDI_AlignHorizontalCenter from 'vue-material-design-icons/AlignHorizontalCenter.vue'
@@ -77,28 +78,23 @@ const DEFAULT_ICON_SIZE = 20
  * @param {import('vue').Component} original from vue-material-design-icons
  */
 function makeIcon(original) {
-	return {
-		functional: true,
-		render(h, { data, props }) {
-			return h(original, {
-				data,
-				key: data.key,
-				staticClass: data.staticClass,
-				props: { size: DEFAULT_ICON_SIZE, ...props },
-			})
-		},
-	}
+	return (_props, { attrs, slots }) => h(original, { size: DEFAULT_ICON_SIZE, ...attrs }, slots)
 }
 
-export const Loading = {
-	functional: true,
-	render(h, { data, props }) {
-		return h(MDI_Loading, {
-			data,
-			staticClass: 'animation-rotate',
-			props: { size: DEFAULT_ICON_SIZE, ...props },
-		})
-	},
+/**
+ * load an icon
+ *
+ * @param {object} _props - component props (unused)
+ * @param {object} context - setup context
+ * @param {object} context.attrs - attributes passed to the icon
+ * @param {object} context.slots - slots passed to the icon
+ */
+export function Loading(_props, { attrs, slots }) {
+	return h(MDI_Loading, {
+		size: DEFAULT_ICON_SIZE,
+		...attrs,
+		class: ['animation-rotate', attrs.class],
+	}, slots)
 }
 
 export const AlphabeticalVariant = makeIcon(MDI_AlphabeticalVariant)

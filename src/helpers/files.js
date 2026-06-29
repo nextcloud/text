@@ -16,7 +16,7 @@ import {
 } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { createApp } from 'vue'
+import { createApp, h, reactive } from 'vue'
 import { logger } from './logger.ts'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
@@ -84,8 +84,10 @@ export function addMenuRichWorkspace() {
 	})
 }
 
+let FilesHeaderRichWorkspaceApp
 let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
+let FilesHeaderRichWorkspaceState
 let latestFolder
 
 /**
@@ -117,22 +119,25 @@ export const FilesWorkspaceHeader = {
 
 		// If an instance already exists, destroy it before creating a new one
 		if (FilesHeaderRichWorkspaceInstance) {
-			FilesHeaderRichWorkspaceInstance.$destroy()
+			FilesHeaderRichWorkspaceApp.unmount()
+			FilesHeaderRichWorkspaceApp = undefined
+			FilesHeaderRichWorkspaceInstance = undefined
+			FilesHeaderRichWorkspaceState = undefined
 			logger.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace
-			= !!latestFolder.attributes['rich-workspace-file-flat']
-		const content = latestFolder.attributes['rich-workspace-flat'] || ''
-		const path = latestFolder.path || ''
+		FilesHeaderRichWorkspaceState = reactive({
+			content: latestFolder.attributes['rich-workspace-flat'] || '',
+			hasRichWorkspace: !!latestFolder.attributes['rich-workspace-file-flat'],
+			path: latestFolder.path || '',
+		})
+
 
 		// Create a new instance of the RichWorkspace component
-		FilesHeaderRichWorkspaceInstance = createApp(FilesHeaderRichWorkspaceView, {
-			content,
-			hasRichWorkspace,
-			path,
-		}).$mount(el)
-
+		FilesHeaderRichWorkspaceApp = createApp({
+			render: () => h(FilesHeaderRichWorkspaceView, { ...FilesHeaderRichWorkspaceState }),
+		})
+		FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceApp.mount(el)
 		window.FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceInstance
 	},
 
@@ -143,12 +148,11 @@ export const FilesWorkspaceHeader = {
 			return
 		}
 
-		const hasRichWorkspace
+		FilesHeaderRichWorkspaceState.hasRichWorkspace
 			= !!folder.attributes['rich-workspace-file-flat'] && enabled(folder, view)
-		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
-		FilesHeaderRichWorkspaceInstance.content
+		FilesHeaderRichWorkspaceState.content
 			= folder.attributes['rich-workspace-flat'] || ''
-		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
+		FilesHeaderRichWorkspaceState.path = folder.path || ''
 	},
 }
 

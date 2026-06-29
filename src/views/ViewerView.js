@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createApp, defineComponent } from 'vue'
+import { createApp, defineComponent, h } from 'vue'
 import ViewerComponent from '../components/ViewerComponent.vue'
 
 // The vue instance used inside text constructed with the import above.
-let innerVue
+let innerApp
 
 /**
  * This thin Component wrapper can be rendered inside the viewer.
@@ -23,18 +23,16 @@ export default defineComponent({
 	render: (h) => h('div'),
 	props: ViewerComponent.props,
 	mounted() {
-		innerVue = createApp({
-			render: (h) => {
-				return h(ViewerComponent, {
-					attrs: this.$attrs,
-					props: this.$props,
-					on: this.$listeners,
-				})
-			},
+		innerApp = createApp({
+			render: () => h(ViewerComponent, {
+				...this.$props,
+				...this.$attrs,
+			}),
 		})
-		innerVue.$mount(this.$el)
+		innerApp.mount(this.$el)
 	},
 	beforeUnmount() {
-		innerVue.$destroy()
+		innerApp.unmount()
+		innerApp = undefined
 	},
 })
