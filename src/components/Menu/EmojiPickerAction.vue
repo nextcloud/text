@@ -37,6 +37,7 @@ export default {
 
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
+	setup: BaseActionEntry.setup,
 	methods: {
 		addEmoji({ id, native }) {
 			this.actionEntry

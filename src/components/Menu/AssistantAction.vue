@@ -176,7 +176,6 @@ import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 import { markFileAsAiGenerated } from '../../apis/ai.ts'
-import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import { logger } from '../../helpers/logger.ts'
 import markdownit from '../../markdownit/index.js'
@@ -217,9 +216,9 @@ export default {
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	setup() {
-		const { editor } = useEditor()
+		const base = BaseActionEntry.setup()
 		const { fileId } = useFileProps()
-		return { editor, fileId }
+		return { ...base, fileId }
 	},
 
 	data() {

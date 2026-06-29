@@ -42,6 +42,8 @@ export default {
 
 	emits: ['triggered'],
 
+	setup: BaseActionEntry.setup,
+
 	mounted() {
 		this.editor?.on('transaction', () => this.updateState())
 	},

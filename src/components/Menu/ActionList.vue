@@ -62,6 +62,8 @@ export default {
 
 	emits: ['triggered'],
 
+	setup: BaseActionEntry.setup,
+
 	data: () => ({
 		visible: false,
 		hasEnabledChild: true,

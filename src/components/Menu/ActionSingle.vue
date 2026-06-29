@@ -37,7 +37,10 @@ export default {
 	},
 
 	extends: BaseActionEntry,
+
 	emits: ['triggered'],
+
+	setup: BaseActionEntry.setup,
 
 	mounted() {
 		this.editor?.on('transaction', () => this.updateState())
