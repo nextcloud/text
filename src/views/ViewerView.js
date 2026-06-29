@@ -20,7 +20,7 @@ let innerApp
  */
 export default defineComponent({
 	name: 'ViewerView',
-	render: (h) => h('div'),
+	render: (h) => h('div', { style: { display: 'contents' } }),
 	props: ViewerComponent.props,
 	mounted() {
 		innerApp = createApp({
