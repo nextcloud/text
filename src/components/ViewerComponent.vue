@@ -87,6 +87,11 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+
+		onLoadedHandler: {
+			type: Function,
+			default: () => {},
+		},
 	},
 
 	emits: ['update:loaded'],
@@ -124,6 +129,7 @@ export default defineComponent({
 	methods: {
 		async onLoaded() {
 			this.$emit('update:loaded', true)
+			this.onLoadedHandler()
 		},
 
 		toggleEdit() {
