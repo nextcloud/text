@@ -36,7 +36,7 @@
 							: 'ActionSingle'
 				"
 				v-for="(actionEntry, index) in visibleEntries"
-				ref="menuEntries"
+				:ref="(el) => collectMenuEntryRef(el, index)"
 				:key="actionEntry.key"
 				:actionEntry="actionEntry"
 				:canBeFocussed="activeMenuEntry === index"
@@ -155,6 +155,7 @@ export default {
 			displayHelp: false,
 			isReady: false,
 			resize: null,
+			menuEntryRefs: [],
 		}
 	},
 
@@ -233,6 +234,10 @@ export default {
 		},
 	},
 
+	beforeUpdate() {
+		this.menuEntryRefs = []
+	},
+
 	mounted() {
 		this.$nextTick(() => {
 			this.isReady = true
@@ -247,6 +252,12 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+
+		collectMenuEntryRef(el, index) {
+			if (el) {
+				this.menuEntryRefs[index] = el
+			}
 		},
 
 		t,
