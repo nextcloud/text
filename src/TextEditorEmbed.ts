@@ -212,6 +212,7 @@ export class TextEditorEmbedBuilder {
 	render(el: HTMLElement, data: DataType) {
 		el.innerHTML = ''
 		const element = document.createElement('div')
+		element.style.display = 'contents'
 		el.appendChild(element)
 		const mounted = this.#app.mount(element) as MountedType
 		return new TextEditorEmbed(this.#app, data, mounted)
