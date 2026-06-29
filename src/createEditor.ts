@@ -7,7 +7,7 @@ import type { EventHandler } from '@nextcloud/event-bus'
 import type { App } from 'vue'
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 
-import { createApp, defineAsyncComponent, h, reactive } from 'vue'
+import { createApp, defineAsyncComponent, h, reactive, shallowRef } from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
@@ -189,7 +189,7 @@ function provideHooks(app: App, options: EditorOptions) {
 	app.provide(OPEN_LINK_HANDLER, {
 		openLink: options.openLinkHandler || openLink,
 	})
-	app.provide(ATTACHMENT_RESOLVER, {
+	app.provide(ATTACHMENT_RESOLVER, shallowRef({
 		resolve(src: string) {
 			return [
 				{
@@ -198,7 +198,7 @@ function provideHooks(app: App, options: EditorOptions) {
 				},
 			]
 		},
-	})
+	}))
 	app.provide(HOOK_MENUBAR_LINK_CUSTOM_ACTION, options.menubarLinkCustomAction)
 }
 

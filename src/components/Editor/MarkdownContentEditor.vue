@@ -21,7 +21,7 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
-import { provide, watch } from 'vue'
+import { provide, shallowRef, watch } from 'vue'
 import MenuBar from '../Menu/MenuBar.vue'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
@@ -41,17 +41,6 @@ import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, EditorWrapper },
-	provide() {
-		const val = {}
-
-		Object.defineProperties(val, {
-			[ATTACHMENT_RESOLVER]: {
-				get: () => this.$attachmentResolver ?? null,
-			},
-		})
-
-		return val
-	},
 
 	props: {
 		fileId: {
@@ -130,7 +119,10 @@ export default {
 		const { applyEditorWidth } = provideEditorWidth(true)
 		applyEditorWidth()
 
-		return { editor, setContent, updateHeadings }
+		const attachmentResolver = shallowRef(null)
+		provide(ATTACHMENT_RESOLVER, attachmentResolver)
+
+		return { attachmentResolver, editor, setContent, updateHeadings }
 	},
 
 	created() {
@@ -150,7 +142,7 @@ export default {
 			})
 		})
 		if (this.fileId) {
-			this.$attachmentResolver = new AttachmentResolver({
+			this.attachmentResolver = new AttachmentResolver({
 				currentDirectory: this.relativePath?.match(/.*\//),
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
