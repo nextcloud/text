@@ -235,20 +235,22 @@ export default {
 		linkCustomAction() {
 			this.menubarLinkCustomAction
 				.action()
-				.then((link) => {
-					this.insertLink(link)
+				.then((result) => {
+					this.insertLink(result)
 				})
 				.catch((error) => {
 					console.error('Custom link action promise rejected', error)
 				})
 		},
-		insertLink(link) {
-			if (!link) {
+		insertLink(result) {
+			if (!result) {
 				return
 			}
+			const { link, title = '' } =
+				typeof result === 'string' ? { link: result } : result
 			const chain = this.editor?.chain()
 			if (this.editor?.view.state?.selection.empty) {
-				chain.focus().insertPreview(link).run()
+				chain.focus().insertPreview(link, title).run()
 			} else {
 				chain.setLink({ href: link }).focus().run()
 			}
