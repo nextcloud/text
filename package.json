@@ -139,7 +139,7 @@
     "vitest": "^4.1.8",
     "vue-demi": "^0.14.10",
     "vue-template-compiler": "^2.7.16",
-    "vue-tsc": "^3.3.4"
+    "vue-tsc": "^3.3.5"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.62.2"
