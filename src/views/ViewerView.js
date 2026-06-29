@@ -27,6 +27,7 @@ export default defineComponent({
 			render: () => h(ViewerComponent, {
 				...this.$props,
 				...this.$attrs,
+				onLoadedHandler: () => this.$emit('update:loaded', true)
 			}),
 		})
 		innerApp.mount(this.$el)
