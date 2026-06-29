@@ -26,7 +26,6 @@ class SessionService {
 	public const int SESSION_VALID_TIME = 5 * 60;
 
 	private SessionMapper $sessionMapper;
-	private ISecureRandom $secureRandom;
 	private ITimeFactory $timeFactory;
 	private IUserManager $userManager;
 	private IAvatarManager $avatarManager;
@@ -38,7 +37,6 @@ class SessionService {
 
 	public function __construct(
 		SessionMapper $sessionMapper,
-		ISecureRandom $secureRandom,
 		ITimeFactory $timeFactory,
 		IUserManager $userManager,
 		IAvatarManager $avatarManager,
@@ -48,7 +46,6 @@ class SessionService {
 		ICacheFactory $cacheFactory,
 	) {
 		$this->sessionMapper = $sessionMapper;
-		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
 		$this->userManager = $userManager;
 		$this->avatarManager = $avatarManager;
@@ -72,7 +69,7 @@ class SessionService {
 		$session = new Session();
 		$session->setDocumentId($documentId);
 		$session->setUserId($this->userId);
-		$session->setToken($this->secureRandom->generate(64));
+		$session->setToken($this->generateRandomString());
 		$session->setColor($this->getColor());
 		if ($this->userId === null) {
 			$session->setGuestName($guestName ?? '');
@@ -242,9 +239,14 @@ class SessionService {
 	private function getColorForGuestName(string $guestName = ''): string {
 		$uniqueGuestId = !empty($guestName)
 			? $guestName . '(guest)' // make it harder to impersonate users.
-			: $this->secureRandom->generate(12);
+			: $this->generateRandomString(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();
+	}
+
+	private function generateRandomString(int $length = 64): string {
+		$randomizer = new \Random\Randomizer();
+		return $randomizer->getBytesFromString(ISecureRandom::CHAR_ALPHANUMERIC . '+/', $length);
 	}
 
 	public function isUserInDocument(int $documentId, string $mention): bool {
