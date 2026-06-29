@@ -253,8 +253,7 @@ export default {
 			if (!result) {
 				return
 			}
-			const { link, title = '' } =
-				typeof result === 'string' ? { link: result } : result
+			const { link, title = '' } = typeof result === 'string' ? { link: result } : result
 			const chain = this.editor?.chain()
 			if (this.editor?.view.state?.selection.empty) {
 				chain.focus().insertPreview(link, title).run()

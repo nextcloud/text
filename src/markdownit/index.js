@@ -50,8 +50,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
 
 // Render horizontal rules with markup attribute
-markdownit.renderer.rules.hr = (tokens, idx) =>
-	`<hr data-markup="${escapeHtml(tokens[idx].markup || '---')}" />\n`
+markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${escapeHtml(tokens[idx].markup || '---')}" />\n`
 
 // Render lists with bullet attribute
 markdownit.renderer.rules.bullet_list_open = (tokens, idx, options) => {
