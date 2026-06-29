@@ -16,13 +16,14 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import NcModal from '@nextcloud/vue/components/NcModal'
 
 export default {
 	name: 'PublicFilesEditor',
 	components: {
 		NcModal,
-		EditorReloader: () => import('./EditorReloader.vue'),
+		EditorReloader: defineAsyncComponent(() => import('./EditorReloader.vue')),
 	},
 
 	props: {

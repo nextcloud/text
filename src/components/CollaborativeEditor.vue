@@ -85,7 +85,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import { defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
+import { defineAsyncComponent, defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
 import { Doc, logUpdate } from 'yjs'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
@@ -145,8 +145,8 @@ export default defineComponent({
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		RichTextReader: () => import('./RichTextReader.vue'),
-		PlainTextReader: () => import('./PlainTextReader.vue'),
+		RichTextReader: defineAsyncComponent(() => import('./RichTextReader.vue')),
+		PlainTextReader: defineAsyncComponent(() => import('./PlainTextReader.vue')),
 		SessionStatus,
 		SuggestionsBar,
 	},

@@ -7,7 +7,7 @@ import type { EventHandler } from '@nextcloud/event-bus'
 import type { App } from 'vue'
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 
-import { createApp, defineAsyncComponent, h, reactive, shallowRef } from 'vue'
+import { createApp, reactive, shallowRef } from 'vue'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
@@ -111,7 +111,7 @@ export async function createEditor(options: EditorOptions) {
  * @param options for the editor
  */
 export async function createCollaborativeEditor(options: CollaborativeEditorOptions) {
-	const CollaborativeEditorApp = defineAsyncComponent(() => import('./views/CollaborativeEditorApp.vue'))
+	const { default: CollaborativeEditorApp } = await import('./views/CollaborativeEditorApp.vue')
 	const data = reactiveData(options)
 	const app = createApp(
 		CollaborativeEditorApp,
@@ -141,9 +141,9 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
  * @param options for the editor
  */
 export async function createMarkdownContentEditor(options: MarkdownContentEditorOptions) {
-	const MarkdownContentEditorApp = defineAsyncComponent(() => import('./views/MarkdownContentEditorApp.vue'))
+	const { default: MarkdownContentEditorApp } = await import('./views/MarkdownContentEditorApp.vue')
 	const data = reactiveData(options)
-	const app = createApp(() => h(
+	const app = createApp(
 		MarkdownContentEditorApp,
 		{
 			ref: 'editor-container',
@@ -156,7 +156,7 @@ export async function createMarkdownContentEditor(options: MarkdownContentEditor
 			'onCreate:content': options.onCreate ?? (() => { }),
 			'onUpdate:content': options.onUpdate ?? (() => { }),
 		},
-	))
+	)
 	provideHooks(app, options)
 	return createTextEditorEmbed(app, data, options)
 }
