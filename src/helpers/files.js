@@ -132,7 +132,6 @@ export const FilesWorkspaceHeader = {
 			path: latestFolder.path || '',
 		})
 
-
 		// Create a new instance of the RichWorkspace component
 		FilesHeaderRichWorkspaceApp = createApp({
 			render: () => h(FilesHeaderRichWorkspaceView, { ...FilesHeaderRichWorkspaceState }),

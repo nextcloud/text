@@ -238,6 +238,7 @@ export default defineComponent({
 		'focus',
 		'ready',
 		'reload',
+		'push:forbidden',
 		'syncService:error',
 		'syncService:idle',
 		'syncService:save',
