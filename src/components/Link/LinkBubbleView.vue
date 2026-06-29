@@ -139,7 +139,7 @@ export default {
 		return {
 			isEditable: false,
 			edit: true,
-			newHref: null,
+			newHref: '',
 			referenceTitle: null,
 		}
 	},
@@ -213,7 +213,7 @@ export default {
 	methods: {
 		resetBubble() {
 			this.edit = false
-			this.newHref = null
+			this.newHref = ''
 			this.referenceTitle = null
 		},
 
@@ -233,7 +233,7 @@ export default {
 
 		startEdit() {
 			this.edit = true
-			this.newHref = this.href
+			this.newHref = this.href ?? ''
 			this.$nextTick(() => {
 				this.$refs.hrefField.focus()
 			})
@@ -247,7 +247,7 @@ export default {
 
 		stopEdit() {
 			this.edit = false
-			this.newHref = null
+			this.newHref = ''
 		},
 
 		updateLink() {
