@@ -32,6 +32,12 @@ export default defineComponent({
 		})
 		innerApp.mount(this.$el)
 	},
+	// Viewer still uses Vue 2
+	beforeDestroy() {
+		innerApp.unmount()
+		innerApp = undefined
+	},
+	// Once Viewer migrated to Vue 3
 	beforeUnmount() {
 		innerApp.unmount()
 		innerApp = undefined
