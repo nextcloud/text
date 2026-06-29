@@ -7,6 +7,7 @@ import type { AnyCommands, Editor } from '@tiptap/core'
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
+import { markRaw } from 'vue'
 import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
@@ -117,7 +118,7 @@ export function getAssistantMenuEntries(): MenuEntry[] {
 	const assistantMenuEntry: MenuEntry = {
 		key: 'assistant',
 		label: t('text', 'Nextcloud Assistant'),
-		component: AssistantAction,
+		component: markRaw(AssistantAction),
 		priority: 7,
 	}
 	const hasAssistantTaskTypes
@@ -517,14 +518,14 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			keyModifiers: [MODIFIERS.Mod],
 			isActive: 'link',
 			icon: LinkIcon,
-			component: ActionInsertLink,
+			component: markRaw(ActionInsertLink),
 			priority: 4,
 		},
 		{
 			key: 'insert-attachment',
 			label: t('text', 'Insert attachment'),
 			icon: Paperclip,
-			component: ActionAttachmentUpload,
+			component: markRaw(ActionAttachmentUpload),
 			priority: 5,
 		},
 	]
@@ -534,7 +535,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			key: 'emoji-picker',
 			label: t('text', 'Insert emoji'),
 			icon: Emoticon,
-			component: EmojiPickerAction,
+			component: markRaw(EmojiPickerAction),
 			// @ts-expect-error emoji action expects object instead of editor as second argument
 			action: (command, emojiObject = {}) => {
 				return command.emoji(emojiObject)
