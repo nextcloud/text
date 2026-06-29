@@ -27,7 +27,7 @@
 
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
-import { showError } from '@nextcloud/dialogs'
+import { getFilePickerBuilder, showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
@@ -173,23 +173,28 @@ export default {
 				})
 		},
 
-		showAttachmentPrompt() {
+		async showAttachmentPrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
 
-			OC.dialogs.filepicker(
-				t('text', 'Insert an attachment'),
-				(filePath) => {
-					this.insertFromPath(filePath)
-				},
-				false,
-				[],
-				true,
-				undefined,
-				this.startPath,
-			)
+			const filePicker = getFilePickerBuilder(t('text', 'Insert an attachment'))
+				.startAt(this.startPath)
+				.allowDirectories(false)
+				.setMultiSelect(false)
+				.setButtonFactory((nodes) => [{
+					label: t('text', 'Choose'),
+					variant: 'primary',
+					disabled: nodes.length === 0,
+					callback: () => {},
+				}])
+				.build()
+
+			const filePath = await filePicker.pick()
+			if (filePath) {
+				this.insertFromPath(filePath)
+			}
 		},
 
 		insertFromPath(filePath) {
