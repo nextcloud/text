@@ -135,6 +135,12 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('foo\n\n---\n\nfoobar')).toBe(
 			'foo\n\n---\n\nfoobar',
 		)
+		expect(markdownThroughEditor('***\n\n- [ ] task\n\n***')).toBe(
+			'***\n\n- [ ] task\n\n***',
+		)
+		expect(markdownThroughEditor('___\n\n- [ ] task\n\n___')).toBe(
+			'___\n\n- [ ] task\n\n___',
+		)
 	})
 
 	test('table', () => {
