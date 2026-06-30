@@ -42,6 +42,17 @@ const initialData = {
 const openResult = { connection, data: initialData }
 
 describe('Sync service', () => {
+	it('resets #sending when there is no active connection', async () => {
+		const { connection, openConnection } = provideConnection(
+			{ fileId: 123, relativePath: './' },
+			vi.fn(),
+			vi.fn(),
+		)
+		const service = new SyncService({ connection, openConnection })
+		await service.sendStepsNow()
+		await expect(service.sendStepsNow()).resolves.toBeUndefined()
+	})
+
 	it('opens a connection', async () => {
 		const getBaseVersionEtag = vi.fn()
 		const setBaseVersionEtag = vi.fn()
