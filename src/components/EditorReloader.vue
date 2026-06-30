@@ -9,6 +9,7 @@
 		ref="editor-component"
 		v-bind="props"
 		@focus="$emit('focus')"
+		@push:forbidden="$emit('push:forbidden')"
 		@reload="reloading = true">
 		<template v-if="$slots.readonlyBar" #readonlyBar>
 			<slot name="readonlyBar" />
@@ -22,7 +23,7 @@ import type { ComponentInstance, ShallowRef } from 'vue'
 import { nextTick, ref, useTemplateRef, watch } from 'vue'
 import CollaborativeEditor from './CollaborativeEditor.vue'
 const props = defineProps(CollaborativeEditor.props)
-defineEmits(['focus'])
+defineEmits(['focus', 'push:forbidden'])
 const reloading = ref(false)
 watch(reloading, (val) => {
 	if (val) {
@@ -45,6 +46,9 @@ defineExpose({
 	},
 	get save() {
 		return editorComponent.value?.save
+	},
+	get close() {
+		return editorComponent.value?.close
 	},
 })
 </script>
