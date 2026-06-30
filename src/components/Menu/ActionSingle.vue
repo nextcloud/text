@@ -43,10 +43,18 @@ export default {
 	setup: BaseActionEntry.setup,
 
 	mounted() {
-		this.editor?.on('transaction', () => this.updateState())
+		this.editor?.on('transaction', this.onTransaction)
+	},
+
+	beforeUnmount() {
+		this.editor?.off('transaction', this.onTransaction)
 	},
 
 	methods: {
+		onTransaction() {
+			this.updateState()
+		},
+
 		runAction() {
 			const { actionEntry } = this
 

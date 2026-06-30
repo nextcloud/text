@@ -6,8 +6,8 @@
 import type { Editor } from '@tiptap/core'
 import type { InjectionKey, Ref, ShallowRef } from 'vue'
 
-import { emit, subscribe } from '@nextcloud/event-bus'
-import { inject, provide, ref, shallowRef } from 'vue'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { inject, onUnmounted, provide, ref, shallowRef } from 'vue'
 import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 
 export type Heading = {
@@ -44,13 +44,17 @@ export function provideEditorHeadings(editor: Editor) {
 
 	provide(headingsKey, headings)
 	provide(displayTocKey, displayToc)
-	subscribe('text:toc:toggle', (event) => {
+	const onTocToggle = (event: { visible: boolean } | undefined) => {
 		if (event?.visible !== undefined) {
 			displayToc.value = event.visible
 		} else {
 			displayToc.value = !displayToc.value
 		}
 		emit('text:toc:toggled', displayToc.value)
+	}
+	subscribe('text:toc:toggle', onTocToggle)
+	onUnmounted(() => {
+		unsubscribe('text:toc:toggle', onTocToggle)
 	})
 
 	return { displayToc, headings, updateHeadings }

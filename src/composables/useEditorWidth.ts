@@ -21,11 +21,11 @@
 import type { InjectionKey, Ref } from 'vue'
 
 import axios from '@nextcloud/axios'
-import { emit, subscribe } from '@nextcloud/event-bus'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import { computed, inject, provide, readonly, ref, watch } from 'vue'
+import { computed, inject, onUnmounted, provide, readonly, ref, watch } from 'vue'
 import { useEditorFlags } from './useEditorFlags.ts'
 
 // Keep the current value around when leaving the editor and reopening
@@ -72,9 +72,13 @@ export function provideEditorWidth(hasTableOfContents = true) {
 	}
 	const isFullWidth = ref(valueSingleton)
 	provide(editorWidthKey, readonly(isFullWidth))
-	subscribe('text:editor:full-width', ({ value }) => {
+	const onFullWidth = ({ value }: { value: boolean }) => {
 		valueSingleton = value
 		isFullWidth.value = value
+	}
+	subscribe('text:editor:full-width', onFullWidth)
+	onUnmounted(() => {
+		unsubscribe('text:editor:full-width', onFullWidth)
 	})
 	const defaultEditorWidthDesktop = hasTableOfContents
 		? editorWidthDesktopEnhanced
