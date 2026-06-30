@@ -175,7 +175,7 @@ describe('test link marks', function() {
 			const checkLinkWebsite = (url, text) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-website').click()
 				cy.getActionSubEntry('insert-link-input')
-					.find('input[type="text"]')
+					.click()
 					.type(`${url}{enter}`)
 				cy.getContent()
 					.find(`a[href*="${url}"]`)
