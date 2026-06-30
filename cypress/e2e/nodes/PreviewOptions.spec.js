@@ -17,8 +17,9 @@ describe('Preview Options', function() {
 		cy.openFile('empty.md')
 		cy.get('.entry-action__insert-link').click()
 		cy.get('li').get('[data-text-action-entry="insert-link-website"]').click()
-		cy.get('[data-text-action-entry="insert-link-input"] input').type('example.org')
-		cy.get('[data-text-action-entry="insert-link-input"] button').click()
+		cy.get('[data-text-action-entry="insert-link-input"]')
+			.click()
+			.type('example.org{enter}')
 
 		cy.getContent().find('a[href*="https://example.org"]').click()
 		cy.get('.link-options').click()
