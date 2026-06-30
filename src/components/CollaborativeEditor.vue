@@ -42,7 +42,7 @@
 				<template v-else>
 					<MenuBar
 						v-if="renderMenus"
-						v-model="menubarLoaded"
+						v-model:loaded="menubarLoaded"
 						:isHidden="hideMenu"
 						:openReadOnly="openReadOnlyEnabled">
 						<SessionStatus
