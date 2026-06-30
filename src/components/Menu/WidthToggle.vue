@@ -7,7 +7,7 @@
 	<NextcloudVueNcActionCheckbox
 		v-if="canToggleWidth"
 		:modelValue="isFullWidth"
-		@update:checked="setFullWidth">
+		@update:modelValue="setFullWidth">
 		{{ t('text', 'Full width editor') }}
 	</NextcloudVueNcActionCheckbox>
 </template>

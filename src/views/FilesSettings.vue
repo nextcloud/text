@@ -4,7 +4,7 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<NcCheckboxRadioSwitch v-model="showWorkspace" @update:checked="toggle">
+		<NcCheckboxRadioSwitch v-model="showWorkspace" @update:modelValue="toggle">
 			{{ t('text', 'Show folder description') }}
 		</NcCheckboxRadioSwitch>
 	</div>
