@@ -10,6 +10,7 @@ import type { Connection } from './composables/useConnection.ts'
 import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
+import { markRaw } from 'vue'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
 import { logger } from './helpers/logger.ts'
 
@@ -68,7 +69,7 @@ function createRichEditor({
 	openLink?: (href: string) => void
 	noLazyImages?: boolean
 } = {}) {
-	return new Editor({
+	return markRaw(new Editor({
 		editorProps,
 		extensions: [
 			RichText.configure({
@@ -82,7 +83,7 @@ function createRichEditor({
 			FocusTrap,
 			...extensions,
 		],
-	})
+	}))
 }
 
 /**
@@ -95,7 +96,7 @@ function createPlainEditor({
 	language = 'plaintext',
 	extensions = [],
 }: { language?: string, extensions?: Extension[] } = {}) {
-	return new Editor({
+	return markRaw(new Editor({
 		editorProps,
 		extensions: [
 			PlainText.configure({
@@ -106,7 +107,7 @@ function createPlainEditor({
 			FocusTrap,
 			...extensions,
 		],
-	})
+	}))
 }
 
 /**
