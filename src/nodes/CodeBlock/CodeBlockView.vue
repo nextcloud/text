@@ -200,7 +200,7 @@ export default {
 			if (this.isEditable) {
 				return 'side-by-side'
 			} else {
-				return this.supportPreview() ? 'code' : 'preview'
+				return this.supportPreview ? 'code' : 'preview'
 			}
 		},
 
