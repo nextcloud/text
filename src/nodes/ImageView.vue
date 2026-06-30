@@ -619,7 +619,7 @@ export default {
 	opacity: 1;
 }
 
-.fade-enter {
+.fade-enter-from {
 	opacity: 0;
 }
 </style>
