@@ -5,7 +5,7 @@
 
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 
-import { createApp, defineAsyncComponent, defineExpose, h, reactive, useTemplateRef } from 'vue'
+import { createApp, h, reactive, useTemplateRef } from 'vue'
 import { TextEditorEmbedBuilder } from './TextEditorEmbed.ts'
 
 interface CreateTableOptions {
@@ -27,17 +27,17 @@ interface CreateTableOptions {
  *
  * @param options Options for the created table
  */
-export function createTable(options: CreateTableOptions): TextEditorEmbed {
-	const PlainTableContentEditor = defineAsyncComponent(() => import('./components/Editor/PlainTableContentEditor.vue'))
+export async function createTable(options: CreateTableOptions): TextEditorEmbed {
+	const { default: PlainTableContentEditor } = await import('./components/Editor/PlainTableContentEditor.vue')
 	const data = reactive({
 		content: options.content ?? '',
 		readOnly: options.readOnly ?? false,
 	})
 
 	const vm = createApp({
-		setup() {
+		setup(_props, { expose }) {
 			const editorContainer = useTemplateRef('editor-container')
-			defineExpose(editorContainer)
+			expose({ editorContainer })
 			return () => h(PlainTableContentEditor, {
 				ref: 'editor-container',
 				content: data.content,
