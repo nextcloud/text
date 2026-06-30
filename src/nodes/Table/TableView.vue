@@ -108,18 +108,27 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('selectionUpdate', ({ editor }) => {
+		this.editor.on('selectionUpdate', this.onSelectionUpdate)
+		this.editor.on('update', this.onUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
+		this.editor.off('selectionUpdate', this.onSelectionUpdate)
+	},
+
+	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
+		onSelectionUpdate({ editor }) {
 			const startOfCurrentNode = this.getPos()
 			const endOfCurrentNode = startOfCurrentNode + this.node.nodeSize
 			const { from, to } = editor.state.selection
 			this.isFocused = from >= startOfCurrentNode && to <= endOfCurrentNode
-		})
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
-	},
+		},
 
-	methods: {
 		addColumnAfter() {
 			const headerRowNode = this.node.firstChild
 			this.editor

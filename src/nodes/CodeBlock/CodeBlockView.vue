@@ -221,12 +221,18 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
+		this.editor.on('update', this.onUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
 		async copyCode() {
 			await this.copyToClipboard(this.node?.textContent)
 		},

@@ -50,9 +50,11 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
+		this.editor.on('update', this.onUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
@@ -63,6 +65,10 @@ export default {
 				.setTextSelection(this.getPos() + 1)
 				.unsetPreview()
 				.run()
+		},
+
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
 		},
 	},
 }

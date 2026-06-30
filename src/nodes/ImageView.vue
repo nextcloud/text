@@ -273,15 +273,8 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
-		this.editor.on('transaction', ({ transaction }) => {
-			const trMeta = transaction.getMeta('insertedAttachmentSrc')
-			if (trMeta?.src === this.src) {
-				this.isLastInserted = true
-			}
-		})
+		this.editor.on('update', this.onUpdate)
+		this.editor.on('transaction', this.onTransaction)
 	},
 
 	mounted() {
@@ -316,11 +309,24 @@ export default {
 	},
 
 	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
+		this.editor.off('transaction', this.onTransaction)
 		this.loadIntersectionObserver?.disconnect()
 		this.resizeObserver?.disconnect()
 	},
 
 	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
+		onTransaction({ transaction }) {
+			const trMeta = transaction.getMeta('insertedAttachmentSrc')
+			if (trMeta?.src === this.src) {
+				this.isLastInserted = true
+			}
+		},
+
 		setupResizeObserver() {
 			if (!this.$refs.wrapper) {
 				return
