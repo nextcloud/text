@@ -188,11 +188,11 @@ export default {
 }
 
 .fade-enter-to,
-.fade-leave {
+.fade-leave-from {
 	opacity: 1;
 }
 
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
 }
