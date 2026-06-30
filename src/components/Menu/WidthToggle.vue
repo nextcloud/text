@@ -4,18 +4,24 @@
 -->
 
 <template>
-	<NcActionCheckbox
+	<NextcloudVueNcActionCheckbox
 		v-if="canToggleWidth"
 		:modelValue="isFullWidth"
 		@update:checked="setFullWidth">
 		{{ t('text', 'Full width editor') }}
-	</NcActionCheckbox>
+	</NextcloudVueNcActionCheckbox>
 </template>
 
 <script setup>
 import { t } from '@nextcloud/l10n'
-import NcActionCheckbox from '@nextcloud/vue/components/NcActionCheckbox'
+import NextcloudVueNcActionCheckbox from '@nextcloud/vue/components/NcActionCheckbox'
 import { useEditorWidth } from '../../composables/useEditorWidth.ts'
+
+// This component is used as a direct child of NcActions.
+// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
+// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
+// Hotfix - rename the component to NcActionCheckbox because it represents and renders it.
+defineOptions({ name: 'NcActionCheckbox' })
 
 const { canToggleWidth, isFullWidth, setFullWidth } = useEditorWidth()
 </script>
