@@ -48,7 +48,7 @@ export const test = base.extend<EditorApiFixture>({
 					const method = type === 'editor' ? 'createEditor' : 'createTable'
 					await window.OCA.Text[method]({
 						el: container,
-						...(fileId !== null ? { fileId } : { content }),
+						...(fileId !== undefined ? { fileId } : { content }),
 						readOnly,
 					})
 				},
