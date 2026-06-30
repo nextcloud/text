@@ -547,8 +547,6 @@ export default defineComponent({
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
-		unsubscribe('text:image-node:add', this.onAddImageNode)
-		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.saveService.save()])
