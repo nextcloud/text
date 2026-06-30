@@ -213,11 +213,16 @@ export default {
 		position: absolute;
 		left: 0;
 		bottom: calc(2 * var(--default-grid-baseline));
-		width: calc(100% - var(--clickable-area-small) - 4px) !important;
+		// width: calc(100% - var(--clickable-area-small) - 4px) !important;
 
 		&:hover {
 			opacity: 1;
 		}
+	}
+
+	// Needed to overwrite forced button width with nextcloud-vue v9
+	&.editable .table-add-row.button-vue {
+		width: calc(100% - var(--clickable-area-small) - 4px) !important;
 	}
 }
 </style>
