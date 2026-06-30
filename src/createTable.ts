@@ -5,7 +5,7 @@
 
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 
-import { createApp, defineAsyncComponent, h, reactive, useTemplateRef } from 'vue'
+import { createApp, defineAsyncComponent, defineExpose, h, reactive, useTemplateRef } from 'vue'
 import { TextEditorEmbedBuilder } from './TextEditorEmbed.ts'
 
 interface CreateTableOptions {
