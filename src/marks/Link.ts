@@ -8,6 +8,7 @@ import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import type { Mark, Node } from '@tiptap/pm/model'
+import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
@@ -118,6 +119,24 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					element.getAttribute('data-wiki-link') === 'true',
 				renderHTML: (attrs) =>
 					attrs.isWikiLink ? { 'data-wiki-link': 'true' } : {},
+			},
+			referenceLabel: {
+				default: null,
+				parseHTML: (element) =>
+					element.getAttribute('data-md-reference-label'),
+				renderHTML: (attrs) =>
+					attrs.referenceLabel
+						? { 'data-md-reference-label': attrs.referenceLabel }
+						: {},
+			},
+			referenceType: {
+				default: null,
+				parseHTML: (element) =>
+					element.getAttribute('data-md-reference-type'),
+				renderHTML: (attrs) =>
+					attrs.referenceType
+						? { 'data-md-reference-type': attrs.referenceType }
+						: {},
 			},
 		}
 	},
@@ -285,13 +304,48 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			_parent: Node,
 			_index: number,
 		) {
-			if (!mark.attrs.isWikiLink) {
-				const close = defaultMarkdownSerializer.marks.link.close
-				return typeof close === 'function'
-					? close(state, mark, _parent, _index)
-					: close
+			if (mark.attrs.isWikiLink) {
+				return ']]'
 			}
-			return ']]'
+			if (mark.attrs.referenceLabel && mark.attrs.referenceType) {
+				const label = mark.attrs.referenceLabel as string
+				const type = mark.attrs.referenceType as
+					| 'shortcut'
+					| 'collapsed'
+					| 'full'
+				const defs =
+					// Cast `state.options` locally as `referenceDefinitions` doesn't exist in upstream type definition
+					(
+						state.options as {
+							referenceDefinitions?: Map<
+								string,
+								{ label: string; href: string; title: string | null }
+							>
+						}
+					).referenceDefinitions
+				if (defs) {
+					const key = normalizeReference(label)
+					if (!defs.has(key)) {
+						defs.set(key, {
+							label,
+							href: mark.attrs.href as string,
+							title: (mark.attrs.title as string) ?? null,
+						})
+					}
+				}
+				switch (type) {
+					case 'shortcut':
+						return ']'
+					case 'collapsed':
+						return '][]'
+					case 'full':
+						return `][${label}]`
+				}
+			}
+			const close = defaultMarkdownSerializer.marks.link.close
+			return typeof close === 'function'
+				? close(state, mark, _parent, _index)
+				: close
 		},
 		mixable: true,
 		expelEnclosingWhitespace: false,
