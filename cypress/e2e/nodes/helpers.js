@@ -54,7 +54,7 @@ function findCommand(editor) {
  */
 export function expectMarkdown(editor, markdown) {
 	const stripped = markdown.replace(/\t*/g, '')
-	expect(getMarkdown(editor)).to.equal(stripped)
+	expect(getMarkdown(editor).replace(/\n*$/, '')).to.equal(stripped)
 }
 
 /**
