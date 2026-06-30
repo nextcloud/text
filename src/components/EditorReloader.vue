@@ -11,6 +11,9 @@
 		@focus="$emit('focus')"
 		@push:forbidden="$emit('push:forbidden')"
 		@reload="reloading = true">
+		<template v-if="$slots.header" #header>
+			<slot name="header" />
+		</template>
 		<template v-if="$slots.readonlyBar" #readonlyBar>
 			<slot name="readonlyBar" />
 		</template>
