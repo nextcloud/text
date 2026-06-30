@@ -8,12 +8,13 @@
 		<EditorReloader
 			ref="editor"
 			:initialSession
-			fileId="initial.fileId"
+			:fileId="initial.fileId"
 			active
 			autofocus
 			:mime="initial.mimetype"
 			isDirectEditing
-			@ready="loaded">
+			@ready="loaded"
+			@push:forbidden="onPushForbidden">
 			<template v-if="isMobile" #header>
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
@@ -121,18 +122,13 @@ export default {
 				'content',
 				'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 			)
-
-		this.$refs.editor.$on('push:forbidden', () => {
-			logger.warn('push was forbidden due to invalidated session')
-			this.reload()
-		})
 	},
 
 	methods: {
 		async close() {
 			this.saving = true
 			setTimeout(async () => {
-				await this.$refs.editor.$destroy()
+				await this.$refs.editor.close?.()
 				callMobileMessage('close')
 			}, 0)
 		},
@@ -147,6 +143,11 @@ export default {
 
 		reload() {
 			callMobileMessage('reload')
+		},
+
+		onPushForbidden() {
+			logger.warn('push was forbidden due to invalidated session')
+			this.reload()
 		},
 	},
 }
