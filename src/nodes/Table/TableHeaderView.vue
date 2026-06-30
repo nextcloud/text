@@ -241,7 +241,9 @@ export default {
 		},
 
 		sortColumn(direction) {
-			this.editor.commands.sortColumn(direction, this.node)
+			const pos = this.getPos()
+			const cellNode = this.editor.state.doc.nodeAt(pos)
+			this.editor.commands.sortColumn(direction, cellNode)
 		},
 
 		t,
