@@ -96,7 +96,7 @@ describe('Workspace', function() {
 		cy.get('.file-picker [data-filename="sub-folder"]').click()
 		cy.get('.file-picker [data-filename="alpha"]').click()
 		cy.get('.file-picker [data-filename="test.md"]').click()
-		cy.get('.dialog__actions button.button-vue--vue-primary').click()
+		cy.contains('button', 'Choose test.md').click()
 
 		cy.getContent().type('{leftArrow}')
 
