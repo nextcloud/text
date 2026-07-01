@@ -98,7 +98,6 @@
     "tippy.js": "^6.3.7",
     "uuid": "^14.0.0",
     "vue": "^3.5.39",
-    "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.3.1",
     "webdav": "^5.10.0",
     "y-indexeddb": "^9.0.12",

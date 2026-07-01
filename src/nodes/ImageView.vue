@@ -14,7 +14,7 @@
 			:data-src="src">
 			<div
 				v-if="canDisplayImage"
-				v-click-outside="() => (showIcons = false)"
+				ref="imageView"
 				class="image__view"
 				@mouseenter="showIcons = true"
 				@mouseleave="showIcons = false">
@@ -137,7 +137,8 @@ import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import ClickOutside from 'vue-click-outside'
+import { onClickOutside } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
 import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
@@ -164,13 +165,19 @@ export default {
 		NodeViewWrapper,
 	},
 
-	directives: {
-		ClickOutside,
-	},
-
 	mixins: [useAttachmentResolver],
 	props: nodeViewProps,
 	emits: ['error'],
+
+	setup() {
+		const imageView = useTemplateRef('imageView')
+		const showIcons = ref(false)
+		onClickOutside(imageView, () => {
+			showIcons.value = false
+		})
+		return { imageView, showIcons }
+	},
+
 	data() {
 		return {
 			attachment: null,
@@ -183,7 +190,6 @@ export default {
 			imageBlurhash: null,
 			loaded: false,
 			failed: false,
-			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
 			attachmentSize: null,
