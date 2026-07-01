@@ -253,6 +253,7 @@ export default {
 			if (textContent.trim() === '') {
 				this.viewMode = this.defaultMode
 				this.$refs.preview.innerHTML = ''
+				return
 			}
 
 			try {
