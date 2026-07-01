@@ -31,3 +31,14 @@ test('applies link mark input rule with dot in text (#7872)', async ({
 		'https://example.org',
 	)
 })
+
+test('code bloc', async ({
+	editor,
+	open,
+}) => {
+	await open()
+	await editor.type('```')
+	await editor.press('Enter')
+	await editor.type('code')
+	await expect(editor.el.locator('code')).toHaveText('code')
+})
