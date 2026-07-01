@@ -37,17 +37,9 @@ export function useLinkFile({
 
 	/**
 	 * Open dialog and ask user which file to link to
-	 *
-	 * @param event click that triggered the call.
 	 */
-	const linkFile = async (event: MouseEvent) => {
-		const node = await pickFile(startPath.value).catch(() => {
-			// TODO: check if this works.
-			// return focus to the trigger.
-			if (event.target instanceof HTMLElement) {
-				event.target.focus()
-			}
-		})
+	const linkFile = async () => {
+		const node = await pickFile(startPath.value)
 		if (!node) {
 			return
 		}
