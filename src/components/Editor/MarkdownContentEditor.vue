@@ -21,7 +21,7 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
-import { provide, shallowRef, watch } from 'vue'
+import { markRaw, provide, shallowRef, watch } from 'vue'
 import MenuBar from '../Menu/MenuBar.vue'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
@@ -89,7 +89,7 @@ export default {
 			}),
 			FocusTrap,
 		]
-		const editor = new Editor({ extensions })
+		const editor = markRaw(new Editor({ extensions }))
 
 		const { setEditable, setContent } = useEditorMethods(editor)
 		const { updateHeadings } = provideEditorHeadings(editor)
