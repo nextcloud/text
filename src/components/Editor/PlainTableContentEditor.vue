@@ -42,7 +42,7 @@ export default {
 		},
 	},
 
-	emits: ['ready', 'update:content'],
+	emits: ['create:content', 'ready', 'update:content'],
 
 	setup(props) {
 		const extensions = [PlainTable, UndoRedo, FocusTrap]
@@ -82,12 +82,11 @@ export default {
 		this.setContent(this.content, { addToHistory: false })
 		this.editor.on('create', () => {
 			this.$emit('ready')
-			this.$parent.$emit('ready')
 
 			// Emit initial content
 			try {
 				const markdown = createMarkdownSerializer(this.editor.schema).serialize(this.editor.state.doc)
-				this.emit('create:content', {
+				this.$emit('create:content', {
 					json: this.editor.state.doc,
 					markdown,
 				})
@@ -98,7 +97,7 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			try {
 				const markdown = createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
-				this.emit('update:content', {
+				this.$emit('update:content', {
 					json: editor.state.doc,
 					markdown,
 				})
@@ -110,19 +109,6 @@ export default {
 
 	beforeUnmount() {
 		this.editor.destroy()
-	},
-
-	methods: {
-		/**
-		 * Wrapper to emit events on our own and the parent component
-		 *
-		 * @param {string} event The event name
-		 * @param {object} data The data to pass along
-		 */
-		emit(event, data) {
-			this.$emit(event, data)
-			this.$parent?.$emit(event, data)
-		},
 	},
 }
 </script>
