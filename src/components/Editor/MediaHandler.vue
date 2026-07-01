@@ -27,7 +27,7 @@
 
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
-import { getFilePickerBuilder, showError } from '@nextcloud/dialogs'
+import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
@@ -40,6 +40,7 @@ import {
 import { useConnection } from '../../composables/useConnection.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
+import { buildFilePicker } from '../../helpers/filePicker.js'
 import { logger } from '../../helpers/logger.ts'
 import {
 	ACTION_ATTACHMENT_PROMPT,
@@ -179,17 +180,7 @@ export default {
 				return
 			}
 
-			const filePicker = getFilePickerBuilder(t('text', 'Insert an attachment'))
-				.startAt(this.startPath)
-				.allowDirectories(false)
-				.setMultiSelect(false)
-				.setButtonFactory((nodes) => [{
-					label: t('text', 'Choose'),
-					variant: 'primary',
-					disabled: nodes.length === 0,
-					callback: () => {},
-				}])
-				.build()
+			const filePicker = buildFilePicker(this.startPath, false)
 
 			const filePath = await filePicker.pick()
 			if (filePath) {
