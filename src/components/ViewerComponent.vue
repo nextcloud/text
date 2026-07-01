@@ -94,8 +94,6 @@ export default defineComponent({
 		},
 	},
 
-	emits: ['update:loaded'],
-
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
@@ -127,7 +125,6 @@ export default defineComponent({
 
 	methods: {
 		async onLoaded() {
-			this.$emit('update:loaded', true)
 			this.onLoadedHandler()
 		},
 
