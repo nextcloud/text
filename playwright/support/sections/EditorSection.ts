@@ -40,6 +40,10 @@ export class EditorSection {
 		await this.content.pressSequentially(keys)
 	}
 
+	public async press(key: string): Promise<void> {
+		await this.content.press(key)
+	}
+
 	public async typeHeading(name: string): Promise<void> {
 		await this.type('## ')
 		await this.type(name)
