@@ -14,7 +14,7 @@
 <script>
 import { Editor } from '@tiptap/core'
 import { UndoRedo } from '@tiptap/extensions'
-import { provide, watch } from 'vue'
+import { markRaw, provide, watch } from 'vue'
 import ContentContainer from './ContentContainer.vue'
 import EditorWrapper from './EditorWrapper.vue'
 import MainContainer from './MainContainer.vue'
@@ -46,7 +46,7 @@ export default {
 
 	setup(props) {
 		const extensions = [PlainTable, UndoRedo, FocusTrap]
-		const editor = new Editor({ extensions })
+		const editor = markRaw(new Editor({ extensions }))
 
 		const { setEditable, setContent } = useEditorMethods(editor)
 		watch(

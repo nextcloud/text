@@ -16,7 +16,7 @@
 <script>
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-3'
-import { inject, watch } from 'vue'
+import { inject, markRaw, watch } from 'vue'
 import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
@@ -40,7 +40,7 @@ export default {
 	setup(props) {
 		// extensions is a factory building a list of extensions for the editor
 		const extensions = inject('extensions')
-		const editor = new Editor({ extensions: extensions() })
+		const editor = markRaw(new Editor({ extensions: extensions() }))
 		provideEditor(editor)
 
 		const { hasTableOfContents } = useEditorFlags()
