@@ -48,7 +48,7 @@ function callMobileMessage(messageName, attributes) {
 			Values: attributes,
 		}
 	}
-	const attributesString = null
+	let attributesString = null
 	try {
 		attributesString = JSON.stringify(attributes)
 	} catch {
