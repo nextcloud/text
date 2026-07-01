@@ -516,7 +516,11 @@ export default {
 }
 
 .image__main {
+	max-width: 100%;
 	max-height: calc(100vh - 50px - 50px);
+	width: auto;
+	height: auto;
+	object-fit: contain;
 	margin: auto;
 }
 
@@ -536,6 +540,7 @@ export default {
 
 	img {
 		max-width: 100%;
+		height: auto;
 	}
 
 	&:hover {
