@@ -62,7 +62,7 @@
 					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
 			</MainContainer>
 			<Component
-				:is="isRichEditor ? RichTextReader : PlainTextReader"
+				:is="isRichEditor ? 'RichTextReader' : 'PlainTextReader'"
 				v-if="isResolvingConflict"
 				:content="otherVersion" />
 		</EditorWrapper>
