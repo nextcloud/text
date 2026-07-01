@@ -9,12 +9,20 @@ const HardBreak = TipTapHardBreak.extend({
 	addAttributes() {
 		return {
 			syntax: {
-				default: '  ',
+				default: 'soft',
 				rendered: false,
 				keepOnSplit: true,
 				parseHTML: (el) => el.getAttribute('data-syntax') || '  ',
 			},
 		}
+	},
+
+	renderHTML({ node, HTMLAttributes }) {
+		if (node.attrs.syntax === 'soft') {
+			// Rendered as inline whitespace, not a visible line break
+			return ['span', { ...HTMLAttributes, 'data-soft-break': '' }, ' ']
+		}
+		return ['br', HTMLAttributes]
 	},
 
 	addCommands() {
@@ -26,7 +34,18 @@ const HardBreak = TipTapHardBreak.extend({
 					if (ctx.state.selection.$from.node(d).type.name === 'heading')
 						return false
 				}
-				return this.parent().setHardBreak()(ctx)
+				// Call upstream setHardBreak, then set syntax property for type 'soft'
+				return ctx.chain()
+					.command(this.parent().setHardBreak())
+					.command(({ tr }) => {
+						const pos = tr.selection.$anchor.pos -1
+						const node = tr.doc.nodeAt(pos)
+						if (node?.type.name === 'hardBreak' && node.attrs.syntax === 'soft') {
+							tr.setNodeMarkup(pos, null, { ...node.attrs, syntax: '  ' })
+						}
+						return true
+					})
+					.run()
 			},
 		}
 	},
@@ -34,11 +53,13 @@ const HardBreak = TipTapHardBreak.extend({
 	toMarkdown(state, node, parent, index) {
 		for (let i = index + 1; i < parent.childCount; i++) {
 			if (parent.child(i).type !== node.type) {
-				if (node.attrs.syntax !== 'html') {
+				if (node.attrs.syntax === 'soft') {
+					state.write('\n')
+				} else if (node.attrs.syntax === 'html') {
+					state.write('<br />')
+				} else {
 					state.write(node.attrs.syntax)
 					if (!parent.child(i).text?.startsWith('\n')) state.write('\n')
-				} else {
-					state.write('<br />')
 				}
 				return
 			}
