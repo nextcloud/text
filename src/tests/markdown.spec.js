@@ -52,6 +52,9 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('- foo\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('- foo\n- bar')
+		expect(markdownThroughEditor('- foo\n  - bar')).toBe('- foo\n  - bar')
+		expect(markdownThroughEditor('- foo\n  - bar\n- baz')).toBe('- foo\n  - bar\n- baz')
+		expect(markdownThroughEditor('- foo\n  bar\n  baz')).toBe('- foo\n  bar\n  baz')
 	})
 	test('ol', () => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
