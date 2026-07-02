@@ -5,6 +5,7 @@
 
 /* eslint-disable jsdoc/valid-types */
 
+import { showError } from '@nextcloud/dialogs'
 import mitt from 'mitt'
 import debounce from 'debounce'
 
@@ -115,6 +116,9 @@ export declare type EventTypes = {
 
 	/* Emitted once a document becomes idle */
 	idle: void
+
+	/* Emitted if the read only state of the document has changed */
+	permissionChange: { readOnly: boolean }
 
 }
 
@@ -374,6 +378,19 @@ class SyncService {
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
+			const response = (
+				e as { response?: { status?: number; data?: { error?: string } } }
+			).response
+			if (response?.status === 403) {
+				// Document is now read-only; permissionChange from sync will update the UI
+				return
+			}
+			if (response?.status === 412) {
+				this.bus.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: response })
+				if (response.data?.error) {
+					showError(response.data.error)
+				}
+			}
 			throw e
 		}
 	}
