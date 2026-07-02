@@ -12,15 +12,17 @@ import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 import { activeLinkFromSelection } from './linkHelpers.js'
 
+export const linkBubbleKey = new PluginKey('linkBubble')
+
 // Commands
 
-/* Set resolved to be the active element (if it has a link mark)
+/**
+ * Set resolved to be the active element (if it has a link mark)
  *
- * @params resolved - resolved position of the action
+ * @param resolved - resolved position of the action
  */
-export const setActiveLink =
-	(resolved: ResolvedPos): Command =>
-	(state, dispatch) => {
+export function setActiveLink(resolved: ResolvedPos): Command {
+	return (state, dispatch) => {
 		const mark = resolved.marks().find((m) => m.type.name === 'link')
 		if (!mark) {
 			return false
@@ -32,6 +34,7 @@ export const setActiveLink =
 		}
 		return true
 	}
+}
 
 /* Hide the link bubble by setting active state to null
  *
@@ -47,7 +50,6 @@ export const hideLinkBubble: Command = (state, dispatch) => {
 	return true
 }
 
-export const linkBubbleKey = new PluginKey('linkBubble')
 /**
  * Prosemirror link bubble plugin
  *
@@ -69,12 +71,11 @@ export function linkBubble(options: { editor: Editor }) {
 			},
 		},
 
-		view: (view) =>
-			new LinkBubblePluginView({
-				view,
-				options,
-				plugin: linkBubblePlugin,
-			}),
+		view: (view) => new LinkBubblePluginView({
+			view,
+			options,
+			plugin: linkBubblePlugin,
+		}),
 
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
@@ -86,9 +87,7 @@ export function linkBubble(options: { editor: Editor }) {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
-			const noHistory = transactions.every(
-				(tr) => tr.getMeta('addToHistory') === false,
-			)
+			const noHistory = transactions.every((tr) => tr.getMeta('addToHistory') === false)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
@@ -140,11 +139,9 @@ export const linkClickingKey = new PluginKey('textHandleClickLink')
  *
  * @param openLink - the openLink callback function
  */
-export function linkClicking(
-	openLink: (href: string) => void = (href) => {
-		window.open(href, '_blank')
-	},
-) {
+export function linkClicking(openLink: (href: string) => void = (href) => {
+	window.open(href, '_blank')
+}) {
 	return new Plugin({
 		key: linkClickingKey,
 		props: {

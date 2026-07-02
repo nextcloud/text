@@ -144,9 +144,7 @@ describe('Image View', () => {
 			cy.openFile(fileName)
 
 			cy.getContent()
-				.find(
-					'[data-component="image-view"][data-src=".attachments.123/github.png"] img',
-				)
+				.find('[data-component="image-view"][data-src=".attachments.123/github.png"] img')
 				.click()
 
 			cy.get('.modal__content img')
@@ -159,9 +157,7 @@ describe('Image View', () => {
 			cy.openFile(fileName)
 
 			cy.getContent()
-				.find(
-					'[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img',
-				)
+				.find('[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img')
 				.click()
 
 			const downloadsFolder = Cypress.config('downloadsFolder')

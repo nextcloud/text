@@ -14,7 +14,7 @@
 			:data-src="src">
 			<div
 				v-if="canDisplayImage"
-				v-click-outside="() => (showIcons = false)"
+				ref="imageView"
 				class="image__view"
 				@mouseenter="showIcons = true"
 				@mouseleave="showIcons = false">
@@ -31,7 +31,7 @@
 									:src="imageUrl"
 									:alt="alt"
 									class="image__main"
-									@load="onLoaded" />
+									@load="onLoaded">
 								<div class="metadata">
 									<span class="name">{{ alt }}</span>
 									<span class="size">{{ attachmentSize }}</span>
@@ -55,7 +55,7 @@
 								:alt="alt"
 								class="image__main"
 								@click="handleImageClick"
-								@load="onLoaded" />
+								@load="onLoaded">
 						</div>
 					</template>
 					<template v-else>
@@ -81,7 +81,7 @@
 								class="image__caption__input"
 								:value="alt"
 								@blur="updateAlt"
-								@keyup="updateAlt" />
+								@keyup="updateAlt">
 							<div
 								v-if="showImageDeleteIcon"
 								contenteditable="false"
@@ -101,7 +101,7 @@
 				<div class="image__modal">
 					<ShowImageModal
 						:images="embeddedImageList"
-						:start-index="imageIndex"
+						:startIndex="imageIndex"
 						:show="showImageModal"
 						@close="showImageModal = false" />
 				</div>
@@ -121,7 +121,7 @@
 							:value="alt"
 							:disabled="!isEditable"
 							@blur="updateAlt"
-							@keyup.enter="updateAlt" />
+							@keyup.enter="updateAlt">
 					</div>
 				</transition>
 			</div>
@@ -136,13 +136,14 @@
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
+import { onClickOutside } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
 import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { NodeViewWrapper } from '@tiptap/vue-2'
-import ClickOutside from 'vue-click-outside'
+import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
-import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { logger } from '../helpers/logger.ts'
 
 class LoadImageError extends Error {
@@ -163,11 +164,20 @@ export default {
 		ShowImageModal,
 		NodeViewWrapper,
 	},
-	directives: {
-		ClickOutside,
-	},
+
 	mixins: [useAttachmentResolver],
-	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
+	props: nodeViewProps,
+	emits: ['error'],
+
+	setup() {
+		const imageView = useTemplateRef('imageView')
+		const showIcons = ref(false)
+		onClickOutside(imageView, () => {
+			showIcons.value = false
+		})
+		return { imageView, showIcons }
+	},
+
 	data() {
 		return {
 			attachment: null,
@@ -180,7 +190,6 @@ export default {
 			imageBlurhash: null,
 			loaded: false,
 			failed: false,
-			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
 			attachmentSize: null,
@@ -192,6 +201,7 @@ export default {
 			loadIntersectionObserver: null,
 		}
 	},
+
 	computed: {
 		attachmentType() {
 			if (this.attachment) {
@@ -200,15 +210,19 @@ export default {
 				return null
 			}
 		},
+
 		isMediaAttachment() {
 			return this.attachmentType === 'media'
 		},
+
 		showDeleteIcon() {
 			return this.isEditable && this.showIcons
 		},
+
 		showImageDeleteIcon() {
 			return this.showDeleteIcon && !this.isMediaAttachment
 		},
+
 		canDisplayImage() {
 			if (this.failed && this.loaded) {
 				return true
@@ -216,14 +230,16 @@ export default {
 
 			return this.loaded && this.imageLoaded
 		},
+
 		canDisplayPlaceholder() {
 			return this.imageHeight > 0
 		},
+
 		blurhashSize() {
 			if (this.imageWidth > 0 && this.imageHeight > 0) {
 				const ratio = this.imageWidth / this.imageHeight
-				const newWidth =
-					this.wrapperWidth - 12 > this.imageWidth
+				const newWidth
+					= this.wrapperWidth - 12 > this.imageWidth
 						? this.imageWidth
 						: this.wrapperWidth - 12
 				const newHeight = newWidth / ratio
@@ -235,20 +251,24 @@ export default {
 			}
 			return {}
 		},
+
 		src: {
 			get() {
 				return this.node.attrs.src || ''
 			},
+
 			set(src) {
 				this.updateAttributes({
 					src,
 				})
 			},
 		},
+
 		alt: {
 			get() {
 				return this.node.attrs.alt ? this.node.attrs.alt : ''
 			},
+
 			set(alt) {
 				this.updateAttributes({
 					alt,
@@ -256,18 +276,13 @@ export default {
 			},
 		},
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
-		this.editor.on('transaction', ({ transaction }) => {
-			const trMeta = transaction.getMeta('insertedAttachmentSrc')
-			if (trMeta?.src === this.src) {
-				this.isLastInserted = true
-			}
-		})
+		this.editor.on('update', this.onUpdate)
+		this.editor.on('transaction', this.onTransaction)
 	},
+
 	mounted() {
 		this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
 		this.loadAttachmentMetadata()
@@ -298,14 +313,30 @@ export default {
 			this.loadIntersectionObserver.observe(this.$el)
 		})
 	},
+
 	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
+		this.editor.off('transaction', this.onTransaction)
 		this.loadIntersectionObserver?.disconnect()
 		this.resizeObserver?.disconnect()
 	},
-	methods: {
-		setupResizeObserver() {
-			if (!this.$refs.wrapper) return
 
+	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
+		onTransaction({ transaction }) {
+			const trMeta = transaction.getMeta('insertedAttachmentSrc')
+			if (trMeta?.src === this.src) {
+				this.isLastInserted = true
+			}
+		},
+
+		setupResizeObserver() {
+			if (!this.$refs.wrapper) {
+				return
+			}
 			this.resizeObserver = new ResizeObserver((entries) => {
 				const width = entries[0].contentRect.width
 				if (width > 0) {
@@ -315,6 +346,7 @@ export default {
 
 			this.resizeObserver.observe(this.$refs.wrapper)
 		},
+
 		async loadAttachmentMetadata() {
 			try {
 				this.attachment = await this.attachmentPromise
@@ -333,6 +365,7 @@ export default {
 				logger.debug('Failed to load attachment metadata', { err })
 			}
 		},
+
 		async loadPreview() {
 			if (!this.attachment) {
 				this.attachment = await this.attachmentPromise
@@ -357,6 +390,7 @@ export default {
 				img.src = this.attachment.previewUrl
 			})
 		},
+
 		onImageLoadFailure(err) {
 			this.failed = true
 			this.imageLoaded = false
@@ -369,11 +403,13 @@ export default {
 
 			this.$emit('error', { error: err, src: this.src })
 		},
+
 		updateAlt(event) {
 			this.updateAttributes({
 				alt: event.target.value,
 			})
 		},
+
 		onLoaded() {
 			this.loaded = true
 			this.$nextTick(() => {
@@ -382,21 +418,16 @@ export default {
 				}
 			})
 		},
+
 		async updateEmbeddedImageList() {
 			this.embeddedImageList = []
 			// Get all images that succeeded to load
-			const imageViews = Array.from(
-				document.querySelectorAll(
-					'figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view',
-				),
-			)
+			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view'))
 			for (const imgv of imageViews) {
 				const src = imgv.getAttribute('data-src')
 				if (!this.embeddedImageList.find((i) => i.src === src)) {
 					// Don't add duplicates (e.g. when several editors are loaded in HTML document)
-					const attachment = await this.$attachmentResolver.resolve(
-						imgv.getAttribute('data-src'),
-					)
+					const attachment = await this.$attachmentResolver.resolve(imgv.getAttribute('data-src'))
 					this.embeddedImageList.push({
 						src,
 						...attachment,
@@ -404,6 +435,7 @@ export default {
 				}
 			}
 		},
+
 		handleAttachmentClick() {
 			// Open in viewer if possible
 			if (
@@ -424,25 +456,26 @@ export default {
 			// Download file
 			window.location.assign(this.attachment.fullUrl)
 		},
+
 		async handleImageClick() {
 			await this.updateEmbeddedImageList()
-			this.imageIndex = this.embeddedImageList.findIndex(
-				(i) => i.src === this.src,
-			)
+			this.imageIndex = this.embeddedImageList.findIndex((i) => i.src === this.src)
 			if (this.imageIndex !== -1) {
 				this.showImageModal = true
 			} else {
-				console.error(
+				logger.error(
 					'Could not find image in attachments list',
 					this.attachment,
 				)
 				showError(t('text', 'Could not find image in attachments list.'))
 			}
 		},
+
 		onDelete() {
 			emit('text:image-node:delete', this.imageUrl)
 			this.deleteNode()
 		},
+
 		t,
 	},
 }
@@ -592,7 +625,7 @@ export default {
 	opacity: 1;
 }
 
-.fade-enter {
+.fade-enter-from {
 	opacity: 0;
 }
 </style>

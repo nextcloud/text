@@ -90,7 +90,7 @@ describe('searchQuery plugin', () => {
 	})
 })
 
-const pluginSetup = () => {
+function pluginSetup() {
 	const plugin = searchQuery()
 	const state = EditorState.create({
 		schema,

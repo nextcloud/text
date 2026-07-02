@@ -4,9 +4,9 @@
  */
 
 import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import codeBlockShortcuts from './CodeBlock/codeBlockShortcuts.js'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import CodeBlockView from './CodeBlock/CodeBlockView.vue'
+import codeBlockShortcuts from './CodeBlock/codeBlockShortcuts.js'
 
 const CodeBlock = TiptapCodeBlockLowlight.extend({
 	parseHTML() {
@@ -24,7 +24,7 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 		]
 	},
 
-	toMarkdown(state, node, parent, index) {
+	toMarkdown(state, node) {
 		// @tiptap/pm/markdown uses `params` instead of `language` attribute
 		node.attrs.params = node.attrs.language
 

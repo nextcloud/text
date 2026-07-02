@@ -7,17 +7,17 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('Test the rich text editor menu bar', function () {
-	before(function () {
+describe('Test the rich text editor menu bar', function() {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.uploadTestFile()
 	})
 
-	describe('word count', function () {
+	describe('word count', function() {
 		/**
 		 *
 		 */
@@ -27,7 +27,7 @@ describe('Test the rich text editor menu bar', function () {
 				.get('[data-text-action-entry="character-count"]')
 		}
 
-		beforeEach(function () {
+		beforeEach(function() {
 			cy.visit('/apps/files')
 			cy.openTestFile()
 		})
@@ -51,7 +51,7 @@ describe('Test the rich text editor menu bar', function () {
 		})
 	})
 
-	describe('text width toggle', function () {
+	describe('text width toggle', function() {
 		beforeEach(() => {
 			cy.configureText('is_full_width_editor', 0)
 			cy.visit('/apps/files')
@@ -61,19 +61,19 @@ describe('Test the rich text editor menu bar', function () {
 				.as('maxWidth')
 		})
 
-		it('applys default', function () {
+		it('applys default', function() {
 			cy.openTestFile()
 			cy.get('@maxWidth').should('equal', 'min(80ch, (100% - 2 * 40px))')
 		})
 
-		it('toggles value', function () {
+		it('toggles value', function() {
 			cy.openTestFile()
 			cy.getActionEntry('remain').click()
 			cy.contains('Full width editor').click()
 			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
-		it('preserves on reopen', function () {
+		it('preserves on reopen', function() {
 			cy.openTestFile()
 			cy.getActionEntry('remain').click()
 			cy.contains('Full width editor').click()
@@ -82,7 +82,7 @@ describe('Test the rich text editor menu bar', function () {
 			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
-		it('preserves on reload', function () {
+		it('preserves on reload', function() {
 			cy.openTestFile()
 			cy.getActionEntry('remain').click()
 			cy.contains('Full width editor').click()
@@ -91,7 +91,7 @@ describe('Test the rich text editor menu bar', function () {
 			cy.get('@maxWidth').should('equal', 'calc(100% - 2 * 40px)')
 		})
 
-		it('does not interfere if width is already set', function () {
+		it('does not interfere if width is already set', function() {
 			cy.window()
 				.its('document.body.style')
 				.invoke('setProperty', '--text-editor-max-width', '987px')

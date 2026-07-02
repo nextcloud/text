@@ -3,13 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
+import { unref } from 'vue'
+import { logger } from '../helpers/logger.ts'
 
 /**
  * Let Nextcloud know someone was mentioned
+ *
  * @param mention user id of the person that was mentioned
  * @param scope scope the user was mentioned in
  * @param options options
@@ -24,7 +28,7 @@ export function emitMention(
 	const con = unref(connection)
 	if (!con) {
 		const err = new Error('Disconnected. Could not notify user about mention.')
-		console.warn(err.message, { err, mention })
+		logger.warn(err.message, { err, mention })
 		return Promise.resolve()
 	}
 	const url = generateUrl(`apps/text/session/${con.documentId}/mention`)
@@ -44,6 +48,7 @@ const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
 /**
  * Look up user names to mention
+ *
  * @param filter string to look for in the user names
  * @param options options
  * @param options.connection connection to the text editing session
@@ -56,7 +61,7 @@ export async function getUsers(
 	const con = unref(connection)
 	if (!con) {
 		const err = new Error('Disconnected. Could not lookup users to mention.')
-		console.warn(err.message, { err })
+		logger.warn(err.message, { err })
 		return Promise.resolve({})
 	}
 	const response = await axios.post(USERS_LIST_ENDPOINT_URL, { ...con, filter })

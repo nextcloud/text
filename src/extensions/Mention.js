@@ -5,8 +5,8 @@
 
 import { mergeAttributes } from '@tiptap/core'
 import TipTapMention from '@tiptap/extension-mention'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import Mention from './Mention.vue'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import MentionView from './MentionView.vue'
 
 export default TipTapMention.extend({
 	parseHTML() {
@@ -43,12 +43,10 @@ export default TipTapMention.extend({
 	},
 
 	addNodeView() {
-		return VueNodeViewRenderer(Mention)
+		return VueNodeViewRenderer(MentionView)
 	},
 
 	toMarkdown(state, node) {
-		state.write(
-			`@[${node.attrs.label}](mention://user/${encodeURIComponent(node.attrs.id)})`,
-		)
+		state.write(`@[${node.attrs.label}](mention://user/${encodeURIComponent(node.attrs.id)})`)
 	},
 })

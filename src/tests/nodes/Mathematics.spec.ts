@@ -4,20 +4,12 @@
  */
 
 import { getExtensionField } from '@tiptap/core'
-import { test as baseTest } from 'vitest'
-import { createRichEditor } from '../../EditorFactory.ts'
-import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { describe, expect } from 'vitest'
 import markdownit from '../../markdownit/index.js'
 import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
-import { markdownThroughEditor } from '../testHelpers/markdown.js'
+import testEditor from '../testHelpers/testEditor.ts'
 
-const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
-		const editor = createRichEditor()
-		await use(editor)
-		editor.destroy()
-	},
-})
+const test = testEditor.override('extensions', [MathBlock, MathInline])
 
 describe('Mathematics nodes', () => {
 	describe('Node structure', () => {
@@ -37,42 +29,38 @@ describe('Mathematics nodes', () => {
 	})
 
 	describe('Markdown roundtrip - Inline math', () => {
-		test('simple inline formula', () => {
+		test('simple inline formula', ({ markdownThroughEditor }) => {
 			expect(markdownThroughEditor('$E=mc^2$')).toBe('$E=mc^2$')
 		})
 
-		test('inline formula with complex LaTeX', () => {
-			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe(
-				'$\\sum_{i=1}^n i$',
-			)
+		test('inline formula with complex LaTeX', ({ markdownThroughEditor }) => {
+			expect(markdownThroughEditor('$\\sum_{i=1}^n i$')).toBe('$\\sum_{i=1}^n i$')
 		})
 
-		test('inline formula with fractions', () => {
+		test('inline formula with fractions', ({ markdownThroughEditor }) => {
 			expect(markdownThroughEditor('$\\frac{a}{b}$')).toBe('$\\frac{a}{b}$')
 		})
 
-		test('multiple inline formulas', () => {
+		test('multiple inline formulas', ({ markdownThroughEditor }) => {
 			expect(markdownThroughEditor('$a$ and $b$')).toBe('$a$ and $b$')
 		})
 
-		test('inline formula in text', () => {
-			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe(
-				'The formula $E=mc^2$ is famous.',
-			)
+		test('inline formula in text', ({ markdownThroughEditor }) => {
+			expect(markdownThroughEditor('The formula $E=mc^2$ is famous.')).toBe('The formula $E=mc^2$ is famous.')
 		})
 	})
 
 	describe('Markdown roundtrip - Block math', () => {
-		test('simple block formula', () => {
+		test('simple block formula', ({ markdownThroughEditor }) => {
 			expect(markdownThroughEditor('$$\nE=mc^2\n$$')).toBe('$$\nE=mc^2\n$$')
 		})
 
-		test('block formula with complex LaTeX', () => {
+		test('block formula with complex LaTeX', ({ markdownThroughEditor }) => {
 			const input = '$$\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n$$'
 			expect(markdownThroughEditor(input)).toBe(input)
 		})
 
-		test('block formula without newlines', () => {
+		test('block formula without newlines', ({ markdownThroughEditor }) => {
 			// markdown-it-katex accepts this format too
 			expect(markdownThroughEditor('$$E=mc^2$$')).toBe('$$\nE=mc^2\n$$')
 		})
@@ -84,8 +72,8 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertInlineMath({ latex: '' })
 
 			// Inline nodes are inside paragraphs
-			const paragraph = editor.state.doc.firstChild
-			const mathNode = paragraph.firstChild
+			const paragraph = editor.state.doc.firstChild!
+			const mathNode = paragraph.firstChild!
 			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('')
 		})
@@ -103,8 +91,8 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertInlineMath({ latex })
 
 			// Inline nodes are inside paragraphs
-			const paragraph = editor.state.doc.firstChild
-			const mathNode = paragraph.firstChild
+			const paragraph = editor.state.doc.firstChild!
+			const mathNode = paragraph.firstChild!
 			expect(mathNode.type.name).toBe('inlineMath')
 			expect(mathNode.attrs.latex).toBe('E=mc^2')
 		})
@@ -114,7 +102,7 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertBlockMath({ latex: '' })
 
 			// Should have a blockMath node
-			const node = editor.state.doc.firstChild
+			const node = editor.state.doc.firstChild!
 			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('')
 		})
@@ -132,7 +120,7 @@ describe('Mathematics nodes', () => {
 			editor.commands.insertBlockMath({ latex })
 
 			// Should have a blockMath node with the selected text
-			const node = editor.state.doc.firstChild
+			const node = editor.state.doc.firstChild!
 			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('E=mc^2')
 		})
@@ -155,23 +143,15 @@ describe('Mathematics nodes', () => {
 	})
 
 	describe('Serialization to markdown', () => {
-		test('serializes inline math node', ({ editor }) => {
+		test('serializes inline math node', ({ editor, serializeMarkdown }) => {
 			editor.commands.insertInlineMath({ latex: 'E=mc^2' })
 			editor.commands.insertContent(' some more text.')
-
-			const serializer = createMarkdownSerializer(editor.schema)
-			const markdown = serializer.serialize(editor.state.doc)
-
-			expect(markdown).toBe('$E=mc^2$ some more text.')
+			expect(serializeMarkdown()).toBe('$E=mc^2$ some more text.')
 		})
 
-		test('serializes block math node', ({ editor }) => {
+		test('serializes block math node', ({ editor, serializeMarkdown }) => {
 			editor.commands.insertBlockMath({ latex: 'E=mc^2' })
-
-			const serializer = createMarkdownSerializer(editor.schema)
-			const markdown = serializer.serialize(editor.state.doc)
-
-			expect(markdown).toBe('$$\nE=mc^2\n$$')
+			expect(serializeMarkdown()).toBe('$$\nE=mc^2\n$$')
 		})
 	})
 })

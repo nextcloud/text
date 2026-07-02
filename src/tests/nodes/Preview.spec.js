@@ -4,23 +4,11 @@
  */
 
 import { getExtensionField } from '@tiptap/core'
-import { test as baseTest } from 'vitest'
-import createCustomEditor from '../testHelpers/createCustomEditor.ts'
-import {
-	markdownThroughEditor,
-	markdownThroughEditorHtml,
-} from '../testHelpers/markdown.js'
-import Markdown from './../../extensions/Markdown.js'
+import testEditor from '../testHelpers/testEditor.ts'
 import Link from './../../marks/Link.ts'
 import Preview from './../../nodes/Preview.js'
 
-const test = baseTest.extend({
-	editor: async ({ task: _ }, use) => {
-		const editor = createCustomEditor('', [Markdown, Preview, Link])
-		await use(editor)
-		editor.destroy()
-	},
-})
+const test = testEditor.override('extensions', [Preview, Link])
 
 describe('Preview extension', () => {
 	test('exposes toMarkdown function', () => {
@@ -35,15 +23,16 @@ describe('Preview extension', () => {
 		expect(preview.spec.toMarkdown).toBeDefined()
 	})
 
-	test('markdown syntax is preserved through editor', () => {
+	test('markdown syntax is preserved through editor', ({ markdownThroughEditor }) => {
 		const markdown = '[link](https://example.org (preview))'
 		expect(markdownThroughEditor(markdown)).toBe(markdown)
 	})
 
-	test('serializes HTML to markdown', () => {
+	test('serializes HTML to markdown', ({ editor, serializeMarkdown }) => {
 		const markdown = '[link](https://example.org (preview))'
 		const link = '<a href="https://example.org" title="preview">link</a>'
-		expect(markdownThroughEditorHtml(link)).toBe(markdown)
+		editor.commands.setContent(link)
+		expect(serializeMarkdown()).toBe(markdown)
 	})
 
 	test('detects links', ({ editor }) => {
@@ -108,9 +97,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text on both sides', ({ editor }) => {
-		editor.commands.setContent(
-			'<p>before <a href="https://example.org">link</a> after</p>',
-		)
+		editor.commands.setContent('<p>before <a href="https://example.org">link</a> after</p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()
@@ -120,9 +107,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text before only', ({ editor }) => {
-		editor.commands.setContent(
-			'<p>before <a href="https://example.org">link</a></p>',
-		)
+		editor.commands.setContent('<p>before <a href="https://example.org">link</a></p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()
@@ -132,9 +117,7 @@ describe('setPreview Tiptap command', () => {
 	})
 
 	test('splits inline link with text after only', ({ editor }) => {
-		editor.commands.setContent(
-			'<p><a href="https://example.org">link</a> after</p>',
-		)
+		editor.commands.setContent('<p><a href="https://example.org">link</a> after</p>')
 		const { to } = findLinkRange(editor.state.doc)
 		editor.commands.setTextSelection(to)
 		editor.commands.setPreview()

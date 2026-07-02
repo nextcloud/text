@@ -3,19 +3,21 @@
  * SPDX-License-Identifier: MIT
  */
 
+import type { Transaction } from '@tiptap/pm/state'
+
 import {
-	Extension,
 	combineTransactionSteps,
+	Extension,
 	findChildrenInRange,
 	getChangedRanges,
 } from '@tiptap/core'
-import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 
 const RTL = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC'
-const LTR =
-	'A-Za-z\u00C0-\u00D6\u00D8-\u00F6'
-	+ '\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF\u200E\u2C00-\uFB1C'
-	+ '\uFE00-\uFE6F\uFEFD-\uFFFF'
+const LTR
+	= 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6'
+		+ '\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF\u200E\u2C00-\uFB1C'
+		+ '\uFE00-\uFE6F\uFEFD-\uFFFF'
 
 /* eslint-disable no-misleading-character-class */
 const RTL_REGEX = new RegExp('^[^' + LTR + ']*[' + RTL + ']')
@@ -51,21 +53,15 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 	return new Plugin({
 		key: new PluginKey('customTextDirection'),
 		appendTransaction: (transactions, oldState, newState) => {
-			const isCollabOrCompositionTransaction = transactions.some(
-				(tr) => tr.getMeta('y-sync$') || tr.getMeta('composition'),
-			)
-			const inputRulePlugin = newState.plugins.find(
-				(plugin) => plugin.spec.isInputRules,
-			)
-			const isInputRuleTransaction =
-				inputRulePlugin
-				&& transactions.some((tr) => tr.getMeta(inputRulePlugin))
+			const isCollabOrCompositionTransaction = transactions.some((tr) => tr.getMeta('y-sync$') || tr.getMeta('composition'))
+			const inputRulePlugin = newState.plugins.find((plugin) => plugin.spec.isInputRules)
+			const isInputRuleTransaction
+				= inputRulePlugin
+					&& transactions.some((tr) => tr.getMeta(inputRulePlugin))
 			if (isCollabOrCompositionTransaction || isInputRuleTransaction) {
 				return
 			}
-			const docChanges = transactions.some(
-				(transaction) => transaction.docChanged,
-			)
+			const docChanges = transactions.some((transaction) => transaction.docChanged)
 			if (!docChanges) {
 				return
 			}
@@ -79,9 +75,7 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 			const changes = getChangedRanges(transform)
 
 			changes.forEach(({ newRange }) => {
-				const nodes = findChildrenInRange(newState.doc, newRange, (node) =>
-					types.includes(node.type.name),
-				)
+				const nodes = findChildrenInRange(newState.doc, newRange, (node) => types.includes(node.type.name))
 
 				nodes.forEach(({ node, pos }) => {
 					if (node.attrs.dir !== null && node.textContent.length > 0) {
@@ -144,8 +138,7 @@ export const TextDirection = Extension.create<TextDirectionOptions>({
 				attributes: {
 					dir: {
 						default: null,
-						parseHTML: (element) =>
-							element.dir || this.options.defaultDirection,
+						parseHTML: (element) => element.dir || this.options.defaultDirection,
 						renderHTML: (attributes) => {
 							if (attributes.dir === this.options.defaultDirection) {
 								return {}
@@ -161,23 +154,17 @@ export const TextDirection = Extension.create<TextDirectionOptions>({
 	addCommands() {
 		return {
 			setTextDirection:
-				(direction: Direction) =>
-				({ commands }) => {
+				(direction: Direction) => ({ commands }) => {
 					if (!validDirections.includes(direction)) {
 						return false
 					}
 
-					return this.options.types.every((type) =>
-						commands.updateAttributes(type, { dir: direction }),
-					)
+					return this.options.types.every((type) => commands.updateAttributes(type, { dir: direction }))
 				},
 
 			unsetTextDirection:
-				() =>
-				({ commands }) => {
-					return this.options.types.every((type) =>
-						commands.resetAttributes(type, 'dir'),
-					)
+				() => ({ commands }) => {
+					return this.options.types.every((type) => commands.resetAttributes(type, 'dir'))
 				},
 		}
 	},

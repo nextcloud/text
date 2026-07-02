@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import * as connect from '../../apis/connect'
+import * as connect from '../../apis/connect.ts'
 import { provideConnection } from '../../composables/useConnection.js'
 import { SyncService } from '../../services/SyncService.js'
 
@@ -60,9 +60,7 @@ describe('Sync service', () => {
 		service.bus.on('opened', openHandler)
 		await service.open()
 		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
-		expect(openHandler).toHaveBeenCalledWith(
-			expect.objectContaining({ session: initialData.session }),
-		)
+		expect(openHandler).toHaveBeenCalledWith(expect.objectContaining({ session: initialData.session }))
 		expect(openData.value?.hasOwner).toBe(true)
 	})
 })

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue, { defineComponent } from 'vue'
+import { createApp, defineComponent } from 'vue'
 import ViewerComponent from '../components/ViewerComponent.vue'
 
 // The vue instance used inside text constructed with the import above.
-let innerVue
+let innerApp
 
 /**
  * This thin Component wrapper can be rendered inside the viewer.
@@ -20,21 +20,25 @@ let innerVue
  */
 export default defineComponent({
 	name: 'ViewerView',
-	render: (h) => h('div'),
+	render: (h) => h('div', { style: { display: 'contents' } }),
 	props: ViewerComponent.props,
+	inheritAttrs: false,
 	mounted() {
-		innerVue = new Vue({
-			render: (h) => {
-				return h(ViewerComponent, {
-					attrs: this.$attrs,
-					props: this.$props,
-					on: this.$listeners,
-				})
-			},
+		innerApp = createApp(ViewerComponent, {
+			...this.$props,
+			...this.$attrs,
+			onLoadedHandler: () => this.$emit('update:loaded', true),
 		})
-		innerVue.$mount(this.$el)
+		innerApp.mount(this.$el)
 	},
+	// Viewer still uses Vue 2
 	beforeDestroy() {
-		innerVue.$destroy()
+		innerApp.unmount()
+		innerApp = undefined
+	},
+	// Once Viewer migrated to Vue 3
+	beforeUnmount() {
+		innerApp.unmount()
+		innerApp = undefined
 	},
 })

@@ -7,7 +7,7 @@ import type { Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { OrderedList as TiptapOrderedList } from '@tiptap/extension-list'
-import { toggleListCommand } from '../commands'
+import { toggleListCommand } from '../commands/index.ts'
 
 const OrderedList = TiptapOrderedList.extend({
 	addAttributes() {
@@ -28,7 +28,6 @@ const OrderedList = TiptapOrderedList.extend({
 	},
 
 	// Overwrite toMarkdown from prosemirror-markdown to preserve non-1 start numbers in lists
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown(state: MarkdownSerializerState, node: Node) {
 		const start = node.attrs.start ?? 1
 		const maxW = String(start + node.childCount - 1).length

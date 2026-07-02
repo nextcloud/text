@@ -8,7 +8,7 @@
 		<NcButton
 			:title="label"
 			:aria-label="label"
-			:disabled="true"
+			disabled
 			variant="tertiary"
 			class="offline-button">
 			<template #icon>
@@ -49,9 +49,10 @@ export default {
 			}
 			return t('text', 'Not connected to the cloud.')
 		},
+
 		offlineTime() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
-			/* eslint-disable-next-line no-unused-expressions */
+			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 			this.refreshMoment
 			return moment(this.offlineSince).fromNow()
 		},

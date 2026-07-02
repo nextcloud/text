@@ -3,14 +3,23 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Editor } from '@tiptap/core'
-import { inject, type InjectionKey, provide } from 'vue'
+import type { Editor } from '@tiptap/core'
+import type { InjectionKey } from 'vue'
+
+import { inject, provide } from 'vue'
 
 export const editorKey = Symbol('tiptap:editor') as InjectionKey<Editor>
-export const provideEditor = (editor: Editor) => {
+/**
+ *
+ * @param editor to provide
+ */
+export function provideEditor(editor: Editor) {
 	provide(editorKey, editor)
 }
-export const useEditor = () => {
+/**
+ *
+ */
+export function useEditor() {
 	const editor = inject(editorKey)
 	if (!editor) {
 		throw new Error('Failed to inject Editor')

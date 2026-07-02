@@ -6,8 +6,8 @@
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import TrackState from './tracking/TrackState.js'
 import { Span } from './tracking/models.js'
+import TrackState from './tracking/TrackState.js'
 
 const UserColor = Extension.create({
 	name: 'users',
@@ -18,9 +18,7 @@ const UserColor = Extension.create({
 			color: (clientID) => {
 				return (
 					'#'
-					+ Math.floor(
-						Math.abs(Math.sin(clientID) * 16777215) % 16777215,
-					).toString(16)
+					+ Math.floor(Math.abs(Math.sin(clientID) * 16777215) % 16777215).toString(16)
 					+ 'aa'
 				)
 			},
@@ -54,14 +52,14 @@ const UserColor = Extension.create({
 						}
 					},
 					apply(tr, instance, oldState, state) {
-						let { tracked, decos } = instance
+						let { tracked } = instance
 						let tState = this.getState(oldState).tracked
 						if (tr.docChanged) {
 							if (!tr.getMeta('clientID')) {
 								// we have an undefined client id for own transactions
 								tr.setMeta(
 									'clientID',
-									tr.steps.map((i) => this.spec.clientID),
+									tr.steps.map(() => this.spec.clientID),
 								)
 							}
 							// Don't apply transaction when in composition (Github issue #2871)
@@ -70,7 +68,7 @@ const UserColor = Extension.create({
 								tState = tracked
 							}
 						}
-						decos = tState.blameMap
+						const decos = tState.blameMap
 							.map((span) => {
 								const clientID = span.author
 								return Decoration.inline(span.from, span.to, {

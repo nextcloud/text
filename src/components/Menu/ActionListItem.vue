@@ -11,9 +11,9 @@
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:model-value="actionType !== 'button' ? state.active : undefined"
-		close-after-click
-		v-on="$listeners"
+		:modelValue="actionType !== 'button' ? state.active : undefined"
+		closeAfterClick
+		v-bind="$attrs"
 		@click="runAction">
 		<template #icon>
 			<component :is="icon" />
@@ -31,7 +31,7 @@ export default {
 	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
 	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
 	// Hotfix - rename the component to NcActionButton because it represents and renders it.
-	// eslint-disable-next-line vue/match-component-file-name
+
 	name: 'NcActionButton',
 
 	components: {
@@ -40,11 +40,23 @@ export default {
 
 	extends: BaseActionEntry,
 
+	emits: ['triggered'],
+
+	setup: BaseActionEntry.setup,
+
 	mounted() {
-		this.editor?.on('transaction', () => this.updateState())
+		this.editor?.on('transaction', this.onTransaction)
+	},
+
+	beforeUnmount() {
+		this.editor?.off('transaction', this.onTransaction)
 	},
 
 	methods: {
+		onTransaction() {
+			this.updateState()
+		},
+
 		runAction() {
 			const { actionEntry } = this
 
@@ -57,7 +69,7 @@ export default {
 			}
 
 			this.$nextTick(() => {
-				this.$emit('trigged', { ...actionEntry })
+				this.$emit('triggered', { ...actionEntry })
 			})
 		},
 	},

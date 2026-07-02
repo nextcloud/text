@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
-import { open, type OpenData } from '../apis/connect'
-import type { Document, Session } from '../services/SyncService'
+import type { InjectionKey, ShallowRef } from 'vue'
+import type { OpenData } from '../apis/connect.ts'
+import type { Document, Session } from '../services/SyncService.ts'
+
+import { inject, provide, shallowRef } from 'vue'
+import { open } from '../apis/connect.ts'
 
 export interface Connection {
 	documentId: number
@@ -36,6 +39,7 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
 
 /**
  * Handle the connection to the text api and provide it to child components
+ *
  * @param props Props of the editor component.
  * @param props.fileId Fileid of the file.
  * @param props.relativePath Relative path to the file.
@@ -59,15 +63,15 @@ export function provideConnection(
 	const openConnection = async () => {
 		const baseVersionEtag = await getBaseVersionEtag()
 		const guestName = localStorage.getItem('nick') ?? ''
-		const { connection: opened, data } =
-			openInitialSession(props, baseVersionEtag)
-			|| (await open({
-				fileId: props.fileId,
-				guestName,
-				token: props.shareToken,
-				filePath: props.relativePath,
-				baseVersionEtag,
-			}))
+		const { connection: opened, data }
+			= openInitialSession(props, baseVersionEtag)
+				|| (await open({
+					fileId: props.fileId,
+					guestName,
+					token: props.shareToken,
+					filePath: props.relativePath,
+					baseVersionEtag,
+				}))
 		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
@@ -78,14 +82,28 @@ export function provideConnection(
 	return { connection, openConnection, openData }
 }
 
-export const useConnection = () => {
+/**
+ *
+ */
+export function useConnection() {
 	const connection = inject(connectionKey)
 	const openData = inject(openDataKey)
 	return { connection, openData }
 }
 
 /**
+ * Mimic axios error for a conflict while creating the session.
+ *
+ * This will be emitted from the SyncService
+ * and trigger conflict handling in Editor.vue
+ */
+class ConflictError extends Error {
+	response = { status: 412 }
+}
+
+/**
  * Get the connection and additional data from the initial session if available.
+ *
  * @param props Props of the editor component
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
@@ -103,9 +121,7 @@ function openInitialSession(
 	if (props.initialSession) {
 		const { document, session } = props.initialSession
 		if (baseVersionEtag && baseVersionEtag !== document.baseVersionEtag) {
-			throw new ConflictError(
-				'Base version etag did not match when opening initial session.',
-			)
+			throw new ConflictError('Base version etag did not match when opening initial session.')
 		}
 		const connection = {
 			documentId: document.id,
@@ -117,14 +133,4 @@ function openInitialSession(
 		}
 		return { connection, data: props.initialSession }
 	}
-}
-
-/**
- * Mimic axios error for a conflict while creating the session.
- *
- * This will be emitted from the SyncService
- * and trigger conflict handling in Editor.vue
- */
-class ConflictError extends Error {
-	response = { status: 412 }
 }

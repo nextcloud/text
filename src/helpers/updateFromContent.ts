@@ -9,11 +9,19 @@ import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
 import markdownit from '../markdownit/index.js'
 
-export const updateFromContent = (
+/**
+ * Compute an update that changes baseDoc to have content
+ *
+ * @param baseDoc document to start with
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
+ */
+export function updateFromContent(
 	baseDoc: Doc,
 	content: string,
 	{ isRichEditor }: { isRichEditor: boolean },
-): Uint8Array => {
+): Uint8Array {
 	// work on a copy
 	const copy = new Doc()
 	// we might still want to only apply this once
@@ -23,11 +31,19 @@ export const updateFromContent = (
 	return encodeStateAsUpdate(copy, encodeStateVector(baseDoc))
 }
 
-const setContent = (
+/**
+ * Change the document to have the given content
+ *
+ * @param doc document to update
+ * @param content desired content of the final document
+ * @param options options
+ * @param options.isRichEditor use a rich editor for the content
+ */
+function setContent(
 	doc: Doc,
 	content: string,
 	{ isRichEditor }: { isRichEditor: boolean },
-) => {
+) {
 	const html = isRichEditor
 		? markdownit.render(content) + '<p/>'
 		: `<pre>\n${escapeHtml(content)}</pre>`

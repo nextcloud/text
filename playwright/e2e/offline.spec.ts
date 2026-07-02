@@ -4,9 +4,9 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
-import { test as editorTest } from '../support/fixtures/editor'
-import { test as offlineTest } from '../support/fixtures/offline'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import { test as editorTest } from '../support/fixtures/editor.ts'
+import { test as offlineTest } from '../support/fixtures/offline.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const test = mergeTests(editorTest, offlineTest, uploadFileTest)
 

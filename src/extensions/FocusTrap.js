@@ -3,17 +3,27 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable jsdoc/require-param-type */
+/* eslint-disable jsdoc/require-param-description */
+
 import { Extension } from '@tiptap/core'
 
 let ownPaused = false
 
-const checkHasExtension = (editor, extensionName) => {
-	return editor.extensionManager.extensions.some(
-		(extension) => extension.name === extensionName,
-	)
+/**
+ *
+ * @param editor
+ * @param extensionName
+ */
+function checkHasExtension(editor, extensionName) {
+	return editor.extensionManager.extensions.some((extension) => extension.name === extensionName)
 }
 
-const checkHasListExtension = (editor) => {
+/**
+ *
+ * @param editor
+ */
+function checkHasListExtension(editor) {
 	return (
 		checkHasExtension(editor, 'bulletList')
 		|| checkHasExtension(editor, 'orderedList')
@@ -21,15 +31,20 @@ const checkHasListExtension = (editor) => {
 	)
 }
 
-const toggleFocusTrap = ({ editor }) => {
+/**
+ *
+ * @param root0
+ * @param root0.editor
+ */
+function toggleFocusTrap({ editor }) {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
-	const possibleEditorTabCommand =
-		(checkHasListExtension(editor) && editor.can().sinkListItem('listItem'))
-		|| (checkHasExtension(editor, 'table') && editor.can().goToNextCell())
-		|| (checkHasExtension(editor, 'table') && editor.can().goToPreviousCell())
-		|| (checkHasExtension(editor, 'codeBlock') && editor.isActive('codeBlock'))
+	const possibleEditorTabCommand
+		= (checkHasListExtension(editor) && editor.can().sinkListItem('listItem'))
+			|| (checkHasExtension(editor, 'table') && editor.can().goToNextCell())
+			|| (checkHasExtension(editor, 'table') && editor.can().goToPreviousCell())
+			|| (checkHasExtension(editor, 'codeBlock') && editor.isActive('codeBlock'))
 
 	if (possibleEditorTabCommand) {
 		activeTrap?.pause()
@@ -42,7 +57,10 @@ const toggleFocusTrap = ({ editor }) => {
 	}
 }
 
-const unpauseFocusTrap = ({ editor }) => {
+/**
+ *
+ */
+function unpauseFocusTrap() {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 

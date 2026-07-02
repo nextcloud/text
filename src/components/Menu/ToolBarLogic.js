@@ -33,6 +33,7 @@ export default defineComponent({
 	methods: {
 		/**
 		 * Update the disabled state of an menu entry
+		 *
 		 * @param {string} menuKey The key of the menu entry that changed
 		 * @param {boolean} state The new disabled state
 		 */
@@ -48,8 +49,8 @@ export default defineComponent({
 		 */
 		setNextMenuEntry() {
 			// refs is not reactive so we must check this every time
-			const modulo =
-				this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
+			const modulo
+				= this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
 
 			do {
 				this.activeMenuEntry = (this.activeMenuEntry + 1) % modulo
@@ -63,8 +64,8 @@ export default defineComponent({
 		 */
 		setPreviousMenuEntry() {
 			// refs is not reactive so we must check this every time
-			const modulo =
-				this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
+			const modulo
+				= this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
 
 			do {
 				const index = this.activeMenuEntry - 1
@@ -77,6 +78,7 @@ export default defineComponent({
 
 		/**
 		 * Handle navigation in toolbar
+		 *
 		 * @param {KeyboardEvent} event The keyup event
 		 */
 		handleToolbarNavigation(event) {
@@ -90,15 +92,9 @@ export default defineComponent({
 				this.$refs.remainingEntries?.focusButton?.()
 			} else {
 				// The ref is in no order (ordered by the time they needed to mount), so we need to order them like they are shown on the menu
-				const entries = [...this.$refs.menuEntries].sort(
-					(a, b) =>
-						this.visibleEntries.findIndex(
-							({ key }) => key === a.$vnode.data.key,
-						)
-						- this.visibleEntries.findIndex(
-							({ key }) => key === b.$vnode.data.key,
-						),
-				)
+				const entries = [...this.menuEntryRefs]
+					.sort((a, b) => this.visibleEntries.findIndex(({ key }) => key === a.$.vnode.key)
+						- this.visibleEntries.findIndex(({ key }) => key === b.$.vnode.key))
 				entries[this.activeMenuEntry].focusButton()
 			}
 		},

@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Editor, type Content, type Extensions } from '@tiptap/core'
+import type { Content, Extensions } from '@tiptap/core'
 
+import { Editor } from '@tiptap/core'
 import { Document } from '@tiptap/extension-document'
 import { Text } from '@tiptap/extension-text'
-import Paragraph from '../../nodes/Paragraph'
+import Markdown from '../../extensions/Markdown.js'
+import Paragraph from '../../nodes/Paragraph.js'
 
 /**
  *
@@ -20,6 +22,6 @@ export default function createCustomEditor(
 ): Editor {
 	return new Editor({
 		content,
-		extensions: [Document, Paragraph, Text, ...extensions],
+		extensions: [Markdown, Document, Paragraph, Text, ...extensions],
 	})
 }

@@ -3,19 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+import type { SyncService } from './SyncService.ts'
+
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
-
-import type { ShallowRef } from 'vue'
-import { save, saveViaSendBeacon } from '../apis/save'
-import type { Connection } from '../composables/useConnection.ts'
+import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { ERROR_TYPE, type SyncService } from './SyncService'
+import { ERROR_TYPE } from './SyncService.ts'
 
 /**
  * Interval to save the serialized document and the document state
  *
- * @type {number} time in ms
+ * time in ms
  */
 const AUTOSAVE_INTERVAL = 30000
 
@@ -76,7 +77,7 @@ class SaveService {
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
-				e as { response?: { status?: number; data?: { error?: string } } }
+				e as { response?: { status?: number, data?: { error?: string } } }
 			).response
 			if (response?.status === 403) {
 				// Document is now read-only; permissionChange from sync will update the UI
@@ -99,11 +100,14 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		saveViaSendBeacon(this.connection.value, {
+		const success = saveViaSendBeacon(this.connection.value, {
 			version: this.version,
 			autosaveContent: this.serialize(),
 			documentState: this.getDocumentState(),
-		}) && logger.debug('[SaveService] saved using sendBeacon')
+		})
+		if (success) {
+			logger.debug('[SaveService] saved using sendBeacon')
+		}
 	}
 
 	forceSave() {

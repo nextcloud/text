@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+/* eslint-disable @stylistic/max-statements-per-line */
+
 import type MarkdownIt from 'markdown-it'
 
 /**
@@ -24,25 +26,24 @@ export default function wikiLinks(md: MarkdownIt): void {
 		const pos = state.pos
 
 		// Must start with ![[
-		if (src.charCodeAt(pos) !== 0x21 /* ! */) return false
-		if (src.charCodeAt(pos + 1) !== 0x5b /* [ */) return false
-		if (src.charCodeAt(pos + 2) !== 0x5b /* [ */) return false
+		if (src.charCodeAt(pos) !== 0x21 /* ! */) { return false }
+		if (src.charCodeAt(pos + 1) !== 0x5b /* [ */) { return false }
+		if (src.charCodeAt(pos + 2) !== 0x5b /* [ */) { return false }
 
 		// Find the closing ]] — no newlines allowed inside
 		let end = pos + 3
 		while (end < src.length) {
 			const ch = src.charCodeAt(end)
-			if (ch === 0x0a /* \n */) return false
-			if (ch === 0x5d /* ] */ && src.charCodeAt(end + 1) === 0x5d /* ] */)
-				break
+			if (ch === 0x0a /* \n */) { return false }
+			if (ch === 0x5d /* ] */ && src.charCodeAt(end + 1) === 0x5d /* ] */) { break }
 			end++
 		}
-		if (end >= src.length) return false
+		if (end >= src.length) { return false }
 
 		const filename = src.slice(pos + 3, end)
-		if (!filename) return false
+		if (!filename) { return false }
 
-		if (silent) return true
+		if (silent) { return true }
 
 		const token = state.push('image', 'img', 0)
 		token.attrs = [
@@ -66,38 +67,37 @@ export default function wikiLinks(md: MarkdownIt): void {
 		const pos = state.pos
 
 		// Must start with [[
-		if (src.charCodeAt(pos) !== 0x5b /* [ */) return false
-		if (src.charCodeAt(pos + 1) !== 0x5b /* [ */) return false
+		if (src.charCodeAt(pos) !== 0x5b /* [ */) { return false }
+		if (src.charCodeAt(pos + 1) !== 0x5b /* [ */) { return false }
 
 		// Prevent matching `[[` that is itself preceded by `[` (e.g. `[[[foo]]]`)
-		if (pos > 0 && src.charCodeAt(pos - 1) === 0x5b /* [ */) return false
+		if (pos > 0 && src.charCodeAt(pos - 1) === 0x5b /* [ */) { return false }
 
 		// Find the closing ]] — no newlines allowed inside
 		let end = pos + 2
 		while (end < src.length) {
 			const ch = src.charCodeAt(end)
-			if (ch === 0x0a /* \n */) return false
-			if (ch === 0x5d /* ] */ && src.charCodeAt(end + 1) === 0x5d /* ] */)
-				break
+			if (ch === 0x0a /* \n */) { return false }
+			if (ch === 0x5d /* ] */ && src.charCodeAt(end + 1) === 0x5d /* ] */) { break }
 			end++
 		}
-		if (end >= src.length) return false
+		if (end >= src.length) { return false }
 
 		const content = src.slice(pos + 2, end)
-		if (!content) return false
+		if (!content) { return false }
 
 		// Split on first | to get target and optional display text
 		const pipeIdx = content.indexOf('|')
 		const target = pipeIdx === -1 ? content : content.slice(0, pipeIdx)
 		const displayText = pipeIdx === -1 ? content : content.slice(pipeIdx + 1)
 
-		if (!target) return false
+		if (!target) { return false }
 
 		// Reject targets containing characters that conflict with CommonMark inline syntax
 		// ([, ], * are not valid in file names on most systems anyway)
-		if (/[[\]*]/.test(target)) return false
+		if (/[[\]*]/.test(target)) { return false }
 
-		if (silent) return true
+		if (silent) { return true }
 
 		const tokenOpen = state.push('link_open', 'a', 1)
 		tokenOpen.attrs = [

@@ -11,8 +11,7 @@ const Heading = TipTapHeading.extend({
 		return this.options.levels.reduce(
 			(items, level) => ({
 				...items,
-				[`Mod-Shift-${level}`]: () =>
-					this.editor.commands.toggleHeading({ level }),
+				[`Mod-Shift-${level}`]: () => this.editor.commands.toggleHeading({ level }),
 			}),
 			{},
 		)

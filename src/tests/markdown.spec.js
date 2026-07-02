@@ -3,15 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createRichEditor } from '../EditorFactory.ts'
-import { createMarkdownSerializer } from '../extensions/Markdown.js'
-import { typesAvailable } from './../markdownit/callouts.js'
-import markdownit from './../markdownit/index.js'
-import {
-	markdownFromPaste,
-	markdownThroughEditor,
-	markdownThroughEditorHtml,
-} from './testHelpers/markdown.js'
+import { typesAvailable } from '../markdownit/callouts.js'
+import markdownit from '../markdownit/index.js'
+import testEditor from './testHelpers/testEditor.js'
+
+const test = testEditor
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
@@ -20,365 +16,231 @@ import {
  */
 
 describe('Markdown though editor', () => {
-	test('headlines', () => {
+	test('headlines', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('# Test')).toBe('# Test')
 		expect(markdownThroughEditor('## Test')).toBe('## Test')
 		expect(markdownThroughEditor('### Test')).toBe('### Test')
 		expect(markdownThroughEditor('#### Test')).toBe('#### Test')
 		expect(markdownThroughEditor('##### Test')).toBe('##### Test')
 	})
-	test('hard breaks', () => {
+	test('hard breaks', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('hard  \nbreak')).toBe('hard  \nbreak')
 		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard\\\nbreak')
-		expect(markdownThroughEditor('mixed\\\nhard  \nbreak')).toBe(
-			'mixed\\\nhard  \nbreak',
-		)
+		expect(markdownThroughEditor('mixed\\\nhard  \nbreak')).toBe('mixed\\\nhard  \nbreak')
 		expect(markdownThroughEditor('hard<br>break')).toBe('hard<br />break')
 		expect(markdownThroughEditor('hard<br />break')).toBe('hard<br />break')
 		expect(markdownThroughEditor('soft\nbreak')).toBe('soft\nbreak')
 	})
-	test('inline format', () => {
+	test('inline format', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('**Test**')).toBe('**Test**')
 		expect(markdownThroughEditor('__Test__')).toBe('__Test__')
 		expect(markdownThroughEditor('_Test_')).toBe('*Test*')
 		expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
-		expect(markdownThroughEditor('Have an `inline code` element')).toBe(
-			'Have an `inline code` element',
-		)
+		expect(markdownThroughEditor('Have an `inline code` element')).toBe('Have an `inline code` element')
 	})
-	test('ul', () => {
+	test('ul', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('+ foo\n+ bar')).toBe('+ foo\n+ bar')
 		expect(markdownThroughEditor('* foo\n* bar')).toBe('* foo\n* bar')
 		expect(markdownThroughEditor('- foo\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('- foo\n- bar')
 	})
-	test('ol', () => {
+	test('ol', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
 		expect(markdownThroughEditor('0. foo\n1. bar')).toBe('0. foo\n1. bar')
 		// regression test for #4828
 		expect(markdownThroughEditor('42. foo\n43. bar')).toBe('42. foo\n43. bar')
 		// for now we enforce sequential order in ordered lists
-		expect(markdownThroughEditor('2. foo\n19. bar\n2. baz')).toBe(
-			'2. foo\n3. bar\n4. baz',
-		)
+		expect(markdownThroughEditor('2. foo\n19. bar\n2. baz')).toBe('2. foo\n3. bar\n4. baz')
 	})
-	test('paragraph', () => {
+	test('paragraph', ({ markdownThroughEditor }) => {
 		// Test whitespace characters are untouched
-		expect(markdownThroughEditor('foo\nbar\n\nfoobar\nfoo\tbar')).toBe(
-			'foo\nbar\n\nfoobar\nfoo\tbar',
-		)
+		expect(markdownThroughEditor('foo\nbar\n\nfoobar\nfoo\tbar')).toBe('foo\nbar\n\nfoobar\nfoo\tbar')
 	})
-	test('links', () => {
+	test('links', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
 		expect(markdownThroughEditor('[test](foo "bar")')).toBe('[test](foo "bar")')
 		// Issue #2703
-		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe(
-			'[bar\\\\](/uri)',
-		)
+		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 		// Issue #4900
 		expect(markdownThroughEditor('[`code`](foo)')).toBe('[`code`](foo)')
-		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe(
-			'[text with `code` inside](foo)',
-		)
+		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe('[text with `code` inside](foo)')
 		// Wiki-style links (issue #4795)
 		expect(markdownThroughEditor('[[WikiLink]]')).toBe('[[WikiLink]]')
-		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe(
-			'text [[wikiLink]] more',
-		)
+		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe('text [[wikiLink]] more')
 	})
-	test('images', () => {
+	test('images', ({ markdownThroughEditor }) => {
 		// Inline images
-		expect(markdownThroughEditor('text ![test](foo) moretext')).toBe(
-			'text ![test](foo) moretext',
-		)
+		expect(markdownThroughEditor('text ![test](foo) moretext')).toBe('text ![test](foo) moretext')
 		// regression introduced in #3282. See issue #3428.
 		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
-		expect(markdownThroughEditor('Hello\n\n![test](foo)')).toBe(
-			'Hello\n\n![test](foo)',
-		)
+		expect(markdownThroughEditor('Hello\n\n![test](foo)')).toBe('Hello\n\n![test](foo)')
 		// Wiki-style image links (issue #4795)
-		expect(markdownThroughEditor('![[wiki style image.png]]')).toBe(
-			'![[wiki style image.png]]',
-		)
-		expect(markdownThroughEditor('text ![[wiki style image.png]] more')).toBe(
-			'text ![[wiki style image.png]] more',
-		)
-		expect(markdownThroughEditor('Hello\n\n![[wiki style image.png]]')).toBe(
-			'Hello\n\n![[wiki style image.png]]',
-		)
+		expect(markdownThroughEditor('![[wiki style image.png]]')).toBe('![[wiki style image.png]]')
+		expect(markdownThroughEditor('text ![[wiki style image.png]] more')).toBe('text ![[wiki style image.png]] more')
+		expect(markdownThroughEditor('Hello\n\n![[wiki style image.png]]')).toBe('Hello\n\n![[wiki style image.png]]')
 	})
-	test('special characters', () => {
+	test('special characters', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
 	})
-	test('code block', () => {
-		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe(
-			'```\n<?php echo "Hello World";\n```',
-		)
+	test('code block', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe('```\n<?php echo "Hello World";\n```')
 		// Issue #3328
-		expect(markdownThroughEditor('```python\nprint("Hello World")\n```')).toBe(
-			'```python\nprint("Hello World")\n```',
-		)
+		expect(markdownThroughEditor('```python\nprint("Hello World")\n```')).toBe('```python\nprint("Hello World")\n```')
 		// Issue #3739
 		expect(markdownThroughEditor('```\n```')).toBe('```\n```')
 	})
-	test('markdown untouched', () => {
+	test('markdown untouched', ({ markdownThroughEditor }) => {
 		// Issue #2703
-		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe(
-			'[bar\\\\](/uri)',
-		)
+		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 		expect(markdownThroughEditor('## Test \\')).toBe('## Test \\')
 		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('- [ [asd](sdf)')
 	})
 
-	test('horizontal rule', () => {
-		expect(markdownThroughEditor('foo\n\n---\n\nfoobar')).toBe(
-			'foo\n\n---\n\nfoobar',
-		)
-		expect(markdownThroughEditor('***\n\n- [ ] task\n\n***')).toBe(
-			'***\n\n- [ ] task\n\n***',
-		)
-		expect(markdownThroughEditor('___\n\n- [ ] task\n\n___')).toBe(
-			'___\n\n- [ ] task\n\n___',
-		)
+	test('horizontal rule', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('foo\n\n---\n\nfoobar')).toBe('foo\n\n---\n\nfoobar')
+		expect(markdownThroughEditor('***\n\n- [ ] task\n\n***')).toBe('***\n\n- [ ] task\n\n***')
+		expect(markdownThroughEditor('___\n\n- [ ] task\n\n___')).toBe('___\n\n- [ ] task\n\n___')
 	})
 
-	test('table', () => {
-		expect(markdownThroughEditor('| a | b |\n|---|---|\n| 1 | 2 |')).toBe(
-			'| a | b |\n|---|---|\n| 1 | 2 |\n',
-		)
+	test('table', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('| a | b |\n|---|---|\n| 1 | 2 |')).toBe('| a | b |\n|---|---|\n| 1 | 2 |\n')
 	})
 
-	test('escaping', () => {
-		const test =
-			'(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n'
-			+ '\n'
-			+ '* [asdf asdf asdf/asdf](Asdf Asdf)\n'
-			+ '* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n'
-			+ '* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
+	test('escaping', ({ markdownThroughEditor }) => {
+		const test
+			= '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n'
+				+ '\n'
+				+ '* [asdf asdf asdf/asdf](Asdf Asdf)\n'
+				+ '* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n'
+				+ '* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
 		expect(markdownThroughEditor(test)).toBe(test)
-		expect(markdownThroughEditor('This is a [test] for escaping')).toBe(
-			'This is a [test] for escaping',
-		)
-		expect(markdownThroughEditor('This is a [test for escaping')).toBe(
-			'This is a [test for escaping',
-		)
+		expect(markdownThroughEditor('This is a [test] for escaping')).toBe('This is a [test] for escaping')
+		expect(markdownThroughEditor('This is a [test for escaping')).toBe('This is a [test for escaping')
 	})
 
-	test('callouts', () => {
+	test('callouts', ({ markdownThroughEditor }) => {
 		typesAvailable.forEach((type) => {
 			const entry = `::: ${type}\n!${type}!\n\njust do it\n\n:::`
 			expect(markdownThroughEditor(entry)).toBe(entry)
 		})
 	})
 
-	test('preview with url only', () => {
+	test('preview with url only', ({ markdownThroughEditor }) => {
 		const entry = '[https://example.org](https://example.org (preview))'
 		expect(markdownThroughEditor(entry)).toBe(entry)
 	})
 
-	test('preview with text', () => {
+	test('preview with text', ({ markdownThroughEditor }) => {
 		const entry = '[some other text](https://example.org (preview))'
 		expect(markdownThroughEditor(entry)).toBe(entry)
 	})
 
-	test('front matter', () => {
-		expect(markdownThroughEditor('---\nhello: world\n---')).toBe(
-			'---\nhello: world\n---',
-		)
+	test('front matter', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('---\nhello: world\n---')).toBe('---\nhello: world\n---')
 		expect(markdownThroughEditor('---\n---')).toBe('---\n---')
 	})
 
-	test('mentions', () => {
-		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe(
-			'@[username](mention://user/id)',
-		)
-		expect(
-			markdownThroughEditor('pretext @[username](mention://user/id) posttext'),
-		).toBe('pretext @[username](mention://user/id) posttext')
+	test('mentions', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe('@[username](mention://user/id)')
+		expect(markdownThroughEditor('pretext @[username](mention://user/id) posttext')).toBe('pretext @[username](mention://user/id) posttext')
 	})
 
-	test('details', () => {
-		expect(
-			markdownThroughEditor(
-				'<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n',
-			),
-		).toBe('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')
+	test('details', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')).toBe('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')
 	})
 
-	test('nested details', () => {
-		expect(
-			markdownThroughEditor(
-				'<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n',
-			),
-		).toBe(
-			'<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n',
-		)
+	test('nested details', ({ markdownThroughEditor }) => {
+		expect(markdownThroughEditor('<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n')).toBe('<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n')
 	})
 })
 
 describe('Markdown serializer from html', () => {
-	test('ul', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<ul data-bullet="*"><li>1</li><li>2</li></ul>',
-			),
-		).toBe('* 1\n* 2')
-		expect(
-			markdownThroughEditorHtml(
-				'<ul data-bullet="-"><li>1</li><li>2</li></ul>',
-			),
-		).toBe('- 1\n- 2')
+	test('ul', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<ul data-bullet="*"><li>1</li><li>2</li></ul>')).toBe('* 1\n* 2')
+		expect(markdownThroughEditorHtml('<ul data-bullet="-"><li>1</li><li>2</li></ul>')).toBe('- 1\n- 2')
 	})
-	test('paragraph', () => {
-		expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe(
-			'hello\n\nworld',
-		)
+	test('paragraph', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe('hello\n\nworld')
 	})
-	test('hard line breaks', () => {
-		expect(markdownThroughEditorHtml('<p>hard<br />break</p>')).toBe(
-			'hard  \nbreak',
-		)
-		expect(markdownThroughEditorHtml('<p>hard<br>break</p>')).toBe(
-			'hard  \nbreak',
-		)
+	test('hard line breaks', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<p>hard<br />break</p>')).toBe('hard  \nbreak')
+		expect(markdownThroughEditorHtml('<p>hard<br>break</p>')).toBe('hard  \nbreak')
 		expect(markdownThroughEditorHtml('<p>soft\nbreak</p>')).toBe('soft\nbreak')
 	})
-	test('links', () => {
-		expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe(
-			'[test](foo)',
-		)
+	test('links', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe('[test](foo)')
 	})
-	test('images', () => {
-		expect(
-			markdownThroughEditorHtml('<img src="image" alt="description" />'),
-		).toBe('![description](image)')
-		expect(
-			markdownThroughEditorHtml(
-				'<p><img src="image" alt="description" /></p>',
-			),
-		).toBe('![description](image)')
-		expect(
-			markdownThroughEditorHtml(
-				'<p>text<img src="image" alt="description" />moretext</p>',
-			),
-		).toBe('text![description](image)moretext')
+	test('images', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
+		expect(markdownThroughEditorHtml('<p><img src="image" alt="description" /></p>')).toBe('![description](image)')
+		expect(markdownThroughEditorHtml('<p>text<img src="image" alt="description" />moretext</p>')).toBe('text![description](image)moretext')
 	})
 
-	test('callouts', () => {
+	test('callouts', ({ markdownThroughEditorHtml }) => {
 		typesAvailable.forEach((type) => {
-			expect(
-				markdownThroughEditorHtml(
-					`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`,
-				),
-			).toBe(`::: ${type}\n!${type}!\n\njust do it\n\n:::`)
-			expect(
-				markdownThroughEditorHtml(
-					`<p class="callout ${type}">!${type}!</p>`,
-				),
-			).toBe(`::: ${type}\n!${type}!\n\n:::`)
+			expect(markdownThroughEditorHtml(`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`)).toBe(`::: ${type}\n!${type}!\n\njust do it\n\n:::`)
+			expect(markdownThroughEditorHtml(`<p class="callout ${type}">!${type}!</p>`)).toBe(`::: ${type}\n!${type}!\n\n:::`)
 		})
 	})
-	test('callouts with handbook classes', () => {
-		expect(
-			markdownThroughEditorHtml('<p class="callout warning">!warning!</p>'),
-		).toBe('::: warn\n!warning!\n\n:::')
+	test('callouts with handbook classes', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<p class="callout warning">!warning!</p>')).toBe('::: warn\n!warning!\n\n:::')
 	})
 
-	test('table', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>',
-			),
-		).toBe('| greetings |\n|-----------|\n| hello     |\n')
+	test('table', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello     |\n')
 	})
 
-	test('table cell escaping', () => {
+	test('table cell escaping', ({ markdownThroughEditorHtml }) => {
 		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
-		expect(
-			markdownThroughEditorHtml(
-				'<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>',
-			),
-		).toBe('| greetings      |\n|----------------|\n| hello \\| hallo |\n')
+		expect(markdownThroughEditorHtml('<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>')).toBe('| greetings      |\n|----------------|\n| hello \\| hallo |\n')
 	})
 
-	test('table pastes (#2708)', () => {
+	test('table pastes (#2708)', ({ editor, serializeMarkdown }) => {
+		// emulate a paste by using insert content
+		editor.commands.insertContent('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')
 		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
-		expect(
-			markdownFromPaste(
-				'<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>',
-			),
-		).toBe('| greetings |\n|-----------|\n| hello     |\n')
+		expect(serializeMarkdown()).toBe('| greetings |\n|-----------|\n| hello     |\n')
 	})
 
-	test('front matter', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<pre id="frontmatter"><code>some: value</code></pre><h1>Heading</h1>',
-			),
-		).toBe('---\nsome: value\n---\n\n# Heading')
+	test('front matter', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>some: value</code></pre><h1>Heading</h1>')).toBe('---\nsome: value\n---\n\n# Heading')
 		// Test --- within front matter is allowed
-		expect(
-			markdownThroughEditorHtml(
-				'<pre id="frontmatter"><code>---</code></pre><h1>Heading</h1>',
-			),
-		).toBe('----\n---\n----\n\n# Heading')
+		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>---</code></pre><h1>Heading</h1>')).toBe('----\n---\n----\n\n# Heading')
 	})
 
-	test('mentions', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<span class="mention" data-label="username" data-type="user" data-id="id">username</span>',
-			),
-		).toBe('@[username](mention://user/id)')
-		expect(
-			markdownThroughEditorHtml(
-				'<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>',
-			),
-		).toBe('@[whitespace user](mention://user/whitespace%20user)')
-		expect(
-			markdownThroughEditorHtml(
-				'pretext <span class="mention" data-label="username" data-type="user" data-id="id">username</span> posttext',
-			),
-		).toBe('pretext @[username](mention://user/id) posttext')
+	test('mentions', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe('@[username](mention://user/id)')
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>')).toBe('@[whitespace user](mention://user/whitespace%20user)')
+		expect(markdownThroughEditorHtml('pretext <span class="mention" data-label="username" data-type="user" data-id="id">username</span> posttext')).toBe('pretext @[username](mention://user/id) posttext')
 	})
 
-	test('details', () => {
-		expect(
-			markdownThroughEditorHtml(
-				'<details><summary><strong>summary</strong></summary><pre>code</pre></details>',
-			),
-		).toBe(
-			'<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n',
-		)
+	test('details', ({ markdownThroughEditorHtml }) => {
+		expect(markdownThroughEditorHtml('<details><summary><strong>summary</strong></summary><pre>code</pre></details>')).toBe('<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n')
 	})
 
-	test('math (content following math stays, #8654)', () => {
-		const test =
-			'Content above\n\n$$\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n$$\n\nContent below'
-		expect(markdownThroughEditor(test)).toBe(test)
+	test('math (content following math stays, #8654)', ({ markdownThroughEditor }) => {
+		const mathAndContent
+			= 'Content above\n\n$$\n\\sum_{i=1}^n i = \\frac{n(n+1)}{2}\n$$\n\nContent below'
+		expect(markdownThroughEditor(mathAndContent)).toBe(mathAndContent)
 	})
 })
 
 describe('Trailing nodes', () => {
-	test('No extra transaction is added after loading', () => {
+	test('No extra transaction is added after loading', ({ editor, serializeMarkdown }) => {
 		const source = '# My heading\n\n* test\n* test2'
-		const tiptap = createRichEditor()
-		tiptap.commands.setContent(markdownit.render(source))
+		editor.commands.setContent(markdownit.render(source))
 
-		const jsonBefore = tiptap.getJSON()
+		const jsonBefore = editor.getJSON()
 
 		// Focus triggers a transaction which is adding the trailing node
 		// this pushes a step through the collaboration plugin
-		// Resulting markdown will not contain the trailing paragraph so everytime the tiptap instance is created from the html, this transaction gets dispatched
-		tiptap.commands.focus()
+		// Resulting markdown will not contain the trailing paragraph so everytime the editor instance is created from the html, this transaction gets dispatched
+		editor.commands.focus()
 
-		const jsonAfter = tiptap.getJSON()
+		const jsonAfter = editor.getJSON()
 		expect(jsonAfter).toStrictEqual(jsonBefore)
 
-		const serializer = createMarkdownSerializer(tiptap.schema)
-		const md = serializer.serialize(tiptap.state.doc)
-		expect(md).toBe(source)
-		tiptap.destroy()
+		expect(serializeMarkdown()).toBe(source)
 	})
 })

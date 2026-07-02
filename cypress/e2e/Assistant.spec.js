@@ -51,14 +51,11 @@ describe('Assistant', () => {
 		})
 		cy.get('.assistant-modal--content .submit-button').click()
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(2000)
 
 		cy.get('.assistant-modal--content button').contains('Get notified').click()
 
-		cy.get('.assistant-modal--content button .bell-ring-outline-icon').should(
-			'be.visible',
-		)
+		cy.get('.assistant-modal--content button .bell-ring-outline-icon').should('be.visible')
 
 		cy.get('.assistant-modal--content .close-button').click()
 		cy.getActionEntry('assistant').click()
@@ -78,7 +75,6 @@ describe('Assistant', () => {
 		cy.getActionEntry('assistant').click()
 		cy.get('.action-button').contains('Translate').click()
 
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
 
 		cy.get('.assistant-modal--content #input-input').type('Hello World', {

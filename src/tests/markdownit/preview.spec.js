@@ -16,9 +16,7 @@ describe('Preview extension', () => {
 	}
 
 	it('wraps', () => {
-		expect(markdownit.render('[link](https://example.org)')).toBe(
-			'<p><a href="https://example.org">link</a></p>\n',
-		)
+		expect(markdownit.render('[link](https://example.org)')).toBe('<p><a href="https://example.org">link</a></p>\n')
 	})
 
 	it('unwraps preview from paragraph', () => {

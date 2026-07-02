@@ -28,7 +28,7 @@ export default {
 
 				// Notify success
 				showSuccess(t('text', 'Copied to the clipboard'))
-			} catch (error) {
+			} catch {
 				this.copySuccess = false
 				this.copied = true
 				showError(

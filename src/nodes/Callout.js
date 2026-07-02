@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, isNodeActive, mergeAttributes } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import { typesAvailable } from './../markdownit/callouts.js'
-
-import Callout from './Callout.vue'
+import { isNodeActive, mergeAttributes, Node } from '@tiptap/core'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
+import CalloutView from './CalloutView.vue'
+import { typesAvailable } from '../markdownit/callouts.js'
 
 export default Node.create({
 	name: 'callout',
@@ -35,9 +34,7 @@ export default Node.create({
 				parseHTML: (element) => {
 					return (
 						element.getAttribute('data-callout')
-						|| typesAvailable.find((type) =>
-							element.classList.contains(type),
-						)
+						|| typesAvailable.find((type) => element.classList.contains(type))
 						|| (element.classList.contains('warning') && 'warn')
 					)
 				},
@@ -84,19 +81,17 @@ export default Node.create({
 	},
 
 	addNodeView() {
-		return VueNodeViewRenderer(Callout)
+		return VueNodeViewRenderer(CalloutView)
 	},
 
 	addCommands() {
 		return {
 			setCallout:
-				(attributes) =>
-				({ commands }) => {
+				(attributes) => ({ commands }) => {
 					return commands.wrapIn(this.name, attributes)
 				},
 			toggleCallout:
-				(attributes) =>
-				({ commands, state }) => {
+				(attributes) => ({ commands, state }) => {
 					if (!isNodeActive(state, this.name)) {
 						return commands.setCallout(attributes)
 					}
@@ -108,8 +103,7 @@ export default Node.create({
 					return commands.unsetCallout()
 				},
 			unsetCallout:
-				() =>
-				({ commands }) => {
+				() => ({ commands }) => {
 					return commands.lift(this.name)
 				},
 		}

@@ -3,23 +3,21 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect } from '@playwright/test'
-import { test as base } from './upload-file'
 import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
-import { User } from './User'
+import { expect } from '@playwright/test'
+import { test as base } from './upload-file.ts'
+import { User } from './User.ts'
 
 export interface SharedFileFixture {
 	owner: User
 	share: { token: string }
 }
 
-
 /**
  * This test fixture uploads the file to a user's root directory and shares it.
  */
 export const test = base.extend<SharedFileFixture>({
 
-	// eslint-disable-next-line no-empty-pattern
 	owner: async ({ browser, baseURL }, use) => {
 		const account = await createRandomUser()
 		// Important: make sure we authenticate in a clean environment by unsetting storage state.

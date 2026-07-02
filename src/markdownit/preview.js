@@ -5,6 +5,7 @@
 
 /**
  * Check if the given tokens represent a preview in a paragraph
+ *
  * @param {Array} tokens - tokens to check
  * @param {number} i - offset into the tokens
  */

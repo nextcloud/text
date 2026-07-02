@@ -2,19 +2,25 @@
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { ImageOptions as TiptapImageOptions } from '@tiptap/extension-image'
+import type { Node } from '@tiptap/pm/model'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { emit } from '@nextcloud/event-bus'
 import TiptapImage from '@tiptap/extension-image'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import { defaultMarkdownSerializer } from 'prosemirror-markdown'
-import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.ts'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import ImageView from './ImageView.vue'
+import extractAttachmentSrcs from '../plugins/extractAttachmentSrcs.js'
 
 const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')
 
-const Image = TiptapImage.extend({
+interface ImageOptions extends TiptapImageOptions {
+	noLazyImages: boolean
+}
+
+const Image = TiptapImage.extend<ImageOptions>({
 	selectable: false,
 
 	addAttributes() {
@@ -22,10 +28,8 @@ const Image = TiptapImage.extend({
 			...this.parent?.(),
 			isWikiLink: {
 				default: false,
-				parseHTML: (element) =>
-					element.getAttribute('data-wiki-image') === 'true',
-				renderHTML: (attrs) =>
-					attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
+				parseHTML: (element) => element.getAttribute('data-wiki-image') === 'true',
+				renderHTML: (attrs) => attrs.isWikiLink ? { 'data-wiki-image': 'true' } : {},
 			},
 		}
 	},
@@ -48,7 +52,7 @@ const Image = TiptapImage.extend({
 
 	addOptions() {
 		return {
-			...this.parent?.(),
+			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
 		}
 	},
@@ -62,10 +66,11 @@ const Image = TiptapImage.extend({
 			new Plugin({
 				key: imageFileDropPluginKey,
 				props: {
-					handleDrop: (view, event, slice) => {
+					handleDrop: (view, event) => {
 						// only catch the drop if it contains files
 						if (
-							event.dataTransfer.files
+							event.target
+							&& event.dataTransfer?.files
 							&& event.dataTransfer.files.length > 0
 						) {
 							const coordinates = view.posAtCoords({
@@ -76,17 +81,18 @@ const Image = TiptapImage.extend({
 								bubbles: true,
 								detail: {
 									files: event.dataTransfer.files,
-									position: coordinates.pos,
+									position: coordinates?.pos,
 								},
 							})
 							event.target.dispatchEvent(customEvent)
 							return true
 						}
 					},
-					handlePaste: (view, event, slice) => {
+					handlePaste: (view, event) => {
 						// only catch the paste if it contains files
 						if (
-							event.clipboardData.files
+							event.target
+							&& event.clipboardData?.files
 							&& event.clipboardData.files.length > 0
 						) {
 							// let the editor wrapper catch this custom event
@@ -131,12 +137,16 @@ const Image = TiptapImage.extend({
 	},
 
 	/* Serializes an image node as a block image, so it ensures an image is always a block by itself */
-	toMarkdown(state, node, parent, index) {
+	toMarkdown(state: MarkdownSerializerState, node: Node) {
 		if (node.attrs.isWikiLink) {
 			state.write(`![[${node.attrs.src}]]`)
 		} else {
-			node.attrs.alt = node.attrs.alt.toString()
-			defaultMarkdownSerializer.nodes.image(state, node, parent, index)
+			const alt = node.attrs.alt?.toString() || ''
+			// same as in prosemirror-markdown, only with alt changes as above.
+			state.write('![' + state.esc(alt) + ']('
+				+ node.attrs.src.replace(/[()]/g, '\\$&')
+				+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '')
+				+ ')')
 		}
 		state.closeBlock(node)
 	},

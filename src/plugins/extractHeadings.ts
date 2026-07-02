@@ -4,7 +4,8 @@
  */
 
 import type { Node } from '@tiptap/pm/model'
-import type { Heading } from '../composables/useEditorHeadings'
+import type { Heading } from '../composables/useEditorHeadings.ts'
+
 import { slugify } from './slug.js'
 
 /**
@@ -40,7 +41,9 @@ export default function extractHeadings(doc: Node) {
 		}
 		const text = node.textContent
 		// ignore empty headings
-		if (!text) return
+		if (!text) {
+			return
+		}
 		const id = getId(text)
 		const heading = Object.freeze({
 			level: node.attrs.level,

@@ -4,29 +4,39 @@
 -->
 
 <template>
-	<NcActionText data-text-action-entry="character-count" :name="countString">
+	<NextcloudVueNcActionText data-text-action-entry="character-count" :name="countString">
 		<template #icon>
 			<AlphabeticalVariant />
 		</template>
-	</NcActionText>
+	</NextcloudVueNcActionText>
 </template>
 
 <script>
 import { translatePlural as n } from '@nextcloud/l10n'
-import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { defineComponent, ref } from 'vue'
+import NextcloudVueNcActionText from '@nextcloud/vue/components/NcActionText'
 import { useEditor } from '../../composables/useEditor.ts'
+import { logger } from '../../helpers/logger.ts'
 import { AlphabeticalVariant } from '../icons.js'
 
 export default defineComponent({
-	name: 'CharacterCount',
+	// This component is used as a direct child of NcActions.
+	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
+	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
+	// Hotfix - rename the component to NcActionButton because it represents and renders it.
+	name: 'NcActionText',
 	components: {
 		AlphabeticalVariant,
-		NcActionText,
+		NextcloudVueNcActionText,
 	},
+
 	props: {
-		visible: Boolean,
+		visible: {
+			type: Boolean,
+			default: false,
+		},
 	},
+
 	setup() {
 		const { editor } = useEditor()
 		const countString = ref('')
@@ -40,13 +50,15 @@ export default defineComponent({
 			const words = n('text', '%n word', '%n words', wordCount)
 			const chars = n('text', '%n char', '%n chars', charCount)
 			countString.value = [words, chars].join(', ')
-			console.debug({ wordCount, charCount, countString: countString.value })
+			logger.debug({ wordCount, charCount, countString: countString.value })
 		}
 		return { countString, refresh }
 	},
+
 	watch: {
 		visible: 'refresh',
 	},
+
 	created() {
 		this.refresh()
 	},

@@ -12,8 +12,7 @@ const LinkBubble = Extension.create({
 	addCommands() {
 		return {
 			hideLinkBubble:
-				() =>
-				({ state, dispatch }) => {
+				() => ({ state, dispatch }) => {
 					return hideLinkBubble(state, dispatch)
 				},
 		}

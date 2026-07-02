@@ -9,19 +9,19 @@
 		:data-type="isBlock ? 'block-math' : 'inline-math'"
 		:data-latex="node.attrs.latex"
 		:class="wrapperClass">
-		<span ref="mathEl" @click="onMathClick"></span>
+		<span ref="mathEl" @click="onMathClick" />
 		<ShowMathModal
 			v-if="showModal"
 			:show="showModal"
 			:latex="node.attrs.latex"
-			:is-block="isBlock"
+			:isBlock="isBlock"
 			@close="onClose"
 			@save="onSave" />
 	</NodeViewWrapper>
 </template>
 
 <script>
-import { NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewWrapper } from '@tiptap/vue-3'
 import katex from 'katex'
 import ShowMathModal from '../components/Math/ShowMathModal.vue'
 
@@ -33,14 +33,17 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		editor: {
 			type: Object,
 			required: true,
 		},
+
 		updateAttributes: {
 			type: Function,
 			required: true,
 		},
+
 		deleteNode: {
 			type: Function,
 			required: true,
@@ -57,6 +60,7 @@ export default {
 		isBlock() {
 			return this.node.type.name === 'blockMath'
 		},
+
 		wrapperClass() {
 			return this.isBlock ? 'katex-display' : 'katex'
 		},
@@ -85,7 +89,9 @@ export default {
 		},
 
 		onMathClick() {
-			if (!this.editor.isEditable) return
+			if (!this.editor.isEditable) {
+				return
+			}
 			this.showModal = true
 		},
 

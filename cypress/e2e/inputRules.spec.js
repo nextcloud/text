@@ -6,7 +6,7 @@
 import { randUser } from '../utils/index.js'
 const user = randUser()
 
-const testPlainInputRule = (chars, expected) => {
+function testPlainInputRule(chars, expected) {
 	cy.getContent().type(chars)
 	cy.getContent().should('contain', expected)
 	return cy.closeFile()

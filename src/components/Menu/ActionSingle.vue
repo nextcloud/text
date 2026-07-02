@@ -14,7 +14,6 @@
 		:title="tooltip"
 		variant="tertiary"
 		:pressed="actionType !== 'button' ? state.active : undefined"
-		v-on="$listeners"
 		@click="runAction">
 		<template #icon>
 			<component :is="icon" />
@@ -39,18 +38,23 @@ export default {
 
 	extends: BaseActionEntry,
 
-	props: {
-		isItem: {
-			type: Boolean,
-			default: false,
-		},
-	},
+	emits: ['triggered'],
+
+	setup: BaseActionEntry.setup,
 
 	mounted() {
-		this.editor?.on('transaction', () => this.updateState())
+		this.editor?.on('transaction', this.onTransaction)
+	},
+
+	beforeUnmount() {
+		this.editor?.off('transaction', this.onTransaction)
 	},
 
 	methods: {
+		onTransaction() {
+			this.updateState()
+		},
+
 		runAction() {
 			const { actionEntry } = this
 
@@ -63,7 +67,7 @@ export default {
 			}
 
 			this.$nextTick(() => {
-				this.$emit('trigged', { ...actionEntry })
+				this.$emit('triggered', { ...actionEntry })
 			})
 		},
 	},

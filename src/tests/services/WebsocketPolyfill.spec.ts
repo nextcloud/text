@@ -5,22 +5,21 @@
 
 import { describe, expect, it, vi } from 'vitest'
 import { shallowRef } from 'vue'
-import { SyncService } from '../../services/SyncService'
+import { SyncService } from '../../services/SyncService.ts'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
 describe('Init function', () => {
-	vi.mock(import('../../services/SyncService'), () => {
+	vi.mock(import('../../services/SyncService.ts'), () => {
 		const SyncService = vi.fn()
 		SyncService.prototype.bus = { on: vi.fn() }
 		SyncService.prototype.open = vi.fn().mockImplementation(async () => ({}))
 		SyncService.prototype.hasActiveConnection = vi.fn()
 		return { SyncService }
 	})
-	const mockSyncService = () =>
-		new SyncService({
-			connection: shallowRef(undefined),
-			openConnection: vi.fn(),
-		})
+	const mockSyncService = () => new SyncService({
+		connection: shallowRef(undefined),
+		openConnection: vi.fn(),
+	})
 
 	it('returns a websocket polyfill class', () => {
 		const syncService = mockSyncService()

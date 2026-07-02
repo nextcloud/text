@@ -8,29 +8,29 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 
 // Retries fail because folders / files already exist.
-describe('Text PROPFIND extension ', { retries: 0 }, function () {
+describe('Text PROPFIND extension ', { retries: 0 }, function() {
 	const PROPERTY_WORKSPACE = 'nc:rich-workspace'
 	const PROPERTY_WORKSPACE_FILE = 'nc:rich-workspace-file'
 	const PROPERTY_WORKSPACE_FLAT = 'nc:rich-workspace-flat'
 	const PROPERTY_WORKSPACE_FILE_FLAT = 'nc:rich-workspace-file-flat'
 
-	before(function () {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.deleteFile('/Readme.md')
 		cy.deleteFile('/workspace-flat')
 		cy.deleteFile('/workspace')
 	})
 
-	describe('with workspaces enabled', function () {
-		beforeEach(function () {
+	describe('with workspaces enabled', function() {
+		beforeEach(function() {
 			cy.configureText('workspace_enabled', 1)
 		})
 
-		it('always adds rich workspace property', function () {
+		it('always adds rich workspace property', function() {
 			const properties = [
 				PROPERTY_WORKSPACE_FLAT,
 				PROPERTY_WORKSPACE_FILE_FLAT,
@@ -56,7 +56,7 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 			)
 		})
 
-		it('never adds rich workspace property to nested folders for flat properties', function () {
+		it('never adds rich workspace property to nested folders for flat properties', function() {
 			const properties = [
 				PROPERTY_WORKSPACE_FLAT,
 				PROPERTY_WORKSPACE_FILE_FLAT,
@@ -73,7 +73,7 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 		})
 
 		// Android app relies on this to detect rich workspace availability in subfolders properly
-		it('adds rich workspace property to nested folders for the default properties', function () {
+		it('adds rich workspace property to nested folders for the default properties', function() {
 			const properties = [PROPERTY_WORKSPACE, PROPERTY_WORKSPACE_FILE]
 			cy.createFolder('/workspace')
 			cy.visit('/apps/dashboard')
@@ -87,12 +87,12 @@ describe('Text PROPFIND extension ', { retries: 0 }, function () {
 		})
 	})
 
-	describe('with workspaces disabled', function () {
-		beforeEach(function () {
+	describe('with workspaces disabled', function() {
+		beforeEach(function() {
 			cy.configureText('workspace_enabled', 0)
 		})
 
-		it('does not return a rich workspace property', function () {
+		it('does not return a rich workspace property', function() {
 			// FIXME: Ideally we do not need a page context for those tests at all
 			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
 			cy.visit('/apps/dashboard')
