@@ -34,7 +34,7 @@
 import { defineComponent } from 'vue'
 import { ReadOnlyEditEntries, OutlineEntries } from './entries.js'
 
-import { useIsMobileMixin } from '../Editor.provider.js'
+import { useIsMobileMixin, useIsRichWorkspaceMixin } from '../Editor.provider.js'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import ToolBarLogic from './ToolBarLogic.js'
@@ -49,7 +49,7 @@ export default defineComponent({
 
 	extends: ToolBarLogic,
 
-	mixins: [useIsMobileMixin],
+	mixins: [useIsMobileMixin, useIsRichWorkspaceMixin],
 
 	props: {
 		isHidden: {
