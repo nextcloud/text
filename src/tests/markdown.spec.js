@@ -73,9 +73,10 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
 		expect(markdownThroughEditor('[test](foo "bar")')).toBe('[test](foo "bar")')
 		// Issue #2703
-		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe(
-			'[bar\\\\](/uri)',
-		)
+		const test2703 = '[bar\\\\]\n\n[bar\\\\]: /uri\n'
+		const test2703ReferenceFirst = '[bar\\\\]: /uri\n\n[bar\\\\]\n'
+		expect(markdownThroughEditor(test2703)).toBe(test2703)
+		expect(markdownThroughEditor(test2703ReferenceFirst)).toBe(test2703)
 		// Issue #4900
 		expect(markdownThroughEditor('[`code`](foo)')).toBe('[`code`](foo)')
 		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe(
@@ -85,6 +86,28 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[[WikiLink]]')).toBe('[[WikiLink]]')
 		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe(
 			'text [[wikiLink]] more',
+		)
+		// Reference-style links (issue #5820)
+		const referenceShortcutTest =
+			'Test with [Case-Sensitive Reference] in it.\n\n[Case-Sensitive Reference]: https://example.org/\n'
+		expect(markdownThroughEditor(referenceShortcutTest)).toBe(
+			referenceShortcutTest,
+		)
+		const referenceCollapsedTest =
+			'Test with [label][] in it.\n\n[label]: https://example.org/\n'
+		expect(markdownThroughEditor(referenceCollapsedTest)).toBe(
+			referenceCollapsedTest,
+		)
+		const referenceFullTest =
+			'Test with [display text][label] in it.\n\n[label]: https://example.org/ "title"\n'
+		expect(markdownThroughEditor(referenceFullTest)).toBe(referenceFullTest)
+		// References moved to the end of the document
+		expect(
+			markdownThroughEditor(
+				'Test with [reference] in it.\n\n[reference]: /url\n\nsome extra paragraph\n',
+			),
+		).toBe(
+			'Test with [reference] in it.\n\nsome extra paragraph\n\n[reference]: /url\n',
 		)
 	})
 	test('images', () => {
@@ -123,10 +146,6 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('```\n```')).toBe('```\n```')
 	})
 	test('markdown untouched', () => {
-		// Issue #2703
-		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe(
-			'[bar\\\\](/uri)',
-		)
 		expect(markdownThroughEditor('## Test \\')).toBe('## Test \\')
 		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('- [ [asd](sdf)')
 	})
