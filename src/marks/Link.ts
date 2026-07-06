@@ -6,11 +6,11 @@
 import type { ExtendedRegExpMatchArray } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
 import type { Mark, Node } from '@tiptap/pm/model'
-import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
+import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { logger } from '../helpers/logger.ts'
@@ -132,21 +132,17 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			},
 			referenceLabel: {
 				default: null,
-				parseHTML: (element) =>
-					element.getAttribute('data-md-reference-label'),
-				renderHTML: (attrs) =>
-					attrs.referenceLabel
-						? { 'data-md-reference-label': attrs.referenceLabel }
-						: {},
+				parseHTML: (element) => element.getAttribute('data-md-reference-label'),
+				renderHTML: (attrs) => attrs.referenceLabel
+					? { 'data-md-reference-label': attrs.referenceLabel }
+					: {},
 			},
 			referenceType: {
 				default: null,
-				parseHTML: (element) =>
-					element.getAttribute('data-md-reference-type'),
-				renderHTML: (attrs) =>
-					attrs.referenceType
-						? { 'data-md-reference-type': attrs.referenceType }
-						: {},
+				parseHTML: (element) => element.getAttribute('data-md-reference-type'),
+				renderHTML: (attrs) => attrs.referenceType
+					? { 'data-md-reference-type': attrs.referenceType }
+					: {},
 			},
 		}
 	},
@@ -321,13 +317,13 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					| 'shortcut'
 					| 'collapsed'
 					| 'full'
-				const defs =
+				const defs
 					// Cast `state.options` locally as `referenceDefinitions` doesn't exist in upstream type definition
-					(
+					= (
 						state.options as {
 							referenceDefinitions?: Map<
 								string,
-								{ label: string; href: string; title: string | null }
+								{ label: string, href: string, title: string | null }
 							>
 						}
 					).referenceDefinitions

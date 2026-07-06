@@ -72,8 +72,8 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[[WikiLink]]')).toBe('[[WikiLink]]')
 		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe('text [[wikiLink]] more')
 		// Reference-style links (issue #5820)
-		const referenceShortcutTest =
-			'Test with [Case-Sensitive Reference] in it.\n\n[Case-Sensitive Reference]: https://example.org/\n'
+		const referenceShortcutTest
+			= 'Test with [Case-Sensitive Reference] in it.\n\n[Case-Sensitive Reference]: https://example.org/\n'
 		expect(markdownThroughEditor(referenceShortcutTest)).toBe(referenceShortcutTest)
 		const referenceCollapsedTest = 'Test with [label][] in it.\n\n[label]: https://example.org/\n'
 		expect(markdownThroughEditor(referenceCollapsedTest)).toBe(referenceCollapsedTest)

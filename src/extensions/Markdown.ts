@@ -202,12 +202,10 @@ function createMarkdownSerializer(schema: {
 			}
 
 			// Render references at the end of the document
-			const referenceLines = [...referenceDefinitions.values()].map(
-				({ label, href, title }) => {
-					const titlePart = title ? ` "${title.replace(/"/g, '\\"')}"` : ''
-					return `[${label}]: ${href}${titlePart}`
-				},
-			)
+			const referenceLines = [...referenceDefinitions.values()].map(({ label, href, title }) => {
+				const titlePart = title ? ` "${title.replace(/"/g, '\\"')}"` : ''
+				return `[${label}]: ${href}${titlePart}`
+			})
 			return (
 				body.replace(/\n+$/, '') + '\n\n' + referenceLines.join('\n') + '\n'
 			)
