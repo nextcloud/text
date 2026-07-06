@@ -7,6 +7,7 @@
 	<EditorReloader
 		ref="editor-container"
 		:fileId
+		:noLazyImages
 		:relativePath="filePath"
 		:shareToken
 		mime="text/markdown"
@@ -31,6 +32,7 @@ const {
 	fileId = undefined,
 	filePath = undefined,
 	autofocus = false,
+	noLazyImages = false,
 	readonlyBarComponent = undefined,
 	readonlyBarProps = {},
 	shareToken = undefined,
@@ -38,6 +40,7 @@ const {
 	fileId?: number
 	filePath?: string
 	autofocus?: boolean
+	noLazyImages?: boolean
 	readonlyBarComponent?: string
 	readonlyBarProps?: object
 	shareToken?: string
