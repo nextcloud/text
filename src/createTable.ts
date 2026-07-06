@@ -27,7 +27,7 @@ interface CreateTableOptions {
  *
  * @param options Options for the created table
  */
-export async function createTable(options: CreateTableOptions): TextEditorEmbed {
+export async function createTable(options: CreateTableOptions): Promise<TextEditorEmbed> {
 	const { default: PlainTableContentEditor } = await import('./components/Editor/PlainTableContentEditor.vue')
 	const data = reactive({
 		content: options.content ?? '',
