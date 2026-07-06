@@ -119,7 +119,7 @@
     "@vue/tsconfig": "^0.9.1",
     "@vueuse/core": "^14.3.0",
     "cypress": "^15.18.0",
-    "cypress-split": "^1.24.31",
+    "cypress-split": "^1.25.0",
     "cypress-vite": "^1.10.2",
     "eslint": "^10.6.0",
     "eslint-plugin-cypress": "^6.4.1",
