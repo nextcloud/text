@@ -116,7 +116,6 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
 	const app = createApp(
 		CollaborativeEditorApp,
 		{
-			ref: 'editor-container',
 			...data,
 			active: true,
 			fileId: options.fileId,
@@ -146,7 +145,6 @@ export async function createMarkdownContentEditor(options: MarkdownContentEditor
 	const app = createApp(
 		MarkdownContentEditorApp,
 		{
-			ref: 'editor-container',
 			...data,
 			fileId: options.fileId,
 			readonlyBarComponent: options.readonlyBar?.component,
