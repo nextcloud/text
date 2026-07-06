@@ -44,7 +44,10 @@
 				@click="activeMenuEntry = index" />
 
 			<!-- The remaining actions -->
+			<!-- eslint-disable vue/no-unused-refs -->
+			<!-- ref `remainingEntries` is used in ToolBarLogic.js -->
 			<ActionList
+				ref="remainingEntries"
 				:actionEntry="hiddenEntries"
 				:canBeFocussed="activeMenuEntry === visibleEntries.length"
 				forceEnabled
@@ -56,6 +59,7 @@
 					<CharacterCount v-bind="{ visible }" />
 				</template>
 			</ActionList>
+			<!-- eslint-enable vue/no-unused-refs -->
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
