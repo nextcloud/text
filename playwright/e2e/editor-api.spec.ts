@@ -4,8 +4,8 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
-import { test } from '../support/fixtures/editor-api'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import { test } from '../support/fixtures/editor-api.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const fileTest = mergeTests(uploadFileTest, test)
 
@@ -57,7 +57,7 @@ test.describe('editor API at window.OCA.Text - MarkdownContentEditor.vue without
 })
 
 fileTest.describe(
-	'editor API at window.OCA.Text - Editor.vue with collaboration session',
+	'editor API at window.OCA.Text - CollaborativeEditor.vue with collaboration session',
 	() => {
 		fileTest.use({ fileContent: 'some content\n' })
 
@@ -81,9 +81,7 @@ fileTest.describe(
 					readOnly: true,
 				})
 
-				await expect(page.locator(`#${containerId}`)).toContainText(
-					'some content',
-				)
+				await expect(page.locator(`#${containerId}`)).toContainText('some content')
 
 				const content = page.locator(`#${containerId} .ProseMirror`)
 				await content.click()

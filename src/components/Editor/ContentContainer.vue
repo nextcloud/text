@@ -11,17 +11,17 @@
 			role="document"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<TocContainer v-if="useTableOfContents" />
+		<TocContainer v-if="hasTableOfContents" />
 	</div>
 </template>
 
 <script>
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import { EditorContent } from '@tiptap/vue-2'
-import { useEditor } from '../../composables/useEditor.ts'
-import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { EditorContent } from '@tiptap/vue-3'
 import FloatingButtons from './FloatingButtons.vue'
 import TocContainer from './TableOfContents/TocContainer.vue'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 
 export default {
 	name: 'ContentContainer',
@@ -30,25 +30,28 @@ export default {
 		FloatingButtons,
 		TocContainer,
 	},
+
 	props: {
 		readOnly: {
 			type: Boolean,
 			required: true,
 		},
 	},
+
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { isRichEditor, isRichWorkspace, useTableOfContents } =
-			useEditorFlags()
+		const { isRichEditor, isRichWorkspace, hasTableOfContents }
+			= useEditorFlags()
 		return {
 			editor,
 			isMobile,
 			isRichEditor,
 			isRichWorkspace,
-			useTableOfContents,
+			hasTableOfContents,
 		}
 	},
+
 	computed: {
 		showFloatingButtons() {
 			return (

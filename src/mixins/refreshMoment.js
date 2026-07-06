@@ -22,7 +22,7 @@ export default {
 		}, 20000)
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		clearInterval(this.$refreshInterval)
 	},
 }

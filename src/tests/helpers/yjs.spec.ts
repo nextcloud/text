@@ -11,8 +11,8 @@ import {
 	getDocumentState,
 } from '../../helpers/yjs.js'
 
-describe('Yjs base64 wrapped with our helpers', function () {
-	it('applies step generated from document state', function () {
+describe('Yjs base64 wrapped with our helpers', function() {
+	it('applies step generated from document state', function() {
 		const source = new Y.Doc()
 		const target = new Y.Doc()
 		const sourceMap = source.getMap()

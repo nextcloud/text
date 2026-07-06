@@ -7,112 +7,117 @@ import { t } from '@nextcloud/l10n'
 import {
 	getLinkWithPicker,
 	searchProvider,
-} from '@nextcloud/vue/dist/Components/NcRichText.js'
+} from '@nextcloud/vue/components/NcRichText'
+import LinkPickerList from './LinkPickerList.vue'
+import { logger } from '../../../helpers/logger.ts'
 import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 import { getIsActive } from '../../Menu/utils.js'
 import createSuggestions from '../suggestions.js'
 import { getMenuEntries } from './../../Menu/entries.ts'
-import LinkPickerList from './LinkPickerList.vue'
 
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
 
-const filterOut = (e) => {
-	return ['undo', 'redo', 'outline', 'emoji-picker'].indexOf(e.key) > -1
-}
-
 const important = ['task-list', 'table']
+const excluded = ['undo', 'redo', 'outline', 'emoji-picker']
 
-const isValidUrl = (url) => {
+/**
+ *
+ * @param {string} url to check
+ */
+function isValidUrl(url) {
 	try {
 		return Boolean(new URL(url))
-	} catch (e) {
+	} catch {
 		return false
 	}
 }
 
-const sortImportantFirst = (list) => {
+/**
+ *
+ * @param {Array} list of menu entries
+ */
+function sortImportantFirst(list) {
 	return [
 		...list.filter((e) => important.indexOf(e.key) > -1),
 		...list.filter((e) => important.indexOf(e.key) === -1),
 	]
 }
 
-const formattingSuggestions = (query) => {
+/**
+ *
+ * @param {string} query to filter by
+ */
+function formattingSuggestions(query) {
 	const menuEntries = getMenuEntries(false, false)
-	return sortImportantFirst(
-		[
-			...menuEntries.find((e) => e.key === 'headings').children,
-			...menuEntries.find((e) => e.key === 'lists').children,
-			...menuEntries.filter((e) => e.action && !filterOut(e)),
-			...menuEntries.find((e) => e.key === 'blocks').children,
-			{
-				...menuEntries.find((e) => e.key === 'emoji-picker'),
-				action: (command) => command.insertContent(':'),
-			},
-		]
-			.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
-			.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })),
-	)
+	return sortImportantFirst([
+		...menuEntries.find((e) => e.key === 'headings').children,
+		...menuEntries.find((e) => e.key === 'lists').children,
+		...menuEntries.filter((e) => e.action && !excluded.includes(e.key)),
+		...menuEntries.find((e) => e.key === 'blocks').children,
+		{
+			...menuEntries.find((e) => e.key === 'emoji-picker'),
+			action: (command) => command.insertContent(':'),
+		},
+	]
+		.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
+		.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })))
 }
 
-export default () =>
-	createSuggestions({
-		listComponent: LinkPickerList,
-		command: ({ editor, range, props }) => {
-			if (props.action) {
-				const commandChain = editor.chain().deleteRange(range)
-				props.action(commandChain)
-				commandChain.run()
-				return
-			}
-			getLinkWithPicker(props.providerId, true)
-				.then((link) => {
-					const isUrl = isValidUrl(link)
-					if (!isUrl) {
-						const isMarkdown = shouldInterpretAsMarkdown(link)
-						// Insert markdown content (e.g. from `text_templates` app)
-						const content = isMarkdown ? markdownit.render(link) : link
-						editor
-							.chain()
-							.focus()
-							.insertContentAt(range, content + ' ')
-							.run()
-						return
-					}
-
+export default () => createSuggestions({
+	listComponent: LinkPickerList,
+	command: ({ editor, range, props }) => {
+		if (props.action) {
+			const commandChain = editor.chain().deleteRange(range)
+			props.action(commandChain)
+			commandChain.run()
+			return
+		}
+		getLinkWithPicker(props.providerId, true)
+			.then((link) => {
+				const isUrl = isValidUrl(link)
+				if (!isUrl) {
+					const isMarkdown = shouldInterpretAsMarkdown(link)
+					// Insert markdown content (e.g. from `text_templates` app)
+					const content = isMarkdown ? markdownit.render(link) : link
 					editor
 						.chain()
 						.focus()
-						.deleteRange(range)
-						.insertPreview(link)
+						.insertContentAt(range, content + ' ')
 						.run()
+					return
+				}
+
+				editor
+					.chain()
+					.focus()
+					.deleteRange(range)
+					.insertPreview(link)
+					.run()
+			})
+			.catch((error) => {
+				logger.error('Smart picker promise rejected', error)
+			})
+	},
+	items: ({ editor, query }) => {
+		return [
+			...searchProvider(query)
+				.map((p) => {
+					return {
+						suggestGroup: suggestGroupPicker,
+						label: p.title,
+						icon: p.icon_url,
+						providerId: p.id,
+					}
 				})
-				.catch((error) => {
-					console.error('Smart picker promise rejected', error)
-				})
-		},
-		items: ({ editor, query }) => {
-			return [
-				...searchProvider(query)
-					.map((p) => {
-						return {
-							suggestGroup: suggestGroupPicker,
-							label: p.title,
-							icon: p.icon_url,
-							providerId: p.id,
-						}
-					})
-					.filter((e) =>
-						e?.label?.toLowerCase?.()?.includes(query.toLowerCase()),
-					),
-				...formattingSuggestions(query).filter(({ action, isActive }) => {
-					const canRunState = action(editor?.can())
-					const isActiveState =
-						isActive && getIsActive({ isActive }, editor)
-					return canRunState && !isActiveState
-				}),
-			]
-		},
-	})
+				.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase())),
+			...formattingSuggestions(query).filter(({ action, isActive }) => {
+				const canRunState = action(editor?.can())
+				const isActiveState
+					= isActive && getIsActive({ isActive }, editor)
+				return canRunState && !isActiveState
+			}),
+		]
+	},
+})

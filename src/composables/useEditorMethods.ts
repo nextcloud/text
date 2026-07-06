@@ -4,13 +4,19 @@
  */
 
 import type { Editor } from '@tiptap/core'
-import escapeHtml from 'escape-html'
 import type { AwarenessUser } from '../extensions/CollaborationCaret.ts'
+import type { Session } from '../services/SyncService.ts'
+
+import escapeHtml from 'escape-html'
 import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
-import { isUser, type Session } from '../services/SyncService'
+import { isUser } from '../services/SyncService.ts'
 
-export const useEditorMethods = (editor: Editor) => {
+/**
+ *
+ * @param editor to apply methods to
+ */
+export function useEditorMethods(editor: Editor) {
 	const setEditable = (val: boolean) => {
 		if (editor && editor.isEditable !== val) {
 			editor.setEditable(val)
@@ -19,10 +25,10 @@ export const useEditorMethods = (editor: Editor) => {
 
 	const setContent: (
 		content: string,
-		options: { addToHistory?: boolean },
+		options?: { addToHistory?: boolean },
 	) => void = (content, { addToHistory = true } = {}) => {
-		const hasMarkdownContent =
-			editor.extensionManager.extensions.includes(Markdown)
+		const hasMarkdownContent
+			= editor.extensionManager.extensions.includes(Markdown)
 		const html = hasMarkdownContent
 			? markdownit.render(content) + '<p/>'
 			: `<pre>\n${escapeHtml(content)}</pre>`

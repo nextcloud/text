@@ -9,18 +9,19 @@
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
-		<TocContainer v-if="useTableOfContents" />
+		<TocContainer v-if="hasTableOfContents" />
 	</div>
 </template>
 
 <script>
 import { Editor } from '@tiptap/core'
-import { EditorContent } from '@tiptap/vue-2'
-import { inject, watch } from 'vue'
+import { EditorContent } from '@tiptap/vue-3'
+import { inject, markRaw, watch } from 'vue'
+import TocContainer from './Editor/TableOfContents/TocContainer.vue'
 import { provideEditor } from '../composables/useEditor.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
-import TocContainer from './Editor/TableOfContents/TocContainer.vue'
+import { logger } from '../helpers/logger.ts'
 
 export default {
 	name: 'BaseReader',
@@ -39,15 +40,15 @@ export default {
 	setup(props) {
 		// extensions is a factory building a list of extensions for the editor
 		const extensions = inject('extensions')
-		const editor = new Editor({ extensions: extensions() })
+		const editor = markRaw(new Editor({ extensions: extensions() }))
 		provideEditor(editor)
 
-		const { useTableOfContents } = useEditorFlags()
+		const { hasTableOfContents } = useEditorFlags()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		watch(
 			() => props.content,
 			(content) => {
-				console.warn({ content })
+				logger.warn('Content changed. Updating', { content })
 				setContent(content)
 			},
 		)
@@ -56,10 +57,10 @@ export default {
 		// Render the initial content last as it may render Vue components
 		// that break the vue context of this setup function.
 		setContent(props.content, { addToHistory: false })
-		return { editor, useTableOfContents }
+		return { editor, hasTableOfContents }
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor?.destroy()
 	},
 }

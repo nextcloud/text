@@ -30,11 +30,12 @@ const ParentComponent = defineComponent({
 	},
 })
 
-const createWrapper = (editor) =>
-	mount(ParentComponent, {
+function createWrapper(editor) {
+	return mount(ParentComponent, {
 		propsData: { editor },
 		slots: { default: ChildComponent },
 	})
+}
 
 const text1 = 'Level 1 heading'
 const text2 = 'Level 2 heading'

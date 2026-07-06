@@ -4,8 +4,8 @@
  */
 
 import { expect, mergeTests } from '@playwright/test'
-import { test as editorTest } from '../support/fixtures/editor'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import { test as editorTest } from '../support/fixtures/editor.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const test = mergeTests(editorTest, uploadFileTest)
 
@@ -30,4 +30,15 @@ test('applies link mark input rule with dot in text (#7872)', async ({
 		'href',
 		'https://example.org',
 	)
+})
+
+test('code bloc', async ({
+	editor,
+	open,
+}) => {
+	await open()
+	await editor.type('```')
+	await editor.press('Enter')
+	await editor.type('code')
+	await expect(editor.el.locator('code')).toHaveText('code')
 })

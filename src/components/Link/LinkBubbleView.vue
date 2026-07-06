@@ -69,9 +69,9 @@
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
 			<NcTextField
 				ref="hrefField"
+				v-model="newHref"
 				name="newHref"
 				:label="t('text', 'URL')"
-				:value.sync="newHref"
 				@keyup.enter.prevent="updateLink" />
 		</div>
 
@@ -82,7 +82,7 @@
 			:text="sanitizedHref"
 			:limit="1"
 			:interactive="false"
-			:display-fallback="true"
+			displayFallback
 			class="link-view-bubble__reference-list"
 			@loaded="onReferenceListLoaded" />
 	</div>
@@ -91,16 +91,16 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
+import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
-
-import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
-import { PROTOCOLS_TO_LINK_TO } from '../../marks/Link.ts'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
+import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
+import { logger } from '../../helpers/logger.ts'
+import * as Link from '../../marks/Link.ts'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -123,6 +123,7 @@ export default {
 			type: Object,
 			required: true,
 		},
+
 		href: {
 			type: String,
 			default: null,
@@ -138,7 +139,7 @@ export default {
 		return {
 			isEditable: false,
 			edit: true,
-			newHref: null,
+			newHref: '',
 			referenceTitle: null,
 		}
 	},
@@ -176,7 +177,7 @@ export default {
 		isSafeHref() {
 			try {
 				const url = new URL(this.href, window.location)
-				return !!this.href && PROTOCOLS_TO_LINK_TO.includes(url.protocol)
+				return !!this.href && Link.PROTOCOLS_TO_LINK_TO.includes(url.protocol)
 			} catch {
 				return false
 			}
@@ -204,15 +205,21 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
+		this.editor.on('update', this.onUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
 		resetBubble() {
 			this.edit = false
-			this.newHref = null
+			this.newHref = ''
 			this.referenceTitle = null
 		},
 
@@ -221,9 +228,9 @@ export default {
 		},
 
 		onReferenceListLoaded() {
-			this.referenceTitle =
-				this.$refs.referencelist.firstReference?.openGraphObject?.name
-				?? null
+			this.referenceTitle
+				= this.$refs.referencelist.firstReference?.openGraphObject?.name
+					?? null
 		},
 
 		setPreview() {
@@ -232,7 +239,7 @@ export default {
 
 		startEdit() {
 			this.edit = true
-			this.newHref = this.href
+			this.newHref = this.href ?? ''
 			this.$nextTick(() => {
 				this.$refs.hrefField.focus()
 			})
@@ -246,7 +253,7 @@ export default {
 
 		stopEdit() {
 			this.edit = false
-			this.newHref = null
+			this.newHref = ''
 		},
 
 		updateLink() {
@@ -263,7 +270,7 @@ export default {
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			console.debug('selection', selection)
+			logger.debug('selection', selection)
 			this.editor
 				.chain()
 				.extendMarkRange('link')
@@ -283,6 +290,7 @@ export default {
 				.run()
 			this.stopEdit()
 		},
+
 		t,
 	},
 }

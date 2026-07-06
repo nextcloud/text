@@ -21,17 +21,17 @@
 			:text="node.attrs.href"
 			:limit="1"
 			:interactive="!extension.options.isEmbedded"
-			:display-fallback="true" />
+			displayFallback />
 	</NodeViewWrapper>
 </template>
 
 <script>
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
+import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
 
 export default {
-	name: 'Preview',
+	name: 'PreviewView',
 
 	components: {
 		NodeViewWrapper,
@@ -50,9 +50,11 @@ export default {
 
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
+		this.editor.on('update', this.onUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
@@ -63,6 +65,10 @@ export default {
 				.setTextSelection(this.getPos() + 1)
 				.unsetPreview()
 				.run()
+		},
+
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
 		},
 	},
 }

@@ -8,12 +8,12 @@ import { randUser } from '../../utils/index.js'
 const fileName = 'empty.md'
 const user = randUser()
 
-describe('Hard break support', function () {
-	before(function () {
+describe('Hard break support', function() {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.isolateTest({
 			sourceFile: fileName,

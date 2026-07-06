@@ -10,8 +10,8 @@
 		@select="(item) => $emit('select', item)">
 		<template #default="{ item }">
 			<div class="link-picker__item" :data-key="item.key">
-				<compoent :is="item.icon" v-if="typeof item.icon !== 'string'" />
-				<img v-else :src="item.icon" />
+				<component :is="item.icon" v-if="typeof item.icon !== 'string'" />
+				<img v-else :src="item.icon">
 				<div>{{ item.label }}</div>
 			</div>
 		</template>
@@ -29,16 +29,21 @@ export default {
 	components: {
 		SuggestionListWrapper,
 	},
+
 	props: {
 		items: {
 			type: Array,
 			required: true,
 		},
+
 		command: {
 			type: Function,
 			required: true,
 		},
 	},
+
+	emits: ['select'],
+
 	methods: {
 		t,
 		onKeyDown({ event }) {
@@ -48,6 +53,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .link-picker__item {
 	display: flex;

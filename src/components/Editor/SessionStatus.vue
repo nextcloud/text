@@ -21,34 +21,37 @@
 			</NcButton>
 		</div>
 		<SessionList v-if="networkOnline && !hasConnectionIssue">
-			<p slot="lastSaved" class="last-saved">
-				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
-			</p>
+			<template #lastSaved>
+				<p class="last-saved">
+					{{ t('text', 'Last saved') }}: {{ lastSavedString }}
+				</p>
+			</template>
 		</SessionList>
-		<OfflineState v-else :offline-since="offlineSince" />
+		<OfflineState v-else :offlineSince="offlineSince" />
 	</div>
 </template>
 
 <script>
 import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
+import { defineAsyncComponent } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
+import OfflineState from './OfflineState.vue'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 import { ERROR_TYPE } from '../../services/SyncService.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import OfflineState from './OfflineState.vue'
 
 export default {
-	name: 'Status',
+	name: 'SessionStatus',
 
 	components: {
 		NcButton,
 		NcSavingIndicatorIcon,
 		OfflineState,
-		SessionList: () => import('./SessionList.vue'),
+		SessionList: defineAsyncComponent(() => import('./SessionList.vue')),
 	},
 
 	mixins: [useIsMobileMixin, refreshMoment],
@@ -58,14 +61,17 @@ export default {
 			type: Boolean,
 			required: true,
 		},
+
 		dirty: {
 			type: Boolean,
 			required: true,
 		},
+
 		document: {
 			type: Object,
 			default: null,
 		},
+
 		syncError: {
 			type: Object,
 			default: null,
@@ -86,12 +92,14 @@ export default {
 					: t('text', 'Offline, changes will be saved when online')
 			}
 			return this.dirtyStateIndicator
-				? t('text', 'Saving …')
+				? t('text', 'Saving …')
 				: t('text', 'Saved')
 		},
+
 		dirtyStateIndicator() {
 			return this.dirty
 		},
+
 		lastSavedStatusTooltip() {
 			let message = t('text', 'Last saved {lastSave}', {
 				lastSave: this.lastSavedString,
@@ -113,6 +121,7 @@ export default {
 				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISION
 			)
 		},
+
 		saveStatusClass() {
 			if (
 				(this.dirtyStateIndicator && !this.networkOnline)
@@ -122,9 +131,10 @@ export default {
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
 		},
+
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
-			/* eslint-disable-next-line no-unused-expressions */
+			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 			this.refreshMoment
 			const timestamp = this.document?.lastSavedVersionTime
 			return timestamp ? moment(timestamp * 1000).fromNow() : ''
@@ -137,6 +147,7 @@ export default {
 				this.saveService.forceSave()
 			}
 		},
+
 		t,
 	},
 }

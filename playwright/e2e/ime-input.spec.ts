@@ -5,9 +5,11 @@
 
 // Ideas taken from https://github.com/microsoft/playwright/issues/5777 and https://github.com/slab/quill/commit/0ea789f95fc4956287b3995f9495aafa367d4190
 
-import { type Locator, expect, mergeTests } from '@playwright/test'
-import { test as editorTest } from '../support/fixtures/editor'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
+import type { Locator } from '@playwright/test'
+
+import { expect, mergeTests } from '@playwright/test'
+import { test as editorTest } from '../support/fixtures/editor.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const test = mergeTests(editorTest, uploadFileTest)
 
@@ -16,11 +18,11 @@ test.beforeEach(async ({ open }) => {
 })
 
 let composingData = ''
-const withKeyboardEvents = async (
+async function withKeyboardEvents(
 	el: Locator,
 	key: string,
 	callback: () => Promise<void>,
-) => {
+) {
 	composingData += key
 	await el.dispatchEvent('keydown', { key })
 	await callback()

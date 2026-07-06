@@ -13,7 +13,7 @@ export default function isValidMarkdown(content) {
 	try {
 		markdownit.parse(content)
 		return true
-	} catch (e) {
+	} catch {
 		return false
 	}
 }

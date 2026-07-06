@@ -9,16 +9,16 @@
 			v-for="heading in headings"
 			:key="heading.id"
 			:heading="heading"
-			@clicked="emit('heading-clicked')" />
+			@clicked="emit('headingClicked')" />
 	</ul>
 </template>
 
 <script setup>
-import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 import TableOfContentsEntry from './TableOfContentsEntry.vue'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
 
+const emit = defineEmits(['headingClicked'])
 const { headings } = useEditorHeadings()
-const emit = defineEmits(['heading-clicked'])
 </script>
 
 <style lang="scss" scoped>

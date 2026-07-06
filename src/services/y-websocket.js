@@ -8,13 +8,12 @@
  * Modified to match the needs of an http transport.
  */
 
-/* eslint-env browser */
 /* eslint-disable jsdoc/require-param-description */
+/* eslint-disable no-console */
 
 import * as bc from 'lib0/broadcastchannel'
 import * as decoding from 'lib0/decoding'
 import * as encoding from 'lib0/encoding'
-import * as env from 'lib0/environment'
 import * as math from 'lib0/math'
 import { Observable } from 'lib0/observable'
 import * as time from 'lib0/time'
@@ -22,7 +21,7 @@ import * as url from 'lib0/url'
 import * as authProtocol from 'y-protocols/auth'
 import * as awarenessProtocol from 'y-protocols/awareness'
 import * as syncProtocol from 'y-protocols/sync'
-import * as Y from 'yjs' // eslint-disable-line
+import * as Y from 'yjs'
 
 export const messageSync = 0
 export const messageQueryAwareness = 3
@@ -31,6 +30,7 @@ export const messageAuth = 2
 
 /**
  *                       encoder,          decoder,          provider,          emitSynced, messageType
+ *
  * @type {Array<function(encoding.Encoder, decoding.Decoder, WebsocketProvider, boolean,    number):void>}
  */
 const messageHandlers = []
@@ -40,7 +40,6 @@ messageHandlers[messageSync] = (
 	decoder,
 	provider,
 	emitSynced,
-	_messageType,
 ) => {
 	encoding.writeVarUint(encoder, messageSync)
 	const decoderForRemote = decoding.clone(decoder)
@@ -88,8 +87,6 @@ messageHandlers[messageQueryAwareness] = (
 	encoder,
 	_decoder,
 	provider,
-	_emitSynced,
-	_messageType,
 ) => {
 	encoding.writeVarUint(encoder, messageAwareness)
 	encoding.writeVarUint8Array(
@@ -106,8 +103,6 @@ messageHandlers[messageAwareness] = (
 	_encoder,
 	decoder,
 	provider,
-	_emitSynced,
-	_messageType,
 ) => {
 	awarenessProtocol.applyAwarenessUpdate(
 		provider.awareness,
@@ -120,12 +115,8 @@ messageHandlers[messageAuth] = (
 	_encoder,
 	decoder,
 	provider,
-	_emitSynced,
-	_messageType,
 ) => {
-	authProtocol.readAuthMessage(decoder, provider.doc, (_ydoc, reason) =>
-		permissionDeniedHandler(provider, reason),
-	)
+	authProtocol.readAuthMessage(decoder, provider.doc, (_ydoc, reason) => permissionDeniedHandler(provider, reason))
 }
 
 // @todo - this should depend on awareness.outdatedTime
@@ -135,8 +126,9 @@ const messageReconnectTimeout = 70000
  * @param {WebsocketProvider} provider
  * @param {string} reason
  */
-const permissionDeniedHandler = (provider, reason) =>
-	console.warn(`Permission denied to access ${provider.url}.\n${reason}`)
+function permissionDeniedHandler(provider, reason) {
+	return console.warn(`Permission denied to access ${provider.url}.\n${reason}`)
+}
 
 /**
  * @param {WebsocketProvider} provider
@@ -144,12 +136,12 @@ const permissionDeniedHandler = (provider, reason) =>
  * @param {boolean} emitSynced
  * @return {encoding.Encoder}
  */
-const readMessage = (provider, buf, emitSynced) => {
+function readMessage(provider, buf, emitSynced) {
 	const decoder = decoding.createDecoder(buf)
 	const encoder = encoding.createEncoder()
 	const messageType = decoding.readVarUint(decoder)
 	const messageHandler = provider.messageHandlers[messageType]
-	if (/** @type {any} */ (messageHandler)) {
+	if (messageHandler) {
 		messageHandler(encoder, decoder, provider, emitSynced, messageType)
 	} else {
 		console.error('Unable to compute message')
@@ -160,7 +152,7 @@ const readMessage = (provider, buf, emitSynced) => {
 /**
  * @param {WebsocketProvider} provider
  */
-const setupWS = (provider) => {
+function setupWS(provider) {
 	if (provider.shouldConnect && provider.ws === null) {
 		const websocket = new provider._WS(provider.url, provider.protocols)
 		websocket.binaryType = 'arraybuffer'
@@ -189,9 +181,7 @@ const setupWS = (provider) => {
 				// update awareness (all users except local left)
 				awarenessProtocol.removeAwarenessStates(
 					provider.awareness,
-					Array.from(provider.awareness.getStates().keys()).filter(
-						(client) => client !== provider.doc.clientID,
-					),
+					Array.from(provider.awareness.getStates().keys()).filter((client) => client !== provider.doc.clientID),
 					provider,
 				)
 				provider.emit('status', [
@@ -248,7 +238,7 @@ const setupWS = (provider) => {
  * @param {WebsocketProvider} provider
  * @param {ArrayBuffer} buf
  */
-const broadcastMessage = (provider, buf) => {
+function broadcastMessage(provider, buf) {
 	const ws = provider.ws
 	if (provider.wsconnected && ws && ws.readyState === ws.OPEN) {
 		ws.send(buf)
@@ -312,6 +302,7 @@ export class WebsocketProvider extends Observable {
 		/**
 		 * The specified url parameters. This can be safely updated. The changed parameters will be used
 		 * when a new connection is established.
+		 *
 		 * @type {{[key: string]: string}}
 		 */
 		this.params = params
@@ -341,6 +332,7 @@ export class WebsocketProvider extends Observable {
 		this.wsLastMessageReceived = 0
 		/**
 		 * Whether to connect to other peers or not
+		 *
 		 * @type {boolean}
 		 */
 		this.shouldConnect = connect
@@ -350,7 +342,7 @@ export class WebsocketProvider extends Observable {
 		 */
 		this._resyncInterval = 0
 		if (resyncInterval > 0) {
-			this._resyncInterval = /** @type {any} */ (
+			this._resyncInterval = /** @type {number} */ (
 				setInterval(() => {
 					if (
 						this.ws
@@ -369,7 +361,7 @@ export class WebsocketProvider extends Observable {
 
 		/**
 		 * @param {ArrayBuffer} data
-		 * @param {any} origin
+		 * @param {unkown} origin
 		 */
 		this._bcSubscriber = (data, origin) => {
 			if (origin !== this) {
@@ -381,8 +373,9 @@ export class WebsocketProvider extends Observable {
 		}
 		/**
 		 * Listens to Yjs updates and sends them to remote peers (ws and broadcastchannel)
+		 *
 		 * @param {Uint8Array} _update
-		 * @param {any} origin
+		 * @param {unknown} origin
 		 * @param {Y.Doc} doc
 		 */
 		this._updateHandler = (_update, origin, doc) => {
@@ -399,10 +392,10 @@ export class WebsocketProvider extends Observable {
 		/**
 		 * Send an awareness update message when local awareness changes
 		 * modified to only send update about this client.
-		 * @param {any} changed
-		 * @param {any} _origin
+		 *
+		 * ({ added, updated, removed }, _origin) => void
 		 */
-		this._awarenessUpdateHandler = ({ added, updated, removed }, _origin) => {
+		this._awarenessUpdateHandler = () => {
 			// const changedClients = added.concat(updated).concat(removed)
 			const encoder = encoding.createEncoder()
 			encoding.writeVarUint(encoder, messageAwareness)
@@ -423,16 +416,13 @@ export class WebsocketProvider extends Observable {
 				'app closed',
 			)
 		}
-		if (env.isNode && typeof process !== 'undefined') {
-			process.on('exit', this._exitHandler)
-		}
 		awareness.on('update', this._awarenessUpdateHandler)
-		this._checkInterval = /** @type {any} */ (
+		this._checkInterval = /** @type {number} */ (
 			setInterval(() => {
 				if (
 					this.wsconnected
 					&& messageReconnectTimeout
-						< time.getUnixTime() - this.wsLastMessageReceived
+					< time.getUnixTime() - this.wsLastMessageReceived
 				) {
 					// no message received in a long time - not even your own awareness
 					// updates (which are updated every 15 seconds)
@@ -476,9 +466,6 @@ export class WebsocketProvider extends Observable {
 		}
 		clearInterval(this._checkInterval)
 		this.disconnect()
-		if (env.isNode && typeof process !== 'undefined') {
-			process.off('exit', this._exitHandler)
-		}
 		this.awareness.off('update', this._awarenessUpdateHandler)
 		this.doc.off('update', this._updateHandler)
 		super.destroy()

@@ -9,7 +9,7 @@ declare module '*?raw' {
 }
 
 declare module '@nextcloud/vue/composables/useIsMobile' {
-	import { Ref } from 'vue'
+	import type { Ref } from 'vue'
 	export function useIsMobile(): Ref<boolean>
 }
 

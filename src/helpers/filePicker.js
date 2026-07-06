@@ -6,29 +6,34 @@
 import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 
-export const buildFilePicker = (startPath) => {
+/**
+ * Create a file picker with our defaults
+ *
+ * @param {string} startPath path to start from
+ * @param {boolean} allowDirectories whether to allow selecting directories
+ */
+export function buildFilePicker(startPath, allowDirectories = true) {
 	return getFilePickerBuilder(t('text', 'Select file or folder to link to'))
 		.startAt(startPath)
-		.allowDirectories(true)
+		.allowDirectories(allowDirectories)
 		.setMultiSelect(false)
-		.setButtonFactory((nodes, path) => {
-			const buttons = []
-			const node = nodes?.[0]?.attributes?.displayName || nodes?.[0]?.basename
-			const isRoot = nodes?.[0]?.root === nodes?.[0]?.attributes?.filename
-			let label = t('text', 'Choose')
+		.setButtonFactory((nodes) => {
+			const node = nodes?.[0]
+			const nodeName = node?.attributes?.displayName || node?.basename
+			const isRoot = node?.root === node?.attributes?.filename
+			const disabled = isRoot || (!allowDirectories && !node)
 
+			let label = t('text', 'Choose')
 			if (nodes.length === 1 && !isRoot) {
-				label = t('text', 'Choose {file}', { file: node })
+				label = t('text', 'Choose {file}', { file: nodeName })
 			}
 
-			buttons.push({
+			return [{
 				callback: () => {},
 				variant: 'primary',
 				label,
-				disabled: isRoot,
-			})
-
-			return buttons
+				disabled,
+			}]
 		})
 		.build()
 }

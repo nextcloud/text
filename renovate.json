@@ -6,6 +6,7 @@
 	"reviewers": ["max-nextcloud", "mejo-"],
 	"labels": ["dependencies"],
 	"rangeStrategy": "bump",
+	"minimumReleaseAge": "4 days",
 	"rebaseWhen": "conflicted",
 	"ignoreUnstable": false,
 	"baseBranchPatterns": ["main", "stable34", "stable33", "stable32"],
@@ -70,20 +71,9 @@
 			"enabled": false
 		},
 		{
-			"matchPackageNames": ["vue"],
-			"allowedVersions": "<3"
-		},
-		{
-			"matchPackageNames": ["@vue/tsconfig"],
-			"allowedVersions": "<0.6"
-		},
-		{
-			"matchPackageNames": ["vueuse"],
-			"allowedVersions": "<12"
-		},
-		{
-			"matchPackageNames": ["@vue/test-utils"],
-			"allowedVersions": "<2"
+			"description": "Disable minimum release age checks for internal dependencies",
+			"matchPackageNames": ["@nextcloud/*"],
+			"minimumReleaseAge": null
 		}
 	]
 }

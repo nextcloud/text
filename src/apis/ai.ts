@@ -5,6 +5,7 @@
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import { logger } from '../helpers/logger.ts'
 
 /**
  * tag a file as containing AI-generated content.
@@ -15,6 +16,6 @@ export async function markFileAsAiGenerated(fileId: number): Promise<void> {
 	try {
 		await axios.post(generateUrl(`apps/text/ai/tag/${fileId}`))
 	} catch (e) {
-		console.warn('failed to tag file as AI-generated', e)
+		logger.warn('failed to tag file as AI-generated', { e })
 	}
 }

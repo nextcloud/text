@@ -25,13 +25,16 @@ import { nextTick, toRefs } from 'vue'
 import { useEditor } from '../../../composables/useEditor.ts'
 import { useVisibility } from '../../../composables/useVisibility.ts'
 const props = defineProps({ heading: { type: Object, required: true } })
+const emit = defineEmits(['clicked'])
 const { heading } = toRefs(props)
 const { visible } = useVisibility(heading.value.id)
 const { editor } = useEditor()
 
-const emit = defineEmits(['clicked'])
-
-const goto = (id) => {
+/**
+ *
+ * @param {string} id attribute of elemet to go to
+ */
+function goto(id) {
 	const el = editor.view.dom.querySelector(`#${id}`)
 	el?.scrollIntoView({ block: 'start', behavior: 'smooth' })
 	nextTick(() => {

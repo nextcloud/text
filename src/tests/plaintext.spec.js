@@ -7,7 +7,7 @@ import { createPlainEditor, serializePlainText } from './../EditorFactory.ts'
 import spec from './fixtures/spec.js'
 import xssFuzzVectors from './fixtures/xssFuzzVectors.js'
 
-const escapeHTML = (s) => {
+function escapeHTML(s) {
 	// prettier-ignore
 	return s.toString()
 		.split('&').join('&amp;')
@@ -17,7 +17,7 @@ const escapeHTML = (s) => {
 		.split("'").join('&#039;')
 }
 
-const plaintextThroughEditor = (markdown) => {
+function plaintextThroughEditor(markdown) {
 	const content = '<pre>\n' + escapeHTML(markdown) + '</pre>'
 	const tiptap = createPlainEditor()
 	tiptap.commands.setContent(content)
@@ -56,9 +56,7 @@ describe('markdown as plaintext', () => {
 		expect(plaintextThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
 	})
 	test('paragraph', () => {
-		expect(plaintextThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe(
-			'foo\nbar\n\nfoobar\n\tfoobar',
-		)
+		expect(plaintextThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo\nbar\n\nfoobar\n\tfoobar')
 	})
 	test('links', () => {
 		expect(plaintextThroughEditor('[test](foo)')).toBe('[test](foo)')
@@ -71,9 +69,7 @@ describe('markdown as plaintext', () => {
 describe('html as plain text', () => {
 	test('link', () => {
 		expect(plaintextThroughEditor('<a>sdf</a>')).toBe('<a>sdf</a>')
-		expect(plaintextThroughEditor('<a href="foobar">sdf</a>')).toBe(
-			'<a href="foobar">sdf</a>',
-		)
+		expect(plaintextThroughEditor('<a href="foobar">sdf</a>')).toBe('<a href="foobar">sdf</a>')
 	})
 	test('special characters', () => {
 		expect(plaintextThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')

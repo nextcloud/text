@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { VueRenderer } from '@tiptap/vue-2'
+import { VueRenderer } from '@tiptap/vue-3'
 import tippy from 'tippy.js'
 
 export default ({
 	listComponent,
-	items = () => {},
-	command = ({ editor, range, props }) => {},
+	items,
+	command,
 }) => ({
 	items,
 	command,
@@ -20,8 +20,11 @@ export default ({
 		return {
 			onStart: (props) => {
 				component = new VueRenderer(listComponent, {
-					parent: this,
-					propsData: props,
+					editor: props.editor,
+					props: {
+						...props,
+						onSelect: () => popup.length > 0 && popup[0].hide(),
+					},
 				})
 
 				if (!props.clientRect) {
@@ -36,10 +39,6 @@ export default ({
 					interactive: true,
 					trigger: 'manual',
 					placement: 'bottom-start',
-				})
-
-				component.ref.$on('select', () => {
-					popup.length > 0 && popup[0].hide()
 				})
 			},
 

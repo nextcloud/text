@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as base } from './upload-file'
 import { expect } from '@playwright/test'
+import { test as base } from './upload-file.ts'
 
 export interface FolderDescriptionFixture {
 	fileName: string

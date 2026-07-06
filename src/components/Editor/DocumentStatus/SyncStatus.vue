@@ -39,19 +39,24 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+
 		syncError: {
 			type: Object,
 			default: null,
 		},
+
 		hasConnectionIssue: {
 			type: Boolean,
 			default: false,
 		},
+
 		hasIndexedDbConflict: {
 			type: Boolean,
 			default: false,
 		},
 	},
+
+	emits: ['reconnect'],
 
 	computed: {
 		card() {
@@ -76,6 +81,7 @@ export default {
 						'text',
 						'The document could not be loaded. Please check your internet connection.',
 					),
+
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}
@@ -90,6 +96,7 @@ export default {
 			}
 			return {}
 		},
+
 		hasSyncCollision() {
 			return (
 				Boolean(this.hasIndexedDbConflict)
@@ -97,12 +104,15 @@ export default {
 					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
+
 		isLoadingError() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
 		},
+
 		isPreconditionFailed() {
 			return this.isLoadingError && this.syncError.data.status === 412
 		},
+
 		hasWarning() {
 			return (
 				this.syncError
@@ -116,6 +126,7 @@ export default {
 		reconnect() {
 			this.$emit('reconnect')
 		},
+
 		reload() {
 			window.location.reload()
 		},

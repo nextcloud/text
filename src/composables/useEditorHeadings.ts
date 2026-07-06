@@ -3,24 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { emit, subscribe } from '@nextcloud/event-bus'
 import type { Editor } from '@tiptap/core'
-import {
-	inject,
-	provide,
-	ref,
-	shallowRef,
-	type InjectionKey,
-	type Ref,
-	type ShallowRef,
-} from 'vue'
-import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
+import type { InjectionKey, Ref, ShallowRef } from 'vue'
 
-declare module '@nextcloud/event-bus' {
-	export interface NextcloudEvents {
-		'text:toc:toggle': { visible: boolean } | void
-	}
-}
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { inject, onUnmounted, provide, ref, shallowRef } from 'vue'
+import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
 
 export type Heading = {
 	id: string
@@ -35,13 +23,17 @@ export const headingsKey = Symbol('text:headings') as InjectionKey<
 >
 export const displayTocKey = Symbol('text:displaytoc') as InjectionKey<Ref<boolean>>
 
-export const provideEditorHeadings = (editor: Editor) => {
+/**
+ *
+ * @param editor instance to extract headings from
+ */
+export function provideEditorHeadings(editor: Editor) {
 	const headings = shallowRef<Heading[]>([])
 	const displayToc = ref<boolean>(false)
 
 	const updateHeadings = () => {
-		headings.value =
-			headingAnchorPluginKey.getState(editor.state)?.headings ?? []
+		headings.value
+			= headingAnchorPluginKey.getState(editor.state)?.headings ?? []
 	}
 	updateHeadings() // Initial sync on setup
 	editor.on('update', ({ transaction }) => {
@@ -52,19 +44,26 @@ export const provideEditorHeadings = (editor: Editor) => {
 
 	provide(headingsKey, headings)
 	provide(displayTocKey, displayToc)
-	subscribe('text:toc:toggle', (event) => {
+	const onTocToggle = (event: { visible: boolean } | undefined) => {
 		if (event?.visible !== undefined) {
 			displayToc.value = event.visible
 		} else {
 			displayToc.value = !displayToc.value
 		}
 		emit('text:toc:toggled', displayToc.value)
+	}
+	subscribe('text:toc:toggle', onTocToggle)
+	onUnmounted(() => {
+		unsubscribe('text:toc:toggle', onTocToggle)
 	})
 
 	return { displayToc, headings, updateHeadings }
 }
 
-export const useEditorHeadings = () => {
+/**
+ *
+ */
+export function useEditorHeadings() {
 	const headings = inject(headingsKey)
 	const displayToc = inject(displayTocKey)
 	return { displayToc, headings }

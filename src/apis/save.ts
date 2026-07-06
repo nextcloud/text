@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+import type { Document } from '../services/SyncService.ts'
+
 import { getRequestToken } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
-import type { Document } from '../services/SyncService'
+import { unref } from 'vue'
 
 interface SaveData {
 	version: number
@@ -24,6 +26,7 @@ interface SaveResponse {
 
 /**
  * Save document
+ *
  * @param connection the active connection
  * @param data data save
  */
@@ -52,6 +55,7 @@ export function save(
 
 /**
  * Save document via `navigator.sendBeacon()`
+ *
  * @param connection the active connection
  * @param data data to save
  */

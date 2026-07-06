@@ -22,7 +22,7 @@ function detectReferenceForm(
 	state: StateInline,
 	startPos: number,
 	endPos: number,
-): { label: string; type: RefType } | undefined {
+): { label: string, type: RefType } | undefined {
 	const savedPos = state.pos
 	const labelEnd = state.md.helpers.parseLinkLabel(state, startPos)
 	state.pos = savedPos

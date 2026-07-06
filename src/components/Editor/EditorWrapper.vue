@@ -17,10 +17,10 @@
 
 <script>
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { READ_ONLY_ACTIONS } from './Wrapper.provider.js'
+import { READ_ONLY_ACTIONS } from './EditorWrapper.provider.js'
 
 export default {
-	name: 'Wrapper',
+	name: 'EditorWrapper',
 	provide() {
 		const val = {}
 
@@ -40,11 +40,9 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		contentLoaded: {
-			type: Boolean,
-			default: true,
-		},
 	},
+
+	emits: ['readOnlyToggled'],
 
 	setup() {
 		const { isRichEditor, isRichWorkspace } = useEditorFlags()
@@ -53,7 +51,7 @@ export default {
 
 	methods: {
 		readOnlyToggle() {
-			this.$emit('read-only-toggled')
+			this.$emit('readOnlyToggled')
 		},
 	},
 }

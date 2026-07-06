@@ -7,9 +7,9 @@
 	<a
 		data-text-el="editor-outline"
 		class="editor__toc-outline"
-		@mouseenter="$emit('show-toc')"
-		@click="$emit('show-toc')"
-		@keydown.enter="$emit('show-toc')">
+		@mouseenter="$emit('showToc')"
+		@click="$emit('showToc')"
+		@keydown.enter="$emit('showToc')">
 		<TocOutlineEntry
 			v-for="heading in headings"
 			:key="heading.id"
@@ -17,9 +17,11 @@
 	</a>
 </template>
 
-<script setup>
-import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
+<script setup lang="ts">
 import TocOutlineEntry from './TocOutlineEntry.vue'
+import { useEditorHeadings } from '../../../composables/useEditorHeadings.ts'
+
+defineEmits<{ showToc: [] }>()
 
 const { headings } = useEditorHeadings()
 </script>

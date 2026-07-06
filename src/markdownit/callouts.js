@@ -7,16 +7,22 @@ import container from 'markdown-it-container'
 
 export const typesAvailable = ['info', 'warn', 'error', 'success']
 
-const buildRender = (type) => (tokens, idx, options, env, slf) => {
-	const tag = tokens[idx]
+/**
+ *
+ * @param {string} type one of 'info', 'warn', 'error' and 'success'
+ */
+function buildRender(type) {
+	return (tokens, idx, options, env, slf) => {
+		const tag = tokens[idx]
 
-	// add attributes to the opening tag
-	if (tag.nesting === 1) {
-		tag.attrSet('data-callout', type)
-		tag.attrJoin('class', `callout callout-${type}`)
+		// add attributes to the opening tag
+		if (tag.nesting === 1) {
+			tag.attrSet('data-callout', type)
+			tag.attrJoin('class', `callout callout-${type}`)
+		}
+
+		return slf.renderToken(tokens, idx, options, env, slf)
 	}
-
-	return slf.renderToken(tokens, idx, options, env, slf)
 }
 
 /**

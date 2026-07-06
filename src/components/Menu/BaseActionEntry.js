@@ -3,14 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable jsdoc/valid-types */
-
-import debounce from 'debounce'
-
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import debounce from 'debounce'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorHeadings } from '../../composables/useEditorHeadings.ts'
-import { useReadOnlyActions } from '../Editor/Wrapper.provider.js'
+import { useReadOnlyActions } from '../Editor/EditorWrapper.provider.js'
 import { getActionState, getActionType, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
@@ -42,6 +39,7 @@ const BaseActionEntry = {
 			actionType: getActionType(this.actionEntry),
 		}
 	},
+	emits: ['disabled'],
 	computed: {
 		label() {
 			const { label } = this.actionEntry
@@ -78,7 +76,7 @@ const BaseActionEntry = {
 		// Initially set the tabindex
 		this.setTabIndexOnButton()
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.off('update', this.$_updateState)
 		this.editor.off('selectionUpdate', this.$_updateState)
 	},
@@ -89,8 +87,8 @@ const BaseActionEntry = {
 		},
 		setTabIndexOnButton() {
 			/** @type {HTMLButtonElement} */
-			const button =
-				this.$el.tagName.toLowerCase() === 'button'
+			const button
+				= this.$el.tagName.toLowerCase() === 'button'
 					? this.$el
 					: this.$el.querySelector('button')
 
@@ -105,8 +103,8 @@ const BaseActionEntry = {
 		 */
 		focusButton() {
 			/** @type {HTMLButtonElement} */
-			const button =
-				this.$el.tagName.toLowerCase() === 'button'
+			const button
+				= this.$el.tagName.toLowerCase() === 'button'
 					? this.$el
 					: this.$el.querySelector('button')
 			button.focus()

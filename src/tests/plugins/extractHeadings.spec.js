@@ -75,7 +75,7 @@ describe('extractHeadings', () => {
 	})
 })
 
-const prepareDoc = (content, extraExtensions = []) => {
+function prepareDoc(content, extraExtensions = []) {
 	const editor = createCustomEditor(content, [Heading, ...extraExtensions])
 	const doc = editor.state.doc
 	editor.destroy()
