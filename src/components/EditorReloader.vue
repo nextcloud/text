@@ -41,9 +41,6 @@ defineExpose({
 	get editor() {
 		return editorComponent.value?.editor
 	},
-	get debugYjsData() {
-		return editorComponent.value?.debugYjsData
-	},
 	get setContent() {
 		return editorComponent.value?.setContent
 	},
