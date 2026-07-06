@@ -12,8 +12,8 @@
   "scripts": {
     "build": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=4096' vite --mode production build",
     "dev": "NODE_ENV=development NODE_OPTIONS='--max-old-space-size=4096' vite --mode development build",
-    "lint": "eslint --ext .js,.ts,.vue src cypress playwright",
-    "lint:fix": "eslint --ext .js,.ts,.vue src cypress playwright --fix",
+    "lint": "tsc && eslint --ext .js,.ts,.vue src cypress playwright",
+    "lint:fix": "tsc && eslint --ext .js,.ts,.vue src cypress playwright --fix",
     "serve": "BASE=${BASE:-/apps/text} NODE_ENV=development vite --mode development serve --host",
     "start:nextcloud": "node playwright/start-nextcloud-server.mjs",
     "test": "NODE_ENV=test vitest run",
