@@ -30,21 +30,13 @@ export default {
 	},
 
 	methods: {
-		toggle() {
+		toggle(enabled) {
 			// FIXME: save to app config
-			if (this.showWorkspace) {
-				emit('Text::showRichWorkspace')
-				axios.post(generateUrl('/apps/text/settings'), {
-					key: 'workspace_enabled',
-					value: '1',
-				})
-			} else {
-				emit('Text::hideRichWorkspace')
-				axios.post(generateUrl('/apps/text/settings'), {
-					key: 'workspace_enabled',
-					value: '0',
-				})
-			}
+			emit(enabled ? 'Text::showRichWorkspace' : 'Text::hideRichWorkspace')
+			axios.post(generateUrl('/apps/text/settings'), {
+				key: 'workspace_enabled',
+				value: enabled ? '1' : '0',
+			})
 		},
 
 		t,
