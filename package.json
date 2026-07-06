@@ -76,7 +76,7 @@
     "@tiptap/pm": "3.23.6",
     "@tiptap/suggestion": "3.23.6",
     "@tiptap/vue-3": "^3.23.6",
-    "@vueuse/shared": "^11.3.0",
+    "@vueuse/shared": "^14.3.0",
     "debounce": "^3.0.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
