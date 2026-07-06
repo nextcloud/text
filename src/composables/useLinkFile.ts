@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node } from '@nextcloud/files'
 import type { Editor } from '@tiptap/core'
 import type { FileStat, ResponseDataDetailed } from 'webdav'
 
@@ -57,8 +58,13 @@ export function useLinkFile({
  *
  * @param startPath path to start the file picker on
  */
-async function pickFile(startPath: string) {
-	const filePicker = buildFilePicker(startPath)
+async function pickFile(startPath: string): Promise<Node | undefined> {
+	let filePicker
+	try {
+		filePicker = buildFilePicker(startPath)
+	} catch {
+		return
+	}
 	const file = await filePicker.pick()
 	const client = getClient()
 	const result = (await client.stat(`${defaultRootPath}${file}`, {
