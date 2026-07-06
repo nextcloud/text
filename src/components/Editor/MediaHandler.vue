@@ -180,9 +180,14 @@ export default {
 				return
 			}
 
-			const filePicker = buildFilePicker(this.startPath, false)
+			let filePath
+			try {
+				const filePicker = buildFilePicker(this.startPath, false)
+				filePath = await filePicker.pick()
+			} catch {
+				return
+			}
 
-			const filePath = await filePicker.pick()
 			if (filePath) {
 				this.insertFromPath(filePath)
 			}

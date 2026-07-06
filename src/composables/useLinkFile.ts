@@ -59,13 +59,13 @@ export function useLinkFile({
  * @param startPath path to start the file picker on
  */
 async function pickFile(startPath: string): Promise<Node | undefined> {
-	let filePicker
+	let file
 	try {
-		filePicker = buildFilePicker(startPath)
+		const filePicker = buildFilePicker(startPath)
+		file = await filePicker.pick()
 	} catch {
 		return
 	}
-	const file = await filePicker.pick()
 	const client = getClient()
 	const result = (await client.stat(`${defaultRootPath}${file}`, {
 		details: true,
