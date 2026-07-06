@@ -47,6 +47,9 @@ defineExpose({
 	get save() {
 		return editorComponent.value?.save
 	},
+	get saveWhenDirty() {
+		return editorComponent.value?.saveWhenDirty
+	},
 	get close() {
 		return editorComponent.value?.close
 	},

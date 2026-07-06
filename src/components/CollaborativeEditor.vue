@@ -547,10 +547,8 @@ export default defineComponent({
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
-		if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
-			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.saveService.save()])
-		}
+		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
 		removeFromDebugging(this)
 	},
@@ -824,6 +822,12 @@ export default defineComponent({
 
 		async save() {
 			await this.saveService.save()
+		},
+
+		async saveWhenDirty() {
+			if (this.dirty && !this.hasOutdatedDocument && !this.hasSyncCollision) {
+				await this.save()
+			}
 		},
 
 		async disconnect() {

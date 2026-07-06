@@ -127,11 +127,10 @@ export default {
 	methods: {
 		async close() {
 			this.saving = true
-			setTimeout(async () => {
-				await this.$refs.editor.save?.()
-				await this.$refs.editor.close?.()
-				callMobileMessage('close')
-			}, 0)
+			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+			await Promise.any([timeout, this.$refs.editor.saveWhenDirty?.()])
+			await this.$refs.editor.close?.()
+			callMobileMessage('close')
 		},
 
 		share() {
