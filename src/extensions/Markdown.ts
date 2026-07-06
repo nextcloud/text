@@ -151,7 +151,8 @@ const Markdown = Extension.create({
 								|| (slice.content.firstChild?.childCount ?? 0) > 1
 							) {
 								// Selected several nodes or several children of one block node
-								return clipboardSerializer(this.editor.schema).serialize(slice.content)
+								const doc = this.editor.schema.topNodeType.create(null, slice.content)
+								return clipboardSerializer(this.editor.schema).serialize(doc)
 							} else if (slice.content.firstChild?.isLeaf) {
 								return slice.content.firstChild.textContent
 							} else if (slice.content.firstChild) {
