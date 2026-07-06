@@ -5,7 +5,7 @@
 
 import container from 'markdown-it-container'
 
-export const typesAvailable = ['info', 'warn', 'error', 'success']
+export const typesAvailable = ['info', 'warn', 'error', 'success', 'question']
 
 const buildRender = (type) => (tokens, idx, options, env, slf) => {
 	const tag = tokens[idx]
