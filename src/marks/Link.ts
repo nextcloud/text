@@ -10,7 +10,6 @@ import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
-import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { logger } from '../helpers/logger.ts'
@@ -317,26 +316,6 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					| 'shortcut'
 					| 'collapsed'
 					| 'full'
-				const defs
-					// Cast `state.options` locally as `referenceDefinitions` doesn't exist in upstream type definition
-					= (
-						state.options as {
-							referenceDefinitions?: Map<
-								string,
-								{ label: string, href: string, title: string | null }
-							>
-						}
-					).referenceDefinitions
-				if (defs) {
-					const key = normalizeReference(label)
-					if (!defs.has(key)) {
-						defs.set(key, {
-							label,
-							href: mark.attrs.href as string,
-							title: (mark.attrs.title as string) ?? null,
-						})
-					}
-				}
 				switch (type) {
 					case 'shortcut':
 						return ']'

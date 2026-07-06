@@ -30,8 +30,10 @@ import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
+import Link from '../marks/Link.ts'
 import transformPastedHTML from './transformPastedHTML.ts'
 
 // taken from prosemirror-markdown
@@ -191,13 +193,34 @@ function createMarkdownSerializer(schema: {
 			extractMarksToMarkdown(schema.marks),
 		),
 		serialize(content: Node) {
-			// Extend serialize options to carry reference definitions (populated by `toMarkdown` callbacks in link mark)
-			const referenceDefinitions = new Map()
 			const body = this.serializer.serialize(content, {
 				tightLists: true,
-				referenceDefinitions,
 			} as { tightLists: boolean })
 
+			const referenceDefinitions = new Map()
+			content.descendants((node: Node) => {
+				const link = node.marks.find((m: Mark) => m.type.name === Link.name)
+				if (!link) {
+					return
+				}
+				const { href, referenceLabel: label, referenceType: type, title } = link.attrs as {
+					href: string
+					referenceLabel?: string
+					referenceType?: string
+					title?: string
+				}
+				if (label && type) {
+					const key = normalizeReference(label)
+					if (!referenceDefinitions.has(key)) {
+						referenceDefinitions.set(key, {
+							label,
+							href,
+							title: title ?? null,
+						})
+					}
+				}
+				return false // do not descend into nodes that already have a link mark.
+			})
 			if (referenceDefinitions.size === 0) {
 				return body
 			}
