@@ -68,22 +68,6 @@
 			],
 			"matchBaseBranches": ["stable34", "stable33", "stable32"],
 			"enabled": false
-		},
-		{
-			"matchPackageNames": ["vue"],
-			"allowedVersions": "<3"
-		},
-		{
-			"matchPackageNames": ["@vue/tsconfig"],
-			"allowedVersions": "<0.6"
-		},
-		{
-			"matchPackageNames": ["vueuse"],
-			"allowedVersions": "<12"
-		},
-		{
-			"matchPackageNames": ["@vue/test-utils"],
-			"allowedVersions": "<2"
 		}
 	]
 }
