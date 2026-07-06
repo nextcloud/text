@@ -95,7 +95,7 @@ export function useConnection() {
  * Mimic axios error for a conflict while creating the session.
  *
  * This will be emitted from the SyncService
- * and trigger conflict handling in Editor.vue
+ * and trigger conflict handling in CollaborativeEditor.vue
  */
 class ConflictError extends Error {
 	response = { status: 412 }

@@ -57,7 +57,7 @@ test.describe('editor API at window.OCA.Text - MarkdownContentEditor.vue without
 })
 
 fileTest.describe(
-	'editor API at window.OCA.Text - Editor.vue with collaboration session',
+	'editor API at window.OCA.Text - CollaborativeEditor.vue with collaboration session',
 	() => {
 		fileTest.use({ fileContent: 'some content\n' })
 
