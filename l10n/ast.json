@@ -25,7 +25,6 @@
     "Guest" : "Convidáu",
     "submit" : "unviar",
     "you" : "tu",
-    "Insert an attachment" : "Inxertar un axuntu",
     "Preview options" : "Opciones de la previsualización",
     "Text only" : "Namás testu",
     "Show link preview" : "Amosar la previsualización del enllaz",
@@ -35,7 +34,6 @@
     "guest" : "convidáu",
     "Offline" : "Desconectáu",
     "Offline, changes will be saved when online" : "Mou desconectáu, los cambeos van guardase cuando teas en llinia",
-    "Saving …" : "Guardando…",
     "Saved" : "Guardóse",
     "Last saved {lastSave}" : "Últimu guardáu: {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documentu camudó fuera del editor. Nun se puen aplicar los cambeos.",
@@ -141,6 +139,8 @@
     "New text file" : "Ficheru de testu nuevu",
     "Close outline view" : "Zarrar la visualización d'esquemes",
     "Outline" : "Esquema",
+    "Insert an attachment" : "Inxertar un axuntu",
+    "Saving …" : "Guardando…",
     "to" : "pa",
     "Replace" : "Trocar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

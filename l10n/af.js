@@ -18,7 +18,6 @@ OC.L10N.register(
     "edit" : "edigeer",
     "guest" : "gas",
     "Offline" : "Vanlyn",
-    "Saving …" : "Bewaar tans…",
     "Saved" : "Bewaar",
     "Unsaved changes" : "Onbewaarde veranderinge",
     "Keyboard shortcuts" : "Sneltoetse",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Details" : "Besonderhede",
     "Choose" : "Kies",
     "text document" : "teksdokument",
+    "Saving …" : "Bewaar tans…",
     "to" : "aan"
 },
 "nplurals=2; plural=(n != 1);");

@@ -16,7 +16,6 @@
     "edit" : "edigeer",
     "guest" : "gas",
     "Offline" : "Vanlyn",
-    "Saving …" : "Bewaar tans…",
     "Saved" : "Bewaar",
     "Unsaved changes" : "Onbewaarde veranderinge",
     "Keyboard shortcuts" : "Sneltoetse",
@@ -40,6 +39,7 @@
     "Details" : "Besonderhede",
     "Choose" : "Kies",
     "text document" : "teksdokument",
+    "Saving …" : "Bewaar tans…",
     "to" : "aan"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
