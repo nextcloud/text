@@ -36,6 +36,7 @@ interface CollaborativeEditorOptions {
 	content?: string
 	readOnly?: boolean
 	autofocus?: boolean
+	noLazyImages?: boolean
 	readonlyBar?: ReadonlyBar
 	menubarLinkCustomAction?: () => void
 	onCreate?: ({ markdown }: { markdown: string }) => void
@@ -63,6 +64,7 @@ interface MarkdownContentEditorOptions {
 	content?: string
 	readOnly?: boolean
 	autofocus?: boolean
+	noLazyImages?: boolean
 	readonlyBar?: ReadonlyBar
 	menubarLinkCustomAction?: () => void
 	onCreate?: ({ markdown }: { markdown: string }) => void
@@ -116,12 +118,12 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
 	const app = createApp(
 		CollaborativeEditorApp,
 		{
-			ref: 'editor-container',
 			...data,
 			active: true,
 			fileId: options.fileId,
 			mime: 'text/markdown',
 			autofocus: options.autofocus ?? true,
+			noLazyImages: options.noLazyImages ?? false,
 			readonlyBarComponent: options.readonlyBar?.component,
 			relativePath: options.filePath,
 			shareToken: options.shareToken,
@@ -146,9 +148,9 @@ export async function createMarkdownContentEditor(options: MarkdownContentEditor
 	const app = createApp(
 		MarkdownContentEditorApp,
 		{
-			ref: 'editor-container',
 			...data,
 			fileId: options.fileId,
+			noLazyImages: options.noLazyImages ?? false,
 			readonlyBarComponent: options.readonlyBar?.component,
 			relativePath: options.filePath,
 			shareToken: options.shareToken,

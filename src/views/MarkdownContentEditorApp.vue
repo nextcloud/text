@@ -8,6 +8,7 @@
 		ref="editor-container"
 		:content
 		:fileId
+		:noLazyImages
 		:readOnly
 		:relativePath="filePath"
 		:shareToken
@@ -29,6 +30,7 @@ import MarkdownContentEditor from '../components/Editor/MarkdownContentEditor.vu
 const {
 	fileId = undefined,
 	filePath = undefined,
+	noLazyImages = false,
 	readOnly = false,
 	readonlyBarComponent = undefined,
 	readonlyBarProps = {},
@@ -36,6 +38,7 @@ const {
 } = defineProps<{
 	fileId?: number
 	filePath?: string
+	noLazyImages?: boolean
 	content: string
 	readOnly?: boolean
 	readonlyBarComponent?: string

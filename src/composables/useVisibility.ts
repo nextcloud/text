@@ -68,12 +68,13 @@ export function useVisibility(id: string) {
 	const { editor } = useEditor()
 	const intersectionObserver = inject(intersectionObserverKey)!
 	const visibleIds = inject(visibleIdsKey)!
+	let observedEl: Element | null = null
 
 	onMounted(() => {
 		nextTick(() => {
-			const el = editor.view.dom.querySelector(`#${id}`)
-			if (el) {
-				intersectionObserver.observe(el)
+			observedEl = editor.view.dom.querySelector(`#${id}`)
+			if (observedEl) {
+				intersectionObserver.observe(observedEl)
 			} else {
 				logger.warn(`Could not find element with id ${id}`)
 			}
@@ -83,9 +84,9 @@ export function useVisibility(id: string) {
 	onUnmounted(() => {
 		visibleIds.value.delete(id)
 		visibleIds.value = new Set(visibleIds.value) // trigger reactivity
-		const el = editor.view.dom.querySelector(`#${id}`)
-		if (el) {
-			intersectionObserver.unobserve(el)
+		if (observedEl) {
+			intersectionObserver.unobserve(observedEl)
+			observedEl = null
 		}
 	})
 	const visible = computed(() => visibleIds.value.has(id))
