@@ -21,7 +21,6 @@ OC.L10N.register(
     "Remove link" : "Șterge link-ul",
     "guest" : "invitat",
     "Offline" : "Offline",
-    "Saving …" : "Se salvează",
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Choose" : "Alege",
     "Choose {file}" : "Selectați {file}",
     "Add folder description" : "Adăugați descrierea directorului",
+    "Saving …" : "Se salvează",
     "to" : "către",
     "Replace" : "Înlocuiește"
 },

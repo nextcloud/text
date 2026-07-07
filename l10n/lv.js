@@ -21,7 +21,6 @@ OC.L10N.register(
     "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
     "Offline" : "Bezsaistē",
-    "Saving …" : "Saglabā ...",
     "Saved" : "Saglabāts",
     "Unsaved changes" : "Nesaglabātas izmaiņas",
     "Keyboard shortcuts" : "Tastatūras saīsnes",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Choose" : "Izvēlēties",
     "Add folder description" : "Pievienot mapes aprakstu",
     "text document" : "teksta dokuments",
+    "Saving …" : "Saglabā ...",
     "Select language" : "Atlasīt valodu",
     "to" : "kam",
     "Replace" : "Aizvietot"

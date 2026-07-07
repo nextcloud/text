@@ -11,7 +11,6 @@ OC.L10N.register(
     "Copy link" : "Eilañ al liamm",
     "guest" : "kouviad",
     "Offline" : "Distaget",
-    "Saving …" : "Orc'h enrolliñ",
     "Saved" : "Enrollet",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Cheñchet eo bet an diel er maez eus an embanner. N'eo ket posuple lakaat pez a oa bet cheñchet.",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",
@@ -27,6 +26,7 @@ OC.L10N.register(
     "Command" : "Urzh",
     "Choose" : "Dibab",
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell",
+    "Saving …" : "Orc'h enrolliñ",
     "Translate to" : "Treiñ e",
     "Replace" : "Erlec'hiañ"
 },
