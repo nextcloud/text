@@ -423,6 +423,56 @@ div.ProseMirror {
 			z-index: 2;
 		}
 	}
+
+	sup[data-type="footnote-reference"] {
+		a.footnote-ref {
+			color: var(--color-primary-element);
+			text-decoration: none;
+
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	section[data-type="footnotes"] {
+		margin-top: calc(2 * var(--default-grid-baseline));
+		border-top: 1px solid var(--color-border);
+		font-size: 0.9em;
+
+		div[data-type="footnote"] {
+			display: flex;
+			gap: 0.5em;
+			margin-bottom: 0.5em;
+
+			.footnote-label {
+				flex: 0 0 auto;
+				font-weight: bold;
+				user-select: none;
+			}
+
+			.footnote-body {
+				flex: 1;
+
+				// Make sure back-arrow sits close to the end of the body
+				> p:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			.footnote-backref {
+				flex: 0 0 auto;
+				color: var(--color-primary-element);
+				text-decoration: none;
+
+				&:hover,
+				&:focus {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {

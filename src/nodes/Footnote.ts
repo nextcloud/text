@@ -24,14 +24,23 @@ const Footnote = Node.create({
 	},
 
 	parseHTML() {
-		return [{ tag: 'div[data-type="footnote"]' }]
+		return [
+			{
+				tag: 'div[data-type="footnote"]',
+				// Skip the label span; recurse into the body wrapper
+				contentElement: (dom) => (dom as HTMLElement).querySelector('.footnote-body') ?? (dom as HTMLElement),
+			},
+		]
 	},
 
-	renderHTML({ HTMLAttributes }) {
+	renderHTML({ node, HTMLAttributes }) {
+		const id = node.attrs.referenceId
 		return [
 			'div',
-			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote' }),
-			0,
+			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote', id: `fn-${id}` }),
+			['span', { class: 'footnote-label', contenteditable: 'false' }, `[${id}]`],
+			['div', { class: 'footnote-body' }, 0],
+			['a', { href: `#fnref-${id}`, class: 'footnote-backref', contenteditable: 'false', 'aria-label': 'Back to reference' }, '↩'],
 		]
 	},
 

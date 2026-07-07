@@ -54,6 +54,8 @@ describe('Footnotes extension', () => {
 		expect(out).toContain('data-reference-id="label"')
 		expect(out).toContain('data-type="footnotes"')
 		expect(out).toContain('data-type="footnote"')
+		expect(out).toContain('id="fnref-label"')
+		expect(out).toContain('id="fn-label"')
 	})
 
 	test('parses multi-paragraph footnote body', ({ editor }) => {

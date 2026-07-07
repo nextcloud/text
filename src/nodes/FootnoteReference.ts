@@ -27,10 +27,16 @@ const FootnoteReference = Node.create({
 		return [{ tag: 'sup[data-type="footnote-reference"]' }]
 	},
 
-	renderHTML({ HTMLAttributes }) {
+	renderHTML({ node, HTMLAttributes }) {
+		const id = node.attrs.referenceId
 		return [
 			'sup',
-			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote-reference' }),
+			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote-reference', id: `fnref-${id}` }),
+			[
+				'a',
+				{ href: `#fn-${id}`, class: 'footnote-ref', role: 'doc-noteref' },
+				`[${id}]`,
+			],
 		]
 	},
 
