@@ -34,6 +34,13 @@ const Footnote = Node.create({
 			0,
 		]
 	},
+
+	toMarkdown(state, node) {
+		const marker = `[^${node.attrs.referenceId}]: `
+		const wrapper = ' '.repeat(marker.length)
+		state.wrapBlock(wrapper, marker, node, () => state.renderContent(node))
+		state.closeBlock(node)
+	},
 })
 
 export default Footnote

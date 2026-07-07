@@ -33,6 +33,10 @@ const FootnoteReference = Node.create({
 			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote-reference' }),
 		]
 	},
+
+	toMarkdown(state, node) {
+		state.write(`[^${node.attrs.referenceId}]`)
+	},
 })
 
 export default FootnoteReference

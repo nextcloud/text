@@ -29,6 +29,10 @@ const Footnotes = Node.create({
 			0,
 		]
 	},
+
+	toMarkdown(state, node) {
+		state.renderContent(node)
+	},
 })
 
 export default Footnotes
