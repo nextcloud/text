@@ -16,7 +16,6 @@ OC.L10N.register(
     "edit" : "tahrirlash",
     "Copy link" : "Havolani nusxalash",
     "Offline" : "Offline",
-    "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",
     "Unsaved changes" : "Saqlanmagan o'zgarishlar",
     "Keyboard shortcuts" : "Klaviatura yorliqlari",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
     "Choose {file}" : " {file}ta tanlash",
+    "Saving …" : "Saqlanmoqda...",
     "to" : "пф"
 },
 "nplurals=1; plural=0;");

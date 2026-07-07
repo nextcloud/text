@@ -16,7 +16,6 @@ OC.L10N.register(
     "Copy link" : "คัดลอกลิงก์",
     "guest" : "ผู้เยี่ยมชม",
     "Offline" : "ออฟไลน์",
-    "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
     "Link" : "ลิงก์",
@@ -34,6 +33,7 @@ OC.L10N.register(
     "Formatting" : "การจัดรูปแบบ",
     "Choose" : "เลือก",
     "Choose {file}" : "เลือก {file}",
+    "Saving …" : "กำลังบันทึก …",
     "to" : "ถึง",
     "Replace" : "แทนที่"
 },

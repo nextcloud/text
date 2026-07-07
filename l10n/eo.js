@@ -20,7 +20,6 @@ OC.L10N.register(
     "edit" : "modifi",
     "Copy link" : "Kopii ligilon",
     "guest" : "gasto",
-    "Saving …" : "Konservado...",
     "Saved" : "Konservita",
     "The document has been changed outside of the editor. The changes cannot be applied." : "La dokumento ŝanĝiĝis ekster la redaktilo. La ŝanĝoj ne povas esti konservitaj.",
     "Unsaved changes" : "Nekonservitaj ŝanĝoj",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Choose" : "Elekti",
     "Choose {file}" : "Elekti {file}",
     "New text file" : "Nova tekstodosiero",
+    "Saving …" : "Konservado...",
     "to" : "al",
     "Replace" : "Anstataŭigi"
 },

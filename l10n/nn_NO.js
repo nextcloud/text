@@ -7,7 +7,7 @@ OC.L10N.register(
     "File not found" : "Fann ikkje fila",
     "Guest" : "Gjest",
     "Copy link" : "Kopier lenkje",
-    "Saving …" : "Lagrar …",
+    "Saving …" : "Lagrar …",
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Link" : "Lenkje",
@@ -21,6 +21,7 @@ OC.L10N.register(
     "Details" : "Detaljar",
     "Choose" : "Vel",
     "Choose {file}" : "Vel {file}",
+    "Saving …" : "Lagrar …",
     "Select language" : "Vel språk",
     "to" : "til",
     "Replace" : "Erstatt"
