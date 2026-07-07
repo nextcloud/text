@@ -23,13 +23,11 @@
     "Enter your name so other people can see who is editing" : "Nhập tên của bạn để người khác có thể biết ai đang chỉnh sửa",
     "Guest" : "Khách",
     "edit" : "chỉnh sửa",
-    "Insert an attachment" : "Chèn phần đính kèm",
     "Copy link" : "Sao chép liên kết",
     "Active people" : "Những người đang hoạt động",
     "guest" : "khách",
     "Offline" : "Ngoại tuyến",
     "Offline, changes will be saved when online" : "Ngoại tuyến, các thay đổi sẽ được lưu khi trực tuyến",
-    "Saving …" : "Đang lưu ...",
     "Saved" : "Đã lưu",
     "Last saved {lastSave}" : "Đã lưu lần cuối {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Tài liệu đã được thay đổi bên ngoài trình chỉnh sửa. Không thể áp dụng các thay đổi.",
@@ -92,6 +90,8 @@
     "New text file" : "Tập tin văn bản mới",
     "Close outline view" : "Đóng chế độ xem phác thảo",
     "Outline" : "Đường viền",
+    "Insert an attachment" : "Chèn phần đính kèm",
+    "Saving …" : "Đang lưu ...",
     "to" : "đến",
     "Replace" : "Thay thế"
 },"pluralForm" :"nplurals=1; plural=0;"

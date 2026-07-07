@@ -25,7 +25,7 @@ OC.L10N.register(
     "you" : "tue",
     "guest" : "persone invitada",
     "Offline" : "Fora de lìnia",
-    "Saving …" : "Sarvende ...",
+    "Saving …" : "Sarvende ...",
     "Saved" : "Sarvadu",
     "The document has been changed outside of the editor. The changes cannot be applied." : "S'archìviu s'est modificadu in foras dae s'editore. Non faghet a aplicare is mudas.",
     "Unsaved changes" : "Mudas non sarvadas",
@@ -73,6 +73,7 @@ OC.L10N.register(
     "Add folder description" : "Agiunghe una descritzione de sa cartella",
     "text document" : "archìviu de testu",
     "New text file" : "Archìviu de testu nou",
+    "Saving …" : "Sarvende ...",
     "Select language" : "Seletziona una limba",
     "to" : "a",
     "Replace" : "Càmbia cun àteru"
