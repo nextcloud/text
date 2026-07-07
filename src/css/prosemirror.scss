@@ -439,32 +439,37 @@ div.ProseMirror {
 	section[data-type="footnotes"] {
 		margin-top: calc(2 * var(--default-grid-baseline));
 		border-top: 1px solid var(--color-border);
-		font-size: 0.9em;
 
 		div[data-type="footnote"] {
 			display: flex;
-			gap: 0.5em;
-			margin-bottom: 0.5em;
+			gap: var(--default-grid-baseline);
 
 			.footnote-label {
-				flex: 0 0 auto;
+				flex: 0 0 44px;
+				font-size: 0.9em;
 				font-weight: bold;
 				user-select: none;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
-			.footnote-body {
-				flex: 1;
+			.footnote-body > p {
+				margin: 0;
+				line-height: unset;
+			}
 
-				// Make sure back-arrow sits close to the end of the body
-				> p:last-child {
-					margin-bottom: 0;
-				}
+			.footnote-body-wrapper {
+				display: flex;
+				gap: var(--default-grid-baseline);
+				font-size: 0.9em;
 			}
 
 			.footnote-backref {
-				flex: 0 0 auto;
+				padding: 0;
 				color: var(--color-primary-element);
 				text-decoration: none;
+				width: unset; // overwrite default `a` width
 
 				&:hover,
 				&:focus {

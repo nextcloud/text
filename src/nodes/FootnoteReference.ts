@@ -3,7 +3,22 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+
 import { mergeAttributes, Node } from '@tiptap/core'
+
+declare module '@tiptap/core' {
+	interface Commands<ReturnType> {
+		footnoteReference: {
+			/**
+			 * Insert a new footnote at the current selection and
+			 * create a matching definition in the trailing footnotes
+			 * block.
+			 */
+			insertFootnote: (options?: { referenceId?: string }) => ReturnType
+		}
+	}
+}
 
 const FootnoteReference = Node.create({
 	name: 'footnoteReference',
@@ -43,6 +58,100 @@ const FootnoteReference = Node.create({
 	toMarkdown(state, node) {
 		state.write(`[^${node.attrs.referenceId}]`)
 	},
+
+	addCommands() {
+		return {
+			insertFootnote: (options?: { referenceId?: string }) => ({ state, chain }) => {
+				const referenceId = options?.referenceId
+					? String(options.referenceId)
+					: generateFootnoteId(state.doc)
+				if (!referenceId) {
+					return false
+				}
+
+				const existingFootnote = footnoteExists(state.doc, referenceId)
+
+				const footnotesType = state.schema.nodes.footnotes
+				const footnoteType = state.schema.nodes.footnote
+				const paragraphType = state.schema.nodes.paragraph
+
+				let c = chain()
+					.insertContent({ type: 'footnoteReference', attrs: { referenceId } })
+
+				if (!existingFootnote) {
+					const newFootnote = footnoteType.create({ referenceId }, paragraphType.create())
+					const lastChild = state.doc.lastChild
+					const hasFootnotesBlock = lastChild?.type === footnotesType
+
+					if (hasFootnotesBlock) {
+						// Append inside the existing footnotes container
+						const insertPos = state.doc.content.size - 1
+						c = c.insertContentAt(insertPos, newFootnote.toJSON())
+					} else {
+						c = c.insertContentAt(state.doc.content.size, {
+							type: 'footnotes',
+							content: [newFootnote.toJSON()],
+						})
+					}
+				}
+
+				return c
+					.focus()
+					.scrollIntoView()
+					.run()
+			},
+		}
+	},
+
+	addKeyboardShortcuts() {
+		return {
+			'Mod-Shift-f': () => this.editor.commands.insertFootnote(),
+		}
+	},
 })
+
+/**
+ * Get first unused numeric footnote id
+ *
+ * @param doc the document node
+ */
+function generateFootnoteId(doc: ProseMirrorNode): string {
+	const existing = new Set<string>()
+	doc.descendants((node) => {
+		if (node.type.name === 'footnoteReference' || node.type.name === 'footnote') {
+			const id = node.attrs.referenceId
+			if (id) {
+				existing.add(String(id))
+			}
+		}
+	})
+	for (let i = 1; i < 10_000; i++) {
+		const candidate = String(i)
+		if (!existing.has(candidate)) {
+			return candidate
+		}
+	}
+	return ''
+}
+
+/**
+ * Check if footnote with reference id exists
+ *
+ * @param doc - the ProseMirror node
+ * @param id - the searched reference id
+ */
+function footnoteExists(doc: ProseMirrorNode, id: string): boolean {
+	let found = false
+	doc.descendants((node) => {
+		if (found) {
+			return false
+		}
+		if (node.type.name === 'footnote' && node.attrs.referenceId === id) {
+			found = true
+			return false
+		}
+	})
+	return found
+}
 
 export default FootnoteReference

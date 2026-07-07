@@ -38,9 +38,13 @@ const Footnote = Node.create({
 		return [
 			'div',
 			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote', id: `fn-${id}` }),
-			['span', { class: 'footnote-label', contenteditable: 'false' }, `[${id}]`],
-			['div', { class: 'footnote-body' }, 0],
-			['a', { href: `#fnref-${id}`, class: 'footnote-backref', contenteditable: 'false', 'aria-label': 'Back to reference' }, '↩'],
+			['span', { class: 'footnote-label', contenteditable: 'false', title: id }, id],
+			[
+				'div',
+				{ class: 'footnote-body-wrapper' },
+				['div', { class: 'footnote-body' }, 0],
+				['a', { href: `#fnref-${id}`, class: 'footnote-backref', contenteditable: 'false', 'aria-label': 'Back to reference' }, '↩'],
+			],
 		]
 	},
 

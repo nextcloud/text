@@ -71,6 +71,55 @@ describe('Footnotes extension', () => {
 	})
 })
 
+describe('insertFootnote command', () => {
+	test('inserts a reference and a matching definition', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+
+		const result = editor.commands.insertFootnote()
+		expect(result).toBe(true)
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.childCount).toBe(2)
+		expect(paragraph.child(1).type.name).toBe('footnoteReference')
+
+		const footnotes = editor.state.doc.lastChild!
+		const footnote = footnotes.firstChild!
+		expect(footnote.type.name).toBe('footnote')
+	})
+
+	test('generates the lowest unused numeric id', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section> data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+		editor.commands.focus('start')
+		editor.commands.setTextSelection(1)
+		editor.commands.insertFootnote()
+
+		const refs: string[] = []
+		editor.state.doc.descendants((node) => {
+			if (node.type.name === 'footnoteReference') {
+				refs.push(node.attrs.referenceId)
+			}
+		})
+		expect(refs).toContain('1')
+		expect(refs).toContain('2')
+	})
+
+	test('accepts explicit referenceId option', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertFootnote({ referenceId: 'custom' })
+
+		const ref = editor.state.doc.firstChild!.lastChild!
+		expect(ref.attrs.referenceId).toBe('custom')
+
+		const footnote = editor.state.doc.lastChild!.firstChild!
+		expect(footnote.attrs.referenceId).toBe('custom')
+	})
+})
+
 describe('Footnotes Markdown roundtrip', () => {
 	test('simple footnote', ({ markdownThroughEditor }) => {
 		const test = 'Foo[^1]\n\n[^1]: bar'
