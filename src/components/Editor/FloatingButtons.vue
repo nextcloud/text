@@ -7,7 +7,10 @@
 	<DragHandle
 		:editor="editor"
 		class="floating-buttons"
-		:class="{ heading: isHeadingNode }"
+		:class="{
+			heading: isHeadingNode,
+			hidden: isHidden,
+		}"
 		:onNodeChange="onNodeChange">
 		<NcButton
 			variant="tertiary-no-background"
@@ -40,6 +43,8 @@ import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import { useEditor } from '../../composables/useEditor.ts'
 
+const IGNORE_NODES = ['footnote', 'footnotes']
+
 export default {
 	name: 'FloatingButtons',
 
@@ -65,6 +70,10 @@ export default {
 	computed: {
 		isHeadingNode() {
 			return this.node?.type.name === 'heading'
+		},
+
+		isHidden() {
+			return IGNORE_NODES.includes(this.node?.type.name)
 		},
 	},
 
@@ -102,6 +111,10 @@ export default {
 
 	&.heading {
 		left: calc(-34px - 14px) !important;
+	}
+
+	&.hidden {
+		display: none;
 	}
 }
 

@@ -5,7 +5,7 @@
 
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 
-import { mergeAttributes, Node, nodeInputRule } from '@tiptap/core'
+import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 
 declare module '@tiptap/core' {
@@ -115,10 +115,16 @@ const FootnoteReference = Node.create({
 
 	addInputRules() {
 		return [
-			nodeInputRule({
+			new InputRule({
 				find: /\[\^([^\]\s]+)\]$/,
-				type: this.type,
-				getAttributes: (match) => ({ referenceId: match[1] }),
+				handler: ({ range, match, chain }) => {
+					const referenceId = match[1] ?? ''
+
+					chain()
+						.deleteRange({ from: range.from, to: range.to })
+						.insertFootnote({ referenceId })
+						.run()
+				},
 			}),
 		]
 	},
