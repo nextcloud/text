@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
+
 import { Document } from '@tiptap/extension-document'
 import { ListItem } from '@tiptap/extension-list'
 import { describe, expect } from 'vitest'
@@ -117,6 +119,66 @@ describe('insertFootnote command', () => {
 
 		const footnote = editor.state.doc.lastChild!.firstChild!
 		expect(footnote.attrs.referenceId).toBe('custom')
+	})
+})
+
+describe('Footnotes cleanup', () => {
+	function deleteFirstReference(editor: Editor) {
+		// Delete reference node
+		let refPos = -1
+		let refSize = 0
+		editor.state.doc.descendants((node, pos) => {
+			if (refPos !== -1) {
+				return false
+			}
+			if (node.type.name === 'footnoteReference') {
+				refPos = pos
+				refSize = node.nodeSize
+				return false
+			}
+		})
+		editor.commands.setTextSelection({ from: refPos, to: refPos + refSize })
+		editor.commands.deleteSelection()
+	}
+
+	function getFootnoteNodesCount(editor: Editor): { footnoteCount: number, footnotesContainerCount: number } {
+		let footnoteCount = 0
+		let footnotesContainerCount = 0
+		editor.state.doc.descendants((n) => {
+			if (n.type.name === 'footnote') {
+				footnoteCount++
+			}
+			if (n.type.name === 'footnotes') {
+				footnotesContainerCount++
+			}
+		})
+		return { footnoteCount, footnotesContainerCount }
+	}
+
+	test('removes footnotes when last reference is deleted', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section> data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+		deleteFirstReference(editor)
+
+		// Verify no footnote // footnotesContainer node exists
+		const { footnoteCount, footnotesContainerCount } = getFootnoteNodesCount(editor)
+		expect(footnotesContainerCount).toBe(0)
+		expect(footnoteCount).toBe(0)
+	})
+
+	test('keeps footnote when other references still point to it', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup>'
+			+ ' bar<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section> data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+		deleteFirstReference(editor)
+
+		const { footnoteCount, footnotesContainerCount } = getFootnoteNodesCount(editor)
+		expect(footnotesContainerCount).toBe(1)
+		expect(footnoteCount).toBe(1)
 	})
 })
 
