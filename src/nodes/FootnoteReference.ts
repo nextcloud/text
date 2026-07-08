@@ -7,7 +7,7 @@ import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 import type { EditorState } from '@tiptap/pm/state'
 
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
-import { Plugin } from '@tiptap/pm/state'
+import { Plugin, TextSelection } from '@tiptap/pm/state'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -88,20 +88,40 @@ const FootnoteReference = Node.create({
 					.insertContent({ type: 'footnoteReference', attrs: { referenceId } })
 
 				if (!existingFootnote) {
+					// Create footnote
 					const newFootnote = footnoteType.create({ referenceId }, paragraphType.create())
 					const lastChild = state.doc.lastChild
 					const hasFootnotesBlock = lastChild?.type === footnotesType
 
 					if (hasFootnotesBlock) {
-						// Append inside the existing footnotes container
+						// Append footnote inside the existing footnotes container
 						const insertPos = state.doc.content.size - 1
 						c = c.insertContentAt(insertPos, newFootnote.toJSON())
 					} else {
+						// Create footnotes container + footnote
 						c = c.insertContentAt(state.doc.content.size, {
 							type: 'footnotes',
 							content: [newFootnote.toJSON()],
 						})
 					}
+				} else {
+					// Jump cursor into existing footnote
+					c = c.command(({ tr }) => {
+						let target: number | null = null
+						tr.doc.descendants((node, pos) => {
+							if (target !== null) {
+								return false
+							}
+							if (node.type.name === 'footnote' && node.attrs.referenceId === referenceId) {
+								target = pos + node.nodeSize - 2
+								return false
+							}
+						})
+						if (target !== null) {
+							tr.setSelection(TextSelection.near(tr.doc.resolve(target)))
+						}
+						return true
+					})
 				}
 
 				return c
