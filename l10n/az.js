@@ -13,6 +13,7 @@ OC.L10N.register(
     "you" : "siz",
     "Copy link" : "linki nüsxələ",
     "guest" : "Qonaq",
+    "Saving …" : "Saxlanılır …",
     "Saved" : "Saxlanıldı",
     "Save changes" : "Dəyişiklikləri yaddaşa ver",
     "Cancel" : "Cancel",
