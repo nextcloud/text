@@ -224,7 +224,20 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t('text', 'Insert emoji') }}</td>
+					<td>{{ t('text', 'Footnote') }}</td>
+					<td>
+						<code>[^{{ t('text', 'label') }}]</code>
+					</td>
+					<td v-if="!isMobileCached">
+						<kbd>{{ ctrlOrModKey }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>F</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Emoji') }}</td>
 					<td>
 						<code>:{{ t('text', 'emoji') }}</code>
 					</td>
