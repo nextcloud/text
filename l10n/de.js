@@ -60,6 +60,7 @@ OC.L10N.register(
     "guest" : "Gast",
     "Offline" : "Offline",
     "Offline, changes will be saved when online" : "Offline. Änderungen werden gespeichert, wenn du online bist.",
+    "Saving …" : "Speichere …",
     "Saved" : "Gespeichert",
     "Last saved {lastSave}" : "Zuletzt gespeichert {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Das Dokument wurde außerhalb des Editors gespeichert. Die Änderungen könnten nicht angewandt werden.",
