@@ -4,6 +4,7 @@
  */
 
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+import type { EditorState } from '@tiptap/pm/state'
 
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
@@ -66,6 +67,10 @@ const FootnoteReference = Node.create({
 	addCommands() {
 		return {
 			insertFootnote: (options?: { referenceId?: string }) => ({ state, chain }) => {
+				if (isInsideFootnote(state)) {
+					return false
+				}
+
 				const referenceId = options?.referenceId
 					? String(options.referenceId)
 					: generateFootnoteId(state.doc)
@@ -117,8 +122,12 @@ const FootnoteReference = Node.create({
 		return [
 			new InputRule({
 				find: /\[\^([^\]\s]+)\]$/,
-				handler: ({ range, match, chain }) => {
+				handler: ({ state, range, match, chain }) => {
 					const referenceId = match[1] ?? ''
+
+					if (isInsideFootnote(state)) {
+						return null
+					}
 
 					chain()
 						.deleteRange({ from: range.from, to: range.to })
@@ -159,6 +168,21 @@ const FootnoteReference = Node.create({
 		]
 	},
 })
+
+/**
+ * Check if selection is inside a footnote
+ *
+ * @param state the editor state
+ */
+function isInsideFootnote(state: EditorState): boolean {
+	const { $from } = state.selection
+	for (let d = $from.depth; d > 0; d--) {
+		if ($from.node(d).type.name === 'footnote') {
+			return true
+		}
+	}
+	return false
+}
 
 /**
  * Get first unused numeric footnote id
