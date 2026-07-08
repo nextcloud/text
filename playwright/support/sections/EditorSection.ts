@@ -19,6 +19,8 @@ export class EditorSection {
 	public readonly sessionList: Locator
 	public readonly suggestionsContainer: Locator
 	public readonly suggestions: Locator
+	public readonly footnoteReferences: Locator
+	public readonly footnotesSection: Locator
 
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('.editor').first()
@@ -34,6 +36,8 @@ export class EditorSection {
 		this.sessionList = this.el.locator('.session-list')
 		this.suggestionsContainer = this.page.locator('.container-suggestions')
 		this.suggestions = this.page.locator('.tippy-box .suggestion-list')
+		this.footnoteReferences = this.el.locator('sup[data-type="footnote-reference"]')
+		this.footnotesSection = this.el.locator('section[data-type="footnotes"]')
 	}
 
 	public async type(keys: string): Promise<void> {
@@ -74,4 +78,7 @@ export class EditorSection {
 
 	getHeading = (options: object = {}) => this.content.getByRole('heading', options)
 	getSuggestion = (name: string) => this.suggestions.getByText(name)
+
+	getFootnoteReference = (id: string) => this.footnoteReferences.locator(`:scope[data-reference-id="${id}"]`)
+	getFootnote = (id: string) => this.footnotesSection.locator(`[data-reference-id="${id}"]`)
 }
