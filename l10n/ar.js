@@ -46,6 +46,7 @@ OC.L10N.register(
     "guest" : "ضيف ",
     "Offline" : "غير متصل",
     "Offline, changes will be saved when online" : "غير متصل. التغييرات سيتم حفظها بمجرد تحقيق الاتصال",
+    "Saving …" : "حفظ ...",
     "Saved" : "تم الحفظ",
     "Last saved {lastSave}" : "آخر حفظ {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "تم تغيير المستند خارج محرر المستندات. لا يمكن تطبيق تلك التغييرات.",
