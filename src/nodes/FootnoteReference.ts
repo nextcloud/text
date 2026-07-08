@@ -5,7 +5,8 @@
 
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 
-import { mergeAttributes, Node } from '@tiptap/core'
+import { mergeAttributes, Node, nodeInputRule } from '@tiptap/core'
+import { Plugin } from '@tiptap/pm/state'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -46,11 +47,14 @@ const FootnoteReference = Node.create({
 		const id = node.attrs.referenceId
 		return [
 			'sup',
-			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote-reference', id: `fnref-${id}` }),
+			mergeAttributes(HTMLAttributes, {
+				'data-type': 'footnote-reference',
+				id: `fnref-${id}`,
+			}),
 			[
 				'a',
 				{ href: `#fn-${id}`, class: 'footnote-ref', role: 'doc-noteref' },
-				`[${id}]`,
+				id,
 			],
 		]
 	},
@@ -107,6 +111,46 @@ const FootnoteReference = Node.create({
 		return {
 			'Mod-Shift-f': () => this.editor.commands.insertFootnote(),
 		}
+	},
+
+	addInputRules() {
+		return [
+			nodeInputRule({
+				find: /\[\^([^\]\s]+)\]$/,
+				type: this.type,
+				getAttributes: (match) => ({ referenceId: match[1] }),
+			}),
+		]
+	},
+
+	addProseMirrorPlugins() {
+		return [
+			// Highlight target when navigating between footnote references and footnotes
+			new Plugin({
+				props: {
+					handleClick(view, _pos, event) {
+						const link = (event.target as HTMLElement).closest('.footnote-ref, .footnote-backref')
+						if (!link) {
+							return false
+						}
+
+						const href = link.getAttribute('href')
+						if (!href?.startsWith('#')) {
+							return false
+						}
+
+						const target = view.dom.ownerDocument.getElementById(href.slice(1))
+						if (!target) {
+							return false
+						}
+
+						target.classList.add('footnote-highlight')
+						setTimeout(() => target.classList.remove('footnote-highlight'), 5000)
+						return false
+					},
+				},
+			}),
+		]
 	},
 })
 

@@ -500,3 +500,13 @@ div.ProseMirror {
 	box-sizing: border-box;
 	visibility: visible !important;
 }
+
+.footnote-highlight {
+	animation: highlight-animation 5s 1;
+	border-radius: var(--border-radius-small);
+}
+@keyframes highlight-animation {
+	0% { background-color: var(--color-background-hover); }
+	50% { background-color: var(--color-background-hover); }
+	100% { background-color: transparent; }
+}
