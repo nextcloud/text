@@ -20,6 +20,10 @@ const Footnote = Node.create({
 					'data-reference-id': attrs.referenceId,
 				}),
 			},
+			ordinal: {
+				default: 0,
+				rendered: false,
+			},
 		}
 	},
 
@@ -35,10 +39,15 @@ const Footnote = Node.create({
 
 	renderHTML({ node, HTMLAttributes }) {
 		const id = node.attrs.referenceId
+		const ordinal = node.attrs.ordinal
 		return [
 			'div',
-			mergeAttributes(HTMLAttributes, { 'data-type': 'footnote', id: `fn-${id}` }),
-			['span', { class: 'footnote-label', contenteditable: 'false', title: id }, id],
+			mergeAttributes(HTMLAttributes, {
+				'data-type': 'footnote',
+				id: `fn-${id}`,
+				style: `order: ${ordinal || 0}`,
+			}),
+			['span', { class: 'footnote-label', contenteditable: 'false', title: id }, String(ordinal || '')],
 			[
 				'div',
 				{ class: 'footnote-body-wrapper' },

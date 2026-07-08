@@ -38,6 +38,45 @@ const Footnotes = Node.create({
 	addProseMirrorPlugins() {
 		return [
 			new Plugin({
+				key: new PluginKey('footnoteOrdinals'),
+				appendTransaction(transactions, _oldState, newState) {
+					if (!transactions.some((tr) => tr.docChanged)) {
+						return null
+					}
+
+					// Compute ordinals
+					const ordinals = new Map<string, number>()
+					newState.doc.descendants((node) => {
+						if (node.type.name === 'footnoteReference') {
+							const id = node.attrs.referenceId
+							if (id && !ordinals.has(id)) {
+								ordinals.set(id, ordinals.size + 1)
+							}
+						}
+					})
+
+					const tr = newState.tr
+					let hasChange = false
+					newState.doc.descendants((node, pos) => {
+						if (node.type.name !== 'footnoteReference' && node.type.name !== 'footnote') {
+							return
+						}
+
+						const targetOrdinal = ordinals.get(node.attrs.referenceId) ?? 0
+						if (node.attrs.ordinal !== targetOrdinal) {
+							tr.setNodeAttribute(pos, 'ordinal', targetOrdinal)
+							hasChange = true
+						}
+					})
+
+					if (!hasChange) {
+						return null
+					}
+					tr.setMeta('addToHistory', false)
+					return tr
+				},
+			}),
+			new Plugin({
 				key: new PluginKey('footnotesCleanup'),
 				appendTransaction(transactions, _oldState, newState) {
 					if (!transactions.some((tr) => tr.docChanged)) {

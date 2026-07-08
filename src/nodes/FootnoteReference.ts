@@ -37,6 +37,10 @@ const FootnoteReference = Node.create({
 					'data-reference-id': attrs.referenceId,
 				}),
 			},
+			ordinal: {
+				default: 0,
+				rendered: false,
+			},
 		}
 	},
 
@@ -46,6 +50,7 @@ const FootnoteReference = Node.create({
 
 	renderHTML({ node, HTMLAttributes }) {
 		const id = node.attrs.referenceId
+		const ordinal = node.attrs.ordinal
 		return [
 			'sup',
 			mergeAttributes(HTMLAttributes, {
@@ -54,8 +59,8 @@ const FootnoteReference = Node.create({
 			}),
 			[
 				'a',
-				{ href: `#fn-${id}`, class: 'footnote-ref', role: 'doc-noteref' },
-				id,
+				{ href: `#fn-${id}`, class: 'footnote-ref', role: 'doc-noteref', title: id },
+				String(ordinal || ''),
 			],
 		]
 	},
