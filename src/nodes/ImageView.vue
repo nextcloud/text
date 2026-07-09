@@ -23,9 +23,10 @@
 						<div
 							v-if="isMediaAttachment"
 							contenteditable="false"
-							class="media"
-							@click="handleAttachmentClick">
-							<div class="media__wrapper">
+							class="media">
+							<a
+								class="media-wrapper media-wrapper__attachment"
+								@click="handleAttachmentClick">
 								<img
 									v-show="loaded"
 									:src="imageUrl"
@@ -36,7 +37,7 @@
 									<span class="name">{{ alt }}</span>
 									<span class="size">{{ attachmentSize }}</span>
 								</div>
-							</div>
+							</a>
 							<div v-if="showDeleteIcon" class="buttons">
 								<NcButton
 									:aria-label="t('text', 'Delete this attachment')"
@@ -48,14 +49,15 @@
 								</NcButton>
 							</div>
 						</div>
-						<div v-else class="media" contenteditable="false">
-							<img
-								v-show="loaded"
-								:src="imageUrl"
-								:alt="alt"
-								class="image__main"
-								@click="handleImageClick"
-								@load="onLoaded">
+						<div v-else contenteditable="false" class="media media__image">
+							<a class="media-wrapper" @click="handleImageClick">
+								<img
+									v-show="loaded"
+									:src="imageUrl"
+									:alt="alt"
+									class="image__main"
+									@load="onLoaded">
+							</a>
 						</div>
 					</template>
 					<template v-else>
@@ -585,15 +587,25 @@ export default {
 	justify-content: left;
 	padding-bottom: 0;
 
-	.media__wrapper {
-		display: flex;
-		border: 2px solid var(--color-border);
-		border-radius: var(--border-radius-large);
-		padding: 8px;
+	&__image {
+		justify-content: center;
+	}
 
-		img {
-			width: var(--default-clickable-area);
-			height: var(--default-clickable-area);
+	.media-wrapper {
+		display: flex;
+		// Overwrite some global rules for a elments
+		text-decoration: none;
+		color: var(--color-main-text);
+
+		&__attachment {
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+			padding: 8px;
+
+			img {
+				width: var(--default-clickable-area);
+				height: var(--default-clickable-area);
+			}
 		}
 
 		.metadata {
@@ -612,6 +624,7 @@ export default {
 			}
 		}
 	}
+
 	.buttons {
 		margin-left: 8px;
 	}
