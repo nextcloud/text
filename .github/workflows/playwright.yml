@@ -44,7 +44,7 @@ jobs:
           node-version: ${{ steps.versions.outputs.node-version }}
 
       - name: Set up npm
-        run: npm i -g 'npm@${{ steps.versions.outputs.steps.versions.outputs.package-manager-version }}'
+        run: npm i -g 'npm@${{ steps.versions.outputs.package-manager-version }}'
 
       - name: Install node dependencies & build app
         env:
