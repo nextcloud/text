@@ -4,7 +4,7 @@
  */
 
 import { expect } from '@playwright/test'
-import { test } from '../support/fixtures/editor-api'
+import { test } from '../support/fixtures/editor-api.ts'
 
 test.describe('createTable API', () => {
 	test.beforeEach(async ({ page }) => {

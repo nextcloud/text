@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.ts'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection'
+import { unref } from 'vue'
 
 /**
  * Upload an attachment to the server.
+ *
  * @param connection the active connection.
  * @param file upload this file.
  */
@@ -25,7 +28,7 @@ export function uploadAttachment(
 	} = unref(connection)
 	const formData = new FormData()
 	formData.append('file', file)
-	const url = generateUrl(`apps/text/attachment/upload?`)
+	const url = generateUrl('apps/text/attachment/upload?')
 	return axios.post(url, formData, {
 		headers: { 'Content-Type': 'multipart/form-data' },
 		params: { documentId, sessionId, sessionToken, token },
@@ -34,6 +37,7 @@ export function uploadAttachment(
 
 /**
  * Create a new attachment based on the given template
+ *
  * @param connection the active connection
  * @param template create the attachment based on this
  * @param template.app app to create the attachment with
@@ -41,10 +45,10 @@ export function uploadAttachment(
  */
 export function createAttachment(
 	connection: ShallowRef<Connection> | Connection,
-	template: { app: string; extension: string },
+	template: { app: string, extension: string },
 ) {
 	const { documentId, sessionId, sessionToken } = unref(connection)
-	const url = generateUrl(`apps/text/attachment/create`)
+	const url = generateUrl('apps/text/attachment/create')
 	return axios.post(url, {
 		documentId,
 		sessionId,
@@ -55,6 +59,7 @@ export function createAttachment(
 
 /**
  * Create a new attachment based on the given template
+ *
  * @param connection the active connection
  * @param filePath path to the file on the server.
  */
@@ -63,7 +68,7 @@ export function insertAttachmentFile(
 	filePath: string,
 ) {
 	const { documentId, sessionId, sessionToken } = unref(connection)
-	const url = generateUrl(`apps/text/attachment/filepath`)
+	const url = generateUrl('apps/text/attachment/filepath')
 	return axios.post(url, {
 		documentId,
 		sessionId,

@@ -6,65 +6,105 @@
 import { textInputRule } from '@tiptap/core'
 import { Typography as TiptapTypography } from '@tiptap/extension-typography'
 
-export const emDash = () =>
-	textInputRule({
+/**
+ *
+ */
+export function emDash() {
+	return textInputRule({
 		find: /(?<![<])-- $/,
 		replace: '— ',
 	})
+}
 
-export const leftRightArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftRightArrow() {
+	return textInputRule({
 		find: /<->$/,
 		replace: '↔',
 	})
+}
 
-export const leftArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftArrow() {
+	return textInputRule({
 		find: /<- $/,
 		replace: '← ',
 	})
+}
 
-export const rightArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function rightArrow() {
+	return textInputRule({
 		find: /(?<![<-])->$/,
 		replace: '→',
 	})
+}
 
-export const leftRightDoubleArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftRightDoubleArrow() {
+	return textInputRule({
 		find: /<=>$/,
 		replace: '⇔',
 	})
+}
 
-export const leftDoubleArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftDoubleArrow() {
+	return textInputRule({
 		find: /<= $/,
 		replace: '⇐ ',
 	})
+}
 
-export const rightDoubleArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function rightDoubleArrow() {
+	return textInputRule({
 		find: /(?<![<=])=>$/,
 		replace: '⇒',
 	})
+}
 
-export const leftRightLongArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftRightLongArrow() {
+	return textInputRule({
 		find: /<-->$/,
 		replace: '⟷',
 	})
+}
 
-export const leftLongArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function leftLongArrow() {
+	return textInputRule({
 		find: /<-- $/,
 		replace: '⟵ ',
 	})
+}
 
-export const rightLongArrow = () =>
-	textInputRule({
+/**
+ *
+ */
+export function rightLongArrow() {
+	return textInputRule({
 		find: /(?<!<)-->$/,
 		replace: '⟶',
 	})
+}
 
 const Typography = TiptapTypography.extend({
 	addOptions() {

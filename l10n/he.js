@@ -27,7 +27,7 @@ OC.L10N.register(
     "Copy link" : "העתקת קישור",
     "guest" : "אורח",
     "Offline" : "בלתי מקוון",
-    "Saving …" : "מתבצעת שמירה…",
+    "Saving …" : "מתבצע שמירה…",
     "Saved" : "נשמרה",
     "The document has been changed outside of the editor. The changes cannot be applied." : "המסמך נערך מחוץ לעורך. לא ניתן להחיל את השינויים.",
     "Unsaved changes" : "שינויים שלא נשמרו",
@@ -77,6 +77,7 @@ OC.L10N.register(
     "Choose" : "בחר",
     "text document" : "מסמך טקסט",
     "New text file" : "קובץ טקסט חדש",
+    "Saving …" : "מתבצעת שמירה…",
     "Select language" : "בחירת שפה",
     "to" : "סיום",
     "Replace" : "החלפה"

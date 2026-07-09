@@ -14,7 +14,6 @@
     "edit" : "tahrirlash",
     "Copy link" : "Havolani nusxalash",
     "Offline" : "Offline",
-    "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",
     "Unsaved changes" : "Saqlanmagan o'zgarishlar",
     "Keyboard shortcuts" : "Klaviatura yorliqlari",
@@ -39,6 +38,7 @@
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
     "Choose {file}" : " {file}ta tanlash",
+    "Saving …" : "Saqlanmoqda...",
     "to" : "пф"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

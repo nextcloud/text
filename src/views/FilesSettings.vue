@@ -4,9 +4,7 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<NcCheckboxRadioSwitch
-			:checked.sync="showWorkspace"
-			@update:checked="toggle">
+		<NcCheckboxRadioSwitch v-model="showWorkspace" @update:modelValue="toggle">
 			{{ t('text', 'Show folder description') }}
 		</NcCheckboxRadioSwitch>
 	</div>
@@ -24,28 +22,23 @@ export default {
 	components: {
 		NcCheckboxRadioSwitch,
 	},
+
 	data() {
 		return {
 			showWorkspace: OCA.Text.RichWorkspaceEnabled,
 		}
 	},
+
 	methods: {
-		toggle() {
+		toggle(enabled) {
 			// FIXME: save to app config
-			if (this.showWorkspace) {
-				emit('Text::showRichWorkspace')
-				axios.post(generateUrl('/apps/text/settings'), {
-					key: 'workspace_enabled',
-					value: '1',
-				})
-			} else {
-				emit('Text::hideRichWorkspace')
-				axios.post(generateUrl('/apps/text/settings'), {
-					key: 'workspace_enabled',
-					value: '0',
-				})
-			}
+			emit(enabled ? 'Text::showRichWorkspace' : 'Text::hideRichWorkspace')
+			axios.post(generateUrl('/apps/text/settings'), {
+				key: 'workspace_enabled',
+				value: enabled ? '1' : '0',
+			})
 		},
+
 		t,
 	},
 }

@@ -4,9 +4,9 @@
 -->
 <template>
 	<NcActions
+		v-model="open"
 		data-text-link-options="select"
 		class="link-options"
-		:open.sync="open"
 		@open="onOpen">
 		<template #icon>
 			<DotsVerticalIcon :size="20" />
@@ -16,7 +16,7 @@
 			data-text-preview-option="text-only"
 			name="preview-option"
 			value="text-only"
-			:model-value="type"
+			:modelValue="type"
 			@change="(e) => toggle(e.currentTarget.value)">
 			{{ t('text', 'Text only') }}
 		</NcActionRadio>
@@ -24,7 +24,7 @@
 			data-text-preview-option="link-preview"
 			name="preview-option"
 			value="link-preview"
-			:model-value="type"
+			:modelValue="type"
 			@change="(e) => toggle(e.currentTarget.value)">
 			{{ t('text', 'Show link preview') }}
 		</NcActionRadio>
@@ -32,7 +32,7 @@
 		<NcActionSeparator />
 
 		<!-- Open link -->
-		<NcActionButton v-if="href" close-after-click @click="openLink">
+		<NcActionButton v-if="href" closeAfterClick @click="openLink">
 			<template #icon>
 				<OpenIcon :size="20" />
 			</template>
@@ -40,7 +40,7 @@
 		</NcActionButton>
 
 		<!-- Copy link -->
-		<NcActionButton v-if="href" close-after-click @click="copyLink">
+		<NcActionButton v-if="href" closeAfterClick @click="copyLink">
 			<template #icon>
 				<CheckIcon v-if="copySuccess" :size="20" />
 				<NcLoadingIcon v-else-if="copyLoading" :size="20" />
@@ -50,7 +50,7 @@
 		</NcActionButton>
 
 		<!-- Remove link -->
-		<NcActionButton close-after-click @click="deleteNode">
+		<NcActionButton closeAfterClick @click="deleteNode">
 			<template #icon>
 				<DeleteOutlineIcon :size="20" />
 			</template>
@@ -99,11 +99,14 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		href: {
 			type: String,
 			default: '',
 		},
 	},
+
+	emits: ['toggle', 'open', 'delete'],
 
 	setup() {
 		const { openLinkHandler } = useOpenLinkHandler()
@@ -126,20 +129,27 @@ export default {
 		onOpen() {
 			this.$emit('open')
 		},
+
 		toggle(type) {
 			this.open = false
 			this.$emit('toggle', type)
 		},
+
 		openLink() {
-			if (!this.href) return
+			if (!this.href) {
+				return
+			}
 			this.openLinkHandler.openLink(this.href)
 		},
+
 		async copyLink() {
 			await this.copyToClipboard(this.href)
 		},
+
 		deleteNode() {
 			this.$emit('delete')
 		},
+
 		t,
 	},
 }

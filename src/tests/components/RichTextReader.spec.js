@@ -9,7 +9,8 @@ import { nextTick } from 'vue'
 import RichTextReader from '../../components/RichTextReader.vue'
 
 const test = baseTest.extend({
-	content: ({ task: _ }, use) => use(''),
+	// eslint-disable-next-line no-empty-pattern
+	content: ({}, use) => use(''),
 	wrapper: async ({ content }, use) => {
 		const wrapper = mount(RichTextReader, { propsData: { content } })
 		await nextTick()
@@ -25,9 +26,7 @@ const test = baseTest.extend({
 test.scoped({ content: '# Hello world\n\n[this is a link](https://example.org)' })
 test('renders markdown', async ({ wrapper }) => {
 	expect(wrapper.get('h1').text()).toBe('#Hello world') // # is the heading anchor
-	expect(wrapper.get('a[href="https://example.org"]').text()).toBe(
-		'this is a link',
-	)
+	expect(wrapper.get('a[href="https://example.org"]').text()).toBe('this is a link')
 })
 
 test('updates markdown', async ({ wrapper }) => {

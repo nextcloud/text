@@ -69,7 +69,6 @@ const TaskItem = TipTapTaskItem.extend({
 	// overwrite the parent node view so renderHTML gets used
 	addNodeView: () => null,
 
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.write(`[${node.attrs.checked ? 'x' : ' '}] `)
 		state.renderContent(node)
@@ -106,16 +105,16 @@ const TaskItem = TipTapTaskItem.extend({
 						const position = state.doc.resolve(coordinates.pos)
 						const parentList = findParentNodeClosestToPos(
 							position,
-							function (node: Node) {
+							function(node: Node) {
 								return (
 									node.type === schema.nodes.taskItem
 									|| node.type === schema.nodes.listItem
 								)
 							},
 						)
-						const isListClicked =
-							event.target instanceof Element
-							&& event.target.tagName.toLowerCase() === 'li'
+						const isListClicked
+							= event.target instanceof Element
+								&& event.target.tagName.toLowerCase() === 'li'
 						if (
 							!isListClicked
 							|| !parentList

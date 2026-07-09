@@ -12,7 +12,7 @@
 			:data-text-action-entry="actionEntry.key"
 			:name="actionEntry.label"
 			:open="menuOpen"
-			force-menu
+			forceMenu
 			@update:open="
 				(open) => {
 					menuOpen = menuOpen || open
@@ -24,7 +24,7 @@
 			<NcActionButton
 				v-for="type in taskTypes"
 				:key="type.id"
-				close-after-click
+				closeAfterClick
 				@click="openAssistantForm(type.id)">
 				<template #icon>
 					<PencilOutlineIcon
@@ -46,7 +46,7 @@
 			<NcActionButton
 				v-if="canTranslate"
 				data-cy="open-translate"
-				close-after-click
+				closeAfterClick
 				@click="openTranslateDialog">
 				<template #icon>
 					<TranslateVariant :size="20" />
@@ -56,7 +56,7 @@
 			<NcActionSeparator />
 			<NcActionButton
 				:disabled="tasks.length < 1"
-				close-after-click
+				closeAfterClick
 				@click="showTaskList = true">
 				<template #icon>
 					<NcLoadingIcon v-if="loading" :size="20" />
@@ -68,11 +68,11 @@
 		<component
 			:is="badgeStateIcon"
 			v-if="badgeStateIcon"
-			fill-color="var(--color-text-maxcontrast)"
+			fillColor="var(--color-text-maxcontrast)"
 			:size="16"
 			class="assistant-action--badge" />
 
-		<NcModal :show.sync="showTaskList" :name="t('text', 'Assistant results')">
+		<NcModal v-if="showTaskList" :name="t('text', 'Assistant results')" @close="showTaskList = false">
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
 					<span class="assistant-bubble">
@@ -86,7 +86,7 @@
 						:key="task.id"
 						:name="task.title"
 						:bold="false"
-						:force-display-actions="true"
+						forceDisplayActions
 						@click="() => openResult(task)">
 						<template #subname>
 							{{ task.input.input }}
@@ -176,8 +176,8 @@ import TextShort from 'vue-material-design-icons/TextShort.vue'
 import TranslateVariant from 'vue-material-design-icons/Translate.vue'
 import DeleteOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue'
 import { markFileAsAiGenerated } from '../../apis/ai.ts'
-import { useEditor } from '../../composables/useEditor.ts'
 import { useFileProps } from '../../composables/useFileProps.ts'
+import { logger } from '../../helpers/logger.ts'
 import markdownit from '../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../markdownit/shouldInterpretAsMarkdown.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
@@ -212,13 +212,15 @@ export default {
 		NcLoadingIcon,
 		NcModal,
 	},
+
 	extends: BaseActionEntry,
 	mixins: [useMenuIDMixin],
 	setup() {
-		const { editor } = useEditor()
+		const base = BaseActionEntry.setup()
 		const { fileId } = useFileProps()
-		return { editor, fileId }
+		return { ...base, fileId }
 	},
+
 	data() {
 		return {
 			menuOpen: false,
@@ -237,16 +239,15 @@ export default {
 			canTranslate: loadState('text', 'translation_available', false),
 		}
 	},
+
 	computed: {
 		identifier() {
 			return 'text-file:' + this.fileId
 		},
+
 		badgeStateIcon() {
 			if (
-				this.tasks.filter(
-					(t) =>
-						t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING,
-				).length > 0
+				this.tasks.filter((t) => t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING).length > 0
 			) {
 				return ClockOutline
 			}
@@ -263,10 +264,12 @@ export default {
 
 			return null
 		},
+
 		taskTypeIds() {
 			return this.taskTypes.map((type) => type.id)
 		},
 	},
+
 	watch: {
 		async menuOpen(isOpen) {
 			if (isOpen && this.tasks.length === 0) {
@@ -276,25 +279,24 @@ export default {
 			}
 		},
 	},
+
 	beforeMount() {
 		this.editor.on('selectionUpdate', this.onSelection)
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
-	beforeDestroy() {
+
+	beforeUnmount() {
 		this.editor.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
+
 	methods: {
 		async fetchTasks() {
-			const result = await axios.get(
-				generateOcsUrl('/taskprocessing/tasks/app/text')
-					+ '?customId='
-					+ this.identifier,
-			)
+			const result = await axios.get(generateOcsUrl('/taskprocessing/tasks/app/text')
+				+ '?customId='
+				+ this.identifier)
 
-			const filteredTasks = result.data.ocs.data.tasks.filter((t) =>
-				this.taskTypeIds.includes(t.type),
-			)
+			const filteredTasks = result.data.ocs.data.tasks.filter((t) => this.taskTypeIds.includes(t.type))
 			this.tasks = filteredTasks
 				.map((task) => {
 					return {
@@ -304,6 +306,7 @@ export default {
 				})
 				.sort((a, b) => b.id - a.id)
 		},
+
 		async checkNotification(event) {
 			if (
 				event.notification.app !== 'assistant'
@@ -313,10 +316,12 @@ export default {
 			}
 			await this.fetchTasks()
 		},
+
 		onSelection() {
 			const { selection, doc } = this.editor.state
 			this.selection = doc.textBetween(selection.from, selection.to, ' ')
 		},
+
 		async openAssistantForm(taskType = null) {
 			await window.OCA.Assistant.openAssistantForm({
 				appId: 'text',
@@ -341,6 +346,7 @@ export default {
 				this.fetchTasks()
 			})
 		},
+
 		openTranslateDialog() {
 			const { selection, doc } = this.editor.state
 			const hasSelection = selection.from !== selection.to
@@ -374,6 +380,7 @@ export default {
 				this.fetchTasks()
 			})
 		},
+
 		async openResult(task) {
 			window.OCA.Assistant.openAssistantTask(task, {
 				isInsideViewer: true,
@@ -389,6 +396,7 @@ export default {
 				],
 			})
 		},
+
 		async insertResult(task) {
 			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
 			const content = isMarkdown
@@ -400,27 +408,30 @@ export default {
 			}
 			this.showTaskList = false
 		},
+
 		async copyResult(task) {
 			try {
 				await navigator.clipboard.writeText(task.output.output)
 				showSuccess(t('text', 'Nextcloud Assistant result copied'))
 				this.showTaskList = false
 			} catch (error) {
-				console.error(error)
+				logger.error(error)
 				showError(t('text', 'Could not copy result to clipboard'))
 			}
 		},
+
 		async deleteTask(task) {
 			try {
 				await axios.delete(generateOcsUrl(`/taskprocessing/task/${task.id}`))
 			} catch (e) {
-				console.error('Failed to delete task', e)
+				logger.error('Failed to delete task', e)
 			}
 			const taskIndex = this.tasks.findIndex((t) => t.id === task.id)
 			if (taskIndex > -1) {
-				this.$delete(this.tasks, taskIndex)
+				this.tasks.splice(taskIndex, 1)
 			}
 		},
+
 		async translateInsert(task, replaceRange) {
 			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
 			const content = isMarkdown
@@ -436,6 +447,7 @@ export default {
 				await markFileAsAiGenerated(this.fileId)
 			}
 		},
+
 		t,
 	},
 }

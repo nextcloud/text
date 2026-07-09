@@ -3,19 +3,22 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { OpenData } from '../apis/connect.ts'
+import type { Step } from '../services/SyncService.ts'
+
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
 import * as Y from 'yjs'
-import type { OpenData } from '../apis/connect'
-import type { Step } from '../services/SyncService'
 import { messageSync } from '../services/y-websocket.js'
-import { decodeArrayBuffer, encodeArrayBuffer } from './base64'
+import { decodeArrayBuffer, encodeArrayBuffer } from './base64.ts'
+import { logger } from './logger.ts'
 
 /**
  * Get Document state encode as base64.
  *
  * Used to store yjs state on the server.
+ *
  * @param ydoc - encode state of this doc
  */
 export function getDocumentState(ydoc: Y.Doc): string {
@@ -86,6 +89,7 @@ function documentStateToUpdateMessage(documentState: string): Uint8Array {
  * Apply a step to the ydoc.
  *
  * Only used in tests right now.
+ *
  * @param ydoc - encode state of this doc
  * @param step - step data
  * @param step.data - array of base64 encoded yjs sync update messages
@@ -97,7 +101,7 @@ export function applyStep(ydoc: Y.Doc, step: Step, origin = 'origin') {
 		const decoder = decoding.createDecoder(updateMessage)
 		const messageType = decoding.readVarUint(decoder)
 		if (messageType !== messageSync) {
-			console.error('y.js update message with invalid type', messageType)
+			logger.error('y.js update message with invalid type', { messageType })
 			return
 		}
 		// There are no responses to updates - so this is a dummy.
@@ -123,13 +127,13 @@ export function logStep(step: Uint8Array<ArrayBufferLike>) {
 	const encodedStep = encodeArrayBuffer(step)
 	switch (messageType) {
 		case 0:
-			console.debug('y.js message sync', subType, encodedStep, err.stack)
+			logger.debug('y.js message sync', { subType, encodedStep, stack: err.stack })
 			break
 		case 3:
-			console.debug('y.js message awareness_query', encodedStep, err.stack)
+			logger.debug('y.js message awareness_query', { encodedStep, stack: err.stack })
 			break
 		case 1:
-			console.debug('y.js message awareness', encodedStep, err.stack)
+			logger.debug('y.js message awareness', { encodedStep, stack: err.stack })
 			break
 	}
 }

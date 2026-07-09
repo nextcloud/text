@@ -3,29 +3,31 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import 'proxy-polyfill'
+import type { Extension } from '@tiptap/core'
+import type { Node } from '@tiptap/pm/model'
+import type { Connection } from './composables/useConnection.ts'
 
-import { Editor, Extension } from '@tiptap/core'
+import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'
 import { createLowlight } from 'lowlight'
-
-import type { Node } from '@tiptap/pm/model'
-import type { Connection } from './composables/useConnection'
+import { markRaw } from 'vue'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
-import { logger } from './helpers/logger'
+import { logger } from './helpers/logger.ts'
+
+import 'proxy-polyfill'
 
 const lowlight = createLowlight()
 
-const loadSyntaxHighlight = async (language: string) => {
+/**
+ * @param language to load the syntax highlighting for
+ */
+async function loadSyntaxHighlight(language: string) {
 	const list = hljs.listLanguages()
 	logger.debug('Supported languages', { list })
 	if (!lowlight.listLanguages().includes(language)) {
 		try {
 			logger.debug('Loading language ' + language)
-			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(
-				`../node_modules/highlight.js/lib/languages/${language}.js`
-			)
+			const syntax = await import(`../node_modules/highlight.js/lib/languages/${language}.js`)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
@@ -39,7 +41,18 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({
+/**
+ *
+ * @param options for the editor
+ * @param options.extensions additional tiptap extensions
+ * @param options.connection to the server api
+ * @param options.relativePath to the file
+ * @param options.isEmbedded wether the editor is embedded as a preview
+ * @param options.mentionSearch hook to perform searches for mentions
+ * @param options.openLink hook called when opening a link
+ * @param options.noLazyImages load images right away
+ */
+function createRichEditor({
 	extensions = [],
 	connection,
 	relativePath,
@@ -55,8 +68,8 @@ const createRichEditor = ({
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
 	openLink?: (href: string) => void
 	noLazyImages?: boolean
-} = {}) => {
-	return new Editor({
+} = {}) {
+	return markRaw(new Editor({
 		editorProps,
 		extensions: [
 			RichText.configure({
@@ -70,14 +83,20 @@ const createRichEditor = ({
 			FocusTrap,
 			...extensions,
 		],
-	})
+	}))
 }
 
-const createPlainEditor = ({
+/**
+ *
+ * @param options for the editor
+ * @param options.language for syntax highlighting, default: plaintext
+ * @param options.extensions additional tiptap extensions
+ */
+function createPlainEditor({
 	language = 'plaintext',
 	extensions = [],
-}: { language?: string; extensions?: Extension[] } = {}) => {
-	return new Editor({
+}: { language?: string, extensions?: Extension[] } = {}) {
+	return markRaw(new Editor({
 		editorProps,
 		extensions: [
 			PlainText.configure({
@@ -88,10 +107,14 @@ const createPlainEditor = ({
 			FocusTrap,
 			...extensions,
 		],
-	})
+	}))
 }
 
-const serializePlainText = (doc: Node) => {
+/**
+ *
+ * @param doc prosemirror document to serialize
+ */
+function serializePlainText(doc: Node) {
 	return doc.textContent
 }
 

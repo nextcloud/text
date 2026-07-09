@@ -7,7 +7,7 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 
 const modKey = Cypress.platform === 'darwin' ? '{cmd}' : '{ctrl}'
-const testShortcut = (shortcut, tag) => {
+function testShortcut(shortcut, tag) {
 	cy.getContent().type(shortcut)
 
 	cy.getContent().find(tag).should('contain', Cypress.currentTest.title)
@@ -15,7 +15,7 @@ const testShortcut = (shortcut, tag) => {
 	return cy.closeFile()
 }
 
-const testHeading = (num) => {
+function testHeading(num) {
 	testShortcut(`${modKey}{shift}${num}`, `h${num}`)
 }
 

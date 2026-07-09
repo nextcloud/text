@@ -27,9 +27,7 @@ Cypress.Commands.overwrite('login', (login, user) => {
 		win.location.href = 'about:blank'
 	})
 	login(user)
-	cy.request('/csrftoken', silent).then(({ body }) =>
-		emit('csrf-token-update', body),
-	)
+	cy.request('/csrftoken', silent).then(({ body }) => emit('csrf-token-update', body))
 	cy.wrap(user, silent).as('currentUser')
 })
 
@@ -59,9 +57,7 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 					{ headers: { 'Content-Type': mimeType } },
 				)
 				.then((response) => {
-					const fileId = Number(
-						response.headers['oc-fileid']?.split('oc')?.[0],
-					)
+					const fileId = Number(response.headers['oc-fileid']?.split('oc')?.[0])
 					Cypress.log({
 						message: `"${target}" (${response.status}): ${fileId}`,
 					})
@@ -83,9 +79,7 @@ Cypress.Commands.add(
 				headers: { 'Content-Type': mimeType, ...headers },
 			})
 			.then((response) => {
-				const fileId = Number(
-					response.headers['oc-fileid']?.split('oc')?.[0],
-				)
+				const fileId = Number(response.headers['oc-fileid']?.split('oc')?.[0])
 				Cypress.log({
 					message: `"${target}" (${response.status}): ${fileId}`,
 				})
@@ -280,17 +274,15 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0, properties = null) => {
 				const props = {}
 				const propStats = resp.querySelectorAll('d\\:propstat, propstat')
 				propStats.forEach((propStat) => {
-					const status =
-						propStat.querySelector('d\\:status, status')?.textContent
+					const status
+						= propStat.querySelector('d\\:status, status')?.textContent
 
 					// Skip properties with 404 status ( not found)
 					if (status?.includes('404')) {
 						return
 					}
 
-					const propElements = resp.querySelectorAll(
-						'd\\:prop > *, prop > * ',
-					)
+					const propElements = resp.querySelectorAll('d\\:prop > *, prop > * ')
 
 					propElements.forEach((prop) => {
 						const tagName = prop.localName
@@ -325,16 +317,14 @@ Cypress.Commands.add('openFolder', (name) => {
 	cy.wait(`@open-${name}`)
 })
 
-Cypress.Commands.add('getFileId', (fileName, params = {}) => {
+Cypress.Commands.add('getFileId', (fileName) => {
 	return cy
 		.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`)
 		.invoke('attr', 'data-cy-files-list-row-fileid')
 })
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
-	cy.get(
-		`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-name-link]`,
-	).click(params)
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-name-link]`).click(params)
 })
 
 Cypress.Commands.add('closeFile', (params = {}) => {
@@ -385,18 +375,14 @@ Cypress.Commands.add('getEditor', { prevSubject: 'optional' }, (subject) => {
 })
 
 Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
-	return (subject ? cy.wrap(subject) : cy.getEditor()).find(
-		'[data-text-el="menubar"]',
-	)
+	return (subject ? cy.wrap(subject) : cy.getEditor()).find('[data-text-el="menubar"]')
 })
 
 // Get menu entry even if moved into overflow menu
 Cypress.Commands.add('getMenuEntry', (name) => {
 	cy.getMenu().then(($body) => {
 		if (
-			$body.find(
-				`div.text-menubar__entries > [data-text-action-entry="${name}"]`,
-			).length
+			$body.find(`div.text-menubar__entries > [data-text-action-entry="${name}"]`).length
 		) {
 			return cy.getActionEntry(name)
 		}
@@ -419,9 +405,7 @@ Cypress.Commands.add(
 	'getActionEntry',
 	{ prevSubject: 'optional' },
 	(subject, name) => {
-		return (subject ? cy.wrap(subject) : cy.getMenu()).find(
-			`[data-text-action-entry="${name}"]`,
-		)
+		return (subject ? cy.wrap(subject) : cy.getMenu()).find(`[data-text-action-entry="${name}"]`)
 	},
 )
 
@@ -488,12 +472,8 @@ Cypress.Commands.add(
 		const url = '**/remote.php/dav/files/**'
 		cy.intercept({ method: 'PUT', url }).as('addDescription')
 
-		cy.get(
-			'[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]',
-		).should('not.exist')
-		cy.get(
-			'.files-list__header [data-cy-upload-picker] button.action-item__menutoggle',
-		).click()
+		cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
+		cy.get('.files-list__header [data-cy-upload-picker] button.action-item__menutoggle').click()
 		cy.get('li.upload-picker__menu-entry button').contains(buttonLabel).click()
 
 		cy.wait('@addDescription')

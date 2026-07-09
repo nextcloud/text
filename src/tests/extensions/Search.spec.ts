@@ -4,11 +4,11 @@
  */
 
 import { afterAll, describe, expect, it } from 'vitest'
-import Search from '../../extensions/Search'
+import Search from '../../extensions/Search.ts'
 import HardBreak from '../../nodes/HardBreak.js'
 import { searchDecorationsPluginKey } from '../../plugins/searchDecorations.js'
 import lorem from '../fixtures/lorem.txt?raw'
-import createCustomEditor from '../testHelpers/createCustomEditor'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('editor search highlighting', () => {
 	const editor = createCustomEditor(lorem, [Search, HardBreak])

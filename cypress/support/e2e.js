@@ -6,6 +6,7 @@
 // This file is loaded before all e2e tests
 
 import chaiExtension from './chai.js'
+
 import './commands.js'
 import './sessions.js'
 
@@ -17,7 +18,7 @@ beforeEach(() => {
 
 Cypress.on('window:before:load', (win) => {
 	// disable service workers
-	// eslint-disable-next-line
+
 	delete win.navigator.ServiceWorker
 })
 
@@ -37,7 +38,7 @@ before(() => {
 	})
 })
 
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', (err) => {
 	// Old files scripts attempt to iterate through views
 	// which do not exist anymore since 28.
 	// TODO: Remove this once

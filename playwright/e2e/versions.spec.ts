@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect, mergeTests, type Locator } from '@playwright/test'
-import { test as editorTest } from '../support/fixtures/editor'
-import { test as randomUserTest } from '../support/fixtures/random-user'
-import { test as uploadFileTest } from '../support/fixtures/upload-file'
-import type { EditorSection } from '../support/sections/EditorSection'
+import type { Locator } from '@playwright/test'
+import type { EditorSection } from '../support/sections/EditorSection.ts'
+
+import { expect, mergeTests } from '@playwright/test'
+import { test as editorTest } from '../support/fixtures/editor.ts'
+import { test as randomUserTest } from '../support/fixtures/random-user.ts'
+import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 
 const test = mergeTests(editorTest, randomUserTest, uploadFileTest)
 

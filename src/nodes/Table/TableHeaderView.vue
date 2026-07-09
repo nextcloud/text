@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-header" as="th" :dir="dir" :style="align">
+	<NodeViewWrapper
+		data-text-el="table-header"
+		as="th"
+		:dir="dir"
+		:style="align">
 		<div>
 			<NodeViewContent class="content" />
 			<NcActions
@@ -19,7 +23,7 @@
 						:aria-label="t('text', 'Left align column')"
 						type="radio"
 						value="left"
-						:model-value="node.attrs.align"
+						:modelValue="node.attrs.align"
 						@click="setAlignLeft">
 						<template #icon>
 							<AlignHorizontalLeft />
@@ -30,7 +34,7 @@
 						:aria-label="t('text', 'Center align column')"
 						type="radio"
 						value="center"
-						:model-value="node.attrs.align"
+						:modelValue="node.attrs.align"
 						@click="setAlignCenter">
 						<template #icon>
 							<AlignHorizontalCenter />
@@ -41,7 +45,7 @@
 						:aria-label="t('text', 'Right align column')"
 						type="radio"
 						value="right"
-						:model-value="node.attrs.align"
+						:modelValue="node.attrs.align"
 						@click="setAlignRight">
 						<template #icon>
 							<AlignHorizontalRight />
@@ -50,7 +54,7 @@
 				</NcActionButtonGroup>
 				<NcActionButton
 					data-text-table-action="sort-column-asc"
-					close-after-click
+					closeAfterClick
 					@click="sortColumnAsc">
 					<template #icon>
 						<SortAscending />
@@ -59,7 +63,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="sort-column-desc"
-					close-after-click
+					closeAfterClick
 					@click="sortColumnDesc">
 					<template #icon>
 						<SortDescending />
@@ -68,7 +72,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="add-column-before"
-					close-after-click
+					closeAfterClick
 					@click="addColumnBefore">
 					<template #icon>
 						<TableAddColumnBefore />
@@ -77,7 +81,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="add-column-after"
-					close-after-click
+					closeAfterClick
 					@click="addColumnAfter">
 					<template #icon>
 						<TableAddColumnAfter />
@@ -86,7 +90,7 @@
 				</NcActionButton>
 				<NcActionButton
 					data-text-table-action="remove-column"
-					close-after-click
+					closeAfterClick
 					@click="deleteColumn">
 					<template #icon>
 						<TrashCan />
@@ -100,10 +104,10 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
 import NcActions from '@nextcloud/vue/components/NcActions'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
@@ -132,49 +136,66 @@ export default {
 		SortAscending,
 		SortDescending,
 	},
+
 	props: {
 		editor: {
 			type: Object,
 			required: true,
 		},
+
 		getPos: {
 			type: Function,
 			required: true,
 		},
+
 		node: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	data() {
 		return {
 			isEditable: false,
 		}
 	},
+
 	computed: {
 		align() {
 			return { 'text-align': this.node.attrs.align }
 		},
+
 		dir() {
 			return this.node.attrs.dir || ''
 		},
 	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
-		this.editor.on('update', ({ editor }) => {
-			this.isEditable = editor.isEditable
-		})
+		this.editor.on('update', this.onUpdate)
 	},
+
+	beforeUnmount() {
+		this.editor.off('update', this.onUpdate)
+	},
+
 	methods: {
+		onUpdate({ editor }) {
+			this.isEditable = editor.isEditable
+		},
+
 		setAlignCenter() {
 			this.setAlign('center')
 		},
+
 		setAlignLeft() {
 			this.setAlign('left')
 		},
+
 		setAlignRight() {
 			this.setAlign('right')
 		},
+
 		setAlign(align) {
 			this.editor
 				.chain()
@@ -189,6 +210,7 @@ export default {
 			this.editor.chain().setTextSelection(this.getPos()).focus().run()
 			this.$refs.menu.closeMenu(false)
 		},
+
 		deleteColumn() {
 			this.editor
 				.chain()
@@ -197,6 +219,7 @@ export default {
 				.deleteColumn()
 				.run()
 		},
+
 		addColumnBefore() {
 			this.editor
 				.chain()
@@ -205,6 +228,7 @@ export default {
 				.addColumnBefore()
 				.run()
 		},
+
 		addColumnAfter() {
 			this.editor
 				.chain()
@@ -213,15 +237,21 @@ export default {
 				.addColumnAfter()
 				.run()
 		},
+
 		sortColumnAsc() {
 			this.sortColumn('asc')
 		},
+
 		sortColumnDesc() {
 			this.sortColumn('desc')
 		},
+
 		sortColumn(direction) {
-			this.editor.commands.sortColumn(direction, this.node)
+			const pos = this.getPos()
+			const cellNode = this.editor.state.doc.nodeAt(pos)
+			this.editor.commands.sortColumn(direction, cellNode)
 		},
+
 		t,
 	},
 }

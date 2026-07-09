@@ -8,8 +8,8 @@ import type StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
 
 const DETAILS_START_REGEX = /^<details>\s*$/
-const DETAILS_AND_SUMMARY_START_REGEX =
-	/(?<=^<details>\s*<summary>).*(?=<\/summary>\s*$)/
+const DETAILS_AND_SUMMARY_START_REGEX
+	= /(?<=^<details>\s*<summary>).*(?=<\/summary>\s*$)/
 const DETAILS_END_REGEX = /^<\/details>\s*$/
 const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
 
@@ -119,7 +119,7 @@ function parseDetails(
 		token.content = t.content
 	}
 
-	token = state.push('details_summary', 'summary', -1)
+	state.push('details_summary', 'summary', -1)
 
 	state.md.block.tokenize(state, startLine + startLineCount, nextLine)
 
@@ -134,7 +134,7 @@ function parseDetails(
 }
 
 /**
- * @param {object} md - Markdown object
+ * @param md - Markdown object
  */
 export default function details(md: MarkdownIt) {
 	md.block.ruler.before('fence', 'details', parseDetails, {

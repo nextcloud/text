@@ -7,7 +7,6 @@
 	<transition name="fade">
 		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
 			<NcButton
-				ref="linkFileOrFolder"
 				variant="secondary"
 				size="normal"
 				class="suggestions--button"
@@ -59,7 +58,7 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { Folder, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
@@ -67,6 +66,7 @@ import { useFileProps } from '../composables/useFileProps.ts'
 import { useLinkFile } from '../composables/useLinkFile.ts'
 import { useNetworkState } from '../composables/useNetworkState.ts'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
+import { logger } from '../helpers/logger.ts'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
@@ -106,6 +106,7 @@ export default {
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
 		},
+
 		uploadTitle() {
 			if (!this.networkOnline) {
 				return t('text', 'Disabled because you are currently offline.')
@@ -125,7 +126,7 @@ export default {
 		this.onUpdate({ editor: this.editor })
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		this.editor.off('update', this.onUpdate)
 	},
 
@@ -145,7 +146,7 @@ export default {
 					}
 				})
 				.catch((error) => {
-					console.error('Smart picker promise rejected', error)
+					logger.error('Smart picker promise rejected', error)
 				})
 		},
 
@@ -164,6 +165,7 @@ export default {
 			const EMPTY_DOCUMENT_SIZE = 4
 			this.isEmptyContent = editor.state.doc.nodeSize <= EMPTY_DOCUMENT_SIZE
 		},
+
 		t,
 	},
 }
@@ -186,11 +188,11 @@ export default {
 }
 
 .fade-enter-to,
-.fade-leave {
+.fade-leave-from {
 	opacity: 1;
 }
 
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
 	opacity: 0;
 }

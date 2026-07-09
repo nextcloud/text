@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import { PlainText } from './../extensions/index.js'
 import BaseReader from './BaseReader.vue'
+import { PlainText } from './../extensions/index.js'
 
 export default {
 	name: 'PlainTextReader',

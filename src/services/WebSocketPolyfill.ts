@@ -3,15 +3,21 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { OpenData } from '../apis/connect'
-import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64'
-import { logger } from '../helpers/logger.js'
-import { stepsFromOpenData } from '../helpers/yjs'
-import getNotifyBus from './NotifyService'
-import type { Step, SyncService } from './SyncService'
+import type { OpenData } from '../apis/connect.ts'
+import type { Step, SyncService } from './SyncService.ts'
 
-// Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
-const debug = (message: string, context?: Record<string, unknown>) => {
+import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.ts'
+import { logger } from '../helpers/logger.js'
+import { stepsFromOpenData } from '../helpers/yjs.ts'
+import getNotifyBus from './NotifyService.ts'
+
+/**
+ * Optional debug logging if window.OCA.Text.logWebSocketPolyfill is set.
+ *
+ * @param message to log
+ * @param context data to include in the log
+ */
+function debug(message: string, context?: Record<string, unknown>) {
 	if (window.OCA?.Text?.logWebSocketPolyfill) {
 		logger.debug(message, context)
 	}
@@ -27,7 +33,6 @@ export default function initWebSocketPolyfill(
 	fileId: number,
 ) {
 	return class WebSocketPolyfill {
-		#url
 		binaryType: 'blob' | 'arraybuffer' = 'blob'
 		onmessage?: (message: MessageEvent) => void
 		onerror?: (error: Event) => void
@@ -41,7 +46,6 @@ export default function initWebSocketPolyfill(
 		constructor(url: string) {
 			this.#notifyPushBus = getNotifyBus()
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
-			this.#url = url
 			debug('WebSocketPolyfill#constructor', { url, fileId })
 
 			this.#onOpened = (data: OpenData) => {
@@ -128,7 +132,7 @@ export default function initWebSocketPolyfill(
 		#onNotifyPush({
 			messageBody,
 		}: {
-			messageBody: { documentId: number; steps: string[] }
+			messageBody: { documentId: number, steps: string[] }
 		}) {
 			debug('WebSocketPolyfill#onNotifyPush', messageBody)
 			if (messageBody.documentId !== fileId) {

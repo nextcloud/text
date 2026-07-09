@@ -5,7 +5,7 @@
 
 <template>
 	<NcPopover
-		:no-focus-trap="!showGuestNameDialog"
+		:noFocusTrap="!showGuestNameDialog"
 		class="session-list"
 		placement="bottom">
 		<template #trigger="{ attrs }">
@@ -32,7 +32,7 @@
 				<ul>
 					<GuestNameDialog
 						v-if="showGuestNameDialog"
-						:session.sync="currentGuestSession" />
+						v-model:session="currentGuestSession" />
 					<li
 						v-for="session in sessionList"
 						:key="session.id"
@@ -55,12 +55,12 @@ import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
+import AvatarWrapper from './AvatarWrapper.vue'
+import GuestNameDialog from './GuestNameDialog.vue'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useSessions } from '../../composables/useSessions.ts'
 import { useSyncService } from '../../composables/useSyncService.ts'
 import { COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
-import AvatarWrapper from './AvatarWrapper.vue'
-import GuestNameDialog from './GuestNameDialog.vue'
 
 export default {
 	name: 'SessionList',
@@ -71,28 +71,32 @@ export default {
 		NcButton,
 		NcPopover,
 	},
+
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
-		const { currentGuestSession, currentSession, sessions } =
-			useSessions(syncService)
+		const { currentGuestSession, currentSession, sessions }
+			= useSessions(syncService)
 		return { currentGuestSession, currentSession, sessions, isPublic }
 	},
+
 	computed: {
 		label() {
 			return t('text', 'Active people')
 		},
+
 		sessionList() {
 			return this.showGuestNameDialog ? this.remoteSessions : this.sessions
 		},
+
 		remoteSessions() {
-			return this.sessions.filter(
-				(session) => session.id !== this.currentSession?.id,
-			)
+			return this.sessions.filter((session) => session.id !== this.currentSession?.id)
 		},
+
 		showGuestNameDialog() {
 			return this.isPublic && this.currentGuestSession
 		},
+
 		avatarStyle() {
 			return (session) => {
 				return {
@@ -104,10 +108,12 @@ export default {
 				}
 			}
 		},
+
 		sessionsForTriggerButton() {
 			return this.remoteSessions.slice(0, 3)
 		},
 	},
+
 	methods: {
 		t,
 		displayNameOrGuestName: (session) => {

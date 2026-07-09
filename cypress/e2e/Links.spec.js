@@ -8,12 +8,12 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 const fileName = 'empty.md'
 
-describe('test link marks', function () {
-	before(function () {
+describe('test link marks', function() {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.isolateTest({
 			sourceFile: fileName,
@@ -24,7 +24,7 @@ describe('test link marks', function () {
 		cy.openFile(fileName, { force: true })
 	})
 
-	describe('link bubble', function () {
+	describe('link bubble', function() {
 		/**
 		 * Find link and click on it
 		 *
@@ -134,14 +134,12 @@ describe('test link marks', function () {
 			cy.insertLine(`[text](${link})`)
 			cy.getContent().find(`a[href*="${link}"]`).should('not.exist')
 			clickLink('#')
-			cy.get('.link-view-bubble__title', { timeout: 10000 }).contains(
-				'other://protocol',
-			)
+			cy.get('.link-view-bubble__title', { timeout: 10000 }).contains('other://protocol')
 			cy.get('.link-view-bubble a').should('not.exist')
 		})
 	})
 
-	describe('autolink', function () {
+	describe('autolink', function() {
 		it('with protocol to files app and fileId', () => {
 			cy.getFile(fileName).then(($el) => {
 				const id = $el.data('cyFilesListRowFileid')
@@ -167,17 +165,17 @@ describe('test link marks', function () {
 		})
 	})
 
-	describe('link menu', function () {
+	describe('link menu', function() {
 		beforeEach(() => cy.clearContent())
 		const text = 'some text'
 
-		describe('link to website', function () {
+		describe('link to website', function() {
 			const url = 'https://example.org/'
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkWebsite = (url, text) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-website').click()
 				cy.getActionSubEntry('insert-link-input')
-					.find('input[type="text"]')
+					.click()
 					.type(`${url}{enter}`)
 				cy.getContent()
 					.find(`a[href*="${url}"]`)
@@ -187,27 +185,26 @@ describe('test link marks', function () {
 
 			beforeEach(cy.clearContent)
 			it('Link website without selection', () => {
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					checkLinkWebsite(url, url)
 				})
 			})
 
 			it('Link website with selection', () => {
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkWebsite(url, text)
 				})
 			})
 		})
 
-		describe('link to local file', function () {
+		describe('link to local file', function() {
+			let fileId = null
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkFile = (filename, text, isFolder = false) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
 				cy.get('.file-picker').within(() => {
-					cy.get(
-						`[data-testid="file-list-row"][data-filename="${filename}"]`,
-					).click()
+					cy.get(`[data-testid="file-list-row"][data-filename="${filename}"]`).click()
 					cy.get(isFolder ? '.empty-content__name' : '.file-picker__files')
 					cy.contains(
 						'button',
@@ -221,15 +218,13 @@ describe('test link marks', function () {
 					.should('have.text', text === undefined ? filename : text)
 			}
 
-			let fileId = null
-
 			beforeEach(() => cy.clearContent())
 
 			it('without text', () => {
 				cy.getFileId(fileName).then((id) => {
 					fileId = id
 				})
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					checkLinkFile(fileName)
 					cy.get('.modal-header__name').should('include.text', fileName)
 				})
@@ -238,19 +233,17 @@ describe('test link marks', function () {
 				cy.getFileId(fileName).then((id) => {
 					fileId = id
 				})
-				cy.getFile(fileName).then(($el) => {
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile(fileName, text)
 					cy.get('.modal-header__name').should('include.text', fileName)
 				})
 			})
 			it('link to directory', () => {
-				cy.createFolder(`${window.__currentDirectory}/dummy folder`).then(
-					(folderId) => {
-						fileId = folderId
-					},
-				)
-				cy.getFile(fileName).then(($el) => {
+				cy.createFolder(`${window.__currentDirectory}/dummy folder`).then((folderId) => {
+					fileId = folderId
+				})
+				cy.getFile(fileName).then(() => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile('dummy folder', text, true)
 				})

@@ -9,7 +9,7 @@
 		class="collision-resolve-dialog"
 		:class="{ 'icon-loading': clicked }">
 		<NcButton
-			:wide="true"
+			wide
 			size="large"
 			:disabled="clicked"
 			data-cy="useEditorVersion"
@@ -17,7 +17,7 @@
 			{{ textForSource[editorSource] }}
 		</NcButton>
 		<NcButton
-			:wide="true"
+			wide
 			:disabled="clicked"
 			data-cy="useReaderVersion"
 			@click="useReaderVersion">
@@ -39,16 +39,21 @@ export default {
 	components: {
 		NcButton,
 	},
+
 	props: {
 		otherVersion: {
 			type: String,
 			required: true,
 		},
+
 		readerSource: {
 			type: String,
 			required: true,
 		},
 	},
+
+	emits: ['resolved'],
+
 	setup(props) {
 		if (!['local', 'server'].includes(props.readerSource)) {
 			logger.warn('Invalid reader source', props)
@@ -63,6 +68,7 @@ export default {
 				'text',
 				'Keep my local changes and overwrite the remote version',
 			),
+
 			server: t('text', 'Discard my local changes and use the remote version'),
 		}
 		return {
@@ -75,11 +81,13 @@ export default {
 			t,
 		}
 	},
+
 	data() {
 		return {
 			clicked: false,
 		}
 	},
+
 	methods: {
 		useEditorVersion() {
 			this.clicked = true
@@ -89,6 +97,7 @@ export default {
 			})
 			this.setEditable(!this.readOnly)
 		},
+
 		useReaderVersion() {
 			this.clicked = true
 			this.setEditable(!this.readOnly)

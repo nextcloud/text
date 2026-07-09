@@ -7,8 +7,8 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('Test state loading of documents', function () {
-	before(function () {
+describe('Test state loading of documents', function() {
+	before(function() {
 		// Init user
 		cy.createUser(user)
 		cy.login(user)
@@ -16,14 +16,12 @@ describe('Test state loading of documents', function () {
 		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
 		cy.uploadFile('test.md', 'text/markdown', 'test3.md')
 	})
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 	})
 
-	it('Initial content can not be undone', function () {
-		cy.shareFile('/test.md', { edit: true }).then((token) =>
-			cy.visit(`/s/${token}`),
-		)
+	it('Initial content can not be undone', function() {
+		cy.shareFile('/test.md', { edit: true }).then((token) => cy.visit(`/s/${token}`))
 		cy.getEditor().should('be.visible')
 		cy.getContent()
 			.should('contain', 'Hello world')
@@ -37,7 +35,7 @@ describe('Test state loading of documents', function () {
 		cy.getActionEntry('undo').should('not.be.disabled')
 	})
 
-	it('Consecutive sessions work properly', function () {
+	it('Consecutive sessions work properly', function() {
 		cy.interceptCreate()
 		cy.shareFile('/test2.md').as('readToken')
 		cy.logout()
@@ -80,7 +78,7 @@ describe('Test state loading of documents', function () {
 		cy.getContent().find('h2').should('contain', 'Something new Hello world')
 	})
 
-	it('Load after state has been saved', function () {
+	it('Load after state has been saved', function() {
 		cy.interceptCreate()
 		cy.shareFile('/test3.md', { edit: true }).as('writeToken')
 		cy.logout()

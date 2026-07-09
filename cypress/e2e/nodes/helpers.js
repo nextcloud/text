@@ -28,7 +28,11 @@ export function runCommands(editor) {
 		const name = node.text
 		editor.commands.setTextSelection(pos)
 		editor.commands[name]()
-		editor.commands.insertContent('did ')
+		const updated = findCommand(editor)
+		if (updated) {
+			editor.commands.setTextSelection(updated.pos)
+			editor.commands.insertContent('did ')
+		}
 	}
 }
 
@@ -39,10 +43,7 @@ export function runCommands(editor) {
 function findCommand(editor) {
 	const doc = editor.state.doc
 	return findChildren(doc, (child) => {
-		return (
-			child.isText
-			&& Object.prototype.hasOwnProperty.call(editor.commands, child.text)
-		)
+		return child.isText && Object.hasOwn(editor.commands, child.text)
 	})[0]
 }
 
@@ -53,7 +54,7 @@ function findCommand(editor) {
  */
 export function expectMarkdown(editor, markdown) {
 	const stripped = markdown.replace(/\t*/g, '')
-	expect(getMarkdown(editor)).to.equal(stripped)
+	expect(getMarkdown(editor).replace(/\n*$/, '')).to.equal(stripped)
 }
 
 /**

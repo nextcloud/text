@@ -19,7 +19,7 @@
 		</template>
 		<NcActionButton
 			v-if="$editorUpload"
-			close-after-click
+			closeAfterClick
 			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-upload`"
 			@click="$callChooseLocalAttachment">
@@ -30,7 +30,7 @@
 		</NcActionButton>
 		<NcActionButton
 			v-if="!isPublic"
-			close-after-click
+			closeAfterClick
 			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-insert`"
 			@click="$callAttachmentPrompt">
@@ -44,7 +44,7 @@
 			<NcActionButton
 				v-for="(template, index) in templates"
 				:key="`${template.app}-${index}`"
-				close-after-click
+				closeAfterClick
 				:disabled="isUploadingAttachments"
 				:data-text-action-entry="`${actionEntry.key}-add-${template.app}-${index}`"
 				@click="createAttachment(template)">
@@ -93,6 +93,7 @@ export default {
 		Upload,
 		Plus,
 	},
+
 	extends: BaseActionEntry,
 	mixins: [
 		useEditorUpload,
@@ -102,19 +103,23 @@ export default {
 		useActionCreateAttachmentMixin,
 		useMenuIDMixin,
 	],
+
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { openData } = useConnection()
 		const { networkOnline } = useNetworkState()
 		return { ...BaseActionEntry.setup(), isPublic, networkOnline, openData }
 	},
+
 	computed: {
 		icon() {
 			return this.isUploadingAttachments ? Loading : this.actionEntry.icon
 		},
+
 		isUploadingAttachments() {
 			return this.$uploadingState.isUploadingAttachments
 		},
+
 		templates() {
 			let templates = loadState('collectives', 'templates', [])
 			if (!templates.length) {
@@ -126,9 +131,11 @@ export default {
 					.filter((t) => !(t.app === 'text' && t.extension === '.md'))
 			)
 		},
+
 		isUploadDisabled() {
 			return !this.openData?.hasOwner || !this.networkOnline
 		},
+
 		menuTitle() {
 			if (!this.networkOnline) {
 				return t('text', 'Disabled because you are currently offline.')
@@ -142,10 +149,12 @@ export default {
 			return this.actionEntry.label
 		},
 	},
+
 	methods: {
 		createAttachment(template) {
 			this.$callCreateAttachment(template)
 		},
+
 		t,
 	},
 }

@@ -15,8 +15,8 @@ describe('extractAttachmentSrcs', () => {
 	})
 
 	it('returns headings', () => {
-		const content =
-			'<figure><img src=".attachments.123/test.pdf"></figure><br><figure><img src=".attachments.456/test2.png"></figure>'
+		const content
+			= '<figure><img src=".attachments.123/test.pdf"></figure><br><figure><img src=".attachments.456/test2.png"></figure>'
 		const doc = prepareDoc(content)
 		const attachmentSrcs = extractAttachmentSrcs(doc)
 		expect(attachmentSrcs).toEqual([
@@ -33,7 +33,7 @@ describe('extractAttachmentSrcs', () => {
 	})
 })
 
-const prepareDoc = (content) => {
+function prepareDoc(content) {
 	const editor = createCustomEditor(content, [Image])
 	const doc = editor.state.doc
 	editor.destroy()

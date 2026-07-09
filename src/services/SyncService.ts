@@ -3,25 +3,23 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable jsdoc/valid-types */
+import type { ShallowRef } from 'vue'
+import type { OpenData } from '../apis/connect.ts'
+import type { Connection } from '../composables/useConnection.ts'
 
 import mitt from 'mitt'
-
-import type { ShallowRef } from 'vue'
-import { close, type OpenData } from '../apis/connect'
-import { push } from '../apis/sync'
-import type { Connection } from '../composables/useConnection'
+import { close } from '../apis/connect.ts'
+import { push } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
-import { awarenessSteps } from '../helpers/steps'
-import { documentStateToStep } from '../helpers/yjs'
-import Outbox from './Outbox'
-import PollingBackend from './PollingBackend'
+import { awarenessSteps } from '../helpers/steps.ts'
+import { documentStateToStep } from '../helpers/yjs.ts'
+import Outbox from './Outbox.ts'
+import PollingBackend from './PollingBackend.ts'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
  *
- * @type {number}
  */
 const IDLE_TIMEOUT = 1440
 
@@ -83,6 +81,7 @@ export type Session = UserSession | GuestSession
 
 /**
  * Test if a session is a guest session
+ *
  * @param session to test.
  */
 export function isGuest(session: Session): session is GuestSession {
@@ -91,6 +90,7 @@ export function isGuest(session: Session): session is GuestSession {
 
 /**
  * Test if a session is a logged in user session
+ *
  * @param session to test.
  */
 export function isUser(session: Session): session is UserSession {
@@ -110,16 +110,16 @@ export declare type EventTypes = {
 	opened: OpenData
 
 	/* received new steps */
-	sync: { document?: object; steps: Step[] }
+	sync: { document?: object, steps: Step[] }
 
 	/* state changed (dirty) */
-	stateChange: { initialLoading?: boolean; dirty?: boolean }
+	stateChange: { initialLoading?: boolean, dirty?: boolean }
 
 	/* error */
-	error: { type: ErrorType; data?: object }
+	error: { type: ErrorType, data?: object }
 
 	/* Events for session and document meta data */
-	change: { sessions: Session[]; document: Document }
+	change: { sessions: Session[], document: Document }
 
 	/* Emitted after successful save */
 	save: object
@@ -174,7 +174,7 @@ class SyncService {
 			return
 		}
 		if (!this.connection.value) {
-			console.error('Opened the connection but now it is undefined')
+			logger.error('Opened the connection but now it is undefined')
 			return
 		}
 		this.backend = new PollingBackend(this, this.connection.value, data)
@@ -190,9 +190,9 @@ class SyncService {
 		this.backend?.resetRefetchTimer()
 	}
 
-	#emitError(error: { response?: object; code?: string }) {
-		const eventData =
-			!error.response || error.code === 'ECONNABORTED'
+	#emitError(error: { response?: object, code?: string }) {
+		const eventData
+			= !error.response || error.code === 'ECONNABORTED'
 				? { type: ERROR_TYPE.CONNECTION_FAILED, data: {} }
 				: { type: ERROR_TYPE.LOAD_ERROR, data: error.response }
 		this.bus.emit('error', eventData)
@@ -310,9 +310,7 @@ class SyncService {
 		if (this.version < versionAfter) {
 			// Steps up to version where emitted but it looks like they were not processed.
 			// Otherwise the WebsocketPolyfill would have increased the version counter.
-			console.warn(
-				`Failed to process steps leading up to version ${versionAfter}.`,
-			)
+			logger.warn(`Failed to process steps leading up to version ${versionAfter}.`)
 		}
 		this.#lastStepPush = Date.now()
 	}
@@ -320,9 +318,7 @@ class SyncService {
 	checkIdle() {
 		const lastPushMinutesAgo = (Date.now() - this.#lastStepPush) / 1000 / 60
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
-			logger.debug(
-				`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`,
-			)
+			logger.debug(`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`)
 			this.bus.emit('idle')
 			return true
 		}

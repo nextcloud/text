@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Connection } from '../composables/useConnection.ts'
+import type { Document, GuestSession, Session } from '../services/SyncService.ts'
+
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import type { Connection } from '../composables/useConnection'
-import type { Document, GuestSession, Session } from '../services/SyncService'
 
 export interface OpenParams {
 	fileId?: number
@@ -28,11 +29,10 @@ export interface OpenData {
 
 /**
  * Open editing connection to the document
+ *
  * @param params Parameters identifying the document
  */
-export async function open(
-	params: OpenParams,
-): Promise<{ connection: Connection; data: OpenData }> {
+export async function open(params: OpenParams): Promise<{ connection: Connection, data: OpenData }> {
 	const _baseUrl = params.token
 		? generateUrl('/apps/text/public')
 		: generateUrl('/apps/text')
@@ -52,6 +52,7 @@ export async function open(
 
 /**
  * Update the guest name
+ *
  * @param guestName the name to use for the local user
  * @param connection connection to update the guest name for
  */
@@ -76,6 +77,7 @@ export async function update(
 
 /**
  * Close the connection
+ *
  * @param connection connection to close
  */
 export async function close(connection: Connection) {

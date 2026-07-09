@@ -8,7 +8,7 @@
 		:editor="editor"
 		class="floating-buttons"
 		:class="{ heading: isHeadingNode }"
-		:on-node-change="onNodeChange">
+		:onNodeChange="onNodeChange">
 		<NcButton
 			variant="tertiary-no-background"
 			size="small"
@@ -34,8 +34,8 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { DragHandle } from '@tiptap/extension-drag-handle-vue-3'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { DragHandle } from '@tiptap/extension-drag-handle-vue-2'
 import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import { useEditor } from '../../composables/useEditor.ts'
@@ -73,6 +73,7 @@ export default {
 			this.node = node
 			this.pos = pos
 		},
+
 		onOpenSmartPicker() {
 			if (!this.node || this.pos === -1) {
 				return
@@ -80,15 +81,16 @@ export default {
 
 			// Node has no children or just text children and no text content
 			const { schema } = this.editor
-			const emptyNode =
-				this.node.textContent.trim() === ''
-				&& (this.node.children.length === 0
-					|| this.node.children.every((n) => n.type === schema.nodes.text))
+			const emptyNode
+				= this.node.textContent.trim() === ''
+					&& (this.node.children.length === 0
+						|| this.node.children.every((n) => n.type === schema.nodes.text))
 
 			// Insert at the end of the node
 			const pos = emptyNode ? this.pos + 1 : this.pos + this.node.nodeSize
 			this.editor.chain().insertContentAt(pos, '/').focus().run()
 		},
+
 		t,
 	},
 }

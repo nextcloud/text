@@ -6,8 +6,13 @@
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 
-const domHref = function (node, relativePath) {
-	const ref = node.attrs.href
+/**
+ * Href to be used in the dom
+ *
+ * @param {import('@tiptap/pm/model').Mark} mark to compute href for
+ */
+function domHref(mark) {
+	const ref = mark.attrs.href
 	if (!ref) {
 		return ref
 	}
@@ -38,7 +43,11 @@ const domHref = function (node, relativePath) {
 	return ref
 }
 
-const parseHref = function (dom) {
+/**
+ *
+ * @param {Element} dom element to parse
+ */
+function parseHref(dom) {
 	const ref = dom.getAttribute('href')
 	if (!ref) {
 		return ref
@@ -51,9 +60,13 @@ const parseHref = function (dom) {
 	return ref
 }
 
-const isLinkToSelfWithHash = function (href) {
-	const locationNoHash =
-		window.location.origin + window.location.pathname + window.location.search
+/**
+ *
+ * @param {string} href url to check
+ */
+function isLinkToSelfWithHash(href) {
+	const locationNoHash
+		= window.location.origin + window.location.pathname + window.location.search
 	return href?.startsWith('#') || href?.startsWith(locationNoHash + '#')
 }
 
@@ -62,7 +75,7 @@ const isLinkToSelfWithHash = function (href) {
  *
  * @param {string} href the link href
  */
-const openLink = function (href) {
+function openLink(href) {
 	const linkUrl = new URL(href, window.location.href)
 	window.open(linkUrl.href, '_blank')
 }

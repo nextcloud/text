@@ -7,26 +7,25 @@ import { initUserAndFiles, randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-describe('Preview Options', function () {
-	before(function () {
+describe('Preview Options', function() {
+	before(function() {
 		initUserAndFiles(user, 'codeblock.md', 'empty.md')
 	})
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.isolateTest({ sourceFile: 'empty.md' })
 		cy.openFile('empty.md')
 		cy.get('.entry-action__insert-link').click()
 		cy.get('li').get('[data-text-action-entry="insert-link-website"]').click()
-		cy.get('[data-text-action-entry="insert-link-input"] input').type(
-			'example.org',
-		)
-		cy.get('[data-text-action-entry="insert-link-input"] button').click()
+		cy.get('[data-text-action-entry="insert-link-input"]')
+			.click()
+			.type('example.org{enter}')
 
-		cy.getContent().find(`a[href*="https://example.org"]`).click()
+		cy.getContent().find('a[href*="https://example.org"]').click()
 		cy.get('.link-options').click()
 	})
 
-	it('should render previewOptions correctly', function () {
+	it('should render previewOptions correctly', function() {
 		cy.get('.action-button__text')
 			.contains('Open in new tab')
 			.should('be.visible')
@@ -38,7 +37,7 @@ describe('Preview Options', function () {
 		})
 	})
 
-	it('should toggle to Link Preview', function () {
+	it('should toggle to Link Preview', function() {
 		cy.get('.preview').should('not.exist')
 		cy.get('.action-radio__text').each((el) => {
 			cy.wrap(el)
@@ -52,7 +51,7 @@ describe('Preview Options', function () {
 		cy.get('.preview').should('be.visible')
 	})
 
-	it('should Remove link', function () {
+	it('should Remove link', function() {
 		cy.get('p > a').should('have.text', 'example.org')
 		cy.get('.action-button__text').contains('Remove link').click()
 		cy.get('p > a').should('not.exist')

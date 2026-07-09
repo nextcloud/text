@@ -14,14 +14,17 @@
 
 <script lang="ts">
 import { t } from '@nextcloud/l10n'
-import NcModal from '@nextcloud/vue/components/NcModal'
 import { defineComponent } from 'vue'
+import NcModal from '@nextcloud/vue/components/NcModal'
 
 export default defineComponent({
 	name: 'TocMobile',
 	components: {
 		NcModal,
 	},
+
+	emits: ['close'],
+
 	methods: {
 		t,
 	},

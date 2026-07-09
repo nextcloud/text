@@ -8,7 +8,7 @@ import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { mergeAttributes } from '@tiptap/core'
 import { TaskList as TiptapTaskList } from '@tiptap/extension-list'
-import { toggleListCommand } from '../commands'
+import { toggleListCommand } from '../commands/index.ts'
 
 const TaskList = TiptapTaskList.extend({
 	parseHTML() {
@@ -45,7 +45,6 @@ const TaskList = TiptapTaskList.extend({
 		}
 	},
 
-	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
 	toMarkdown: (state: MarkdownSerializerState, node: Node) => {
 		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
 	},

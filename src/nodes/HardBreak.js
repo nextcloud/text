@@ -23,8 +23,9 @@ const HardBreak = TipTapHardBreak.extend({
 			setHardBreak: () => (ctx) => {
 				// Prevent hard breaks within headings
 				for (let d = ctx.state.selection.$from.depth; d >= 0; d--) {
-					if (ctx.state.selection.$from.node(d).type.name === 'heading')
+					if (ctx.state.selection.$from.node(d).type.name === 'heading') {
 						return false
+					}
 				}
 				return this.parent().setHardBreak()(ctx)
 			},
@@ -36,7 +37,9 @@ const HardBreak = TipTapHardBreak.extend({
 			if (parent.child(i).type !== node.type) {
 				if (node.attrs.syntax !== 'html') {
 					state.write(node.attrs.syntax)
-					if (!parent.child(i).text?.startsWith('\n')) state.write('\n')
+					if (!parent.child(i).text?.startsWith('\n')) {
+						state.write('\n')
+					}
 				} else {
 					state.write('<br />')
 				}
