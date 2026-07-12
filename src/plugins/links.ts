@@ -191,8 +191,17 @@ export function linkClicking(
 						event.preventDefault()
 
 						if (isLinkToSelfWithHash(linkEl.href)) {
-							// Open anchor links directly
-							location.href = linkEl.href
+							// Directly scroll to anchor links
+							const url = new URL(linkEl.href, window.location.href)
+							const hash = url.hash
+							if (hash) {
+								const target = view.dom.querySelector(hash)
+								target?.scrollIntoView({
+									block: 'start',
+									behavior: 'smooth',
+								})
+							}
+							window.history.replaceState({}, '', url.href)
 						} else if (event.ctrlKey || event.metaKey) {
 							// Open link directly on Ctrl/Cmd + left click
 							openLink(linkEl.href)
