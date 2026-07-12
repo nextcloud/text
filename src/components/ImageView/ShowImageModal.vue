@@ -11,7 +11,7 @@
 		outTransition
 		hasNext
 		hasPrevious
-		:closeButtonContained="false"
+		:closeButtonOutside="true"
 		dark
 		@next="showNextImage"
 		@previous="showPreviousImage"
