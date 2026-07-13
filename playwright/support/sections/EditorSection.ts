@@ -19,6 +19,7 @@ export class EditorSection {
 	public readonly sessionList: Locator
 	public readonly suggestionsContainer: Locator
 	public readonly suggestions: Locator
+	public readonly details: Locator
 	public readonly footnoteReferences: Locator
 	public readonly footnotesSection: Locator
 
@@ -36,6 +37,7 @@ export class EditorSection {
 		this.sessionList = this.el.locator('.session-list')
 		this.suggestionsContainer = this.page.locator('.container-suggestions')
 		this.suggestions = this.page.locator('.tippy-box .suggestion-list')
+		this.details = this.el.locator('div[data-text-el="details"]')
 		this.footnoteReferences = this.el.locator('sup[data-type="footnote-reference"]')
 		this.footnotesSection = this.el.locator('section[data-type="footnotes"]')
 	}
@@ -60,6 +62,8 @@ export class EditorSection {
 
 	public getMenuItem(name: string): Locator {
 		return this.el.getByRole('menuitem', { name })
+			.or(this.el.getByRole('menuitemcheckbox', { name }))
+			.or(this.el.getByRole('menuitemradio', { name }))
 	}
 
 	public async clickMenu(menu: string, item: string): Promise<void> {
