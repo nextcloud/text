@@ -12,10 +12,6 @@ import { listInputRule, toggleListCommand } from '../commands/index.ts'
  * Only there we know the user is not trying to create a task list.
  */
 const BulletList = TiptapBulletList.extend({
-	parseHTML() {
-		return this.parent?.()?.map((rule) => Object.assign(rule, { preserveWhitespace: true }))
-	},
-
 	addAttributes() {
 		return {
 			...this.parent?.(),

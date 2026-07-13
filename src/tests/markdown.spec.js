@@ -44,6 +44,21 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('- foo\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('- foo\n- bar')
 		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('- foo\n- bar')
+		expect(markdownThroughEditor('- foo\n  - bar')).toBe('- foo\n  - bar')
+		expect(markdownThroughEditor('- foo\n  - bar\n- baz')).toBe('- foo\n  - bar\n- baz')
+		expect(markdownThroughEditor('- foo  \n  bar  \n  baz')).toBe('- foo  \n  bar  \n  baz')
+	})
+	test('ul - no suprious linebreak in nested lists (#8775)', ({ editor }) => {
+		const source = '- foo\n   - bar\n- baz'
+		editor.commands.setContent(markdownit.render(source))
+		// Walk the doc: no hardBreak node should exist in outer list item's paragraph
+		let hasHardBreak = false
+		editor.state.doc.descendants((node) => {
+			if (node.type.name === 'hardBreak') {
+				hasHardBreak = true
+			}
+		})
+		expect(hasHardBreak).toBe(false)
 	})
 	test('ol', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
