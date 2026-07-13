@@ -64,7 +64,7 @@ export default {
 
 	computed: {
 		isHeadingNode() {
-			return this.node?.type === this.editor.schema.nodes.heading
+			return this.node?.type.name === 'heading'
 		},
 	},
 
@@ -99,7 +99,7 @@ export default {
 	display: flex;
 
 	&.heading {
-		margin-right: 16px;
+		left: calc(-34px - 14px) !important;
 	}
 }
 
