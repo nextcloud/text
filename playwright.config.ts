@@ -20,7 +20,7 @@ export default defineConfig({
 	// line (so we have a quick overview in the logs while the tests are running)
 	// github (to have annotations in the PR)
 	// locally we just want the html report with the traces
-	reporter: process.env.CI ? [['blob'], ['line'], ['github']] : 'html',
+	reporter: process.env.CI ? [['blob'], ['line'], ['github']] : 'list',
 	use: {
 		// Base URL to use in actions like `await page.goto('./')`.
 		baseURL: process.env.baseURL ?? 'http://localhost:8089/index.php/',
