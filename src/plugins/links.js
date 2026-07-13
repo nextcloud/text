@@ -177,8 +177,17 @@ export function linkClicking() {
 						event.preventDefault()
 
 						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
-							// Open anchor links directly
-							location.href = linkEl.attributes.href.value
+							// Directly scroll to anchor links
+							const url = new URL(linkEl.href, window.location.href)
+							const hash = url.hash
+							if (hash) {
+								const target = view.dom.querySelector(hash)
+								target?.scrollIntoView({
+									block: 'start',
+									behavior: 'smooth',
+								})
+							}
+							window.history.replaceState({}, '', url.href)
 						} else if (event.ctrlKey || event.metaKey) {
 							// Open link in new tab on Ctrl/Cmd + left click
 							window.open(linkEl.href, '_blank')
