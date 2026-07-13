@@ -14,6 +14,7 @@ import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
+	Asterisk,
 	CodeBrackets,
 	CodeTags,
 	Danger,
@@ -415,6 +416,19 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 					isSeparator: true,
 				},
 				{
+					key: 'details',
+					label: t('text', 'Details'),
+					isActive: 'details',
+					icon: UnfoldMoreHorizontal,
+					action: (command) => {
+						return command.toggleDetails()
+					},
+				},
+				{
+					key: 'blocks-separator-2',
+					isSeparator: true,
+				},
+				{
 					key: 'math-inline',
 					// TRANSLATORS Inline level math/science formula menu item, eg "something [the formula] something"
 					label: t('text', 'Inline math'),
@@ -449,7 +463,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 					},
 				},
 				{
-					key: 'math-separator',
+					key: 'block-separator-3',
 					isSeparator: true,
 				},
 				{
@@ -502,12 +516,14 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			priority: 15,
 		},
 		{
-			key: 'details',
-			label: t('text', 'Details'),
-			isActive: 'details',
-			icon: UnfoldMoreHorizontal,
+			key: 'footnote',
+			label: t('text', 'Footnote'),
+			keyChar: 'f',
+			keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+			isActive: 'footnote',
+			icon: Asterisk,
 			action: (command) => {
-				return command.toggleDetails()
+				return command.insertFootnote()
 			},
 			priority: 16,
 		},

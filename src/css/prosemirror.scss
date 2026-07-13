@@ -423,6 +423,62 @@ div.ProseMirror {
 			z-index: 2;
 		}
 	}
+
+	sup[data-type="footnote-reference"] {
+		a.footnote-ref {
+			color: var(--color-primary-element);
+			text-decoration: none;
+
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	section[data-type="footnotes"] {
+		display: flex;
+		flex-direction: column;
+		margin-top: calc(2 * var(--default-grid-baseline));
+		border-top: 1px solid var(--color-border);
+
+		div[data-type="footnote"] {
+			display: flex;
+			gap: var(--default-grid-baseline);
+
+			.footnote-label {
+				flex: 0 0 16px;
+				font-size: 0.9em;
+				font-weight: bold;
+				user-select: none;
+				overflow: hidden;
+			}
+
+			.footnote-body > p {
+				margin: 0;
+				line-height: unset;
+			}
+
+			.footnote-body-wrapper {
+				display: flex;
+				gap: var(--default-grid-baseline);
+				font-size: 0.9em;
+				color: var(--color-text-maxcontrast);
+			}
+
+			.footnote-backref {
+				padding: 0;
+				color: var(--color-primary-element);
+				text-decoration: none;
+				width: unset; // overwrite default `a` width
+
+				&:hover,
+				&:focus {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
@@ -444,4 +500,14 @@ div.ProseMirror {
 .tippy-content div {
 	box-sizing: border-box;
 	visibility: visible !important;
+}
+
+.footnote-highlight {
+	animation: highlight-animation 5s 1;
+	border-radius: var(--border-radius-small);
+}
+@keyframes highlight-animation {
+	0% { background-color: var(--color-background-hover); }
+	50% { background-color: var(--color-background-hover); }
+	100% { background-color: transparent; }
 }

@@ -12,6 +12,7 @@ import multimdTable from 'markdown-it-multimd-table'
 import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 import callouts from './callouts.js'
 import details from './details.ts'
+import footnotes from './footnotes.ts'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
 import mathematics from './mathematics.ts'
@@ -32,6 +33,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(hardbreak)
 	.use(callouts)
 	.use(details)
+	.use(footnotes)
 	.use(preview)
 	.use(keepSyntax)
 	.use(markdownitMentions)

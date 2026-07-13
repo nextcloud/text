@@ -14,6 +14,7 @@ import MDI_AlignHorizontalRight from 'vue-material-design-icons/AlignHorizontalR
 import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
 import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
+import MDI_Asterisk from 'vue-material-design-icons/Asterisk.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
 import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
@@ -101,6 +102,7 @@ export const AlphabeticalVariant = makeIcon(MDI_AlphabeticalVariant)
 export const AlignHorizontalCenter = makeIcon(MDI_AlignHorizontalCenter)
 export const AlignHorizontalLeft = makeIcon(MDI_AlignHorizontalLeft)
 export const AlignHorizontalRight = makeIcon(MDI_AlignHorizontalRight)
+export const Asterisk = makeIcon(MDI_Asterisk)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeBrackets = makeIcon(MDI_CodeBrackets)

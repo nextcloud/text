@@ -29,6 +29,7 @@ import Callouts from '../nodes/Callout.js'
 import CodeBlock from '../nodes/CodeBlock.js'
 import Details from '../nodes/Details.js'
 import EditableTable from '../nodes/EditableTable.js'
+import Footnotes from '../nodes/Footnotes.ts'
 import FrontMatter from '../nodes/FrontMatter.js'
 import HardBreak from '../nodes/HardBreak.js'
 import Heading from '../nodes/Heading.js'
@@ -76,7 +77,9 @@ export default Extension.create({
 	addExtensions() {
 		const defaultExtensions = [
 			Markdown,
-			Document,
+			Document.extend({
+				content: 'block+ footnotes?',
+			}),
 			Text,
 			Paragraph,
 			HardBreak,
@@ -93,6 +96,7 @@ export default Extension.create({
 				defaultLanguage: 'plaintext',
 			}),
 			Details,
+			Footnotes,
 			BulletList,
 			HorizontalRule,
 			OrderedList,
@@ -140,12 +144,15 @@ export default Extension.create({
 						placeholder: t('text', "Start writing or type '/' to add…"),
 					})]
 				: []),
-			TrailingNode,
+			TrailingNode.configure({
+				notAfter: ['paragraph', 'footnotes'],
+			}),
 			TextDirection.configure({
 				types: [
 					'blockquote',
 					'callout',
 					'detailsSummary',
+					'footnote',
 					'heading',
 					'listItem',
 					'paragraph',
