@@ -463,6 +463,7 @@ div.ProseMirror {
 				display: flex;
 				gap: var(--default-grid-baseline);
 				font-size: 0.9em;
+				color: var(--color-text-maxcontrast);
 			}
 
 			.footnote-backref {
