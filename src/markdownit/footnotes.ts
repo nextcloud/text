@@ -15,7 +15,7 @@ import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
  * @param token markdown-it token
  */
 function labelOf(token: Token): string {
-	return (token.meta && token.meta.label) || String(token.meta?.id ?? '')
+	return token.meta?.label || String(token.meta?.id ?? '')
 }
 
 /**
