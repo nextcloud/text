@@ -83,29 +83,18 @@ const Footnotes = Node.create({
 						return null
 					}
 
-					let hasFootnotes = false
-					for (let i = 0; i < newState.doc.childCount; i++) {
-						if (newState.doc.child(i).type.name === 'footnotes') {
-							hasFootnotes = true
-							break
-						}
-					}
-					if (!hasFootnotes) {
-						return null
-					}
-
-					const referencedLabels = new Set<string>()
-					newState.doc.descendants((node) => {
-						if (node.type.name === 'footnoteReference') {
-							referencedLabels.add(node.attrs.referenceId)
-						}
-					})
-
 					const deletions: { pos: number, size: number }[] = []
 					newState.doc.forEach((child, offset) => {
 						if (child.type.name !== 'footnotes') {
 							return
 						}
+
+						const referencedLabels = new Set<string>()
+						newState.doc.descendants((node) => {
+							if (node.type.name === 'footnoteReference') {
+								referencedLabels.add(node.attrs.referenceId)
+							}
+						})
 
 						const containerPos = offset
 
