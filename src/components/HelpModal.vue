@@ -226,7 +226,7 @@
 				<tr>
 					<td>{{ t('text', 'Footnote') }}</td>
 					<td>
-						<code>[^{{ t('text', 'label') }}]</code>
+						<code>[^]</code>
 					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ ctrlOrModKey }}</kbd>

@@ -146,17 +146,15 @@ const FootnoteReference = Node.create({
 	addInputRules() {
 		return [
 			new InputRule({
-				find: /\[\^([^\]\s]+)\]$/,
-				handler: ({ state, range, match, chain }) => {
-					const referenceId = match[1] ?? ''
-
+				find: /\[\^\]$/,
+				handler: ({ state, range, chain }) => {
 					if (isInsideFootnote(state)) {
 						return null
 					}
 
 					chain()
 						.deleteRange({ from: range.from, to: range.to })
-						.insertFootnote({ referenceId })
+						.insertFootnote()
 						.run()
 				},
 			}),

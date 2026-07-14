@@ -83,6 +83,17 @@ const Footnotes = Node.create({
 						return null
 					}
 
+					let hasFootnotes = false
+					for (let i = 0; i < newState.doc.childCount; i++) {
+						if (newState.doc.child(i).type.name === 'footnotes') {
+							hasFootnotes = true
+							break
+						}
+					}
+					if (!hasFootnotes) {
+						return null
+					}
+
 					const referencedLabels = new Set<string>()
 					newState.doc.descendants((node) => {
 						if (node.type.name === 'footnoteReference') {
