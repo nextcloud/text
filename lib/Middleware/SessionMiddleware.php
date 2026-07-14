@@ -22,6 +22,8 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
 use OCP\Constants;
+use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
@@ -134,6 +136,17 @@ class SessionMiddleware extends Middleware {
 			$node = $this->rootFolder->getUserFolder($share->getShareOwner())->getFirstNodeById($documentId);
 			if ($node === null) {
 				throw new InvalidSessionException();
+			}
+
+			if ($share->getNodeType() === 'folder') {
+				$folder = $share->getNode();
+				if (!$folder instanceof Folder) {
+					throw new InvalidSessionException();
+				}
+				$file = $folder->getFirstNodeById($documentId);
+				if (!$file instanceof File) {
+					throw new InvalidSessionException();
+				}
 			}
 
 			if ($share->getPassword() !== null) {
