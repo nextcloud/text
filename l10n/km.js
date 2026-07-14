@@ -12,8 +12,8 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Edit" : "កែប្រែ",
     "Upload" : "ផ្ទុក​ឡើង",
-    "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
+    "Table" : "តារាង",
     "Choose" : "ជ្រើស",
     "to" : "ទៅ"
 },

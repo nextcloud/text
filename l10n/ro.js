@@ -26,6 +26,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Scurtături din tastatură",
     "Quoted text" : "Text citat",
     "Link" : "Legătură",
+    "Emoji" : "Emoticoane",
     "Undo" : "Anulează ultima acțiune",
     "Redo" : "Repetă",
     "Edit link" : "Editare link",
