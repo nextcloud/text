@@ -17,6 +17,7 @@ export function buildFilePicker(startPath, allowDirectories = true) {
 		.startAt(startPath)
 		.allowDirectories(allowDirectories)
 		.setMultiSelect(false)
+		.setNoMenu(true)
 		.setButtonFactory((nodes) => {
 			const node = nodes?.[0]
 			const nodeName = node?.attributes?.displayName || node?.basename
