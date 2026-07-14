@@ -18,7 +18,7 @@ import { ERROR_TYPE } from './SyncService.ts'
  *
  * time in ms
  */
-const AUTOSAVE_INTERVAL = 30000
+const AUTOSAVE_DEBOUNCE = 1000
 
 class SaveService {
 	connection: ShallowRef<Connection | undefined>
@@ -42,7 +42,7 @@ class SaveService {
 		this.syncService = syncService
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
-		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
+		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE)
 		this.syncService.bus.on('close', () => {
 			this.autosave.clear()
 		})
@@ -115,6 +115,7 @@ class SaveService {
 	}
 
 	_autosave() {
+		logger.debug('_autosave')
 		return this.save({ manualSave: false }).catch((error) => {
 			logger.error('Failed to autosave document.', { error })
 			// retry in 30 seconds
