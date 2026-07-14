@@ -47,7 +47,7 @@ export class EditorSection {
 	}
 
 	public getMenu(name: string): Locator {
-		return this.el.getByRole('button', { name })
+		return this.menubar.getByRole('button', { name })
 	}
 
 	public getMenuItem(name: string): Locator {
