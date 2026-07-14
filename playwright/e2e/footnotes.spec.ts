@@ -33,9 +33,9 @@ test('inserts footnote via keyboard shortcut', async ({ editor, open }) => {
 	await expect(editor.getFootnote('1')).toContainText('footnote')
 })
 
-test('inserts footnote via [^label] input rule', async ({ editor, open }) => {
+test('inserts footnote via [^] input rule', async ({ editor, open }) => {
 	await open()
-	await editor.type('hello[^bar]')
-	await expect(editor.getFootnoteReference('bar')).toBeVisible()
-	await expect(editor.getFootnote('bar')).toBeVisible()
+	await editor.type('hello[^]')
+	await expect(editor.getFootnoteReference('1')).toBeVisible()
+	await expect(editor.getFootnote('1')).toBeVisible()
 })
