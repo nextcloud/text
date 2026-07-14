@@ -71,6 +71,21 @@ function findSameCellInNextRow($cell) {
 	}
 }
 
+/**
+ * Return the node type name if the selection sits inside a listItem/taskItem.
+ *
+ * @param {object} selection - the editor selection
+ */
+function findListItemAtSelection(selection) {
+	const { $from } = selection
+	for (let depth = $from.depth; depth > 0; depth--) {
+		const name = $from.node(depth).type.name
+		if (name === 'listItem' || name === 'taskItem') {
+			return name
+		}
+	}
+}
+
 export default Table.extend({
 	content: 'tableCaption? tableHeadRow tableRow*',
 
@@ -327,10 +342,35 @@ export default Table.extend({
 			...this.parent(),
 			/**
 			 * <Tab> inside a table cell
-			 * Jump to next cell or outside table if already in last cell
+			 * When inside a list, indent the list item. Otherwise jump to
+			 * the next cell (or out of the table if in the last cell).
 			 */
-			Tab: () => this.editor.commands.goToNextCell()
-				|| this.editor.commands.leaveTable(),
+			Tab: () => {
+				const listItemName = findListItemAtSelection(this.editor.state.selection)
+				if (
+					listItemName
+					&& this.editor.commands.sinkListItem(listItemName)
+				) {
+					return true
+				}
+				this.editor.commands.goToNextCell()
+				|| this.editor.commands.leaveTable()
+			},
+			/**
+			 * <Tab> inside a table cell
+			 * When inside a list, indent the list item. Otherwise jump to
+			 * the next cell (or out of the table if in the last cell).
+			 */
+			'Shift-Tab': () => {
+				const listItemName = findListItemAtSelection(this.editor.state.selection)
+				if (
+					listItemName
+					&& this.editor.commands.liftListItem(listItemName)
+				) {
+					return true
+				}
+				this.editor.commands.goToPreviousCell()
+			},
 		}
 	},
 })
