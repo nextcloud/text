@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "程式碼區塊",
     "Some code" : "一些程式碼",
     "Link" : "連結",
+    "Footnote" : "腳註",
     "Emoji" : "表情符號",
     "emoji" : "表情符號",
     "Mention someone" : "提及某人",

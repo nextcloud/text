@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Bloc de code",
     "Some code" : "Code source",
     "Link" : "Lien",
+    "Footnote" : "Note de bas de page",
     "Emoji" : "Emoji",
     "emoji" : "émoji",
     "Mention someone" : "Mentionner quelqu'un",
