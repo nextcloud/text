@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Koodiplokk",
     "Some code" : "Natukene koodi",
     "Link" : "Link",
+    "Footnote" : "Joonealune märkus",
     "Emoji" : "Emoji",
     "emoji" : "emoji",
     "Mention someone" : "Maini kedagi",
