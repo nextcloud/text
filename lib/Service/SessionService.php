@@ -31,6 +31,7 @@ class SessionService {
 	private IAvatarManager $avatarManager;
 	private ?string $userId;
 	private ICache $cache;
+	private EncodingService $encodingService;
 
 	/** @var ?Session cache current session in the request */
 	private ?Session $session = null;
@@ -44,11 +45,13 @@ class SessionService {
 		IManager $directManager,
 		?string $userId,
 		ICacheFactory $cacheFactory,
+		EncodingService $encodingService,
 	) {
 		$this->sessionMapper = $sessionMapper;
 		$this->timeFactory = $timeFactory;
 		$this->userManager = $userManager;
 		$this->avatarManager = $avatarManager;
+		$this->encodingService = $encodingService;
 		$this->userId = $userId;
 
 		$token = $request->getParam('token');
@@ -96,7 +99,8 @@ class SessionService {
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
 			if (!$session->isGuest()) {
-				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
+				$displayName = $this->userManager->getDisplayName($session->getUserId()) ?? '';
+				$result['displayName'] = $this->encodingService->encodeToUtf8($displayName) ?? $displayName;
 			}
 			return $result;
 		}, $sessions);
@@ -111,7 +115,8 @@ class SessionService {
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
 			if (!$session->isGuest()) {
-				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
+				$displayName = $this->userManager->getDisplayName($session->getUserId()) ?? '';
+				$result['displayName'] = $this->encodingService->encodeToUtf8($displayName) ?? $displayName;
 			}
 			return $result;
 		}, $sessions);
@@ -119,7 +124,8 @@ class SessionService {
 
 	public function getNameForSession(Session $session): ?string {
 		if (!$session->isGuest()) {
-			return $this->userManager->getDisplayName($session->getUserId());
+			$displayName = $this->userManager->getDisplayName($session->getUserId()) ?? '';
+			return $this->encodingService->encodeToUtf8($displayName) ?? $displayName;
 		}
 
 		return $session->getGuestName();
