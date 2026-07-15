@@ -89,6 +89,7 @@ OC.L10N.register(
     "Code block" : "كتلة كود",
     "Some code" : "سطور كود",
     "Link" : "رابط",
+    "Emoji" : "الصور التعبيرية emoji",
     "emoji" : "إيموجي",
     "Mention someone" : "الإشارة إلى شخصٍ ما",
     "name" : "الاسم",
