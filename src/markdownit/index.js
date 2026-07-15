@@ -11,6 +11,7 @@ import mark from 'markdown-it-mark'
 import multimdTable from 'markdown-it-multimd-table'
 import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 import callouts from './callouts.js'
+import comments from './comments.ts'
 import details from './details.ts'
 import footnotes from './footnotes.ts'
 import hardbreak from './hardbreak.js'
@@ -28,12 +29,13 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('table')
 	.use(taskLists, { enable: true, labelAfter: true })
 	.use(frontMatter, () => {})
-	.use(splitMixedLists) // needs task Lists to be used first.
+	.use(splitMixedLists) // needs task Lists to be used first
 	.use(underline)
 	.use(hardbreak)
 	.use(callouts)
 	.use(details)
 	.use(footnotes)
+	.use(comments) // needs to come after footnotes and before markdownitMentions
 	.use(preview)
 	.use(keepSyntax)
 	.use(markdownitMentions)
