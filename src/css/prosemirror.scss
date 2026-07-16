@@ -424,8 +424,13 @@ div.ProseMirror {
 		}
 	}
 
-	sup[data-type="footnote-reference"] {
-		a.footnote-ref {
+	section[data-type="comments"] {
+		display: none;
+	}
+
+	sup[data-type="footnote-reference"], sup[data-type="comment-reference"] {
+		a.footnote-ref, a.comment-ref {
+			font-size: 0.9em;
 			color: var(--color-primary-element);
 			text-decoration: none;
 
