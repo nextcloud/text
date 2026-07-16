@@ -28,6 +28,7 @@ import {
 import BulletList from '../nodes/BulletList.ts'
 import Callouts from '../nodes/Callout.js'
 import CodeBlock from '../nodes/CodeBlock.js'
+import Comments from '../nodes/Comments.ts'
 import Details from '../nodes/Details.js'
 import EditableTable from '../nodes/EditableTable.js'
 import Footnotes from '../nodes/Footnotes.ts'
@@ -87,7 +88,7 @@ export default Extension.create<RichTextOptions>({
 		const defaultExtensions = [
 			Markdown,
 			Document.extend({
-				content: 'block+ footnotes?',
+				content: 'block+ comments? footnotes?',
 			}),
 			Text,
 			Paragraph,
@@ -105,6 +106,7 @@ export default Extension.create<RichTextOptions>({
 				defaultLanguage: 'plaintext',
 			}),
 			Details,
+			Comments,
 			Footnotes,
 			BulletList,
 			HorizontalRule,
@@ -154,12 +156,14 @@ export default Extension.create<RichTextOptions>({
 					})]
 				: []),
 			TrailingNode.configure({
-				notAfter: ['paragraph', 'footnotes'],
+				notAfter: ['paragraph', 'comments', 'footnotes'],
 			}),
 			TextDirection.configure({
 				types: [
 					'blockquote',
 					'callout',
+					'comment',
+					'commentItem',
 					'detailsSummary',
 					'footnote',
 					'heading',
