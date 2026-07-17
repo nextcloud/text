@@ -11,8 +11,10 @@ namespace OCA\Text\Controller;
 
 use OCA\Text\Service\AiTagService;
 use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Files\NotFoundException;
 use OCP\IRequest;
 
 class AiController extends ApiController {
@@ -26,7 +28,11 @@ class AiController extends ApiController {
 
 	#[NoAdminRequired]
 	public function tagFile(int $fileId): DataResponse {
-		$this->aiTagService->tagFileAsAiGenerated($fileId);
-		return new DataResponse([]);
+		try {
+			$this->aiTagService->tagFileAsAiGenerated($fileId);
+			return new DataResponse([]);
+		} catch (NotFoundException) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
 	}
 }
