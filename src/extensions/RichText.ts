@@ -2,7 +2,8 @@
  * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-import type { Extensions } from '@tiptap/core'
+import type { AnyExtension, Extensions } from '@tiptap/core'
+import type { Connection } from '../composables/useConnection.ts'
 
 import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'
@@ -58,18 +59,25 @@ import Typography from './Typography.ts'
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
 
-export default Extension.create({
+interface RichTextOptions {
+	connection?: Connection
+	editing: boolean
+	extensions: Extensions
+	relativePath?: string
+	isEmbedded: boolean
+	mentionSearch?: (query: string) => Promise<Record<string, string>>
+	openLink?: (href: string) => void
+	noLazyImages: boolean
+}
+
+export default Extension.create<RichTextOptions>({
 	name: 'RichText',
 
 	addOptions() {
 		return {
-			connection: null,
 			editing: true,
-			extensions: [] as Extensions,
-			relativePath: undefined,
+			extensions: [],
 			isEmbedded: false,
-			mentionSearch: undefined,
-			openLink: undefined,
 			noLazyImages: false,
 		}
 	},
@@ -165,7 +173,7 @@ export default Extension.create({
 			MathInline,
 			MathBlock,
 		] as const
-		const additionalExtensionNames = this.options.extensions.map((e: Extension) => e.name)
+		const additionalExtensionNames = this.options.extensions.map((e: AnyExtension) => e.name)
 		return [
 			...defaultExtensions.filter((e) => e && !additionalExtensionNames.includes(e.name)),
 			...this.options.extensions,
