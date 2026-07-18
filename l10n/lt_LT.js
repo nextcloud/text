@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Kodo blokas",
     "Some code" : "Kažkoks kodas",
     "Link" : "Nuoroda",
+    "Footnote" : "Išnaša",
     "Emoji" : "Emociukai",
     "emoji" : "emociukas",
     "Mention someone" : "Paminėti ką nors",
