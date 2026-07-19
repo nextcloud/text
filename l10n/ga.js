@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Bloc cód",
     "Some code" : "Roinnt cód",
     "Link" : "Nasc",
+    "Footnote" : "Nóta coise",
     "Emoji" : "Emoji",
     "emoji" : "emoji",
     "Mention someone" : "Luaigh duine éigin",
