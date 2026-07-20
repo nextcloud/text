@@ -181,6 +181,81 @@ describe('Comments cleanup', () => {
 	})
 })
 
+describe('insertComment command', () => {
+	test('inserts a reference and matching comment thread', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+
+		const result = editor.commands.insertComment()
+		expect(result).toBe(true)
+
+		expect(editor.state.doc.firstChild!.lastChild!.type.name).toBe('commentReference')
+
+		const comments = editor.state.doc.lastChild!
+		expect(comments.type.name).toBe('comments')
+		expect(comments.firstChild!.type.name).toBe('comment')
+		expect(comments.firstChild!.firstChild!.type.name).toBe('commentItem')
+	})
+
+	test('generates comment-1 for the first comment', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertComment()
+
+		const ref = editor.state.doc.firstChild!.lastChild!
+		expect(ref.attrs.referenceId).toBe('comment-1')
+		expect(editor.state.doc.lastChild!.firstChild!.attrs.referenceId).toBe('comment-1')
+	})
+
+	test('generates lowest unused comment-N id', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="" data-author-label="" data-timestamp="ts"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.setTextSelection(1)
+		editor.commands.insertComment()
+
+		const refs: string[] = []
+		editor.state.doc.descendants((node) => {
+			if (node.type.name === 'commentReference') {
+				refs.push(node.attrs.referenceId)
+			}
+		})
+		expect(refs).toContain('comment-1')
+		expect(refs).toContain('comment-2')
+	})
+
+	test('appends into existing comments container', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.focus('start')
+		editor.commands.insertComment()
+
+		const comments = editor.state.doc.lastChild!
+		expect(comments.type.name).toBe('comments')
+		expect(comments.childCount).toBe(2)
+	})
+
+	test('inserts comments container before footnotes', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>fn</p></div>'
+			+ '</section>')
+		editor.commands.setTextSelection(1)
+		editor.commands.insertComment()
+
+		const childNames: string[] = []
+		editor.state.doc.forEach((child) => childNames.push(child.type.name))
+		expect(childNames.indexOf('comments')).toBeLessThan(childNames.indexOf('footnotes'))
+	})
+})
+
 describe('Comments Markdown roundtrip', () => {
 	test('single-reply comment', ({ markdownThroughEditor }) => {
 		const test = 'Foo[^comment-1]\n\n'
