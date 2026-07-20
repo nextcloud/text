@@ -21,8 +21,12 @@ import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
 import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_CodeBrackets from 'vue-material-design-icons/CodeBrackets.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
+import MDI_CommentOffOutline from 'vue-material-design-icons/CommentOffOutline.vue'
+import MDI_CommentOutline from 'vue-material-design-icons/CommentOutline.vue'
 import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
+import MDI_Eye from 'vue-material-design-icons/Eye.vue'
+import MDI_EyeOff from 'vue-material-design-icons/EyeOff.vue'
 import MDI_Document from 'vue-material-design-icons/FileDocument.vue'
 import MDI_Folder from 'vue-material-design-icons/FolderOutline.vue'
 import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
@@ -107,11 +111,15 @@ export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeBrackets = makeIcon(MDI_CodeBrackets)
 export const CodeTags = makeIcon(MDI_CodeTags)
+export const CommentOffOutline = makeIcon(MDI_CommentOffOutline)
+export const CommentOutline = makeIcon(MDI_CommentOutline)
 export const CircleMedium = makeIcon(MDI_CircleMedium)
 export const Danger = makeIcon(MDI_Danger)
 export const Document = makeIcon(MDI_Document)
 export const DotsHorizontal = makeIcon(MDI_DotsHorizontal)
 export const Emoticon = makeIcon(MDI_Emoticon)
+export const Eye = makeIcon(MDI_Eye)
+export const EyeOff = makeIcon(MDI_EyeOff)
 export const Folder = makeIcon(MDI_Folder)
 export const FormatBold = makeIcon(MDI_FormatBold)
 export const FormatColorHighlight = makeIcon(MDI_FormatColorHighlight)
