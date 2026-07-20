@@ -46,6 +46,7 @@ import Table from '../nodes/Table.js'
 import TaskItem from '../nodes/TaskItem.ts'
 import TaskList from '../nodes/TaskList.ts'
 import TrailingNode from '../nodes/TrailingNode.js'
+import CommentBubble from './CommentBubble.ts'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
 import Keymap from './Keymap.js'
@@ -149,6 +150,7 @@ export default Extension.create<RichTextOptions>({
 				openLink: this.options.openLink,
 			}),
 			LinkBubble,
+			CommentBubble,
 			...(this.options.editing
 				? [ Placeholder.configure({
 						placeholder: t('text', "Start writing or type '/' to add…"),
