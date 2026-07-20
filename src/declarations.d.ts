@@ -19,3 +19,5 @@ declare module 'markdown-it/lib/rules_inline/link.mjs' {
 	const rule: (state: StateInline, silent: boolean) => boolean
 	export default rule
 }
+
+declare module 'vite/modulepreload-polyfill'

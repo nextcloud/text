@@ -71,6 +71,11 @@
 			"enabled": false
 		},
 		{
+			"description": "Typescript v7 is a go rewrite incompatible with typescript-eslint",
+			"matchPackageNames": ["typescript"],
+			"allowedVersions": "<7"
+		},
+		{
 			"description": "Disable minimum release age checks for internal dependencies",
 			"matchPackageNames": ["@nextcloud/*"],
 			"minimumReleaseAge": null
