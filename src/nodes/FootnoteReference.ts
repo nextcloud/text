@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
-import type { EditorState } from '@tiptap/pm/state'
-
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { Plugin, TextSelection } from '@tiptap/pm/state'
+import { footnoteExists, generateFootnoteId, isInsideFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -191,64 +189,5 @@ const FootnoteReference = Node.create({
 		]
 	},
 })
-
-/**
- * Check if selection is inside a footnote
- *
- * @param state the editor state
- */
-function isInsideFootnote(state: EditorState): boolean {
-	const { $from } = state.selection
-	for (let d = $from.depth; d > 0; d--) {
-		if ($from.node(d).type.name === 'footnote') {
-			return true
-		}
-	}
-	return false
-}
-
-/**
- * Get first unused numeric footnote id
- *
- * @param doc the document node
- */
-function generateFootnoteId(doc: ProseMirrorNode): string {
-	const existing = new Set<string>()
-	doc.descendants((node) => {
-		if (node.type.name === 'footnoteReference' || node.type.name === 'footnote') {
-			const id = node.attrs.referenceId
-			if (id) {
-				existing.add(String(id))
-			}
-		}
-	})
-	for (let i = 1; i < 10_000; i++) {
-		const candidate = String(i)
-		if (!existing.has(candidate)) {
-			return candidate
-		}
-	}
-	return ''
-}
-
-/**
- * Check if footnote with reference id exists
- *
- * @param doc - the ProseMirror node
- * @param id - the searched reference id
- */
-function footnoteExists(doc: ProseMirrorNode, id: string): boolean {
-	let found = false
-	doc.descendants((node) => {
-		if (found) {
-			return false
-		}
-		if (node.type.name === 'footnote' && node.attrs.referenceId === id) {
-			found = true
-			return false
-		}
-	})
-	return found
-}
 
 export default FootnoteReference
