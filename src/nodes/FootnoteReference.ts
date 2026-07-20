@@ -5,7 +5,7 @@
 
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { Plugin, TextSelection } from '@tiptap/pm/state'
-import { footnoteExists, generateReferenceId, isInsideFootnote } from '../plugins/referenceHelpers.ts'
+import { footnoteExists, generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -70,7 +70,7 @@ const FootnoteReference = Node.create({
 	addCommands() {
 		return {
 			insertFootnote: (options?: { referenceId?: string }) => ({ state, chain }) => {
-				if (isInsideFootnote(state)) {
+				if (isInsideCommentOrFootnote(state)) {
 					return false
 				}
 
@@ -146,7 +146,7 @@ const FootnoteReference = Node.create({
 			new InputRule({
 				find: /\[\^\]$/,
 				handler: ({ state, range, chain }) => {
-					if (isInsideFootnote(state)) {
+					if (isInsideCommentOrFootnote(state)) {
 						return null
 					}
 
