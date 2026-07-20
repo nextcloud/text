@@ -4,7 +4,10 @@
 -->
 
 <template>
-	<div data-text-el="editor-content-wrapper" class="editor__content-wrapper">
+	<div
+		data-text-el="editor-content-wrapper"
+		class="editor__content-wrapper"
+		:class="{ 'editor--annotations-hidden': annotationsHidden }">
 		<slot />
 		<FloatingButtons v-if="showFloatingButtons" />
 		<EditorContent
@@ -20,6 +23,7 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-3'
 import FloatingButtons from './FloatingButtons.vue'
 import TocContainer from './TableOfContents/TocContainer.vue'
+import { useAnnotationsVisibility } from '../../composables/useAnnotationsVisibility.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 
@@ -43,7 +47,9 @@ export default {
 		const { editor } = useEditor()
 		const { isRichEditor, isRichWorkspace, hasTableOfContents }
 			= useEditorFlags()
+		const { annotationsHidden } = useAnnotationsVisibility()
 		return {
+			annotationsHidden,
 			editor,
 			isMobile,
 			isRichEditor,
