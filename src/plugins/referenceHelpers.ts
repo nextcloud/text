@@ -7,14 +7,15 @@ import type { Node } from '@tiptap/pm/model'
 import type { EditorState } from '@tiptap/pm/state'
 
 /**
- * Check if selection is inside a footnote
+ * Check if selection is inside a node type
  *
  * @param state the editor state
+ * @param nodeTypeName the node type name
  */
-export function isInsideFootnote(state: EditorState): boolean {
+function isInside(state: EditorState, nodeTypeName: string): boolean {
 	const { $from } = state.selection
 	for (let d = $from.depth; d > 0; d--) {
-		if ($from.node(d).type.name === 'footnote') {
+		if ($from.node(d).type.name === nodeTypeName) {
 			return true
 		}
 	}
@@ -22,14 +23,42 @@ export function isInsideFootnote(state: EditorState): boolean {
 }
 
 /**
- * Get first unused numeric footnote id
+ * Check if selection is inside a comment
+ *
+ * @param state the editor state
+ */
+export function isInsideComment(state: EditorState): boolean {
+	return isInside(state, 'comment')
+}
+
+/**
+ * Check if selection is inside a footnote
+ *
+ * @param state the editor state
+ */
+export function isInsideFootnote(state: EditorState): boolean {
+	return isInside(state, 'footnote')
+}
+
+/**
+ * Check if selection is inside a comment or footnote
+ *
+ * @param state the editor state
+ */
+export function isInsideCommentOrFootnote(state: EditorState): boolean {
+	return isInsideComment(state) || isInsideFootnote(state)
+}
+
+/**
+ * Get first unused numeric id
  *
  * @param doc the document node
+ * @param type comment or footnote
  */
-export function generateFootnoteId(doc: Node): string {
+export function generateReferenceId(doc: Node, type: 'comment' | 'footnote'): string {
 	const existing = new Set<string>()
 	doc.descendants((node) => {
-		if (node.type.name === 'footnoteReference' || node.type.name === 'footnote') {
+		if (node.type.name === type + 'Reference' || node.type.name === type) {
 			const id = node.attrs.referenceId
 			if (id) {
 				existing.add(String(id))
@@ -37,7 +66,7 @@ export function generateFootnoteId(doc: Node): string {
 		}
 	})
 	for (let i = 1; i < 10_000; i++) {
-		const candidate = String(i)
+		const candidate = type === 'comment' ? 'comment-' + String(i) : String(i)
 		if (!existing.has(candidate)) {
 			return candidate
 		}
