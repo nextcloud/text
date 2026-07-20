@@ -507,6 +507,14 @@ div.ProseMirror {
 	visibility: visible !important;
 }
 
+.editor--annotations-hidden div.ProseMirror {
+	sup[data-type="comment-reference"],
+	sup[data-type="footnote-reference"],
+	section[data-type="footnotes"] {
+		display: none;
+	}
+}
+
 .footnote-highlight {
 	animation: highlight-animation 5s 1;
 	border-radius: var(--border-radius-small);
