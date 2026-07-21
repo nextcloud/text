@@ -7,14 +7,16 @@ import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
+import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
+import markdownit from '../markdownit/index.js'
 import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentReference: {
 			insertComment: () => ReturnType
-			addCommentReply: (referenceId: string, text: string) => ReturnType
+			addCommentReply: (referenceId: string, markdownText: string) => ReturnType
 		}
 	}
 }
@@ -143,8 +145,19 @@ const CommentReference = Node.create({
 					.openCommentBubble(referenceId)
 					.run()
 			},
-			addCommentReply: (referenceId: string, text: string) => ({ state, dispatch }) => {
-				if (!text.trim()) {
+			addCommentReply: (referenceId: string, markdownText: string) => ({ state, dispatch }) => {
+				if (!markdownText) {
+					return false
+				}
+
+				// serialize Markdown from content to a ProseMirror Fragment
+				const html = markdownit.render(markdownText)
+				const dom = document.createElement('div')
+				dom.innerHTML = html
+				const fragment = DOMParser.fromSchema(this.editor.schema).parse(dom)
+				const content = fragment.content
+
+				if (content.textBetween(0, content.size, ' ').trim() === '') {
 					return false
 				}
 
@@ -172,21 +185,16 @@ const CommentReference = Node.create({
 				const firstItem = comment.firstChild!
 
 				const commentItemType = state.schema.nodes.commentItem
-				const paragraphType = state.schema.nodes.paragraph
-				const textNode = state.schema.text(text.trim())
-				const newParagraph = paragraphType.create(null, textNode)
-
 				const tr = state.tr
 
 				if (comment.childCount === 1 && firstItem.textContent === '') {
 					// Update the initial empty item instead of appending
 					const firstItemPos = commentPos + 1
 					tr.setNodeMarkup(firstItemPos, null, { ...firstItem.attrs, timestamp })
-					const paragraphStart = firstItemPos + 1
-					tr.replaceWith(paragraphStart, paragraphStart + firstItem.firstChild!.nodeSize, newParagraph)
+					tr.replaceWith(firstItemPos + 1, firstItemPos + firstItem.nodeSize - 1, content)
 				} else {
 					// Append a new reply item
-					const newItem = commentItemType.create({ author, authorLabel, timestamp }, newParagraph)
+					const newItem = commentItemType.create({ author, authorLabel, timestamp }, content)
 					tr.insert(commentPos + comment.nodeSize - 1, newItem)
 				}
 
