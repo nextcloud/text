@@ -252,6 +252,23 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Upload a local media file (file.txt.gz)', () => {
+		const checkPreviewAttachment = (documentId, fileName, fileId) => {
+			cy.log(
+				'Check the attachment is visible and well formed',
+				documentId,
+				fileName,
+			)
+
+			// keep track that we have created this attachment in the attachment dir
+			if (!attachmentFileNameToId[documentId]) {
+				attachmentFileNameToId[documentId] = {}
+			}
+
+			attachmentFileNameToId[documentId][fileName] = fileId
+
+			return cy.get('.text-editor__main .widget-file__link').should('contain', `.attachments.${documentId}`)
+		}
+
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
@@ -263,7 +280,7 @@ describe('Test all attachment insertion methods', () => {
 
 			attachFile('file.txt.gz', requestAlias)
 
-			return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
+			return waitForRequestAndCheckAttachment(requestAlias, undefined, false, checkPreviewAttachment)
 		})
 		cy.closeFile()
 	})

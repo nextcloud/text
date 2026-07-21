@@ -151,13 +151,17 @@ export default {
 
 			return uploadAttachment(this.connection, file)
 				.then((response) => {
-					this.insertAttachment(
-						response.data?.name,
-						response.data?.id,
-						file.type,
-						position,
-						response.data?.dirname,
-					)
+					if (file.type.startsWith('image/')) {
+						this.insertAttachment(
+							response.data?.name,
+							response.data?.id,
+							file.type,
+							position,
+							response.data?.dirname,
+						)
+					} else {
+						this.insertAttachmentPreview(response.data?.id, position)
+					}
 				})
 				.catch((error) => {
 					logger.error('Uploading attachment failed', { error })
@@ -232,10 +236,11 @@ export default {
 				})
 		},
 
-		insertAttachmentPreview(fileId) {
+		insertAttachmentPreview(fileId, position = null) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
-			this.editor.chain().focus().insertPreview(href).run()
+			const chain = position ? this.editor.chain().focus(position) : this.editor.chain().focus()
+			chain.insertPreview(href).run()
 		},
 
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
