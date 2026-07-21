@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { CommandProps } from '@tiptap/core'
+
 import { Extension } from '@tiptap/core'
 import { commentBubble, hideCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentBubble: {
-			openCommentBubble: (referenceId: string, nodeStart: number) => ReturnType
+			openCommentBubble: (referenceId: string) => ReturnType
 			hideCommentBubble: () => ReturnType
 		}
 	}
@@ -20,8 +22,10 @@ const CommentBubble = Extension.create({
 
 	addCommands() {
 		return {
-			openCommentBubble: (referenceId: string, nodeStart: number) => ({ state, dispatch }) => {
-				return openCommentBubble(referenceId, nodeStart)(state, dispatch)
+			openCommentBubble(referenceId: string) {
+				return ({ state, dispatch }: CommandProps) => {
+					return openCommentBubble(referenceId)(state, dispatch)
+				}
 			},
 			hideCommentBubble: () => ({ state, dispatch }) => {
 				return hideCommentBubble(state, dispatch)

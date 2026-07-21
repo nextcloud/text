@@ -26,13 +26,24 @@ export const hideCommentBubble: Command = (state, dispatch) => {
  * Open the bubble for a comment
  *
  * @param referenceId - the comment reference ID
- * @param nodeStart - the node start position
  */
-export function openCommentBubble(referenceId: string, nodeStart: number): Command {
+export function openCommentBubble(referenceId: string): Command {
 	return (state, dispatch) => {
-		const active = { referenceId, nodeStart }
+		let nodeStart = -1
+		state.doc.descendants((node, pos) => {
+			if (nodeStart !== -1) {
+				return false
+			}
+			if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
+				nodeStart = pos
+				return false
+			}
+		})
+		if (nodeStart === -1) {
+			return false
+		}
 		if (dispatch) {
-			dispatch(state.tr.setMeta(commentBubbleKey, { active }))
+			dispatch(state.tr.setMeta(commentBubbleKey, { active: { referenceId, nodeStart } }))
 		}
 		return true
 	}
@@ -87,7 +98,7 @@ export function commentBubble(options: { editor: Editor }) {
 					return false
 				}
 				event.preventDefault()
-				openCommentBubble(referenceId, nodeStart)(view.state, view.dispatch)
+				openCommentBubble(referenceId)(view.state, view.dispatch)
 				return true
 			},
 
