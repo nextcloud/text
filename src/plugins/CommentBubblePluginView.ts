@@ -7,7 +7,7 @@ import type { Editor } from '@tiptap/core'
 import type { Plugin } from '@tiptap/pm/state'
 import type { EditorView } from '@tiptap/pm/view'
 
-import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom'
+import { autoUpdate, computePosition, offset, shift } from '@floating-ui/dom'
 import { VueRenderer } from '@tiptap/vue-3'
 import CommentBubbleView from '../components/Comment/CommentBubbleView.vue'
 
@@ -41,7 +41,7 @@ class CommentBubblePluginView {
 			return
 		}
 		this.#floatingEl = document.createElement('div')
-		this.#floatingEl.style.cssText = 'position: absolute; z-index: 100; visibility: hidden;'
+		this.#floatingEl.style.cssText = 'position: fixed; z-index: 100; visibility: hidden;'
 
 		this.#component = new VueRenderer(CommentBubbleView, {
 			props: { editor: this.#editor, referenceId },
@@ -65,19 +65,22 @@ class CommentBubblePluginView {
 			return
 		}
 		const floating = this.#floatingEl
-		const container = this.view.dom.parentNode as HTMLElement
+		const contentWrapper = this.view.dom.closest<HTMLElement>('[data-text-el="editor-content-wrapper"]')
+		const container = contentWrapper ?? this.view.dom.parentNode as HTMLElement
 		if (!container.contains(floating)) {
 			container.appendChild(floating)
 		}
 
 		const update = async () => {
-			const { x, y } = await computePosition(referenceEl, floating, {
-				placement: 'right',
-				middleware: [
-					offset(8),
-					flip({ fallbackPlacements: ['top', 'bottom'] }),
-					shift({ padding: 8 }),
-				],
+			const wrapperRect = (contentWrapper ?? this.view.dom.closest('div')!).getBoundingClientRect()
+			const refRect = referenceEl.getBoundingClientRect()
+
+			const { x, y } = await computePosition({
+				getBoundingClientRect: () => new DOMRect(wrapperRect.right, refRect.top, 0, refRect.height),
+			} as Element, floating, {
+				placement: 'left',
+				strategy: 'fixed',
+				middleware: [offset(8), shift({ padding: 8 })],
 			})
 			floating.style.left = `${x}px`
 			floating.style.top = `${y}px`

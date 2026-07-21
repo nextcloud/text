@@ -157,8 +157,7 @@ function close() {
 	display: flex;
 	flex-direction: column;
 	max-height: min(80vh, 700px);
-	min-width: 280px;
-	max-width: 380px;
+	width: 300px;
 
 	background: var(--color-main-background);
 	border: 1px solid var(--color-border);
