@@ -154,19 +154,24 @@ function close() {
 
 <style scoped lang="scss">
 .comment-bubble {
+	display: flex;
+	flex-direction: column;
+	max-height: min(80vh, 700px);
+	min-width: 280px;
+	max-width: 380px;
+
 	background: var(--color-main-background);
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius-large);
 	box-shadow: 0 2px 8px var(--color-box-shadow);
-	padding: calc(2 * var(--default-grid-baseline));
-	min-width: 280px;
-	max-width: 380px;
 
 	&__header {
+		flex-shrink: 0;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: var(--default-grid-baseline);
+		padding: calc(2 * var(--default-grid-baseline));
+		padding-bottom: var(--default-grid-baseline);
 	}
 
 	&__title {
@@ -176,6 +181,9 @@ function close() {
 	}
 
 	&__items {
+		flex: 1 1 auto; // take available space
+		overflow-y: auto;
+		padding: calc(2 * var(--default-grid-baseline));
 		display: flex;
 		flex-direction: column;
 		gap: calc(2 * var(--default-grid-baseline));
@@ -207,11 +215,11 @@ function close() {
 	}
 
 	&__composer {
+		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--default-grid-baseline);
-		margin-top: var(--default-grid-baseline);
-		border-top: 1px solid var(--color-border);
+		padding: calc(2 * var(--default-grid-baseline));
 		padding-top: var(--default-grid-baseline);
 	}
 
