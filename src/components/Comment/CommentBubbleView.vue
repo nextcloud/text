@@ -40,6 +40,23 @@
 				</div>
 			</div>
 		</div>
+		<div class="comment-bubble__composer">
+			<textarea
+				ref="replyInput"
+				v-model="replyText"
+				class="comment-bubble__composer-input"
+				:placeholder="t('text', 'Add a comment…')"
+				rows="2"
+				@keydown.ctrl.enter.prevent="submitReply"
+				@keydown.meta.enter.prevent="submitReply" />
+			<NcButton
+				variant="primary"
+				size="small"
+				:disabled="!replyText.trim()"
+				@click="submitReply">
+				{{ isFirstComment ? t('text', 'Comment') : t('text', 'Reply') }}
+			</NcButton>
+		</div>
 	</div>
 </template>
 
@@ -48,7 +65,7 @@ import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 
 import { t } from '@nextcloud/l10n'
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
@@ -59,7 +76,26 @@ const props = defineProps<{
 	referenceId: string
 }>()
 
+const replyText = ref('')
+const replyInput = ref<HTMLTextAreaElement | null>(null)
+
+const editorVersion = ref(0)
+/**
+ * Increment editor version on editor updates
+ */
+function onUpdate() {
+	editorVersion.value++
+}
+onMounted(() => {
+	props.editor.on('update', onUpdate)
+	// Focus input field when comment bubble is opened.
+	// The ProseMirror transaction that opens the bubble steals focus after finishing, so focus with a delay.
+	setTimeout(() => replyInput.value?.focus(), 50)
+})
+onUnmounted(() => props.editor.off('update', onUpdate))
+
 const commentNode = computed<Node | null>(() => {
+	void editorVersion.value
 	let found: Node | null = null
 	props.editor.state.doc.descendants((node) => {
 		if (found) {
@@ -88,6 +124,25 @@ const items = computed(() => {
 	})
 	return result
 })
+
+const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].body))
+
+// Focus input field when switching between comment references.
+// The ProseMirror transaction that opens the bubble steals focus after finishing, so focus with a delay.
+watch(() => props.referenceId, () => {
+	setTimeout(() => replyInput.value?.focus(), 50)
+})
+
+/**
+ * Submit comment reply
+ */
+function submitReply() {
+	if (!replyText.value.trim()) {
+		return
+	}
+	props.editor.commands.addCommentReply(props.referenceId, replyText.value)
+	replyText.value = ''
+}
 
 /**
  * Close the comment bubble
@@ -149,6 +204,28 @@ function close() {
 		line-height: 1.4;
 		white-space: pre-wrap;
 		word-break: break-word;
+	}
+
+	&__composer {
+		display: flex;
+		flex-direction: column;
+		gap: var(--default-grid-baseline);
+		margin-top: var(--default-grid-baseline);
+		border-top: 1px solid var(--color-border);
+		padding-top: var(--default-grid-baseline);
+	}
+
+	&__composer-input {
+		width: 100%;
+		resize: none;
+		border: 1px solid var(--color-border-maxcontrast);
+		border-radius: var(--border-radius);
+		padding: var(--default-grid-baseline);
+		font-size: 0.9em;
+		background: var(--color-main-background);
+		color: var(--color-main-text);
+		font-family: inherit;
+		box-sizing: border-box;
 	}
 }
 </style>

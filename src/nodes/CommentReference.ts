@@ -3,14 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+
 import { getCurrentUser } from '@nextcloud/auth'
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
+import { TextSelection } from '@tiptap/pm/state'
 import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentReference: {
 			insertComment: () => ReturnType
+			addCommentReply: (referenceId: string, text: string) => ReturnType
 		}
 	}
 }
@@ -113,10 +117,83 @@ const CommentReference = Node.create({
 					})
 				}
 
+				// Move selection/cursor to reference to avoid it being inside the hidden comments container
+				c = c.command(({ state, dispatch }) => {
+					let refEnd: number | null = null
+					state.doc.descendants((node, pos) => {
+						if (refEnd !== null) {
+							return false
+						}
+						if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
+							refEnd = pos + node.nodeSize
+							return false
+						}
+					})
+					if (refEnd === null) {
+						return false
+					}
+					if (dispatch) {
+						dispatch(state.tr.setSelection(TextSelection.near(state.doc.resolve(refEnd))))
+					}
+					return true
+				})
+
 				return c
-					.focus()
 					.scrollIntoView()
+					.openCommentBubble(referenceId)
 					.run()
+			},
+			addCommentReply: (referenceId: string, text: string) => ({ state, dispatch }) => {
+				if (!text.trim()) {
+					return false
+				}
+
+				const currentUser = getCurrentUser()
+				const author = currentUser?.uid ?? ''
+				const authorLabel = currentUser?.displayName ?? localStorage.getItem('nick')
+				const timestamp = new Date().toISOString()
+
+				let commentPos = -1
+				let targetComment: ProseMirrorNode | null = null
+				state.doc.descendants((node, pos) => {
+					if (targetComment) {
+						return false
+					}
+					if (node.type.name === 'comment' && node.attrs.referenceId === referenceId) {
+						commentPos = pos
+						targetComment = node
+						return false
+					}
+				})
+				if (!targetComment || commentPos === -1) {
+					return false
+				}
+				const comment = targetComment as ProseMirrorNode
+				const firstItem = comment.firstChild!
+
+				const commentItemType = state.schema.nodes.commentItem
+				const paragraphType = state.schema.nodes.paragraph
+				const textNode = state.schema.text(text.trim())
+				const newParagraph = paragraphType.create(null, textNode)
+
+				const tr = state.tr
+
+				if (comment.childCount === 1 && firstItem.textContent === '') {
+					// Update the initial empty item instead of appending
+					const firstItemPos = commentPos + 1
+					tr.setNodeMarkup(firstItemPos, null, { ...firstItem.attrs, timestamp })
+					const paragraphStart = firstItemPos + 1
+					tr.replaceWith(paragraphStart, paragraphStart + firstItem.firstChild!.nodeSize, newParagraph)
+				} else {
+					// Append a new reply item
+					const newItem = commentItemType.create({ author, authorLabel, timestamp }, newParagraph)
+					tr.insert(commentPos + comment.nodeSize - 1, newItem)
+				}
+
+				if (dispatch) {
+					dispatch(tr)
+				}
+				return true
 			},
 		}
 	},
