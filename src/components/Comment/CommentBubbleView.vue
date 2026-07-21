@@ -17,7 +17,7 @@
 				</template>
 			</NcButton>
 		</div>
-		<div v-if="commentNode" class="comment-bubble__items">
+		<div v-if="commentNode" ref="itemsContainer" class="comment-bubble__items">
 			<div v-for="(item, i) in items" :key="i" class="comment-bubble__item">
 				<div class="comment-bubble__meta">
 					<NcAvatar
@@ -35,24 +35,23 @@
 						relativeTime="long"
 						ignoreSeconds />
 				</div>
-				<div class="comment-bubble__body">
-					{{ item.body }}
-				</div>
+				<!-- The passed HTML got sanitized by ProseMirror's DOMSerializer -->
+				<!-- eslint-disable-next-line vue/no-v-html -->
+				<div class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
 		</div>
 		<div class="comment-bubble__composer">
-			<textarea
-				ref="replyInput"
+			<NcRichContenteditable
 				v-model="replyText"
-				class="comment-bubble__composer-input"
 				:placeholder="t('text', 'Add a comment…')"
-				rows="2"
-				@keydown.ctrl.enter.prevent="submitReply"
-				@keydown.meta.enter.prevent="submitReply" />
+				:aria-label="t('text', 'Add a comment…')"
+				:userData
+				multiline
+				class="comment-bubble__composer-input"
+				@submit="submitReply" />
 			<NcButton
 				variant="primary"
 				size="small"
-				:disabled="!replyText.trim()"
 				@click="submitReply">
 				{{ isFirstComment ? t('text', 'Comment') : t('text', 'Reply') }}
 			</NcButton>
@@ -65,10 +64,12 @@ import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 
 import { t } from '@nextcloud/l10n'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { DOMSerializer } from '@tiptap/pm/model'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
+import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditable'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 
 const props = defineProps<{
@@ -76,8 +77,10 @@ const props = defineProps<{
 	referenceId: string
 }>()
 
+const itemsContainer = ref<HTMLElement | null>(null)
 const replyText = ref('')
 const replyInput = ref<HTMLTextAreaElement | null>(null)
+const userData = ref<Record<string, object>>({})
 
 const editorVersion = ref(0)
 /**
@@ -113,13 +116,17 @@ const items = computed(() => {
 	if (!commentNode.value) {
 		return []
 	}
+	const serializer = DOMSerializer.fromSchema(props.editor.schema)
 	const result: { author: string, authorLabel: string, timestamp: Date | null, body: string }[] = []
 	commentNode.value.forEach((item) => {
+		const fragment = serializer.serializeFragment(item.content)
+		const wrapper = document.createElement('div')
+		wrapper.appendChild(fragment)
 		result.push({
 			author: item.attrs.author,
 			authorLabel: item.attrs.authorLabel,
 			timestamp: item.attrs.timestamp ? new Date(item.attrs.timestamp) : null,
-			body: item.textContent,
+			body: wrapper.innerHTML,
 		})
 	})
 	return result
@@ -140,8 +147,13 @@ function submitReply() {
 	if (!replyText.value.trim()) {
 		return
 	}
-	props.editor.commands.addCommentReply(props.referenceId, replyText.value)
+	props.editor.commands.addCommentReply(props.referenceId, replyText.value.trim())
 	replyText.value = ''
+	nextTick(() => {
+		if (itemsContainer.value) {
+			itemsContainer.value?.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+		}
+	})
 }
 
 /**
@@ -211,10 +223,12 @@ function close() {
 		line-height: 1.4;
 		white-space: pre-wrap;
 		word-break: break-word;
+		// Overwrite some ProseMirror styles
+		height: unset;
+		padding: 0;
 	}
 
 	&__composer {
-		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--default-grid-baseline);
@@ -223,16 +237,7 @@ function close() {
 	}
 
 	&__composer-input {
-		width: 100%;
-		resize: none;
-		border: 1px solid var(--color-border-maxcontrast);
-		border-radius: var(--border-radius);
-		padding: var(--default-grid-baseline);
 		font-size: 0.9em;
-		background: var(--color-main-background);
-		color: var(--color-main-text);
-		font-family: inherit;
-		box-sizing: border-box;
 	}
 }
 </style>
