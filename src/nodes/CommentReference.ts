@@ -17,6 +17,7 @@ declare module '@tiptap/core' {
 		commentReference: {
 			insertComment: () => ReturnType
 			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ReturnType
+			deleteCommentReply: (referenceId: string, itemIndex: number) => ReturnType
 		}
 	}
 }
@@ -213,6 +214,59 @@ const CommentReference = Node.create({
 					// exists (i.e. straight after addComment() command was called)
 					tr.setNodeMarkup(itemPos, null, { ...item.attrs, timestamp })
 					tr.replaceWith(itemPos + 1, itemPos + item.nodeSize - 1, content)
+				}
+
+				if (dispatch) {
+					dispatch(tr)
+				}
+				return true
+			},
+			deleteCommentReply: (referenceId: string, itemIndex: number) => ({ state, dispatch }) => {
+				let commentPos = -1
+				let targetComment: ProseMirrorNode | null = null
+				state.doc.descendants((node, pos) => {
+					if (targetComment) {
+						return false
+					}
+					if (node.type.name === 'comment' && node.attrs.referenceId === referenceId) {
+						commentPos = pos
+						targetComment = node
+						return false
+					}
+				})
+
+				if (!targetComment || commentPos === -1) {
+					return false
+				}
+
+				const comment = targetComment as ProseMirrorNode
+				if (itemIndex >= comment.childCount) {
+					return false
+				}
+
+				const tr = state.tr
+
+				if (comment.childCount === 1) {
+					// Deleting the last item - remove the reference instead;
+					// commentsCleanup will remove the orphaned comment node
+					let refPos = -1, refSize = 0
+					state.doc.descendants((node, pos) => {
+						if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
+							refPos = pos
+							refSize = node.nodeSize
+							return false
+						}
+					})
+					if (refPos !== -1) {
+						tr.delete(refPos, refPos + refSize)
+					}
+				} else {
+					let itemPos = commentPos + 1
+					for (let i = 0; i < itemIndex; i++) {
+						itemPos += comment.child(i).nodeSize
+					}
+					const item = comment.child(itemIndex)
+					tr.delete(itemPos, itemPos + item.nodeSize)
 				}
 
 				if (dispatch) {
