@@ -47,6 +47,16 @@
 							<PencilIcon :size="16" />
 						</template>
 					</NcButton>
+					<NcButton
+						v-if="isEditable"
+						variant="tertiary"
+						size="small"
+						:title="t('text', 'Delete')"
+						@click="deleteItem(i)">
+						<template #icon>
+							<DeleteIcon :size="16" />
+						</template>
+					</NcButton>
 				</div>
 				<template v-if="editingItemIndex === i">
 					<NcRichContenteditable
@@ -133,6 +143,7 @@ import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditab
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
+import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { createMarkdownSerializer } from '../../extensions/Markdown.ts'
 
@@ -277,6 +288,15 @@ function saveEdit() {
 function cancelEdit() {
 	editingItemIndex.value = null
 	editText.value = ''
+}
+
+/**
+ * Delete a comment item
+ *
+ * @param index the item index
+ */
+function deleteItem(index: number) {
+	props.editor.commands.deleteCommentReply(props.referenceId, index)
 }
 
 const isGuest = !getCurrentUser()

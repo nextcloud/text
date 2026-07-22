@@ -70,6 +70,27 @@ export function commentBubble(options: { editor: Editor }) {
 			},
 		},
 
+		appendTransaction: (transactions, _oldState, state) => {
+			if (!transactions.some((tr) => tr.docChanged)) {
+				return null
+			}
+
+			const pluginState = commentBubbleKey.getState(state)
+			if (!pluginState?.active) {
+				return null
+			}
+
+			const { referenceId, nodeStart } = pluginState.active
+
+			// If reference node no longer exists at the stored position, close the bubble
+			const node = state.doc.nodeAt(nodeStart)
+			if (node?.type.name !== 'commentReference' || node.attrs.referenceId !== referenceId) {
+				return state.tr.setMeta(commentBubbleKey, { active: null })
+			}
+
+			return null
+		},
+
 		view: (view) => new CommentBubblePluginView({ view, options, plugin }),
 
 		props: {
