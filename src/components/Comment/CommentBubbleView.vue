@@ -141,8 +141,10 @@ const props = defineProps<{
 	referenceId: string
 }>()
 
+const DRAFT_KEY_PREFIX = 'text-comment-draft-'
+
 const itemsContainer = ref<HTMLElement | null>(null)
-const replyText = ref('')
+const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
 const replyInput = ref<HTMLTextAreaElement | null>(null)
 const userData = ref<Record<string, object>>({})
 
@@ -202,6 +204,21 @@ const items = computed(() => {
 
 const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].body))
 
+// Persist draft as user types
+watch(replyText, (val) => {
+	const key = `${DRAFT_KEY_PREFIX}${props.referenceId}`
+	if (val.trim()) {
+		sessionStorage.setItem(key, val)
+	} else {
+		sessionStorage.removeItem(key)
+	}
+})
+
+// Restore draft when bubble opens or switches to a different comment
+watch(() => props.referenceId, (id) => {
+	replyText.value = sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${id}`) ?? ''
+})
+
 // Focus input field when switching between comment references.
 // The ProseMirror transaction that opens the bubble steals focus after finishing, so focus with a delay.
 watch(() => props.referenceId, () => {
@@ -216,6 +233,7 @@ function submitReply() {
 		return
 	}
 	props.editor.commands.addOrUpdateCommentReply(props.referenceId, replyText.value.trim())
+	sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
 	replyText.value = ''
 	nextTick(() => {
 		if (itemsContainer.value) {
