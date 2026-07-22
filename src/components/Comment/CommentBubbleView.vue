@@ -35,6 +35,7 @@
 						relativeTime="long"
 						ignoreSeconds />
 					<NcButton
+						v-if="!isGuestWithoutNick"
 						variant="tertiary"
 						size="small"
 						:title="t('text', 'Edit')"
@@ -78,7 +79,24 @@
 				<div v-else class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
 		</div>
-		<div v-if="editingItemIndex === null" class="comment-bubble__composer">
+		<div v-if="isGuestWithoutNick" class="comment-bubble__guest-name">
+			<p class="comment-bubble__guest-name-hint">
+				{{ t('text', 'Enter your name to comment') }}
+			</p>
+			<div class="comment-bubble__guest-name-row">
+				<NcTextField
+					v-model="guestNickInput"
+					:label="t('text', 'Guest')"
+					:placeholder="t('text', 'Guest')"
+					@keydown.enter.prevent="submitGuestName" />
+				<NcButton variant="primary" size="small" @click="submitGuestName">
+					<template #icon>
+						<CheckIcon :size="16" />
+					</template>
+				</NcButton>
+			</div>
+		</div>
+		<div v-else-if="editingItemIndex === null" class="comment-bubble__composer">
 			<NcRichContenteditable
 				v-model="replyText"
 				:placeholder="t('text', 'Add a comment…')"
@@ -101,6 +119,7 @@
 import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 
+import { getCurrentUser } from '@nextcloud/auth'
 import { t } from '@nextcloud/l10n'
 import { DOMSerializer } from '@tiptap/pm/model'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
@@ -108,6 +127,7 @@ import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditable'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
@@ -236,6 +256,22 @@ function cancelEdit() {
 	editText.value = ''
 }
 
+const isGuest = !getCurrentUser()
+const guestNick = ref(localStorage.getItem('nick') ?? '')
+const guestNickInput = ref('')
+
+const isGuestWithoutNick = computed(() => isGuest && !guestNick.value)
+/**
+ * Submit guest name
+ */
+function submitGuestName() {
+	if (!guestNickInput.value.trim()) {
+		return
+	}
+	guestNick.value = guestNickInput.value.trim()
+	localStorage.setItem('nick', guestNick.value)
+}
+
 /**
  * Close the comment bubble
  */
@@ -324,6 +360,25 @@ function close() {
 		display: flex;
 		gap: var(--default-grid-baseline);
 		margin-top: var(--default-grid-baseline);
+	}
+
+	&__guest-name {
+		padding: calc(2 * var(--default-grid-baseline));
+		display: flex;
+		flex-direction: column;
+		gap: var(--default-grid-baseline);
+
+		&-hint {
+			font-size: 0.9em;
+			color: var(--color-text-maxcontrast);
+			margin: 0;
+		}
+
+		&-row {
+			display: flex;
+			align-items: center;
+			gap: var(--default-grid-baseline);
+		}
 	}
 }
 </style>
