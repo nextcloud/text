@@ -16,7 +16,7 @@ declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentReference: {
 			insertComment: () => ReturnType
-			addCommentReply: (referenceId: string, markdownText: string) => ReturnType
+			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ReturnType
 		}
 	}
 }
@@ -145,7 +145,7 @@ const CommentReference = Node.create({
 					.openCommentBubble(referenceId)
 					.run()
 			},
-			addCommentReply: (referenceId: string, markdownText: string) => ({ state, dispatch }) => {
+			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ({ state, dispatch }) => {
 				if (!markdownText) {
 					return false
 				}
@@ -163,7 +163,7 @@ const CommentReference = Node.create({
 
 				const currentUser = getCurrentUser()
 				const author = currentUser?.uid ?? ''
-				const authorLabel = currentUser?.displayName ?? localStorage.getItem('nick')
+				const authorLabel = currentUser?.displayName ?? localStorage.getItem('nick') ?? ''
 				const timestamp = new Date().toISOString()
 
 				let commentPos = -1
@@ -182,20 +182,37 @@ const CommentReference = Node.create({
 					return false
 				}
 				const comment = targetComment as ProseMirrorNode
-				const firstItem = comment.firstChild!
 
-				const commentItemType = state.schema.nodes.commentItem
-				const tr = state.tr
+				if (itemIndex !== undefined && itemIndex >= comment.childCount) {
+					// Given itemIndex does not exist
+					return false
+				}
 
-				if (comment.childCount === 1 && firstItem.textContent === '') {
-					// Update the initial empty item instead of appending
-					const firstItemPos = commentPos + 1
-					tr.setNodeMarkup(firstItemPos, null, { ...firstItem.attrs, timestamp })
-					tr.replaceWith(firstItemPos + 1, firstItemPos + firstItem.nodeSize - 1, content)
+				// Get item to update if itemIndex is provided
+				let itemPos = commentPos + 1
+				let item: ProseMirrorNode
+				if (itemIndex !== undefined) {
+					for (let i = 0; i < itemIndex; i++) {
+						itemPos += comment.child(i).nodeSize
+					}
+					item = comment.child(itemIndex)
 				} else {
+					item = comment.firstChild!
+				}
+
+				const tr = state.tr
+				const shouldAppendNewReply = itemIndex === undefined
+					&& !(comment.childCount === 1 && item.textContent === '')
+				if (shouldAppendNewReply) {
 					// Append a new reply item
+					const commentItemType = state.schema.nodes.commentItem
 					const newItem = commentItemType.create({ author, authorLabel, timestamp }, content)
 					tr.insert(commentPos + comment.nodeSize - 1, newItem)
+				} else {
+					// Replace existing item if itemIndex is given or if only one empty item
+					// exists (i.e. straight after addComment() command was called)
+					tr.setNodeMarkup(itemPos, null, { ...item.attrs, timestamp })
+					tr.replaceWith(itemPos + 1, itemPos + item.nodeSize - 1, content)
 				}
 
 				if (dispatch) {
