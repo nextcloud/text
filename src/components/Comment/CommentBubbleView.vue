@@ -10,7 +10,7 @@
 			<NcButton
 				variant="tertiary"
 				size="small"
-				:aria-label="t('text', 'Close')"
+				:title="t('text', 'Close')"
 				@click="close">
 				<template #icon>
 					<CloseIcon :size="16" />
@@ -34,13 +34,51 @@
 						:timestamp="item.timestamp"
 						relativeTime="long"
 						ignoreSeconds />
+					<NcButton
+						variant="tertiary"
+						size="small"
+						:title="t('text', 'Edit')"
+						@click="startEdit(i)">
+						<template #icon>
+							<PencilIcon :size="16" />
+						</template>
+					</NcButton>
 				</div>
+				<template v-if="editingItemIndex === i">
+					<NcRichContenteditable
+						v-model="editText"
+						multiline
+						class="comment-bubble__body-edit comment-bubble__composer-input"
+						@submit="saveEdit"
+						@keydown.escape.prevent.stop="cancelEdit" />
+					<div class="comment-bubble__edit-actions">
+						<NcButton
+							variant="primary"
+							size="small"
+							:title="t('text', 'Save')"
+							@click="saveEdit">
+							<template #icon>
+								<CheckIcon :size="16" />
+							</template>
+							{{ t('text', 'Save') }}
+						</NcButton>
+						<NcButton
+							size="small"
+							:title="t('text', 'Cancel')"
+							@click="cancelEdit">
+							<template #icon>
+								<CloseIcon :size="16" />
+							</template>
+							{{ t('text', 'Cancel') }}
+						</NcButton>
+					</div>
+				</template>
 				<!-- The passed HTML got sanitized by ProseMirror's DOMSerializer -->
 				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div class="comment-bubble__body ProseMirror" v-html="item.body" />
+				<div v-else class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
 		</div>
-		<div class="comment-bubble__composer">
+		<div v-if="editingItemIndex === null" class="comment-bubble__composer">
 			<NcRichContenteditable
 				v-model="replyText"
 				:placeholder="t('text', 'Add a comment…')"
@@ -70,7 +108,10 @@ import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditable'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import { createMarkdownSerializer } from '../../extensions/Markdown.ts'
 
 const props = defineProps<{
 	editor: Editor
@@ -116,10 +157,11 @@ const items = computed(() => {
 	if (!commentNode.value) {
 		return []
 	}
-	const serializer = DOMSerializer.fromSchema(props.editor.schema)
-	const result: { author: string, authorLabel: string, timestamp: Date | null, body: string }[] = []
+	const domSerializer = DOMSerializer.fromSchema(props.editor.schema)
+	const mdSerializer = createMarkdownSerializer(props.editor.schema)
+	const result: { author: string, authorLabel: string, timestamp: Date | null, body: string, markdownBody: string }[] = []
 	commentNode.value.forEach((item) => {
-		const fragment = serializer.serializeFragment(item.content)
+		const fragment = domSerializer.serializeFragment(item.content)
 		const wrapper = document.createElement('div')
 		wrapper.appendChild(fragment)
 		result.push({
@@ -127,6 +169,7 @@ const items = computed(() => {
 			authorLabel: item.attrs.authorLabel,
 			timestamp: item.attrs.timestamp ? new Date(item.attrs.timestamp) : null,
 			body: wrapper.innerHTML,
+			markdownBody: mdSerializer.serialize(item).trim(),
 		})
 	})
 	return result
@@ -147,13 +190,50 @@ function submitReply() {
 	if (!replyText.value.trim()) {
 		return
 	}
-	props.editor.commands.addCommentReply(props.referenceId, replyText.value.trim())
+	props.editor.commands.addOrUpdateCommentReply(props.referenceId, replyText.value.trim())
 	replyText.value = ''
 	nextTick(() => {
 		if (itemsContainer.value) {
 			itemsContainer.value?.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'end' })
 		}
 	})
+}
+
+const editingItemIndex = ref<number | null>(null)
+const editText = ref('')
+
+/**
+ * Start to edit an existent comment
+ *
+ * @param index the comment item index
+ */
+function startEdit(index: number) {
+	editingItemIndex.value = index
+	editText.value = items.value[index].markdownBody
+}
+
+/**
+ * Save the edit of an existing comment
+ */
+function saveEdit() {
+	const index = editingItemIndex.value
+	if (index === null) {
+		return
+	}
+	const original = items.value[index]?.markdownBody ?? ''
+	if (editText.value.trim() && editText.value.trim() !== original.trim()) {
+		props.editor.commands.addOrUpdateCommentReply(props.referenceId, editText.value.trim(), index)
+	}
+	editingItemIndex.value = null
+	editText.value = ''
+}
+
+/**
+ * Cancel to edit an existing comment
+ */
+function cancelEdit() {
+	editingItemIndex.value = null
+	editText.value = ''
 }
 
 /**
@@ -238,6 +318,12 @@ function close() {
 
 	&__composer-input {
 		font-size: 0.9em;
+	}
+
+	&__edit-actions {
+		display: flex;
+		gap: var(--default-grid-baseline);
+		margin-top: var(--default-grid-baseline);
 	}
 }
 </style>
