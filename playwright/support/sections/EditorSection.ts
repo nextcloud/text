@@ -22,6 +22,8 @@ export class EditorSection {
 	public readonly details: Locator
 	public readonly footnoteReferences: Locator
 	public readonly footnotesSection: Locator
+	public readonly commentReferences: Locator
+	public readonly commentBubble: Locator
 
 	constructor(public readonly page: Page) {
 		this.el = this.page.locator('.editor').first()
@@ -40,6 +42,8 @@ export class EditorSection {
 		this.details = this.el.locator('div[data-text-el="details"]')
 		this.footnoteReferences = this.el.locator('sup[data-type="footnote-reference"]')
 		this.footnotesSection = this.el.locator('section[data-type="footnotes"]')
+		this.commentReferences = this.el.locator('sup[data-type="comment-reference"]')
+		this.commentBubble = this.page.locator('.comment-bubble')
 	}
 
 	public async type(keys: string): Promise<void> {
@@ -85,4 +89,6 @@ export class EditorSection {
 
 	getFootnoteReference = (id: string) => this.footnoteReferences.locator(`:scope[data-reference-id="${id}"]`)
 	getFootnote = (id: string) => this.footnotesSection.locator(`[data-reference-id="${id}"]`)
+
+	getCommentReference = (id: string) => this.commentReferences.locator(`:scope[data-reference-id="${id}"]`)
 }
