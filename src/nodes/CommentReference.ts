@@ -66,7 +66,7 @@ const CommentReference = Node.create({
 
 	addCommands() {
 		return {
-			insertComment: () => ({ state, chain }) => {
+			insertComment: () => ({ state, chain, dispatch }) => {
 				if (isInsideCommentOrFootnote(state)) {
 					return false
 				}
@@ -74,6 +74,11 @@ const CommentReference = Node.create({
 				const referenceId = generateReferenceId(state.doc, 'comment')
 				if (!referenceId) {
 					return false
+				}
+
+				// In can-check mode, the above guards are sufficient
+				if (!dispatch) {
+					return true
 				}
 
 				const currentUser = getCurrentUser()
