@@ -88,6 +88,54 @@ test('edits an existing comment', async ({ editor, open }) => {
 	await expect(editor.commentBubble).not.toContainText('Original text')
 })
 
+test.describe('deletes a comment reply', () => {
+	test.use({
+		fileContent: 'Test[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @[jane](mention://user/jane) *(2026-07-16T13:12Z)*\n'
+			+ '      First reply\n'
+			+ '    - @[bob](mention://user/bob) *(2026-07-17T11:11Z)*\n'
+			+ '      Second reply\n',
+	})
+
+	test('deletes one reply from a multi-reply thread', async ({ editor, open }) => {
+		await open()
+		await editor.getCommentReference('comment-1').click()
+		await expect(editor.commentBubble).toContainText('First reply')
+		await expect(editor.commentBubble).toContainText('Second reply')
+
+		// Delete the first reply
+		await editor.commentBubble.getByRole('button', { name: 'Delete' }).first().click()
+
+		await expect(editor.commentBubble).not.toContainText('First reply')
+		await expect(editor.commentBubble).toContainText('Second reply')
+
+		// Reference still in the editor (thread still has one reply)
+		await expect(editor.getCommentReference('comment-1')).toBeVisible()
+	})
+})
+
+test.describe('deletes last comment reply', () => {
+	test.use({
+		fileContent: 'Test[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @[jane](mention://user/jane) *(2026-07-16T13:12Z)*\n'
+			+ '      Only reply\n',
+	})
+
+	test('removes reference when last reply is deleted', async ({ editor, open }) => {
+		await open()
+		await editor.getCommentReference('comment-1').click()
+		await expect(editor.commentBubble).toContainText('Only reply')
+
+		await editor.commentBubble.getByRole('button', { name: 'Delete' }).click()
+
+		// Bubble should close and reference should be gone
+		await expect(editor.commentBubble).not.toBeVisible()
+		await expect(editor.commentReferences.first()).not.toBeVisible()
+	})
+})
+
 test('hides and shows comment references via annotations toggle', async ({ editor, open }) => {
 	await open()
 	await editor.type('Test[?]')
