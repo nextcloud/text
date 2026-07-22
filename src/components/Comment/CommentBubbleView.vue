@@ -38,7 +38,7 @@
 						relativeTime="long"
 						ignoreSeconds />
 					<NcButton
-						v-if="!isGuestWithoutNick"
+						v-if="isEditable && !isGuestWithoutNick"
 						variant="tertiary"
 						size="small"
 						:title="t('text', 'Edit')"
@@ -82,7 +82,7 @@
 				<div v-else class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
 		</div>
-		<div v-if="isGuestWithoutNick" class="comment-bubble__guest-name">
+		<div v-if="isEditable && isGuestWithoutNick" class="comment-bubble__guest-name">
 			<p class="comment-bubble__guest-name-hint">
 				{{ t('text', 'Enter your name to comment') }}
 			</p>
@@ -99,7 +99,7 @@
 				</NcButton>
 			</div>
 		</div>
-		<div v-else-if="editingItemIndex === null" class="comment-bubble__composer">
+		<div v-else-if="isEditable && editingItemIndex === null" class="comment-bubble__composer">
 			<NcRichContenteditable
 				v-model="replyText"
 				:placeholder="t('text', 'Add a comment…')"
@@ -147,11 +147,13 @@ const replyInput = ref<HTMLTextAreaElement | null>(null)
 const userData = ref<Record<string, object>>({})
 
 const editorVersion = ref(0)
+const isEditable = ref(props.editor.isEditable)
 /**
  * Increment editor version on editor updates
  */
 function onUpdate() {
 	editorVersion.value++
+	isEditable.value = props.editor.isEditable
 }
 onMounted(() => {
 	props.editor.on('update', onUpdate)
