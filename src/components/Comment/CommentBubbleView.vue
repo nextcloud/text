@@ -60,6 +60,7 @@
 				</div>
 				<template v-if="editingItemIndex === i">
 					<NcRichContenteditable
+						ref="editInput"
 						v-model="editText"
 						multiline
 						class="comment-bubble__body-edit comment-bubble__composer-input"
@@ -111,6 +112,7 @@
 		</div>
 		<div v-else-if="isEditable && editingItemIndex === null" class="comment-bubble__composer">
 			<NcRichContenteditable
+				ref="replyInput"
 				v-model="replyText"
 				:placeholder="t('text', 'Add a comment…')"
 				:aria-label="t('text', 'Add a comment…')"
@@ -156,7 +158,8 @@ const DRAFT_KEY_PREFIX = 'text-comment-draft-'
 
 const itemsContainer = ref<HTMLElement | null>(null)
 const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
-const replyInput = ref<HTMLTextAreaElement | null>(null)
+const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
+const replyInput = ref<InstanceType<typeof NcRichContenteditable> | null>(null)
 const userData = ref<Record<string, object>>({})
 
 const editorVersion = ref(0)
@@ -264,6 +267,9 @@ const editText = ref('')
 function startEdit(index: number) {
 	editingItemIndex.value = index
 	editText.value = items.value[index].markdownBody
+	nextTick(() => {
+		editInput.value?.[0].focus()
+	})
 }
 
 /**
