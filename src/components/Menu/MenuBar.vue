@@ -19,7 +19,7 @@
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
 		<div
-			v-if="isRichEditor"
+			v-if="isRichEditor && !rawEditing"
 			ref="menubar"
 			role="toolbar"
 			class="text-menubar__entries"
@@ -53,6 +53,7 @@
 				forceEnabled
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
+					<RawEditingToggle />
 					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
@@ -77,10 +78,12 @@ import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
+import RawEditingToggle from './RawEditingToggle.vue'
 import WidthToggle from './WidthToggle.vue'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useMenuEntries } from '../../composables/useMenuEntries.ts'
+import { useRawEditing } from '../../composables/useRawEditing.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 import { DotsHorizontal } from '../icons.js'
 import { MENU_ID } from './MenuBar.provider.js'
@@ -95,6 +98,7 @@ export default {
 		HelpModal,
 		NcActionSeparator,
 		CharacterCount,
+		RawEditingToggle,
 		WidthToggle,
 	},
 
@@ -129,6 +133,7 @@ export default {
 	setup() {
 		const editor = useEditor()
 		const { isPublic, isRichEditor, isRichWorkspace } = useEditorFlags()
+		const { rawEditing } = useRawEditing()
 		const { assistantMenuEntries, menuEntries, readOnlyDoneEntries }
 			= useMenuEntries()
 		const menubar = ref()
@@ -139,6 +144,7 @@ export default {
 			isPublic,
 			isRichEditor,
 			isRichWorkspace,
+			rawEditing,
 			menubar,
 			menuEntries,
 			readOnlyDoneEntries,
