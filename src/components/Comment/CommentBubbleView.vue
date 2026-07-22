@@ -27,7 +27,10 @@
 						:size="24"
 						disableTooltip
 						disableMenu />
-					<span class="comment-bubble__author">{{ item.authorLabel || t('text', 'Guest') }}</span>
+					<span class="comment-bubble__author">
+						<span class="comment-bubble__author-name">{{ item.authorLabel || t('text', 'Guest') }}</span>
+						<span v-if="!item.author" class="comment-bubble__author-guest">({{ t('text', 'guest') }})</span>
+					</span>
 					<NcDateTime
 						v-if="item.timestamp"
 						class="comment-bubble__timestamp"
@@ -324,11 +327,31 @@ function close() {
 	}
 
 	&__author {
-		font-weight: 600;
+		display: flex;
+		align-items: baseline;
+		gap: var(--default-grid-baseline);
+		min-width: 0;
+		overflow: hidden;
 		font-size: 0.9em;
 	}
 
+	&__author-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		min-width: 0;
+		flex-shrink: 1;
+		font-weight: 600;
+	}
+
+	&__author-guest {
+		white-space: nowrap;
+		flex-shrink: 0;
+		color: var(--color-text-maxcontrast);
+	}
+
 	&__timestamp {
+		white-space: nowrap;
 		color: var(--color-text-maxcontrast);
 		font-size: 0.8em;
 		margin-inline-start: auto;
