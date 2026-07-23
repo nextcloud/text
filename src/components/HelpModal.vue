@@ -224,6 +224,19 @@
 					</td>
 				</tr>
 				<tr>
+					<td>{{ t('text', 'Comment') }}</td>
+					<td>
+						<code>[?]</code>
+					</td>
+					<td v-if="!isMobileCached">
+						<kbd>{{ ctrlOrModKey }}</kbd>
+						+
+						<kbd>{{ t('text', 'Alt') }}</kbd>
+						+
+						<kbd>M</kbd>
+					</td>
+				</tr>
+				<tr>
 					<td>{{ t('text', 'Footnote') }}</td>
 					<td>
 						<code>[^]</code>

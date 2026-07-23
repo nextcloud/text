@@ -424,8 +424,13 @@ div.ProseMirror {
 		}
 	}
 
-	sup[data-type="footnote-reference"] {
-		a.footnote-ref {
+	section[data-type="comments"] {
+		display: none;
+	}
+
+	sup[data-type="footnote-reference"], sup[data-type="comment-reference"] {
+		a.footnote-ref, a.comment-ref {
+			font-size: 0.9em;
 			color: var(--color-primary-element);
 			text-decoration: none;
 
@@ -500,6 +505,14 @@ div.ProseMirror {
 .tippy-content div {
 	box-sizing: border-box;
 	visibility: visible !important;
+}
+
+.editor--annotations-hidden div.ProseMirror {
+	sup[data-type="comment-reference"],
+	sup[data-type="footnote-reference"],
+	section[data-type="footnotes"] {
+		display: none;
+	}
 }
 
 .footnote-highlight {

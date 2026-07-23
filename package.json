@@ -27,6 +27,7 @@
     "extends @nextcloud/browserslist-config"
   ],
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "@mdi/svg": "^7.4.47",
     "@mdit/plugin-tex": "^1.0.1",
     "@nextcloud/auth": "^2.6.0",
