@@ -10,6 +10,7 @@ import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.js'
+import { commentBubbleKey } from '../plugins/commentBubble.ts'
 import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
@@ -127,28 +128,32 @@ const CommentReference = Node.create({
 
 				// Move selection/cursor to reference to avoid it being inside the hidden comments container
 				c = c.command(({ state, dispatch }) => {
+					let nodeStart: number | null = null
 					let refEnd: number | null = null
 					state.doc.descendants((node, pos) => {
 						if (refEnd !== null) {
 							return false
 						}
 						if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
+							nodeStart = pos
 							refEnd = pos + node.nodeSize
 							return false
 						}
 					})
-					if (refEnd === null) {
+					if (nodeStart === null || refEnd === null) {
 						return false
 					}
 					if (dispatch) {
-						dispatch(state.tr.setSelection(TextSelection.near(state.doc.resolve(refEnd))))
+						dispatch(state.tr
+							.setSelection(TextSelection.near(state.doc.resolve(refEnd)))
+							// Open comment bubble
+							.setMeta(commentBubbleKey, { active: { referenceId, nodeStart } }))
 					}
 					return true
 				})
 
 				return c
 					.scrollIntoView()
-					.openCommentBubble(referenceId)
 					.run()
 			},
 			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ({ state, dispatch }) => {
