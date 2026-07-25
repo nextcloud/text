@@ -19,7 +19,7 @@ interface SaveData {
 }
 
 interface SaveResponse {
-	data: Document
+	data: { document: Document }
 }
 
 /**

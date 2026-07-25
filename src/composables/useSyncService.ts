@@ -40,9 +40,11 @@ export function provideSyncService(
 	}
 	syncService.bus.on('opened', updateDocument)
 	syncService.bus.on('change', updateDocument)
+	syncService.bus.on('save', updateDocument)
 	onUnmounted(() => {
 		syncService.bus.off('opened', updateDocument)
 		syncService.bus.off('change', updateDocument)
+		syncService.bus.off('save', updateDocument)
 	})
 
 	return { document, syncService }
