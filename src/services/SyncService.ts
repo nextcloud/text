@@ -110,7 +110,7 @@ export declare type EventTypes = {
 	opened: OpenData
 
 	/* received new steps */
-	sync: { document?: object, steps: Step[] }
+	sync: { steps: Step[] }
 
 	/* state changed (dirty) */
 	stateChange: { initialLoading?: boolean, dirty?: boolean }
@@ -294,17 +294,14 @@ class SyncService {
 
 	receiveSteps({
 		steps,
-		document,
 		sessions = [],
 	}: {
 		steps: Step[]
-		document?: object
 		sessions?: Session[]
 	}) {
 		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
 			steps: [...awarenessSteps(sessions), ...steps],
-			document,
 		})
 		if (this.version < versionAfter) {
 			// Steps up to version where emitted but it looks like they were not processed.

@@ -286,7 +286,7 @@ export default defineComponent({
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
-		const { syncService } = provideSyncService(connection, openConnection)
+		const { document, syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -343,6 +343,7 @@ export default defineComponent({
 			clearIndexedDb,
 			connection,
 			dirty,
+			document,
 			editor,
 			editorReady,
 			el,
@@ -371,7 +372,6 @@ export default defineComponent({
 		return {
 			IDLE_TIMEOUT,
 
-			document: null,
 			fileNode: null,
 
 			idle: false,
@@ -614,8 +614,7 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		onOpened({ document, session, content, documentState, readOnly }) {
-			this.document = document
+		onOpened({ session, content, documentState, readOnly }) {
 			this.readOnly = readOnly
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
@@ -666,9 +665,7 @@ export default defineComponent({
 			this.updateUser(session)
 		},
 
-		onChange({ document }) {
-			this.document = document
-
+		onChange() {
 			this.syncError = null
 			this.setEditable(this.editMode)
 		},
@@ -690,7 +687,7 @@ export default defineComponent({
 			})
 		},
 
-		onSync({ document }) {
+		onSync() {
 			this.hasConnectionIssue
 				= this.syncService.backend.fetcher === 0
 					|| !this.syncProvider?.wsconnected
@@ -702,9 +699,6 @@ export default defineComponent({
 			this.$nextTick(() => {
 				this.$emit('syncService:sync')
 			})
-			if (document) {
-				this.document = document
-			}
 		},
 
 		onError({ type, data }) {

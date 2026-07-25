@@ -4,9 +4,10 @@
  */
 
 import type { InjectionKey, ShallowRef } from 'vue'
+import type { Document } from '../services/SyncService.ts'
 import type { Connection, InitialData } from './useConnection.ts'
 
-import { inject, provide } from 'vue'
+import { inject, onUnmounted, provide, ref } from 'vue'
 import { SyncService } from '../services/SyncService.ts'
 
 const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
@@ -26,7 +27,25 @@ export function provideSyncService(
 		openConnection,
 	})
 	provide(syncServiceKey, syncService)
-	return { syncService }
+
+	const document = ref<Document | undefined>()
+	/**
+	 * Update the document ref based on the event provided
+	 *
+	 * @param event that triggered the update
+	 * @param event.document latest state of the document
+	 */
+	function updateDocument({ document: current }: { document: Document }) {
+		document.value = current
+	}
+	syncService.bus.on('opened', updateDocument)
+	syncService.bus.on('change', updateDocument)
+	onUnmounted(() => {
+		syncService.bus.off('opened', updateDocument)
+		syncService.bus.off('change', updateDocument)
+	})
+
+	return { document, syncService }
 }
 
 /**
