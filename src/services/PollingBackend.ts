@@ -143,23 +143,23 @@ class PollingBackend {
 	}
 
 	_handleResponse({ data }: { data: PollData }) {
-		const { document, sessions } = data
+		const { document, readOnly, sessions, steps } = data
 		this.#fetchRetryCounter = 0
 
-		if (data.readOnly !== undefined && data.readOnly !== this.#readOnly) {
-			this.#readOnly = data.readOnly
+		if (readOnly !== undefined && readOnly !== this.#readOnly) {
+			this.#readOnly = readOnly
 			this.#syncService.bus.emit('permissionChange', {
 				readOnly: this.#readOnly,
 			})
-			if (data.readOnly) {
+			if (readOnly) {
 				this.maximumReadOnlyTimer()
 			}
 		}
 
 		this.#syncService.bus.emit('change', { document, sessions })
-		this.#syncService.receiveSteps(data)
+		this.#syncService.receiveSteps({ sessions, steps })
 
-		if (data.steps.length === 0) {
+		if (steps.length === 0) {
 			if (!this.#initialLoadingFinished) {
 				this.#initialLoadingFinished = true
 			}
