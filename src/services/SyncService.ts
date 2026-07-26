@@ -113,7 +113,10 @@ export declare type EventTypes = {
 	sync: { steps: Step[] }
 
 	/* state changed (dirty) */
-	stateChange: { initialLoading?: boolean; dirty?: boolean }
+	stateChange: { initialLoading?: boolean }
+
+	/* local yjs changes have been pushed to the server */
+	changesPushed: { version: number }
 
 	/* error */
 	error: { type: ErrorType; data?: object }
@@ -232,9 +235,7 @@ class SyncService {
 		this.#sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
-		if (this.#outbox.hasUpdate) {
-			this.bus.emit('stateChange', { dirty: true })
-		}
+		const hadUpdate = this.#outbox.hasUpdate
 		if (!this.hasActiveConnection()) {
 			this.#sending = false
 			return
@@ -258,6 +259,10 @@ class SyncService {
 				this.#sending = false
 				if (steps?.length > 0) {
 					this.receiveSteps({ steps })
+					if (hadUpdate) {
+						// this.version has been increased in receiveSteps
+						this.bus.emit('changesPushed', { version: this.version })
+					}
 				}
 			})
 			.catch((err) => {
