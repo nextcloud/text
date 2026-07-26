@@ -286,7 +286,7 @@ export default defineComponent({
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
-		const { document, syncService } = provideSyncService(connection, openConnection)
+		const { document, syncService } = provideSyncService(connection, openConnection, setDirty)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -320,6 +320,7 @@ export default defineComponent({
 
 		const { saveService } = provideSaveService(
 			connection,
+			document,
 			syncService,
 			serialize,
 			ydoc,
@@ -591,6 +592,7 @@ export default defineComponent({
 			bus.on('idle', this.onIdle)
 			bus.on('save', this.onSave)
 			bus.on('permissionChange', this.onPermissionChange)
+			bus.on('changesPushed', this.onChangesPushed)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -603,6 +605,7 @@ export default defineComponent({
 			bus.off('idle', this.onIdle)
 			bus.off('save', this.onSave)
 			bus.off('permissionChange', this.onPermissionChange)
+			bus.off('changesPushed', this.onChangesPushed)
 		},
 
 		reconnect() {
@@ -752,17 +755,6 @@ export default defineComponent({
 				}
 				this.$emit('ready')
 			}
-			if (Object.hasOwn(state, 'dirty')) {
-				if (state.dirty) {
-					// ignore initial loading and other automated changes before first user change
-					if (this.editor.can().undo() || this.editor.can().redo()) {
-						this.setDirty(state.dirty)
-						this.saveService.autosave()
-					}
-				} else {
-					this.setDirty(state.dirty)
-				}
-			}
 		},
 
 		onIdle() {
@@ -800,6 +792,10 @@ export default defineComponent({
 			} else {
 				showWarning(t('text', 'You now have edit permissions for this document.'))
 			}
+		},
+
+		onChangesPushed() {
+			this.saveService.autosave()
 		},
 
 		onFocus() {
