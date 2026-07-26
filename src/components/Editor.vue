@@ -235,6 +235,10 @@ export default defineComponent({
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
 		const hasConnectionIssue = ref(false)
+		const dirty = ref(false)
+		const setDirty = (val) => {
+			dirty.value = val
+		}
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
 			provideEditorFlags(props)
@@ -243,7 +247,7 @@ export default defineComponent({
 			props,
 		)
 		const { connection, openConnection } = provideConnection(props)
-		const { document, syncService } = provideSyncService(connection, openConnection)
+		const { document, syncService } = provideSyncService(connection, openConnection, setDirty)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -280,6 +284,7 @@ export default defineComponent({
 
 		const { saveService } = provideSaveService(
 			connection,
+			document,
 			syncService,
 			serialize,
 			ydoc,
@@ -290,6 +295,7 @@ export default defineComponent({
 		return {
 			awareness,
 			connection,
+			dirty,
 			document,
 			editor,
 			el,
@@ -302,6 +308,7 @@ export default defineComponent({
 			requireReconnect,
 			saveService,
 			serialize,
+			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -318,7 +325,6 @@ export default defineComponent({
 			fileNode: null,
 
 			idle: false,
-			dirty: false,
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
@@ -478,6 +484,7 @@ export default defineComponent({
 			bus.on('idle', this.onIdle)
 			bus.on('save', this.onSave)
 			bus.on('permissionChange', this.onPermissionChange)
+			bus.on('changesPushed', this.onChangesPushed)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -490,6 +497,7 @@ export default defineComponent({
 			bus.off('idle', this.onIdle)
 			bus.off('save', this.onSave)
 			bus.off('permissionChange', this.onPermissionChange)
+			bus.off('changesPushed', this.onChangesPushed)
 		},
 
 		reconnect() {
@@ -627,15 +635,6 @@ export default defineComponent({
 				}
 				this.emit('ready')
 			}
-			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes before first user change
-				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.dirty = state.dirty
-					if (this.dirty) {
-						this.saveService.autosave()
-					}
-				}
-			}
 		},
 
 		onIdle() {
@@ -677,6 +676,10 @@ export default defineComponent({
 					t('text', 'You now have edit permissions for this document.'),
 				)
 			}
+		},
+
+		onChangesPushed() {
+			this.saveService.autosave()
 		},
 
 		onFocus() {
