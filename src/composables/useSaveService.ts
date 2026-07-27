@@ -63,7 +63,15 @@ export function provideSaveService(
 	 * @param event.document latest state of the document
 	 */
 	function updateDocument(event: { document: Document }) {
-		document.value = event.document
+		// Limit lastSavedVersionTime to now. No saving from the future.
+		const lastSavedVersionTime = Math.min(
+			event.document.lastSavedVersionTime,
+			Math.ceil(Date.now() / 1000),
+		)
+		document.value = {
+			...event.document,
+			lastSavedVersionTime,
+		}
 	}
 	syncService.bus.on('opened', updateDocument)
 	syncService.bus.on('change', updateDocument)

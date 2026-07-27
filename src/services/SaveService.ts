@@ -142,8 +142,8 @@ class SaveService {
 				this.autosaveErrorCount = 0
 				// server did not save due to throttling
 				if (saved === false) {
-					// document has been updated - let autosave handle the delay.
-					this.autosave()
+					// Make sure to not hammer the server if clocks are out of sync.
+					setTimeout(this.autosave, SERVER_AUTOSAVE_INTERVAL * 1000)
 				}
 			})
 			.catch((error) => {
