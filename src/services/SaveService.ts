@@ -22,6 +22,8 @@ const AUTOSAVE_DEBOUNCE = 1
 const SERVER_AUTOSAVE_INTERVAL = 10
 // Randomize save times to prevent all clients saving at the same time.
 const MAX_RANDOM_AUTOSAVE_DELAY = 3
+// First retry on error - interval will double with every retry.
+const RETRY_TIMEOUT = SERVER_AUTOSAVE_INTERVAL
 
 type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
 
@@ -37,6 +39,7 @@ class SaveService {
 	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
 	document: Ref<Document | undefined>
+	autosaveErrorCount = 0
 	getSaveData
 	autosave
 	clear
@@ -115,15 +118,21 @@ class SaveService {
 		if (now < lastSave + SERVER_AUTOSAVE_INTERVAL) {
 			logger.debug('Not autosaving as last save is recent', { lastSave, now })
 			const nextSave = lastSave + SERVER_AUTOSAVE_INTERVAL + Math.random() * MAX_RANDOM_AUTOSAVE_DELAY
-			setTimeout(() => this.autosave(), (nextSave - now) * 1000)
+			setTimeout(this.autosave, (nextSave - now) * 1000)
 			return
 		}
 		logger.debug('Autosaving')
-		return this.save({ manualSave: false }).catch((error) => {
-			logger.error('Failed to autosave document.', { error })
-			// retry in 30 seconds
-			this.autosave()
-		})
+		return this.save({ manualSave: false })
+			.then(() => {
+				this.autosaveErrorCount = 0
+			})
+			.catch((error) => {
+				logger.error('Failed to autosave document.', { error })
+				// double the delay on every failed attempt
+				const delay = Math.pow(2, this.autosaveErrorCount) * RETRY_TIMEOUT
+				setTimeout(this.autosave, delay * 1000)
+				this.autosaveErrorCount++
+			})
 	}
 }
 
