@@ -9,6 +9,7 @@ import type { Document, SyncService } from './SyncService.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
+import mitt from 'mitt'
 import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
 import { ERROR_TYPE } from './SyncService.ts'
@@ -21,7 +22,18 @@ const SERVER_AUTOSAVE_INTERVAL = 10
 // Randomize save times to prevent all clients saving at the same time.
 const MAX_RANDOM_AUTOSAVE_DELAY = 3
 
+type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
+
+export declare type EventTypes = {
+	/* error */
+	error: { type: ErrorType, data?: object }
+
+	/* Emitted after successful save */
+	save: { document: Document }
+}
+
 class SaveService {
+	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
 	document: Ref<Document | undefined>
 	syncService
@@ -57,10 +69,6 @@ class SaveService {
 		return this.syncService.version
 	}
 
-	get emit() {
-		return this.syncService.bus.emit
-	}
-
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
 		if (!this.connection.value) {
@@ -76,7 +84,7 @@ class SaveService {
 				manualSave,
 			})
 			logger.debug('[SaveService] saved', { response })
-			this.emit('save', response.data)
+			this.bus.emit('save', response.data)
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
@@ -88,7 +96,7 @@ class SaveService {
 				return
 			}
 			if (response?.status === 412) {
-				this.emit('error', {
+				this.bus.emit('error', {
 					type: ERROR_TYPE.LOAD_ERROR,
 					data: response,
 				})

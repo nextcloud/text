@@ -124,9 +124,6 @@ export declare type EventTypes = {
 	/* Events for session and document meta data */
 	change: { sessions: Session[], document: Document }
 
-	/* Emitted after successful save */
-	save: { document: Document }
-
 	/* Emitted once a document becomes idle */
 	idle: void
 

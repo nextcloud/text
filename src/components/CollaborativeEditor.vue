@@ -286,7 +286,7 @@ export default defineComponent({
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
-		const { document, syncService } = provideSyncService(connection, openConnection, setDirty)
+		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -318,12 +318,12 @@ export default defineComponent({
 			? () => createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
 			: () => serializePlainText(editor.state.doc)
 
-		const { saveService } = provideSaveService(
+		const { document, saveService } = provideSaveService(
 			connection,
-			document,
 			syncService,
 			serialize,
 			ydoc,
+			setDirty,
 		)
 
 		const syncProvider = shallowRef(null)
@@ -590,9 +590,9 @@ export default defineComponent({
 			bus.on('error', this.onError)
 			bus.on('stateChange', this.onStateChange)
 			bus.on('idle', this.onIdle)
-			bus.on('save', this.onSave)
 			bus.on('permissionChange', this.onPermissionChange)
-			bus.on('changesPushed', this.onChangesPushed)
+			this.saveService.bus.on('error', this.onError)
+			this.saveService.bus.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -603,9 +603,9 @@ export default defineComponent({
 			bus.off('error', this.onError)
 			bus.off('stateChange', this.onStateChange)
 			bus.off('idle', this.onIdle)
-			bus.off('save', this.onSave)
 			bus.off('permissionChange', this.onPermissionChange)
-			bus.off('changesPushed', this.onChangesPushed)
+			this.saveService.bus.off('error', this.onError)
+			this.saveService.bus.off('save', this.onSave)
 		},
 
 		reconnect() {
@@ -792,10 +792,6 @@ export default defineComponent({
 			} else {
 				showWarning(t('text', 'You now have edit permissions for this document.'))
 			}
-		},
-
-		onChangesPushed() {
-			this.saveService.autosave()
 		},
 
 		onFocus() {
