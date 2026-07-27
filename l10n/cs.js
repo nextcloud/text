@@ -101,6 +101,7 @@ OC.L10N.register(
     "Code block" : "Blok kódu",
     "Some code" : "Nějaký kód",
     "Link" : "Odkaz",
+    "Footnote" : "Poznámka pod čarou",
     "Emoji" : "Emotikona",
     "emoji" : "Emotikona",
     "Mention someone" : "Zmínit někoho",
