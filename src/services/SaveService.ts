@@ -4,8 +4,9 @@
  */
 
 import type { Ref, ShallowRef } from 'vue'
+import type { SaveData } from '../apis/save.ts'
 import type { Connection } from '../composables/useConnection.ts'
-import type { Document, SyncService } from './SyncService.ts'
+import type { Document } from './SyncService.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
@@ -36,37 +37,24 @@ class SaveService {
 	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
 	document: Ref<Document | undefined>
-	syncService
-	serialize
-	getDocumentState
+	getSaveData
 	autosave
+	clear
 
 	constructor({
 		connection,
 		document,
-		syncService,
-		serialize,
-		getDocumentState,
+		getSaveData,
 	}: {
 		connection: ShallowRef<Connection | undefined>
 		document: Ref<Document | undefined>
-		syncService: SyncService
-		serialize: () => string
-		getDocumentState: () => string
+		getSaveData: () => SaveData
 	}) {
 		this.connection = connection
 		this.document = document
-		this.syncService = syncService
-		this.serialize = serialize
-		this.getDocumentState = getDocumentState
+		this.getSaveData = getSaveData
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
-		this.syncService.bus.on('close', () => {
-			this.autosave.clear()
-		})
-	}
-
-	get version() {
-		return this.syncService.version
+		this.clear = this.autosave.clear.bind(this.autosave)
 	}
 
 	async save({ force = false, manualSave = true } = {}) {
@@ -77,9 +65,7 @@ class SaveService {
 		}
 		try {
 			const response = await save(this.connection.value, {
-				version: this.version,
-				autosaveContent: this.serialize(),
-				documentState: this.getDocumentState(),
+				...this.getSaveData(),
 				force,
 				manualSave,
 			})
@@ -112,11 +98,7 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		const success = saveViaSendBeacon(this.connection.value, {
-			version: this.version,
-			autosaveContent: this.serialize(),
-			documentState: this.getDocumentState(),
-		})
+		const success = saveViaSendBeacon(this.connection.value, this.getSaveData())
 		if (success) {
 			logger.debug('[SaveService] saved using sendBeacon')
 		}

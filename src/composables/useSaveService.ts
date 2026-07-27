@@ -5,6 +5,7 @@
 
 import type { InjectionKey, ShallowRef } from 'vue'
 import type { Doc } from 'yjs'
+import type { SaveData } from '../apis/save.ts'
 import type { Document, SyncService } from '../services/SyncService.ts'
 import type { Connection } from './useConnection.ts'
 
@@ -30,17 +31,29 @@ export function provideSaveService(
 	setDirty: (val: boolean) => Promise<never>,
 ) {
 	const document = ref<Document | undefined>()
+
+	/**
+	 * Get the data for the save request
+	 */
+	function getSaveData(): SaveData {
+		return {
+			version: syncService.version,
+			autosaveContent: serialize(),
+			documentState: getDocumentState(ydoc),
+		}
+	}
+
 	const saveService = new SaveService({
 		connection,
 		document,
-		syncService,
-		serialize,
-		getDocumentState: () => getDocumentState(ydoc),
+		getSaveData,
 	})
 
 	syncService.bus.on('changesPushed', saveService.autosave)
+	syncService.bus.on('close', saveService.clear)
 	onUnmounted(() => {
 		syncService.bus.off('changesPushed', saveService.autosave)
+		syncService.bus.off('close', saveService.clear)
 	})
 
 	/**

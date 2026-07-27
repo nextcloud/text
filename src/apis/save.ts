@@ -10,10 +10,13 @@ import { unref, type ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection'
 import type { Document } from '../services/SyncService'
 
-interface SaveData {
+export interface SaveData {
 	version: number
 	autosaveContent: string
 	documentState: string
+}
+
+export interface SaveOptions {
 	force: boolean
 	manualSave: boolean
 }
@@ -29,7 +32,7 @@ interface SaveResponse {
  */
 export function save(
 	connection: ShallowRef<Connection> | Connection,
-	data: SaveData,
+	data: SaveData & SaveOptions,
 ): Promise<SaveResponse> {
 	const con = unref(connection)
 	const pub = con.shareToken ? '/public' : ''
@@ -57,7 +60,7 @@ export function save(
  */
 export function saveViaSendBeacon(
 	connection: Connection,
-	data: Omit<SaveData, 'force' | 'manualSave'>,
+	data: SaveData,
 ): boolean {
 	const con = unref(connection)
 	const pub = con.shareToken ? '/public' : ''
