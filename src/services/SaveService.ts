@@ -60,21 +60,36 @@ class SaveService {
 		this.clear = this.autosave.clear.bind(this.autosave)
 	}
 
+	/**
+	 * Save the current state
+	 *
+	 * @param options for saving
+	 * @param options.force force save for handling conflicts
+	 * @param options.manualSave user initiated the saving - not autosave
+	 * @return true on success, false if autosave was throttled by the server
+	 */
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
 		if (!this.connection.value) {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
+		const data = this.getSaveData()
 		try {
 			const response = await save(this.connection.value, {
-				...this.getSaveData(),
+				...data,
 				force,
 				manualSave,
 			})
-			logger.debug('[SaveService] saved', { response })
+			// update the document - even if the save was throttled
 			this.bus.emit('save', response.data)
+			if (response.data.document.lastSavedVersion < data.version) {
+				logger.debug('[SaveService] Server throttled save request.', { response })
+				return false
+			}
+			logger.debug('[SaveService] saved', { response })
 			this.autosave.clear()
+			return true
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
@@ -122,9 +137,14 @@ class SaveService {
 			return
 		}
 		logger.debug('Autosaving')
-		return this.save({ manualSave: false })
-			.then(() => {
+		this.save({ manualSave: false })
+			.then((saved) => {
 				this.autosaveErrorCount = 0
+				// server did not save due to throttling
+				if (saved === false) {
+					// document has been updated - let autosave handle the delay.
+					this.autosave()
+				}
 			})
 			.catch((error) => {
 				logger.error('Failed to autosave document.', { error })
