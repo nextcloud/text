@@ -149,5 +149,14 @@
       "email": "jus@bitgrid.net",
       "role": "Developer"
     }
-  ]
+  ],
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "core-js": true,
+    "cypress": true,
+    "esbuild": true,
+    "protobufjs": true,
+    "ssh2": true,
+    "cpu-features": true
+  }
 }
