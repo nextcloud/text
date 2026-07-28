@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\AiTagService;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Files\NotFoundException;
 use OCP\IRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
@@ -40,6 +42,7 @@ class AiControllerTest extends TestCase {
 
 		$this->assertInstanceOf(DataResponse::class, $response);
 		$this->assertSame([], $response->getData());
+		$this->assertSame(Http::STATUS_OK, $response->getStatus());
 	}
 
 	public function testTagFilePassesCorrectFileId(): void {
@@ -48,5 +51,17 @@ class AiControllerTest extends TestCase {
 			->with(99999);
 
 		$this->controller->tagFile(99999);
+	}
+
+	public function testTagFileReturnsNotFoundWhenInaccessible(): void {
+		$this->aiTagService->expects($this->once())
+			->method('tagFileAsAiGenerated')
+			->with(42)
+			->willThrowException(new NotFoundException('File not found'));
+
+		$response = $this->controller->tagFile(42);
+
+		$this->assertSame(Http::STATUS_NOT_FOUND, $response->getStatus());
+		$this->assertSame([], $response->getData());
 	}
 }
