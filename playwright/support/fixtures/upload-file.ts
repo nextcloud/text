@@ -12,7 +12,7 @@ export interface UploadFileFixture {
 	file: Node
 	fileName: string
 	fileContent: string
-	mtime: number
+	mtime?: number
 	oldVersions: { content?: string, mtime: number }[]
 	open: () => Promise<void>
 	close: () => Promise<void>
