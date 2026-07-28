@@ -17,7 +17,7 @@
 		@previous="showPreviousImage"
 		@close="$emit('close')">
 		<div class="modal__content">
-			<img :src="currentImage.previewUrl">
+			<img :src="currentImage.fullUrl">
 		</div>
 	</NcModal>
 </template>
