@@ -12,6 +12,7 @@ export interface UploadFileFixture {
 	file: Node
 	fileName: string
 	fileContent: string
+	mtime: number
 	oldVersions: { content?: string, mtime: number }[]
 	open: () => Promise<void>
 	close: () => Promise<void>
@@ -25,15 +26,16 @@ export interface UploadFileFixture {
 export const test = base.extend<UploadFileFixture>({
 	fileContent: ['', { option: true }],
 	fileName: ['empty.md', { option: true }],
+	mtime: [undefined, { option: true }],
 	oldVersions: [[], { option: true }],
 
-	file: async ({ fileContent, fileName, oldVersions, user }, use) => {
+	file: async ({ fileContent, fileName, oldVersions, mtime, user }, use) => {
 		const uploadVersion
 			= (opts: { content?: string, mtime?: number }) => user.uploadFile({ name: fileName, ...opts })
 		for (const version of oldVersions) {
 			await uploadVersion(version)
 		}
-		const file = await uploadVersion({ content: fileContent })
+		const file = await uploadVersion({ content: fileContent, mtime })
 		await use(file)
 	},
 
