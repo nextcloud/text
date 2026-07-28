@@ -3,24 +3,40 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ReporterDescription } from '@playwright/test'
+
 import { defineConfig, devices } from '@playwright/test'
+
+/**
+ * Used locally - i.e. if `CI` is not set as an environment variable.
+ */
+const LOCAL_CONFIG = {
+	// Just the html report with the traces
+	reporter: 'list',
+} as const
+
+/**
+ * Used on CI - i.e. if `CI` is set as an environment variable.
+ */
+const CI_CONFIG = {
+	// ensure no `test.only` is left in the code causing false positives
+	forbidOnly: true,
+	// blob (so we can merge reports and download them for inspection),
+	// dot (so we have a quick overview in the logs while the tests are running)
+	// github (to have annotations in the PR)
+	reporter: [['blob'], ['line'], ['github']] as ReporterDescription[],
+	retries: 1,
+	timeout: 45_000,
+	// we shard to speed up the tests so no parallelism in workers
+	workers: 1,
+} as const
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
 	testDir: './playwright',
-	// ensure no `test.only` is left in the code causing false positives
-	forbidOnly: !!process.env.CI,
-	// retry on CI only
-	retries: process.env.CI ? 1 : 0,
-	// we shard on CI to speed up the tests so no parallelism in workers
-	workers: process.env.CI ? 1 : undefined,
-	// on CI we want to have blob (so we can merge reports and download them for inspection),
-	// line (so we have a quick overview in the logs while the tests are running)
-	// github (to have annotations in the PR)
-	// locally we just want the html report with the traces
-	reporter: process.env.CI ? [['blob'], ['line'], ['github']] : 'list',
+	...(process.env.CI ? CI_CONFIG : LOCAL_CONFIG),
 	use: {
 		// Base URL to use in actions like `await page.goto('./')`.
 		baseURL: process.env.baseURL ?? 'http://localhost:8089/index.php/',
