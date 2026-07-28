@@ -20,8 +20,6 @@ import { ERROR_TYPE } from './SyncService.ts'
 const AUTOSAVE_DEBOUNCE = 1
 // Server only accepts auutosaves every 10 seconds
 const SERVER_AUTOSAVE_INTERVAL = 10
-// Randomize save times to prevent all clients saving at the same time.
-const MAX_RANDOM_AUTOSAVE_DELAY = 3
 // First retry on error - interval will double with every retry.
 const RETRY_TIMEOUT = SERVER_AUTOSAVE_INTERVAL
 
@@ -131,9 +129,8 @@ class SaveService {
 		const now = Date.now() / 1000
 		// Server won't accept autosaves yet
 		if (now < lastSave + SERVER_AUTOSAVE_INTERVAL) {
-			logger.debug('Not autosaving as last save is recent', { lastSave, now })
-			const nextSave = lastSave + SERVER_AUTOSAVE_INTERVAL + Math.random() * MAX_RANDOM_AUTOSAVE_DELAY
-			setTimeout(this.autosave, (nextSave - now) * 1000)
+			logger.debug('Just saved, will try again in 10 seconds.', { lastSave, now })
+			setTimeout(this.autosave, (SERVER_AUTOSAVE_INTERVAL - AUTOSAVE_DEBOUNCE) * 1000)
 			return
 		}
 		logger.debug('Autosaving')
@@ -143,7 +140,7 @@ class SaveService {
 				// server did not save due to throttling
 				if (saved === false) {
 					// Make sure to not hammer the server if clocks are out of sync.
-					setTimeout(this.autosave, SERVER_AUTOSAVE_INTERVAL * 1000)
+					setTimeout(this.autosave, (SERVER_AUTOSAVE_INTERVAL - AUTOSAVE_DEBOUNCE) * 1000)
 				}
 			})
 			.catch((error) => {
