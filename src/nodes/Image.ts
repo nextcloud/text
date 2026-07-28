@@ -89,22 +89,34 @@ const Image = TiptapImage.extend<ImageOptions>({
 						}
 					},
 					handlePaste: (view, event) => {
+						const data = event.clipboardData
+						if (!data) {
+							return false
+						}
+
+						// Check if the pasted content contains a table, either in HTML or TSV-like format. If so, let the regular paste pipeline handle it.
+						const html = data.getData('text/html') || ''
+						const text = data.getData('text/plain') || ''
+
+						const hasHtmlTable = /<table[\s>]/i.test(html)
+						const hasTsvLikeTable = text.includes('\t') && text.includes('\n')
+
+						if (hasHtmlTable || hasTsvLikeTable) {
+							// Let regular paste pipeline parse table content
+							return false
+						}
+
 						// only catch the paste if it contains files
-						if (
-							event.target
-							&& event.clipboardData?.files
-							&& event.clipboardData.files.length > 0
-						) {
-							// let the editor wrapper catch this custom event
+						if (event.target && data.files && data.files.length > 0) {
 							const customEvent = new CustomEvent('image-paste', {
 								bubbles: true,
-								detail: {
-									files: event.clipboardData.files,
-								},
+								detail: { files: data.files },
 							})
 							event.target.dispatchEvent(customEvent)
 							return true
 						}
+
+						return false
 					},
 				},
 			}),
