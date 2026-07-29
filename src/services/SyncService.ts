@@ -259,6 +259,7 @@ class SyncService {
 					if (hadUpdate) {
 						// this.version has been increased in receiveSteps
 						this.bus.emit('changesPushed', { version: this.version })
+						logger.debug('changesPushed', { version: this.version })
 					}
 				}
 			})
