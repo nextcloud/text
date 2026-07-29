@@ -1077,6 +1077,7 @@ export default defineComponent({
 	position: absolute;
 	top: -1.4em;
 	left: -1px;
+	max-width: 80px;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 600;
@@ -1085,6 +1086,8 @@ export default defineComponent({
 	color: #0d0d0d;
 	padding: 0.1rem 0.3rem;
 	border-radius: 3px 3px 3px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 	opacity: 0;
 
