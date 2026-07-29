@@ -20,8 +20,6 @@ import { ERROR_TYPE } from './SyncService.ts'
 const AUTOSAVE_DEBOUNCE = 1
 // Server only accepts auutosaves every 10 seconds
 const SERVER_AUTOSAVE_INTERVAL = 10
-// First retry on error - interval will double with every retry.
-const RETRY_TIMEOUT = SERVER_AUTOSAVE_INTERVAL
 
 type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
 
@@ -37,7 +35,8 @@ class SaveService {
 	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
 	document: Ref<Document | undefined>
-	autosaveErrorCount = 0
+	lastSaveAttempt = 0
+	pendingAutosave = 0
 	getSaveData
 	autosave
 	clear
@@ -55,7 +54,7 @@ class SaveService {
 		this.document = document
 		this.getSaveData = getSaveData
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
-		this.clear = this.autosave.clear.bind(this.autosave)
+		this.clear = this.clearAutosave.bind(this)
 	}
 
 	/**
@@ -74,6 +73,7 @@ class SaveService {
 		}
 		const data = this.getSaveData()
 		try {
+			this.lastSaveAttempt = Date.now()
 			const response = await save(this.connection.value, {
 				...data,
 				force,
@@ -86,7 +86,7 @@ class SaveService {
 				return false
 			}
 			logger.debug('[SaveService] saved', { response })
-			this.autosave.clear()
+			this.clearAutosave()
 			return true
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
@@ -125,31 +125,37 @@ class SaveService {
 	}
 
 	_autosave() {
-		const lastSave = this.document.value?.lastSavedVersionTime ?? 0
-		const now = Date.now() / 1000
+		const now = Date.now()
+		const nextSaveAttempt = this.lastSaveAttempt + SERVER_AUTOSAVE_INTERVAL * 1000
 		// Server won't accept autosaves yet
-		if (now < lastSave + SERVER_AUTOSAVE_INTERVAL) {
-			logger.debug('Just saved, will try again in 10 seconds.', { lastSave, now })
-			setTimeout(this.autosave, (SERVER_AUTOSAVE_INTERVAL - AUTOSAVE_DEBOUNCE) * 1000)
+		if (now < nextSaveAttempt) {
+			if (!this.pendingAutosave) {
+				const wait = nextSaveAttempt - now
+				logger.debug(`Just saved, will try again in ${Math.ceil(wait)} seconds.`)
+				this.pendingAutosave = window.setTimeout(this.autosave, wait)
+			}
 			return
 		}
 		logger.debug('Autosaving')
 		this.save({ manualSave: false })
 			.then((saved) => {
-				this.autosaveErrorCount = 0
 				// server did not save due to throttling
 				if (saved === false) {
-					// Make sure to not hammer the server if clocks are out of sync.
-					setTimeout(this.autosave, (SERVER_AUTOSAVE_INTERVAL - AUTOSAVE_DEBOUNCE) * 1000)
+					this.autosave()
 				}
 			})
 			.catch((error) => {
 				logger.error('Failed to autosave document.', { error })
-				// double the delay on every failed attempt
-				const delay = Math.pow(2, this.autosaveErrorCount) * RETRY_TIMEOUT
-				setTimeout(this.autosave, delay * 1000)
-				this.autosaveErrorCount++
+				this.autosave()
 			})
+	}
+
+	clearAutosave() {
+		this.autosave.clear()
+		if (this.pendingAutosave) {
+			window.clearTimeout(this.pendingAutosave)
+			this.pendingAutosave = 0
+		}
 	}
 }
 
