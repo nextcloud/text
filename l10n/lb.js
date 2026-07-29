@@ -1,9 +1,16 @@
 OC.L10N.register(
     "text",
     {
+    "The file was uploaded" : "D'Datei gouf eropgelueden",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Déi ropgelueden Datei ass méi grouss wei d'MAX_FILE_SIZE Eegenschaft déi an der HTML form uginn ass",
+    "The file was only partially uploaded" : "D'Datei gouf nëmmen deelweis eropgelueden",
     "No file was uploaded" : "Et ass kee Fichier ropgeluede ginn",
     "Missing a temporary folder" : "Et feelt en temporären Dossier",
+    "Nextcloud Text" : "Nextcloud Text",
+    "Text document" : "Textdokument",
+    "Create new text file" : "Nei Textdatei erstellen",
+    "File not found" : "Datei net fonnt",
+    "Readme" : "Readme",
     "Copy link" : "Link kopéieren",
     "guest" : "Gaascht",
     "Saved" : "Gespäichert",
