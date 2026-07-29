@@ -4,7 +4,7 @@
  */
 
 {
-	"extends": "@vue/tsconfig",
+	"extends": "@vue/tsconfig/tsconfig.json",
 	"include": ["src/**/*.ts", "*.ts", "src/**/*.vue", "playwright/**/*.ts"],
 	"compilerOptions": {
 		"allowJs": true,
