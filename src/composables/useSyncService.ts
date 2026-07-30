@@ -26,6 +26,7 @@ export function provideSyncService(
 		openConnection,
 	})
 	provide(syncServiceKey, syncService)
+
 	return { syncService }
 }
 
