@@ -443,6 +443,11 @@ div.ProseMirror {
 				text-decoration: underline;
 			}
 		}
+
+		&.is-active {
+			background-color: var(--color-primary-element-light-text);
+			border-radius: var(--border-radius);
+		}
 	}
 
 	section[data-type="footnotes"] {
