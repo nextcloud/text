@@ -15,6 +15,7 @@ class CommentBubblePluginView {
 	#component: VueRenderer | null = null
 	#floatingEl: HTMLElement | null = null
 	#cleanupAutoUpdate: (() => void) | null = null
+	#activeReferenceEl: Element | null = null
 	#editor: Editor
 	plugin: Plugin
 	view: EditorView
@@ -57,6 +58,8 @@ class CommentBubblePluginView {
 		this.#component = null
 		this.#floatingEl?.remove()
 		this.#floatingEl = null
+		this.#activeReferenceEl?.classList.remove('is-active')
+		this.#activeReferenceEl = null
 		document.removeEventListener('mousedown', this.#closeOnOutsideClick)
 	}
 
@@ -114,6 +117,11 @@ class CommentBubblePluginView {
 		}
 
 		if (referenceEl) {
+			if (this.#activeReferenceEl !== referenceEl) {
+				this.#activeReferenceEl?.classList.remove('is-active')
+				referenceEl.classList.add('is-active')
+				this.#activeReferenceEl = referenceEl
+			}
 			this.#position(referenceEl)
 			document.addEventListener('mousedown', this.#closeOnOutsideClick)
 		}
