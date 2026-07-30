@@ -216,7 +216,7 @@ const items = computed(() => {
 	return result
 })
 
-const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].body))
+const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].markdownBody))
 
 // Persist draft as user types
 watch(replyText, (val) => {
