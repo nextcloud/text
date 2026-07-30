@@ -349,6 +349,9 @@ function cancelEdit() {
  * @param index the item index
  */
 function deleteItem(index: number) {
+	if (items.value.length === 1) {
+		sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
+	}
 	props.editor.commands.deleteCommentReply(props.referenceId, index)
 }
 
