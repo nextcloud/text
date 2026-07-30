@@ -106,10 +106,12 @@ export default Node.create({
 			 * Insert a preview for given link.
 			 *
 			 * @param {string} link - the link URL
+			 * @param {string|null} title - the link title (optional)
 			 */
 			insertPreview:
-				(link) =>
+				(link, title = '') =>
 				({ state, chain }) => {
+					title = title.trim() || link
 					return chain()
 						.insertContent({
 							type: 'preview',
@@ -123,7 +125,7 @@ export default Node.create({
 											attrs: { href: link },
 										},
 									],
-									text: link,
+									text: title,
 								},
 							],
 						})
