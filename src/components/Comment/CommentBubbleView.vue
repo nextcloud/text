@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<div class="comment-bubble" @keydown.escape.prevent.stop="closeAndRefocus">
+	<div ref="commentBubble" class="comment-bubble" @keydown.escape.prevent.stop="closeAndRefocus">
 		<div class="comment-bubble__header">
 			<span class="comment-bubble__title">{{ t('text', 'Comments') }}</span>
 			<div v-if="commentCount > 1" class="comment-bubble__nav">
@@ -58,26 +58,20 @@
 						:timestamp="item.timestamp"
 						relativeTime="long"
 						ignoreSeconds />
-					<NcButton
-						v-if="isEditable && !isGuestWithoutName"
-						variant="tertiary"
-						size="small"
-						:title="t('text', 'Edit')"
-						@click="startEdit(i)">
-						<template #icon>
-							<PencilIcon :size="16" />
-						</template>
-					</NcButton>
-					<NcButton
-						v-if="isEditable && !isGuestWithoutName"
-						variant="tertiary"
-						size="small"
-						:title="t('text', 'Delete')"
-						@click="deleteItem(i)">
-						<template #icon>
-							<DeleteIcon :size="16" />
-						</template>
-					</NcButton>
+					<NcActions v-if="isEditable && !isGuestWithoutName" :container="commentBubble ?? undefined">
+						<NcActionButton closeAfterClick @click="startEdit(i)">
+							<template #icon>
+								<PencilIcon :size="16" />
+							</template>
+							{{ t('text', 'Edit') }}
+						</NcActionButton>
+						<NcActionButton closeAfterClick @click="deleteItem(i)">
+							<template #icon>
+								<DeleteIcon :size="16" />
+							</template>
+							{{ t('text', 'Delete') }}
+						</NcActionButton>
+					</NcActions>
 				</div>
 				<template v-if="editingItemIndex === i">
 					<NcRichContenteditable
@@ -159,6 +153,8 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { t } from '@nextcloud/l10n'
 import { DOMSerializer } from '@tiptap/pm/model'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
@@ -180,6 +176,7 @@ const props = defineProps<{
 
 const DRAFT_KEY_PREFIX = 'text-comment-draft-'
 
+const commentBubble = ref<HTMLElement | null>(null)
 const itemsContainer = ref<HTMLElement | null>(null)
 const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
 const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
