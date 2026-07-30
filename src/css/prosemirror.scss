@@ -435,15 +435,22 @@ div.ProseMirror {
 	sup[data-type="footnote-reference"], sup[data-type="comment-reference"] {
 		scroll-margin-top: calc(var(--default-clickable-area) + 4 * var(--default-grid-baseline));
 
-		a.footnote-ref, a.comment-ref {
+		a.footnote-ref, button.comment-ref {
 			font-size: 0.9em;
 			color: var(--color-primary-element);
 			text-decoration: none;
+			min-height: unset;
 
 			&:hover,
 			&:focus {
 				text-decoration: underline;
 			}
+		}
+
+		button.comment-ref {
+			width: unset;
+			padding: 0;
+			border-radius: var(--border-radius-small);
 		}
 
 		&.is-active {

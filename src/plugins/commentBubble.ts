@@ -133,40 +133,20 @@ export function commentBubble(options: { editor: Editor }) {
 		view: (view) => new CommentBubblePluginView({ view, options, plugin }),
 
 		props: {
-			handleClickOn: (view, _pos, _node, _nodePos, event) => {
-				const link = (event.target as HTMLElement).closest('.comment-ref')
-				if (!link) {
-					return false
-				}
-				const sup = link.closest('sup[data-type="comment-reference"]')
-				if (!sup) {
-					return false
-				}
-				const referenceId = (sup as HTMLElement).dataset.referenceId ?? ''
-				if (!referenceId) {
-					return false
-				}
-				// Find the node position
-				let nodeStart = -1
-				view.state.doc.descendants((node, pos) => {
-					if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
-						nodeStart = pos
-						return false
-					}
-				})
-				if (nodeStart === -1) {
-					return false
-				}
-				event.preventDefault()
-				openCommentBubble(referenceId)(view.state, view.dispatch)
-				return true
-			},
-
 			handleDOMEvents: {
 				keydown: (view, event) => {
 					if (event.key === 'Escape') {
 						return hideCommentBubble(view.state, view.dispatch)
 					}
+					if (event.key === 'Enter') {
+						const focused = document.activeElement
+						if (focused?.classList.contains('comment-ref')) {
+							event.preventDefault()
+							;(focused as HTMLElement).click()
+							return true
+						}
+					}
+					return false
 				},
 			},
 		},

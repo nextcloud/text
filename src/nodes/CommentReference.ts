@@ -61,6 +61,25 @@ const CommentReference = Node.create({
 		]
 	},
 
+	addNodeView() {
+		return ({ node, editor }) => {
+			const id = node.attrs.referenceId
+			const sup = document.createElement('sup')
+			sup.dataset.type = 'comment-reference'
+			sup.dataset.referenceId = id
+			sup.id = `cref-${id}`
+
+			const button = document.createElement('button')
+			button.type = 'button'
+			button.className = 'comment-ref'
+			button.setAttribute('contenteditable', 'false')
+			button.textContent = '💬'
+			button.addEventListener('click', () => editor.commands.openCommentBubble(id))
+			sup.appendChild(button)
+			return { dom: sup, contentDOM: null }
+		}
+	},
+
 	toMarkdown(state, node) {
 		state.write(`[^${node.attrs.referenceId}]`)
 	},
