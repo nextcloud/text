@@ -59,7 +59,6 @@ const Comment = Node.create({
 			return `- ${authorMarkdown}${ts}\n`
 		})
 		state.delim = savedDelim
-		// state.wrapBlock('    ', marker, node, () => state.renderContent(node))
 		state.closeBlock(node)
 	},
 })
