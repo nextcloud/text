@@ -50,6 +50,45 @@ export function openCommentBubble(referenceId: string): Command {
 }
 
 /**
+ * Navigate to prev or next comment
+ *
+ * @param direction - the navigation direction
+ */
+export function navigateCommentBubble(direction: 'prev' | 'next'): Command {
+	return (state, dispatch) => {
+		const pluginState = commentBubbleKey.getState(state)
+		if (!pluginState?.active) {
+			return false
+		}
+
+		const refs: { referenceId: string, nodeStart: number }[] = []
+		state.doc.descendants((node, pos) => {
+			if (node.type.name === 'commentReference') {
+				refs.push({ referenceId: node.attrs.referenceId, nodeStart: pos })
+			}
+		})
+
+		if (refs.length <= 1) {
+			return false
+		}
+
+		const currentIndex = refs.findIndex((ref) => ref.referenceId === pluginState.active.referenceId)
+		if (currentIndex === -1) {
+			return false
+		}
+
+		const nextIndex = direction === 'next'
+			? (currentIndex + 1) % refs.length
+			: (currentIndex - 1 + refs.length) % refs.length
+
+		if (dispatch) {
+			dispatch(state.tr.setMeta(commentBubbleKey, { active: refs[nextIndex] }))
+		}
+		return true
+	}
+}
+
+/**
  * Comment plugin function
  *
  * @param options - the plugin options object

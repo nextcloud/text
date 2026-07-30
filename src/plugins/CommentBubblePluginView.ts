@@ -121,6 +121,13 @@ class CommentBubblePluginView {
 				this.#activeReferenceEl?.classList.remove('is-active')
 				referenceEl.classList.add('is-active')
 				this.#activeReferenceEl = referenceEl
+
+				// Scroll into view
+				const rect = referenceEl.getBoundingClientRect()
+				const inView = rect.top >= 0 && rect.bottom <= window.innerHeight
+				if (!inView) {
+					referenceEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+				}
 			}
 			this.#position(referenceEl)
 			document.addEventListener('mousedown', this.#closeOnOutsideClick)

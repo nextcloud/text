@@ -6,13 +6,14 @@
 import type { CommandProps } from '@tiptap/core'
 
 import { Extension } from '@tiptap/core'
-import { commentBubble, hideCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
+import { commentBubble, hideCommentBubble, navigateCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentBubble: {
 			openCommentBubble: (referenceId: string) => ReturnType
 			hideCommentBubble: () => ReturnType
+			navigateCommentBubble: (direction: 'prev' | 'next') => ReturnType
 		}
 	}
 }
@@ -29,6 +30,11 @@ const CommentBubble = Extension.create({
 			},
 			hideCommentBubble: () => ({ state, dispatch }) => {
 				return hideCommentBubble(state, dispatch)
+			},
+			navigateCommentBubble(direction: 'prev' | 'next') {
+				return ({ state, dispatch }: CommandProps) => {
+					return navigateCommentBubble(direction)(state, dispatch)
+				}
 			},
 		}
 	},

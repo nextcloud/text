@@ -7,6 +7,27 @@
 	<div class="comment-bubble">
 		<div class="comment-bubble__header">
 			<span class="comment-bubble__title">{{ t('text', 'Comments') }}</span>
+			<div v-if="commentCount > 1" class="comment-bubble__nav">
+				<NcButton
+					variant="tertiary"
+					size="small"
+					:title="t('text', 'Previous comment')"
+					@click="navigate('prev')">
+					<template #icon>
+						<ChevronUpIcon :size="16" />
+					</template>
+				</NcButton>
+				<span class="comment-bubble__nav-position">{{ commentPosition }} / {{ commentCount }}</span>
+				<NcButton
+					variant="tertiary"
+					size="small"
+					:title="t('text', 'Next comment')"
+					@click="navigate('next')">
+					<template #icon>
+						<ChevronDownIcon :size="16" />
+					</template>
+				</NcButton>
+			</div>
 			<NcButton
 				variant="tertiary"
 				size="small"
@@ -144,6 +165,8 @@ import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditable'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
+import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
+import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
@@ -179,8 +202,29 @@ onMounted(() => {
 })
 onUnmounted(() => props.editor.off('update', onUpdate))
 
+const allCommentRefs = computed(() => {
+	void editorVersion.value // reactive dependency on editor updates
+	const refs: string[] = []
+	props.editor.state.doc.descendants((node) => {
+		if (node.type.name === 'commentReference') {
+			refs.push(node.attrs.referenceId)
+		}
+	})
+	return refs
+})
+
+const commentCount = computed(() => allCommentRefs.value.length)
+const commentPosition = computed(() => allCommentRefs.value.indexOf(props.referenceId) + 1)
+
+/**
+ * @param direction direction to navigate
+ */
+function navigate(direction: 'prev' | 'next') {
+	props.editor.commands.navigateCommentBubble(direction)
+}
+
 const commentNode = computed<Node | null>(() => {
-	void editorVersion.value
+	void editorVersion.value // reactive dependency on editor updates
 	let found: Node | null = null
 	props.editor.state.doc.descendants((node) => {
 		if (found) {
@@ -348,12 +392,26 @@ function close() {
 		justify-content: space-between;
 		padding: calc(2 * var(--default-grid-baseline));
 		padding-bottom: var(--default-grid-baseline);
+
 	}
 
 	&__title {
 		font-weight: bold;
 		font-size: 0.9em;
 		color: var(--color-text-maxcontrast);
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		gap: var(--default-grid-baseline);
+		margin-inline-start: auto;
+	}
+
+	&__nav-position {
+		font-size: 0.8em;
+		color: var(--color-text-maxcontrast);
+		white-space: nowrap;
 	}
 
 	&__items {
