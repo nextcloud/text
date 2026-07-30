@@ -96,6 +96,9 @@ const CommentReference = Node.create({
 					return false
 				}
 
+				// Clear any stale draft from a previous comment that used this ID
+				sessionStorage.removeItem('text-comment-draft-' + referenceId)
+
 				// In can-check mode, the above guards are sufficient
 				if (!dispatch) {
 					return true
