@@ -78,7 +78,8 @@ test('edits an existing comment', async ({ editor, open }) => {
 	await expect(editor.commentBubble).toContainText('Original text')
 
 	// Edit the reply
-	await editor.commentBubble.getByRole('button', { name: 'Edit' }).click()
+	await editor.commentBubble.getByLabel('Actions', { exact: true }).click()
+	await editor.commentBubble.getByRole('menuitem', { name: 'Edit' }).click()
 	const editInput = editor.commentBubble
 		.locator('.comment-bubble__body-edit [contenteditable]')
 	await editInput.clear()
@@ -105,7 +106,8 @@ test.describe('deletes a comment reply', () => {
 		await expect(editor.commentBubble).toContainText('Second reply')
 
 		// Delete the first reply
-		await editor.commentBubble.getByRole('button', { name: 'Delete' }).first().click()
+		await editor.commentBubble.getByLabel('Actions', { exact: true }).first().click()
+		await editor.commentBubble.getByRole('menuitem', { name: 'Delete' }).click()
 
 		await expect(editor.commentBubble).not.toContainText('First reply')
 		await expect(editor.commentBubble).toContainText('Second reply')
@@ -128,7 +130,8 @@ test.describe('deletes last comment reply', () => {
 		await editor.getCommentReference('comment-1').click()
 		await expect(editor.commentBubble).toContainText('Only reply')
 
-		await editor.commentBubble.getByRole('button', { name: 'Delete' }).click()
+		await editor.commentBubble.getByLabel('Actions', { exact: true }).click()
+		await editor.commentBubble.getByRole('menuitem', { name: 'Delete' }).click()
 
 		// Bubble should close and reference should be gone
 		await expect(editor.commentBubble).not.toBeVisible()
