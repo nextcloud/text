@@ -38,8 +38,13 @@
 				</template>
 			</NcButton>
 		</div>
-		<div v-if="commentNode" ref="itemsContainer" class="comment-bubble__items">
-			<div v-for="(item, i) in items" :key="i" class="comment-bubble__item">
+		<TransitionGroup
+			v-if="commentNode"
+			ref="itemsContainer"
+			tag="div"
+			name="comment-item"
+			class="comment-bubble__items">
+			<div v-for="(item, i) in items" :key="item.author + item.timestamp?.toISOString()" class="comment-bubble__item">
 				<div class="comment-bubble__meta">
 					<NcAvatar
 						v-if="item.author"
@@ -107,7 +112,7 @@
 				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-else class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
-		</div>
+		</TransitionGroup>
 		<div v-if="isEditable && isGuestWithoutName" class="comment-bubble__guest-name">
 			<p class="comment-bubble__guest-name-hint">
 				{{ t('text', 'Enter your name to comment') }}
@@ -517,5 +522,13 @@ function closeAndRefocus() {
 			gap: var(--default-grid-baseline);
 		}
 	}
+}
+
+.comment-item-enter-active {
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.comment-item-enter-from {
+	opacity: 0;
+	transform: translateY(-8px);
 }
 </style>
