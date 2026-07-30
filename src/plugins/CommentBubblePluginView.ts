@@ -78,9 +78,9 @@ class CommentBubblePluginView {
 			const { x, y } = await computePosition({
 				getBoundingClientRect: () => new DOMRect(wrapperRect.right, refRect.top, 0, refRect.height),
 			} as Element, floating, {
-				placement: 'left',
+				placement: 'left-start',
 				strategy: 'fixed',
-				middleware: [offset(8), shift({ padding: 8 })],
+				middleware: [offset(8), shift({ padding: { top: 50, right: 8, bottom: 8, left: 8 } })],
 			})
 			floating.style.left = `${x}px`
 			floating.style.top = `${y}px`
