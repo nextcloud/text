@@ -69,7 +69,7 @@
 						</template>
 					</NcButton>
 					<NcButton
-						v-if="isEditable"
+						v-if="isEditable && !isGuestWithoutNick"
 						variant="tertiary"
 						size="small"
 						:title="t('text', 'Delete')"
