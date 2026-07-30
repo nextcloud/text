@@ -15,7 +15,7 @@
 		<CollisionResolveDialog
 			v-if="isResolvingConflict"
 			:otherVersion="otherVersion"
-			:readerSource="indexedDbConflictContent ? 'local' : 'server'"
+			:readerSource="conflictReaderSource"
 			@resolved="resolved()" />
 		<EditorWrapper
 			v-if="displayed"
@@ -54,12 +54,16 @@
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
 				</template>
+				<RawMarkdownEditor
+					v-if="rawEditing"
+					:initialMarkdown="rawInitialMarkdown"
+					@change="rawMarkdown = $event" />
 				<ContentContainer
-					v-show="contentLoaded"
+					v-show="contentLoaded && !rawEditing"
 					ref="contentWrapper"
 					:readOnly="!editMode" />
 				<SuggestionsBar
-					v-if="isRichEditor && contentLoaded && !isRichWorkspace" />
+					v-if="isRichEditor && contentLoaded && !isRichWorkspace && !rawEditing" />
 			</MainContainer>
 			<Component
 				:is="isRichEditor ? 'RichTextReader' : 'PlainTextReader'"
@@ -85,7 +89,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import { defineAsyncComponent, defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
+import { computed, defineAsyncComponent, defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
 import { Doc, logUpdate } from 'yjs'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
@@ -93,6 +97,7 @@ import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import EditorWrapper from './Editor/EditorWrapper.vue'
 import MainContainer from './Editor/MainContainer.vue'
+import RawMarkdownEditor from './Editor/RawMarkdownEditor.vue'
 import SessionStatus from './Editor/SessionStatus.vue'
 import MenuBar from './Menu/MenuBar.vue'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
@@ -108,6 +113,7 @@ import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideFileProps } from '../composables/useFileProps.ts'
 import { useIndexedDbProvider } from '../composables/useIndexedDbProvider.ts'
 import { useOpenLinkHandler } from '../composables/useOpenLinkHandler.ts'
+import { provideRawEditing } from '../composables/useRawEditing.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -145,6 +151,7 @@ export default defineComponent({
 		MainContainer,
 		ReadonlyBar,
 		ContentContainer,
+		RawMarkdownEditor,
 		MenuBar,
 		RichTextReader: defineAsyncComponent(() => import('./RichTextReader.vue')),
 		PlainTextReader: defineAsyncComponent(() => import('./PlainTextReader.vue')),
@@ -312,7 +319,7 @@ export default defineComponent({
 
 		provideEditorHeadings(editor)
 
-		const { setEditable, updateUser } = useEditorMethods(editor)
+		const { setContent, setEditable, updateUser } = useEditorMethods(editor)
 
 		const serialize = isRichEditor
 			? () => createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
@@ -324,6 +331,24 @@ export default defineComponent({
 			serialize,
 			ydoc,
 		)
+
+		// Per-user raw Markdown editing. Only meaningful when the rich editor is
+		// in use — when `rich_editing_enabled` is off the whole instance is
+		// already raw (isRichEditor === false), so the toggle stays hidden.
+		const canRawEdit = computed(() => isRichEditor && !isRichWorkspace && !isPublic)
+		const {
+			rawEditing,
+			rawInitialMarkdown,
+			rawMarkdown,
+			rawConflict,
+			resolveRawConflict,
+		} = provideRawEditing({
+			serialize,
+			setContent,
+			setEditable,
+			save: () => saveService.save(),
+			canRawEdit,
+		})
 
 		const syncProvider = shallowRef(null)
 
@@ -354,6 +379,11 @@ export default defineComponent({
 			language,
 			lowlightLoaded,
 			displayConnectionIssue,
+			rawEditing,
+			rawInitialMarkdown,
+			rawMarkdown,
+			rawConflict,
+			resolveRawConflict,
 			saveService,
 			serialize,
 			setDirty,
@@ -395,14 +425,32 @@ export default defineComponent({
 
 		hasSyncCollision() {
 			return (
-				Boolean(this.indexedDbConflictContent)
+				Boolean(this.rawConflict)
+				|| Boolean(this.indexedDbConflictContent)
 				|| (this.syncError
 					&& this.syncError.type === ERROR_TYPE.SAVE_COLLISION)
 			)
 		},
 
 		otherVersion() {
-			return this.indexedDbConflictContent || this.syncError.data.outsideChange
+			// For a raw-editing conflict the editor still holds the live
+			// (remote) document, and `rawConflict` holds the user's raw edits —
+			// so it maps to the "local" reader source in CollisionResolveDialog.
+			return (
+				this.rawConflict
+				|| this.indexedDbConflictContent
+				|| this.syncError.data.outsideChange
+			)
+		},
+
+		conflictReaderSource() {
+			return this.rawConflict || this.indexedDbConflictContent
+				? 'local'
+				: 'server'
+		},
+
+		rawUnsaved() {
+			return this.rawEditing && this.rawMarkdown !== this.rawInitialMarkdown
 		},
 
 		hasDocumentParameters() {
@@ -465,6 +513,14 @@ export default defineComponent({
 				window.addEventListener('beforeunload', this.saveBeforeUnload)
 			} else {
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
+
+		rawUnsaved(val) {
+			if (val) {
+				window.addEventListener('beforeunload', this.warnBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', this.warnBeforeUnload)
 			}
 		},
 
@@ -547,6 +603,7 @@ export default defineComponent({
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
+		window.removeEventListener('beforeunload', this.warnBeforeUnload)
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
@@ -763,7 +820,11 @@ export default defineComponent({
 					// ignore initial loading and other automated changes before first user change
 					if (this.editor.can().undo() || this.editor.can().redo()) {
 						this.setDirty(state.dirty)
-						this.saveService.autosave()
+						// While raw editing, the rich editor is detached and only
+						// absorbs remote changes — never autosave/push from it.
+						if (!this.rawEditing) {
+							this.saveService.autosave()
+						}
 					}
 				} else {
 					this.setDirty(state.dirty)
@@ -923,6 +984,13 @@ export default defineComponent({
 			this.saveService.saveViaSendBeacon()
 		},
 
+		warnBeforeUnload(event) {
+			// Raw edits live in a detached buffer that cannot be flushed safely
+			// on unload, so prompt the user instead of losing them silently.
+			event.preventDefault()
+			event.returnValue = ''
+		},
+
 		checkIndexedDbConflict() {
 			// Only check if we're not already showing a conflict (e.g. when server API reported one)
 			if (this.hasSyncCollision) {
@@ -947,6 +1015,7 @@ export default defineComponent({
 		resolved() {
 			localStorage.removeItem(this.indexedDbConflictKey)
 			this.indexedDbConflictContent = ''
+			this.resolveRawConflict()
 		},
 	},
 })
