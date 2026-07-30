@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<div class="comment-bubble">
+	<div class="comment-bubble" @keydown.escape.prevent.stop="closeAndRefocus">
 		<div class="comment-bubble__header">
 			<span class="comment-bubble__title">{{ t('text', 'Comments') }}</span>
 			<div v-if="commentCount > 1" class="comment-bubble__nav">
@@ -32,7 +32,7 @@
 				variant="tertiary"
 				size="small"
 				:title="t('text', 'Close')"
-				@click="close">
+				@click="closeAndRefocus">
 				<template #icon>
 					<CloseIcon :size="16" />
 				</template>
@@ -368,8 +368,8 @@ function submitGuestName() {
 /**
  * Close the comment bubble
  */
-function close() {
-	props.editor.commands.hideCommentBubble()
+function closeAndRefocus() {
+	props.editor.commands.hideCommentBubble({ refocus: true })
 }
 </script>
 

@@ -135,9 +135,6 @@ export function commentBubble(options: { editor: Editor }) {
 		props: {
 			handleDOMEvents: {
 				keydown: (view, event) => {
-					if (event.key === 'Escape') {
-						return hideCommentBubble(view.state, view.dispatch)
-					}
 					if (event.key === 'Enter') {
 						const focused = document.activeElement
 						if (focused?.classList.contains('comment-ref')) {
