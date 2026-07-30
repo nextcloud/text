@@ -59,7 +59,7 @@
 						relativeTime="long"
 						ignoreSeconds />
 					<NcButton
-						v-if="isEditable && !isGuestWithoutNick"
+						v-if="isEditable && !isGuestWithoutName"
 						variant="tertiary"
 						size="small"
 						:title="t('text', 'Edit')"
@@ -69,7 +69,7 @@
 						</template>
 					</NcButton>
 					<NcButton
-						v-if="isEditable && !isGuestWithoutNick"
+						v-if="isEditable && !isGuestWithoutName"
 						variant="tertiary"
 						size="small"
 						:title="t('text', 'Delete')"
@@ -114,13 +114,13 @@
 				<div v-else class="comment-bubble__body ProseMirror" v-html="item.body" />
 			</div>
 		</div>
-		<div v-if="isEditable && isGuestWithoutNick" class="comment-bubble__guest-name">
+		<div v-if="isEditable && isGuestWithoutName" class="comment-bubble__guest-name">
 			<p class="comment-bubble__guest-name-hint">
 				{{ t('text', 'Enter your name to comment') }}
 			</p>
 			<div class="comment-bubble__guest-name-row">
 				<NcTextField
-					v-model="guestNickInput"
+					v-model="guestNameInput"
 					:label="t('text', 'Guest')"
 					:placeholder="t('text', 'Guest')"
 					@keydown.enter.prevent="submitGuestName" />
@@ -170,6 +170,7 @@ import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import { useGuestName } from '../../composables/useGuestName.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.ts'
 
 const props = defineProps<{
@@ -350,19 +351,24 @@ function deleteItem(index: number) {
 }
 
 const isGuest = !getCurrentUser()
-const guestNick = ref(localStorage.getItem('nick') ?? '')
-const guestNickInput = ref('')
+const guestName = ref(localStorage.getItem('nick') ?? '')
+const guestNameInput = ref('')
 
-const isGuestWithoutNick = computed(() => isGuest && !guestNick.value)
+const isGuestWithoutName = computed(() => isGuest && !guestName.value)
+
+const { setGuestName } = useGuestName(props.editor)
+
 /**
  * Submit guest name
  */
-function submitGuestName() {
-	if (!guestNickInput.value.trim()) {
+async function submitGuestName() {
+	if (!guestNameInput.value.trim()) {
 		return
 	}
-	guestNick.value = guestNickInput.value.trim()
-	localStorage.setItem('nick', guestNick.value)
+	const session = await setGuestName(guestNameInput.value)
+	if (session) {
+		guestName.value = session.guestName
+	}
 }
 
 /**
