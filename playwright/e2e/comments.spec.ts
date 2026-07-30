@@ -61,7 +61,7 @@ test('adds a reply to a comment', async ({ editor, open }) => {
 	const composerInput = editor.commentBubble
 		.locator('.comment-bubble__composer-input [contenteditable]')
 	await composerInput.fill('My first reply')
-	await editor.commentBubble.getByRole('button', { name: 'Reply' }).click()
+	await editor.commentBubble.getByRole('button', { name: 'Comment' }).click()
 	await expect(editor.commentBubble).toContainText('My first reply')
 })
 
@@ -74,7 +74,7 @@ test('edits an existing comment', async ({ editor, open }) => {
 	const composerInput = editor.commentBubble
 		.locator('.comment-bubble__composer-input [contenteditable]')
 	await composerInput.fill('Original text')
-	await editor.commentBubble.getByRole('button', { name: 'Reply' }).click()
+	await editor.commentBubble.getByRole('button', { name: 'Comment' }).click()
 	await expect(editor.commentBubble).toContainText('Original text')
 
 	// Edit the reply
