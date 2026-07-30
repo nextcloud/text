@@ -333,7 +333,7 @@ function close() {
 .comment-bubble {
 	display: flex;
 	flex-direction: column;
-	max-height: min(80vh, 700px);
+	max-height: min(80vh, 900px);
 	width: 300px;
 
 	background: var(--color-main-background);
@@ -357,7 +357,7 @@ function close() {
 	}
 
 	&__items {
-		flex: 1 1 auto; // take available space
+		flex: 1 1 auto; // take available space, but shrink to leave space for input field
 		overflow-y: auto;
 		padding: calc(2 * var(--default-grid-baseline));
 		display: flex;
@@ -423,6 +423,12 @@ function close() {
 
 	&__composer-input {
 		font-size: 0.9em;
+
+		:deep(.rich-contenteditable__input--multiline) {
+			// NcRichContenteditable sets a sane max-height for __input (34px * 5.5),
+			// but then overwrites it with `max-height: unset` for `__input--multiline`.
+			max-height: calc(var(--default-clickable-area) * 5.5);
+		}
 	}
 
 	&__edit-actions {
