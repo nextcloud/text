@@ -486,6 +486,7 @@ function closeAndRefocus() {
 		font-size: 0.9em;
 
 		:deep(.rich-contenteditable__input--multiline) {
+			min-height: unset;
 			// NcRichContenteditable sets a sane max-height for __input (34px * 5.5),
 			// but then overwrites it with `max-height: unset` for `__input--multiline`.
 			max-height: calc(var(--default-clickable-area) * 5.5);
