@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "コードブロック",
     "Some code" : "何かコード",
     "Link" : "リンク",
+    "Footnote" : "脚注",
     "Emoji" : "絵文字",
     "emoji" : "絵文字",
     "Mention someone" : "誰かにメンション",
