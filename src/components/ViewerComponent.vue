@@ -97,6 +97,7 @@ export default defineComponent({
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
+			isLoaded: false,
 		}
 	},
 
@@ -117,6 +118,29 @@ export default defineComponent({
 		},
 	},
 
+	watch: {
+		/**
+		 * Watch for active prop changes to handle the preloading race condition.
+		 *
+		 * The Viewer preloads adjacent files (next/prev) for faster navigation.
+		 * When a component finishes loading while in "preloaded" state (not yet active),
+		 * it emits 'update:loaded', but the Viewer isn't listening yet because the
+		 * component isn't active. When the user navigates to that file and it becomes
+		 * active, the Viewer is still showing the spinner waiting for the event.
+		 *
+		 * This watcher re-emits 'update:loaded' when transitioning from inactive to active
+		 * if the content has already loaded.
+		 */
+		active: {
+			handler(newVal, oldVal) {
+				if (newVal === true && oldVal === false && this.isLoaded) {
+					this.onLoaded()
+				}
+			},
+			immediate: false,
+		},
+	},
+
 	mounted() {
 		if (!this.useSourceView) {
 			this.onLoaded()
@@ -125,7 +149,12 @@ export default defineComponent({
 
 	methods: {
 		async onLoaded() {
-			this.onLoadedHandler()
+			this.isLoaded = true
+			// Only emit if already active to handle preloading race condition.
+			// If not active yet, the active watcher will call this when it becomes active.
+			if (this.active) {
+				this.onLoadedHandler()
+			}
 		},
 
 		toggleEdit() {
