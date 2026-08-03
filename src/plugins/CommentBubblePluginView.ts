@@ -4,7 +4,7 @@
  */
 
 import type { Editor } from '@tiptap/core'
-import type { Plugin } from '@tiptap/pm/state'
+import type { EditorState, Plugin } from '@tiptap/pm/state'
 import type { EditorView } from '@tiptap/pm/view'
 
 import { autoUpdate, computePosition, offset, shift } from '@floating-ui/dom'
@@ -94,8 +94,13 @@ class CommentBubblePluginView {
 		this.#cleanupAutoUpdate = autoUpdate(referenceEl, floating, update)
 	}
 
-	update(view: EditorView) {
-		const { active } = this.plugin.getState(view.state)
+	update(view: EditorView, prevState: EditorState) {
+		const prev = this.plugin.getState(prevState)
+		const cur = this.plugin.getState(view.state)
+		if (prev === cur) {
+			return
+		}
+		const { active } = cur
 		if (!active) {
 			this.#destroyFloating()
 			return
