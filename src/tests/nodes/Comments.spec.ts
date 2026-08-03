@@ -307,4 +307,57 @@ describe('Comments Markdown roundtrip', () => {
 			+ '      Hello there\n'
 		expect(markdownThroughEditor(test)).toBe('Foo')
 	})
+	test('idempotent through round-trip with broken metadata #1', ({ markdownThroughEditor }) => {
+		const testIn = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - whatever\n'
+			+ '      Hello there'
+		const testOut = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - \n'
+			+ '      whatever\n'
+			+ '      Hello there'
+		expect(markdownThroughEditor(testIn)).toBe(testOut)
+		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
+	test('idempotent through round-trip with broken metadata #2', ({ markdownThroughEditor }) => {
+		const testIn = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @jane xyz\n'
+			+ '      Hello there'
+		const testOut = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @jane\n'
+			+ '      xyz\n'
+			+ '      Hello there'
+		expect(markdownThroughEditor(testIn)).toBe(testOut)
+		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
+	test('idempotent through round-trip with broken metadata #3', ({ markdownThroughEditor }) => {
+		const testIn = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @jane *(2026-01-01x*\n'
+			+ '      Hello there'
+		const testOut = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @jane\n'
+			+ '      (2026-01-01x\n'
+			+ '      Hello there'
+		expect(markdownThroughEditor(testIn)).toBe(testOut)
+		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
+	test('idempotent through round-trips when comment has no list', ({ markdownThroughEditor }) => {
+		const testIn1 = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]: hello'
+		const testIn2 = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]: \n'
+			+ '    - hello'
+		const testOut = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - \n'
+			+ '      hello'
+		expect(markdownThroughEditor(testIn1)).toBe(testOut)
+		expect(markdownThroughEditor(testIn2)).toBe(testOut)
+		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
 })

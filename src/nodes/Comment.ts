@@ -54,7 +54,7 @@ const Comment = Node.create({
 			const { author, authorLabel, timestamp } = item.attrs
 			const authorMarkdown = author
 				? `@[${authorLabel}](mention://user/${encodeURIComponent(author)})`
-				: `@${authorLabel || ''}`
+				: authorLabel ? `@${authorLabel}` : ''
 			const ts = timestamp ? ` *(${timestamp})*` : ''
 			return `- ${authorMarkdown}${ts}\n`
 		})
