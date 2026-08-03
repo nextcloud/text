@@ -9,7 +9,6 @@
 		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
-		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
@@ -851,13 +850,6 @@ export default defineComponent({
 .modal-container .text-editor {
 	top: 0;
 	height: calc(100vh - var(--header-height));
-
-	&.is-mobile {
-		// TODO: Why is this required to prevent small scrolling container on mobile with short content?
-		height: calc(
-			100vh - var(--header-height) - 2 * var(--default-grid-baseline)
-		);
-	}
 }
 
 .text-editor {
