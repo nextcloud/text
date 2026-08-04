@@ -25,7 +25,7 @@ type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
 
 export declare type EventTypes = {
 	/* error */
-	error: { type: ErrorType, data?: object }
+	error: { type: ErrorType; data?: object }
 
 	/* Emitted after successful save */
 	save: { document: Document }
@@ -82,7 +82,9 @@ class SaveService {
 			// update the document - even if the save was throttled
 			this.bus.emit('save', response.data)
 			if (response.data.document.lastSavedVersion < data.version) {
-				logger.debug('[SaveService] Server throttled save request.', { response })
+				logger.debug('[SaveService] Server throttled save request.', {
+					response,
+				})
 				return false
 			}
 			logger.debug('[SaveService] saved', { response })
@@ -91,7 +93,7 @@ class SaveService {
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
-				e as { response?: { status?: number, data?: { error?: string } } }
+				e as { response?: { status?: number; data?: { error?: string } } }
 			).response
 			if (response?.status === 403) {
 				// Document is now read-only; permissionChange from sync will update the UI
@@ -126,12 +128,15 @@ class SaveService {
 
 	_autosave() {
 		const now = Date.now()
-		const nextSaveAttempt = this.lastSaveAttempt + SERVER_AUTOSAVE_INTERVAL * 1000
+		const nextSaveAttempt =
+			this.lastSaveAttempt + SERVER_AUTOSAVE_INTERVAL * 1000
 		// Server won't accept autosaves yet
 		if (now < nextSaveAttempt) {
 			if (!this.pendingAutosave) {
 				const wait = nextSaveAttempt - now
-				logger.debug(`Just saved, will try again in ${Math.ceil(wait)} seconds.`)
+				logger.debug(
+					`Just saved, will try again in ${Math.ceil(wait)} seconds.`,
+				)
 				this.pendingAutosave = window.setTimeout(this.autosave, wait)
 			}
 			return

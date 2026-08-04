@@ -97,7 +97,9 @@ export function provideSaveService(
 		syncService.bus.off('changesPushed', updateVersionWithChanges)
 	})
 
-	const dirty = computed(() => (document.value?.lastSavedVersion ?? 0) < versionWithChanges.value)
+	const dirty = computed(
+		() => (document.value?.lastSavedVersion ?? 0) < versionWithChanges.value,
+	)
 	watch(dirty, setDirty)
 
 	provide(saveServiceKey, saveService)
