@@ -54,6 +54,7 @@ import Markdown from './Markdown.js'
 import Mention from './Mention.js'
 import Search from './Search.ts'
 import TextDirection from './TextDirection.ts'
+import TranslateAttribute from './TranslateAttribute.ts'
 import Typography from './Typography.ts'
 
 const lowlight = createLowlight(common)
@@ -169,6 +170,7 @@ export default Extension.create<RichTextOptions>({
 					'taskItem',
 				],
 			}),
+			TranslateAttribute,
 			Typography,
 			MathInline,
 			MathBlock,
