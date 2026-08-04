@@ -568,7 +568,7 @@ export default defineComponent({
 			})
 		},
 
-		onSync({ steps }) {
+		onSync() {
 			this.hasConnectionIssue =
 				this.syncService.backend.fetcher === 0
 				|| !this.syncProvider?.wsconnected

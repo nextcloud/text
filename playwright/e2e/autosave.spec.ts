@@ -42,7 +42,9 @@ test('saves again within 12 seconds', async ({ editor }) => {
 	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/)
 	await editor.type(' again')
 	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
-	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/, { timeout: 12_000 })
+	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/, {
+		timeout: 12_000,
+	})
 })
 
 test('saves after being disconnected for 5 sec.', async ({
@@ -59,7 +61,9 @@ test('saves after being disconnected for 5 sec.', async ({
 	await new Promise((resolve) => setTimeout(resolve, 5_000))
 	await setOnline()
 	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
-	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/, { timeout: 10_000 })
+	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/, {
+		timeout: 10_000,
+	})
 })
 
 test('saves after being disconnected for 2 minutes.', async ({

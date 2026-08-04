@@ -58,10 +58,7 @@ export function save(
  * @param connection the active connection
  * @param data data to save
  */
-export function saveViaSendBeacon(
-	connection: Connection,
-	data: SaveData,
-): boolean {
+export function saveViaSendBeacon(connection: Connection, data: SaveData): boolean {
 	const con = unref(connection)
 	const pub = con.shareToken ? '/public' : ''
 	const url = generateUrl(`apps/text${pub}/session/${con.documentId}/save`)
