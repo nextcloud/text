@@ -245,6 +245,7 @@ class SyncService {
 			this.bus.emit('stateChange', { dirty: true })
 		}
 		if (!this.hasActiveConnection()) {
+			this.#sending = false
 			return
 		}
 		const sendable = this.#outbox.getDataToSend()
