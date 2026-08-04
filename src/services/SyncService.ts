@@ -296,13 +296,7 @@ class SyncService {
 			})
 	}
 
-	receiveSteps({
-		steps,
-		sessions = [],
-	}: {
-		steps: Step[]
-		sessions?: Session[]
-	}) {
+	receiveSteps({ steps, sessions = [] }: { steps: Step[]; sessions?: Session[] }) {
 		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
 			steps: [...awarenessSteps(sessions), ...steps],

@@ -648,10 +648,10 @@ export default defineComponent({
 		},
 
 		onSync() {
-			this.hasConnectionIssue
-				= this.syncService.backend.fetcher === 0
-					|| !this.syncProvider?.wsconnected
-					|| this.syncService.pushError > 0
+			this.hasConnectionIssue =
+				this.syncService.backend.fetcher === 0
+				|| !this.syncProvider?.wsconnected
+				|| this.syncService.pushError > 0
 			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.syncService.sendStepsNow()
