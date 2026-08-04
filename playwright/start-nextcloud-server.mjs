@@ -12,6 +12,15 @@ import {
 import { readFileSync } from 'fs'
 import { execSync } from 'node:child_process'
 
+async function isServerRunning() {
+	try {
+		const res = await fetch('http://127.0.0.1:8089/status.php')
+		return res.ok
+	} catch {
+		return false
+	}
+}
+
 async function start() {
 	const appinfo = readFileSync('appinfo/info.xml').toString()
 	const maxVersion = appinfo.match(
@@ -41,9 +50,14 @@ process.on('SIGTERM', stop)
 process.on('SIGINT', stop)
 
 // Start the Nextcloud docker container
-const ip = await start()
-await waitOnNextcloud(ip)
-await configureNextcloud(['text', 'viewer'])
+if (await isServerRunning()) {
+	// eslint-disable-next-line no-console
+	console.log('└─ Nextcloud is now ready to use')
+} else {
+	const ip = await start()
+	await waitOnNextcloud(ip)
+	await configureNextcloud(['text', 'viewer'])
+}
 
 // Idle to wait for shutdown
 while (true) {
