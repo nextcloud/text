@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Блок кода",
     "Some code" : "Некоторый код",
     "Link" : "Ссылка",
+    "Footnote" : "Сноска",
     "Emoji" : "Emoji",
     "emoji" : "эмодзи",
     "Mention someone" : " Упомянуть кого-либо",
