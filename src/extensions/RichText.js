@@ -54,6 +54,7 @@ import TrailingNode from './../nodes/TrailingNode.js'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
 import Keymap from './Keymap.js'
+import TranslateAttribute from './TranslateAttribute.ts'
 
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
@@ -155,6 +156,7 @@ export default Extension.create({
 					'taskItem',
 				],
 			}),
+			TranslateAttribute,
 			Typography,
 			MathInline,
 			MathBlock,
