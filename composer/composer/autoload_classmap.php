@@ -32,6 +32,7 @@ return array(
     'OCA\\Text\\DirectEditing\\TextDocumentCreator' => $baseDir . '/../lib/DirectEditing/TextDocumentCreator.php',
     'OCA\\Text\\Event\\LoadEditor' => $baseDir . '/../lib/Event/LoadEditor.php',
     'OCA\\Text\\Event\\MentionEvent' => $baseDir . '/../lib/Event/MentionEvent.php',
+    'OCA\\Text\\Exception\\AccountDisabledException' => $baseDir . '/../lib/Exception/AccountDisabledException.php',
     'OCA\\Text\\Exception\\DocumentHasUnsavedChangesException' => $baseDir . '/../lib/Exception/DocumentHasUnsavedChangesException.php',
     'OCA\\Text\\Exception\\DocumentSaveConflictException' => $baseDir . '/../lib/Exception/DocumentSaveConflictException.php',
     'OCA\\Text\\Exception\\InvalidDocumentBaseVersionEtagException' => $baseDir . '/../lib/Exception/InvalidDocumentBaseVersionEtagException.php',
