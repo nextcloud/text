@@ -234,6 +234,7 @@ class SyncService {
 		this.#sendIntervalId = undefined
 		const hadUpdate = this.#outbox.hasUpdate
 		if (!this.hasActiveConnection()) {
+			this.#sending = false
 			return
 		}
 		const sendable = this.#outbox.getDataToSend()
