@@ -113,17 +113,23 @@ class TextEditorEmbed {
 
 	setSearchQuery(query, matchAll) {
 		const editor = this.#getEditorComponent()?.editor
-		editor?.commands.setSearchQuery(query, matchAll)
+		if (typeof editor?.commands.setSearchQuery === 'function') {
+			editor?.commands.setSearchQuery(query, matchAll)
+		}
 	}
 
 	searchNext() {
 		const editor = this.#getEditorComponent()?.editor
-		editor?.commands.nextMatch()
+		if (typeof editor?.commands.nextMatch === 'function') {
+			editor?.commands.nextMatch()
+		}
 	}
 
 	searchPrevious() {
 		const editor = this.#getEditorComponent()?.editor
-		editor?.commands.previousMatch()
+		if (typeof editor?.commands.previousMatch === 'function') {
+			editor?.commands.previousMatch()
+		}
 	}
 
 	async save() {
