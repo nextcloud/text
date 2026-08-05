@@ -108,6 +108,7 @@ OC.L10N.register(
     "Code block" : "Kod bloğu",
     "Some code" : "Kod yazısı",
     "Link" : "Bağlantı",
+    "Footnote" : "Dipnot",
     "Emoji" : "Emoji",
     "emoji" : "emoji",
     "Mention someone" : "Birini an",
