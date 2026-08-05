@@ -28,7 +28,7 @@ describe('direct editing', function () {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 
-	beforeEach(function() {
+	beforeEach(function () {
 		// ensure user is enabled if it was disabled before
 		cy.clearCookies()
 		cy.enableUser(user, true)
@@ -82,7 +82,9 @@ describe('direct editing', function () {
 		cy.clearCookies()
 		cy.enableUser(user, false)
 		cy.get('@token')
-			.then((token) => { cy.request({ url: token, failOnStatusCode: false }) })
+			.then((token) => {
+				cy.request({ url: token, failOnStatusCode: false })
+			})
 			.its('status')
 			.should('equal', 404)
 	})
@@ -93,7 +95,9 @@ describe('direct editing', function () {
 		cy.clearCookies()
 		cy.deleteUser(user)
 		cy.get('@token')
-			.then((token) => { cy.request({ url: token, failOnStatusCode: false }) })
+			.then((token) => {
+				cy.request({ url: token, failOnStatusCode: false })
+			})
 			.its('status')
 			.should('equal', 404)
 	})
