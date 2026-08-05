@@ -29,10 +29,11 @@ const FETCH_INTERVAL_MAX = 5000
 const FETCH_INTERVAL_SINGLE_EDITOR = 5000
 
 /**
- * Interval to check for changes for read only users
+ * Interval to check for permission changes while read-only.
+ * Step updates are rare here; keep polling fast so edit permission can be restored.
  * @type {number}
  */
-const FETCH_INTERVAL_READ_ONLY = 30000
+const FETCH_INTERVAL_READ_ONLY = 5000
 
 /**
  * Interval to fetch for changes when a browser window is considered invisible by the
@@ -59,6 +60,8 @@ class PollingBackend {
 	#syncService
 	/** @type {Connection} */
 	#connection
+	/** @type {boolean} */
+	#readOnly = false
 
 	#lastPoll
 	#fetchInterval
@@ -73,6 +76,7 @@ class PollingBackend {
 		this.#fetchInterval = FETCH_INTERVAL
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
+		this.#readOnly = connection.state?.document?.readOnly ?? false
 	}
 
 	connect() {
@@ -126,6 +130,18 @@ class PollingBackend {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
+		if (data.readOnly !== undefined && data.readOnly !== this.#readOnly) {
+			this.#readOnly = data.readOnly
+			this.#syncService.bus.emit('permissionChange', {
+				readOnly: this.#readOnly,
+			})
+			if (data.readOnly) {
+				this.maximumReadOnlyTimer()
+			} else {
+				this.resetRefetchTimer()
+			}
+		}
+
 		this.#syncService.bus.emit('change', { document, sessions })
 		this.#syncService.receiveSteps(data)
 
@@ -138,7 +154,7 @@ class PollingBackend {
 			}
 			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
 			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
-			if (this.#syncService.isReadOnly) {
+			if (this.#readOnly) {
 				this.maximumReadOnlyTimer()
 			} else if (alive.length < 2) {
 				this.maximumRefetchTimer()
