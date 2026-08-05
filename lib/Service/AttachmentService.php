@@ -577,7 +577,10 @@ class AttachmentService {
 				// shared file or folder?
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
-					if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
+					if ($textFile instanceof File
+						&& !$this->isDownloadDisabled($textFile)
+						&& $textFile->getId() === $documentId
+					) {
 						return $textFile;
 					}
 				} elseif ($documentId !== null && $share->getNodeType() === 'folder') {
