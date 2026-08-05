@@ -110,19 +110,19 @@ export declare type EventTypes = {
 	opened: OpenData
 
 	/* received new steps */
-	sync: { document?: object; steps: Step[] }
+	sync: { steps: Step[] }
 
 	/* state changed (dirty) */
-	stateChange: { initialLoading?: boolean; dirty?: boolean }
+	stateChange: { initialLoading?: boolean }
+
+	/* local yjs changes have been pushed to the server */
+	changesPushed: { version: number }
 
 	/* error */
 	error: { type: ErrorType; data?: object }
 
 	/* Events for session and document meta data */
 	change: { sessions: Session[]; document: Document }
-
-	/* Emitted after successful save */
-	save: object
 
 	/* Emitted once a document becomes idle */
 	idle: void
@@ -232,9 +232,7 @@ class SyncService {
 		this.#sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
-		if (this.#outbox.hasUpdate) {
-			this.bus.emit('stateChange', { dirty: true })
-		}
+		const hadUpdate = this.#outbox.hasUpdate
 		if (!this.hasActiveConnection()) {
 			this.#sending = false
 			return
@@ -258,6 +256,11 @@ class SyncService {
 				this.#sending = false
 				if (steps?.length > 0) {
 					this.receiveSteps({ steps })
+					if (hadUpdate) {
+						// this.version has been increased in receiveSteps
+						this.bus.emit('changesPushed', { version: this.version })
+						logger.debug('changesPushed', { version: this.version })
+					}
 				}
 			})
 			.catch((err) => {
@@ -293,19 +296,10 @@ class SyncService {
 			})
 	}
 
-	receiveSteps({
-		steps,
-		document,
-		sessions = [],
-	}: {
-		steps: Step[]
-		document?: object
-		sessions?: Session[]
-	}) {
+	receiveSteps({ steps, sessions = [] }: { steps: Step[]; sessions?: Session[] }) {
 		const versionAfter = Math.max(this.version, ...steps.map((s) => s.version))
 		this.bus.emit('sync', {
 			steps: [...awarenessSteps(sessions), ...steps],
-			document,
 		})
 		if (this.version < versionAfter) {
 			// Steps up to version where emitted but it looks like they were not processed.

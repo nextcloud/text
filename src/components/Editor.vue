@@ -294,11 +294,12 @@ export default defineComponent({
 					)
 			: () => serializePlainText(editor.state.doc)
 
-		const { saveService } = provideSaveService(
+		const { document, saveService } = provideSaveService(
 			connection,
 			syncService,
 			serialize,
 			ydoc,
+			setDirty,
 		)
 
 		const syncProvider = shallowRef(null)
@@ -314,6 +315,7 @@ export default defineComponent({
 			clearIndexedDb,
 			connection,
 			dirty,
+			document,
 			editor,
 			editorReady,
 			el,
@@ -342,7 +344,6 @@ export default defineComponent({
 		return {
 			IDLE_TIMEOUT,
 
-			document: null,
 			fileNode: null,
 
 			idle: false,
@@ -547,8 +548,9 @@ export default defineComponent({
 			bus.on('error', this.onError)
 			bus.on('stateChange', this.onStateChange)
 			bus.on('idle', this.onIdle)
-			bus.on('save', this.onSave)
 			bus.on('permissionChange', this.onPermissionChange)
+			this.saveService.bus.on('error', this.onError)
+			this.saveService.bus.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -559,8 +561,9 @@ export default defineComponent({
 			bus.off('error', this.onError)
 			bus.off('stateChange', this.onStateChange)
 			bus.off('idle', this.onIdle)
-			bus.off('save', this.onSave)
 			bus.off('permissionChange', this.onPermissionChange)
+			this.saveService.bus.off('error', this.onError)
+			this.saveService.bus.off('save', this.onSave)
 		},
 
 		reconnect() {
@@ -572,8 +575,7 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		onOpened({ document, session, content, documentState, readOnly }) {
-			this.document = document
+		onOpened({ session, content, documentState, readOnly }) {
 			this.readOnly = readOnly
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
@@ -616,20 +618,14 @@ export default defineComponent({
 			// Save and push unsaved changes from offline editing session.
 			Promise.all([this.whenSynced, this.editorReady]).then(() => {
 				if (this.dirty) {
-					this.saveService
-						.save()
-						.catch((err) =>
-							logger.error('Failed to save offline changes', { err }),
-						)
+					// the update will trigger an autosave
 					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
 				}
 			})
 			this.updateUser(session)
 		},
 
-		onChange({ document }) {
-			this.document = document
-
+		onChange() {
 			this.syncError = null
 			this.setEditable(this.editMode)
 		},
@@ -651,7 +647,7 @@ export default defineComponent({
 			})
 		},
 
-		onSync({ steps, document }) {
+		onSync() {
 			this.hasConnectionIssue =
 				this.syncService.backend.fetcher === 0
 				|| !this.syncProvider?.wsconnected
@@ -663,9 +659,6 @@ export default defineComponent({
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
-			if (document) {
-				this.document = document
-			}
 		},
 
 		onError({ type, data }) {
@@ -720,17 +713,6 @@ export default defineComponent({
 					})
 				}
 				this.emit('ready')
-			}
-			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				if (state.dirty) {
-					// ignore initial loading and other automated changes before first user change
-					if (this.editor.can().undo() || this.editor.can().redo()) {
-						this.setDirty(state.dirty)
-						this.saveService.autosave()
-					}
-				} else {
-					this.setDirty(state.dirty)
-				}
 			}
 		},
 

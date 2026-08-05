@@ -3,76 +3,93 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Ref, ShallowRef } from 'vue'
+import type { SaveData } from '../apis/save.ts'
+import type { Connection } from '../composables/useConnection.ts'
+import type { Document } from './SyncService.ts'
+
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
-
-import type { ShallowRef } from 'vue'
-import { save, saveViaSendBeacon } from '../apis/save'
-import type { Connection } from '../composables/useConnection.ts'
+import mitt from 'mitt'
+import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { ERROR_TYPE, type SyncService } from './SyncService'
+import { ERROR_TYPE } from './SyncService.ts'
 
-/**
- * Interval to save the serialized document and the document state
- *
- * @type {number} time in ms
- */
-const AUTOSAVE_INTERVAL = 30000
+// Time constants in seconds:
+// Only autosave after 1 second typing breaks
+const AUTOSAVE_DEBOUNCE = 1
+// Server only accepts auutosaves every 10 seconds
+const SERVER_AUTOSAVE_INTERVAL = 10
+
+type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
+
+export declare type EventTypes = {
+	/* error */
+	error: { type: ErrorType; data?: object }
+
+	/* Emitted after successful save */
+	save: { document: Document }
+}
 
 class SaveService {
+	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
-	syncService
-	serialize
-	getDocumentState
+	document: Ref<Document | undefined>
+	lastSaveAttempt = 0
+	pendingAutosave = 0
+	getSaveData
 	autosave
+	clear
 
 	constructor({
 		connection,
-		syncService,
-		serialize,
-		getDocumentState,
+		document,
+		getSaveData,
 	}: {
 		connection: ShallowRef<Connection | undefined>
-		syncService: SyncService
-		serialize: () => string
-		getDocumentState: () => string
+		document: Ref<Document | undefined>
+		getSaveData: () => SaveData
 	}) {
 		this.connection = connection
-		this.syncService = syncService
-		this.serialize = serialize
-		this.getDocumentState = getDocumentState
-		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
-		this.syncService.bus.on('close', () => {
-			this.autosave.clear()
-		})
+		this.document = document
+		this.getSaveData = getSaveData
+		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
+		this.clear = this.clearAutosave.bind(this)
 	}
 
-	get version() {
-		return this.syncService.version
-	}
-
-	get emit() {
-		return this.syncService.bus.emit
-	}
-
+	/**
+	 * Save the current state
+	 *
+	 * @param options for saving
+	 * @param options.force force save for handling conflicts
+	 * @param options.manualSave user initiated the saving - not autosave
+	 * @return true on success, false if autosave was throttled by the server
+	 */
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
 		if (!this.connection.value) {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
+		const data = this.getSaveData()
 		try {
+			this.lastSaveAttempt = Date.now()
 			const response = await save(this.connection.value, {
-				version: this.version,
-				autosaveContent: this.serialize(),
-				documentState: this.getDocumentState(),
+				...data,
 				force,
 				manualSave,
 			})
-			this.emit('stateChange', { dirty: false })
+			// update the document - even if the save was throttled
+			this.bus.emit('save', response.data)
+			if (response.data.document.lastSavedVersion < data.version) {
+				logger.debug('[SaveService] Server throttled save request.', {
+					response,
+				})
+				return false
+			}
 			logger.debug('[SaveService] saved', { response })
-			this.emit('save', response.data)
-			this.autosave.clear()
+			this.clearAutosave()
+			return true
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
@@ -83,7 +100,7 @@ class SaveService {
 				return
 			}
 			if (response?.status === 412) {
-				this.emit('error', {
+				this.bus.emit('error', {
 					type: ERROR_TYPE.LOAD_ERROR,
 					data: response,
 				})
@@ -99,11 +116,10 @@ class SaveService {
 		if (!this.connection.value) {
 			return
 		}
-		saveViaSendBeacon(this.connection.value, {
-			version: this.version,
-			autosaveContent: this.serialize(),
-			documentState: this.getDocumentState(),
-		}) && logger.debug('[SaveService] saved using sendBeacon')
+		const success = saveViaSendBeacon(this.connection.value, this.getSaveData())
+		if (success) {
+			logger.debug('[SaveService] saved using sendBeacon')
+		}
 	}
 
 	forceSave() {
@@ -111,11 +127,40 @@ class SaveService {
 	}
 
 	_autosave() {
-		return this.save({ manualSave: false }).catch((error) => {
-			logger.error('Failed to autosave document.', { error })
-			// retry in 30 seconds
-			this.autosave()
-		})
+		const now = Date.now()
+		const nextSaveAttempt =
+			this.lastSaveAttempt + SERVER_AUTOSAVE_INTERVAL * 1000
+		// Server won't accept autosaves yet
+		if (now < nextSaveAttempt) {
+			if (!this.pendingAutosave) {
+				const wait = nextSaveAttempt - now
+				logger.debug(
+					`Just saved, will try again in ${Math.ceil(wait)} seconds.`,
+				)
+				this.pendingAutosave = window.setTimeout(this.autosave, wait)
+			}
+			return
+		}
+		logger.debug('Autosaving')
+		this.save({ manualSave: false })
+			.then((saved) => {
+				// server did not save due to throttling
+				if (saved === false) {
+					this.autosave()
+				}
+			})
+			.catch((error) => {
+				logger.error('Failed to autosave document.', { error })
+				this.autosave()
+			})
+	}
+
+	clearAutosave() {
+		this.autosave.clear()
+		if (this.pendingAutosave) {
+			window.clearTimeout(this.pendingAutosave)
+			this.pendingAutosave = 0
+		}
 	}
 }
 
