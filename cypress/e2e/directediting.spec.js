@@ -28,6 +28,12 @@ describe('direct editing', function() {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 
+	beforeEach(function() {
+		// ensure user is enabled if it was disabled before
+		cy.clearCookies()
+		cy.enableUser(user, true)
+	})
+
 	it('Open an existing file, edit it', () => {
 		cy.login(user)
 		cy.createDirectEditingLink('empty.md').then((token) => {
@@ -68,5 +74,27 @@ describe('direct editing', function() {
 			'equal',
 			'# This is a headline\nSome text\n',
 		)
+	})
+
+	it('Cannot open as disabled user', () => {
+		cy.login(user)
+		cy.createDirectEditingLink('empty.md').as('token')
+		cy.clearCookies()
+		cy.enableUser(user, false)
+		cy.get('@token')
+			.then((token) => { cy.request({ url: token, failOnStatusCode: false }) })
+			.its('status')
+			.should('equal', 404)
+	})
+
+	it('Cannot open as deleted user', () => {
+		cy.login(user)
+		cy.createDirectEditingLink('empty.md').as('token')
+		cy.clearCookies()
+		cy.deleteUser(user)
+		cy.get('@token')
+			.then((token) => { cy.request({ url: token, failOnStatusCode: false }) })
+			.its('status')
+			.should('equal', 404)
 	})
 })
