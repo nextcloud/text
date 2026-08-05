@@ -16,13 +16,14 @@
 
 <script>
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
-import { Danger, Info, Positive, Warn } from '../components/icons.js'
+import { Danger, Help, Info, Positive, Warn } from '../components/icons.js'
 
 const ICONS_MAP = {
 	info: Info,
 	success: Positive,
 	error: Danger,
 	warn: Warn,
+	question: Help,
 }
 
 export default {
@@ -110,6 +111,11 @@ export default {
 	// Success variables
 	&--success {
 		--callout-border: var(--color-element-success);
+	}
+
+	// Question variable
+	&--question {
+		--callout-border: #184cbd;
 	}
 }
 </style>
