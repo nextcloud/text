@@ -235,6 +235,10 @@ export default defineComponent({
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
 		const hasConnectionIssue = ref(false)
+		const dirty = ref(false)
+		const setDirty = (val) => {
+			dirty.value = val
+		}
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace, useTableOfContents } =
 			provideEditorFlags(props)
@@ -278,11 +282,12 @@ export default defineComponent({
 					)
 			: () => serializePlainText(editor.state.doc)
 
-		const { saveService } = provideSaveService(
+		const { document, saveService } = provideSaveService(
 			connection,
 			syncService,
 			serialize,
 			ydoc,
+			setDirty,
 		)
 
 		const syncProvider = shallowRef(null)
@@ -290,6 +295,8 @@ export default defineComponent({
 		return {
 			awareness,
 			connection,
+			dirty,
+			document,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -301,6 +308,7 @@ export default defineComponent({
 			requireReconnect,
 			saveService,
 			serialize,
+			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -314,11 +322,9 @@ export default defineComponent({
 		return {
 			IDLE_TIMEOUT,
 
-			document: null,
 			fileNode: null,
 
 			idle: false,
-			dirty: false,
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
@@ -476,8 +482,9 @@ export default defineComponent({
 			bus.on('error', this.onError)
 			bus.on('stateChange', this.onStateChange)
 			bus.on('idle', this.onIdle)
-			bus.on('save', this.onSave)
 			bus.on('permissionChange', this.onPermissionChange)
+			this.saveService.bus.on('error', this.onError)
+			this.saveService.bus.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -488,8 +495,9 @@ export default defineComponent({
 			bus.off('error', this.onError)
 			bus.off('stateChange', this.onStateChange)
 			bus.off('idle', this.onIdle)
-			bus.off('save', this.onSave)
 			bus.off('permissionChange', this.onPermissionChange)
+			this.saveService.bus.off('error', this.onError)
+			this.saveService.bus.off('save', this.onSave)
 		},
 
 		reconnect() {
@@ -501,8 +509,7 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		onOpened({ document, session, content, documentState, readOnly }) {
-			this.document = document
+		onOpened({ session, content, documentState, readOnly }) {
 			this.readOnly = readOnly
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
@@ -541,9 +548,7 @@ export default defineComponent({
 			this.updateUser(session)
 		},
 
-		onChange({ document }) {
-			this.document = document
-
+		onChange() {
 			this.syncError = null
 			this.setEditable(this.editMode && !this.requireReconnect)
 		},
@@ -563,7 +568,7 @@ export default defineComponent({
 			})
 		},
 
-		onSync({ steps, document }) {
+		onSync() {
 			this.hasConnectionIssue =
 				this.syncService.backend.fetcher === 0
 				|| !this.syncProvider?.wsconnected
@@ -575,9 +580,6 @@ export default defineComponent({
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
-			if (document) {
-				this.document = document
-			}
 		},
 
 		onError({ type, data }) {
@@ -632,15 +634,6 @@ export default defineComponent({
 					})
 				}
 				this.emit('ready')
-			}
-			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes before first user change
-				if (this.editor.can().undo() || this.editor.can().redo()) {
-					this.dirty = state.dirty
-					if (this.dirty) {
-						this.saveService.autosave()
-					}
-				}
 			}
 		},
 

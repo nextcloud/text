@@ -1,6 +1,7 @@
 {
 	"extends": "@vue/tsconfig",
 	"compilerOptions": {
+		"allowImportingTsExtensions": true,
 		"allowSyntheticDefaultImports": true,
 		"allowJs": true,
 		"declaration": true,
