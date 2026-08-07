@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "成功標記",
     "Warning callout" : "警告標記",
     "Danger callout" : "危險標記",
+    "Question callout" : "問題標記",
     "Table" : "表",
     "Insert link" : "插入連結",
     "Insert attachment" : "插入附件",

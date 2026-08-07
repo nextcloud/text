@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Success callout",
     "Warning callout" : "Warning callout",
     "Danger callout" : "Danger callout",
+    "Question callout" : "Question callout",
     "Table" : "Table",
     "Insert link" : "Insert link",
     "Insert attachment" : "Insert attachment",
