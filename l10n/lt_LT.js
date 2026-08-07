@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Pranešimas apie sėkmingą operaciją",
     "Warning callout" : "Įspėjamasis pranešimas",
     "Danger callout" : "Pavojaus pranešimas",
+    "Question callout" : "Klausimo pranešimas",
     "Table" : "Lentelė",
     "Insert link" : "Įterpti nuorodą",
     "Insert attachment" : "Įterpti priedą",

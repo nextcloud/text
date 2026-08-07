@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Viiktekst: õnnestumine",
     "Warning callout" : "Viiktekst: hoiatus",
     "Danger callout" : "Viiktekst: ohtlik",
+    "Question callout" : "Viiktekst: küsimus",
     "Table" : "Tabel",
     "Insert link" : "Lisa link",
     "Insert attachment" : "Lisa manus",
