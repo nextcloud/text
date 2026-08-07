@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Erfolg-Textbox",
     "Warning callout" : "Warnung-Textbox",
     "Danger callout" : "Gefahr-Textbox",
+    "Question callout" : "Frageaufruf",
     "Table" : "Tabelle",
     "Insert link" : "Link einfügen",
     "Insert attachment" : "Anhang einfügen",
