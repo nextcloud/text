@@ -133,9 +133,7 @@ describe('test link marks', function() {
 			const link = 'other://protocol'
 			cy.insertLine(`[text](${link})`)
 			cy.getContent().find(`a[href*="${link}"]`).should('not.exist')
-			clickLink('#')
-			cy.get('.link-view-bubble__title', { timeout: 10000 }).contains('other://protocol')
-			cy.get('.link-view-bubble a').should('not.exist')
+			cy.getContent().find('a[href="#]').should('not.exist')
 		})
 	})
 

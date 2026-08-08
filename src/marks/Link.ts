@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { ExtendedRegExpMatchArray } from '@tiptap/core'
 import type { LinkOptions } from '@tiptap/extension-link'
 import type { Mark, Node } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
-import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
+import { getMarkRange, isMarkActive } from '@tiptap/core'
 import TipTapLink, { isAllowedUri } from '@tiptap/extension-link'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
@@ -16,30 +15,6 @@ import { logger } from '../helpers/logger.ts'
 import { linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
-
-/**
- *
- * @param match to extract href from
- */
-function extractHrefFromMatch(match: ExtendedRegExpMatchArray) {
-	return { href: match.groups?.href }
-}
-
-/**
- *
- * @param match with multiple capture groups
- */
-function extractHrefFromMarkdownLink(match: ExtendedRegExpMatchArray) {
-	/**
-	 * Removes the last capture group from the match to satisfy
-	 * Tiptap markInputRule expectation of having the content as
-	 * the last capture group in the match.
-	 *
-	 * https://github.com/ueberdosis/tiptap/blob/%40tiptap/core%402.0.0-beta.75/packages/core/src/inputRules/markInputRule.ts#L11
-	 */
-	match.pop()
-	return extractHrefFromMatch(match)
-}
 
 export interface RelativePathLinkOptions extends LinkOptions {
 	relativePath?: string
@@ -53,6 +28,7 @@ const parentDefaults: LinkOptions = {
 	autolink: true,
 	protocols: [],
 	defaultProtocol: 'http',
+	markdownLinks: false,
 	HTMLAttributes: {
 		target: '_blank',
 		rel: 'noopener noreferrer nofollow',
@@ -113,6 +89,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			relativePath: undefined,
 			openLink: undefined,
 			...parentDefaults,
+			markdownLinks: true,
 		}
 	},
 
@@ -181,17 +158,6 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 				rel: 'noopener noreferrer nofollow',
 			},
 			0,
-		]
-	},
-
-	addInputRules() {
-		const linkInputRegex = /(?:^|\s)\[([^[\]]+)\]\((?<href>.+?)\)$/gm
-		return [
-			markInputRule({
-				find: linkInputRegex,
-				type: this.type,
-				getAttributes: extractHrefFromMarkdownLink,
-			}),
 		]
 	},
 
