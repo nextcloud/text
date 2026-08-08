@@ -12,8 +12,10 @@ test.describe('createTable API', () => {
 		await page.goto('/apps/files')
 
 		// Load the editor API bundle
+		const textRoot = await page.evaluate(() => (window as any).OC.appswebroots.text)
 		await page.addScriptTag({
-			url: '/apps/text/js/text-editor.mjs',
+			// @nextcloud/e2e-test-server mounts the app to `/apps-writable`
+			url: `${textRoot}/js/text-editor.mjs`,
 			type: 'module',
 		})
 	})
