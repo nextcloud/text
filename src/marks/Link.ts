@@ -53,6 +53,7 @@ const parentDefaults: LinkOptions = {
 	autolink: true,
 	protocols: [],
 	defaultProtocol: 'http',
+	markdownLinks: false,
 	HTMLAttributes: {
 		target: '_blank',
 		rel: 'noopener noreferrer nofollow',
