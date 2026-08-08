@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { annotationsHidden } from '../../composables/useAnnotationsVisibility.js'
 import { MODIFIERS, TRANSLATIONS } from './keys.js'
 
 /**
@@ -61,7 +62,8 @@ function getKeys(isMobile, { keyChar, keyModifiers }) {
  * @param editor
  */
 function isDisabled(actionEntry, editor) {
-	return actionEntry.action && !actionEntry.action(editor.can(), editor)
+	return (actionEntry.action && !actionEntry.action(editor.can(), editor))
+		|| (actionEntry.isAnnotation && annotationsHidden.value)
 }
 
 /**

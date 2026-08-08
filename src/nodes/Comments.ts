@@ -5,28 +5,29 @@
 
 import { mergeAttributes, Node } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import Footnote from './Footnote.ts'
-import FootnoteReference from './FootnoteReference.ts'
+import Comment from './Comment.ts'
+import CommentItem from './CommentItem.ts'
+import CommentReference from './CommentReference.ts'
 
-const Footnotes = Node.create({
-	name: 'footnotes',
-	content: 'footnote+',
+const Comments = Node.create({
+	name: 'comments',
+	content: 'comment+',
 	defining: true,
 	isolating: true,
 	allowGapCursor: false,
 
 	addExtensions() {
-		return [Footnote, FootnoteReference]
+		return [Comment, CommentItem, CommentReference]
 	},
 
 	parseHTML() {
-		return [{ tag: 'section[data-type="footnotes"]' }]
+		return [{ tag: 'section[data-type="comments"]' }]
 	},
 
 	renderHTML({ HTMLAttributes }) {
 		return [
 			'section',
-			mergeAttributes(HTMLAttributes, { 'data-type': 'footnotes' }),
+			mergeAttributes(HTMLAttributes, { 'data-type': 'comments' }),
 			0,
 		]
 	},
@@ -38,46 +39,7 @@ const Footnotes = Node.create({
 	addProseMirrorPlugins() {
 		return [
 			new Plugin({
-				key: new PluginKey('footnoteOrdinals'),
-				appendTransaction(transactions, _oldState, newState) {
-					if (!transactions.some((tr) => tr.docChanged)) {
-						return null
-					}
-
-					// Compute ordinals
-					const ordinals = new Map<string, number>()
-					newState.doc.descendants((node) => {
-						if (node.type.name === 'footnoteReference') {
-							const id = node.attrs.referenceId
-							if (id && !ordinals.has(id)) {
-								ordinals.set(id, ordinals.size + 1)
-							}
-						}
-					})
-
-					const tr = newState.tr
-					let hasChange = false
-					newState.doc.descendants((node, pos) => {
-						if (node.type.name !== 'footnoteReference' && node.type.name !== 'footnote') {
-							return
-						}
-
-						const targetOrdinal = ordinals.get(node.attrs.referenceId) ?? 0
-						if (node.attrs.ordinal !== targetOrdinal) {
-							tr.setNodeAttribute(pos, 'ordinal', targetOrdinal)
-							hasChange = true
-						}
-					})
-
-					if (!hasChange) {
-						return null
-					}
-					tr.setMeta('addToHistory', false)
-					return tr
-				},
-			}),
-			new Plugin({
-				key: new PluginKey('footnotesCleanup'),
+				key: new PluginKey('commentsCleanup'),
 				appendTransaction(transactions, _oldState, newState) {
 					if (!transactions.some((tr) => tr.docChanged)) {
 						return null
@@ -85,28 +47,26 @@ const Footnotes = Node.create({
 
 					const deletions: { pos: number, size: number }[] = []
 					newState.doc.forEach((child, offset) => {
-						if (child.type.name !== 'footnotes') {
+						if (child.type.name !== 'comments') {
 							return
 						}
 
 						const referencedLabels = new Set<string>()
 						newState.doc.descendants((node) => {
-							if (node.type.name === 'footnoteReference') {
+							if (node.type.name === 'commentReference') {
 								referencedLabels.add(node.attrs.referenceId)
 							}
 						})
 
 						const containerPos = offset
-
 						const orphans: { pos: number, size: number }[] = []
 						let remainingNodeCount = 0
 						let inner = 0
 
 						child.forEach((node) => {
-							if (node.type.name !== 'footnote') {
+							if (node.type.name !== 'comment') {
 								return
 							}
-
 							if (!referencedLabels.has(node.attrs.referenceId)) {
 								orphans.push({ pos: containerPos + 1 + inner, size: node.nodeSize })
 							} else {
@@ -120,10 +80,8 @@ const Footnotes = Node.create({
 						}
 
 						if (remainingNodeCount === 0) {
-							// Delete the whole footnotes container
 							deletions.push({ pos: containerPos, size: child.nodeSize })
 						} else {
-							// Delete only orphaned footnotes
 							deletions.push(...orphans)
 						}
 					})
@@ -146,4 +104,4 @@ const Footnotes = Node.create({
 	},
 })
 
-export default Footnotes
+export default Comments

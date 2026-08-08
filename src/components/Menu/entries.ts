@@ -12,13 +12,18 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
+import { useAnnotationsVisibility } from '../../composables/useAnnotationsVisibility.js'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	Asterisk,
 	CodeBrackets,
 	CodeTags,
+	CommentOffOutline,
+	CommentOutline,
 	Danger,
 	Emoticon,
+	Eye,
+	EyeOff,
 	FormatBold,
 	FormatColorHighlight,
 	FormatHeader1,
@@ -79,6 +84,7 @@ type MenuEntry
 		visible?: boolean
 		children?: MenuEntry[]
 		isSeparator?: boolean
+		isAnnotation?: boolean
 	}
 	| undefined
 
@@ -121,7 +127,7 @@ export function getAssistantMenuEntries(): MenuEntry[] {
 		key: 'assistant',
 		label: t('text', 'Nextcloud Assistant'),
 		component: markRaw(AssistantAction),
-		priority: 7,
+		priority: 8,
 	}
 	const hasAssistantTaskTypes
 		= loadState('text', 'taskprocessing', []).length > 0
@@ -134,6 +140,7 @@ export function getAssistantMenuEntries(): MenuEntry[] {
  * @param isRichWorkspace is the editor a folder description
  */
 export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
+	const { annotationsHidden } = useAnnotationsVisibility()
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',
@@ -142,7 +149,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			keyModifiers: [MODIFIERS.Mod],
 			icon: Undo,
 			action: (command) => command.undo(),
-			priority: 8,
+			priority: 9,
 		},
 		{
 			key: 'redo',
@@ -151,7 +158,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			keyModifiers: [MODIFIERS.Mod],
 			icon: Redo,
 			action: (command) => command.redo(),
-			priority: 11,
+			priority: 12,
 		},
 		{
 			key: 'headings',
@@ -256,7 +263,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.toggleBold()
 			},
-			priority: 9,
+			priority: 10,
 		},
 		{
 			key: 'italic',
@@ -268,7 +275,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.toggleItalic()
 			},
-			priority: 10,
+			priority: 11,
 		},
 		{
 			key: 'underline',
@@ -280,7 +287,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.toggleUnderline()
 			},
-			priority: 12,
+			priority: 13,
 		},
 		{
 			key: 'strikethrough',
@@ -292,7 +299,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.toggleStrike()
 			},
-			priority: 13,
+			priority: 14,
 		},
 		{
 			key: 'highlight',
@@ -304,7 +311,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.toggleHighlight()
 			},
-			priority: 14,
+			priority: 15,
 		},
 		{
 			key: 'lists',
@@ -523,19 +530,61 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command) => {
 				return command.insertTable()
 			},
-			priority: 15,
+			priority: 16,
 		},
 		{
-			key: 'footnote',
-			label: t('text', 'Footnote'),
-			keyChar: 'f',
-			keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-			isActive: 'footnote',
-			icon: Asterisk,
-			action: (command) => {
-				return command.insertFootnote()
+			key: 'annotations',
+			label: t('text', 'Annotations'),
+			get icon() {
+				return annotationsHidden.value
+					? CommentOffOutline
+					: CommentOutline
 			},
-			priority: 16,
+			priority: 4,
+			children: [
+				{
+					key: 'comment',
+					label: t('text', 'Comment'),
+					keyChar: 'm',
+					keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
+					isActive: 'comment',
+					icon: CommentOutline,
+					isAnnotation: true,
+					action: (command) => {
+						return command.insertComment()
+					},
+				},
+				{
+					key: 'footnote',
+					label: t('text', 'Footnote'),
+					keyChar: 'f',
+					keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+					isActive: 'footnote',
+					icon: Asterisk,
+					isAnnotation: true,
+					action: (command) => {
+						return command.insertFootnote()
+					},
+				},
+				{
+					key: 'annotation-separator',
+					isSeparator: true,
+				},
+				{
+					key: 'annotations-hide',
+					get icon() {
+						return annotationsHidden.value
+							? Eye
+							: EyeOff
+					},
+					get label() {
+						return annotationsHidden.value
+							? t('text', 'Show annotations')
+							: t('text', 'Hide annotations')
+					},
+					click: () => emit('text:annotations:toggle-visibility', undefined),
+				},
+			],
 		},
 		{
 			key: 'insert-link',
@@ -545,14 +594,14 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			isActive: 'link',
 			icon: LinkIcon,
 			component: markRaw(ActionInsertLink),
-			priority: 4,
+			priority: 5,
 		},
 		{
 			key: 'insert-attachment',
 			label: t('text', 'Insert attachment'),
 			icon: Paperclip,
 			component: markRaw(ActionAttachmentUpload),
-			priority: 5,
+			priority: 6,
 		},
 	]
 
@@ -566,7 +615,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			action: (command, emojiObject = {}) => {
 				return command.emoji(emojiObject)
 			},
-			priority: 6,
+			priority: 7,
 		})
 	}
 
