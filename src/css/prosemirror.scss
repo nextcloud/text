@@ -307,6 +307,10 @@ div.ProseMirror {
 		padding-inline-start: 10px;
 		margin-inline-start: 10px;
 		margin-bottom: 1em;
+
+		ul, ol {
+			margin-bottom: 0;
+		}
 	}
 
 	ul > li {
