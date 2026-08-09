@@ -66,8 +66,13 @@ function formattingItems(query, editor) {
 function pickerItems(query) {
 	return searchProvider(query)
 		.map((p) => {
+			let label = p.title
+			if (p.id === 'files') {
+				// Rename "Files" to "Link a file", less ambiguous
+				label = t('text', 'Link a file')
+			}
 			return {
-				label: p.title,
+				label,
 				icon: p.icon_url,
 				providerId: p.id,
 				order: p.order,
