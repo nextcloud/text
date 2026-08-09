@@ -15,14 +15,15 @@ import createSuggestions from '../suggestions.js'
 import { getMenuEntries } from './../../Menu/entries.ts'
 import LinkPickerList from './LinkPickerList.vue'
 
+const suggestGroupImportant = t('text', 'Suggestions')
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
 
-const filterOut = (e) => {
-	return ['undo', 'redo', 'outline', 'emoji-picker'].indexOf(e.key) > -1
-}
+const important = ['task-list', 'table', 'callout-info']
+const excludedFormatting = ['undo', 'redo', 'outline', 'emoji-picker']
 
-const important = ['task-list', 'table']
+const isImportant = (item) =>
+	important.includes(item.key) || important.includes(item.providerId)
 
 const isValidUrl = (url) => {
 	try {
@@ -32,29 +33,47 @@ const isValidUrl = (url) => {
 	}
 }
 
-const sortImportantFirst = (list) => {
+/**
+ *
+ * @param {string} query to filter by
+ * @param {object} editor the editor instance
+ */
+function formattingItems(query, editor) {
+	const menuEntries = getMenuEntries(false, false)
 	return [
-		...list.filter((e) => important.indexOf(e.key) > -1),
-		...list.filter((e) => important.indexOf(e.key) === -1),
+		...menuEntries.find((e) => e.key === 'headings').children,
+		...menuEntries.find((e) => e.key === 'lists').children,
+		...menuEntries.filter(
+			(e) => e.action && !excludedFormatting.includes(e.key),
+		),
+		...menuEntries.find((e) => e.key === 'blocks').children,
+		{
+			...menuEntries.find((e) => e.key === 'emoji-picker'),
+			action: (command) => command.insertContent(':'),
+		},
 	]
+		.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
+		.filter(({ action, isActive }) => {
+			const canRunState = action(editor?.can())
+			const isActiveState = isActive && getIsActive({ isActive }, editor)
+			return canRunState && !isActiveState
+		})
 }
 
-const formattingSuggestions = (query) => {
-	const menuEntries = getMenuEntries(false, false)
-	return sortImportantFirst(
-		[
-			...menuEntries.find((e) => e.key === 'headings').children,
-			...menuEntries.find((e) => e.key === 'lists').children,
-			...menuEntries.filter((e) => e.action && !filterOut(e)),
-			...menuEntries.find((e) => e.key === 'blocks').children,
-			{
-				...menuEntries.find((e) => e.key === 'emoji-picker'),
-				action: (command) => command.insertContent(':'),
-			},
-		]
-			.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
-			.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })),
-	)
+/**
+ * @param {string} query to filter by
+ */
+function pickerItems(query) {
+	return searchProvider(query)
+		.map((p) => {
+			return {
+				label: p.title,
+				icon: p.icon_url,
+				providerId: p.id,
+				order: p.order,
+			}
+		})
+		.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
 }
 
 export default () =>
@@ -94,25 +113,25 @@ export default () =>
 				})
 		},
 		items: ({ editor, query }) => {
+			const pickers = pickerItems(query)
+			const formatting = formattingItems(query, editor)
 			return [
-				...searchProvider(query)
-					.map((p) => {
-						return {
-							suggestGroup: suggestGroupPicker,
-							label: p.title,
-							icon: p.icon_url,
-							providerId: p.id,
-						}
-					})
-					.filter((e) =>
-						e?.label?.toLowerCase?.()?.includes(query.toLowerCase()),
-					),
-				...formattingSuggestions(query).filter(({ action, isActive }) => {
-					const canRunState = action(editor?.can())
-					const isActiveState =
-						isActive && getIsActive({ isActive }, editor)
-					return canRunState && !isActiveState
-				}),
+				// pickers with order -1, then important pickers, then important formatting
+				...[
+					...pickers.filter((e) => e.order === -1),
+					...pickers.filter((e) => e.order !== -1 && isImportant(e)),
+					...formatting.filter(isImportant),
+				].map((e) => ({ ...e, suggestGroup: suggestGroupImportant })),
+
+				// Smart picker: remaining (non-important) pickers
+				...pickers
+					.filter((e) => e.order !== -1 && !isImportant(e))
+					.map((e) => ({ ...e, suggestGroup: suggestGroupPicker })),
+
+				// Formatting: remaining (non-important) formatting entries
+				...formatting
+					.filter((e) => !isImportant(e))
+					.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })),
 			]
 		},
 	})
