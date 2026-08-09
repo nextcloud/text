@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Glao amach rathúil",
     "Warning callout" : "Glao amach rabhaidh",
     "Danger callout" : "Glaoch contúirte",
+    "Question callout" : "Glao ceiste",
     "Table" : "Tábla",
     "Insert link" : "Ionsáigh nasc",
     "Insert attachment" : "Ionsáigh ceangaltán",
