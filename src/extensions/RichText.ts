@@ -28,6 +28,7 @@ import {
 import BulletList from '../nodes/BulletList.ts'
 import Callouts from '../nodes/Callout.js'
 import CodeBlock from '../nodes/CodeBlock.js'
+import Comments from '../nodes/Comments.ts'
 import Details from '../nodes/Details.js'
 import EditableTable from '../nodes/EditableTable.js'
 import Footnotes from '../nodes/Footnotes.ts'
@@ -45,6 +46,8 @@ import Table from '../nodes/Table.js'
 import TaskItem from '../nodes/TaskItem.ts'
 import TaskList from '../nodes/TaskList.ts'
 import TrailingNode from '../nodes/TrailingNode.js'
+import AnnotationsVisibility from './AnnotationsVisibility.ts'
+import CommentBubble from './CommentBubble.ts'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
 import Keymap from './Keymap.js'
@@ -87,7 +90,7 @@ export default Extension.create<RichTextOptions>({
 		const defaultExtensions = [
 			Markdown,
 			Document.extend({
-				content: 'block+ footnotes?',
+				content: 'block+ comments? footnotes?',
 			}),
 			Text,
 			Paragraph,
@@ -105,6 +108,8 @@ export default Extension.create<RichTextOptions>({
 				defaultLanguage: 'plaintext',
 			}),
 			Details,
+			AnnotationsVisibility,
+			Comments,
 			Footnotes,
 			BulletList,
 			HorizontalRule,
@@ -148,18 +153,21 @@ export default Extension.create<RichTextOptions>({
 				openLink: this.options.openLink,
 			}),
 			LinkBubble,
+			CommentBubble,
 			...(this.options.editing
 				? [ Placeholder.configure({
 						placeholder: t('text', "Start writing or type '/' to add…"),
 					})]
 				: []),
 			TrailingNode.configure({
-				notAfter: ['paragraph', 'footnotes'],
+				notAfter: ['paragraph', 'comments', 'footnotes'],
 			}),
 			TextDirection.configure({
 				types: [
 					'blockquote',
 					'callout',
+					'comment',
+					'commentItem',
 					'detailsSummary',
 					'footnote',
 					'heading',

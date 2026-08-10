@@ -428,15 +428,36 @@ div.ProseMirror {
 		}
 	}
 
-	sup[data-type="footnote-reference"] {
-		a.footnote-ref {
+	section[data-type="comments"] {
+		display: none;
+	}
+
+	sup[data-type="footnote-reference"], sup[data-type="comment-reference"] {
+		line-height: 0; // prevent references from extending line height
+		scroll-margin-top: calc(var(--default-clickable-area) + 4 * var(--default-grid-baseline));
+
+		a.footnote-ref, button.comment-ref {
+			line-height: 1;
+			font-size: 0.9em;
 			color: var(--color-primary-element);
 			text-decoration: none;
+			min-height: unset;
 
 			&:hover,
 			&:focus {
 				text-decoration: underline;
 			}
+		}
+
+		button.comment-ref {
+			width: unset;
+			padding: 0;
+			border-radius: var(--border-radius-small);
+		}
+
+		&.is-active {
+			background-color: var(--color-primary-element-light-text);
+			border-radius: var(--border-radius);
 		}
 	}
 
@@ -504,6 +525,14 @@ div.ProseMirror {
 .tippy-content div {
 	box-sizing: border-box;
 	visibility: visible !important;
+}
+
+.editor--annotations-hidden div.ProseMirror {
+	sup[data-type="comment-reference"],
+	sup[data-type="footnote-reference"],
+	section[data-type="footnotes"] {
+		display: none;
+	}
 }
 
 .footnote-highlight {

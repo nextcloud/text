@@ -43,7 +43,7 @@ import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import { useEditor } from '../../composables/useEditor.ts'
 
-const IGNORE_NODES = ['footnote', 'footnotes']
+const IGNORE_NODES = ['comment', 'commentItem', 'comments', 'footnote', 'footnotes']
 
 export default {
 	name: 'FloatingButtons',

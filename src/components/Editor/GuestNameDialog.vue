@@ -11,7 +11,7 @@
 				t('text', 'Enter your name so other people can see who is editing')
 			"
 			class="guest-name-dialog"
-			@submit.prevent="setGuestName">
+			@submit.prevent="setGuestNameHandler">
 			<NcInputField
 				v-model="guestName"
 				maxlength="60"
@@ -21,7 +21,7 @@
 			<NcButton
 				variant="primary"
 				:aria-label="t('text', 'submit')"
-				@click="setGuestName">
+				@click="setGuestNameHandler">
 				<template #icon>
 					<CheckIcon :size="20" />
 				</template>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { showError, showWarning } from '@nextcloud/dialogs'
+import { showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -50,11 +50,8 @@ import NcInputField from '@nextcloud/vue/components/NcInputField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { update } from '../../apis/connect.ts'
-import { useConnection } from '../../composables/useConnection.ts'
 import { useEditor } from '../../composables/useEditor.ts'
-import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import { logger } from '../../helpers/logger.ts'
+import { useGuestName } from '../../composables/useGuestName.ts'
 
 const props = defineProps({
 	session: {
@@ -63,9 +60,8 @@ const props = defineProps({
 	},
 })
 const emit = defineEmits(['update:session'])
-const { connection } = useConnection()
 const { editor } = useEditor()
-const { updateUser } = useEditorMethods(editor)
+const { setGuestName } = useGuestName(editor)
 const editing = ref(false)
 const loading = ref(false)
 const guestName = ref(props.session.guestName)
@@ -80,29 +76,19 @@ watch(
 /**
  *
  */
-async function setGuestName() {
-	if (!connection.value) {
-		showError(t('text', 'Not connected. Cannot update guest name.'))
-		return
-	}
-	const previousGuestName = props.session.guestName
+async function setGuestNameHandler() {
 	loading.value = true
 	try {
-		const session = await update(guestName.value, connection.value)
-		loading.value = false
-		editing.value = false
-		try {
-			localStorage.setItem('nick', session.guestName)
-		} catch (e) {
-			logger.warn('Could not store guest name in local storage.', e)
+		const session = await setGuestName(guestName.value)
+		if (session) {
+			editing.value = false
+			emit('update:session', session)
 		}
-		emit('update:session', session)
-		updateUser(session)
-	} catch (error) {
-		loading.value = false
-		logger.warn('Failed to update the session', { error })
+	} catch {
 		showWarning(t('text', 'Failed to update the guest name.'))
-		guestName.value = previousGuestName
+		guestName.value = props.session.guestName
+	} finally {
+		loading.value = false
 	}
 }
 </script>

@@ -43,7 +43,7 @@ function isValidUrl(url) {
  * @param {object} editor the editor instance
  */
 function formattingItems(query, editor) {
-	const menuEntries = getMenuEntries(false, false)
+	const menuEntries = getMenuEntries(false)
 	return [
 		...menuEntries.find((e) => e.key === 'headings').children,
 		...menuEntries.find((e) => e.key === 'lists').children,
