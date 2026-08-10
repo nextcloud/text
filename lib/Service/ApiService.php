@@ -20,61 +20,30 @@ use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
-use OCP\IRequest;
 use OCP\Lock\LockedException;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
 	public function __construct(
-		private readonly IRequest $request,
 		private readonly ConfigService $configService,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
 		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
 		private readonly IL10N $l10n,
-		private readonly ?string $userId,
 		private readonly ?IQueue $queue,
 	) {
 	}
 
-	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
+	public function create(File $file, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
 		try {
-			if ($token !== null) {
-				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
-
-				/*
-				 * Check if we have proper read access (files drop)
-				 * If not then well 404 it is.
-				 */
-				try {
-					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
-				} catch (NotFoundException) {
-					return new DataResponse([], Http::STATUS_NOT_FOUND);
-				} catch (NotPermittedException) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
-				}
-			} elseif ($fileId !== null && $this->userId !== null) {
-				try {
-					$file = $this->documentService->getFileById($fileId, $this->userId);
-				} catch (NotFoundException|NotPermittedException $e) {
-					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
-					return new DataResponse([
-						'error' => $this->l10n->t('File not found')
-					], Http::STATUS_NOT_FOUND);
-				}
-			} else {
-				return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
-			}
-
 			$storage = $file->getStorage();
 
 			// Block using text for disabled download internal shares

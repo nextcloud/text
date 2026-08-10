@@ -56,16 +56,14 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCreateNewSession() {
 		$file = $this->mockFile(1234, 'admin');
-		$this->documentService->method('getFileById')->willReturn($file);
-		$actual = $this->apiService->create(1234);
+		$actual = $this->apiService->create($file);
 		self::assertTrue($actual->getData()['hasOwner']);
 		self::assertEquals('file content', $actual->getData()['content']);
 	}
 
 	public function testCreateNewSessionWithoutOwner() {
 		$file = $this->mockFile(1234, null);
-		$this->documentService->method('getFileById')->willReturn($file);
-		$actual = $this->apiService->create(1234);
+		$actual = $this->apiService->create($file);
 		self::assertFalse($actual->getData()['hasOwner']);
 	}
 

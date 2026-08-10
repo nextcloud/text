@@ -12,10 +12,15 @@ use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\DocumentService;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
+use OCP\Constants;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -34,6 +39,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		private ShareManager $shareManager,
 		private ApiService $apiService,
 		private DocumentService $documentService,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request, $session);
 	}
@@ -66,8 +72,21 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function create(string $token, ?string $file = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
-		return $this->apiService->create(null, $file, $baseVersionEtag, $token, $guestName);
+	public function create(string $token, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
+		$file = $this->documentService->getFileByShareToken($token, $filePath);
+		/*
+			* Check if we have proper read access (files drop)
+			* If not then well 404 it is.
+			*/
+		try {
+			$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
+		} catch (NotFoundException) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		} catch (NotPermittedException) {
+			return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
+		}
+
+		return $this->apiService->create($file, $baseVersionEtag, $token, $guestName);
 	}
 
 	#[NoAdminRequired]

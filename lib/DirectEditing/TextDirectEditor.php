@@ -131,7 +131,7 @@ class TextDirectEditor implements IEditor {
 	public function open(IToken $token): Response {
 		$token->useTokenScope();
 		try {
-			$session = $this->apiService->create($token->getFile()->getId());
+			$session = $this->apiService->create($token->getFile());
 			$this->initialStateProvider->provideFile([
 				'fileId' => $token->getFile()->getId(),
 				'mimetype' => $token->getFile()->getMimeType(),
