@@ -295,7 +295,10 @@ function submitReply() {
 	if (!replyText.value.trim()) {
 		return
 	}
-	props.editor.commands.addOrUpdateCommentReply(props.referenceId, replyText.value.trim())
+	if (!commentNode.value) {
+		return
+	}
+	props.editor.commands.addOrUpdateCommentReply(commentNode.value, replyText.value.trim())
 	sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
 	replyText.value = ''
 	nextTick(() => {
@@ -329,9 +332,12 @@ function saveEdit() {
 	if (index === null) {
 		return
 	}
+	if (!commentNode.value) {
+		return
+	}
 	const original = items.value[index]?.markdownBody ?? ''
 	if (editText.value.trim() && editText.value.trim() !== original.trim()) {
-		props.editor.commands.addOrUpdateCommentReply(props.referenceId, editText.value.trim(), index)
+		props.editor.commands.addOrUpdateCommentReply(commentNode.value, editText.value.trim(), index)
 	}
 	editingItemIndex.value = null
 	editText.value = ''
@@ -351,10 +357,13 @@ function cancelEdit() {
  * @param index the item index
  */
 function deleteItem(index: number) {
+	if (!commentNode.value) {
+		return
+	}
 	if (items.value.length === 1) {
 		sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
 	}
-	props.editor.commands.deleteCommentReply(props.referenceId, index)
+	props.editor.commands.deleteCommentReply(commentNode.value, index)
 }
 
 const isGuest = !getCurrentUser()

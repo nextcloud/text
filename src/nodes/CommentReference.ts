@@ -17,8 +17,8 @@ declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentReference: {
 			insertComment: () => ReturnType
-			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ReturnType
-			deleteCommentReply: (referenceId: string, itemIndex: number) => ReturnType
+			addOrUpdateCommentReply: (comment: ProseMirrorNode, markdownText: string, itemIndex?: number) => ReturnType
+			deleteCommentReply: (comment: ProseMirrorNode, itemIndex: number) => ReturnType
 		}
 	}
 }
@@ -178,7 +178,7 @@ const CommentReference = Node.create({
 					.scrollIntoView()
 					.run()
 			},
-			addOrUpdateCommentReply: (referenceId: string, markdownText: string, itemIndex?: number) => ({ state, dispatch }) => {
+			addOrUpdateCommentReply: (comment: ProseMirrorNode, markdownText: string, itemIndex?: number) => ({ state, dispatch }) => {
 				if (!markdownText) {
 					return false
 				}
@@ -200,21 +200,18 @@ const CommentReference = Node.create({
 				const timestamp = new Date().toISOString()
 
 				let commentPos = -1
-				let targetComment: ProseMirrorNode | null = null
 				state.doc.descendants((node, pos) => {
-					if (targetComment) {
+					if (commentPos !== -1) {
 						return false
 					}
-					if (node.type.name === 'comment' && node.attrs.referenceId === referenceId) {
+					if (node === comment) {
 						commentPos = pos
-						targetComment = node
 						return false
 					}
 				})
-				if (!targetComment || commentPos === -1) {
+				if (commentPos === -1) {
 					return false
 				}
-				const comment = targetComment as ProseMirrorNode
 
 				if (itemIndex !== undefined && itemIndex >= comment.childCount) {
 					// Given itemIndex does not exist
@@ -253,25 +250,22 @@ const CommentReference = Node.create({
 				}
 				return true
 			},
-			deleteCommentReply: (referenceId: string, itemIndex: number) => ({ state, dispatch }) => {
+			deleteCommentReply: (comment: ProseMirrorNode, itemIndex: number) => ({ state, dispatch }) => {
 				let commentPos = -1
-				let targetComment: ProseMirrorNode | null = null
 				state.doc.descendants((node, pos) => {
-					if (targetComment) {
+					if (commentPos !== -1) {
 						return false
 					}
-					if (node.type.name === 'comment' && node.attrs.referenceId === referenceId) {
+					if (node === comment) {
 						commentPos = pos
-						targetComment = node
 						return false
 					}
 				})
 
-				if (!targetComment || commentPos === -1) {
+				if (commentPos === -1) {
 					return false
 				}
 
-				const comment = targetComment as ProseMirrorNode
 				if (itemIndex >= comment.childCount) {
 					return false
 				}
@@ -283,7 +277,7 @@ const CommentReference = Node.create({
 					// commentsCleanup will remove the orphaned comment node
 					let refPos = -1, refSize = 0
 					state.doc.descendants((node, pos) => {
-						if (node.type.name === 'commentReference' && node.attrs.referenceId === referenceId) {
+						if (node.type.name === 'commentReference' && node.attrs.referenceId === comment.attrs.referenceId) {
 							refPos = pos
 							refSize = node.nodeSize
 							return false
