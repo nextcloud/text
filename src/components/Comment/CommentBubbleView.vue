@@ -4,7 +4,10 @@
 -->
 
 <template>
-	<div ref="commentBubble" class="comment-bubble" @keydown.escape.prevent.stop="closeAndRefocus">
+	<div
+		:id="`comment-bubble-${referenceId}`"
+		class="comment-bubble"
+		@keydown.escape.prevent.stop="closeAndRefocus">
 		<div class="comment-bubble__header">
 			<span class="comment-bubble__title">{{ t('text', 'Comments') }}</span>
 			<div v-if="commentCount > 1" class="comment-bubble__nav">
@@ -63,7 +66,7 @@
 						:timestamp="item.timestamp"
 						relativeTime="long"
 						ignoreSeconds />
-					<NcActions v-if="isEditable && !isGuestWithoutName" :container="commentBubble ?? undefined">
+					<NcActions v-if="isEditable && !isGuestWithoutName" :container="`#comment-bubble-${referenceId}`">
 						<NcActionButton closeAfterClick @click="startEdit(i)">
 							<template #icon>
 								<PencilIcon :size="16" />
@@ -181,7 +184,6 @@ const props = defineProps<{
 
 const DRAFT_KEY_PREFIX = 'text-comment-draft-'
 
-const commentBubble = ref<HTMLElement | null>(null)
 const itemsContainer = ref<HTMLElement | null>(null)
 const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
 const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
