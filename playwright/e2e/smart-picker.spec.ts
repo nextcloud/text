@@ -34,3 +34,27 @@ test('Insert Link', async ({ editor }) => {
 	await editor.referencePicker.press('Enter')
 	await expect(editor.content.getByRole('link')).toContainText('github.com')
 })
+
+test('Files provider is renamed to "Link a file"', async ({ editor }) => {
+	await editor.type('/')
+	await expect(editor.getSuggestion('Link a file')).toBeVisible()
+})
+
+test('Important items appear before remaining items', async ({ editor }) => {
+	await editor.type('/')
+	await expect(editor.getSuggestion('To-Do list')).toBeVisible()
+	const allTexts = await editor.suggestions
+		.locator('.suggestion-list__item')
+		.allTextContents()
+
+	const todoIdx = allTexts.findIndex((t) => t.includes('To-Do list'))
+	const tableIdx = allTexts.findIndex((t) => t.includes('Table'))
+	const filesIdx = allTexts.findIndex((t) => t.includes('Link a file'))
+	const heading1Idx = allTexts.findIndex((t) => t.includes('Heading 1'))
+
+	expect(todoIdx).toBeLessThan(filesIdx)
+	expect(todoIdx).toBeLessThan(heading1Idx)
+	expect(tableIdx).toBeLessThan(filesIdx)
+	expect(tableIdx).toBeLessThan(heading1Idx)
+	expect(filesIdx).toBeLessThan(heading1Idx)
+})

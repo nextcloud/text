@@ -16,11 +16,14 @@ import { getIsActive } from '../../Menu/utils.js'
 import createSuggestions from '../suggestions.js'
 import { getMenuEntries } from './../../Menu/entries.ts'
 
+const suggestGroupImportant = t('text', 'Suggestions')
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
 
-const important = ['task-list', 'table']
-const excluded = ['undo', 'redo', 'outline', 'emoji-picker']
+const important = ['task-list', 'table', 'callout-info']
+const excludedFormatting = ['undo', 'redo', 'outline', 'emoji-picker']
+
+const isImportant = (item) => important.includes(item.key) || important.includes(item.providerId)
 
 /**
  *
@@ -36,25 +39,15 @@ function isValidUrl(url) {
 
 /**
  *
- * @param {Array} list of menu entries
- */
-function sortImportantFirst(list) {
-	return [
-		...list.filter((e) => important.indexOf(e.key) > -1),
-		...list.filter((e) => important.indexOf(e.key) === -1),
-	]
-}
-
-/**
- *
  * @param {string} query to filter by
+ * @param {object} editor the editor instance
  */
-function formattingSuggestions(query) {
+function formattingItems(query, editor) {
 	const menuEntries = getMenuEntries(false, false)
-	return sortImportantFirst([
+	return [
 		...menuEntries.find((e) => e.key === 'headings').children,
 		...menuEntries.find((e) => e.key === 'lists').children,
-		...menuEntries.filter((e) => e.action && !excluded.includes(e.key)),
+		...menuEntries.filter((e) => e.action && !excludedFormatting.includes(e.key)),
 		...menuEntries.find((e) => e.key === 'blocks').children,
 		{
 			...menuEntries.find((e) => e.key === 'emoji-picker'),
@@ -62,7 +55,33 @@ function formattingSuggestions(query) {
 		},
 	]
 		.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
-		.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })))
+		.filter(({ action, isActive }) => {
+			const canRunState = action(editor?.can())
+			const isActiveState
+				= isActive && getIsActive({ isActive }, editor)
+			return canRunState && !isActiveState
+		})
+}
+
+/**
+ * @param {string} query to filter by
+ */
+function pickerItems(query) {
+	return searchProvider(query)
+		.map((p) => {
+			let label = p.title
+			if (p.id === 'files') {
+				// Rename "Files" to "Link a file", less ambiguous
+				label = t('text', 'Link a file')
+			}
+			return {
+				label,
+				icon: p.icon_url,
+				providerId: p.id,
+				order: p.order,
+			}
+		})
+		.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))
 }
 
 export default () => createSuggestions({
@@ -101,23 +120,25 @@ export default () => createSuggestions({
 			})
 	},
 	items: ({ editor, query }) => {
+		const pickers = pickerItems(query)
+		const formatting = formattingItems(query, editor)
 		return [
-			...searchProvider(query)
-				.map((p) => {
-					return {
-						suggestGroup: suggestGroupPicker,
-						label: p.title,
-						icon: p.icon_url,
-						providerId: p.id,
-					}
-				})
-				.filter((e) => e?.label?.toLowerCase?.()?.includes(query.toLowerCase())),
-			...formattingSuggestions(query).filter(({ action, isActive }) => {
-				const canRunState = action(editor?.can())
-				const isActiveState
-					= isActive && getIsActive({ isActive }, editor)
-				return canRunState && !isActiveState
-			}),
+			// pickers with order -1, then important pickers, then important formatting
+			...[
+				...pickers.filter((e) => e.order === -1),
+				...pickers.filter((e) => e.order !== -1 && isImportant(e)),
+				...formatting.filter(isImportant),
+			].map((e) => ({ ...e, suggestGroup: suggestGroupImportant })),
+
+			// Smart picker: remaining (non-important) pickers
+			...pickers
+				.filter((e) => e.order !== -1 && !isImportant(e))
+				.map((e) => ({ ...e, suggestGroup: suggestGroupPicker })),
+
+			// Formatting: remaining (non-important) formatting entries
+			...formatting
+				.filter((e) => !isImportant(e))
+				.map((e) => ({ ...e, suggestGroup: suggestGroupFormat })),
 		]
 	},
 })
