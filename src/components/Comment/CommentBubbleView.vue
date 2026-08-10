@@ -184,27 +184,16 @@ const props = defineProps<{
 
 const DRAFT_KEY_PREFIX = 'text-comment-draft-'
 
+// References used in template
 const itemsContainer = ref<HTMLElement | null>(null)
 const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
 const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
 const replyInput = ref<InstanceType<typeof NcRichContenteditable> | null>(null)
 const userData = ref<Record<string, object>>({})
-const isEditable = ref(props.editor.isEditable)
 
-/**
- *
- */
-function onUpdate() {
-	isEditable.value = props.editor.isEditable
-	updateCommentState()
-}
-onMounted(() => {
-	props.editor.on('update', onUpdate)
-	// Focus input field when comment bubble is opened.
-	// The ProseMirror transaction that opens the bubble steals focus after finishing, so focus with a delay.
-	setTimeout(() => replyInput.value?.focus(), 50)
-})
-onUnmounted(() => props.editor.off('update', onUpdate))
+// Reactive properties
+
+const isEditable = ref(props.editor.isEditable)
 
 const commentNodesMap = shallowRef<Record<string, Node>>({})
 const commentRefIds = ref<string[]>([])
@@ -212,23 +201,8 @@ const commentCount = computed(() => commentRefIds.value.length)
 const commentPosition = computed(() => commentRefIds.value.indexOf(props.referenceId) + 1)
 const commentNode = computed<Node | null>(() => commentNodesMap.value[props.referenceId] ?? null)
 
-/**
- *
- */
-function updateCommentState() {
-	const map: Record<string, Node> = {}
-	const refs: string[] = []
-	props.editor.state.doc.descendants((node) => {
-		if (node.type.name === 'comment') {
-			map[node.attrs.referenceId] = node
-		} else if (node.type.name === 'commentReference') {
-			refs.push(node.attrs.referenceId)
-		}
-	})
-	commentNodesMap.value = map
-	commentRefIds.value = refs
-}
-updateCommentState() // initialize before first render
+const editingItemIndex = ref<number | null>(null)
+const editText = ref('')
 
 const items = computed(() => {
 	if (!commentNode.value) {
@@ -254,12 +228,15 @@ const items = computed(() => {
 
 const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].markdownBody))
 
-/**
- * @param direction direction to navigate
- */
-function navigate(direction: 'prev' | 'next') {
-	props.editor.commands.navigateCommentBubble(direction)
-}
+const isGuest = !getCurrentUser()
+const guestName = ref(localStorage.getItem('nick') ?? '')
+const guestNameInput = ref('')
+
+const isGuestWithoutName = computed(() => isGuest && !guestName.value)
+
+const { setGuestName } = useGuestName(props.editor)
+
+// Watchers
 
 // Persist draft as user types
 watch(replyText, (val) => {
@@ -282,6 +259,51 @@ watch(() => props.referenceId, () => {
 	setTimeout(() => replyInput.value?.focus(), 50)
 })
 
+// Mounted/unmounted callbacks
+
+onMounted(() => {
+	props.editor.on('update', onUpdate)
+	// Focus input field when comment bubble is opened.
+	// The ProseMirror transaction that opens the bubble steals focus after finishing, so focus with a delay.
+	setTimeout(() => replyInput.value?.focus(), 50)
+})
+onUnmounted(() => props.editor.off('update', onUpdate))
+
+// Methods
+
+/**
+ *
+ */
+function onUpdate() {
+	isEditable.value = props.editor.isEditable
+	updateCommentState()
+}
+
+/**
+ *
+ */
+function updateCommentState() {
+	const map: Record<string, Node> = {}
+	const refs: string[] = []
+	props.editor.state.doc.descendants((node) => {
+		if (node.type.name === 'comment') {
+			map[node.attrs.referenceId] = node
+		} else if (node.type.name === 'commentReference') {
+			refs.push(node.attrs.referenceId)
+		}
+	})
+	commentNodesMap.value = map
+	commentRefIds.value = refs
+}
+updateCommentState() // initialize before first render
+
+/**
+ * @param direction direction to navigate
+ */
+function navigate(direction: 'prev' | 'next') {
+	props.editor.commands.navigateCommentBubble(direction)
+}
+
 /**
  * Submit comment reply
  */
@@ -301,9 +323,6 @@ function submitReply() {
 		}
 	})
 }
-
-const editingItemIndex = ref<number | null>(null)
-const editText = ref('')
 
 /**
  * Start to edit an existent comment
@@ -359,14 +378,6 @@ function deleteItem(index: number) {
 	}
 	props.editor.commands.deleteCommentReply(commentNode.value, index)
 }
-
-const isGuest = !getCurrentUser()
-const guestName = ref(localStorage.getItem('nick') ?? '')
-const guestNameInput = ref('')
-
-const isGuestWithoutName = computed(() => isGuest && !guestName.value)
-
-const { setGuestName } = useGuestName(props.editor)
 
 /**
  * Submit guest name
