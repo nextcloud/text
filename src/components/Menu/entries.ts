@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { AnyCommands, Editor } from '@tiptap/core'
+import type { Ref } from 'vue'
 
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
@@ -12,7 +13,6 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
-import { useAnnotationsVisibility } from '../../composables/useAnnotationsVisibility.js'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	Asterisk,
@@ -84,7 +84,6 @@ type MenuEntry
 		visible?: boolean
 		children?: MenuEntry[]
 		isSeparator?: boolean
-		isAnnotation?: boolean
 	}
 	| undefined
 
@@ -138,9 +137,9 @@ export function getAssistantMenuEntries(): MenuEntry[] {
 /**
  *
  * @param isRichWorkspace is the editor a folder description
+ * @param annotationsHidden whether annotations are hidden in editor
  */
-export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
-	const { annotationsHidden } = useAnnotationsVisibility()
+export function getMenuEntries(isRichWorkspace: boolean, annotationsHidden?: Ref<boolean>): MenuEntry[] {
 	const menuEntries: MenuEntry[] = [
 		{
 			key: 'undo',
@@ -536,7 +535,7 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 			key: 'annotations',
 			label: t('text', 'Annotations'),
 			get icon() {
-				return annotationsHidden.value
+				return annotationsHidden?.value
 					? CommentOffOutline
 					: CommentOutline
 			},
@@ -549,7 +548,6 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 					keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
 					isActive: 'comment',
 					icon: CommentOutline,
-					isAnnotation: true,
 					action: (command) => {
 						return command.insertComment()
 					},
@@ -561,7 +559,6 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 					keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 					isActive: 'footnote',
 					icon: Asterisk,
-					isAnnotation: true,
 					action: (command) => {
 						return command.insertFootnote()
 					},
@@ -573,16 +570,18 @@ export function getMenuEntries(isRichWorkspace: boolean): MenuEntry[] {
 				{
 					key: 'annotations-hide',
 					get icon() {
-						return annotationsHidden.value
+						return annotationsHidden?.value
 							? Eye
 							: EyeOff
 					},
-					get label() {
-						return annotationsHidden.value
+					label: () => {
+						return annotationsHidden?.value
 							? t('text', 'Show annotations')
 							: t('text', 'Hide annotations')
 					},
-					click: () => emit('text:annotations:toggle-visibility', undefined),
+					action: (command) => {
+						return command.toggleAnnotationsVisibility()
+					},
 				},
 			],
 		},

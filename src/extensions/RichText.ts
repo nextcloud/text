@@ -46,6 +46,7 @@ import Table from '../nodes/Table.js'
 import TaskItem from '../nodes/TaskItem.ts'
 import TaskList from '../nodes/TaskList.ts'
 import TrailingNode from '../nodes/TrailingNode.js'
+import AnnotationsVisibility from './AnnotationsVisibility.ts'
 import CommentBubble from './CommentBubble.ts'
 import Emoji from './Emoji.js'
 import KeepSyntax from './KeepSyntax.js'
@@ -107,6 +108,7 @@ export default Extension.create<RichTextOptions>({
 				defaultLanguage: 'plaintext',
 			}),
 			Details,
+			AnnotationsVisibility,
 			Comments,
 			Footnotes,
 			BulletList,

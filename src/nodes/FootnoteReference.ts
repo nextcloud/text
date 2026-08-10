@@ -69,8 +69,8 @@ const FootnoteReference = Node.create({
 
 	addCommands() {
 		return {
-			insertFootnote: (options?: { referenceId?: string }) => ({ state, chain }) => {
-				if (isInsideCommentOrFootnote(state)) {
+			insertFootnote: (options?: { referenceId?: string }) => ({ state, chain, editor }) => {
+				if (editor.storage.annotationsVisibility.hidden || isInsideCommentOrFootnote(state)) {
 					return false
 				}
 

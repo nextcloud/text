@@ -23,7 +23,7 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { EditorContent } from '@tiptap/vue-3'
 import FloatingButtons from './FloatingButtons.vue'
 import TocContainer from './TableOfContents/TocContainer.vue'
-import { useAnnotationsVisibility } from '../../composables/useAnnotationsVisibility.ts'
+import { useAnnotationsHidden } from '../../composables/useAnnotationsHidden.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 
@@ -47,7 +47,7 @@ export default {
 		const { editor } = useEditor()
 		const { isRichEditor, isRichWorkspace, hasTableOfContents }
 			= useEditorFlags()
-		const { annotationsHidden } = useAnnotationsVisibility()
+		const annotationsHidden = useAnnotationsHidden(editor)
 		return {
 			annotationsHidden,
 			editor,
