@@ -89,6 +89,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Service\\ConfigService' => __DIR__ . '/..' . '/../lib/Service/ConfigService.php',
         'OCA\\Text\\Service\\DocumentService' => __DIR__ . '/..' . '/../lib/Service/DocumentService.php',
         'OCA\\Text\\Service\\EncodingService' => __DIR__ . '/..' . '/../lib/Service/EncodingService.php',
+        'OCA\\Text\\Service\\FileService' => __DIR__ . '/..' . '/../lib/Service/FileService.php',
         'OCA\\Text\\Service\\InitialStateProvider' => __DIR__ . '/..' . '/../lib/Service/InitialStateProvider.php',
         'OCA\\Text\\Service\\NotificationService' => __DIR__ . '/..' . '/../lib/Service/NotificationService.php',
         'OCA\\Text\\Service\\SessionService' => __DIR__ . '/..' . '/../lib/Service/SessionService.php',

@@ -16,24 +16,18 @@ use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Middleware\Attribute\RequireDocumentSessionOrUserOrShareToken;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\FileService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
-use OCP\Constants;
-use OCP\Files\File;
-use OCP\Files\Folder;
-use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
-use OCP\ISession;
 use OCP\IUserManager;
 use OCP\IUserSession;
-use OCP\Share\Exceptions\ShareNotFound;
-use OCP\Share\IManager as ShareManager;
 use ReflectionException;
 
 class SessionMiddleware extends Middleware {
@@ -42,12 +36,10 @@ class SessionMiddleware extends Middleware {
 		private readonly IRequest $request,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
-		private readonly ISession $session,
 		private readonly IUserSession $userSession,
-		private readonly IRootFolder $rootFolder,
-		private readonly ShareManager $shareManager,
 		private readonly IL10N $l10n,
 		private readonly IUserManager $userManager,
+		private readonly FileService $fileService,
 	) {
 	}
 
@@ -135,60 +127,21 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$fileId = (int)$this->request->getParam('documentId');
 		$shareToken = (string)$this->request->getParam('shareToken');
+		$userId = $this->userSession->getUser()?->getUID();
 
 		if ($shareToken !== '') {
-			try {
-				$share = $this->shareManager->getShareByToken($shareToken);
-			} catch (ShareNotFound) {
-				throw new InvalidSessionException();
-			}
-
-			$node = $this->rootFolder->getUserFolder($share->getShareOwner())->getFirstNodeById($documentId);
-			if ($node === null) {
-				throw new InvalidSessionException();
-			}
-
-			if ($share->getNodeType() === 'folder') {
-				$folder = $share->getNode();
-				if (!$folder instanceof Folder) {
-					throw new InvalidSessionException();
-				}
-				$file = $folder->getFirstNodeById($documentId);
-				if (!$file instanceof File) {
-					throw new InvalidSessionException();
-				}
-			}
-
-			if ($share->getPassword() !== null) {
-				$shareIds = $this->session->get('public_link_authenticated');
-				$shareIds = is_array($shareIds) ? $shareIds : [$shareIds];
-
-				if (!in_array($share->getId(), $shareIds, true)) {
-					throw new InvalidSessionException();
-				}
-			}
-
-			if (($share->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
-				throw new InvalidSessionException();
-			}
-
-			$attributes = $share->getAttributes();
-			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
-				throw new InvalidSessionException();
-			}
-
+			$documentId = $this->fileService->getDocumentIdFromShare($fileId, $shareToken);
 			$controller->setDocumentId($documentId);
 			return;
 		}
 
-		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
-			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) !== null) {
-				$controller->setUserId($userId);
-				$controller->setDocumentId($documentId);
-				return;
-			}
+		if ($userId !== null) {
+			$documentId = $this->fileService->getDocumentIdForUser($fileId, $userId);
+			$controller->setUserId($userId);
+			$controller->setDocumentId($documentId);
+			return;
 		}
 
 		throw new InvalidSessionException();
