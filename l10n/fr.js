@@ -213,6 +213,7 @@ OC.L10N.register(
     "Success callout" : "Légende de succès",
     "Warning callout" : "Légende d'avertissement",
     "Danger callout" : "Légende de danger",
+    "Question callout" : "Légende de question",
     "Table" : "Tableau",
     "Insert link" : "Insérer un lien",
     "Insert attachment" : "Insérer une pièce jointe",
