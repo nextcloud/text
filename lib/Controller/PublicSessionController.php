@@ -11,6 +11,7 @@ namespace OCA\Text\Controller;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\DocumentService;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
@@ -32,6 +33,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		ISession $session,
 		private ShareManager $shareManager,
 		private ApiService $apiService,
+		private DocumentService $documentService,
 	) {
 		parent::__construct($appName, $request, $session);
 	}
@@ -70,8 +72,9 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+	public function close(int $documentId, int $sessionId, string $sessionToken, string $token): DataResponse {
+		$file = $this->documentService->getFileByIdFromShare($documentId, $token);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
 	}
 
 	#[NoAdminRequired]

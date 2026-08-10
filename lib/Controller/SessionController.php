@@ -8,9 +8,11 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\ApiController;
@@ -33,6 +35,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
+		private DocumentService $documentService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
 		private IUserManager $userManager,
@@ -49,7 +52,12 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+		$userId = $this->userSession->getUser()?->getUID();
+		if ($userId === null) {
+			throw new InvalidSessionException();
+		}
+		$file = $this->documentService->getFileById($documentId, $userId);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
 	}
 
 	#[NoAdminRequired]

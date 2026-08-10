@@ -445,13 +445,29 @@ class DocumentService {
 	 */
 	public function resetDocument(int $documentId, bool $force = false): void {
 		try {
+			$userId = $this->userId;
+			// If no user is provided we need to get any file from existing mounts for cleanup jobs
+			if ($userId === null) {
+				$mounts = $this->userMountCache->getMountsForFileId($documentId);
+				$anyMount = array_shift($mounts);
+				if ($anyMount === null) {
+					throw new NotFoundException('Could not fallback to file from mounts');
+				}
+				$userId = $anyMount->getUser()->getUID();
+			}
+
 			$document = $this->documentMapper->find($documentId);
 			if (!$force && $this->hasUnsavedChanges($document)) {
 				$this->logger->debug('did not reset document for ' . $documentId);
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 
-			$this->unlock($documentId);
+			try {
+				$file = $this->getFileById($documentId, $userId);
+				$this->unlock($file);
+			} catch (NotFoundException) {
+				// Continue with the cleanup even if the file does not exist.
+			}
 
 			$this->stepMapper->deleteAll($documentId);
 			$this->sessionMapper->deleteByDocumentId($documentId);
@@ -488,7 +504,13 @@ class DocumentService {
 		if ($shareToken === null) {
 			throw new \InvalidArgumentException('No proper share data');
 		}
+		return $this->getFileByIdFromShare($session->getDocumentId(), $shareToken);
+	}
 
+	/**
+	 * @throws NotFoundException
+	 */
+	public function getFileByIdFromShare(int $fileId, string $shareToken): File {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound) {
@@ -497,31 +519,19 @@ class DocumentService {
 
 		$node = $share->getNode();
 		if ($node instanceof Folder) {
-			$node = $node->getFirstNodeById($session->getDocumentId());
+			$node = $node->getFirstNodeById($fileId);
 		}
 		if ($node instanceof File) {
 			return $node;
 		}
-		throw new \InvalidArgumentException('No proper share data');
+		throw new NotFoundException();
 	}
 
 	/**
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getFileById(int $fileId, ?string $userId = null): File {
-		$userId ??= $this->userId;
-
-		// If no user is provided we need to get any file from existing mounts for cleanup jobs
-		if ($userId === null) {
-			$mounts = $this->userMountCache->getMountsForFileId($fileId);
-			$anyMount = array_shift($mounts);
-			if ($anyMount === null) {
-				throw new NotFoundException('Could not fallback to file from mounts');
-			}
-
-			$userId = $anyMount->getUser()->getUID();
-		}
+	public function getFileById(int $fileId, string $userId): File {
 
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($userId);
@@ -652,38 +662,36 @@ class DocumentService {
 		return true;
 	}
 
-	public function lock(int $fileId): bool {
+	public function lock(File $file): bool {
 		if (!$this->lockManager->isLockProviderAvailable()) {
 			return true;
 		}
 
 		try {
-			$file = $this->getFileById($fileId, $this->userId);
 			$this->lockManager->lock(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException) {
+		} catch (NoLockProviderException|PreConditionNotMetException) {
 		} catch (OwnerLockedException) {
 			return false;
 		}
 		return true;
 	}
 
-	public function unlock(int $fileId): void {
+	public function unlock(File $file): void {
 		if (!$this->lockManager->isLockProviderAvailable()) {
 			return;
 		}
 
 		try {
-			$file = $this->getFileById($fileId, $this->userId);
 			$this->lockManager->unlock(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException) {
+		} catch (NoLockProviderException|PreConditionNotMetException) {
 		}
 	}
 

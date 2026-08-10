@@ -21,6 +21,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Constants;
+use OCP\Files\File;
 use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
@@ -61,7 +62,7 @@ class ApiService {
 				} catch (NotPermittedException) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
 				}
-			} elseif ($fileId !== null) {
+			} elseif ($fileId !== null && $this->userId !== null) {
 				try {
 					$file = $this->documentService->getFileById($fileId, $this->userId);
 				} catch (NotFoundException|NotPermittedException $e) {
@@ -132,7 +133,7 @@ class ApiService {
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
 		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
-			$isLocked = $this->documentService->lock($file->getId());
+			$isLocked = $this->documentService->lock($file);
 			if (!$isLocked) {
 				$readOnly = true;
 			}
@@ -149,12 +150,12 @@ class ApiService {
 		]);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+	public function close(int $documentId, int $sessionId, string $sessionToken, File $file): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			$this->documentService->unlock($documentId);
+			$this->documentService->unlock($file);
 		}
 		return new DataResponse([]);
 	}

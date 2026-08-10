@@ -77,7 +77,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$file = $this->createMock(\OCP\Files\File::class);
 		$file->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$userFolder->method('getById')->willReturn([$file]);
-		$actual = $this->documentService->getFileById(1234);
+		$actual = $this->documentService->getFileById(1234, 'userid');
 		self::assertEquals($file, $actual);
 	}
 
@@ -90,7 +90,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$file2 = $this->createMock(\OCP\Files\File::class);
 		$file2->method('getPermissions')->willReturn(Constants::PERMISSION_READ & Constants::PERMISSION_UPDATE);
 		$userFolder->method('getById')->willReturn([$file1, $file2]);
-		$actual = $this->documentService->getFileById(1234);
+		$actual = $this->documentService->getFileById(1234, 'userid');
 		self::assertEquals($file2, $actual);
 	}
 
@@ -102,6 +102,6 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$file->method('getPermissions')->willReturn(Constants::PERMISSION_UPDATE);
 		$userFolder->method('getById')->willReturn([$file]);
 		$this->expectException(NotPermittedException::class);
-		$actual = $this->documentService->getFileById(1234);
+		$actual = $this->documentService->getFileById(1234, 'userid');
 	}
 }
