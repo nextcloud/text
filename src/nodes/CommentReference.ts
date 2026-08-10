@@ -87,7 +87,7 @@ const CommentReference = Node.create({
 	addCommands() {
 		return {
 			insertComment: () => ({ state, chain, dispatch, editor }) => {
-				if (editor.storage.annotationsVisibility.hidden || isInsideCommentOrFootnote(state)) {
+				if (editor.storage.annotationsVisibility?.hidden || isInsideCommentOrFootnote(state)) {
 					return false
 				}
 
