@@ -160,7 +160,7 @@ import type { Node } from '@tiptap/pm/model'
 import { getCurrentUser } from '@nextcloud/auth'
 import { t } from '@nextcloud/l10n'
 import { DOMSerializer } from '@tiptap/pm/model'
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
@@ -189,15 +189,14 @@ const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referen
 const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
 const replyInput = ref<InstanceType<typeof NcRichContenteditable> | null>(null)
 const userData = ref<Record<string, object>>({})
-
-const editorVersion = ref(0)
 const isEditable = ref(props.editor.isEditable)
+
 /**
- * Increment editor version on editor updates
+ *
  */
 function onUpdate() {
-	editorVersion.value++
 	isEditable.value = props.editor.isEditable
+	updateCommentState()
 }
 onMounted(() => {
 	props.editor.on('update', onUpdate)
@@ -207,41 +206,29 @@ onMounted(() => {
 })
 onUnmounted(() => props.editor.off('update', onUpdate))
 
-const allCommentRefs = computed(() => {
-	void editorVersion.value // reactive dependency on editor updates
+const commentNodesMap = shallowRef<Record<string, Node>>({})
+const commentRefIds = ref<string[]>([])
+const commentCount = computed(() => commentRefIds.value.length)
+const commentPosition = computed(() => commentRefIds.value.indexOf(props.referenceId) + 1)
+const commentNode = computed<Node | null>(() => commentNodesMap.value[props.referenceId] ?? null)
+
+/**
+ *
+ */
+function updateCommentState() {
+	const map: Record<string, Node> = {}
 	const refs: string[] = []
 	props.editor.state.doc.descendants((node) => {
-		if (node.type.name === 'commentReference') {
+		if (node.type.name === 'comment') {
+			map[node.attrs.referenceId] = node
+		} else if (node.type.name === 'commentReference') {
 			refs.push(node.attrs.referenceId)
 		}
 	})
-	return refs
-})
-
-const commentCount = computed(() => allCommentRefs.value.length)
-const commentPosition = computed(() => allCommentRefs.value.indexOf(props.referenceId) + 1)
-
-/**
- * @param direction direction to navigate
- */
-function navigate(direction: 'prev' | 'next') {
-	props.editor.commands.navigateCommentBubble(direction)
+	commentNodesMap.value = map
+	commentRefIds.value = refs
 }
-
-const commentNode = computed<Node | null>(() => {
-	void editorVersion.value // reactive dependency on editor updates
-	let found: Node | null = null
-	props.editor.state.doc.descendants((node) => {
-		if (found) {
-			return false
-		}
-		if (node.type.name === 'comment' && node.attrs.referenceId === props.referenceId) {
-			found = node
-			return false
-		}
-	})
-	return found
-})
+updateCommentState() // initialize before first render
 
 const items = computed(() => {
 	if (!commentNode.value) {
@@ -266,6 +253,13 @@ const items = computed(() => {
 })
 
 const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].markdownBody))
+
+/**
+ * @param direction direction to navigate
+ */
+function navigate(direction: 'prev' | 'next') {
+	props.editor.commands.navigateCommentBubble(direction)
+}
 
 // Persist draft as user types
 watch(replyText, (val) => {
