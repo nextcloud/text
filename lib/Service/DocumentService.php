@@ -35,7 +35,6 @@ use OCP\Files\Lock\ILockManager;
 use OCP\Files\Lock\LockContext;
 use OCP\Files\Lock\NoLockProviderException;
 use OCP\Files\Lock\OwnerLockedException;
-use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -62,6 +61,7 @@ class DocumentService {
 
 	public function __construct(
 		private readonly DocumentMapper $documentMapper,
+		private readonly FileService $fileService,
 		private readonly StepMapper $stepMapper,
 		private readonly SessionMapper $sessionMapper,
 		private readonly IAppData $appData,
@@ -227,7 +227,7 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
-			$file = $this->getFileForSession($session, $shareToken);
+			$file = $this->fileService->getFileForSession($session, $shareToken);
 			if (!$this->isReadOnly($file, $shareToken)) {
 				$this->insertSteps($document, $session, $stepsToInsert);
 			}
@@ -463,7 +463,7 @@ class DocumentService {
 			}
 
 			try {
-				$file = $this->getFileById($documentId, $userId);
+				$file = $this->fileService->getFileById($documentId, $userId);
 				$this->unlock($file);
 			} catch (NotFoundException) {
 				// Continue with the cleanup even if the file does not exist.
@@ -486,108 +486,6 @@ class DocumentService {
 
 	public function getAllWithNoActiveSession(): \Generator {
 		return $this->documentMapper->findAllWithNoActiveSessions();
-	}
-
-	/**
-	 * @throws NotPermittedException
-	 * @throws NotFoundException
-	 */
-	public function getFileForSession(Session $session, ?string $shareToken = null): File {
-		if (!$session->isGuest()) {
-			try {
-				return $this->getFileById($session->getDocumentId(), $session->getUserId());
-			} catch (NotFoundException) {
-				// We may still have a user session but on a public share link so move on
-			}
-		}
-
-		if ($shareToken === null) {
-			throw new \InvalidArgumentException('No proper share data');
-		}
-		return $this->getFileByIdFromShare($session->getDocumentId(), $shareToken);
-	}
-
-	/**
-	 * @throws NotFoundException
-	 */
-	public function getFileByIdFromShare(int $fileId, string $shareToken): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
-		$node = $share->getNode();
-		if ($node instanceof Folder) {
-			$node = $node->getFirstNodeById($fileId);
-		}
-		if ($node instanceof File) {
-			return $node;
-		}
-		throw new NotFoundException();
-	}
-
-	/**
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 */
-	public function getFileById(int $fileId, string $userId): File {
-
-		try {
-			$userFolder = $this->rootFolder->getUserFolder($userId);
-		} catch (\OC\User\NoUserException) {
-			// It is a bit hacky to depend on internal exceptions here. But it is the best we can do for now
-			throw new NotFoundException();
-		}
-
-		// We currently don't know the path nor care about which file mount it is when getting by id
-		// therefore we can take a shortcut on the cached node if we have edit permissions on that
-		$file = $userFolder->getFirstNodeById($fileId);
-		if ($file instanceof File && $file->getPermissions() & Constants::PERMISSION_UPDATE) {
-			return $file;
-		}
-
-		// Ideally we'd optimize this part in the future by storing the path and getting the acutal target directly
-		$files = $userFolder->getById($fileId);
-		if (count($files) === 0) {
-			throw new NotFoundException();
-		}
-
-		// Workaround to always open files with edit permissions if multiple occurrences of
-		// the same file id are in the user home, ideally we should also track the path of the file when opening
-		usort($files, static fn (Node $a, Node $b) => ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE));
-
-		$file = array_shift($files);
-
-		if (!$file instanceof File) {
-			throw new NotFoundException();
-		}
-
-		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
-			throw new NotPermittedException();
-		}
-
-		return $file;
-	}
-
-	/**
-	 * @throws NotFoundException
-	 */
-	public function getFileByShareToken(string $shareToken, ?string $path = null): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
-		$node = $share->getNode();
-		if ($path !== null && $node instanceof Folder) {
-			$node = $node->get($path);
-		}
-		if ($node instanceof File) {
-			return $node;
-		}
-		throw new \InvalidArgumentException('No proper share data');
 	}
 
 	public function isReadOnly(File $file, ?string $token): bool {

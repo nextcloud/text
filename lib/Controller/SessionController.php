@@ -12,7 +12,7 @@ use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
-use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\FileService;
 use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\ApiController;
@@ -40,7 +40,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
-		private DocumentService $documentService,
+		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
 		private IUserManager $userManager,
@@ -59,7 +59,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		}
 
 		try {
-			$file = $this->documentService->getFileById($fileId, $this->userId);
+			$file = $this->fileService->getFileById($fileId, $userId);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
 			return new DataResponse([
@@ -77,7 +77,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		if ($userId === null) {
 			throw new InvalidSessionException();
 		}
-		$file = $this->documentService->getFileById($documentId, $userId);
+		$file = $this->fileService->getFileById($documentId, $userId);
 		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
 	}
 

@@ -8,32 +8,30 @@ use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\EncodingService;
+use OCA\Text\Service\FileService;
 use OCA\Text\Service\SessionService;
 use OCP\IL10N;
-use OCP\IRequest;
 use Psr\Log\LoggerInterface;
 
 class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	private ApiService $apiService;
 
-	private IRequest $request;
 	private ConfigService $configService;
 	private SessionService $sessionService;
 	private DocumentService $documentService;
+	private FileService $fileService;
 	private EncodingService $encodingService;
 	private LoggerInterface $loggerInterface;
 	private IL10N $l10n;
-	private string $userId;
 
 	public function setUp(): void {
-		$this->request = $this->createMock(IRequest::class);
 		$this->configService = $this->createMock(ConfigService::class);
 		$this->sessionService = $this->createMock(SessionService::class);
 		$this->documentService = $this->createMock(DocumentService::class);
+		$this->fileService = $this->createMock(FileService::class);
 		$this->encodingService = $this->createMock(EncodingService::class);
 		$this->loggerInterface = $this->createMock(LoggerInterface::class);
 		$this->l10n = $this->createMock(IL10N::class);
-		$this->userId = 'admin';
 
 		$document = new Document();
 		$document->setId(123);
@@ -42,14 +40,13 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->encodingService->method('encodeToUtf8')->willReturnCallback(fn ($str) => $str);
 
 		$this->apiService = new ApiService(
-			$this->request,
 			$this->configService,
 			$this->sessionService,
 			$this->documentService,
+			$this->fileService,
 			$this->encodingService,
 			$this->loggerInterface,
 			$this->l10n,
-			$this->userId,
 			null,
 		);
 	}
@@ -75,7 +72,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$file = $this->mockFile(123, 'admin');
 
-		$this->documentService->method('getFileForSession')->willReturn($file);
+		$this->fileService->method('getFileForSession')->willReturn($file);
 		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());
 
 		$this->l10n->method('t')

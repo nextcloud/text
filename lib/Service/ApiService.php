@@ -35,6 +35,7 @@ class ApiService {
 		private readonly ConfigService $configService,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
+		private readonly FileService $fileService,
 		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
 		private readonly IL10N $l10n,
@@ -185,7 +186,7 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$file = $this->documentService->getFileForSession($session, $shareToken);
+			$file = $this->fileService->getFileForSession($session, $shareToken);
 			$result['readOnly'] = $this->documentService->isReadOnly($file, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
@@ -212,7 +213,7 @@ class ApiService {
 
 	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
-			$file = $this->documentService->getFileForSession($session, $shareToken);
+			$file = $this->fileService->getFileForSession($session, $shareToken);
 		} catch (NotPermittedException|NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
