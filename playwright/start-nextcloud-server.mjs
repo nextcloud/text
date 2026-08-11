@@ -33,13 +33,7 @@ async function start() {
 	const appinfo = readFileSync('appinfo/info.xml').toString()
 	const maxVersion = appinfo.match(/<nextcloud min-version="\d+" max-version="(\d\d+)" \/>/)?.[1]
 
-	let branch = 'master'
-	if (maxVersion) {
-		const refs = execSync('git ls-remote --refs').toString('utf-8')
-		branch = refs.includes(`refs/heads/stable${maxVersion}`)
-			? `stable${maxVersion}`
-			: branch
-	}
+	let branch = '48ac4910f81b0a5f9c755e8b3e20cc9a692c3737'
 
 	return await startNextcloud(branch, true, {
 		exposePort: 8089,
