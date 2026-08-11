@@ -23,15 +23,22 @@ test.describe('Text PROPFIND extension', () => {
 		})
 
 		test('always adds rich workspace property', async ({ page, user }) => {
-			const properties = [PROPERTY_WORKSPACE_FLAT, PROPERTY_WORKSPACE_FILE_FLAT]
+			const properties = [
+				PROPERTY_WORKSPACE_FLAT,
+				PROPERTY_WORKSPACE_FILE_FLAT,
+			]
+			const fiveSecondsAgo = Math.floor(Date.now() / 1000) - 5
 
 			await page.goto('/apps/dashboard')
-			await user.uploadFile({ name: 'Readme.md', content: '' })
+			await user.uploadFile({
+				name: 'Readme.md',
+				content: '',
+				mtime: fiveSecondsAgo,
+			})
 
 			const [root1] = await propfindFolder(user, '/', 0, properties)
 			expect(root1).toHaveProperty(PROPERTY_WORKSPACE_FLAT, '')
 
-			await deleteWebDAVResource(user, '/Readme.md')
 			await user.uploadFile({ name: 'Readme.md', content: '## Hello world\n' })
 			const [root2] = await propfindFolder(user, '/', 0, properties)
 			expect(root2).toHaveProperty(PROPERTY_WORKSPACE_FLAT, '## Hello world\n')
