@@ -31,7 +31,7 @@
 	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot2.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot3.gif</screenshot>
 	<dependencies>
-		<nextcloud min-version="35" max-version="35" />
+		<nextcloud min-version="34" max-version="35" />
 	</dependencies>
 	<background-jobs>
 		<job>OCA\Text\Cron\Cleanup</job>
