@@ -10,8 +10,10 @@ OC.L10N.register(
     "Could not write file to disk" : "No se podió escribir o fichero en o disco",
     "A PHP extension stopped the file upload" : "Una estensión de PHP aturó a carga de fichers",
     "File not found" : "Fichero no trobau",
-    "Cancel" : "Cancelar",
+    "Close" : "Zarrar",
+    "Delete" : "Delete",
     "Save" : "Save",
+    "Cancel" : "Cancelar",
     "Done" : "Feito",
     "Details" : "Detalles",
     "Choose" : "Eslechir"
