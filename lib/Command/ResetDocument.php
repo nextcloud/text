@@ -16,11 +16,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetDocument extends Command {
-	protected DocumentService $documentService;
-
-	public function __construct(DocumentService $documentService) {
+	public function __construct(
+		protected DocumentService $documentService,
+	) {
 		parent::__construct();
-		$this->documentService = $documentService;
 	}
 
 	protected function configure(): void {

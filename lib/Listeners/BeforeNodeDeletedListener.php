@@ -19,13 +19,10 @@ use OCP\Files\File;
  * @template-implements IEventListener<Event|BeforeNodeDeletedEvent>
  */
 class BeforeNodeDeletedListener implements IEventListener {
-	private AttachmentService $attachmentService;
-	private DocumentService $documentService;
-
-	public function __construct(AttachmentService $attachmentService,
-		DocumentService $documentService) {
-		$this->attachmentService = $attachmentService;
-		$this->documentService = $documentService;
+	public function __construct(
+		private readonly AttachmentService $attachmentService,
+		private readonly DocumentService $documentService,
+	) {
 	}
 
 	public function handle(Event $event): void {

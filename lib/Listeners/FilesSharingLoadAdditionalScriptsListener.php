@@ -17,10 +17,10 @@ use OCP\Util;
 
 /** @implements IEventListener<Event|BeforeTemplateRenderedEvent> */
 class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
-	protected InitialStateProvider $initialStateProvider;
-
-	public function __construct(IConfig $config, InitialStateProvider $initialStateProvider) {
-		$this->initialStateProvider = $initialStateProvider;
+	public function __construct(
+		IConfig $config,
+		protected InitialStateProvider $initialStateProvider,
+	) {
 	}
 
 	public function handle(Event $event): void {

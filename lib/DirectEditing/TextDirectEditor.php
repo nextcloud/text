@@ -24,25 +24,12 @@ use OCP\Util;
 
 class TextDirectEditor implements IEditor {
 
-	/** @var IL10N */
-	private $l10n;
-
-	/** @var InitialStateProvider */
-	private $initialStateProvider;
-
-	/** @var ApiService */
-	private $apiService;
-
-	/**
-	 * @var IAppConfig
-	 */
-	private $appConfig;
-
-	public function __construct(IL10N $l10n, InitialStateProvider $initialStateProvider, ApiService $apiService, IAppConfig $appConfig) {
-		$this->l10n = $l10n;
-		$this->initialStateProvider = $initialStateProvider;
-		$this->apiService = $apiService;
-		$this->appConfig = $appConfig;
+	public function __construct(
+		private readonly IL10N $l10n,
+		private readonly InitialStateProvider $initialStateProvider,
+		private readonly ApiService $apiService,
+		private readonly IAppConfig $appConfig,
+	) {
 	}
 
 	/**
@@ -155,9 +142,7 @@ class TextDirectEditor implements IEditor {
 			Util::addScript('text', 'text-text');
 			Util::addStyle('text', 'text-text');
 			return new TemplateResponse('text', 'main', [], 'base');
-		} catch (InvalidPathException $e) {
-		} catch (NotFoundException $e) {
-		} catch (NotPermittedException $e) {
+		} catch (InvalidPathException|NotFoundException|NotPermittedException) {
 		}
 		return new NotFoundResponse();
 	}

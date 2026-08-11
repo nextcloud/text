@@ -29,11 +29,11 @@ class Notifier implements INotifier {
 	public const string SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
 
 	public function __construct(
-		private IFactory $factory,
-		private IUserManager $userManager,
-		private IURLGenerator $urlGenerator,
-		private IRootFolder $rootFolder,
-		private IEventDispatcher $eventDispatcher,
+		private readonly IFactory $factory,
+		private readonly IUserManager $userManager,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly IRootFolder $rootFolder,
+		private readonly IEventDispatcher $eventDispatcher,
 	) {
 	}
 
@@ -66,7 +66,7 @@ class Notifier implements INotifier {
 
 				try {
 					$userFolder = $this->rootFolder->getUserFolder($targetUser);
-				} catch (NotPermittedException|NoUserException $e) {
+				} catch (NotPermittedException|NoUserException) {
 					throw new UnknownNotificationException();
 				}
 				$node = $userFolder->getFirstNodeById($fileId);

@@ -33,11 +33,11 @@ class WorkspacePlugin extends ServerPlugin {
 	private Server $server;
 
 	public function __construct(
-		private WorkspaceService $workspaceService,
-		private ICacheFactory $cacheFactory,
-		private ConfigService $configService,
-		private LoggerInterface $logger,
-		private ?string $userId,
+		private readonly WorkspaceService $workspaceService,
+		private readonly ICacheFactory $cacheFactory,
+		private readonly ConfigService $configService,
+		private readonly LoggerInterface $logger,
+		private readonly ?string $userId,
 	) {
 	}
 
@@ -55,7 +55,7 @@ class WorkspacePlugin extends ServerPlugin {
 	public function initialize(Server $server) {
 		$this->server = $server;
 
-		$this->server->on('propFind', [$this, 'propFind']);
+		$this->server->on('propFind', $this->propFind(...));
 	}
 
 	public function propFind(PropFind $propFind, INode $node) {

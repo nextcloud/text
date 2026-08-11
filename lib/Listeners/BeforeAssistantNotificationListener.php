@@ -17,7 +17,7 @@ use OCP\IURLGenerator;
 class BeforeAssistantNotificationListener implements \OCP\EventDispatcher\IEventListener {
 
 	public function __construct(
-		private IURLGenerator $urlGenerator,
+		private readonly IURLGenerator $urlGenerator,
 	) {
 	}
 

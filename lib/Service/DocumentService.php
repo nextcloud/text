@@ -58,33 +58,25 @@ class DocumentService {
 	public const int AUTOSAVE_MINIMUM_DELAY = 10;
 
 	private bool $saveFromText = false;
+	private readonly ICache $cache;
 
-	private ?string $userId;
-	private DocumentMapper $documentMapper;
-	private SessionMapper $sessionMapper;
-	private LoggerInterface $logger;
-	private ShareManager $shareManager;
-	private StepMapper $stepMapper;
-	private IRootFolder $rootFolder;
-	private ICache $cache;
-	private IAppData $appData;
-	private ILockManager $lockManager;
-	private IUserMountCache $userMountCache;
-	private IConfig $config;
-
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockManager $lockManager, IUserMountCache $userMountCache, IConfig $config) {
-		$this->documentMapper = $documentMapper;
-		$this->stepMapper = $stepMapper;
-		$this->sessionMapper = $sessionMapper;
-		$this->userId = $userId;
-		$this->appData = $appData;
-		$this->rootFolder = $rootFolder;
+	public function __construct(
+		private readonly DocumentMapper $documentMapper,
+		private readonly StepMapper $stepMapper,
+		private readonly SessionMapper $sessionMapper,
+		private readonly IAppData $appData,
+		private ?string $userId,
+		private readonly IRootFolder $rootFolder,
+		ICacheFactory $cacheFactory,
+		private readonly LoggerInterface $logger,
+		private readonly ShareManager $shareManager,
+		IRequest $request,
+		IManager $directManager,
+		private readonly ILockManager $lockManager,
+		private readonly IUserMountCache $userMountCache,
+		private readonly IConfig $config,
+	) {
 		$this->cache = $cacheFactory->createDistributed('text');
-		$this->logger = $logger;
-		$this->shareManager = $shareManager;
-		$this->lockManager = $lockManager;
-		$this->userMountCache = $userMountCache;
-		$this->config = $config;
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -92,7 +84,7 @@ class DocumentService {
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
-			} catch (\Exception $e) {
+			} catch (\Exception) {
 			}
 		}
 	}
@@ -100,7 +92,7 @@ class DocumentService {
 	public function getDocument(int $id): ?Document {
 		try {
 			return $this->documentMapper->find($id);
-		} catch (DoesNotExistException|NotFoundException $e) {
+		} catch (DoesNotExistException|NotFoundException) {
 			return null;
 		}
 	}
@@ -201,7 +193,7 @@ class DocumentService {
 	public function writeDocumentState(int $documentId, string $content): void {
 		try {
 			$documentStateFile = $this->getStateFile($documentId);
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			$documentStateFile = $this->createStateFile($documentId);
 		} catch (NotPermittedException $e) {
 			$this->logger->error('Failed to create document state file', ['exception' => $e]);
@@ -257,7 +249,7 @@ class DocumentService {
 				// If there were any queries in the steps, send all steps starting 200 steps before last save.
 				// Adding 200 previous steps to workaround race conditions where state with missing step got persisted in the document state. See #7692
 				$getStepsSinceVersion = $this->stepMapper->getBeforeVersion($documentId, $document->getLastSavedVersion(), 200);
-			} catch (NotFoundException $e) {
+			} catch (NotFoundException) {
 				$this->logger->debug('Existing document, but no state file found for ' . $documentId);
 				// If there is no state file, include all the steps.
 				$getStepsSinceVersion = 0;
@@ -406,12 +398,8 @@ class DocumentService {
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
 				'fileSizeBeforeSave' => $file->getSize(),
-				'steps' => array_map(static function (Step $step) {
-					return $step->jsonSerialize();
-				}, $this->stepMapper->find($documentId, 0)),
-				'sessions' => array_map(static function (Session $session) {
-					return $session->jsonSerialize();
-				}, $this->sessionMapper->findAll($documentId))
+				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($documentId, 0)),
+				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($documentId))
 			]);
 		}
 
@@ -431,7 +419,7 @@ class DocumentService {
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoSaveDocument, $documentState) {
+			), function () use ($file, $autoSaveDocument, $documentState): void {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
 				$this->writeDocumentState($file->getId(), $documentState);
@@ -441,7 +429,7 @@ class DocumentService {
 			$document->setLastSavedVersionEtag($file->getEtag());
 			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
-		} catch (LockedException $e) {
+		} catch (LockedException) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		} finally {
@@ -471,7 +459,7 @@ class DocumentService {
 			$this->getStateFile($documentId)->delete();
 
 			$this->logger->debug('document reset for ' . $documentId);
-		} catch (DoesNotExistException|NotFoundException $e) {
+		} catch (DoesNotExistException|NotFoundException) {
 			// Ignore if document not found or state file not found
 		}
 	}
@@ -503,7 +491,7 @@ class DocumentService {
 
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			throw new NotFoundException();
 		}
 
@@ -522,7 +510,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 */
 	public function getFileById(int $fileId, ?string $userId = null): File {
-		$userId = $userId ?? $this->userId;
+		$userId ??= $this->userId;
 
 		// If no user is provided we need to get any file from existing mounts for cleanup jobs
 		if ($userId === null) {
@@ -537,7 +525,7 @@ class DocumentService {
 
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($userId);
-		} catch (\OC\User\NoUserException $e) {
+		} catch (\OC\User\NoUserException) {
 			// It is a bit hacky to depend on internal exceptions here. But it is the best we can do for now
 			throw new NotFoundException();
 		}
@@ -557,9 +545,7 @@ class DocumentService {
 
 		// Workaround to always open files with edit permissions if multiple occurrences of
 		// the same file id are in the user home, ideally we should also track the path of the file when opening
-		usort($files, static function (Node $a, Node $b) {
-			return ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE);
-		});
+		usort($files, static fn (Node $a, Node $b) => ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE));
 
 		$file = array_shift($files);
 
@@ -580,7 +566,7 @@ class DocumentService {
 	public function getFileByShareToken(string $shareToken, ?string $path = null): File {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			throw new NotFoundException();
 		}
 
@@ -599,7 +585,7 @@ class DocumentService {
 		if ($token !== null) {
 			try {
 				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
-			} catch (NotFoundException $e) {
+			} catch (NotFoundException) {
 				$readOnly = true;
 			}
 		}
@@ -619,7 +605,7 @@ class DocumentService {
 	public function getLockInfo(File $file): ?ILock {
 		try {
 			$locks = $this->lockManager->getLocks($file->getId());
-		} catch (NoLockProviderException|PreConditionNotMetException $e) {
+		} catch (NoLockProviderException|PreConditionNotMetException) {
 			return null;
 		}
 		return array_shift($locks);
@@ -637,7 +623,7 @@ class DocumentService {
 	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			throw new NotFoundException();
 		}
 
@@ -655,7 +641,7 @@ class DocumentService {
 	private function ensureDocumentsFolder(): bool {
 		try {
 			$this->appData->getFolder('documents');
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			$this->appData->newFolder('documents');
 		} catch (\RuntimeException $e) {
 			// Do not fail hard
@@ -678,8 +664,8 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException $e) {
-		} catch (OwnerLockedException $e) {
+		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException) {
+		} catch (OwnerLockedException) {
 			return false;
 		}
 		return true;
@@ -697,7 +683,7 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException $e) {
+		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException) {
 		}
 	}
 

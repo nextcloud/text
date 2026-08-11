@@ -17,8 +17,6 @@ use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
 class WorkspaceService {
-	private IL10N $l10n;
-
 	public const string DEFAULT_FILENAME = 'Readme.md';
 
 	private const array SUPPORTED_STATIC_FILENAMES = [
@@ -28,8 +26,9 @@ class WorkspaceService {
 		'.Readme.md',
 	];
 
-	public function __construct(IL10N $l10n) {
-		$this->l10n = $l10n;
+	public function __construct(
+		private readonly IL10N $l10n,
+	) {
 	}
 
 	public function getFile(Folder $folder): ?File {
