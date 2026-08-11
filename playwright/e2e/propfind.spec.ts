@@ -31,7 +31,7 @@ test.describe('Text PROPFIND extension', () => {
 			const [root1] = await propfindFolder(user, '/', 0, properties)
 			expect(root1).toHaveProperty(PROPERTY_WORKSPACE_FLAT, '')
 
-			await deleteWebDAVResource(user, '/Readme.md')
+			// await deleteWebDAVResource(user, '/Readme.md')
 			await user.uploadFile({ name: 'Readme.md', content: '## Hello world\n' })
 			const [root2] = await propfindFolder(user, '/', 0, properties)
 			expect(root2).toHaveProperty(PROPERTY_WORKSPACE_FLAT, '## Hello world\n')
