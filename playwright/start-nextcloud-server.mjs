@@ -59,7 +59,7 @@ if (await isServerRunning()) {
 } else {
 	const ip = await start()
 	await waitOnNextcloud(ip)
-	await configureNextcloud(['text', 'viewer'])
+	await configureNextcloud(['text'])
 }
 
 // Idle to wait for shutdown
