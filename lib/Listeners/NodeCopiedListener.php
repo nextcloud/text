@@ -20,10 +20,9 @@ use OCP\Lock\ILockingProvider;
  * @template-implements IEventListener<Event|NodeCopiedEvent>
  */
 class NodeCopiedListener implements IEventListener {
-	private $attachmentService;
-
-	public function __construct(AttachmentService $attachmentService) {
-		$this->attachmentService = $attachmentService;
+	public function __construct(
+		private readonly AttachmentService $attachmentService,
+	) {
 	}
 
 	public function handle(Event $event): void {

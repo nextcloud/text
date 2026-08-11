@@ -20,9 +20,9 @@ use OCP\IL10N;
 /** @implements IEventListener<Event|RegisterTemplateCreatorEvent> */
 class RegisterTemplateCreatorListener implements IEventListener {
 	public function __construct(
-		private IL10N $l10n,
-		private ConfigService $configService,
-		private IAppManager $appManager,
+		private readonly IL10N $l10n,
+		private readonly ConfigService $configService,
+		private readonly IAppManager $appManager,
 	) {
 	}
 

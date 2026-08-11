@@ -37,15 +37,15 @@ class WorkspaceController extends OCSController {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private IRootFolder $rootFolder,
-		private IManager $shareManager,
-		private IDirectEditingManager $directEditingManager,
-		private IURLGenerator $urlGenerator,
-		private WorkspaceService $workspaceService,
-		private IEventDispatcher $eventDispatcher,
-		private LoggerInterface $logger,
-		private ISession $session,
-		private ?string $userId,
+		private readonly IRootFolder $rootFolder,
+		private readonly IManager $shareManager,
+		private readonly IDirectEditingManager $directEditingManager,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly WorkspaceService $workspaceService,
+		private readonly IEventDispatcher $eventDispatcher,
+		private readonly LoggerInterface $logger,
+		private readonly ISession $session,
+		private readonly ?string $userId,
 	) {
 		parent::__construct($appName, $request);
 	}

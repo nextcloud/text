@@ -52,7 +52,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		try {
 			$this->share = $this->shareManager->getShareByToken($this->getToken());
 			return true;
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			return false;
 		}
 	}

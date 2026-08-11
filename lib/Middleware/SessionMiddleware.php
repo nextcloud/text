@@ -39,15 +39,15 @@ use ReflectionException;
 class SessionMiddleware extends Middleware {
 
 	public function __construct(
-		private IRequest $request,
-		private SessionService $sessionService,
-		private DocumentService $documentService,
-		private ISession $session,
-		private IUserSession $userSession,
-		private IRootFolder $rootFolder,
-		private ShareManager $shareManager,
-		private IL10N $l10n,
-		private IUserManager $userManager,
+		private readonly IRequest $request,
+		private readonly SessionService $sessionService,
+		private readonly DocumentService $documentService,
+		private readonly ISession $session,
+		private readonly IUserSession $userSession,
+		private readonly IRootFolder $rootFolder,
+		private readonly ShareManager $shareManager,
+		private readonly IL10N $l10n,
+		private readonly IUserManager $userManager,
 	) {
 	}
 

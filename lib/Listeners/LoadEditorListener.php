@@ -20,8 +20,8 @@ use OCP\Util;
 /** @template-implements IEventListener<Event|LoadEditor> */
 class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
 	public function __construct(
-		private InitialStateProvider $initialStateProvider,
-		private IEventDispatcher $eventDispatcher,
+		private readonly InitialStateProvider $initialStateProvider,
+		private readonly IEventDispatcher $eventDispatcher,
 	) {
 	}
 

@@ -32,7 +32,7 @@ class DocumentMapper extends QBMapper {
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($documentId)))
 			->executeQuery();
 
-		$data = $result->fetch();
+		$data = $result->fetchAssociative();
 		$result->closeCursor();
 		if ($data === false) {
 			throw new DoesNotExistException('Document doesn\'t exist');
@@ -46,7 +46,7 @@ class DocumentMapper extends QBMapper {
 			->from($this->getTableName())
 			->executeQuery();
 		try {
-			while ($row = $result->fetch()) {
+			while ($row = $result->fetchAssociative()) {
 				yield $this->mapRowToEntity($row);
 			}
 		} finally {
@@ -62,7 +62,7 @@ class DocumentMapper extends QBMapper {
 			->where($qb->expr()->isNull('s.id'))
 			->executeQuery();
 		try {
-			while ($row = $result->fetch()) {
+			while ($row = $result->fetchAssociative()) {
 				yield $this->mapRowToEntity($row);
 			}
 		} finally {

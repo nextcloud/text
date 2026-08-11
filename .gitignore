@@ -1,18 +1,17 @@
-build/
 \.idea/
+build/
 node_modules/
-vendor/
-img/twemoji/
+cypress/downloads/
 cypress/screenshots/
 cypress/snapshots/
 cypress/videos/
-cypress/downloads/
+dist/
 /playwright-report/
 .php-cs-fixer.cache
 /test-results/
-/tests/clover.xml
 /tests/.phpunit.result.cache
-dist/
+/vendor/
+/vendor-bin/*/vendor
 webpack-stats.json
 
 # js folder, to be updated wth --force

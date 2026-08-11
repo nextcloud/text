@@ -24,36 +24,22 @@ use OCP\Security\ISecureRandom;
 
 class SessionService {
 	public const int SESSION_VALID_TIME = 5 * 60;
-
-	private SessionMapper $sessionMapper;
-	private ITimeFactory $timeFactory;
-	private IUserManager $userManager;
-	private IAvatarManager $avatarManager;
-	private ?string $userId;
-	private ICache $cache;
-	private EncodingService $encodingService;
+	private readonly ICache $cache;
 
 	/** @var ?Session cache current session in the request */
 	private ?Session $session = null;
 
 	public function __construct(
-		SessionMapper $sessionMapper,
-		ITimeFactory $timeFactory,
-		IUserManager $userManager,
-		IAvatarManager $avatarManager,
+		private readonly SessionMapper $sessionMapper,
+		private readonly ITimeFactory $timeFactory,
+		private readonly IUserManager $userManager,
+		private readonly IAvatarManager $avatarManager,
 		IRequest $request,
 		IManager $directManager,
-		?string $userId,
+		private ?string $userId,
 		ICacheFactory $cacheFactory,
-		EncodingService $encodingService,
+		private readonly EncodingService $encodingService,
 	) {
-		$this->sessionMapper = $sessionMapper;
-		$this->timeFactory = $timeFactory;
-		$this->userManager = $userManager;
-		$this->avatarManager = $avatarManager;
-		$this->encodingService = $encodingService;
-		$this->userId = $userId;
-
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -61,7 +47,7 @@ class SessionService {
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
-			} catch (\Exception $e) {
+			} catch (\Exception) {
 			}
 		}
 
@@ -90,7 +76,7 @@ class SessionService {
 			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			$this->cache->remove($token);
 			$this->sessionMapper->delete($session);
-		} catch (DoesNotExistException $e) {
+		} catch (DoesNotExistException) {
 		}
 	}
 
@@ -168,7 +154,7 @@ class SessionService {
 		try {
 			$this->session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			$this->cache->set($token, json_encode($this->session), self::SESSION_VALID_TIME - 30);
-		} catch (DoesNotExistException $e) {
+		} catch (DoesNotExistException) {
 			$this->session = null;
 			$this->cache->remove($token);
 		}
@@ -190,7 +176,7 @@ class SessionService {
 			 */
 			try {
 				$session = $this->sessionMapper->find($documentId, $sessionId, $token);
-			} catch (DoesNotExistException $e) {
+			} catch (DoesNotExistException) {
 				$this->session = null;
 				$this->cache->remove($token);
 				return null;

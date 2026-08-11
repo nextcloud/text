@@ -16,10 +16,10 @@ use Psr\Log\LoggerInterface;
 
 class AiTagService {
 	public function __construct(
-		private ISystemTagObjectMapper $systemTagObjectMapper,
-		private IRootFolder $rootFolder,
-		private LoggerInterface $logger,
-		private ?string $userId,
+		private readonly ISystemTagObjectMapper $systemTagObjectMapper,
+		private readonly IRootFolder $rootFolder,
+		private readonly LoggerInterface $logger,
+		private readonly ?string $userId,
 	) {
 	}
 

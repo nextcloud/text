@@ -33,15 +33,15 @@ use Psr\Log\LoggerInterface;
 
 class ApiService {
 	public function __construct(
-		private IRequest $request,
-		private ConfigService $configService,
-		private SessionService $sessionService,
-		private DocumentService $documentService,
-		private EncodingService $encodingService,
-		private LoggerInterface $logger,
-		private IL10N $l10n,
-		private ?string $userId,
-		private ?IQueue $queue,
+		private readonly IRequest $request,
+		private readonly ConfigService $configService,
+		private readonly SessionService $sessionService,
+		private readonly DocumentService $documentService,
+		private readonly EncodingService $encodingService,
+		private readonly LoggerInterface $logger,
+		private readonly IL10N $l10n,
+		private readonly ?string $userId,
+		private readonly ?IQueue $queue,
 	) {
 	}
 
@@ -56,9 +56,9 @@ class ApiService {
 				 */
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
-				} catch (NotFoundException $e) {
+				} catch (NotFoundException) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
-				} catch (NotPermittedException $e) {
+				} catch (NotPermittedException) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
 				}
 			} elseif ($fileId !== null) {
@@ -113,7 +113,7 @@ class ApiService {
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
-			} catch (NotFoundException $e) {
+			} catch (NotFoundException) {
 				$this->logger->warning('State file not found for saved document' . $file->getId());
 
 				// If we have no state file we need to load the content from the file

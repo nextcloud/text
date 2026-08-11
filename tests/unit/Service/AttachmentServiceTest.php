@@ -90,9 +90,7 @@ class AttachmentServiceTest extends TestCase {
 		$folder = $this->createMock(Folder::class);
 		$folder->expects(self::any())
 			->method('nodeExists')
-			->willReturnCallback(function ($name) use ($fileNameList) {
-				return in_array($name, $fileNameList);
-			});
+			->willReturnCallback(fn ($name) => in_array($name, $fileNameList));
 
 		// files that do not exist yet
 		$this->assertEquals('doesNotExistYet', AttachmentService::getUniqueFileName($folder, 'doesNotExistYet'));
@@ -162,7 +160,7 @@ class AttachmentServiceTest extends TestCase {
 		$target->method('getId')->willReturn(2);
 		$target->method('getContent')->willReturn($sourceContent);
 		$replacedContent = '';
-		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent): void {
 			$replacedContent = $content;
 		});
 
@@ -180,7 +178,7 @@ class AttachmentServiceTest extends TestCase {
 		$target->method('getId')->willReturn(2);
 		$target->method('getContent')->willReturn($sourceContent);
 		$replacedContent = '';
-		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent): void {
 			$replacedContent = $content;
 		});
 
@@ -220,7 +218,7 @@ class AttachmentServiceTest extends TestCase {
 		$target->method('getId')->willReturn(2);
 		$target->method('getContent')->willReturn($sourceContent);
 		$replacedContent = '';
-		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent): void {
 			$replacedContent = $content;
 		});
 
@@ -260,7 +258,7 @@ class AttachmentServiceTest extends TestCase {
 		$target->method('getId')->willReturn(2);
 		$target->method('getContent')->willReturn($sourceContent);
 		$replacedContent = '';
-		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent): void {
 			$replacedContent = $content;
 		});
 

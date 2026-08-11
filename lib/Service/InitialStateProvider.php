@@ -22,10 +22,10 @@ class InitialStateProvider {
 	];
 
 	public function __construct(
-		private IInitialState $initialState,
-		private ConfigService $configService,
-		private IManager $taskProcessingManager,
-		private ?string $userId,
+		private readonly IInitialState $initialState,
+		private readonly ConfigService $configService,
+		private readonly IManager $taskProcessingManager,
+		private readonly ?string $userId,
 	) {
 	}
 
@@ -62,9 +62,7 @@ class InitialStateProvider {
 			isset($taskTypes['core:text2text:translate']),
 		);
 
-		$filteredTypes = array_filter($taskTypes, static function (string $taskType) {
-			return in_array($taskType, self::ASSISTANT_TASK_TYPES, true);
-		}, ARRAY_FILTER_USE_KEY);
+		$filteredTypes = array_filter($taskTypes, static fn (string $taskType) => in_array($taskType, self::ASSISTANT_TASK_TYPES, true), ARRAY_FILTER_USE_KEY);
 		$this->initialState->provideInitialState(
 			'taskprocessing',
 			array_map(static function (string $typeId, array $taskType) {
