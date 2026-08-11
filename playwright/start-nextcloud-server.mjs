@@ -33,7 +33,7 @@ async function start() {
 	const appinfo = readFileSync('appinfo/info.xml').toString()
 	const maxVersion = appinfo.match(/<nextcloud min-version="\d+" max-version="(\d\d+)" \/>/)?.[1]
 
-	let branch = '48ac4910f81b0a5f9c755e8b3e20cc9a692c3737'
+	let branch = 'stable34'
 
 	return await startNextcloud(branch, true, {
 		exposePort: 8089,
