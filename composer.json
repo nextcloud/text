@@ -31,7 +31,20 @@
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
 		"cs:fix": "php-cs-fixer fix",
 		"psalm": "psalm.phar",
-		"test:unit": "phpunit -c tests/phpunit.xml"
+		"rector": "vendor/bin/rector process && composer cs:fix",
+		"test:unit": "phpunit -c tests/phpunit.xml",
+		"post-install-cmd": [
+			"[ $COMPOSER_DEV_MODE -eq 0 ] || composer bin all install --ansi"
+		],
+		"post-update-cmd": [
+			"[ $COMPOSER_DEV_MODE -eq 0 ] || composer bin all update --ansi"
+		]
+	},
+	"extra": {
+		"bamarni-bin": {
+			"bin-links": true,
+			"forward-command": true
+		}
 	},
 	"autoload-dev": {
 		"psr-4": {
