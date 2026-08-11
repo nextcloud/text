@@ -167,7 +167,12 @@ body .toastify.dialogs {
 	margin-top: calc(45px + var(--default-clickable-area));
 }
 
-.viewer[data-handler='text'] .modal-wrapper .modal-container {
+.viewer--split .source-viewer .editor__content-wrapper {
+	// Account for missing menubar for old version in version comparison
+	margin-top: calc(var(--default-clickable-area) + 2 * var(--default-grid-baseline));
+}
+
+.viewer[data-handler="text"] .modal-wrapper .modal-container {
 	bottom: 0;
 }
 </style>
