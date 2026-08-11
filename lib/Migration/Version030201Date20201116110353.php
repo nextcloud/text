@@ -41,7 +41,7 @@ class Version030201Date20201116110353 extends SimpleMigrationStep {
 			$table = $schema->getTable('text_documents');
 			$column = $table->getColumn('id');
 			if ($column->getAutoincrement()) {
-				$table->changeColumn('id', [
+				$table->modifyColumn('id', [
 					'autoincrement' => false,
 				]);
 			}
