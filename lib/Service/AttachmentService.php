@@ -181,7 +181,7 @@ readonly class AttachmentService {
 						'type' => 'file',
 						'file' => $this->previewManager->getPreview($mediaFile, 1024, 1024),
 					];
-				} catch (NotFoundException $e) {
+				} catch (NotFoundException) {
 					// the preview might not be found even if the mimetype is supported
 				}
 			}
@@ -552,7 +552,7 @@ readonly class AttachmentService {
 					}
 				}
 			}
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			// same as below
 		}
 		throw new NotFoundException('Text file with id=' . (string)$documentId . ' and shareToken ' . $shareToken . ' was not found.');
@@ -579,7 +579,7 @@ readonly class AttachmentService {
 					throw new NotFoundException('Share folder for ' . $shareToken . ' was not a folder.');
 				}
 			}
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			// same as below
 		}
 		throw new NotFoundException('Share folder for ' . $shareToken . ' was not found.');
@@ -606,7 +606,7 @@ readonly class AttachmentService {
 				// get IDs of the files inside the attachment dir
 				try {
 					$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
-				} catch (NotFoundException $e) {
+				} catch (NotFoundException) {
 					// this only happens if the attachment dir was deleted by the user while editing the document
 					return 0;
 				}
@@ -614,10 +614,8 @@ readonly class AttachmentService {
 				$contentAttachmentNames = self::getAttachmentNamesFromContent($textFile->getContent(), $fileId);
 
 				$toDelete = array_filter($attachmentDir->getDirectoryListing(),
-					function ($node) use ($contentAttachmentFileIds, $contentAttachmentNames) {
-						return !in_array($node->getName(), $contentAttachmentNames)
-							&& !in_array($node->getId(), $contentAttachmentFileIds);
-					}
+					fn ($node) => !in_array($node->getName(), $contentAttachmentNames)
+							&& !in_array($node->getId(), $contentAttachmentFileIds)
 				);
 				foreach ($toDelete as $node) {
 					$node->delete();
@@ -640,9 +638,7 @@ readonly class AttachmentService {
 			$matches,
 			PREG_SET_ORDER
 		);
-		return array_map(static function (array $match) {
-			return intval($match[1]);
-		}, $matches);
+		return array_map(static fn (array $match) => intval($match[1]), $matches);
 	}
 
 	/**
@@ -657,9 +653,7 @@ readonly class AttachmentService {
 			$matches,
 			PREG_SET_ORDER
 		);
-		return array_map(static function (array $match) {
-			return urldecode($match[1]);
-		}, $matches);
+		return array_map(static fn (array $match) => urldecode($match[1]), $matches);
 	}
 
 	/**
@@ -672,7 +666,7 @@ readonly class AttachmentService {
 	public function copyAttachments(File $source, File $target): array {
 		try {
 			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			// silently return if no attachment dir was found for source file
 			return [];
 		}
@@ -737,7 +731,7 @@ readonly class AttachmentService {
 		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
 			try {
 				$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-			} catch (NotFoundException $e) {
+			} catch (NotFoundException) {
 				// silently return if no attachment dir was found for source file
 				return;
 			}
@@ -760,7 +754,7 @@ readonly class AttachmentService {
 		// if there is an attachment dir for this file
 		try {
 			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			// silently return if no attachment dir was found
 			return;
 		}

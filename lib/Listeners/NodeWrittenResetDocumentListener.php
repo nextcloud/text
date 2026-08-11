@@ -25,8 +25,8 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 	private array $oldChecksums = [];
 
 	public function __construct(
-		private LoggerInterface $logger,
-		private DocumentService $documentService,
+		private readonly LoggerInterface $logger,
+		private readonly DocumentService $documentService,
 	) {
 	}
 

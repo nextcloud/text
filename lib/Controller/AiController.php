@@ -21,7 +21,7 @@ class AiController extends ApiController {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private AiTagService $aiTagService,
+		private readonly AiTagService $aiTagService,
 	) {
 		parent::__construct($appName, $request);
 	}

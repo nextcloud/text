@@ -47,7 +47,7 @@ class SessionMapper extends QBMapper {
 			->andWhere($qb->expr()->eq('token', $qb->createNamedParameter($token)))
 			->executeQuery();
 
-		$data = $result->fetch();
+		$data = $result->fetchAssociative();
 		$result->closeCursor();
 		if ($data === false) {
 			throw new DoesNotExistException('Session is invalid');
@@ -122,9 +122,7 @@ class SessionMapper extends QBMapper {
 			$inactiveSessionBuilder->andWhere($inactiveSessionBuilder->expr()->eq('s.document_id', $inactiveSessionBuilder->createNamedParameter($documentId)));
 		}
 		$result = $inactiveSessionBuilder->executeQuery();
-		$documentIds = array_map(function ($row) {
-			return (int)$row['id'];
-		}, $result->fetchAll());
+		$documentIds = array_map(fn ($row) => (int)$row['id'], $result->fetchAllAssociative());
 		$result->closeCursor();
 
 		$chunks = array_chunk($documentIds, 500);
@@ -157,9 +155,7 @@ class SessionMapper extends QBMapper {
 				->setMaxResults($batchSize)
 				->executeQuery();
 
-			$sessionIds = array_map(function ($row) {
-				return (int)$row['id'];
-			}, $result->fetchAll());
+			$sessionIds = array_map(fn ($row) => (int)$row['id'], $result->fetchAllAssociative());
 			$result->closeCursor();
 
 			if (empty($sessionIds)) {
@@ -202,9 +198,7 @@ class SessionMapper extends QBMapper {
 				->setMaxResults($batchSize);
 
 			$result = $orphanedStepsQb->executeQuery();
-			$stepIds = array_map(function ($row) {
-				return (int)$row['id'];
-			}, $result->fetchAll());
+			$stepIds = array_map(fn ($row) => (int)$row['id'], $result->fetchAllAssociative());
 			$result->closeCursor();
 
 			if (empty($stepIds)) {
@@ -245,7 +239,7 @@ class SessionMapper extends QBMapper {
 			->setMaxResults(1)
 			->executeQuery();
 
-		$data = $result->fetch();
+		$data = $result->fetchAssociative();
 		$result->closeCursor();
 		if ($data === false) {
 			return false;

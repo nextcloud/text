@@ -28,8 +28,9 @@ class WorkspaceService {
 		'.Readme.md',
 	];
 
-	public function __construct(IL10N $l10n) {
-		$this->l10n = $l10n;
+	public function __construct(
+		private readonly IL10N $l10n,
+	) {
 	}
 
 	public function getFile(Folder $folder): ?File {

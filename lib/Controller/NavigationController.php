@@ -16,11 +16,11 @@ class NavigationController extends Controller {
 
 	/**
 	 *
-	 * @NoCSRFRequired
-	 * @NoAdminRequired
 	 *
 	 * @return TemplateResponse
 	 */
+	#[\OCP\AppFramework\Http\Attribute\NoCSRFRequired]
+	#[\OCP\AppFramework\Http\Attribute\NoAdminRequired]
 	public function navigate(): TemplateResponse {
 		return new TemplateResponse(Application::APP_NAME, 'main');
 	}

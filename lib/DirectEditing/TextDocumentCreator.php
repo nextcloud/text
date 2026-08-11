@@ -14,19 +14,10 @@ use OCP\IL10N;
 class TextDocumentCreator extends ACreateEmpty {
 	public const CREATOR_ID = 'textdocument';
 
-	/**
-	 * @var IL10N
-	 */
-	private $l10n;
-
-	/**
-	 * @var IAppConfig
-	 */
-	private $appConfig;
-
-	public function __construct(IL10N $l10n, IAppConfig $appConfig) {
-		$this->l10n = $l10n;
-		$this->appConfig = $appConfig;
+	public function __construct(
+		private readonly IL10N $l10n,
+		private readonly IAppConfig $appConfig,
+	) {
 	}
 
 	public function getId(): string {
@@ -42,12 +33,9 @@ class TextDocumentCreator extends ACreateEmpty {
 	}
 
 	public function getMimetype(): string {
-		switch ($this->getExtension()) {
-			case 'txt':
-				return 'text/plain';
-			case 'md':
-			default:
-				return 'text/markdown';
-		}
+		return match ($this->getExtension()) {
+			'txt' => 'text/plain',
+			default => 'text/markdown',
+		};
 	}
 }

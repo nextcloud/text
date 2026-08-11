@@ -17,12 +17,10 @@ use OCP\Files\SimpleFS\ISimpleFile;
  * Wrapper around a ISimpleFile object to ensure that it is correctly encoded (UTF-8) for the text app.
  */
 class TextFile implements ISimpleFile {
-	private ISimpleFile $file;
-	private EncodingService $encodingService;
-
-	public function __construct(ISimpleFile $file, EncodingService $encodingService) {
-		$this->file = $file;
-		$this->encodingService = $encodingService;
+	public function __construct(
+		private readonly ISimpleFile $file,
+		private readonly EncodingService $encodingService,
+	) {
 	}
 
 	public function getName(): string {

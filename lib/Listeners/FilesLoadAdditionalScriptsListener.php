@@ -17,10 +17,9 @@ use OCP\EventDispatcher\IEventListener;
  * @implements IEventListener<Event>
  */
 class FilesLoadAdditionalScriptsListener implements IEventListener {
-	private InitialStateProvider $initialStateProvider;
-
-	public function __construct(InitialStateProvider $initialStateProvider) {
-		$this->initialStateProvider = $initialStateProvider;
+	public function __construct(
+		private readonly InitialStateProvider $initialStateProvider,
+	) {
 	}
 
 	public function handle(Event $event): void {

@@ -45,9 +45,9 @@ class SessionService {
 		IAvatarManager $avatarManager,
 		IRequest $request,
 		IManager $directManager,
-		?string $userId,
+		private ?string $userId,
 		ICacheFactory $cacheFactory,
-		EncodingService $encodingService,
+		private readonly EncodingService $encodingService,
 	) {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
@@ -64,7 +64,7 @@ class SessionService {
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
-			} catch (\Exception $e) {
+			} catch (\Exception) {
 			}
 		}
 
@@ -93,7 +93,7 @@ class SessionService {
 			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			$this->cache->remove($token);
 			$this->sessionMapper->delete($session);
-		} catch (DoesNotExistException $e) {
+		} catch (DoesNotExistException) {
 		}
 	}
 
@@ -171,7 +171,7 @@ class SessionService {
 		try {
 			$this->session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			$this->cache->set($token, json_encode($this->session), self::SESSION_VALID_TIME - 30);
-		} catch (DoesNotExistException $e) {
+		} catch (DoesNotExistException) {
 			$this->session = null;
 			$this->cache->remove($token);
 		}
@@ -193,7 +193,7 @@ class SessionService {
 			 */
 			try {
 				$session = $this->sessionMapper->find($documentId, $sessionId, $token);
-			} catch (DoesNotExistException $e) {
+			} catch (DoesNotExistException) {
 				$this->session = null;
 				$this->cache->remove($token);
 				return null;

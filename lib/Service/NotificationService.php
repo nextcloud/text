@@ -12,14 +12,11 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Notification\IManager;
 
 class NotificationService {
-	private IManager $manager;
-	private ITimeFactory $timeFactory;
-	private ?string $userId;
-
-	public function __construct(IManager $manager, ITimeFactory $timeFactory, ?string $userId = null) {
-		$this->manager = $manager;
-		$this->timeFactory = $timeFactory;
-		$this->userId = $userId;
+	public function __construct(
+		private readonly IManager $manager,
+		private readonly ITimeFactory $timeFactory,
+		private readonly ?string $userId = null,
+	) {
 	}
 
 	public function mention(int $fileId, string $userId): bool {

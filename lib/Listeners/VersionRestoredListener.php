@@ -21,7 +21,7 @@ use OCP\Files\NotFoundException;
  */
 class VersionRestoredListener implements IEventListener {
 	public function __construct(
-		private DocumentService $documentService,
+		private readonly DocumentService $documentService,
 	) {
 	}
 
@@ -38,7 +38,7 @@ class VersionRestoredListener implements IEventListener {
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
 			$this->documentService->resetDocument($sourceFile->getId());
-		} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
+		} catch (DocumentHasUnsavedChangesException|NotFoundException) {
 			// Do not throw during event handling in this is expected to happen
 			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
 			// NotFoundException: The event was called on a file that was just created so a NonExistingFile object is used that has no id yet

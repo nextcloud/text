@@ -48,7 +48,7 @@ class StepMapper extends QBMapper {
 			->orderBy('id', 'DESC')
 			->executeQuery();
 
-		$data = $result->fetch();
+		$data = $result->fetchAssociative();
 		if ($data === false) {
 			return null;
 		}
@@ -66,7 +66,7 @@ class StepMapper extends QBMapper {
 			->orderBy('id', 'DESC')
 			->executeQuery();
 
-		$rows = $result->fetchAll();
+		$rows = $result->fetchAllAssociative();
 		$data = end($rows);
 		if ($data === false) {
 			return $version;

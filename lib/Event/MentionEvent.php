@@ -16,8 +16,8 @@ use OCP\Notification\INotification;
 
 class MentionEvent extends Event {
 	public function __construct(
-		private INotification $notification,
-		private File $file,
+		private readonly INotification $notification,
+		private readonly File $file,
 	) {
 		parent::__construct();
 	}

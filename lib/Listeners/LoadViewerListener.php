@@ -18,13 +18,10 @@ use OCP\Util;
 
 /** @implements IEventListener<Event|LoadViewer> */
 class LoadViewerListener implements IEventListener {
-	private InitialStateProvider $initialStateProvider;
-	private IEventDispatcher $eventDispatcher;
-
-	public function __construct(InitialStateProvider $initialStateProvider,
-		IEventDispatcher $eventDispatcher) {
-		$this->initialStateProvider = $initialStateProvider;
-		$this->eventDispatcher = $eventDispatcher;
+	public function __construct(
+		private readonly InitialStateProvider $initialStateProvider,
+		private readonly IEventDispatcher $eventDispatcher,
+	) {
 	}
 
 	public function handle(Event $event): void {
