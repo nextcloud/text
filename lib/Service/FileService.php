@@ -7,6 +7,7 @@
 
 namespace OCA\Text\Service;
 
+use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\Constants;
@@ -19,6 +20,7 @@ use OCP\Files\NotPermittedException;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
+use OCP\Share\IShare;
 
 class FileService {
 
@@ -145,6 +147,18 @@ class FileService {
 		$lockInfo = $this->lockService->getLockByOthers($file);
 
 		return $readOnly || $lockInfo !== null;
+	}
+
+	public function isDownloadDisabled(File $file): bool {
+		$storage = $file->getStorage();
+		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+			return false;
+		}
+		/** @var IShare $share */
+		$share = $storage->getShare();
+		$shareAttribtues = $share->getAttributes();
+		return $shareAttribtues !== null
+			&& $shareAttribtues->getAttribute('permissions', 'download') === false;
 	}
 
 	/**

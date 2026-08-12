@@ -11,7 +11,6 @@ namespace OCA\Text\Service;
 
 use Exception;
 use InvalidArgumentException;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
@@ -25,7 +24,6 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\Lock\LockedException;
-use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
@@ -44,16 +42,9 @@ class ApiService {
 
 	public function create(File $file, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
 		try {
-			$storage = $file->getStorage();
-
 			// Block using text for disabled download internal shares
-			if ($storage->instanceOfStorage(SharedStorage::class)) {
-				/** @var IShare $share */
-				$share = $storage->getShare();
-				$shareAttribtues = $share->getAttributes();
-				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
-				}
+			if ($this->fileService->isDownloadDisabled($file)) {
+				return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 			}
 
 			$readOnly = $this->fileService->isReadOnly($file, $token);
