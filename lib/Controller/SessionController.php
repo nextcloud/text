@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Context\FileContextFactory;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -40,6 +41,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
+		private FileContextFactory $fileContextFactory,
 		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
@@ -53,13 +55,12 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($fileId === null || $userId === null) {
+		if ($fileId === null) {
 			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
 		}
 
 		try {
-			$file = $this->fileService->getFileById($fileId, $userId);
+			$context = $this->fileContextFactory->buildForId($fileId, $baseVersionEtag);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
 			return new DataResponse([
@@ -67,7 +68,7 @@ class SessionController extends ApiController implements ISessionAwareController
 			], Http::STATUS_NOT_FOUND);
 		}
 
-		return $this->apiService->create($file, $baseVersionEtag);
+		return $this->apiService->create($context);
 	}
 
 	#[NoAdminRequired]
