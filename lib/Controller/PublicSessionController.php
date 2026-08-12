@@ -38,7 +38,6 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		ISession $session,
 		private ShareManager $shareManager,
 		private ApiService $apiService,
-		private DocumentService $documentService,
 		private FileService $fileService,
 		private IL10N $l10n,
 	) {
@@ -101,7 +100,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
+	public function push(int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
 		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $token);
 	}
 
