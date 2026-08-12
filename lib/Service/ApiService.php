@@ -12,6 +12,7 @@ namespace OCA\Text\Service;
 use Exception;
 use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
+use OCA\Text\Context\IContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -32,7 +33,6 @@ class ApiService {
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
 		private readonly FileService $fileService,
-		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
 		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
@@ -40,19 +40,20 @@ class ApiService {
 	) {
 	}
 
-	public function create(File $file, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
+	public function create(IContext $context, ?string $guestName = null): DataResponse {
 		try {
-			// Block using text for disabled download internal shares
-			if ($this->fileService->isDownloadDisabled($file)) {
-				return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
+			$error = $context->check();
+			if ($error !== null) {
+				return new DataResponse(['error' => $error], Http::STATUS_FORBIDDEN);
 			}
 
-			$readOnly = $this->fileService->isReadOnly($file, $token);
+			$readOnly = $context->isReadOnly();
 
-			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$document = $this->documentService->getOrCreateDocument($file);
-			if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
-				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
+			$document = $this->documentService->getOrCreateDocument($context);
+			$this->sessionService->removeInactiveSessionsWithoutSteps($document->getId());
+			$error = $context->checkDocument($document);
+			if ($error !== null) {
+				return new DataResponse(['error' => $error], Http::STATUS_PRECONDITION_FAILED);
 			}
 
 		} catch (Exception $e) {
@@ -67,30 +68,30 @@ class ApiService {
 		$documentState = null;
 		$content = null;
 		if ($document->getLastSavedVersion() === 0) {
-			$this->logger->debug('Sending content for unsaved file ' . $file->getId());
-			$content = $this->loadContent($file);
+			$this->logger->debug('Sending content for unsaved ' . $context->toString());
+			$content = $context->loadContent();
 		} else {
-			$this->logger->debug('Loading saved document state for ' . $file->getId());
+			$this->logger->debug('Loading saved document state for ' . $context->toString());
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException) {
-				$this->logger->warning('State file not found for saved document' . $file->getId());
+				$this->logger->warning('State file not found for saved document' . $context->toString());
 
 				// If we have no state file we need to load the content from the file
 				// On the client side we use this to initialize a idempotent initial y.js document
-				$content = $this->loadContent($file);
+				$content = $context->loadContent();
 			}
 		}
 
-		$lockInfo = $this->lockService->getLockByOthers($file);
+		$lockInfo = $context->getLockInfo();
 
-		$hasOwner = $file->getOwner() !== null;
+		$hasOwner = $context->getOwner() !== null;
 
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
-		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
-			$isLocked = $this->lockService->lock($file);
+		if (!$readOnly) {
+			$isLocked = $context->lock();
 			if (!$isLocked) {
 				$readOnly = true;
 			}
@@ -234,17 +235,4 @@ class ApiService {
 		return new DataResponse($this->sessionService->updateSession($session, $guestName));
 	}
 
-	private function loadContent(\OCP\Files\File $file): ?string {
-		try {
-			$content = $file->getContent();
-			$content = $this->encodingService->encodeToUtf8($content);
-			if ($content === null) {
-				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
-			}
-		} catch (NotFoundException $e) {
-			$this->logger->warning($e->getMessage(), ['exception' => $e]);
-			$content = null;
-		}
-		return $content;
-	}
 }
