@@ -20,6 +20,7 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Stoor",
     "Cancel" : "Cancel",
+    "Comment" : "Kommentaar",
     "Reconnect" : "Herverbind",
     "you" : "u",
     "edit" : "edigeer",

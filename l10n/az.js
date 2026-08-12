@@ -16,6 +16,7 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Saxla",
     "Cancel" : "Cancel",
+    "Comment" : "Komentariya",
     "Reload" : "Yenidən yüklə",
     "you" : "siz",
     "Copy link" : "linki nüsxələ",
