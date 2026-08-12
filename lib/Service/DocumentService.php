@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use InvalidArgumentException;
+use OCA\Text\Context\IContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
@@ -96,10 +97,10 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function getOrCreateDocument(File $file): Document {
-		$document = $this->getDocument($file->getId());
+	public function getOrCreateDocument(IContext $context): Document {
+		$document = $this->getDocument($context->getId());
 		if ($document !== null) {
-			$this->logger->info('Keep previous document of ' . $file->getId());
+			$this->logger->info('Keep previous document of ' . $context->toString());
 			return $document;
 		}
 
@@ -107,14 +108,8 @@ class DocumentService {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
-		$this->logger->info('Create new document of ' . $file->getId());
-		$document = new Document();
-		$document->setId($file->getId());
-		$document->setLastSavedVersion(0);
-		$document->setLastSavedVersionTime($file->getMTime());
-		$document->setLastSavedVersionEtag($file->getEtag());
-		$document->setBaseVersionEtag(uniqid());
-		$document->setChecksum(self::computeCheckSum($file->getContent()));
+		$this->logger->info('Create new document of ' . $context->toString());
+		$document = $context->createDocument();
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
@@ -124,7 +119,7 @@ class DocumentService {
 				throw $e;
 			}
 			// Document might have been created in the meantime
-			$document = $this->getDocument($file->getId());
+			$document = $this->getDocument($context->getId());
 			if ($document === null) {
 				throw $e;
 			}
