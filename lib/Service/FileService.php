@@ -21,13 +21,16 @@ use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
+use Psr\Log\LoggerInterface;
 
 class FileService {
 
 	public function __construct(
+		private readonly EncodingService $encodingService,
 		private readonly ISession $session,
 		private readonly IRootFolder $rootFolder,
 		private readonly LockService $lockService,
+		private readonly LoggerInterface $logger,
 		private readonly ShareManager $shareManager,
 	) {
 	}
@@ -235,6 +238,20 @@ class FileService {
 			return $fileId;
 		}
 		throw new InvalidSessionException();
+	}
+
+	public function loadContent(File $file): ?string {
+		try {
+			$content = $file->getContent();
+			$content = $this->encodingService->encodeToUtf8($content);
+			if ($content === null) {
+				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
+			}
+		} catch (NotFoundException $e) {
+			$this->logger->warning($e->getMessage(), ['exception' => $e]);
+			$content = null;
+		}
+		return $content;
 	}
 
 }
