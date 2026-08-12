@@ -76,6 +76,7 @@ return array(
     'OCA\\Text\\Service\\EncodingService' => $baseDir . '/../lib/Service/EncodingService.php',
     'OCA\\Text\\Service\\FileService' => $baseDir . '/../lib/Service/FileService.php',
     'OCA\\Text\\Service\\InitialStateProvider' => $baseDir . '/../lib/Service/InitialStateProvider.php',
+    'OCA\\Text\\Service\\LockService' => $baseDir . '/../lib/Service/LockService.php',
     'OCA\\Text\\Service\\NotificationService' => $baseDir . '/../lib/Service/NotificationService.php',
     'OCA\\Text\\Service\\SessionService' => $baseDir . '/../lib/Service/SessionService.php',
     'OCA\\Text\\Service\\WorkspaceService' => $baseDir . '/../lib/Service/WorkspaceService.php',

@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use InvalidArgumentException;
-use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
@@ -30,11 +29,6 @@ use OCP\Files\Folder;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
-use OCP\Files\Lock\ILock;
-use OCP\Files\Lock\ILockManager;
-use OCP\Files\Lock\LockContext;
-use OCP\Files\Lock\NoLockProviderException;
-use OCP\Files\Lock\OwnerLockedException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -43,7 +37,6 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
-use OCP\PreConditionNotMetException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use Psr\Log\LoggerInterface;
@@ -69,10 +62,10 @@ class DocumentService {
 		private readonly IRootFolder $rootFolder,
 		ICacheFactory $cacheFactory,
 		private readonly LoggerInterface $logger,
+		private readonly LockService $lockService,
 		private readonly ShareManager $shareManager,
 		IRequest $request,
 		IManager $directManager,
-		private readonly ILockManager $lockManager,
 		private readonly IUserMountCache $userMountCache,
 		private readonly IConfig $config,
 	) {
@@ -415,11 +408,7 @@ class DocumentService {
 
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
-			$this->lockManager->runInScope(new LockContext(
-				$file,
-				ILock::TYPE_APP,
-				Application::APP_NAME
-			), function () use ($file, $autoSaveDocument, $documentState): void {
+			$this->lockService->runInScope($file, function () use ($file, $autoSaveDocument, $documentState): void {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
 				$this->writeDocumentState($file->getId(), $documentState);
@@ -464,7 +453,7 @@ class DocumentService {
 
 			try {
 				$file = $this->fileService->getFileById($documentId, $userId);
-				$this->unlock($file);
+				$this->lockService->unlock($file);
 			} catch (NotFoundException) {
 				// Continue with the cleanup even if the file does not exist.
 			}
@@ -498,25 +487,9 @@ class DocumentService {
 			}
 		}
 
-		$lockInfo = $this->getLockInfo($file);
-		$isTextLock = (
-			$lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME
-		);
-
-		if ($isTextLock) {
-			return $readOnly;
-		}
+		$lockInfo = $this->lockService->getLockByOthers($file);
 
 		return $readOnly || $lockInfo !== null;
-	}
-
-	public function getLockInfo(File $file): ?ILock {
-		try {
-			$locks = $this->lockManager->getLocks($file->getId());
-		} catch (NoLockProviderException|PreConditionNotMetException) {
-			return null;
-		}
-		return array_shift($locks);
 	}
 
 	/**
@@ -558,39 +531,6 @@ class DocumentService {
 		}
 
 		return true;
-	}
-
-	public function lock(File $file): bool {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return true;
-		}
-
-		try {
-			$this->lockManager->lock(new LockContext(
-				$file,
-				ILock::TYPE_APP,
-				Application::APP_NAME
-			));
-		} catch (NoLockProviderException|PreConditionNotMetException) {
-		} catch (OwnerLockedException) {
-			return false;
-		}
-		return true;
-	}
-
-	public function unlock(File $file): void {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return;
-		}
-
-		try {
-			$this->lockManager->unlock(new LockContext(
-				$file,
-				ILock::TYPE_APP,
-				Application::APP_NAME
-			));
-		} catch (NoLockProviderException|PreConditionNotMetException) {
-		}
 	}
 
 	public function countAll(): int {

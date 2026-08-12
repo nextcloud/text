@@ -13,7 +13,6 @@ use Exception;
 use InvalidArgumentException;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\NotifyPush\Queue\IQueue;
-use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -22,7 +21,6 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\File;
 use OCP\Files\InvalidPathException;
-use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
@@ -38,6 +36,7 @@ class ApiService {
 		private readonly FileService $fileService,
 		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
+		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
 		private readonly ?IQueue $queue,
 	) {
@@ -93,17 +92,14 @@ class ApiService {
 			}
 		}
 
-		$lockInfo = $this->documentService->getLockInfo($file);
-		if ($lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME) {
-			$lockInfo = null;
-		}
+		$lockInfo = $this->lockService->getLockByOthers($file);
 
 		$hasOwner = $file->getOwner() !== null;
 
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
 		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
-			$isLocked = $this->documentService->lock($file);
+			$isLocked = $this->lockService->lock($file);
 			if (!$isLocked) {
 				$readOnly = true;
 			}
@@ -125,7 +121,7 @@ class ApiService {
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			$this->documentService->unlock($file);
+			$this->lockService->unlock($file);
 		}
 		return new DataResponse([]);
 	}

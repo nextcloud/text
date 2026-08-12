@@ -9,6 +9,7 @@ use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
+use OCA\Text\Service\LockService;
 use OCA\Text\Service\SessionService;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
@@ -22,6 +23,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	private FileService $fileService;
 	private EncodingService $encodingService;
 	private LoggerInterface $loggerInterface;
+	private LockService $lockService;
 	private IL10N $l10n;
 
 	public function setUp(): void {
@@ -31,6 +33,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->fileService = $this->createMock(FileService::class);
 		$this->encodingService = $this->createMock(EncodingService::class);
 		$this->loggerInterface = $this->createMock(LoggerInterface::class);
+		$this->lockService = $this->createMock(LockService::class);
 		$this->l10n = $this->createMock(IL10N::class);
 
 		$document = new Document();
@@ -46,6 +49,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->fileService,
 			$this->encodingService,
 			$this->loggerInterface,
+			$this->lockService,
 			$this->l10n,
 			null,
 		);
