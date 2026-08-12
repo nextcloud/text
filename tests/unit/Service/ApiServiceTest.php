@@ -39,7 +39,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$document = new Document();
 		$document->setId(123);
 		$this->documentService->method('getOrCreateDocument')->willReturn($document);
-		$this->documentService->method('isReadOnly')->willReturn(false);
+		$this->fileService->method('isReadOnly')->willReturn(false);
 		$this->encodingService->method('encodeToUtf8')->willReturnCallback(fn ($str) => $str);
 
 		$this->apiService = new ApiService(

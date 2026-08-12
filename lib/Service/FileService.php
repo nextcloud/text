@@ -25,6 +25,7 @@ class FileService {
 	public function __construct(
 		private readonly ISession $session,
 		private readonly IRootFolder $rootFolder,
+		private readonly LockService $lockService,
 		private readonly ShareManager $shareManager,
 	) {
 	}
@@ -129,6 +130,42 @@ class FileService {
 			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
+	}
+
+	public function isReadOnly(File $file, ?string $token): bool {
+		$readOnly = !$file->isUpdateable();
+		if ($token !== null) {
+			try {
+				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
+			} catch (NotFoundException) {
+				$readOnly = true;
+			}
+		}
+
+		$lockInfo = $this->lockService->getLockByOthers($file);
+
+		return $readOnly || $lockInfo !== null;
+	}
+
+	/**
+	 * @param $shareToken
+	 *
+	 * @return void
+	 *
+	 * @throws NotFoundException|NotPermittedException
+	 *
+	 * @psalm-param 1|2 $permission
+	 */
+	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+		} catch (ShareNotFound) {
+			throw new NotFoundException();
+		}
+
+		if (($share->getPermissions() & $permission) === 0 || ($share->getNode()->getPermissions() & $permission) === 0) {
+			throw new NotFoundException();
+		}
 	}
 
 	public function getDocumentIdFromShare(int $fileId, string $shareToken): int {

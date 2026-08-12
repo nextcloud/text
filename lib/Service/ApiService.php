@@ -56,7 +56,7 @@ class ApiService {
 				}
 			}
 
-			$readOnly = $this->documentService->isReadOnly($file, $token);
+			$readOnly = $this->fileService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$document = $this->documentService->getOrCreateDocument($file);
@@ -183,7 +183,7 @@ class ApiService {
 
 			// ensure file is still present and accessible
 			$file = $this->fileService->getFileForSession($session, $shareToken);
-			$result['readOnly'] = $this->documentService->isReadOnly($file, $shareToken);
+			$result['readOnly'] = $this->fileService->isReadOnly($file, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);

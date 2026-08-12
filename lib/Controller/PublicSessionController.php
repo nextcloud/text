@@ -80,7 +80,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 			* If not then well 404 it is.
 			*/
 		try {
-			$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
+			$this->fileService->checkSharePermissions($token, Constants::PERMISSION_READ);
 		} catch (NotFoundException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (NotPermittedException) {

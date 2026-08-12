@@ -4,6 +4,7 @@ namespace OCA\Text\Tests;
 
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Service\FileService;
+use OCA\Text\Service\LockService;
 use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -29,6 +30,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->fileService = new FileService(
 			$this->session,
 			$this->rootFolder,
+			$this->createMock(LockService::class),
 			$this->shareManager,
 		);
 	}

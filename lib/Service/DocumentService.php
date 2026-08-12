@@ -20,7 +20,6 @@ use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\Constants;
 use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
 use OCP\Files\Config\IUserMountCache;
@@ -37,8 +36,6 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
-use OCP\Share\Exceptions\ShareNotFound;
-use OCP\Share\IManager as ShareManager;
 use Psr\Log\LoggerInterface;
 use function json_encode;
 
@@ -63,7 +60,6 @@ class DocumentService {
 		ICacheFactory $cacheFactory,
 		private readonly LoggerInterface $logger,
 		private readonly LockService $lockService,
-		private readonly ShareManager $shareManager,
 		IRequest $request,
 		IManager $directManager,
 		private readonly IUserMountCache $userMountCache,
@@ -221,7 +217,7 @@ class DocumentService {
 		}
 		if (count($stepsToInsert) > 0) {
 			$file = $this->fileService->getFileForSession($session, $shareToken);
-			if (!$this->isReadOnly($file, $shareToken)) {
+			if (!$this->fileService->isReadOnly($file, $shareToken)) {
 				$this->insertSteps($document, $session, $stepsToInsert);
 			}
 		}
@@ -319,7 +315,7 @@ class DocumentService {
 		$lastMTime = $document->getLastSavedVersionTime();
 		$lastEtag = $document->getLastSavedVersionEtag();
 
-		if ($lastMTime <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
+		if ($lastMTime <= 0 || $force || $this->fileService->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
 			return;
 		}
 
@@ -362,7 +358,7 @@ class DocumentService {
 	public function autosave(Document $document, File $file, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
 
-		if ($this->isReadOnly($file, $shareToken)) {
+		if ($this->fileService->isReadOnly($file, $shareToken)) {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
@@ -475,42 +471,6 @@ class DocumentService {
 
 	public function getAllWithNoActiveSession(): \Generator {
 		return $this->documentMapper->findAllWithNoActiveSessions();
-	}
-
-	public function isReadOnly(File $file, ?string $token): bool {
-		$readOnly = !$file->isUpdateable();
-		if ($token !== null) {
-			try {
-				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
-			} catch (NotFoundException) {
-				$readOnly = true;
-			}
-		}
-
-		$lockInfo = $this->lockService->getLockByOthers($file);
-
-		return $readOnly || $lockInfo !== null;
-	}
-
-	/**
-	 * @param $shareToken
-	 *
-	 * @return void
-	 *
-	 * @throws NotFoundException|NotPermittedException
-	 *
-	 * @psalm-param 1|2 $permission
-	 */
-	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
-		if (($share->getPermissions() & $permission) === 0 || ($share->getNode()->getPermissions() & $permission) === 0) {
-			throw new NotFoundException();
-		}
 	}
 
 	public function hasUnsavedChanges(Document $document): bool {
