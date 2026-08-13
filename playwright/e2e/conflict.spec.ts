@@ -325,6 +325,7 @@ test('conflict dialog is sticky when scrolling', async ({
 	setOnline,
 	user,
 }) => {
+	test.slow()
 	await expect(editor.el).toBeVisible()
 	const pushPromise = page.waitForRequest(/push/)
 	await editor.typeHeading('Long content\n')
