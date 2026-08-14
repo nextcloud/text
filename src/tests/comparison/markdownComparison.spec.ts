@@ -3,9 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { EditorState } from '@tiptap/pm/state'
 import { describe, expect, it } from 'vitest'
 import { createComparisonEditor } from '../../comparison/createComparisonEditor.ts'
-import { createMarkdownComparisonModel } from '../../comparison/markdownComparison.ts'
+import {
+	createComparisonDecorationPlugin,
+	createMarkdownComparisonModel,
+} from '../../comparison/markdownComparison.ts'
 import { stableSerialize } from '../../comparison/markdownComparisonClassification.ts'
 import {
 	ATLAS_CURRENT_CONTENT,
@@ -201,6 +205,16 @@ describe('semantic Markdown comparison', () => {
 			beforeEditor.destroy()
 			afterEditor.destroy()
 		}
+	})
+
+	it('creates valid decorations for inline, structural, and empty-side changes', () => {
+		const { before, after, model } = compare('- one\n- two', '- one\n- changed\n- two')
+		const beforeDecorations = createComparisonDecorationPlugin(model.descriptors, 'before', 'Removed content')
+		const afterDecorations = createComparisonDecorationPlugin(model.descriptors, 'after', 'Added content')
+		const beforeState = EditorState.create({ doc: before, plugins: [beforeDecorations.plugin] })
+		const afterState = EditorState.create({ doc: after, plugins: [afterDecorations.plugin] })
+		expect(beforeDecorations.key.getState(beforeState)?.decorations.find().length).toBeGreaterThan(0)
+		expect(afterDecorations.key.getState(afterState)?.decorations.find().length).toBeGreaterThan(0)
 	})
 
 	it('keeps a small edit in a large document narrow', () => {
