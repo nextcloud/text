@@ -45,6 +45,18 @@
 						@keydown="onViewTabKeydown($event, 'documents')">
 						{{ t('text', 'Full documents') }}
 					</button>
+					<button
+						:id="sourceTabId"
+						ref="sourceTab"
+						type="button"
+						role="tab"
+						:aria-controls="sourcePanelId"
+						:aria-selected="view === 'source'"
+						:tabindex="view === 'source' ? 0 : -1"
+						@click="setView('source')"
+						@keydown="onViewTabKeydown($event, 'source')">
+						{{ t('text', 'Markdown source') }}
+					</button>
 				</div>
 
 				<div
@@ -99,8 +111,8 @@
 			data-comparison-rendered-limit
 			role="status">
 			{{ renderedLimitReason === 'size'
-				? t('text', 'This comparison is too large for rendered views.')
-				: t('text', 'This comparison has too many changes for rendered views.') }}
+				? t('text', 'This comparison is too large for rendered views. Markdown source is shown instead.')
+				: t('text', 'This comparison has too many changes for rendered views. Markdown source is shown instead.') }}
 		</div>
 
 		<div
@@ -132,6 +144,9 @@
 					data-comparison-empty="syntax"
 					role="status">
 					<p>{{ t('text', 'No rendered differences — Markdown syntax differs.') }}</p>
+					<NcButton data-comparison-empty-action @click="setView('source')">
+						{{ t('text', 'Open Markdown source') }}
+					</NcButton>
 				</div>
 				<div
 					v-else
@@ -242,17 +257,45 @@
 				</article>
 			</div>
 		</div>
+
+		<div
+			v-show="view === 'source'"
+			:id="sourcePanelId"
+			class="text-comparison__source"
+			role="tabpanel"
+			:aria-labelledby="sourceTabId">
+			<p class="text-comparison__source-explanation">
+				{{ t('text', 'Source compares literal Markdown, so its change groups and count can differ from rendered changes.') }}
+			</p>
+			<div v-if="sourceComponentLoading" class="text-comparison__source-message" role="status">
+				{{ t('text', 'Loading Markdown source view…') }}
+			</div>
+			<div v-else-if="sourceComponentError" class="text-comparison__source-message" role="alert">
+				<p>{{ t('text', 'Could not load the Markdown source view.') }}</p>
+				<NcButton @click="loadSourceComponent">
+					{{ t('text', 'Retry') }}
+				</NcButton>
+			</div>
+			<component
+				:is="SourceComparison"
+				v-else-if="SourceComparison"
+				:afterContent="afterContent"
+				:beforeContent="beforeContent"
+				:layoutMode="layoutMode" />
+		</div>
 	</section>
 </template>
 
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core'
+import type { Component, ShallowRef } from 'vue'
 import type { ComparisonSide } from '../comparison/markdownComparison.ts'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { n, t } from '@nextcloud/l10n'
 import {
 	computed,
+	markRaw,
 	nextTick,
 	onBeforeUnmount,
 	onMounted,
@@ -285,7 +328,7 @@ import AttachmentResolver from '../services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER, EDITOR_UPLOAD } from './Editor.provider.ts'
 
 type LayoutMode = 'paired' | 'single'
-type ComparisonView = 'changes' | 'documents'
+type ComparisonView = 'changes' | 'documents' | 'source'
 
 const props = defineProps<{
 	beforeContent: string
@@ -306,17 +349,24 @@ const beforeScroller = ref<HTMLElement | null>(null)
 const afterScroller = ref<HTMLElement | null>(null)
 const changesTab = ref<HTMLButtonElement | null>(null)
 const documentsTab = ref<HTMLButtonElement | null>(null)
+const sourceTab = ref<HTMLButtonElement | null>(null)
 const beforeSideTab = ref<HTMLButtonElement | null>(null)
 const afterSideTab = ref<HTMLButtonElement | null>(null)
 const layoutMode = ref<LayoutMode>('paired')
-const view = ref<ComparisonView>('changes')
+const view = ref<ComparisonView>(renderedLimitReason ? 'source' : 'changes')
 const activeSide = ref<ComparisonSide>('before')
 const hidePureFormatting = ref(false)
+const SourceComparison: ShallowRef<Component | null> = shallowRef(null)
+const sourceComponentLoading = ref(false)
+const sourceComponentError = ref<unknown>(null)
+let destroyed = false
 const comparisonId = useId()
 const changesPanelId = `${comparisonId}-changes-panel`
 const documentsPanelId = `${comparisonId}-documents-panel`
+const sourcePanelId = `${comparisonId}-source-panel`
 const changesTabId = `${comparisonId}-changes-tab`
 const documentsTabId = `${comparisonId}-documents-tab`
+const sourceTabId = `${comparisonId}-source-tab`
 const beforePanelId = `${comparisonId}-before-panel`
 const afterPanelId = `${comparisonId}-after-panel`
 const beforeTabId = `${comparisonId}-before-tab`
@@ -419,6 +469,7 @@ function createComparisonRuntime() {
 		}
 		if (error instanceof ComparisonModelLimitError) {
 			renderedLimitReason = 'complexity'
+			view.value = 'source'
 			return null
 		}
 		throw error
@@ -472,8 +523,35 @@ function onEditorReady(side: ComparisonSide) {
  * @param nextView Selected peer view
  */
 function setView(nextView: ComparisonView) {
-	if (!renderedLimitReason) {
-		view.value = nextView
+	if (renderedLimitReason && nextView !== 'source') {
+		return
+	}
+	view.value = nextView
+	if (nextView === 'source') {
+		loadSourceComponent()
+	}
+}
+
+/** Load the source view only after its peer tab is selected. */
+async function loadSourceComponent() {
+	if (SourceComparison.value || sourceComponentLoading.value) {
+		return
+	}
+	sourceComponentLoading.value = true
+	sourceComponentError.value = null
+	try {
+		const component = await import('./MarkdownSourceComparison.vue')
+		if (!destroyed) {
+			SourceComparison.value = markRaw(component.default)
+		}
+	} catch (error) {
+		if (!destroyed) {
+			sourceComponentError.value = error
+		}
+	} finally {
+		if (!destroyed) {
+			sourceComponentLoading.value = false
+		}
 	}
 }
 
@@ -565,7 +643,7 @@ function setActiveSide(side: ComparisonSide, focus = false) {
  * @param current Current peer view
  */
 function onViewTabKeydown(event: KeyboardEvent, current: ComparisonView) {
-	const views: ComparisonView[] = ['changes', 'documents']
+	const views: ComparisonView[] = renderedLimitReason ? ['source'] : ['changes', 'documents', 'source']
 	let target: ComparisonView | undefined
 	if (event.key === 'Home') {
 		target = views[0]
@@ -584,6 +662,7 @@ function onViewTabKeydown(event: KeyboardEvent, current: ComparisonView) {
 	nextTick(() => ({
 		changes: changesTab.value,
 		documents: documentsTab.value,
+		source: sourceTab.value,
 	})[target]?.focus())
 }
 
@@ -647,6 +726,9 @@ onMounted(async () => {
 			rootObserver.observe(root.value)
 		}
 	}
+	if (renderedLimitReason) {
+		await loadSourceComponent()
+	}
 	await nextTick()
 	if (!renderedLimitReason && readyEditors.size !== 2) {
 		throw new Error('Comparison editor plugin initialization failed')
@@ -655,6 +737,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+	destroyed = true
 	rootObserver?.disconnect()
 	comparisonRuntime?.destroy()
 })
@@ -768,6 +851,8 @@ $content-inset: 16px;
 	&__status,
 	&__changes-count,
 	&__empty p,
+	&__source-message p,
+	&__source-explanation {
 		margin: 0;
 	}
 
@@ -983,7 +1068,30 @@ $content-inset: 16px;
 
 			img { max-inline-size: 100%; }
 		}
-		}
+	}
+
+	&__source {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		min-width: 0;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	&__source-explanation {
+		flex: 0 0 auto;
+		padding: calc(2 * var(--default-grid-baseline)) calc(3 * var(--default-grid-baseline));
+		border-block-end: 1px solid var(--color-border);
+		color: var(--color-text-maxcontrast);
+		font-size: var(--font-size-small);
+		text-align: center;
+	}
+
+	&__source-message {
+		padding: calc(6 * var(--default-grid-baseline));
+		text-align: center;
+	}
 
 	&__sr-only {
 		position: absolute;
