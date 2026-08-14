@@ -192,6 +192,12 @@ const SourceLine = defineComponent({
 				line.hasZeroWidth ? t('text', 'Zero-width character') : '',
 				line.eolChanged ? line.eol.toUpperCase() : '',
 			].filter(Boolean)
+			const annotations = [
+				...signals.map((signal) => h('span', { class: 'text-source-comparison__whitespace-signal' }, signal)),
+				line.missingFinalNewline
+					? h('span', { class: 'text-source-comparison__newline-marker' }, t('text', 'No newline at end of file'))
+					: null,
+			].filter(Boolean)
 			return h('div', {
 				class: [
 					'text-source-comparison__line',
@@ -214,9 +220,8 @@ const SourceLine = defineComponent({
 				}, line.segments.map((segment) => h('bdi', {
 					class: segment.changed ? 'text-source-comparison__segment--changed' : undefined,
 				}, segment.text))),
-				...signals.map((signal) => h('span', { class: 'text-source-comparison__whitespace-signal' }, signal)),
-				line.missingFinalNewline
-					? h('span', { class: 'text-source-comparison__newline-marker' }, t('text', 'No newline at end of file'))
+				annotations.length
+					? h('span', { class: 'text-source-comparison__annotations' }, annotations)
 					: null,
 			])
 		}
@@ -580,6 +585,13 @@ onBeforeUnmount(() => {
 		}
 	}
 
+	&__annotations {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		min-width: 0;
+	}
+
 	&__hunks {
 		flex: 1 1 auto;
 		min-width: 0;
@@ -604,11 +616,6 @@ onBeforeUnmount(() => {
 		font-family: var(--font-face);
 		font-size: var(--font-size-small);
 		white-space: nowrap;
-	}
-
-	&__newline-marker {
-		grid-column: 3 / -1;
-		justify-self: start;
 	}
 
 	&__gap {

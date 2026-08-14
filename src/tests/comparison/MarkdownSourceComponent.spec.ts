@@ -272,6 +272,37 @@ describe('MarkdownSourceComparison', () => {
 		wrapper.unmount()
 	})
 
+	it('keeps all whitespace annotations in the line annotation column', async () => {
+		const annotatedLine = {
+			...sourceLine(1, '\ttext \u200b'),
+			eol: 'none' as const,
+			eolChanged: true,
+			hasTab: true,
+			hasTrailingWhitespace: true,
+			hasZeroWidth: true,
+			missingFinalNewline: true,
+		}
+		createSourceComparison.mockResolvedValue({
+			...readyModel,
+			hunks: [{
+				...readyModel.hunks[0],
+				before: [annotatedLine],
+				after: [],
+			}],
+		})
+		const wrapper = mount(MarkdownSourceComparison, {
+			props: { beforeContent: 'Before', afterContent: 'After', layoutMode: 'paired' },
+		})
+
+		await vi.waitFor(() => expect(wrapper.find('.text-source-comparison__annotations').exists()).toBe(true))
+		const annotations = wrapper.find('.text-source-comparison__annotations')
+		expect(annotations.findAll('.text-source-comparison__whitespace-signal').map((signal) => signal.text()))
+			.toEqual(['Tab', 'Trailing whitespace', 'Zero-width character', 'NONE'])
+		expect(annotations.find('.text-source-comparison__newline-marker').text())
+			.toBe('No newline at end of file')
+		wrapper.unmount()
+	})
+
 	it('summarizes line endings and keeps very long source lines unwrapped', async () => {
 		const longLine = sourceLine(1, 'x'.repeat(2001))
 		createSourceComparison.mockResolvedValue({
