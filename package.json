@@ -79,6 +79,7 @@
     "@tiptap/vue-3": "^3.30.0",
     "@vueuse/shared": "^14.4.0",
     "debounce": "^3.0.0",
+    "diff": "^8.0.3",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
     "katex": "^0.18.1",
