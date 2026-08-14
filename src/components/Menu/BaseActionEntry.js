@@ -79,6 +79,7 @@ const BaseActionEntry = {
 	beforeUnmount() {
 		this.editor.off('update', this.$_updateState)
 		this.editor.off('selectionUpdate', this.$_updateState)
+		this.$_updateState.clear()
 	},
 	methods: {
 		updateState() {
