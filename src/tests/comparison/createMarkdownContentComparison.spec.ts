@@ -4,7 +4,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MAX_RENDERED_COMPARISON_DESCRIPTORS } from '../../comparison/hierarchicalMarkdownComparisonModel.ts'
+import * as markdownComparison from '../../comparison/markdownComparison.ts'
 import { RENDERED_COMPARISON_LIMITS } from '../../comparison/renderedComparisonLimit.ts'
 import { createMarkdownContentComparison } from '../../createMarkdownContentComparison.ts'
 import {
@@ -164,11 +164,15 @@ describe('createMarkdownContentComparison', { timeout: 30_000 }, () => {
 		comparison.destroy()
 	})
 	it('reports when semantic change density reaches the model limit', async () => {
+		vi.spyOn(markdownComparison, 'createMarkdownComparisonModel').mockImplementationOnce(() => {
+			throw new markdownComparison.ComparisonModelLimitError()
+		})
 		const el = document.createElement('div')
-		const itemCount = Math.floor(MAX_RENDERED_COMPARISON_DESCRIPTORS / 8) + 1
-		const beforeContent = Array.from({ length: itemCount }, () => '- [ ] a x a x a x a x a x a x a x a x').join('\n')
-		const afterContent = Array.from({ length: itemCount }, () => '- [ ] b x b x b x b x b x b x b x b x').join('\n')
-		const comparison = await createMarkdownContentComparison({ afterContent, beforeContent, el })
+		const comparison = await createMarkdownContentComparison({
+			afterContent: 'After',
+			beforeContent: 'Before',
+			el,
+		})
 
 		expect(el.querySelector('[data-comparison-rendered-limit]')?.textContent)
 			.toContain('too many changes for rendered views')
