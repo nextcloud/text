@@ -59,14 +59,14 @@ class SessionController extends ApiController implements ISessionAwareController
 		$type = 'file';
 		$id = $fileId;
 		$builders = [
-			'file' => fn (int $id, string $_type, ?string $baseVersionEtag): IContext => $this->fileContextFactory->buildForId($id, $baseVersionEtag),
+			'file' => fn (int $id, string $_type): IContext => $this->fileContextFactory->buildForId($id),
 		];
 		if ($id === null) {
 			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
 		}
 
 		try {
-			$context = $builders[$type]($id, $type, $baseVersionEtag);
+			$context = $builders[$type]($id, $type);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
 			return new DataResponse([
@@ -74,7 +74,7 @@ class SessionController extends ApiController implements ISessionAwareController
 			], Http::STATUS_NOT_FOUND);
 		}
 
-		return $this->apiService->create($context);
+		return $this->apiService->create($context, $baseVersionEtag);
 	}
 
 	#[NoAdminRequired]
