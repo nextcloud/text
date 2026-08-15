@@ -13,6 +13,8 @@ use Exception;
 use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\Context\IContext;
+use OCA\Text\Context\NewSessionData;
+use OCA\Text\Context\SessionInfo;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -41,71 +43,37 @@ class ApiService {
 	}
 
 	public function create(IContext $context, ?string $guestName = null): DataResponse {
+		$document = $context->buildDocument();
+		if (!$document instanceof Document) {
+			return new DataResponse(['error' => $document], Http::STATUS_FORBIDDEN);
+		}
+
 		try {
-			$error = $context->check();
-			if ($error !== null) {
-				return new DataResponse(['error' => $error], Http::STATUS_FORBIDDEN);
-			}
-
-			$readOnly = $context->isReadOnly();
-
-			$document = $this->documentService->getOrCreateDocument($context);
-			$this->sessionService->removeInactiveSessionsWithoutSteps($document->getId());
-			$error = $context->checkDocument($document);
-			if ($error !== null) {
-				return new DataResponse(['error' => $error], Http::STATUS_PRECONDITION_FAILED);
-			}
-
+			$document = $this->documentService->getOrCreateDocument($document, $context);
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
+		$documentData = $this->documentService->getDocumentData($document);
 
-		/** @var Document $document */
-
-		$session = $this->sessionService->initSession($document->getId(), $guestName);
-
-		$documentState = null;
-		$content = null;
-		if ($document->getLastSavedVersion() === 0) {
-			$this->logger->debug('Sending content for unsaved ' . $context->toString());
-			$content = $context->loadContent();
-		} else {
-			$this->logger->debug('Loading saved document state for ' . $context->toString());
-			try {
-				$stateFile = $this->documentService->getStateFile($document->getId());
-				$documentState = $stateFile->getContent();
-			} catch (NotFoundException) {
-				$this->logger->warning('State file not found for saved document' . $context->toString());
-
-				// If we have no state file we need to load the content from the file
-				// On the client side we use this to initialize a idempotent initial y.js document
-				$content = $context->loadContent();
-			}
+		$sessionInfo = $context->prepareSession($documentData);
+		if (!$sessionInfo instanceof SessionInfo) {
+			return new DataResponse(['error' => $sessionInfo], Http::STATUS_PRECONDITION_FAILED);
 		}
 
-		$lockInfo = $context->getLockInfo();
+		$session = $this->sessionService->initSession($document->id, $guestName);
+		$displayName = $this->sessionService->getNameForSession($session);
 
-		$hasOwner = $context->getOwner() !== null;
+		$newSession = new NewSessionData(
+			documentData: $documentData,
+			sessionInfo: $sessionInfo,
+			session: $session,
+			displayName: $displayName,
+		);
 
-		// Disable file locking for Readme.md files, because in the
-		// current setup, this makes it almost impossible to delete these files.
-		if (!$readOnly) {
-			$isLocked = $context->lock();
-			if (!$isLocked) {
-				$readOnly = true;
-			}
-		}
-
-		return new DataResponse([
-			'document' => $document,
-			'session' => array_merge($session->jsonSerialize(), ['displayName' => $this->sessionService->getNameForSession($session)]),
-			'readOnly' => $readOnly,
-			'content' => $content,
-			'documentState' => $documentState,
-			'lock' => $lockInfo,
-			'hasOwner' => $hasOwner,
-		]);
+		return new DataResponse(
+			$newSession->jsonSerialize()
+		);
 	}
 
 	public function close(int $documentId, int $sessionId, string $sessionToken, File $file): DataResponse {
@@ -147,7 +115,7 @@ class ApiService {
 			return;
 		}
 
-		$sessions = $this->sessionService->getActiveSessions($document->getId());
+		$sessions = $this->sessionService->getActiveSessions($document->id);
 		$userIds = array_values(array_filter(array_unique(
 			array_map(fn ($session): ?string => $session['userId'], $sessions)
 		)));

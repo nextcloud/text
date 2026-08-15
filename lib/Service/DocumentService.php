@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use InvalidArgumentException;
+use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
@@ -97,34 +98,56 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function getOrCreateDocument(IContext $context): Document {
-		$document = $this->getDocument($context->getId());
-		if ($document !== null) {
-			$this->logger->info('Keep previous document of ' . $context->toString());
-			return $document;
+	public function getOrCreateDocument(Document $document, IContext $context): Document {
+		// TODO: drop $context once $document contains contextId and contextType
+		$loaded = $this->getDocument($context->getId());
+		if ($loaded !== null) {
+			$this->logger->info('Keep previous document of ' . $document->toString());
+			return $loaded;
 		}
 
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
-		$this->logger->info('Create new document of ' . $context->toString());
-		$document = $context->createDocument();
+		$this->logger->info('Create new document of ' . $document->toString());
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
-			$this->cache->set('document-version-' . $document->getId(), 0);
+			$this->cache->set('document-version-' . $document->id, 0);
 		} catch (Exception $e) {
 			if ($e->getReason() !== Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
 				throw $e;
 			}
 			// Document might have been created in the meantime
-			$document = $this->getDocument($context->getId());
+			$document = $this->getDocument($document->id);
 			if ($document === null) {
 				throw $e;
 			}
 		}
 		return $document;
+	}
+
+	public function getDocumentData(Document $document): DocumentData {
+		$documentState = null;
+		if ($document->getLastSavedVersion() > 0) {
+			$this->logger->debug('Loading saved document state for ' . $document->toString());
+			try {
+				$stateFile = $this->getStateFile($document->id);
+				$documentState = $stateFile->getContent();
+			} catch (NotFoundException) {
+				// If we have no state file we need to load the content from the file
+				// On the client side we use this to initialize a idempotent initial y.js document
+				$this->logger->warning('State file not found for saved document' . $document->toString());
+			}
+		}
+
+		$documentData = new DocumentData(
+			document: $document,
+			documentState: $documentState,
+		);
+
+		return $documentData;
 	}
 
 	/**
