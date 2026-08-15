@@ -134,7 +134,7 @@ class TextDirectEditor implements IEditor {
 		$token->useTokenScope();
 		try {
 			$context = $this->fileContextFactory->buildForDirectEditing($token);
-			$session = $this->apiService->create($context);
+			$session = $this->apiService->create($context, null);
 			$this->initialStateProvider->provideFile([
 				'fileId' => $token->getFile()->getId(),
 				'mimetype' => $token->getFile()->getMimeType(),

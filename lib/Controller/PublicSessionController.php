@@ -74,8 +74,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	public function create(string $token, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
 		try {
-			$context = $this->fileContextFactory->buildForShareWithPath($token, $filePath, $baseVersionEtag);
-			return $this->apiService->create($context, $guestName);
+			$context = $this->fileContextFactory->buildForShareWithPath($token, $filePath);
+			return $this->apiService->create($context, $baseVersionEtag, $guestName);
 		} catch (NotFoundException|\InvalidArgumentException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
