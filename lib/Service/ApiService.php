@@ -14,7 +14,6 @@ use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\Context\IContext;
 use OCA\Text\Context\NewSessionData;
-use OCA\Text\Context\SessionInfo;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -42,7 +41,7 @@ class ApiService {
 	) {
 	}
 
-	public function create(IContext $context, ?string $guestName = null): DataResponse {
+	public function create(IContext $context, ?string $baseVersionEtag, ?string $guestName = null): DataResponse {
 		$document = $context->buildDocument();
 		if (!$document instanceof Document) {
 			return new DataResponse(['error' => $document], Http::STATUS_FORBIDDEN);
@@ -56,11 +55,12 @@ class ApiService {
 		}
 		$documentData = $this->documentService->getDocumentData($document);
 
-		$sessionInfo = $context->prepareSession($documentData);
-		if (!$sessionInfo instanceof SessionInfo) {
-			return new DataResponse(['error' => $sessionInfo], Http::STATUS_PRECONDITION_FAILED);
+		if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
+			$error = $this->l10n->t('Editing session has expired. Please reload the page.');
+			return new DataResponse(['error' => $error], Http::STATUS_PRECONDITION_FAILED);
 		}
 
+		$sessionInfo = $context->prepareSession($documentData);
 		$session = $this->sessionService->initSession($document->id, $guestName);
 		$displayName = $this->sessionService->getNameForSession($session);
 
