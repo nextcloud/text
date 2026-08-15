@@ -55,4 +55,11 @@ class Document extends Entity implements \JsonSerializable {
 			'checksum' => $this->checksum
 		];
 	}
+
+	/**
+	 * Short identifier - mostly for logging
+	 */
+	public function toString(): string {
+		return 'file' . ' (' . $this->id . ')';
+	}
 }
