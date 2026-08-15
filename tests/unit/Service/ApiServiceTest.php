@@ -65,7 +65,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 			->method('prepareSession')
 			->with($documentData)
 			->willReturn($sessionInfo);
-		$actual = $this->apiService->create($context);
+		$actual = $this->apiService->create($context, null);
 		foreach ($documentData as $key => $value) {
 			self::assertEquals($value, $actual->getData()[$key]);
 		}

@@ -16,7 +16,7 @@ interface IContext {
 	public function getType(): string;
 	public function toString(): string;
 	public function buildDocument(): Document|string;
-	public function prepareSession(DocumentData $documentData): SessionInfo|string;
+	public function prepareSession(DocumentData $documentData): SessionInfo;
 }
 
 readonly class DocumentData {
