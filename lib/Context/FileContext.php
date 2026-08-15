@@ -25,7 +25,6 @@ class FileContext implements IContext {
 		private readonly LockService $lockService,
 		private readonly LoggerInterface $logger,
 		private readonly File $file,
-		private readonly ?string $baseVersionEtag,
 		private readonly ?string $token = null,
 	) {
 	}
@@ -63,13 +62,9 @@ class FileContext implements IContext {
 	}
 
 	#[Override]
-	public function prepareSession(DocumentData $documentData): SessionInfo|string {
+	public function prepareSession(DocumentData $documentData): SessionInfo {
 		$document = $documentData->document;
 		$documentState = $documentData->documentState;
-
-		if ($this->baseVersionEtag !== null && $this->baseVersionEtag !== $document->getBaseVersionEtag()) {
-			return $this->l10n->t('Editing session has expired. Please reload the page.');
-		}
 
 		$content = null;
 		if ($documentState === null) {

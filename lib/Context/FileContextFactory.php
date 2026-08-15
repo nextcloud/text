@@ -30,7 +30,6 @@ class FileContextFactory {
 
 	private function build(
 		File $file,
-		?string $baseVersionEtag,
 		?string $token = null,
 	): FileContext {
 		return new FileContext(
@@ -39,7 +38,6 @@ class FileContextFactory {
 			$this->lockService,
 			$this->logger,
 			$file,
-			$baseVersionEtag,
 			$token,
 		);
 	}
@@ -50,14 +48,13 @@ class FileContextFactory {
 	 */
 	public function buildForId(
 		int $id,
-		?string $baseVersionEtag,
 	): FileContext {
 		$userId = $this->userSession->getUser()?->getUID();
 		if ($userId === null) {
 			throw new NotPermittedException();
 		}
 		$file = $this->fileService->getFileById($id, $userId);
-		return $this->build($file, $baseVersionEtag);
+		return $this->build($file);
 	}
 
 	/**
@@ -67,7 +64,6 @@ class FileContextFactory {
 	public function buildForShareWithPath(
 		string $token,
 		?string $filePath,
-		?string $baseVersionEtag,
 	): FileContext {
 		$file = $this->fileService->getFileByShareToken($token, $filePath);
 		/*
@@ -75,7 +71,7 @@ class FileContextFactory {
 		* If not then well 404 it is.
 		*/
 		$this->fileService->checkSharePermissions($token);
-		return $this->build($file, $baseVersionEtag, $token);
+		return $this->build($file, $token);
 	}
 
 	/**
