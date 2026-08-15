@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Context\FileContextFactory;
+use OCA\Text\Context\IContext;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -55,12 +56,17 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
-		if ($fileId === null) {
+		$type = 'file';
+		$id = $fileId;
+		$builders = [
+			'file' => fn (int $id, string $_type, ?string $baseVersionEtag): IContext => $this->fileContextFactory->buildForId($id, $baseVersionEtag),
+		];
+		if ($id === null) {
 			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
 		}
 
 		try {
-			$context = $this->fileContextFactory->buildForId($fileId, $baseVersionEtag);
+			$context = $builders[$type]($id, $type, $baseVersionEtag);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
 			return new DataResponse([
