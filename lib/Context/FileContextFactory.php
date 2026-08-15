@@ -10,10 +10,12 @@ namespace OCA\Text\Context;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\DirectEditing\IToken;
+use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 
 class FileContextFactory {
 
@@ -21,8 +23,25 @@ class FileContextFactory {
 		private readonly FileService $fileService,
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
+		private readonly LoggerInterface $logger,
 		private readonly IUserSession $userSession,
 	) {
+	}
+
+	private function build(
+		File $file,
+		?string $baseVersionEtag,
+		?string $token = null,
+	): FileContext {
+		return new FileContext(
+			$this->fileService,
+			$this->l10n,
+			$this->lockService,
+			$this->logger,
+			$file,
+			$baseVersionEtag,
+			$token,
+		);
 	}
 
 	/**
@@ -38,13 +57,7 @@ class FileContextFactory {
 			throw new NotPermittedException();
 		}
 		$file = $this->fileService->getFileById($id, $userId);
-		return new FileContext(
-			$this->fileService,
-			$this->l10n,
-			$this->lockService,
-			$file,
-			$baseVersionEtag,
-		);
+		return $this->build($file, $baseVersionEtag);
 	}
 
 	/**
@@ -62,14 +75,7 @@ class FileContextFactory {
 		* If not then well 404 it is.
 		*/
 		$this->fileService->checkSharePermissions($token);
-		return new FileContext(
-			$this->fileService,
-			$this->l10n,
-			$this->lockService,
-			$file,
-			$baseVersionEtag,
-			$token,
-		);
+		return $this->build($file, $baseVersionEtag, $token);
 	}
 
 	/**
@@ -77,13 +83,7 @@ class FileContextFactory {
 	 */
 	public function buildForDirectEditing(IToken $token): FileContext {
 		$file = $token->getFile();
-		return new FileContext(
-			$this->fileService,
-			$this->l10n,
-			$this->lockService,
-			$file,
-			null,
-		);
+		return $this->build($file, null);
 	}
 
 }

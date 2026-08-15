@@ -3,6 +3,7 @@
 namespace OCA\Text\Tests;
 
 use OCA\Text\Exception\InvalidSessionException;
+use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Constants;
@@ -14,6 +15,7 @@ use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
+use Psr\Log\LoggerInterface;
 
 class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	private FileService $fileService;
@@ -28,9 +30,11 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->shareManager = $this->createMock(IManager::class);
 
 		$this->fileService = new FileService(
+			$this->createStub(EncodingService::class),
 			$this->session,
 			$this->rootFolder,
 			$this->createMock(LockService::class),
+			$this->createStub(LoggerInterface::class),
 			$this->shareManager,
 		);
 	}
