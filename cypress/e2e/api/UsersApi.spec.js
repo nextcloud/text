@@ -16,7 +16,7 @@ describe('The user mention API', function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 			.as('fileId')
-			.then((fileId) => cy.openConnection({ fileId }))
+			.then((fileId) => cy.openFileConnection({ fileId }))
 			.its('connection')
 			.as('connection')
 	})
