@@ -49,13 +49,13 @@ describe('Sync service', () => {
 		const setBaseVersionEtag = vi.fn()
 		const { connection, openConnection, openData } = provideConnection(
 			{
-				fileId: 123,
+				context: { type: 'file', id: 123 },
 				relativePath: './',
 			},
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
-		vi.mocked(connect.open).mockResolvedValue(openResult)
+		vi.mocked(connect.openFile).mockResolvedValue(openResult)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
 		service.bus.on('opened', openHandler)
