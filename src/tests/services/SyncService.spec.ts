@@ -54,7 +54,7 @@ describe('Sync service', () => {
 			setBaseVersionEtag,
 		)
 		vi.mock('../../apis/connect')
-		vi.mocked(connect.open).mockResolvedValue(openResult)
+		vi.mocked(connect.openFile).mockResolvedValue(openResult)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
 		service.bus.on('opened', openHandler)
