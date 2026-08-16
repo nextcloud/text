@@ -8,8 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
-use OCA\Text\Context\FileContextFactory;
-use OCA\Text\Context\IContext;
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -42,7 +41,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
-		private FileContextFactory $fileContextFactory,
+		private ContextManager $contextManager,
 		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
@@ -58,17 +57,14 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
 		$type = 'file';
 		$id = $fileId;
-		$builders = [
-			'file' => fn (int $id, string $_type): IContext => $this->fileContextFactory->buildForId($id),
-		];
 		if ($id === null) {
 			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
 		}
 
 		try {
-			$context = $builders[$type]($id, $type);
+			$context = $this->contextManager->getContext($id, $type);
 		} catch (NotFoundException|NotPermittedException $e) {
-			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+			$this->logger->error('No permission to access this context', [ 'exception' => $e ]);
 			return new DataResponse([
 				'error' => $this->l10n->t('File not found')
 			], Http::STATUS_NOT_FOUND);
