@@ -10,10 +10,16 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
 export interface OpenParams {
-	fileId?: number
+	fileId: number
+	filePath: string // not send to the api but included in the connection
 	baseVersionEtag?: string
+}
+
+export interface OpenShareParams {
+	token: string
+	fileId: number
 	filePath: string
-	token?: string
+	baseVersionEtag?: string
 	guestName?: string
 }
 
@@ -28,15 +34,31 @@ export interface OpenData {
 }
 
 /**
+ * Open editing connection to a file when logged in
+ *
+ * @param params Parameters identifying the document
+ */
+export async function openFile(params: OpenParams): Promise<{ connection: Connection, data: OpenData }> {
+	const url = generateUrl(`/apps/text/session/${params.fileId}/create`)
+	const response = await axios.put(url, params)
+	const { document, session } = response.data
+	const connection = {
+		documentId: document.id,
+		sessionId: session.id,
+		sessionToken: session.token,
+		baseVersionEtag: document.baseVersionEtag,
+		filePath: params.filePath,
+	}
+	return { connection, data: response.data }
+}
+
+/**
  * Open editing connection to the document
  *
  * @param params Parameters identifying the document
  */
-export async function open(params: OpenParams): Promise<{ connection: Connection, data: OpenData }> {
-	const _baseUrl = params.token
-		? generateUrl('/apps/text/public')
-		: generateUrl('/apps/text')
-	const url = `${_baseUrl}/session/${params.fileId}/create`
+export async function openShare(params: OpenShareParams): Promise<{ connection: Connection, data: OpenData }> {
+	const url = generateUrl('/apps/text/public/session/123/create')
 	const response = await axios.put(url, params)
 	const { document, session } = response.data
 	const connection = {
