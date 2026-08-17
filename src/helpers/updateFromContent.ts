@@ -55,4 +55,5 @@ function setContent(
 				extensions: [Collaboration.configure({ document: doc })],
 			})
 	editor.commands.setContent(html)
+	editor.destroy()
 }
