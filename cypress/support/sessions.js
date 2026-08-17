@@ -4,13 +4,19 @@
  */
 
 import axios from '@nextcloud/axios'
-import { close, openFile, openShare } from '../../src/apis/connect.ts'
+import { close, openContext, openShare } from '../../src/apis/connect.ts'
 import { save } from '../../src/apis/save.ts'
 import { push, sync } from '../../src/apis/sync.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
-Cypress.Commands.add('openFileConnection', openFile)
+Cypress.Commands.add(
+	'openFileConnection',
+	({ fileId, filePath }) => {
+		return openContext({ type: 'file', id: fileId, filePath })
+	},
+)
+
 Cypress.Commands.add('openShareConnection', openShare)
 
 Cypress.Commands.add('closeConnection', close)
@@ -18,7 +24,7 @@ Cypress.Commands.add('closeConnection', close)
 Cypress.Commands.add(
 	'failToCreateTextSession',
 	(fileId, baseVersionEtag = null, options = {}) => {
-		return openFile({ fileId, ...options, baseVersionEtag }).then(
+		return openContext({ type: 'file', id: fileId, ...options, baseVersionEtag }).then(
 			() => {
 				throw new Error('Expected request to fail - but it succeeded!')
 			},
