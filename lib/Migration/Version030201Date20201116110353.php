@@ -50,6 +50,10 @@ class Version030201Date20201116110353 extends SimpleMigrationStep {
 		return $schema;
 	}
 
+	/**
+	 * @param non-empty-string $tableName
+	 * @param non-empty-string $columnName
+	 */
 	protected function ensureColumnIsNullable(ISchemaWrapper $schema, string $tableName, string $columnName): bool {
 		$table = $schema->getTable($tableName);
 		$column = $table->getColumn($columnName);
