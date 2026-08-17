@@ -9,8 +9,9 @@ import type { Document, GuestSession, Session } from '../services/SyncService.ts
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
-export interface OpenParams {
-	fileId: number
+export interface OpenContextParams {
+	type: string
+	id: number
 	filePath: string // not send to the api but included in the connection
 	baseVersionEtag?: string
 }
@@ -38,9 +39,10 @@ export interface OpenData {
  *
  * @param params Parameters identifying the document
  */
-export async function openFile(params: OpenParams): Promise<{ connection: Connection, data: OpenData }> {
-	const url = generateUrl(`/apps/text/session/${params.fileId}/create`)
-	const response = await axios.put(url, params)
+export async function openContext(params: OpenContextParams): Promise<{ connection: Connection, data: OpenData }> {
+	const { type, id, baseVersionEtag } = params
+	const url = generateUrl(`/apps/text/session/${type}/${id}/create`)
+	const response = await axios.put(url, { baseVersionEtag })
 	const { document, session } = response.data
 	const connection = {
 		documentId: document.id,

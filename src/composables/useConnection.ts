@@ -175,8 +175,9 @@ async function openFile(
 	},
 	baseVersionEtag: string | undefined,
 ) {
-	return api.openFile({
-		fileId: props.fileId,
+	return api.openContext({
+		type: 'file',
+		id: props.fileId,
 		filePath: props.relativePath,
 		baseVersionEtag,
 	})
