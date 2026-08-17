@@ -12,17 +12,15 @@ namespace OCA\Text\Migration;
 use Closure;
 use OCP\DB\ISchemaWrapper;
 use OCP\DB\Types;
-use OCP\IConfig;
+use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
 class Version030201Date20201116123153 extends SimpleMigrationStep {
+	private readonly bool $isOracle;
 
-	/** @var bool */
-	private $isOracle;
-
-	public function __construct(IConfig $config) {
-		$this->isOracle = $config->getSystemValue('dbtype', 'sqlite') === 'oci';
+	public function __construct(IDBConnection $connection) {
+		$this->isOracle = $connection->getDatabaseProvider() === IDBConnection::PLATFORM_ORACLE;
 	}
 
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
