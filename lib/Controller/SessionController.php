@@ -54,17 +54,11 @@ class SessionController extends ApiController implements ISessionAwareController
 	}
 
 	#[NoAdminRequired]
-	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
-		$type = 'file';
-		$id = $fileId;
-		if ($id === null) {
-			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
-		}
-
+	public function create(string $type, int $id, ?string $baseVersionEtag = null): DataResponse {
 		try {
 			$context = $this->contextManager->getContext($id, $type);
 		} catch (NotFoundException|NotPermittedException $e) {
-			$this->logger->error('No permission to access this context', [ 'exception' => $e ]);
+			$this->logger->error('No context for ' . $type . ' (' . $id . ') ', [ 'exception' => $e ]);
 			return new DataResponse([
 				'error' => $this->l10n->t('File not found')
 			], Http::STATUS_NOT_FOUND);

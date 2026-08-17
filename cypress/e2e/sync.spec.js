@@ -102,7 +102,7 @@ describe('Sync', () => {
 			'contain',
 			'The document could not be loaded.',
 		)
-		cy.intercept('**/apps/text/session/*/create').as('create')
+		cy.intercept('**/apps/text/session/*/*/create').as('create')
 		cy.get('#editor-container .document-status').find('button').click()
 		// let first attempt fail
 		cy.wait('@create', { timeout: 10000 })
@@ -180,7 +180,7 @@ describe('Sync', () => {
 
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' }).as('create')
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/*/create' }).as('create')
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')
