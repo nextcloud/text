@@ -4,9 +4,9 @@
  */
 
 import { expect } from '@playwright/test'
-import { createFolder, uploadFile } from '../support/fixtures/Node.ts'
-import { test } from '../support/fixtures/random-user.ts'
-import { setTextSetting } from '../support/fixtures/settings.ts'
+import { createFolder, uploadFile } from '../support/fixtures/Node'
+import { test } from '../support/fixtures/random-user'
+import { setTextSetting } from '../support/fixtures/settings'
 import {
 	deleteWebDAVResource,
 	PROPERTY_WORKSPACE,
@@ -14,7 +14,7 @@ import {
 	PROPERTY_WORKSPACE_FILE_FLAT,
 	PROPERTY_WORKSPACE_FLAT,
 	propfindFolder,
-} from '../support/fixtures/webdav.ts'
+} from '../support/fixtures/webdav'
 
 test.describe('Text PROPFIND extension', () => {
 	test.describe('with workspaces enabled', () => {
