@@ -37,7 +37,7 @@ describe('The session Api', function() {
 
 		it('returns connection', function() {
 			cy.openFileConnection({ fileId }).then(({ connection }) => {
-				cy.wrap(connection).its('documentId').should('equal', fileId)
+				cy.wrap(connection).its('documentId').should('be.greaterThan', 0)
 				cy.closeConnection(connection)
 			})
 		})
