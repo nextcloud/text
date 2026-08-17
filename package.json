@@ -113,6 +113,7 @@
     "@nextcloud/prettier-config": "^1.2.0",
     "@nextcloud/vite-config": "^1.7.2",
     "@playwright/test": "^1.60.0",
+    "@types/jsdom": "^30.0.0",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^26.2.0",
     "@vitejs/plugin-vue2": "^2.3.4",
