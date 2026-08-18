@@ -77,7 +77,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 			* If not then well 404 it is.
 			*/
 		try {
-			$this->fileService->checkSharePermissions($token);
+			$context = $this->fileContextFactory->buildForShareWithPath($token, $filePath);
+			return $this->apiService->create($context, $baseVersionEtag, $guestName);
 		} catch (NotFoundException|\InvalidArgumentException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
