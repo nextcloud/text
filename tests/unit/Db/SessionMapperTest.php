@@ -146,7 +146,8 @@ class SessionMapperTest extends \Test\TestCase {
 
 		// Create document
 		$document = $this->documentMapper->insert(Document::fromParams([
-			'id' => 1,
+			'contextId' => 123,
+			'contextType' => 'file',
 			'currentVersion' => 0,
 			'lastSavedVersion' => 100,
 			'lastSavedVersionTime' => time()
