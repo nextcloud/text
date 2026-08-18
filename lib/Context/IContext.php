@@ -9,6 +9,7 @@ namespace OCA\Text\Context;
 
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
+use OCP\Files\File;
 use OCP\Files\Lock\ILock;
 
 interface IContext {
@@ -19,6 +20,7 @@ interface IContext {
 	public function prepareSession(DocumentData $documentData): SessionInfo;
 	public function isReadOnly(): bool;
 	public function updateDocument(Document $document): ?Document;
+	public function getFile(): ?File;
 }
 
 readonly class DocumentData {
