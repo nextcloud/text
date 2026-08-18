@@ -183,6 +183,14 @@ class DocumentService {
 	}
 
 	/**
+	 * @throws Exception
+	 * @throws InvalidPathException
+	 */
+	public function updateDocument(Document $document): void {
+		$this->documentMapper->update($document);
+	}
+
+	/**
 	 * @param int $documentId
 	 *
 	 * @return ISimpleFile
