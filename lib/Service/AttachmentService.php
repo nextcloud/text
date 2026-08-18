@@ -12,7 +12,9 @@ namespace OCA\Text\Service;
 use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Files_Sharing\SharedStorage;
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Controller\AttachmentController;
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
 use OCP\Constants;
 use OCP\Files\File;
@@ -44,6 +46,8 @@ readonly class AttachmentService {
 		private IFilenameValidator $filenameValidator,
 		private IFilesMetadataManager $filesMetadataManager,
 		private ISession $session,
+		private DocumentMapper $documentMapper,
+		private ContextManager $contextManager,
 	) {
 	}
 
@@ -515,12 +519,21 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 */
 	private function getTextFile(int $documentId, string $userId): File {
-		$userFolder = $this->rootFolder->getUserFolder($userId);
-		$file = $userFolder->getFirstNodeById($documentId);
+		$document = $this->documentMapper->find($documentId);
+		$type = $document->getContextType();
+		$id = $document->getContextId();
+		$context = $this->contextManager->getContext($id, $type);
+		$file = $context->getFile();
 		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 			return $file;
 		}
-		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
+		throw new NotFoundException('Text file for document'
+			. $documentId
+			. ' ('
+			. $context->toString()
+			. ') was not found in storage of '
+			. $userId
+		);
 	}
 
 	/**
