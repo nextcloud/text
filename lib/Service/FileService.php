@@ -40,7 +40,10 @@ class FileService {
 		if (!$session->isGuest()) {
 			try {
 				return $this->getFileById($session->getDocumentId(), $session->getUserId());
-			} catch (NotFoundException) {
+			} catch (NotFoundException $e) {
+				if ($shareToken === null) {
+					throw $e;
+				}
 				// We may still have a user session but on a public share link so move on
 			}
 		}
@@ -115,7 +118,8 @@ class FileService {
 	}
 
 	/**
-	 * @throws NotFoundException
+	 * @throws NotFoundException if the share cannot be found based on the token
+	 * @throws \InvalidArgumentException if the share is not a File share and path is omitted.
 	 */
 	public function getFileByShareToken(string $shareToken, ?string $path = null): File {
 		try {
@@ -131,7 +135,7 @@ class FileService {
 		if ($node instanceof File) {
 			return $node;
 		}
-		throw new \InvalidArgumentException('No proper share data');
+		throw new \InvalidArgumentException('Invalid share data.');
 	}
 
 	public function isReadOnly(File $file, ?string $token): bool {
@@ -166,7 +170,7 @@ class FileService {
 	 *
 	 * @return void
 	 *
-	 * @throws NotFoundException|NotPermittedException
+	 * @throws NotFoundException
 	 *
 	 * @psalm-param 1|2 $permission
 	 */

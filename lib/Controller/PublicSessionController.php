@@ -17,9 +17,7 @@ use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
-use OCP\Constants;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ISession;
@@ -79,11 +77,9 @@ class PublicSessionController extends PublicShareController implements ISessionA
 			* If not then well 404 it is.
 			*/
 		try {
-			$this->fileService->checkSharePermissions($token, Constants::PERMISSION_READ);
-		} catch (NotFoundException) {
+			$this->fileService->checkSharePermissions($token);
+		} catch (NotFoundException|\InvalidArgumentException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		} catch (NotPermittedException) {
-			return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
 		}
 
 		return $this->apiService->create($file, $baseVersionEtag, $token, $guestName);
