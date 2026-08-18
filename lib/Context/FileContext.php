@@ -8,12 +8,16 @@
 namespace OCA\Text\Context;
 
 use OCA\Text\Db\Document;
+use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\File;
+use OCP\Files\GenericFileException;
 use OCP\Files\Lock\ILock;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IUser;
+use OCP\Lock\LockedException;
 use Override;
 use Psr\Log\LoggerInterface;
 
@@ -90,12 +94,48 @@ class FileContext implements IContext {
 		);
 	}
 
-	private function computeCheckSum(): string {
-		return hash('crc32', $this->file->getContent());
+	public function isReadOnly(): bool {
+		return $this->fileService->isReadOnly($this->file, $this->token);
 	}
 
-	private function isReadOnly(): bool {
-		return $this->fileService->isReadOnly($this->file, $this->token);
+	/**
+	 * @throws DocumentSaveConflictException
+	 * @throws GenericFileException if the file changed and reading the content fails.
+	 * @throws LockedException if the file changed and a lock prevents reading the content.
+	 * @throws NotPermittedException if the file changed and reading is not allowed.
+	 * @return Document|null Updated document if there was an update
+	 */
+	public function updateDocument(Document $document): ?Document {
+		$lastMTime = $document->getLastSavedVersionTime();
+		$lastEtag = $document->getLastSavedVersionEtag();
+
+		if ($lastMTime <= 0 || $this->isReadOnly()) {
+			return null;
+		}
+
+		$fileMtime = $this->file->getMtime();
+		$fileEtag = $this->file->getEtag();
+
+		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
+			return null;
+		}
+
+		$storedChecksum = $document->getChecksum();
+		$fileContent = $this->file->getContent();
+		$fileChecksum = self::computeCheckSum($fileContent);
+
+		if ($storedChecksum !== $fileChecksum) {
+			throw new DocumentSaveConflictException($fileContent);
+		}
+
+		$document->setLastSavedVersionTime($fileMtime);
+		$document->setLastSavedVersionEtag($fileEtag);
+		return $document;
+	}
+
+	private function computeCheckSum(?string $content = null): string {
+		$content ??= $this->file->getContent();
+		return hash('crc32', $content);
 	}
 
 	private function loadContent(): ?string {
