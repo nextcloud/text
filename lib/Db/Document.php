@@ -25,6 +25,10 @@ use OCP\AppFramework\Db\Entity;
  * @method setBaseVersionEtag(string $etag): void
  * @method getChecksum(): ?string
  * @method setChecksum(?string $checksum): void
+ * @method getContextType(): string
+ * @method setContextType(string $contextType): void
+ * @method getContextId(): int
+ * @method setContextId(int $contextId): void
  */
 class Document extends Entity implements \JsonSerializable {
 	public $id = null;
@@ -36,6 +40,8 @@ class Document extends Entity implements \JsonSerializable {
 	protected string $lastSavedVersionEtag = '';
 	protected string $baseVersionEtag = '';
 	protected ?string $checksum = null;
+	protected string $contextType = '';
+	protected int $contextId = 0;
 
 	public function __construct() {
 		$this->addType('currentVersion', 'integer');
@@ -43,6 +49,8 @@ class Document extends Entity implements \JsonSerializable {
 		$this->addType('lastSavedVersionTime', 'integer');
 		$this->addType('initialVersion', 'integer');
 		$this->addType('checksum', 'string');
+		$this->addType('contextType', 'string');
+		$this->addType('contextId', 'integer');
 	}
 
 	public function jsonSerialize(): array {
@@ -52,7 +60,9 @@ class Document extends Entity implements \JsonSerializable {
 			'lastSavedVersionTime' => $this->lastSavedVersionTime,
 			'baseVersionEtag' => $this->baseVersionEtag,
 			'initialVersion' => $this->initialVersion,
-			'checksum' => $this->checksum
+			'checksum' => $this->checksum,
+			'contextType' => $this->contextType,
+			'contextId' => $this->contextId,
 		];
 	}
 
@@ -60,6 +70,6 @@ class Document extends Entity implements \JsonSerializable {
 	 * Short identifier - mostly for logging
 	 */
 	public function toString(): string {
-		return 'file' . ' (' . $this->id . ')';
+		return $this->contextType . ' (' . $this->contextId . ')';
 	}
 }
