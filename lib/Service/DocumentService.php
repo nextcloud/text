@@ -325,6 +325,7 @@ class DocumentService {
 
 	/**
 	 * @throws DocumentSaveConflictException
+	 * @throws DoesNotExistException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
@@ -349,7 +350,7 @@ class DocumentService {
 		$fileChecksum = self::computeCheckSum($fileContent);
 
 		if ($storedChecksum !== $fileChecksum) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			throw new DocumentSaveConflictException($fileContent);
 		}
 
 		$document->setLastSavedVersionTime($fileMtime);
