@@ -12,6 +12,7 @@ namespace OCA\Text\Service;
 use Exception;
 use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\IContext;
 use OCA\Text\Context\NewSessionData;
 use OCA\Text\Db\Document;
@@ -30,6 +31,7 @@ use Psr\Log\LoggerInterface;
 class ApiService {
 	public function __construct(
 		private readonly ConfigService $configService,
+		private readonly ContextManager $contextManager,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
 		private readonly FileService $fileService,
@@ -141,9 +143,12 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-			$result['readOnly'] = $this->fileService->isReadOnly($file, $shareToken);
-			$this->documentService->assertNoOutsideConflict($document, $file);
+			$context = $this->contextManager->getContext($document->getContextId(), $document->getContextType());
+			$result['readOnly'] = $context->isReadOnly();
+			$document = $context->updateDocument($document);
+			if ($document) {
+				$this->documentService->updateDocument($document);
+			}
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([

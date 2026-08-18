@@ -2,6 +2,7 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
 use OCA\Text\Context\SessionInfo;
@@ -20,6 +21,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	private ApiService $apiService;
 
 	private ConfigService $configService;
+	private ContextManager $contextManager;
 	private SessionService $sessionService;
 	private DocumentService $documentService;
 	private FileService $fileService;
@@ -29,6 +31,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function setUp(): void {
 		$this->configService = $this->createStub(ConfigService::class);
+		$this->contextManager = $this->createStub(ContextManager::class);
 		$this->sessionService = $this->createStub(SessionService::class);
 		$this->documentService = $this->createStub(DocumentService::class);
 		$this->fileService = $this->createStub(FileService::class);
@@ -38,6 +41,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$this->apiService = new ApiService(
 			$this->configService,
+			$this->contextManager,
 			$this->sessionService,
 			$this->documentService,
 			$this->fileService,
