@@ -49,6 +49,11 @@ class FileContext implements IContext {
 	}
 
 	#[Override]
+	public function getFile(): ?File {
+		return $this->file;
+	}
+
+	#[Override]
 	public function buildDocument(): Document|string {
 		// Block using text for disabled download internal shares
 		if ($this->fileService->isDownloadDisabled($this->file)) {
