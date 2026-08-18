@@ -51,7 +51,8 @@ class FileContext implements IContext {
 			return $this->l10n->t('This file cannot be displayed as download is disabled by the share');
 		}
 		$document = new Document();
-		$document->setId($this->getId());
+		$document->setContextType('file');
+		$document->setContextId($this->getId());
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($this->file->getMTime());
 		$document->setLastSavedVersionEtag($this->file->getEtag());
