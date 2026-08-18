@@ -25,7 +25,6 @@ use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
-use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
@@ -177,12 +176,8 @@ class ApiService {
 		$result = [];
 		try {
 			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
-		} catch (DocumentSaveConflictException) {
-			try {
-				$result['outsideChange'] = $file->getContent();
-			} catch (LockedException) {
-				// Ignore locked exception since it might happen due to an autosave action happening at the same time
-			}
+		} catch (DocumentSaveConflictException $e) {
+			$result['outsideChange'] = $e->getContent();
 		} catch (NotPermittedException) {
 			return new DataResponse([
 				'error' => $this->l10n->t('Read-only permission cannot save document changes. Please reload the page.')
