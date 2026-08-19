@@ -30,7 +30,13 @@ class RegisterContextEventListener implements IEventListener {
 
 		$event->getContextManager()->registerContext(
 			'file',
-			fn (int $id) => $this->fileContextFactory->buildForId($id)
+			function (int $id, string $type, ?string $shareToken) {
+				if ($shareToken === null) {
+					return $this->fileContextFactory->buildForId($id);
+				} else {
+					return $this->fileContextFactory->buildForShareWithId($shareToken, $id);
+				}
+			}
 		);
 	}
 }

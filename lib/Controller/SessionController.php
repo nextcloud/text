@@ -56,7 +56,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	public function create(string $type, int $id, ?string $baseVersionEtag = null): DataResponse {
 		try {
-			$context = $this->contextManager->getContext($id, $type);
+			$context = $this->contextManager->getContext($type, $id, null);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No context for ' . $type . ' (' . $id . ') ', [ 'exception' => $e ]);
 			return new DataResponse([
