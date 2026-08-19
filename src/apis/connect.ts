@@ -82,11 +82,14 @@ export async function update(
  */
 export async function close(connection: Connection) {
 	const id = connection.documentId
-	const url = generateUrl(`/apps/text/session/${id}/close`)
+	const url = connection.shareToken
+		? generateUrl(`/apps/text/public/session/${id}/close`)
+		: generateUrl(`/apps/text/session/${id}/close`)
 	const response = await axios.post(url, {
 		documentId: connection.documentId,
 		sessionId: connection.sessionId,
 		sessionToken: connection.sessionToken,
+		token: connection.shareToken,
 	})
 	return response.data
 }

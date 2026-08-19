@@ -11,10 +11,14 @@ namespace OCA\Text\Controller;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\FileService;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
+use OCP\Files\NotFoundException;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -32,6 +36,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		ISession $session,
 		private ShareManager $shareManager,
 		private ApiService $apiService,
+		private FileService $fileService,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request, $session);
 	}
@@ -64,21 +70,33 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function create(string $token, ?string $file = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
-		return $this->apiService->create(null, $file, $baseVersionEtag, $token, $guestName);
+	public function create(string $token, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
+		$file = $this->fileService->getFileByShareToken($token, $filePath);
+		/*
+			* Check if we have proper read access (files drop)
+			* If not then well 404 it is.
+			*/
+		try {
+			$this->fileService->checkSharePermissions($token);
+		} catch (NotFoundException|\InvalidArgumentException) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		return $this->apiService->create($file, $baseVersionEtag, $token, $guestName);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+	public function close(int $documentId, int $sessionId, string $sessionToken, string $token): DataResponse {
+		$file = $this->fileService->getFileByIdFromShare($documentId, $token);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
+	public function push(int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
 		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $token);
 	}
 

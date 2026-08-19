@@ -8,20 +8,27 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\FileService;
 use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 
 class SessionController extends ApiController implements ISessionAwareController {
 	use TSessionAwareController;
@@ -33,23 +40,45 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
+		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
 		private IUserManager $userManager,
 		private IUserSession $userSession,
+		private LoggerInterface $logger,
+		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request);
 	}
 
 	#[NoAdminRequired]
-	public function create(?int $fileId = null, ?string $file = null, ?string $baseVersionEtag = null): DataResponse {
-		return $this->apiService->create($fileId, $file, $baseVersionEtag);
+	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
+		$userId = $this->userSession->getUser()?->getUID();
+		if ($fileId === null || $userId === null) {
+			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
+		}
+
+		try {
+			$file = $this->fileService->getFileById($fileId, $userId);
+		} catch (NotFoundException|NotPermittedException $e) {
+			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+			return new DataResponse([
+				'error' => $this->l10n->t('File not found')
+			], Http::STATUS_NOT_FOUND);
+		}
+
+		return $this->apiService->create($file, $baseVersionEtag);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+		$userId = $this->userSession->getUser()?->getUID();
+		if ($userId === null) {
+			throw new InvalidSessionException();
+		}
+		$file = $this->fileService->getFileById($documentId, $userId);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
 	}
 
 	#[NoAdminRequired]

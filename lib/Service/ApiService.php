@@ -11,82 +11,43 @@ namespace OCA\Text\Service;
 
 use Exception;
 use InvalidArgumentException;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\NotifyPush\Queue\IQueue;
-use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\Constants;
+use OCP\Files\File;
 use OCP\Files\InvalidPathException;
-use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
-use OCP\IRequest;
 use OCP\Lock\LockedException;
-use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
 	public function __construct(
-		private readonly IRequest $request,
 		private readonly ConfigService $configService,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
+		private readonly FileService $fileService,
 		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
+		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
-		private readonly ?string $userId,
 		private readonly ?IQueue $queue,
 	) {
 	}
 
-	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
+	public function create(File $file, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
 		try {
-			if ($token !== null) {
-				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
-
-				/*
-				 * Check if we have proper read access (files drop)
-				 * If not then well 404 it is.
-				 */
-				try {
-					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
-				} catch (NotFoundException) {
-					return new DataResponse([], Http::STATUS_NOT_FOUND);
-				} catch (NotPermittedException) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
-				}
-			} elseif ($fileId !== null) {
-				try {
-					$file = $this->documentService->getFileById($fileId, $this->userId);
-				} catch (NotFoundException|NotPermittedException $e) {
-					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
-					return new DataResponse([
-						'error' => $this->l10n->t('File not found')
-					], Http::STATUS_NOT_FOUND);
-				}
-			} else {
-				return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
-			}
-
-			$storage = $file->getStorage();
-
 			// Block using text for disabled download internal shares
-			if ($storage->instanceOfStorage(SharedStorage::class)) {
-				/** @var IShare $share */
-				$share = $storage->getShare();
-				$shareAttribtues = $share->getAttributes();
-				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
-				}
+			if ($this->fileService->isDownloadDisabled($file)) {
+				return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 			}
 
-			$readOnly = $this->documentService->isReadOnly($file, $token);
+			$readOnly = $this->fileService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$document = $this->documentService->getOrCreateDocument($file);
@@ -122,17 +83,14 @@ class ApiService {
 			}
 		}
 
-		$lockInfo = $this->documentService->getLockInfo($file);
-		if ($lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME) {
-			$lockInfo = null;
-		}
+		$lockInfo = $this->lockService->getLockByOthers($file);
 
 		$hasOwner = $file->getOwner() !== null;
 
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
 		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
-			$isLocked = $this->documentService->lock($file->getId());
+			$isLocked = $this->lockService->lock($file);
 			if (!$isLocked) {
 				$readOnly = true;
 			}
@@ -149,12 +107,12 @@ class ApiService {
 		]);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+	public function close(int $documentId, int $sessionId, string $sessionToken, File $file): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			$this->documentService->unlock($documentId);
+			$this->lockService->unlock($file);
 		}
 		return new DataResponse([]);
 	}
@@ -215,8 +173,8 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$file = $this->documentService->getFileForSession($session, $shareToken);
-			$result['readOnly'] = $this->documentService->isReadOnly($file, $shareToken);
+			$file = $this->fileService->getFileForSession($session, $shareToken);
+			$result['readOnly'] = $this->fileService->isReadOnly($file, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
@@ -242,7 +200,7 @@ class ApiService {
 
 	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
-			$file = $this->documentService->getFileForSession($session, $shareToken);
+			$file = $this->fileService->getFileForSession($session, $shareToken);
 		} catch (NotPermittedException|NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
