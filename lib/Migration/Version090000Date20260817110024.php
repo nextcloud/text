@@ -28,14 +28,14 @@ class Version090000Date20260817110024 extends SimpleMigrationStep {
 
 		if (!$table->hasColumn('context_type')) {
 			$table->addColumn('context_type', Types::STRING, [
-				'notnull' => true,
+				'notnull' => false,
 				'length' => 64,
 			]);
 		}
 
 		if (!$table->hasColumn('context_id')) {
 			$table->addColumn('context_id', Types::BIGINT, [
-				'notnull' => true,
+				'notnull' => false,
 				'unsigned' => true,
 			]);
 		}
