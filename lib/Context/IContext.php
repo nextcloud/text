@@ -21,6 +21,8 @@ interface IContext {
 	public function isReadOnly(): bool;
 	public function updateDocument(Document $document): ?Document;
 	public function getFile(): ?File;
+	public function loadContent(): ?string;
+	public function saveWithLock(string $content, callable $doWhileLocked): void;
 }
 
 readonly class DocumentData {

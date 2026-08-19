@@ -7,6 +7,7 @@
 
 namespace OCA\Text\Context;
 
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\DirectEditing\IToken;
@@ -20,6 +21,7 @@ use Psr\Log\LoggerInterface;
 class FileContextFactory {
 
 	public function __construct(
+		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
@@ -33,6 +35,7 @@ class FileContextFactory {
 		?string $token = null,
 	): FileContext {
 		return new FileContext(
+			$this->documentMapper,
 			$this->fileService,
 			$this->l10n,
 			$this->lockService,
