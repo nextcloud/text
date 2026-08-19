@@ -8,6 +8,7 @@
 namespace OCA\Text\Context;
 
 use OCA\Text\Db\Document;
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
@@ -24,6 +25,7 @@ use Psr\Log\LoggerInterface;
 class FileContext implements IContext {
 
 	public function __construct(
+		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
@@ -104,6 +106,8 @@ class FileContext implements IContext {
 	}
 
 	/**
+	 * Update the document last saved version metadata to be in line with the data saved in the context.
+	 *
 	 * @throws DocumentSaveConflictException
 	 * @throws GenericFileException if the file changed and reading the content fails.
 	 * @throws LockedException if the file changed and a lock prevents reading the content.
@@ -138,13 +142,20 @@ class FileContext implements IContext {
 		return $document;
 	}
 
+	public function loadContent(): ?string {
+		return $this->fileService->loadContent($this->file);
+	}
+
+	public function saveWithLock(string $content, callable $doWhileLocked): void {
+		$this->lockService->runInScope($this->file, function () use ($content, $doWhileLocked): void {
+			$this->file->putContent($content);
+			$doWhileLocked();
+		});
+	}
+
 	private function computeCheckSum(?string $content = null): string {
 		$content ??= $this->file->getContent();
 		return hash('crc32', $content);
-	}
-
-	private function loadContent(): ?string {
-		return $this->fileService->loadContent($this->file);
 	}
 
 	private function getLockInfo(): ?ILock {
