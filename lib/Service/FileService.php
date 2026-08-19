@@ -8,7 +8,6 @@
 namespace OCA\Text\Service;
 
 use OCA\Files_Sharing\SharedStorage;
-use OCA\Text\Db\Session;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\Constants;
 use OCP\Files\File;
@@ -33,28 +32,6 @@ class FileService {
 		private readonly LoggerInterface $logger,
 		private readonly ShareManager $shareManager,
 	) {
-	}
-
-	/**
-	 * @throws NotPermittedException
-	 * @throws NotFoundException
-	 */
-	public function getFileForSession(Session $session, ?string $shareToken = null): File {
-		if (!$session->isGuest()) {
-			try {
-				return $this->getFileById($session->getDocumentId(), $session->getUserId());
-			} catch (NotFoundException $e) {
-				if ($shareToken === null) {
-					throw $e;
-				}
-				// We may still have a user session but on a public share link so move on
-			}
-		}
-
-		if ($shareToken === null) {
-			throw new \InvalidArgumentException('No proper share data');
-		}
-		return $this->getFileByIdFromShare($session->getDocumentId(), $shareToken);
 	}
 
 	/**
