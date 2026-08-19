@@ -168,7 +168,7 @@ class FileService {
 		}
 	}
 
-	public function getDocumentIdFromShare(int $fileId, string $shareToken): int {
+	public function checkFileAccessFromShare(int $fileId, string $shareToken): void {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound) {
@@ -208,15 +208,12 @@ class FileService {
 		if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
 			throw new InvalidSessionException();
 		}
-
-		return $fileId;
 	}
 
-	public function getDocumentIdForUser(int $fileId, string $userId): int {
-		if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($fileId) !== null) {
-			return $fileId;
+	public function checkFileAccessForUser(int $fileId, string $userId): void {
+		if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($fileId) === null) {
+			throw new InvalidSessionException();
 		}
-		throw new InvalidSessionException();
 	}
 
 	public function loadContent(File $file): ?string {
