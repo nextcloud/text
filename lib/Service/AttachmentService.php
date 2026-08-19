@@ -522,7 +522,7 @@ readonly class AttachmentService {
 		$document = $this->documentMapper->find($documentId);
 		$type = $document->getContextType();
 		$id = $document->getContextId();
-		$context = $this->contextManager->getContext($id, $type);
+		$context = $this->contextManager->getContext($type, $id, null);
 		$file = $context->getFile();
 		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 			return $file;
