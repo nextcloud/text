@@ -336,40 +336,6 @@ class DocumentService {
 	}
 
 	/**
-	 * @throws DocumentSaveConflictException
-	 * @throws InvalidPathException
-	 * @throws NotFoundException
-	 */
-	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
-		$documentId = $document->getId();
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
-
-		if ($lastMTime <= 0 || $force || $this->fileService->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
-			return;
-		}
-
-		$fileMtime = $file->getMtime();
-		$fileEtag = $file->getEtag();
-
-		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return;
-		}
-
-		$storedChecksum = $document->getChecksum();
-		$fileContent = $file->getContent();
-		$fileChecksum = self::computeCheckSum($fileContent);
-
-		if ($storedChecksum !== $fileChecksum) {
-			throw new DocumentSaveConflictException($fileContent);
-		}
-
-		$document->setLastSavedVersionTime($fileMtime);
-		$document->setLastSavedVersionEtag($fileEtag);
-		$this->documentMapper->update($document);
-	}
-
-	/**
 	 * @param string $content
 	 * @return string
 	 */
@@ -385,19 +351,25 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, File $file, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
-		$documentId = $document->getId();
-
-		if ($this->fileService->isReadOnly($file, $shareToken)) {
+	public function autosave(Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+		if ($context->isReadOnly()) {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
-		$this->assertNoOutsideConflict($document, $file, $force);
+		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
+			$updatedDocument = $context->updateDocument($document);
+			if ($updatedDocument !== null) {
+				$document = $updatedDocument;
+				$lastMTime = $document->getLastSavedVersionTime();
+				$this->documentMapper->update($document);
+			}
+		}
 
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
-		$stepsVersion = $this->stepMapper->getLatestVersion($documentId) ?? 0;
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->id) ?? 0;
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
@@ -405,50 +377,45 @@ class DocumentService {
 		}
 
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		$lastMTime = $document->getLastSavedVersionTime();
-		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 
 		if (empty($autoSaveDocument)) {
+			$file = $context->getFile();
 			$this->logger->warning('Saving empty document', [
 				'requestVersion' => $version,
 				'requestAutosaveDocument' => $autoSaveDocument,
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
-				'fileSizeBeforeSave' => $file->getSize(),
-				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($documentId, 0)),
-				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($documentId))
+				'fileSizeBeforeSave' => $file ? $file->getSize() : $context->getType() . ' is not stored in a file',
+				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($document->id, 0)),
+				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($document->id))
 			]);
 		}
 
 		// Version changed but the content remains the same
-		if ($autoSaveDocument === $file->getContent()) {
-			$this->writeDocumentState($file->getId(), $documentState);
+		if ($autoSaveDocument === $context->loadContent()) {
+			$this->writeDocumentState($document->id, $documentState);
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $document->id, true, 10);
+		$this->saveFromText = true;
 		try {
-			$this->lockService->runInScope($file, function () use ($file, $autoSaveDocument, $documentState): void {
-				$this->saveFromText = true;
-				$file->putContent($autoSaveDocument);
-				$this->writeDocumentState($file->getId(), $documentState);
+			$context->saveWithLock($autoSaveDocument, function () use ($document, $documentState): void {
+				$this->writeDocumentState($document->id, $documentState);
 			});
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
 			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		} finally {
-			$this->cache->remove('document-save-lock-' . $documentId);
+			$this->cache->remove('document-save-lock-' . $document->id);
 		}
 		return $document;
 	}

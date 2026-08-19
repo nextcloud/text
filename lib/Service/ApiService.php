@@ -34,7 +34,6 @@ class ApiService {
 		private readonly ContextManager $contextManager,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
-		private readonly FileService $fileService,
 		private readonly LoggerInterface $logger,
 		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
@@ -170,22 +169,19 @@ class ApiService {
 
 	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-		} catch (NotPermittedException|NotFoundException $e) {
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $shareToken);
+		} catch (NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
-			], Http::STATUS_NOT_FOUND);
-		} catch (DoesNotExistException $e) {
-			$this->logger->info($e->getMessage(), ['exception' => $e]);
-			return new DataResponse([
-				'message' => 'Document no longer exists'
 			], Http::STATUS_NOT_FOUND);
 		}
 
 		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
+			$result['document'] = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
 		} catch (DocumentSaveConflictException $e) {
 			$result['outsideChange'] = $e->getContent();
 		} catch (NotPermittedException) {
