@@ -42,12 +42,12 @@ class ContextManager {
 		$this->contexts[$type] = $createContext;
 	}
 
-	public function getContext(int $id, string $type): IContext {
+	public function getContext(string $type, int $id, ?string $shareToken): IContext {
 		$createContext = $this->getContexts()[$type];
 		if (!is_callable($createContext)) {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
 		}
-		$context = $createContext($id, $type);
+		$context = $createContext($id, $type, $shareToken);
 		if (!$context instanceof IContext) {
 			throw new NotFoundException('Failed to create context of type ' . $type . '!');
 		}
