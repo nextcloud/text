@@ -74,27 +74,29 @@ class FileService {
 			return $file;
 		}
 
-		// Ideally we'd optimize this part in the future by storing the path and getting the acutal target directly
-		$files = $userFolder->getById($fileId);
+		// Ideally we'd optimize this part in the future by storing the path and getting the actual target directly
+		$files = array_filter($userFolder->getById($fileId), fn (Node $f) => $f instanceof File);
 		if (count($files) === 0) {
 			throw new NotFoundException();
 		}
 
 		// Workaround to always open files with edit permissions if multiple occurrences of
 		// the same file id are in the user home, ideally we should also track the path of the file when opening
-		usort($files, static fn (Node $a, Node $b) => ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE));
-
-		$file = array_shift($files);
-
-		if (!$file instanceof File) {
-			throw new NotFoundException();
+		$readableFile = null;
+		foreach ($files as $file) {
+			$permissions = $file->getPermissions();
+			if ($permissions & Constants::PERMISSION_READ && $permissions & Constants::PERMISSION_UPDATE) {
+				return $file;
+			}
+			if ($permissions & Constants::PERMISSION_READ) {
+				$readableFile = $file;
+			}
+		}
+		if ($readableFile !== null) {
+			return $readableFile;
 		}
 
-		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
-			throw new NotPermittedException();
-		}
-
-		return $file;
+		throw new NotPermittedException();
 	}
 
 	/**
