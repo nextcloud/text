@@ -48,7 +48,7 @@ class FileService {
 		if ($node instanceof Folder) {
 			$node = $node->getFirstNodeById($fileId);
 		}
-		if ($node instanceof File) {
+		if ($node instanceof File && $node->getId() === $fileId) {
 			return $node;
 		}
 		throw new NotFoundException();
