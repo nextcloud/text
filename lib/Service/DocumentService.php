@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use InvalidArgumentException;
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
 use OCA\Text\Db\Document;
@@ -52,6 +53,7 @@ class DocumentService {
 	private readonly ICache $cache;
 
 	public function __construct(
+		private readonly ContextManager $contextManager,
 		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly StepMapper $stepMapper,
@@ -242,8 +244,10 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-			if (!$this->fileService->isReadOnly($file, $shareToken)) {
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $shareToken);
+			if (!$context->isReadOnly()) {
 				$this->insertSteps($document, $session, $stepsToInsert);
 			}
 		}
