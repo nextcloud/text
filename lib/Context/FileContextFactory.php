@@ -59,6 +59,22 @@ class FileContextFactory {
 
 	/**
 	 * @throws NotFoundException if the file cannot be found
+	 */
+	public function buildForShareWithId(
+		string $token,
+		int $id,
+	): FileContext {
+		$file = $this->fileService->getFileByIdFromShare($id, $token);
+		/*
+		* Check if we have proper read access (files drop)
+		* If not then well 404 it is.
+		*/
+		$this->fileService->checkSharePermissions($token);
+		return $this->build($file, $token);
+	}
+
+	/**
+	 * @throws NotFoundException if the file cannot be found
 	 * @throws \InvalidArgumentException if the share token is for a folder and path is missing
 	 */
 	public function buildForShareWithPath(
