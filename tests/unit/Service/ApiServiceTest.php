@@ -11,7 +11,6 @@ use OCA\Text\Db\Session;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCA\Text\Service\SessionService;
 use OCP\IL10N;
@@ -24,7 +23,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	private ContextManager $contextManager;
 	private SessionService $sessionService;
 	private DocumentService $documentService;
-	private FileService $fileService;
 	private LoggerInterface $loggerInterface;
 	private LockService $lockService;
 	private IL10N $l10n;
@@ -34,7 +32,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->contextManager = $this->createStub(ContextManager::class);
 		$this->sessionService = $this->createStub(SessionService::class);
 		$this->documentService = $this->createStub(DocumentService::class);
-		$this->fileService = $this->createStub(FileService::class);
 		$this->loggerInterface = $this->createStub(LoggerInterface::class);
 		$this->lockService = $this->createStub(LockService::class);
 		$this->l10n = $this->createStub(IL10N::class);
@@ -44,7 +41,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->contextManager,
 			$this->sessionService,
 			$this->documentService,
-			$this->fileService,
 			$this->loggerInterface,
 			$this->lockService,
 			$this->l10n,
@@ -86,7 +82,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$file = $this->mockFile(123, 'admin');
 
-		$this->fileService->method('getFileForSession')->willReturn($file);
 		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());
 
 		$this->l10n->method('t')
