@@ -7,6 +7,7 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\SessionMapper;
@@ -45,6 +46,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->fileService->method('isReadOnly')->willReturn(false);
 
 		$this->documentService = new DocumentService(
+			$this->createMock(ContextManager::class),
 			$this->documentMapper,
 			$this->fileService,
 			$this->createMock(StepMapper::class),
