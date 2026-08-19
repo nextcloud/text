@@ -52,10 +52,6 @@ class LockService {
 	}
 
 	public function lock(File $file): bool {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return true;
-		}
-
 		try {
 			$this->lockManager->lock(new LockContext(
 				$file,
@@ -70,10 +66,6 @@ class LockService {
 	}
 
 	public function unlock(File $file): void {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return;
-		}
-
 		try {
 			$this->lockManager->unlock(new LockContext(
 				$file,
