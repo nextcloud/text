@@ -143,7 +143,9 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$context = $this->contextManager->getContext($document->getContextId(), $document->getContextType());
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $shareToken);
 			$result['readOnly'] = $context->isReadOnly();
 			$document = $context->updateDocument($document);
 			if ($document) {
