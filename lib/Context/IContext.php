@@ -23,6 +23,10 @@ interface IContext {
 	public function getFile(): ?File;
 	public function loadContent(): ?string;
 	public function saveWithLock(string $content, callable $doWhileLocked): void;
+	/**
+	 * This will be called when the last active editing session ends.
+	 */
+	public function cleanup(): void;
 }
 
 readonly class DocumentData {
