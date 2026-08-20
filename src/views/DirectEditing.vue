@@ -8,7 +8,7 @@
 		<EditorReloader
 			ref="editor"
 			:initialSession
-			:fileId="initial.fileId"
+			:context
 			active
 			autofocus
 			:mime="initial.mimetype"
@@ -108,6 +108,13 @@ export default {
 					&& window.webkit.messageHandlers
 					&& window.webkit.messageHandlers.DirectEditingMobileInterface)
 			)
+		},
+
+		context() {
+			return {
+				id: this.initial.fileId,
+				type: 'file',
+			}
 		},
 	},
 
