@@ -45,8 +45,7 @@ class Version090000Date20260817110024 extends SimpleMigrationStep {
 			$table->modifyColumn('id', [
 				'autoincrement' => true,
 			]);
-			return $schema;
 		}
-		return null;
+		return $schema;
 	}
 }
