@@ -10,6 +10,11 @@ import type { Document, Session } from '../services/SyncService.ts'
 import { inject, provide, shallowRef } from 'vue'
 import * as api from '../apis/connect.ts'
 
+export interface Context {
+	type: string
+	id: number
+}
+
 export interface Connection {
 	documentId: number
 	sessionId: number
@@ -41,7 +46,7 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
  * Handle the connection to the text api and provide it to child components
  *
  * @param props Props of the editor component.
- * @param props.fileId Fileid of the file.
+ * @param props.context of the document (i.e. type 'file' and id of the file)
  * @param props.relativePath Relative path to the file.
  * @param props.initialSession Initial session handed to the editor in direct editing
  * @param props.shareToken Share token of the file.
@@ -50,7 +55,7 @@ export const openDataKey = Symbol('text:opendata') as InjectionKey<
  */
 export function provideConnection(
 	props: {
-		fileId: number
+		context: Context
 		relativePath: string
 		initialSession?: InitialData
 		shareToken?: string
@@ -136,13 +141,13 @@ function openInitialSession(
  * @param props Props of the editor component
  * @param props.relativePath Relative path to the file.
  * @param props.shareToken Share token of the file.
- * @param props.fileId id of the file
+ * @param props.context of the document (i.e. type 'file' and id of the file)
  * @param baseVersionEtag Etag from the last editing session.
  * @param guestName to be shown to other participants.
  */
 async function openShare(
 	props: {
-		fileId: number
+		context: Context
 		relativePath: string
 		shareToken?: string
 	},
@@ -154,7 +159,7 @@ async function openShare(
 			guestName,
 			token: props.shareToken,
 			filePath: props.relativePath,
-			fileId: props.fileId,
+			fileId: props.context.id,
 			baseVersionEtag,
 		})
 	}
@@ -164,20 +169,19 @@ async function openShare(
  * Get the connection and additional data from the initial session if available.
  *
  * @param props Props of the editor component
- * @param props.fileId id of the file
+ * @param props.context of the document (i.e. type 'file' and id of the file)
  * @param props.relativePath Relative path to the file.
  * @param baseVersionEtag Etag from the last editing session.
  */
 async function openFile(
 	props: {
-		fileId: number
+		context: Context
 		relativePath: string
 	},
 	baseVersionEtag: string | undefined,
 ) {
 	return api.openContext({
-		type: 'file',
-		id: props.fileId,
+		...props.context,
 		filePath: props.relativePath,
 		baseVersionEtag,
 	})

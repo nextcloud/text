@@ -6,11 +6,11 @@
 <template>
 	<EditorReloader
 		v-if="!useSourceView"
-		:fileId="fileid"
+		:context="{ id: fileid, type: 'file' }"
 		:relativePath="filename"
 		:active="active || isEmbedded"
 		:autofocus
-		:shareToken
+		:shareToken="shareToken || getSharingToken()"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime />
 	<SourceView
@@ -35,18 +35,7 @@ defineOptions({
 	inheritAttrs: false,
 })
 
-const {
-	filename = undefined,
-	fileid = undefined,
-	// This is a public interface for Viewer we cannot change for now.
-	// eslint-disable-next-line vue/no-boolean-default
-	autofocus = true,
-	shareToken = getSharingToken(),
-	mime = undefined,
-	source = undefined,
-	onLoadedHandler = () => {},
-	...props
-} = defineProps <{
+const props = defineProps <{
 	filename?: string | undefined
 	fileid?: number | undefined
 	active: boolean
@@ -65,15 +54,15 @@ const hasToggledInteractiveEmbedding = ref(false)
 const attrs = useAttrs()
 const isEncrypted = computed(() => Boolean(attrs.e2EeIsEncrypted))
 
-const useSourceView = computed(() => source
-	&& (!fileid
+const useSourceView = computed(() => props.source
+	&& (!props.fileid
 		|| props.isEmbedded
 		|| isEncrypted.value)
 	&& !hasToggledInteractiveEmbedding.value)
 
 onMounted(() => {
-	if (!useSourceView.value) {
-		onLoadedHandler()
+	if (!useSourceView.value && props.onLoadedHandler) {
+		props.onLoadedHandler()
 	}
 })
 
