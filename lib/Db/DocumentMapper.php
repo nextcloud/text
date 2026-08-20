@@ -8,7 +8,6 @@
 namespace OCA\Text\Db;
 
 use Generator;
-use OCA\Text\Context\IContext;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
@@ -42,25 +41,19 @@ class DocumentMapper extends QBMapper {
 		return Document::fromRow($data);
 	}
 
-	/**
-	 * @throws DoesNotExistException
-	 */
-	public function load(IContext $context): Document {
-		$type = $context->getType();
-		$id = $context->getId();
-
+	public function load(string $type, int $id): ?Document {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('context_type', $qb->createNamedParameter($type)))
-			->where($qb->expr()->eq('context_id', $qb->createNamedParameter($id)))
+			->andWhere($qb->expr()->eq('context_id', $qb->createNamedParameter($id)))
 			->executeQuery();
 
 		$data = $result->fetchAssociative();
 		$result->closeCursor();
 		if ($data === false) {
-			throw new DoesNotExistException('Document doesn\'t exist');
+			return null;
 		}
 		return Document::fromRow($data);
 	}
