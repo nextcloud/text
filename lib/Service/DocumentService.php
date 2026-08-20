@@ -100,9 +100,8 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function getOrCreateDocument(Document $document, IContext $context): Document {
-		// TODO: drop $context once $document contains contextId and contextType
-		$loaded = $this->getDocument($context->getId());
+	public function getOrCreateDocument(Document $document): Document {
+		$loaded = $this->documentMapper->load($document->getContextType(), $document->getContextId());
 		if ($loaded !== null) {
 			$this->logger->info('Keep previous document of ' . $document->toString());
 			return $loaded;
