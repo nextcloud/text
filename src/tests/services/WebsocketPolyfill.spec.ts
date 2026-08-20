@@ -24,14 +24,14 @@ describe('Init function', () => {
 
 	it('returns a websocket polyfill class', () => {
 		const syncService = mockSyncService()
-		const Polyfill = initWebSocketPolyfill(syncService, 123)
+		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 	})
 
 	it('registers handlers', () => {
 		const syncService = mockSyncService()
-		const Polyfill = initWebSocketPolyfill(syncService, 123)
+		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 		expect(syncService.bus.on).toHaveBeenCalled()
@@ -39,8 +39,7 @@ describe('Init function', () => {
 
 	it('opens sync service', () => {
 		const syncService = mockSyncService()
-		const fileId = 123
-		const Polyfill = initWebSocketPolyfill(syncService, fileId)
+		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 		expect(syncService.open).toHaveBeenCalled()

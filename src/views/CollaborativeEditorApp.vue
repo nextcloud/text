@@ -6,7 +6,7 @@
 <template>
 	<EditorReloader
 		ref="editor-container"
-		:fileId
+		:context
 		:noLazyImages
 		:relativePath="filePath"
 		:shareToken
@@ -17,27 +17,20 @@
 		@create:content="(c: { markdown: string }) => emit('create:content', c)"
 		@update:content="(c: { markdown: string }) => emit('update:content', c)">
 		<template v-if="readonlyBarComponent" #readonlyBar>
-			<component :is="readonlyBarComponent" v-bind="readonlyBarProps" />
+			<component :is="readonlyBarComponent" v-bind="readonlyBarProps || {}" />
 		</template>
 	</EditorReloader>
 </template>
 
 <script setup lang='ts'>
 import type { ComponentInstance, ShallowRef } from 'vue'
+import type { Context } from '../composables/useConnection.ts'
 
 import { useTemplateRef } from 'vue'
 import EditorReloader from '../components/EditorReloader.vue'
 
-const {
-	fileId = undefined,
-	filePath = undefined,
-	autofocus = false,
-	noLazyImages = false,
-	readonlyBarComponent = undefined,
-	readonlyBarProps = {},
-	shareToken = undefined,
-} = defineProps<{
-	fileId?: number
+defineProps<{
+	context: Context
 	filePath?: string
 	autofocus?: boolean
 	noLazyImages?: boolean
