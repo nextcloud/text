@@ -15,56 +15,26 @@
 	</NcModal>
 </template>
 
-<script>
-import { defineAsyncComponent } from 'vue'
+<script setup lang="ts">
+import { computed, defineAsyncComponent } from 'vue'
 import NcModal from '@nextcloud/vue/components/NcModal'
 
-export default {
-	name: 'PublicFilesEditor',
-	components: {
-		NcModal,
-		EditorReloader: defineAsyncComponent(() => import('./EditorReloader.vue')),
-	},
+const props = defineProps <{
+	fileId?: number
+	relativePath?: string
+	active?: boolean
+	shareToken?: string
+	mimeType?: string
+}>()
 
-	props: {
-		fileId: {
-			type: Number,
-			default: null,
-		},
+const emit = defineEmits(['close'])
 
-		relativePath: {
-			type: String,
-			default: null,
-		},
+const EditorReloader = defineAsyncComponent(() => import('./EditorReloader.vue'))
 
-		active: {
-			type: Boolean,
-			default: false,
-		},
+const fileName = computed(() => props.relativePath
+	? props.relativePath.substring(props.relativePath.lastIndexOf('/') + 1)
+	: '')
 
-		shareToken: {
-			type: String,
-			default: null,
-		},
+const close = () => emit('close')
 
-		mimeType: {
-			type: String,
-			default: null,
-		},
-	},
-
-	emits: ['close'],
-
-	computed: {
-		fileName() {
-			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
-		},
-	},
-
-	methods: {
-		close() {
-			this.$emit('close')
-		},
-	},
-}
 </script>
