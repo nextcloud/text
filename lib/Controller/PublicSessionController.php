@@ -85,8 +85,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken, string $token): DataResponse {
-		$file = $this->fileService->getFileByIdFromShare($documentId, $token);
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $token);
 	}
 
 	#[NoAdminRequired]

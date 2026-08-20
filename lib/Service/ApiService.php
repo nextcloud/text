@@ -76,12 +76,18 @@ class ApiService {
 		);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken, File $file): DataResponse {
+	public function close(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			$this->lockService->unlock($file);
+			$document = $this->documentService->getDocument($documentId);
+			if ($document !== null) {
+				$type = $document->getContextType();
+				$id = $document->getContextId();
+				$context = $this->contextManager->getContext($type, $id, $shareToken);
+				$context->cleanup();
+			}
 		}
 		return new DataResponse([]);
 	}

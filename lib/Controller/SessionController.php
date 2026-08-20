@@ -74,8 +74,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		if ($userId === null) {
 			throw new InvalidSessionException();
 		}
-		$file = $this->fileService->getFileById($documentId, $userId);
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, null);
 	}
 
 	#[NoAdminRequired]

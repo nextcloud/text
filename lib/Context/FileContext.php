@@ -153,6 +153,11 @@ class FileContext implements IContext {
 		});
 	}
 
+	#[Override]
+	public function cleanup(): void {
+		$this->unlock();
+	}
+
 	private function computeCheckSum(?string $content = null): string {
 		$content ??= $this->file->getContent();
 		return hash('crc32', $content);
@@ -173,6 +178,14 @@ class FileContext implements IContext {
 			return $this->lockService->lock($this->file);
 		}
 		return true;
+	}
+
+	private function unlock(): void {
+		// Disable file locking for Readme.md files, because in the
+		// current setup, this makes it almost impossible to delete these files.
+		if (strcasecmp($this->file->getName(), 'Readme.md') !== 0) {
+			$this->lockService->unlock($this->file);
+		}
 	}
 
 }
