@@ -48,7 +48,7 @@ class ApiService {
 		}
 
 		try {
-			$document = $this->documentService->getOrCreateDocument($document, $context);
+			$document = $this->documentService->getOrCreateDocument($document);
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
