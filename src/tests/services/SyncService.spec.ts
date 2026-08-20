@@ -47,7 +47,7 @@ describe('Sync service', () => {
 		const setBaseVersionEtag = vi.fn()
 		const { connection, openConnection, openData } = provideConnection(
 			{
-				fileId: 123,
+				context: { type: 'file', id: 123 },
 				relativePath: './',
 			},
 			getBaseVersionEtag,
