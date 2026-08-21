@@ -10,6 +10,10 @@ import { push, sync } from '../../src/apis/sync.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
+const expectFailure = () => {
+	throw new Error('Expected request to fail - but it succeeded!')
+}
+
 Cypress.Commands.add(
 	'openFileConnection',
 	({ fileId, filePath }) => {
@@ -24,12 +28,16 @@ Cypress.Commands.add('closeConnection', close)
 Cypress.Commands.add(
 	'failToCreateTextSession',
 	(fileId, baseVersionEtag = null, options = {}) => {
-		return openContext({ type: 'file', id: fileId, ...options, baseVersionEtag }).then(
-			() => {
-				throw new Error('Expected request to fail - but it succeeded!')
-			},
-			(err) => err.response,
-		)
+		return openContext({ type: 'file', id: fileId, ...options, baseVersionEtag })
+			.then(expectFailure, (err) => err.response)
+	},
+)
+
+Cypress.Commands.add(
+	'failToCreateTextShareSession',
+	(shareToken, baseVersionEtag = null, options = {}) => {
+		return openShare({ token: shareToken, baseVersionEtag, ...options })
+			.then(expectFailure, (err) => err.response)
 	},
 )
 
@@ -43,12 +51,8 @@ Cypress.Commands.add(
 Cypress.Commands.add(
 	'failToPushSteps',
 	({ connection, steps, version, awareness = '' }) => {
-		return push(connection, { steps, version, awareness }).then(
-			() => {
-				throw new Error('Expected request to fail - but it succeeded!')
-			},
-			(err) => err.response,
-		)
+		return push(connection, { steps, version, awareness })
+			.then(expectFailure, (err) => err.response)
 	},
 )
 
@@ -57,12 +61,8 @@ Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 })
 
 Cypress.Commands.add('failToSyncSteps', (connection, options = { version: 0 }) => {
-	return sync(connection, options).then(
-		() => {
-			throw new Error('Expected request to fail - but it succeeded!')
-		},
-		(err) => err.response,
-	)
+	return sync(connection, options)
+		.then(expectFailure, (err) => err.response)
 })
 
 Cypress.Commands.add('save', (connection, options = { version: 0 }) => {
@@ -70,12 +70,8 @@ Cypress.Commands.add('save', (connection, options = { version: 0 }) => {
 })
 
 Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
-	return save(connection, options).then(
-		() => {
-			throw new Error('Expected request to fail - but it succeeded!')
-		},
-		(err) => err.response,
-	)
+	return save(connection, options)
+		.then(expectFailure, (err) => err.response)
 })
 
 Cypress.Commands.add('sessionUsers', function(connection, bodyOptions = {}) {
