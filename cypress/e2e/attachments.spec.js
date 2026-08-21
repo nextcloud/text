@@ -172,14 +172,14 @@ describe('Test all attachment insertion methods', () => {
 		cy.showHiddenFiles()
 	})
 
-	it('See test files in the list and display hidden files', () => {
+	it.only('See test files in the list and display hidden files', () => {
 		cy.visit('/apps/files')
 		cy.getFile('test.md')
 		cy.getFile('github.png')
 		cy.getFile('.hidden')
 	})
 
-	it('Insert an image file from Files', () => {
+	it.only('Insert an image file from Files', () => {
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
 

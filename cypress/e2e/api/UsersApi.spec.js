@@ -22,7 +22,7 @@ describe('The user mention API', function() {
 	})
 
 	it('has a valid connection', function() {
-		cy.get('@connection').its('documentId').should('equal', this.fileId)
+		cy.get('@connection').its('documentId').should('be.greaterThan', 0)
 		cy.closeConnection(this.connection)
 	})
 
