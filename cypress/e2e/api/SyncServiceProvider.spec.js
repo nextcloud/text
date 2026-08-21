@@ -42,6 +42,7 @@ describe('Sync service provider', function() {
 	 * @param {object} ydoc Yjs document
 	 */
 	function createProvider(ydoc) {
+		const context = { type: 'file', id: fileId }
 		const relativePath = '.'
 		let baseVersionEtag
 		const setBaseVersionEtag = (val) => {
@@ -50,21 +51,18 @@ describe('Sync service provider', function() {
 		const getBaseVersionEtag = () => baseVersionEtag
 		const { connection, openConnection } = provideConnection(
 			{
-				fileId,
+				context,
 				relativePath,
 			},
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
 		const { syncService } = provideSyncService(connection, openConnection)
-		const queue = []
 		syncService.bus.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({
 			ydoc,
 			syncService,
-			fileId,
-			initialSession: null,
-			queue,
+			context,
 			disableBc: true,
 		})
 	}
