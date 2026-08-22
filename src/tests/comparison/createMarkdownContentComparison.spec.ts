@@ -149,21 +149,28 @@ describe('createMarkdownContentComparison', { timeout: 30_000 }, () => {
 		expect(el.childElementCount).toBe(0)
 	})
 
-	it('skips rendered editors above the pre-parse limit and reports the boundary', async () => {
+	it('skips rendered editors above the pre-parse limit and defaults to Source', async () => {
+		const oversized = 'a'.repeat(RENDERED_COMPARISON_LIMITS.maximumCharactersPerSnapshot + 1)
 		const el = document.createElement('div')
-		const beforeContent = 'x'.repeat(RENDERED_COMPARISON_LIMITS.maximumCharactersPerSnapshot + 1)
+		const onLoaded = vi.fn()
 		const comparison = await createMarkdownContentComparison({
-			afterContent: 'After',
-			beforeContent,
+			afterContent: `${oversized}b`,
+			beforeContent: oversized,
 			el,
+			onLoaded,
 		})
 
+		expect(onLoaded).toHaveBeenCalledOnce()
+		expect(tab(el, 'Changes').disabled).toBe(true)
+		expect(tab(el, 'Full documents').disabled).toBe(true)
+		expect(tab(el, 'Markdown source').getAttribute('aria-selected')).toBe('true')
 		expect(el.querySelector('[data-comparison-rendered-limit]')?.textContent)
 			.toContain('too large for rendered views')
 		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(0)
+		expect(el.textContent).toContain('Source compares literal Markdown')
 		comparison.destroy()
 	})
-	it('reports when semantic change density reaches the model limit', async () => {
+	it('falls back to Source when change density reaches the model limit', async () => {
 		vi.spyOn(markdownComparison, 'createMarkdownComparisonModel').mockImplementationOnce(() => {
 			throw new markdownComparison.ComparisonModelLimitError()
 		})
@@ -174,44 +181,68 @@ describe('createMarkdownContentComparison', { timeout: 30_000 }, () => {
 			el,
 		})
 
+		expect(tab(el, 'Changes').disabled).toBe(true)
+		expect(tab(el, 'Full documents').disabled).toBe(true)
+		expect(tab(el, 'Markdown source').getAttribute('aria-selected')).toBe('true')
 		expect(el.querySelector('[data-comparison-rendered-limit]')?.textContent)
 			.toContain('too many changes for rendered views')
+		expect(el.querySelector('[data-comparison-rendered-limit]')?.textContent)
+			.not.toContain('too large')
 		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(0)
 		comparison.destroy()
 	})
-	it('reports syntax-only Markdown without inventing rendered changes', async () => {
+
+	it('keeps syntax-only differences in Changes and offers one Source action', async () => {
 		const el = document.createElement('div')
 		const comparison = await createMarkdownContentComparison({
-			afterContent: '# Same #',
-			beforeContent: '# Same',
+			beforeContent: '# Heading',
+			afterContent: '# Heading #',
 			el,
 		})
 
+		expect(tab(el, 'Changes').getAttribute('aria-selected')).toBe('true')
 		expect(el.querySelector('[data-comparison-empty="syntax"]')?.textContent)
 			.toContain('No rendered differences — Markdown syntax differs.')
-		expect(el.querySelectorAll('.text-comparison__change-item')).toHaveLength(0)
+		const action = el.querySelector<HTMLButtonElement>('[data-comparison-empty-action]')!
+		expect(action.textContent).toContain('Open Markdown source')
+		action.click()
+		await vi.waitFor(() => expect(tab(el, 'Markdown source').getAttribute('aria-selected')).toBe('true'))
+		expect(el.textContent).toContain('Source compares literal Markdown')
+		await vi.waitFor(() => expect(el.textContent).toContain('# Heading #'))
 		comparison.destroy()
 	})
-	it('uses two peer ARIA tabs with wrapping Arrow, Home, and End behavior', async () => {
+
+	it('uses exactly three peer ARIA tabs with wrapping Arrow, Home, and End behavior', async () => {
 		const el = document.createElement('div')
 		const comparison = await createMarkdownContentComparison({
-			afterContent: 'After',
-			beforeContent: 'Before',
+			beforeContent: 'Before one\n\nBefore two',
+			afterContent: 'After one\n\nAfter two',
 			el,
 		})
 		const tabs = [...el.querySelectorAll<HTMLButtonElement>('.text-comparison__view-tabs [role="tab"]')]
+		expect(tabs.map(({ textContent }) => textContent?.trim())).toEqual([
+			'Changes',
+			'Full documents',
+			'Markdown source',
+		])
+		expect(el.querySelectorAll('[role="tablist"]')).toHaveLength(1)
+		const selectedId = el.querySelector('[aria-current="true"][data-comparison-select]')?.getAttribute('data-comparison-select')
 
-		expect(tabs.map(({ textContent }) => textContent?.trim())).toEqual(['Changes', 'Full documents'])
-		tab(el, 'Changes').dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }))
+		tab(el, 'Changes').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
 		await vi.waitFor(() => expect(tab(el, 'Full documents').getAttribute('aria-selected')).toBe('true'))
-		tab(el, 'Full documents').dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }))
+		tab(el, 'Full documents').dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }))
+		await vi.waitFor(() => expect(tab(el, 'Markdown source').getAttribute('aria-selected')).toBe('true'))
+		tab(el, 'Markdown source').dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }))
 		await vi.waitFor(() => expect(tab(el, 'Changes').getAttribute('aria-selected')).toBe('true'))
 		tab(el, 'Changes').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }))
-		await vi.waitFor(() => expect(tab(el, 'Full documents').getAttribute('aria-selected')).toBe('true'))
-		tab(el, 'Full documents').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
+		await vi.waitFor(() => expect(tab(el, 'Markdown source').getAttribute('aria-selected')).toBe('true'))
+		tab(el, 'Markdown source').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }))
 		await vi.waitFor(() => expect(tab(el, 'Changes').getAttribute('aria-selected')).toBe('true'))
+		expect(el.querySelector(`[aria-current="true"][data-comparison-select="${selectedId}"]`)).not.toBeNull()
+		expect(el.querySelector('[aria-label="Rendered comparison mode"]')).toBeNull()
 		comparison.destroy()
 	})
+
 	it('renders Atlas as one compact, complete, ordered changelog', async () => {
 		class ResizeObserverMock {
 			observe() {}
@@ -730,6 +761,21 @@ describe('createMarkdownContentComparison', { timeout: 30_000 }, () => {
 		expect(observers[0]!.observe).toHaveBeenCalledWith(el.querySelector('.text-comparison'))
 		comparison.destroy()
 		expect(observers[0]!.disconnect).toHaveBeenCalledOnce()
+	})
+
+	it('renders HTML-like source literally without creating executable elements', async () => {
+		const el = document.createElement('div')
+		const comparison = await createMarkdownContentComparison({
+			beforeContent: '<script>globalThis.pwned = true</script>',
+			afterContent: '<img src=x onerror="globalThis.pwned = true">',
+			el,
+		})
+		tab(el, 'Markdown source').click()
+		await vi.waitFor(() => expect(el.textContent).toContain('onerror'))
+		expect(el.querySelector('script')).toBeNull()
+		expect(el.querySelector('img')).toBeNull()
+		expect((globalThis as { pwned?: boolean }).pwned).toBeUndefined()
+		comparison.destroy()
 	})
 
 	it('unmounts and removes its root when onLoaded fails', async () => {
