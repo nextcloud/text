@@ -134,14 +134,15 @@ export default {
 	},
 
 	mounted() {
-		this.$_updateState = debounce(this.checkStateOfChildren.bind(this), 50)
-		this.editor?.on('update', this.$_updateState)
-		this.editor?.on('selectionUpdate', this.$_updateState)
+		this.$_updateChildrenState = debounce(this.checkStateOfChildren.bind(this), 50)
+		this.editor?.on('update', this.$_updateChildrenState)
+		this.editor?.on('selectionUpdate', this.$_updateChildrenState)
 	},
 
 	beforeUnmount() {
-		this.editor?.off('update', this.$_updateState)
-		this.editor?.off('selectionUpdate', this.$_updateState)
+		this.editor?.off('update', this.$_updateChildrenState)
+		this.editor?.off('selectionUpdate', this.$_updateChildrenState)
+		this.$_updateChildrenState.clear()
 	},
 
 	methods: {
