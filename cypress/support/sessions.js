@@ -10,7 +10,10 @@ import { push, sync } from '../../src/apis/sync.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
-const expectFailure = () => {
+/**
+ * Callback for requests that are expected to fail.
+ */
+function expectFailure() {
 	throw new Error('Expected request to fail - but it succeeded!')
 }
 
