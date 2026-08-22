@@ -17,6 +17,7 @@ const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')
 
 interface ImageOptions extends TiptapImageOptions {
+	emitAttachmentEvents: boolean
 	noLazyImages: boolean
 }
 
@@ -53,6 +54,7 @@ const Image = TiptapImage.extend<ImageOptions>({
 	addOptions() {
 		return {
 			...this.parent?.() as ImageOptions,
+			emitAttachmentEvents: true,
 			noLazyImages: false,
 		}
 	},
@@ -62,6 +64,7 @@ const Image = TiptapImage.extend<ImageOptions>({
 	},
 
 	addProseMirrorPlugins() {
+		const emitAttachmentEvents = this.options.emitAttachmentEvents
 		return [
 			new Plugin({
 				key: imageFileDropPluginKey,
@@ -125,7 +128,9 @@ const Image = TiptapImage.extend<ImageOptions>({
 				state: {
 					init(_, { doc }) {
 						const attachmentSrcs = extractAttachmentSrcs(doc)
-						emit('text:editor:attachments:updated', { attachmentSrcs })
+						if (emitAttachmentEvents) {
+							emit('text:editor:attachments:updated', { attachmentSrcs })
+						}
 						return { attachmentSrcs }
 					},
 					apply(tr, value, _oldState, newState) {
@@ -140,7 +145,9 @@ const Image = TiptapImage.extend<ImageOptions>({
 							return value
 						}
 
-						emit('text:editor:attachments:updated', { attachmentSrcs })
+						if (emitAttachmentEvents) {
+							emit('text:editor:attachments:updated', { attachmentSrcs })
+						}
 						return { attachmentSrcs }
 					},
 				},

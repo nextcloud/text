@@ -66,12 +66,16 @@ lowlight.registerAlias('plaintext', 'mermaid')
 interface RichTextOptions {
 	connection?: Connection
 	editing: boolean
+	emitAttachmentEvents: boolean
 	extensions: Extensions
+	inferTextDirectionOnParse: boolean
+	keymap: boolean
 	relativePath?: string
 	isEmbedded: boolean
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
 	openLink?: (href: string) => void
 	noLazyImages: boolean
+	search: boolean
 }
 
 export default Extension.create<RichTextOptions>({
@@ -80,9 +84,13 @@ export default Extension.create<RichTextOptions>({
 	addOptions() {
 		return {
 			editing: true,
+			emitAttachmentEvents: true,
 			extensions: [],
+			inferTextDirectionOnParse: false,
 			isEmbedded: false,
+			keymap: true,
 			noLazyImages: false,
+			search: true,
 		}
 	},
 
@@ -123,7 +131,10 @@ export default Extension.create<RichTextOptions>({
 				isEmbedded: this.options.isEmbedded,
 			}),
 			Underline,
-			Image.configure({ noLazyImages: this.options.noLazyImages }),
+			Image.configure({
+				emitAttachmentEvents: this.options.emitAttachmentEvents,
+				noLazyImages: this.options.noLazyImages,
+			}),
 			ImageInline.configure({ noLazyImages: this.options.noLazyImages }),
 			Dropcursor.configure({
 				color: 'var(--color-primary-element)',
@@ -131,7 +142,7 @@ export default Extension.create<RichTextOptions>({
 			}),
 			Gapcursor,
 			KeepSyntax,
-			Keymap,
+			...(this.options.keymap ? [Keymap] : []),
 			FrontMatter,
 			Mention.configure({
 				suggestion: MentionSuggestion({
@@ -141,7 +152,9 @@ export default Extension.create<RichTextOptions>({
 					},
 				}),
 			}),
-			Search,
+			...(this.options.search
+				? [Search]
+				: []),
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
 			}),
@@ -163,6 +176,7 @@ export default Extension.create<RichTextOptions>({
 				notAfter: ['paragraph', 'comments', 'footnotes'],
 			}),
 			TextDirection.configure({
+				inferTextDirectionOnParse: this.options.inferTextDirectionOnParse,
 				types: [
 					'blockquote',
 					'callout',
