@@ -115,7 +115,7 @@
     "@nextcloud/vite-config": "^2.5.4",
     "@playwright/test": "^1.62.1",
     "@types/jsdom": "^30.0.0",
-    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it": "^14.2.0",
     "@types/markdown-it-footnote": "^3.0.4",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vitest/coverage-v8": "^4.1.10",
