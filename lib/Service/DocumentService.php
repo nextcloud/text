@@ -424,12 +424,12 @@ class DocumentService {
 	 * @throws Exception
 	 * @throws NotPermittedException
 	 */
-	public function resetDocument(int $documentId, bool $force = false): void {
+	public function resetDocument(int $fileId, bool $force = false): void {
 		try {
 			$userId = $this->userId;
 			// If no user is provided we need to get any file from existing mounts for cleanup jobs
 			if ($userId === null) {
-				$mounts = $this->userMountCache->getMountsForFileId($documentId);
+				$mounts = $this->userMountCache->getMountsForFileId($fileId);
 				$anyMount = array_shift($mounts);
 				if ($anyMount === null) {
 					throw new NotFoundException('Could not fallback to file from mounts');
@@ -437,25 +437,30 @@ class DocumentService {
 				$userId = $anyMount->getUser()->getUID();
 			}
 
-			$document = $this->documentMapper->find($documentId);
+			$document = $this->documentMapper->load('file', $fileId);
+			if (!$document) {
+				// no document found for the file in question - so nothing to reset.
+				$this->logger->info('did not find document for file with id - document not reset.' . $fileId);
+				return;
+			}
 			if (!$force && $this->hasUnsavedChanges($document)) {
-				$this->logger->debug('did not reset document for ' . $documentId);
+				$this->logger->debug('did not reset document for file with id' . $fileId);
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 
 			try {
-				$file = $this->fileService->getFileById($documentId, $userId);
+				$file = $this->fileService->getFileById($fileId, $userId);
 				$this->lockService->unlock($file);
 			} catch (NotFoundException) {
 				// Continue with the cleanup even if the file does not exist.
 			}
 
-			$this->stepMapper->deleteAll($documentId);
-			$this->sessionMapper->deleteByDocumentId($documentId);
+			$this->stepMapper->deleteAll($document->id);
+			$this->sessionMapper->deleteByDocumentId($document->id);
 			$this->documentMapper->delete($document);
-			$this->getStateFile($documentId)->delete();
+			$this->getStateFile($document->id)->delete();
 
-			$this->logger->debug('document reset for ' . $documentId);
+			$this->logger->debug('document reset for file with id ' . $fileId);
 		} catch (DoesNotExistException|NotFoundException) {
 			// Ignore if document not found or state file not found
 		}
