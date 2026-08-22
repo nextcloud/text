@@ -8,6 +8,7 @@
 namespace OCA\Text\DirectEditing;
 
 use OCA\Text\AppInfo\Application;
+use OCA\Text\Context\FileContextFactory;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\InitialStateProvider;
 use OCP\AppFramework\Http\NotFoundResponse;
@@ -29,6 +30,7 @@ class TextDirectEditor implements IEditor {
 		private readonly InitialStateProvider $initialStateProvider,
 		private readonly ApiService $apiService,
 		private readonly IAppConfig $appConfig,
+		private readonly FileContextFactory $fileContextFactory,
 	) {
 	}
 
@@ -131,7 +133,8 @@ class TextDirectEditor implements IEditor {
 	public function open(IToken $token): Response {
 		$token->useTokenScope();
 		try {
-			$session = $this->apiService->create($token->getFile());
+			$context = $this->fileContextFactory->buildForDirectEditing($token);
+			$session = $this->apiService->create($context, null);
 			$this->initialStateProvider->provideFile([
 				'fileId' => $token->getFile()->getId(),
 				'mimetype' => $token->getFile()->getMimeType(),

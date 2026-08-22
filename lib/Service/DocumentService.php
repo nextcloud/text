@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use InvalidArgumentException;
+use OCA\Text\Context\ContextManager;
+use OCA\Text\Context\DocumentData;
+use OCA\Text\Context\IContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
@@ -50,6 +53,7 @@ class DocumentService {
 	private readonly ICache $cache;
 
 	public function __construct(
+		private readonly ContextManager $contextManager,
 		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly StepMapper $stepMapper,
@@ -96,40 +100,55 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function getOrCreateDocument(File $file): Document {
-		$document = $this->getDocument($file->getId());
-		if ($document !== null) {
-			$this->logger->info('Keep previous document of ' . $file->getId());
-			return $document;
+	public function getOrCreateDocument(Document $document): Document {
+		$loaded = $this->documentMapper->load($document->getContextType(), $document->getContextId());
+		if ($loaded !== null) {
+			$this->logger->info('Keep previous document of ' . $document->toString());
+			return $loaded;
 		}
 
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
-		$this->logger->info('Create new document of ' . $file->getId());
-		$document = new Document();
-		$document->setId($file->getId());
-		$document->setLastSavedVersion(0);
-		$document->setLastSavedVersionTime($file->getMTime());
-		$document->setLastSavedVersionEtag($file->getEtag());
-		$document->setBaseVersionEtag(uniqid());
-		$document->setChecksum(self::computeCheckSum($file->getContent()));
+		$this->logger->info('Create new document of ' . $document->toString());
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
-			$this->cache->set('document-version-' . $document->getId(), 0);
+			$this->cache->set('document-version-' . $document->id, 0);
 		} catch (Exception $e) {
 			if ($e->getReason() !== Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
 				throw $e;
 			}
 			// Document might have been created in the meantime
-			$document = $this->getDocument($file->getId());
+			$document = $this->getDocument($document->id);
 			if ($document === null) {
 				throw $e;
 			}
 		}
 		return $document;
+	}
+
+	public function getDocumentData(Document $document): DocumentData {
+		$documentState = null;
+		if ($document->getLastSavedVersion() > 0) {
+			$this->logger->debug('Loading saved document state for ' . $document->toString());
+			try {
+				$stateFile = $this->getStateFile($document->id);
+				$documentState = $stateFile->getContent();
+			} catch (NotFoundException) {
+				// If we have no state file we need to load the content from the file
+				// On the client side we use this to initialize a idempotent initial y.js document
+				$this->logger->warning('State file not found for saved document' . $document->toString());
+			}
+		}
+
+		$documentData = new DocumentData(
+			document: $document,
+			documentState: $documentState,
+		);
+
+		return $documentData;
 	}
 
 	/**
@@ -161,6 +180,14 @@ class DocumentService {
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setChecksum(self::computeCheckSum($file->getContent()));
+		$this->documentMapper->update($document);
+	}
+
+	/**
+	 * @throws Exception
+	 * @throws InvalidPathException
+	 */
+	public function updateDocument(Document $document): void {
 		$this->documentMapper->update($document);
 	}
 
@@ -216,8 +243,10 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-			if (!$this->fileService->isReadOnly($file, $shareToken)) {
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $shareToken);
+			if (!$context->isReadOnly()) {
 				$this->insertSteps($document, $session, $stepsToInsert);
 			}
 		}
@@ -306,40 +335,6 @@ class DocumentService {
 	}
 
 	/**
-	 * @throws DocumentSaveConflictException
-	 * @throws InvalidPathException
-	 * @throws NotFoundException
-	 */
-	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
-		$documentId = $document->getId();
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
-
-		if ($lastMTime <= 0 || $force || $this->fileService->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
-			return;
-		}
-
-		$fileMtime = $file->getMtime();
-		$fileEtag = $file->getEtag();
-
-		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return;
-		}
-
-		$storedChecksum = $document->getChecksum();
-		$fileContent = $file->getContent();
-		$fileChecksum = self::computeCheckSum($fileContent);
-
-		if ($storedChecksum !== $fileChecksum) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
-		}
-
-		$document->setLastSavedVersionTime($fileMtime);
-		$document->setLastSavedVersionEtag($fileEtag);
-		$this->documentMapper->update($document);
-	}
-
-	/**
 	 * @param string $content
 	 * @return string
 	 */
@@ -355,19 +350,25 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, File $file, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
-		$documentId = $document->getId();
-
-		if ($this->fileService->isReadOnly($file, $shareToken)) {
+	public function autosave(Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+		if ($context->isReadOnly()) {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
-		$this->assertNoOutsideConflict($document, $file, $force);
+		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
+			$updatedDocument = $context->updateDocument($document);
+			if ($updatedDocument !== null) {
+				$document = $updatedDocument;
+				$lastMTime = $document->getLastSavedVersionTime();
+				$this->documentMapper->update($document);
+			}
+		}
 
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
-		$stepsVersion = $this->stepMapper->getLatestVersion($documentId) ?? 0;
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->id) ?? 0;
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
@@ -375,50 +376,45 @@ class DocumentService {
 		}
 
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		$lastMTime = $document->getLastSavedVersionTime();
-		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 
 		if (empty($autoSaveDocument)) {
+			$file = $context->getFile();
 			$this->logger->warning('Saving empty document', [
 				'requestVersion' => $version,
 				'requestAutosaveDocument' => $autoSaveDocument,
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
-				'fileSizeBeforeSave' => $file->getSize(),
-				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($documentId, 0)),
-				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($documentId))
+				'fileSizeBeforeSave' => $file ? $file->getSize() : $context->getType() . ' is not stored in a file',
+				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($document->id, 0)),
+				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($document->id))
 			]);
 		}
 
 		// Version changed but the content remains the same
-		if ($autoSaveDocument === $file->getContent()) {
-			$this->writeDocumentState($file->getId(), $documentState);
+		if ($autoSaveDocument === $context->loadContent()) {
+			$this->writeDocumentState($document->id, $documentState);
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $document->id, true, 10);
+		$this->saveFromText = true;
 		try {
-			$this->lockService->runInScope($file, function () use ($file, $autoSaveDocument, $documentState): void {
-				$this->saveFromText = true;
-				$file->putContent($autoSaveDocument);
-				$this->writeDocumentState($file->getId(), $documentState);
+			$context->saveWithLock($autoSaveDocument, function () use ($document, $documentState): void {
+				$this->writeDocumentState($document->id, $documentState);
 			});
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
 			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		} finally {
-			$this->cache->remove('document-save-lock-' . $documentId);
+			$this->cache->remove('document-save-lock-' . $document->id);
 		}
 		return $document;
 	}
@@ -428,12 +424,12 @@ class DocumentService {
 	 * @throws Exception
 	 * @throws NotPermittedException
 	 */
-	public function resetDocument(int $documentId, bool $force = false): void {
+	public function resetDocument(int $fileId, bool $force = false): void {
 		try {
 			$userId = $this->userId;
 			// If no user is provided we need to get any file from existing mounts for cleanup jobs
 			if ($userId === null) {
-				$mounts = $this->userMountCache->getMountsForFileId($documentId);
+				$mounts = $this->userMountCache->getMountsForFileId($fileId);
 				$anyMount = array_shift($mounts);
 				if ($anyMount === null) {
 					throw new NotFoundException('Could not fallback to file from mounts');
@@ -441,25 +437,30 @@ class DocumentService {
 				$userId = $anyMount->getUser()->getUID();
 			}
 
-			$document = $this->documentMapper->find($documentId);
+			$document = $this->documentMapper->load('file', $fileId);
+			if (!$document) {
+				// no document found for the file in question - so nothing to reset.
+				$this->logger->info('did not find document for file with id - document not reset.' . $fileId);
+				return;
+			}
 			if (!$force && $this->hasUnsavedChanges($document)) {
-				$this->logger->debug('did not reset document for ' . $documentId);
+				$this->logger->debug('did not reset document for file with id' . $fileId);
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 
 			try {
-				$file = $this->fileService->getFileById($documentId, $userId);
+				$file = $this->fileService->getFileById($fileId, $userId);
 				$this->lockService->unlock($file);
 			} catch (NotFoundException) {
 				// Continue with the cleanup even if the file does not exist.
 			}
 
-			$this->stepMapper->deleteAll($documentId);
-			$this->sessionMapper->deleteByDocumentId($documentId);
+			$this->stepMapper->deleteAll($document->id);
+			$this->sessionMapper->deleteByDocumentId($document->id);
 			$this->documentMapper->delete($document);
-			$this->getStateFile($documentId)->delete();
+			$this->getStateFile($document->id)->delete();
 
-			$this->logger->debug('document reset for ' . $documentId);
+			$this->logger->debug('document reset for file with id ' . $fileId);
 		} catch (DoesNotExistException|NotFoundException) {
 			// Ignore if document not found or state file not found
 		}

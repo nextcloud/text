@@ -6,7 +6,7 @@
 import { Extension } from '@tiptap/core'
 
 export interface AutofocusOptions {
-	fileId: number | null
+	id: number | null
 }
 
 declare module '@tiptap/core' {
@@ -20,7 +20,7 @@ declare module '@tiptap/core' {
 export default Extension.create<AutofocusOptions>({
 	addOptions() {
 		return {
-			fileId: null,
+			id: null,
 		}
 	},
 	addStorage() {
@@ -29,8 +29,8 @@ export default Extension.create<AutofocusOptions>({
 		}
 	},
 	onCreate() {
-		if (this.options.fileId === null) {
-			throw new Error('fileId needs to be provided')
+		if (this.options.id === null) {
+			throw new Error('id needs to be provided')
 		}
 	},
 	onSelectionUpdate({ editor }) {
@@ -39,14 +39,14 @@ export default Extension.create<AutofocusOptions>({
 		}
 
 		const pos = editor.state.selection.$anchor.pos
-		localStorage.setItem('text-lastPos-' + this.options.fileId, String(pos))
+		localStorage.setItem('text-lastPos-' + this.options.id, String(pos))
 	},
 	addCommands() {
 		return {
 			autofocus:
 				() => ({ commands }) => {
 					this.storage.started = true
-					const pos = localStorage.getItem('text-lastPos-' + this.options.fileId)
+					const pos = localStorage.getItem('text-lastPos-' + this.options.id)
 					if (pos) {
 						return commands.focus(Number(pos))
 					}

@@ -2,13 +2,15 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Text\Context\ContextManager;
+use OCA\Text\Context\DocumentData;
+use OCA\Text\Context\IContext;
+use OCA\Text\Context\SessionInfo;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\EncodingService;
-use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCA\Text\Service\SessionService;
 use OCP\IL10N;
@@ -18,36 +20,27 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	private ApiService $apiService;
 
 	private ConfigService $configService;
+	private ContextManager $contextManager;
 	private SessionService $sessionService;
 	private DocumentService $documentService;
-	private FileService $fileService;
-	private EncodingService $encodingService;
 	private LoggerInterface $loggerInterface;
 	private LockService $lockService;
 	private IL10N $l10n;
 
 	public function setUp(): void {
-		$this->configService = $this->createMock(ConfigService::class);
-		$this->sessionService = $this->createMock(SessionService::class);
-		$this->documentService = $this->createMock(DocumentService::class);
-		$this->fileService = $this->createMock(FileService::class);
-		$this->encodingService = $this->createMock(EncodingService::class);
-		$this->loggerInterface = $this->createMock(LoggerInterface::class);
-		$this->lockService = $this->createMock(LockService::class);
-		$this->l10n = $this->createMock(IL10N::class);
-
-		$document = new Document();
-		$document->setId(123);
-		$this->documentService->method('getOrCreateDocument')->willReturn($document);
-		$this->fileService->method('isReadOnly')->willReturn(false);
-		$this->encodingService->method('encodeToUtf8')->willReturnCallback(fn ($str) => $str);
+		$this->configService = $this->createStub(ConfigService::class);
+		$this->contextManager = $this->createStub(ContextManager::class);
+		$this->sessionService = $this->createStub(SessionService::class);
+		$this->documentService = $this->createStub(DocumentService::class);
+		$this->loggerInterface = $this->createStub(LoggerInterface::class);
+		$this->lockService = $this->createStub(LockService::class);
+		$this->l10n = $this->createStub(IL10N::class);
 
 		$this->apiService = new ApiService(
 			$this->configService,
+			$this->contextManager,
 			$this->sessionService,
 			$this->documentService,
-			$this->fileService,
-			$this->encodingService,
 			$this->loggerInterface,
 			$this->lockService,
 			$this->l10n,
@@ -56,16 +49,29 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testCreateNewSession() {
-		$file = $this->mockFile(1234, 'admin');
-		$actual = $this->apiService->create($file);
-		self::assertTrue($actual->getData()['hasOwner']);
-		self::assertEquals('file content', $actual->getData()['content']);
-	}
-
-	public function testCreateNewSessionWithoutOwner() {
-		$file = $this->mockFile(1234, null);
-		$actual = $this->apiService->create($file);
-		self::assertFalse($actual->getData()['hasOwner']);
+		$document = new Document();
+		$document->setId(123);
+		$context = $this->createMock(IContext::class);
+		$documentData = new DocumentData(document: $document, documentState: 'documentState');
+		$sessionInfo = new SessionInfo(content: 'content', readOnly: false, lock: null, hasOwner: true);
+		$context
+			->expects($this->once())
+			->method('buildDocument')
+			->willReturn($document);
+		$this->documentService->method('getOrCreateDocument')->willReturn($document);
+		$this->documentService->method('getDocumentData')->willReturn($documentData);
+		$context
+			->expects($this->once())
+			->method('prepareSession')
+			->with($documentData)
+			->willReturn($sessionInfo);
+		$actual = $this->apiService->create($context, null);
+		foreach ($documentData as $key => $value) {
+			self::assertEquals($value, $actual->getData()[$key]);
+		}
+		foreach ($sessionInfo as $key => $value) {
+			self::assertEquals($value, $actual->getData()[$key]);
+		}
 	}
 
 	public function testSaveWithNotPermittedException() {
@@ -76,7 +82,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$file = $this->mockFile(123, 'admin');
 
-		$this->fileService->method('getFileForSession')->willReturn($file);
 		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());
 
 		$this->l10n->method('t')

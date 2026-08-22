@@ -94,7 +94,8 @@ class SessionMiddleware extends Middleware {
 		$documentId = (int)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
-		$shareToken = (string)$this->request->getParam('token');
+		$shareToken = (string)$this->request->getParam('token')
+			|| (string)$this->request->getParam('shareToken');
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
@@ -127,18 +128,24 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$fileId = (int)$this->request->getParam('documentId');
+		$documentId = (int)$this->request->getParam('documentId');
 		$shareToken = (string)$this->request->getParam('shareToken');
 		$userId = $this->userSession->getUser()?->getUID();
 
+		$document = $this->documentService->getDocument($documentId);
+		if (!$document || $document->getContextType() !== 'file') {
+			throw new InvalidSessionException();
+		}
+		$fileId = $document->getContextId();
+
 		if ($shareToken !== '') {
-			$documentId = $this->fileService->getDocumentIdFromShare($fileId, $shareToken);
+			$this->fileService->checkFileAccessFromShare($fileId, $shareToken);
 			$controller->setDocumentId($documentId);
 			return;
 		}
 
 		if ($userId !== null) {
-			$documentId = $this->fileService->getDocumentIdForUser($fileId, $userId);
+			$this->fileService->checkFileAccessForUser($fileId, $userId);
 			$controller->setUserId($userId);
 			$controller->setDocumentId($documentId);
 			return;

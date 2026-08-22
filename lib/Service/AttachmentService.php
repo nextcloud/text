@@ -12,7 +12,9 @@ namespace OCA\Text\Service;
 use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Files_Sharing\SharedStorage;
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Controller\AttachmentController;
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
 use OCP\Constants;
 use OCP\Files\File;
@@ -44,6 +46,8 @@ readonly class AttachmentService {
 		private IFilenameValidator $filenameValidator,
 		private IFilesMetadataManager $filesMetadataManager,
 		private ISession $session,
+		private DocumentMapper $documentMapper,
+		private ContextManager $contextManager,
 	) {
 	}
 
@@ -305,7 +309,7 @@ readonly class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function uploadAttachmentPublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
+	public function uploadAttachmentPublic(int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound) {
@@ -515,12 +519,21 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 */
 	private function getTextFile(int $documentId, string $userId): File {
-		$userFolder = $this->rootFolder->getUserFolder($userId);
-		$file = $userFolder->getFirstNodeById($documentId);
+		$document = $this->documentMapper->find($documentId);
+		$type = $document->getContextType();
+		$id = $document->getContextId();
+		$context = $this->contextManager->getContext($type, $id, null);
+		$file = $context->getFile();
 		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 			return $file;
 		}
-		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
+		throw new NotFoundException('Text file for document'
+			. $documentId
+			. ' ('
+			. $context->toString()
+			. ') was not found in storage of '
+			. $userId
+		);
 	}
 
 	/**
@@ -528,32 +541,23 @@ readonly class AttachmentService {
 	 *
 	 * @throws NotFoundException
 	 */
-	private function getTextFilePublic(?int $documentId, string $shareToken): File {
-		// is the file shared with this token?
+	private function getTextFilePublic(int $documentId, string $shareToken): File {
+		// TODO: Lazy load the context and enable these additional checks inside the context
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-			if (in_array($share->getShareType(), [IShare::TYPE_LINK, IShare::TYPE_EMAIL])) {
-				// shared file or folder?
-				if ($share->getNodeType() === 'file') {
-					$textFile = $share->getNode();
-					if ($textFile instanceof File
-						&& !$this->isDownloadDisabled($textFile)
-						&& $textFile->getId() === $documentId
-					) {
-						return $textFile;
-					}
-				} elseif ($documentId !== null && $share->getNodeType() === 'folder') {
-					$folder = $share->getNode();
-					if ($folder instanceof Folder) {
-						$textFile = $folder->getFirstNodeById($documentId);
-						if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
-							return $textFile;
-						}
-					}
-				}
-			}
 		} catch (ShareNotFound) {
-			// same as below
+			throw new NotFoundException();
+		}
+		if (!in_array($share->getShareType(), [IShare::TYPE_LINK, IShare::TYPE_EMAIL])) {
+			throw new NotFoundException();
+		}
+		$document = $this->documentMapper->find($documentId);
+		$type = $document->getContextType();
+		$id = $document->getContextId();
+		$context = $this->contextManager->getContext($type, $id, $shareToken);
+		$file = $context->getFile();
+		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+			return $file;
 		}
 		throw new NotFoundException('Text file with id=' . (string)$documentId . ' and shareToken ' . $shareToken . ' was not found.');
 	}

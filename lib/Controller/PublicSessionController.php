@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Context\FileContextFactory;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
@@ -34,6 +35,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		string $appName,
 		IRequest $request,
 		ISession $session,
+		private FileContextFactory $fileContextFactory,
 		private ShareManager $shareManager,
 		private ApiService $apiService,
 		private FileService $fileService,
@@ -71,25 +73,19 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function create(string $token, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
-		$file = $this->fileService->getFileByShareToken($token, $filePath);
-		/*
-			* Check if we have proper read access (files drop)
-			* If not then well 404 it is.
-			*/
 		try {
-			$this->fileService->checkSharePermissions($token);
+			$context = $this->fileContextFactory->buildForShareWithPath($token, $filePath);
+			return $this->apiService->create($context, $baseVersionEtag, $guestName);
 		} catch (NotFoundException|\InvalidArgumentException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		return $this->apiService->create($file, $baseVersionEtag, $token, $guestName);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken, string $token): DataResponse {
-		$file = $this->fileService->getFileByIdFromShare($documentId, $token);
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $token);
 	}
 
 	#[NoAdminRequired]

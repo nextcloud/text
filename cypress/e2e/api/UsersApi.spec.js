@@ -16,13 +16,13 @@ describe('The user mention API', function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 			.as('fileId')
-			.then((fileId) => cy.openConnection({ fileId }))
+			.then((fileId) => cy.openFileConnection({ fileId }))
 			.its('connection')
 			.as('connection')
 	})
 
 	it('has a valid connection', function() {
-		cy.get('@connection').its('documentId').should('equal', this.fileId)
+		cy.get('@connection').its('documentId').should('be.greaterThan', 0)
 		cy.closeConnection(this.connection)
 	})
 

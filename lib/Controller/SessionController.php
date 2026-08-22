@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -40,6 +41,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
+		private ContextManager $contextManager,
 		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
@@ -52,22 +54,17 @@ class SessionController extends ApiController implements ISessionAwareController
 	}
 
 	#[NoAdminRequired]
-	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($fileId === null || $userId === null) {
-			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
-		}
-
+	public function create(string $type, int $id, ?string $baseVersionEtag = null): DataResponse {
 		try {
-			$file = $this->fileService->getFileById($fileId, $userId);
+			$context = $this->contextManager->getContext($type, $id, null);
 		} catch (NotFoundException|NotPermittedException $e) {
-			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+			$this->logger->error('No context for ' . $type . ' (' . $id . ') ', [ 'exception' => $e ]);
 			return new DataResponse([
 				'error' => $this->l10n->t('File not found')
 			], Http::STATUS_NOT_FOUND);
 		}
 
-		return $this->apiService->create($file, $baseVersionEtag);
+		return $this->apiService->create($context, $baseVersionEtag);
 	}
 
 	#[NoAdminRequired]
@@ -77,8 +74,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		if ($userId === null) {
 			throw new InvalidSessionException();
 		}
-		$file = $this->fileService->getFileById($documentId, $userId);
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, null);
 	}
 
 	#[NoAdminRequired]
