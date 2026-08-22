@@ -289,7 +289,6 @@ describe('The session Api', function() {
 				.its('status')
 				.should('eql', 412)
 
-
 			connection.baseVersionEtag = 'wrongBaseVersionEtag'
 
 			cy.failToPushSteps({ connection, steps: [messages.update], version })
