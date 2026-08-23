@@ -10,14 +10,19 @@ namespace OCA\Text\Context;
 use OCA\Text\Event\RegisterContextEvent;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\IUserSession;
 use Psr\Log\LoggerInterface;
+use Psr\Container\ContainerInterface;
 
 class ContextManager {
-	/** @var array<string, callable> */
+	/** @var array<string, string> */
 	private array $contexts = [];
 	public function __construct(
+		private readonly ContainerInterface $c,
 		private readonly IEventDispatcher $eventDispatcher,
 		private readonly LoggerInterface $logger,
+		private readonly IUserSession $userSession,
 	) {
 	}
 
@@ -33,24 +38,30 @@ class ContextManager {
 		return $this->contexts;
 	}
 
-	public function registerContext(string $type, callable $createContext): void {
+	public function registerContext(string $type, string $factoryClassName): void {
 		$this->logger->debug('Registering context for type "' . $type . '".');
 		if (array_key_exists($type, $this->contexts)) {
 			$this->logger->warning('Context of type "' . $type . '" was already registered!');
 			return;
 		}
-		$this->contexts[$type] = $createContext;
+		$this->contexts[$type] = $factoryClassName;
 	}
 
 	public function getContext(string $type, int $id, ?string $shareToken): IContext {
-		$createContext = $this->getContexts()[$type];
-		if (!is_callable($createContext)) {
+		$factoryClassName = $this->getContexts()[$type];
+		if ($factoryClassName === null) {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
 		}
-		$context = $createContext($id, $type, $shareToken);
-		if (!$context instanceof IContext) {
-			throw new NotFoundException('Failed to create context of type ' . $type . '!');
+		$factory = $this->c->get($factoryClassName);
+
+		if ($shareToken === null) {
+			$user = $this->userSession->getUser();
+			if ($user === null) {
+				throw new NotPermittedException();
+			}
+			return $factory->buildForUser($user, $id);
+		} else {
+			return $factory->buildForShare($shareToken, $id);
 		}
-		return $context;
 	}
 }
