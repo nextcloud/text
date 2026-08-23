@@ -21,6 +21,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IAppConfig;
 use OCP\IL10N;
+use OCP\IUserManager;
 use OCP\Util;
 
 class TextDirectEditor implements IEditor {
@@ -31,6 +32,7 @@ class TextDirectEditor implements IEditor {
 		private readonly ApiService $apiService,
 		private readonly IAppConfig $appConfig,
 		private readonly FileContextFactory $fileContextFactory,
+		private readonly IUserManager $userManager,
 	) {
 	}
 
@@ -133,7 +135,12 @@ class TextDirectEditor implements IEditor {
 	public function open(IToken $token): Response {
 		$token->useTokenScope();
 		try {
-			$context = $this->fileContextFactory->buildForDirectEditing($token);
+			$user = $this->userManager->get($token->getUser());
+			if ($user === null) {
+				throw new NotFoundException();
+			}
+			$file = $token->getFile();
+			$context = $this->fileContextFactory->build($user, 'file', $file->getId(), $file);
 			$session = $this->apiService->create($context, null);
 			$this->initialStateProvider->provideFile([
 				'fileId' => $token->getFile()->getId(),

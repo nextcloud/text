@@ -15,10 +15,12 @@ use OCA\Text\Service\LockService;
 use OCP\Files\File;
 use OCP\Files\GenericFileException;
 use OCP\Files\Lock\ILock;
+use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IUser;
 use OCP\Lock\LockedException;
+use OCP\Share\IShare;
 use Override;
 use Psr\Log\LoggerInterface;
 
@@ -30,14 +32,19 @@ class FileContext implements IContext {
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
 		private readonly LoggerInterface $logger,
-		private readonly File $file,
-		private readonly ?string $token = null,
+		private readonly IUser|IShare $auth,
+		string $type,
+		private readonly int $id,
+		private ?File $file,
 	) {
+		if ($type !== 'file') {
+			throw new NotFoundException('Incompatible type for file context: ' . $type);
+		}
 	}
 
 	#[Override]
 	public function getId(): int {
-		return $this->file->getId();
+		return $this->id;
 	}
 
 	#[Override]
@@ -51,22 +58,34 @@ class FileContext implements IContext {
 	}
 
 	#[Override]
-	public function getFile(): ?File {
+	public function getFile(): File {
+		if ($this->file !== null) {
+			return $this->file;
+		}
+		$id = $this->getId();
+		if ($this->auth instanceof IUser) {
+			$user = $this->auth;
+			$this->file = $this->fileService->getFileById($id, $user->getUID());
+		} else {
+			$share = $this->auth;
+			$this->file = $this->fileService->getFileByIdFromShare($id, $share);
+		}
 		return $this->file;
 	}
 
 	#[Override]
 	public function buildDocument(): Document|string {
+		$file = $this->getFile();
 		// Block using text for disabled download internal shares
-		if ($this->fileService->isDownloadDisabled($this->file)) {
+		if ($this->fileService->isDownloadDisabled($file)) {
 			return $this->l10n->t('This file cannot be displayed as download is disabled by the share');
 		}
 		$document = new Document();
 		$document->setContextType('file');
 		$document->setContextId($this->getId());
 		$document->setLastSavedVersion(0);
-		$document->setLastSavedVersionTime($this->file->getMTime());
-		$document->setLastSavedVersionEtag($this->file->getEtag());
+		$document->setLastSavedVersionTime($file->getMTime());
+		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setChecksum($this->computeChecksum());
 		// This is a new document - so it needs a fresh base version etag.
 		$document->setBaseVersionEtag(uniqid());
@@ -102,7 +121,7 @@ class FileContext implements IContext {
 	}
 
 	public function isReadOnly(): bool {
-		return $this->fileService->isReadOnly($this->file, $this->token);
+		return $this->fileService->isReadOnly($this->getFile(), $this->auth);
 	}
 
 	/**
@@ -122,15 +141,16 @@ class FileContext implements IContext {
 			return null;
 		}
 
-		$fileMtime = $this->file->getMtime();
-		$fileEtag = $this->file->getEtag();
+		$file = $this->getFile();
+		$fileMtime = $file->getMtime();
+		$fileEtag = $file->getEtag();
 
 		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
 			return null;
 		}
 
 		$storedChecksum = $document->getChecksum();
-		$fileContent = $this->file->getContent();
+		$fileContent = $file->getContent();
 		$fileChecksum = self::computeCheckSum($fileContent);
 
 		if ($storedChecksum !== $fileChecksum) {
@@ -143,12 +163,12 @@ class FileContext implements IContext {
 	}
 
 	public function loadContent(): ?string {
-		return $this->fileService->loadContent($this->file);
+		return $this->fileService->loadContent($this->getFile());
 	}
 
 	public function saveWithLock(string $content, callable $doWhileLocked): void {
-		$this->lockService->runInScope($this->file, function () use ($content, $doWhileLocked): void {
-			$this->file->putContent($content);
+		$this->lockService->runInScope($this->getFile(), function () use ($content, $doWhileLocked): void {
+			$this->getFile()->putContent($content);
 			$doWhileLocked();
 		});
 	}
@@ -159,32 +179,34 @@ class FileContext implements IContext {
 	}
 
 	private function computeCheckSum(?string $content = null): string {
-		$content ??= $this->file->getContent();
+		$content ??= $this->getFile()->getContent();
 		return hash('crc32', $content);
 	}
 
 	private function getLockInfo(): ?ILock {
-		return $this->lockService->getLockByOthers($this->file);
+		return $this->lockService->getLockByOthers($this->getFile());
 	}
 
 	private function getOwner(): ?IUser {
-		return $this->file->getOwner();
+		return $this->getFile()->getOwner();
 	}
 
 	private function lock(): bool {
+		$file = $this->getFile();
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
-		if (strcasecmp($this->file->getName(), 'Readme.md') !== 0) {
-			return $this->lockService->lock($this->file);
+		if (strcasecmp($file->getName(), 'Readme.md') !== 0) {
+			return $this->lockService->lock($file);
 		}
 		return true;
 	}
 
 	private function unlock(): void {
+		$file = $this->getFile();
 		// Disable file locking for Readme.md files, because in the
 		// current setup, this makes it almost impossible to delete these files.
-		if (strcasecmp($this->file->getName(), 'Readme.md') !== 0) {
-			$this->lockService->unlock($this->file);
+		if (strcasecmp($file->getName(), 'Readme.md') !== 0) {
+			$this->lockService->unlock($file);
 		}
 	}
 
