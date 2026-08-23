@@ -14,6 +14,7 @@ return array(
     'OCA\\Text\\Context\\FileContext' => $baseDir . '/../lib/Context/FileContext.php',
     'OCA\\Text\\Context\\FileContextFactory' => $baseDir . '/../lib/Context/FileContextFactory.php',
     'OCA\\Text\\Context\\IContext' => $baseDir . '/../lib/Context/IContext.php',
+    'OCA\\Text\\Context\\IContextFactory' => $baseDir . '/../lib/Context/IContextFactory.php',
     'OCA\\Text\\Controller\\AiController' => $baseDir . '/../lib/Controller/AiController.php',
     'OCA\\Text\\Controller\\AttachmentController' => $baseDir . '/../lib/Controller/AttachmentController.php',
     'OCA\\Text\\Controller\\ISessionAwareController' => $baseDir . '/../lib/Controller/ISessionAwareController.php',
