@@ -53,7 +53,9 @@ class ContextManager {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
 		}
 		$factory = $this->c->get($factoryClassName);
-
+		if (!$factory instanceof IContextFactory) {
+			throw new NotFoundException('Context factory of type "' . $type . '" is not an IContextFactory.');
+		}
 		if ($shareToken === null) {
 			$user = $this->userSession->getUser();
 			if ($user === null) {
