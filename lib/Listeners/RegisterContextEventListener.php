@@ -12,6 +12,8 @@ use OCA\Text\Context\FileContextFactory;
 use OCA\Text\Event\RegisterContextEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\Files\NotPermittedException;
+use OCP\IUserSession;
 use Override;
 
 /** @implements IEventListener<Event|RegisterContextEvent> */
@@ -19,6 +21,7 @@ class RegisterContextEventListener implements IEventListener {
 
 	public function __construct(
 		private readonly FileContextFactory $fileContextFactory,
+		private readonly IUserSession $userSession,
 	) {
 	}
 
@@ -32,9 +35,13 @@ class RegisterContextEventListener implements IEventListener {
 			'file',
 			function (int $id, string $type, ?string $shareToken) {
 				if ($shareToken === null) {
-					return $this->fileContextFactory->buildForId($id);
+					$user = $this->userSession->getUser();
+					if ($user === null) {
+						throw new NotPermittedException();
+					}
+					return $this->fileContextFactory->buildForUser($user, $id);
 				} else {
-					return $this->fileContextFactory->buildForShareWithId($shareToken, $id);
+					return $this->fileContextFactory->buildForShare($shareToken, $id);
 				}
 			}
 		);

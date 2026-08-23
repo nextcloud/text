@@ -13,9 +13,8 @@ use OCA\Text\Service\LockService;
 use OCP\DirectEditing\IToken;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
 use OCP\IL10N;
-use OCP\IUserSession;
+use OCP\IUser;
 use Psr\Log\LoggerInterface;
 
 class FileContextFactory {
@@ -26,7 +25,6 @@ class FileContextFactory {
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
 		private readonly LoggerInterface $logger,
-		private readonly IUserSession $userSession,
 	) {
 	}
 
@@ -46,24 +44,20 @@ class FileContextFactory {
 	}
 
 	/**
-	 * @throws NotPermittedException if not logged in
 	 * @throws NotFoundException if the file cannot be found
 	 */
-	public function buildForId(
+	public function buildForUser(
+		IUser $user,
 		int $id,
 	): FileContext {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($userId === null) {
-			throw new NotPermittedException();
-		}
-		$file = $this->fileService->getFileById($id, $userId);
+		$file = $this->fileService->getFileById($id, $user->getUID());
 		return $this->build($file);
 	}
 
 	/**
 	 * @throws NotFoundException if the file cannot be found
 	 */
-	public function buildForShareWithId(
+	public function buildForShare(
 		string $token,
 		int $id,
 	): FileContext {
