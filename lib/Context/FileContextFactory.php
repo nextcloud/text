@@ -10,11 +10,11 @@ namespace OCA\Text\Context;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
-use OCP\DirectEditing\IToken;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\IL10N;
 use OCP\IUser;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class FileContextFactory implements IContextFactory {
@@ -28,46 +28,30 @@ class FileContextFactory implements IContextFactory {
 	) {
 	}
 
-	private function build(
-		File $file,
-		?string $token = null,
+	public function build(
+		IUser|IShare $auth,
+		string $type,
+		int $id,
+		?File $file = null,
 	): FileContext {
+		if ($auth instanceof IShare) {
+			/*
+			* Check if we have proper read access (no files drop)
+			* If not then well 404 it is.
+			*/
+			$this->fileService->checkSharePermissions($auth);
+		}
 		return new FileContext(
 			$this->documentMapper,
 			$this->fileService,
 			$this->l10n,
 			$this->lockService,
 			$this->logger,
+			$auth,
+			$type,
+			$id,
 			$file,
-			$token,
 		);
-	}
-
-	/**
-	 * @throws NotFoundException if the file cannot be found
-	 */
-	public function buildForUser(
-		IUser $user,
-		int $id,
-	): FileContext {
-		$file = $this->fileService->getFileById($id, $user->getUID());
-		return $this->build($file);
-	}
-
-	/**
-	 * @throws NotFoundException if the file cannot be found
-	 */
-	public function buildForShare(
-		string $token,
-		int $id,
-	): FileContext {
-		$file = $this->fileService->getFileByIdFromShare($id, $token);
-		/*
-		* Check if we have proper read access (files drop)
-		* If not then well 404 it is.
-		*/
-		$this->fileService->checkSharePermissions($token);
-		return $this->build($file, $token);
 	}
 
 	/**
@@ -75,24 +59,12 @@ class FileContextFactory implements IContextFactory {
 	 * @throws \InvalidArgumentException if the share token is for a folder and path is missing
 	 */
 	public function buildForShareWithPath(
-		string $token,
+		IShare $share,
 		?string $filePath,
 	): FileContext {
-		$file = $this->fileService->getFileByShareToken($token, $filePath);
-		/*
-		* Check if we have proper read access (files drop)
-		* If not then well 404 it is.
-		*/
-		$this->fileService->checkSharePermissions($token);
-		return $this->build($file, $token);
-	}
 
-	/**
-	 * @throws NotFoundException if the file cannot be found
-	 */
-	public function buildForDirectEditing(IToken $token): FileContext {
-		$file = $token->getFile();
-		return $this->build($file, null);
+		$file = $this->fileService->getFileFromShareByPath($share, $filePath);
+		return $this->build($share, 'file', $file->getId(), $file);
 	}
 
 }

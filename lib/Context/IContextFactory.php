@@ -8,8 +8,8 @@
 namespace OCA\Text\Context;
 
 use OCP\IUser;
+use OCP\Share\IShare;
 
 interface IContextFactory {
-	public function buildForUser( IUser $user, int $id,): IContext;
-	public function buildForShare( string $token, int $id,): IContext;
+	public function build(IUser|IShare $auth, string $type, int $id): IContext;
 }
