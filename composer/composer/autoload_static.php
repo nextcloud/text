@@ -29,6 +29,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Context\\FileContext' => __DIR__ . '/..' . '/../lib/Context/FileContext.php',
         'OCA\\Text\\Context\\FileContextFactory' => __DIR__ . '/..' . '/../lib/Context/FileContextFactory.php',
         'OCA\\Text\\Context\\IContext' => __DIR__ . '/..' . '/../lib/Context/IContext.php',
+        'OCA\\Text\\Context\\IContextFactory' => __DIR__ . '/..' . '/../lib/Context/IContextFactory.php',
         'OCA\\Text\\Controller\\AiController' => __DIR__ . '/..' . '/../lib/Controller/AiController.php',
         'OCA\\Text\\Controller\\AttachmentController' => __DIR__ . '/..' . '/../lib/Controller/AttachmentController.php',
         'OCA\\Text\\Controller\\ISessionAwareController' => __DIR__ . '/..' . '/../lib/Controller/ISessionAwareController.php',

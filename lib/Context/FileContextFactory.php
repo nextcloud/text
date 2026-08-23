@@ -17,7 +17,7 @@ use OCP\IL10N;
 use OCP\IUser;
 use Psr\Log\LoggerInterface;
 
-class FileContextFactory {
+class FileContextFactory implements IContextFactory {
 
 	public function __construct(
 		private readonly DocumentMapper $documentMapper,
