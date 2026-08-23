@@ -12,14 +12,12 @@ use OCA\Text\Context\FileContextFactory;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
-use OCA\Text\Service\FileService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
 use OCP\Files\NotFoundException;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -38,8 +36,6 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		private FileContextFactory $fileContextFactory,
 		private ShareManager $shareManager,
 		private ApiService $apiService,
-		private FileService $fileService,
-		private IL10N $l10n,
 	) {
 		parent::__construct($appName, $request, $session);
 	}
@@ -74,12 +70,16 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	public function create(string $token, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
 		try {
-			$context = $this->fileContextFactory->buildForShareWithPath($token, $filePath);
+			$share = $this->shareManager->getShareByToken($token);
+		} catch (ShareNotFound) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+		try {
+			$context = $this->fileContextFactory->buildForShareWithPath($share, $filePath);
 			return $this->apiService->create($context, $baseVersionEtag, $guestName);
 		} catch (NotFoundException|\InvalidArgumentException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
-
 	}
 
 	#[NoAdminRequired]

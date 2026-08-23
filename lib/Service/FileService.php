@@ -17,6 +17,7 @@ use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\ISession;
+use OCP\IUser;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
@@ -37,13 +38,7 @@ class FileService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function getFileByIdFromShare(int $fileId, string $shareToken): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
+	public function getFileByIdFromShare(int $fileId, IShare $share): File {
 		$node = $share->getNode();
 		if ($node instanceof Folder) {
 			$node = $node->getFirstNodeById($fileId);
@@ -100,15 +95,14 @@ class FileService {
 	}
 
 	/**
-	 * @throws NotFoundException if the share cannot be found based on the token
 	 * @throws \InvalidArgumentException if the share is not a File share and path is omitted.
 	 */
-	public function getFileByShareToken(string $shareToken, ?string $path = null): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
+	public function getFileFromShareByPath(Ishare $share, ?string $path = null): File {
+		/*
+		* Check if we have proper read access (files drop)
+		* If not then well 404 it is.
+		*/
+		$this->checkSharePermissions($share);
 
 		$node = $share->getNode();
 		if ($path !== null && $node instanceof Folder) {
@@ -120,11 +114,11 @@ class FileService {
 		throw new \InvalidArgumentException('Invalid share data.');
 	}
 
-	public function isReadOnly(File $file, ?string $token): bool {
+	public function isReadOnly(File $file, IUser|IShare $auth): bool {
 		$readOnly = !$file->isUpdateable();
-		if ($token !== null) {
+		if ($auth instanceof IShare) {
 			try {
-				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
+				$this->checkSharePermissions($auth, Constants::PERMISSION_UPDATE);
 			} catch (NotFoundException) {
 				$readOnly = true;
 			}
@@ -156,13 +150,7 @@ class FileService {
 	 *
 	 * @psalm-param 1|2 $permission
 	 */
-	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
+	public function checkSharePermissions(IShare $share, int $permission = Constants::PERMISSION_READ): void {
 		if (($share->getPermissions() & $permission) === 0 || ($share->getNode()->getPermissions() & $permission) === 0) {
 			throw new NotFoundException();
 		}

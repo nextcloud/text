@@ -12,8 +12,10 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IUserSession;
-use Psr\Log\LoggerInterface;
+use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IManager as ShareManager;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class ContextManager {
 	/** @var array<string, string> */
@@ -23,6 +25,7 @@ class ContextManager {
 		private readonly IEventDispatcher $eventDispatcher,
 		private readonly LoggerInterface $logger,
 		private readonly IUserSession $userSession,
+		private readonly ShareManager $shareManager,
 	) {
 	}
 
@@ -61,9 +64,14 @@ class ContextManager {
 			if ($user === null) {
 				throw new NotPermittedException();
 			}
-			return $factory->buildForUser($user, $id);
+			return $factory->build($user, $type, $id);
 		} else {
-			return $factory->buildForShare($shareToken, $id);
+			try {
+				$share = $this->shareManager->getShareByToken($shareToken);
+			} catch (ShareNotFound) {
+				throw new NotFoundException();
+			}
+			return $factory->build($share, $type, $id);
 		}
 	}
 }
