@@ -172,7 +172,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 */
 	public function updateDocumentVersionInfo(File $file): void {
-		$document = $this->getDocument($file->getId());
+		$document = $this->documentMapper->load('file', $file->getId());
 		if ($document === null) {
 			return;
 		}
