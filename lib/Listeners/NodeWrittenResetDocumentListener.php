@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
@@ -27,6 +28,7 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 	public function __construct(
 		private readonly LoggerInterface $logger,
 		private readonly DocumentService $documentService,
+		private readonly DocumentMapper $documentMapper,
 	) {
 	}
 
@@ -45,7 +47,7 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 			// Handle non existing node (during creation).
 			return;
 		}
-		if (!$this->documentService->getDocument($node->getId())) {
+		if (!$this->documentMapper->load('file', $node->getId())) {
 			return;
 		}
 		if ($this->documentService->isSaveFromText()) {
