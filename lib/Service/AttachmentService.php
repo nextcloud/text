@@ -295,7 +295,7 @@ readonly class AttachmentService {
 			'name' => $fileName,
 			'dirname' => $saveDir->getName(),
 			'id' => $savedFile->getId(),
-			'documentId' => $textFile->getId(),
+			'documentId' => $documentId,
 		];
 	}
 
@@ -346,7 +346,7 @@ readonly class AttachmentService {
 			'name' => $fileName,
 			'dirname' => $saveDir->getName(),
 			'id' => $savedFile->getId(),
-			'documentId' => $textFile->getId(),
+			'documentId' => $documentId,
 		];
 	}
 
@@ -365,7 +365,16 @@ readonly class AttachmentService {
 		}
 		$originalFile = $this->getFileFromPath($path, $userId);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		return $this->copyFile($originalFile, $saveDir, $textFile);
+		$fileName = self::getUniqueFileName($saveDir, $originalFile->getName());
+		$targetPath = $saveDir->getPath() . '/' . $fileName;
+		$targetFile = $originalFile->copy($targetPath);
+		return [
+			'name' => $fileName,
+			'dirname' => $saveDir->getName(),
+			'id' => $targetFile->getId(),
+			'documentId' => $documentId,
+			'mimetype' => $targetFile->getMimetype(),
+		];
 	}
 
 	/**
@@ -388,25 +397,8 @@ readonly class AttachmentService {
 			'name' => $newFile->getName(),
 			'dirname' => $saveDir->getName(),
 			'id' => $newFile->getId(),
-			'documentId' => $textFile->getId(),
+			'documentId' => $documentId,
 			'mimetype' => $newFile->getMimetype(),
-		];
-	}
-
-	/**
-	 * @throws NotFoundException
-	 * @throws InvalidPathException
-	 */
-	private function copyFile(File $originalFile, Folder $saveDir, File $textFile): array {
-		$fileName = self::getUniqueFileName($saveDir, $originalFile->getName());
-		$targetPath = $saveDir->getPath() . '/' . $fileName;
-		$targetFile = $originalFile->copy($targetPath);
-		return [
-			'name' => $fileName,
-			'dirname' => $saveDir->getName(),
-			'id' => $targetFile->getId(),
-			'documentId' => $textFile->getId(),
-			'mimetype' => $targetFile->getMimetype(),
 		];
 	}
 
