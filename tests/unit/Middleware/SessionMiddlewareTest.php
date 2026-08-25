@@ -75,7 +75,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->fileService->expects($this->once())->method('checkFileAccessFromShare')->with(999, 'token');
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->never())->method('setUser');
 		$controller->expects($this->once())->method('setDocumentId');
 
 		$this->invokeMiddleware('token', 'user1', $controller);
@@ -88,7 +88,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->fileService->expects($this->once())->method('checkFileAccessForUser')->with(999, 'user1');
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->once())->method('setUserId');
+		$controller->expects($this->once())->method('setUser');
 		$controller->expects($this->once())->method('setDocumentId');
 
 		$this->invokeMiddleware(null, 'user1', $controller);
@@ -128,7 +128,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->documentService->method('getDocument')->willReturn($this->createMock(Document::class));
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->once())->method('setUserId')->with('alice');
+		$controller->expects($this->once())->method('setUser')->with($user);
 
 		$this->invokeAssertDocumentSession($controller);
 		$this->assertTrue(true);
@@ -147,7 +147,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->userManager->method('get')->with('alice')->willReturn($user);
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->never())->method('setUser');
 
 		$this->invokeAssertDocumentSession($controller);
 	}
@@ -162,7 +162,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->userManager->method('get')->with('alice')->willReturn(null);
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->never())->method('setUser');
 
 		$this->invokeAssertDocumentSession($controller);
 	}
