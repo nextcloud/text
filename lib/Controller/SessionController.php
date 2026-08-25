@@ -56,7 +56,11 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	public function create(string $type, int $id, ?string $baseVersionEtag = null): DataResponse {
 		try {
-			$context = $this->contextManager->getContext($type, $id, null);
+			$user = $this->userSession->getUser();
+			if ($user === null) {
+				throw new NotFoundException('No user found.');
+			}
+			$context = $this->contextManager->getContext($type, $id, $user);
 		} catch (NotFoundException|NotPermittedException $e) {
 			$this->logger->error('No context for ' . $type . ' (' . $id . ') ', [ 'exception' => $e ]);
 			return new DataResponse([
@@ -70,11 +74,13 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($userId === null) {
+		// We also want this to work with a session that has already been closed.
+		// So we cannot rely on RequireDocumentSession to retrieve the user.
+		$user = $this->userSession->getUser();
+		if ($user === null) {
 			throw new InvalidSessionException();
 		}
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, null);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $user);
 	}
 
 	#[NoAdminRequired]
@@ -84,7 +90,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function push(int $version, array $steps, string $awareness, ?int $recoveryAttempt = null): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt);
+			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $this->getUser());
 		} finally {
 			$this->restoreSessionUser();
 		}
@@ -97,7 +103,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function sync(int $version = 0): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->sync($this->getSession(), $this->getDocument(), $version);
+			return $this->apiService->sync($this->getDocument(), $this->getUser(), $version);
 		} finally {
 			$this->restoreSessionUser();
 		}
@@ -110,7 +116,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);
+			return $this->apiService->save($this->getDocument(), $this->getUser(), $version, $autosaveContent, $documentState, $force, $manualSave);
 		} finally {
 			$this->restoreSessionUser();
 		}

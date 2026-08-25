@@ -26,6 +26,8 @@ use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
+use OCP\IUser;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
@@ -76,7 +78,7 @@ class ApiService {
 		);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken): DataResponse {
+	public function close(int $documentId, int $sessionId, string $sessionToken, IShare|IUser $auth): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
@@ -85,7 +87,7 @@ class ApiService {
 			if ($document !== null) {
 				$type = $document->getContextType();
 				$id = $document->getContextId();
-				$context = $this->contextManager->getContext($type, $id, $shareToken);
+				$context = $this->contextManager->getContext($type, $id, $auth);
 				$context->cleanup();
 			}
 		}
@@ -95,7 +97,7 @@ class ApiService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, ?string $token = null): DataResponse {
+	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, IShare|IUser $auth): DataResponse {
 		try {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
@@ -103,7 +105,7 @@ class ApiService {
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		try {
-			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $token);
+			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $auth);
 			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
@@ -137,20 +139,19 @@ class ApiService {
 		}
 	}
 
-	public function sync(Session $session, Document $document, int $version = 0, ?string $shareToken = null): DataResponse {
-		$documentId = $session->getDocumentId();
+	public function sync(Document $document, IShare|IUser $auth, int $version = 0): DataResponse {
 		$result = [];
 		try {
 			$result = [
-				'steps' => $this->documentService->getSteps($documentId, $version),
-				'sessions' => $this->sessionService->getAllSessions($documentId),
+				'steps' => $this->documentService->getSteps($document->id, $version),
+				'sessions' => $this->sessionService->getAllSessions($document->id),
 				'document' => $document,
 			];
 
 			// ensure file is still present and accessible
 			$type = $document->getContextType();
 			$id = $document->getContextId();
-			$context = $this->contextManager->getContext($type, $id, $shareToken);
+			$context = $this->contextManager->getContext($type, $id, $auth);
 			$result['readOnly'] = $context->isReadOnly();
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
@@ -167,11 +168,11 @@ class ApiService {
 		return new DataResponse($result, Http::STATUS_OK);
 	}
 
-	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+	public function save(Document $document, IShare|IUser $auth, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
-			$context = $this->contextManager->getContext($type, $id, $shareToken);
+			$context = $this->contextManager->getContext($type, $id, $auth);
 		} catch (NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
@@ -181,7 +182,7 @@ class ApiService {
 
 		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
+			$result['document'] = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave);
 		} catch (DocumentSaveConflictException $e) {
 			$result['outsideChange'] = $e->getContent();
 		} catch (NotPermittedException) {
