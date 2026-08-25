@@ -14,6 +14,7 @@ use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\LockService;
 use OCA\Text\Service\SessionService;
 use OCP\IL10N;
+use OCP\IUser;
 use Psr\Log\LoggerInterface;
 
 class ApiServiceTest extends \PHPUnit\Framework\TestCase {
@@ -79,8 +80,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$session->setDocumentId(123);
 
 		$document = new Document();
-
-		$file = $this->mockFile(123, 'admin');
+		$user = $this->createStub(IUser::class);
 
 		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());
 
@@ -88,23 +88,12 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 			->with('Read-only permission cannot save document changes. Please reload the page.')
 			->willReturn('Read-only permission cannot save document changes. Please reload the page.');
 
-		$response = $this->apiService->save($session, $document, 1, 'content', 'state');
+		$response = $this->apiService->save($document, $user, 1, 'content', 'state');
 
 		self::assertEquals(\OCP\AppFramework\Http::STATUS_FORBIDDEN, $response->getStatus());
 		self::assertEquals('Read-only permission cannot save document changes. Please reload the page.',
 			$response->getData()['error']
 		);
-	}
-
-	private function mockFile(int $id, ?string $owner) {
-		$file = $this->createMock(\OCP\Files\File::class);
-		$storage = $this->createMock(\OCP\Files\Storage\IStorage::class);
-		$file->method('getStorage')->willReturn($storage);
-		$file->method('getId')->willReturn($id);
-		$file->method('getOwner')->willReturn($owner);
-		$file->method('getName')->willReturn('name');
-		$file->method('getContent')->willReturn('file content');
-		return $file;
 	}
 
 }
