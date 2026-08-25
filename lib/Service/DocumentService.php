@@ -38,7 +38,9 @@ use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\IUser;
 use OCP\Lock\LockedException;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 use function json_encode;
 
@@ -224,7 +226,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws DoesNotExistException
 	 */
-	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, ?string $shareToken): array {
+	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, IShare|IUser $auth): array {
 		$documentId = $session->getDocumentId();
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
@@ -245,7 +247,7 @@ class DocumentService {
 		if (count($stepsToInsert) > 0) {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
-			$context = $this->contextManager->getContext($type, $id, $shareToken);
+			$context = $this->contextManager->getContext($type, $id, $auth);
 			if (!$context->isReadOnly()) {
 				$this->insertSteps($document, $session, $stepsToInsert);
 			}
@@ -350,7 +352,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+	public function autosave(Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false): Document {
 		if ($context->isReadOnly()) {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}

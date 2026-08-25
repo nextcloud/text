@@ -10,10 +10,8 @@ namespace OCA\Text\Context;
 use OCA\Text\Event\RegisterContextEvent;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
-use OCP\IUserSession;
-use OCP\Share\Exceptions\ShareNotFound;
-use OCP\Share\IManager as ShareManager;
+use OCP\IUser;
+use OCP\Share\IShare;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -24,8 +22,6 @@ class ContextManager {
 		private readonly ContainerInterface $c,
 		private readonly IEventDispatcher $eventDispatcher,
 		private readonly LoggerInterface $logger,
-		private readonly IUserSession $userSession,
-		private readonly ShareManager $shareManager,
 	) {
 	}
 
@@ -50,7 +46,7 @@ class ContextManager {
 		$this->contexts[$type] = $factoryClassName;
 	}
 
-	public function getContext(string $type, int $id, ?string $shareToken): IContext {
+	public function getContext(string $type, int $id, IShare|IUser $auth): IContext {
 		$factoryClassName = $this->getContexts()[$type];
 		if ($factoryClassName === null) {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
@@ -59,19 +55,7 @@ class ContextManager {
 		if (!$factory instanceof IContextFactory) {
 			throw new NotFoundException('Context factory of type "' . $type . '" is not an IContextFactory.');
 		}
-		if ($shareToken === null) {
-			$user = $this->userSession->getUser();
-			if ($user === null) {
-				throw new NotPermittedException();
-			}
-			return $factory->build($user, $type, $id);
-		} else {
-			try {
-				$share = $this->shareManager->getShareByToken($shareToken);
-			} catch (ShareNotFound) {
-				throw new NotFoundException();
-			}
-			return $factory->build($share, $type, $id);
-		}
+		return $factory->build($auth, $type, $id);
 	}
+
 }

@@ -84,32 +84,32 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function close(int $documentId, int $sessionId, string $sessionToken, string $token): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $token);
+	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $this->getShare());
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function push(int $version, array $steps, string $awareness, string $token, ?int $recoveryAttempt = null): DataResponse {
-		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $token);
+	public function push(int $version, array $steps, string $awareness, ?int $recoveryAttempt = null): DataResponse {
+		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $this->getShare());
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function sync(string $token, int $version = 0): DataResponse {
-		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $token);
+	public function sync(int $version = 0): DataResponse {
+		return $this->apiService->sync($this->getDocument(), $this->getShare(), $version);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function save(string $token, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
-		return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
+	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
+		return $this->apiService->save($this->getDocument(), $this->getShare(), $version, $autosaveContent, $documentState, $force, $manualSave);
 	}
 
 	#[NoAdminRequired]
@@ -118,4 +118,5 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	public function updateSession(string $guestName): DataResponse {
 		return $this->apiService->updateSession($this->getSession(), $guestName);
 	}
+
 }
