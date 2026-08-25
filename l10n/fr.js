@@ -234,6 +234,7 @@ OC.L10N.register(
     "Option" : "Option",
     "Suggestions" : "Suggestions",
     "Formatting" : "Mise en forme",
+    "Link a file" : "Lier un fichier",
     "Start writing or type '/' to add…" : "Commencez à écrire ou tapez « / » pour ajouter…",
     "Select file or folder to link to" : "Sélection d'un fichier ou d'un dossier à lier",
     "Choose" : "Choisir",
