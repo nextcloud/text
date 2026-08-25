@@ -652,6 +652,7 @@ export default defineComponent({
 					})
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
+						origin: this.syncProvider,
 					})
 				}
 			})

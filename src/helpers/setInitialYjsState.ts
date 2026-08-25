@@ -17,11 +17,14 @@ import markdownit from '../markdownit/index.js'
  * @param content desired content of the final document
  * @param options options
  * @param options.isRichEditor use a rich editor for the content
+ * @param options.origin origin of the update, e.g. the sync provider.
+ * Pass the sync provider to mark the initial state as received from the server
+ * so it does not count as local changes that need to be pushed and saved.
  */
 export function setInitialYjsState(
 	ydoc: Doc,
 	content: string,
-	{ isRichEditor }: { isRichEditor: boolean },
+	{ isRichEditor, origin }: { isRichEditor: boolean, origin?: unknown },
 ) {
 	const html = isRichEditor
 		? markdownit.render(content) + '<p/>'
@@ -54,5 +57,5 @@ export function setInitialYjsState(
 	}
 
 	const baseUpdate = encodeStateAsUpdate(getBaseDoc(node))
-	applyUpdate(ydoc, baseUpdate)
+	applyUpdate(ydoc, baseUpdate, origin)
 }
