@@ -4,6 +4,7 @@
  */
 
 import type { Doc } from 'yjs'
+import type { Context } from './useConnection.ts'
 
 import { readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
@@ -13,16 +14,16 @@ import { logger } from '../helpers/logger.js'
  * Initialize a indexed db provider for the given ydoc
  *
  * @param props Props of the editor component.
- * @param props.fileId Fileid of the file.
+ * @param props.context Context of the document.
  * @param ydoc Document to sync via the provider
  */
 export function useIndexedDbProvider(
 	props: {
-		fileId: number
+		context: Context
 	},
 	ydoc: Doc,
 ) {
-	const name = `text-${props.fileId}`
+	const name = `text-${props.context.type}-${props.context.id}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
 	let isDestroyed = false
