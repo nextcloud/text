@@ -408,7 +408,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.5.10
 	- license: MIT
 - uuid
-	- version: 14.0.1
+	- version: 14.0.2
 	- license: MIT
 - vite-plugin-node-polyfills
 	- version: 0.24.0
