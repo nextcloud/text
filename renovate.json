@@ -9,7 +9,7 @@
 	"minimumReleaseAge": "4 days",
 	"rebaseWhen": "conflicted",
 	"ignoreUnstable": false,
-	"baseBranchPatterns": ["main", "stable34", "stable33", "stable32"],
+	"baseBranchPatterns": ["main", "stable35", "stable34", "stable33", "stable32"],
 	"enabledManagers": ["npm"],
 	"ignoreDeps": ["node", "npm"],
 	"packageRules": [
@@ -52,12 +52,12 @@
 		},
 		{
 			"matchUpdateTypes": ["major"],
-			"matchBaseBranches": ["stable34", "stable33", "stable32"],
+			"matchBaseBranches": ["stable35", "stable34", "stable33", "stable32"],
 			"enabled": false
 		},
 		{
 			"matchUpdateTypes": ["major", "minor"],
-			"matchBaseBranches": ["stable34", "stable33", "stable32"],
+			"matchBaseBranches": ["stable35", "stable34", "stable33", "stable32"],
 			"enabled": false
 		},
 		{
@@ -67,7 +67,7 @@
 				"@nextcloud/cypress",
 				"@cypress/{/,}**"
 			],
-			"matchBaseBranches": ["stable34", "stable33", "stable32"],
+			"matchBaseBranches": ["stable35", "stable34", "stable33", "stable32"],
 			"enabled": false
 		},
 		{
