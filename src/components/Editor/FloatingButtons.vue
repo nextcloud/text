@@ -68,6 +68,13 @@ export default {
 		},
 	},
 
+	mounted() {
+		// Start hidden until the drag handle plugin positions the buttons on
+		// first mousemove. The Vue 3 wrapper of @tiptap/extension-drag-handle
+		// does that internally, so this is not needed on NC v35 onwards.
+		this.$el.style.visibility = 'hidden'
+	},
+
 	methods: {
 		onNodeChange({ node, pos }) {
 			this.node = node
