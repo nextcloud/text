@@ -347,8 +347,10 @@ export default Table.extend({
 				) {
 					return true
 				}
-				this.editor.commands.goToNextCell()
+				return (
+					this.editor.commands.goToNextCell()
 					|| this.editor.commands.leaveTable()
+				)
 			},
 			/**
 			 * <Tab> inside a table cell
@@ -365,7 +367,7 @@ export default Table.extend({
 				) {
 					return true
 				}
-				this.editor.commands.goToPreviousCell()
+				return this.editor.commands.goToPreviousCell()
 			},
 		}
 	},
