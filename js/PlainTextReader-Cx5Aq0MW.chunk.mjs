@@ -1,0 +1,2 @@
+import{P as n}from"./Wrapper-DyYLgX0Q.chunk.mjs";import{B as r}from"./BaseReader-DPTyPJt6.chunk.mjs";import{n as o}from"./_plugin-vue2_normalizer-wd1ZAbRr.chunk.mjs";const s={name:"PlainTextReader",components:{BaseReader:r},provide:{extensions:()=>[n]},props:{content:{type:String,required:!0}}};var a=function(){var t=this,e=t._self._c;return e("BaseReader",{attrs:{content:t.content}})},i=[],p=o(s,a,i,!1,null,null);const d=p.exports;export{d as P};
+//# sourceMappingURL=PlainTextReader-Cx5Aq0MW.chunk.mjs.map
