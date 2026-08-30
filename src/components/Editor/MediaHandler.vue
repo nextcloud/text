@@ -215,6 +215,7 @@ export default {
 			return createAttachment(this.connection, template)
 				.then((response) => {
 					this.insertAttachmentPreview(response.data?.id)
+					emit('text:image-node:add', null)
 				})
 				.catch((error) => {
 					logger.error('Failed to create attachment', { error })
