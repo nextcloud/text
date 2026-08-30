@@ -43,7 +43,7 @@
     "@nextcloud/notify_push": "^1.4.0",
     "@nextcloud/router": "^3.1.0",
     "@nextcloud/sharing": "^0.4.0",
-    "@nextcloud/vue": "^9.9.0",
+    "@nextcloud/vue": "^9.11.0",
     "@quartzy/markdown-it-mentions": "^0.2.0",
     "@tiptap/core": "3.30.3",
     "@tiptap/extension-blockquote": "3.30.3",
