@@ -126,7 +126,7 @@
     "cypress-split": "^1.25.0",
     "cypress-vite": "^1.10.2",
     "eslint": "^10.8.1",
-    "eslint-plugin-cypress": "^7.0.0",
+    "eslint-plugin-cypress": "^7.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^30.0.1",
     "prosemirror-schema-basic": "^1.2.4",
