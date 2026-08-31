@@ -650,9 +650,12 @@ export default defineComponent({
 						content,
 						isRichEditor: this.isRichEditor,
 					})
+					// The resulting push still needs to reach the server like any
+					// other step, but should not autosave a document nobody has
+					// edited yet.
+					this.saveService.skipNextAutosaveTrigger()
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
-						origin: this.syncProvider,
 					})
 				}
 			})
