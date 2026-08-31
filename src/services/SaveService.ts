@@ -39,7 +39,9 @@ class SaveService {
 	pendingAutosave = 0
 	getSaveData
 	autosave
+	autosaveOnChangesPushed
 	clear
+	#skipNextAutosaveTrigger = false
 
 	constructor({
 		connection,
@@ -54,7 +56,20 @@ class SaveService {
 		this.document = document
 		this.getSaveData = getSaveData
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
+		this.autosaveOnChangesPushed = this._autosaveOnChangesPushed.bind(this)
 		this.clear = this.clearAutosave.bind(this)
+	}
+
+	skipNextAutosaveTrigger() {
+		this.#skipNextAutosaveTrigger = true
+	}
+
+	_autosaveOnChangesPushed() {
+		if (this.#skipNextAutosaveTrigger) {
+			this.#skipNextAutosaveTrigger = false
+			return
+		}
+		this.autosave()
 	}
 
 	/**

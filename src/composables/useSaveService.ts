@@ -49,10 +49,10 @@ export function provideSaveService(
 		getSaveData,
 	})
 
-	syncService.bus.on('changesPushed', saveService.autosave)
+	syncService.bus.on('changesPushed', saveService.autosaveOnChangesPushed)
 	syncService.bus.on('close', saveService.clear)
 	onUnmounted(() => {
-		syncService.bus.off('changesPushed', saveService.autosave)
+		syncService.bus.off('changesPushed', saveService.autosaveOnChangesPushed)
 		syncService.bus.off('close', saveService.clear)
 	})
 
