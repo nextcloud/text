@@ -402,7 +402,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $documentId, true, 60);
 		try {
 			$this->lockService->runInScope($file, function () use ($file, $autoSaveDocument, $documentState): void {
 				$this->saveFromText = true;
