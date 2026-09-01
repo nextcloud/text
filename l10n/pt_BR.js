@@ -39,7 +39,7 @@ OC.L10N.register(
     "Cancel" : "Cancelar",
     "Enter your name to comment" : "Digite seu nome para comentar",
     "Add a comment…" : "Adicionar um comentário…",
-    "Comment" : "Comentário",
+    "Comment" : "Comentar",
     "Reply" : "Responder",
     "Reload" : "Recarregar",
     "The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed." : "O arquivo foi sobrescrito. Suas alterações atuais não podem ser salvas automaticamente. Escolha como proceder.",
