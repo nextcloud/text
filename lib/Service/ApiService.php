@@ -217,7 +217,6 @@ class ApiService {
 			// ensure file is still present and accessible
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 			$result['readOnly'] = $this->documentService->isReadOnly($file, $shareToken);
-			$this->documentService->assertNoOutsideConflict($document, $file);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
@@ -228,16 +227,9 @@ class ApiService {
 			return new DataResponse([
 				'message' => 'Document no longer exists'
 			], Http::STATUS_NOT_FOUND);
-		} catch (DocumentSaveConflictException) {
-			try {
-				/** @psalm-suppress PossiblyUndefinedVariable */
-				$result['outsideChange'] = $file->getContent();
-			} catch (LockedException) {
-				// Ignore locked exception since it might happen due to an autosave action happening at the same time
-			}
 		}
 
-		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
+		return new DataResponse($result, Http::STATUS_OK);
 	}
 
 	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
