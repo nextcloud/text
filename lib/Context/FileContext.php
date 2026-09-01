@@ -57,6 +57,10 @@ class FileContext implements IContext {
 		return $this->getType() . ' (' . $this->getId() . ')';
 	}
 
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
 	#[Override]
 	public function getFile(): File {
 		if ($this->file !== null) {
@@ -73,12 +77,23 @@ class FileContext implements IContext {
 		return $this->file;
 	}
 
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
 	#[Override]
-	public function buildDocument(): Document|string {
-		$file = $this->getFile();
+	public function buildDocument(): Document {
+		try {
+			$file = $this->getFile();
+		} catch (NotFoundException|NotPermittedException $e) {
+			$this->logger->warning('No permission to access this file', ['exception' => $e]);
+			throw new NotFoundException($this->l10n->t('File not found'), $e->getCode(), $e);
+		}
 		// Block using text for disabled download internal shares
 		if ($this->fileService->isDownloadDisabled($file)) {
-			return $this->l10n->t('This file cannot be displayed as download is disabled by the share');
+			throw new NotPermittedException(
+				$this->l10n->t('This file cannot be displayed as download is disabled by the share')
+			);
 		}
 		$document = new Document();
 		$document->setContextType('file');

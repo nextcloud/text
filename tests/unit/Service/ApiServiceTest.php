@@ -43,7 +43,6 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->sessionService,
 			$this->documentService,
 			$this->loggerInterface,
-			$this->lockService,
 			$this->l10n,
 			null,
 		);

@@ -21,7 +21,6 @@ use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\Files\File;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
@@ -37,16 +36,18 @@ class ApiService {
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
 		private readonly LoggerInterface $logger,
-		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
 		private readonly ?IQueue $queue,
 	) {
 	}
 
 	public function create(IContext $context, ?string $baseVersionEtag, ?string $guestName = null): DataResponse {
-		$document = $context->buildDocument();
-		if (!$document instanceof Document) {
-			return new DataResponse(['error' => $document], Http::STATUS_FORBIDDEN);
+		try {
+			$document = $context->buildDocument();
+		} catch (NotFoundException $e) {
+			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_NOT_FOUND);
+		} catch (NotPermittedException $e) {
+			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_FORBIDDEN);
 		}
 
 		try {

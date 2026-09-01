@@ -54,7 +54,7 @@ describe('The session Api', function() {
 		})
 
 		it('handles missing file id', function() {
-			cy.failToCreateTextSession().its('status').should('equal', 412)
+			cy.failToCreateTextSession().its('status').should('equal', 404)
 		})
 	})
 
