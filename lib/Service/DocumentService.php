@@ -427,7 +427,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $documentId, true, 60);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
