@@ -11,6 +11,10 @@ describe('Details extension', () => {
 		const rendered = markdownit.render('<details>\n<summary>summary</summary>\ncontent\n</details>')
 		expect(stripIndent(rendered)).toBe('<details><summary>summary</summary><p>content</p></details>')
 	})
+	it('renders the native open state', () => {
+		const rendered = markdownit.render('<details open>\n<summary>summary</summary>\ncontent\n</details>')
+		expect(stripIndent(rendered)).toBe('<details open=""><summary>summary</summary><p>content</p></details>')
+	})
 	it('renders with empty summary', () => {
 		const rendered = markdownit.render('<details>\n<summary></summary>\ncontent\n</details>')
 		expect(stripIndent(rendered)).toBe('<details><summary></summary><p>content</p></details>')

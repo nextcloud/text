@@ -67,6 +67,11 @@ const Details = Node.create({
 			openDetails: {
 				default: false,
 			},
+			open: {
+				default: false,
+				parseHTML: (element) => element.hasAttribute('open'),
+				renderHTML: ({ open }) => open ? { open: '' } : {},
+			},
 		}
 	},
 
@@ -91,7 +96,7 @@ const Details = Node.create({
 	},
 
 	toMarkdown: (state, node) => {
-		state.write('<details>\n')
+		state.write(node.attrs.open ? '<details open>\n' : '<details>\n')
 		state.renderContent(node)
 		state.closeBlock(node)
 		state.ensureNewLine()

@@ -7,9 +7,8 @@ import type MarkdownIt from 'markdown-it'
 import type StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
 
-const DETAILS_START_REGEX = /^<details>\s*$/
-const DETAILS_AND_SUMMARY_START_REGEX
-	= /(?<=^<details>\s*<summary>).*(?=<\/summary>\s*$)/
+const DETAILS_START_REGEX = /^<details(?<open>\s+open(?:=(?:""|''|open))?)?>\s*$/
+const DETAILS_AND_SUMMARY_START_REGEX = /^<details(?<open>\s+open(?:=(?:""|''|open))?)?>\s*<summary>(?<summary>.*)<\/summary>\s*$/
 const DETAILS_END_REGEX = /^<\/details>\s*$/
 const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
 
@@ -32,16 +31,22 @@ function parseDetails(
 
 	let detailsFound = false
 	let detailsSummary = null
+	let openDetails: boolean
 	let startLineCount = 2
 
-	const m = state.src.slice(start, max).match(DETAILS_AND_SUMMARY_START_REGEX)
-	if (m) {
+	const openingLine = state.src.slice(start, max)
+	const combined = openingLine.match(DETAILS_AND_SUMMARY_START_REGEX)
+	if (combined) {
 		// Details block start and summary in same line
-		detailsSummary = m[0].trim()
+		detailsSummary = combined.groups!.summary!.trim()
+		openDetails = Boolean(combined.groups!.open)
 		startLineCount = 1
-	} else if (!state.src.slice(start, max).match(DETAILS_START_REGEX)) {
-		// Details block start in separate line
-		return false
+	} else {
+		const opening = openingLine.match(DETAILS_START_REGEX)
+		if (!opening) {
+			return false
+		}
+		openDetails = Boolean(opening.groups!.open)
 	}
 
 	// Since start is found, we can report success here in validation mode
@@ -105,6 +110,9 @@ function parseDetails(
 	token.block = true
 	token.info = detailsSummary
 	token.map = [startLine, nextLine]
+	if (openDetails) {
+		token.attrSet('open', '')
+	}
 
 	token = state.push('details_summary', 'summary', 1)
 	token.block = false
