@@ -104,6 +104,13 @@
 							t('text', 'No rendered differences — Markdown syntax differs.')
 						}}
 					</p>
+					<NcButton
+						data-comparison-empty-action
+						type="button"
+						variant="tertiary"
+						@click="setView('source')">
+						{{ t('text', 'Open Markdown source') }}
+					</NcButton>
 				</div>
 				<p v-else class="empty" role="status">
 					{{ t('text', 'No differences.') }}
@@ -157,17 +164,35 @@
 					</article>
 				</div>
 			</section>
+
+			<section v-if="view === 'source'" role="tabpanel" class="source">
+				<p class="source-explanation">
+					{{
+						t(
+							'text',
+							'Source compares literal Markdown, so its change groups can differ from rendered changes.',
+						)
+					}}
+				</p>
+				<MarkdownSourceFallback v-if="!SourceView" :beforeContent="beforeContent" :afterContent="afterContent" />
+				<component
+					:is="SourceView"
+					v-else
+					:beforeContent="beforeContent"
+					:afterContent="afterContent"
+					:layoutMode="layoutMode" />
+			</section>
 		</template>
 	</section>
 </template>
 
 <script setup lang="ts">
-import type { ComponentPublicInstance as Public } from 'vue'
+import type { Component, ComponentPublicInstance as Public } from 'vue'
 import type { ComparisonEdit as Edit, ComparisonSide as Side } from '../comparison/markdownComparisonTypes.ts'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { n, t } from '@nextcloud/l10n'
-import { computed, nextTick, onBeforeUnmount, onErrorCaptured, onMounted, provide, ref, shallowRef, watch } from 'vue'
+import { computed, markRaw, nextTick, onBeforeUnmount, onErrorCaptured, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import ComparisonChangeList from './ComparisonChangeList.vue'
 import ComparisonEditorContent from './ComparisonEditorContent.vue'
@@ -188,10 +213,10 @@ const props = defineProps<{
 	openLinkHandler?: (href: string) => void
 }>()
 const emit = defineEmits<{ ready: [] }>()
-type View = 'changes' | 'documents'
-const tabs: readonly View[] = ['changes', 'documents']
+type View = 'changes' | 'documents' | 'source'
+const tabs: readonly View[] = ['changes', 'documents', 'source']
 const sides: readonly Side[] = ['before', 'after']
-const tabLabels = { changes: t('text', 'Changes'), documents: t('text', 'Full documents') }
+const tabLabels = { changes: t('text', 'Changes'), documents: t('text', 'Full documents'), source: t('text', 'Markdown source') }
 const sideLabels = { before: t('text', 'Before'), after: t('text', 'After') }
 const sideLegends = { before: t('text', 'Removed'), after: t('text', 'Added') }
 const root = ref<HTMLElement | null>(null)
@@ -208,6 +233,7 @@ const hideFormatting = ref(false)
 const currentId = ref<string | null>(null)
 const currentLabel = ref('')
 const failure = ref(false)
+const SourceView = shallowRef<Component | null>(null)
 let observer: ResizeObserver | null = null
 let didReady = false
 let destroyed = false
@@ -296,6 +322,12 @@ watch(activeIds, (ids) => {
 	updateDecorations()
 })
 watch(currentId, refreshDocuments)
+watch(view, (next) => {
+	if (next === 'source' && !SourceView.value) {
+		loadSource()
+	}
+})
+
 onErrorCaptured(() => {
 	activateFallback()
 	nextTick(ready)
@@ -411,6 +443,13 @@ function destroyEditors() {
 	for (const side of sides) {
 		editors[side]?.destroy()
 		editors[side] = null
+	}
+}
+async function loadSource() {
+	try {
+		SourceView.value = markRaw((await import('./MarkdownSourceComparison.vue')).default)
+	} catch {
+		SourceView.value = null
 	}
 }
 function setView(next: View) {

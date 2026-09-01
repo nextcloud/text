@@ -50,6 +50,15 @@ const config = createAppConfig(
 		},
 		config: {
 			base: process.env.BASE,
+			worker: {
+				rollupOptions: {
+					output: {
+						assetFileNames: 'js/[name]-[hash][extname]',
+						chunkFileNames: 'js/[name]-[hash].worker.chunk.mjs',
+						entryFileNames: 'js/[name]-[hash].worker.mjs',
+					},
+				},
+			},
 			resolve: {
 				dedupe: ['vue'],
 			},

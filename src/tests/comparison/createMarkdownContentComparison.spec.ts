@@ -30,6 +30,26 @@ afterAll(() => {
 afterEach(() => vi.restoreAllMocks())
 
 describe('Markdown comparison factory fallback and lifecycle', () => {
+	it('V09 reports syntax-only Markdown as no semantic edit and opens Source', async () => {
+		const el = document.createElement('div')
+		const instance = await createMarkdownContentComparison({
+			beforeContent: '*same rendered text*',
+			afterContent: '_same rendered text_',
+			el,
+		})
+
+		expect(el.querySelectorAll('[data-comparison-change]')).toHaveLength(0)
+		expect(el.querySelector('[role="status"]')?.textContent).toContain('No rendered differences')
+		const openSource = el.querySelector<HTMLButtonElement>('[data-comparison-empty-action]')
+		expect(openSource).not.toBeNull()
+		openSource!.click()
+		await nextTick()
+		expect([...el.querySelectorAll<HTMLElement>('[role="tab"]')]
+			.find(({ textContent }) => textContent?.trim() === 'Markdown source')
+			?.getAttribute('aria-selected')).toBe('true')
+		instance.destroy()
+	})
+
 	it('F05 remounts complete Source when rendered editor initialization fails', async () => {
 		vi.spyOn(Editor.prototype, 'mount').mockImplementation(() => {
 			throw new Error('forced mount failure')
