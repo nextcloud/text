@@ -307,7 +307,6 @@ class DocumentService {
 
 	/**
 	 * @throws DocumentSaveConflictException
-	 * @throws DoesNotExistException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
@@ -332,16 +331,7 @@ class DocumentService {
 		$fileChecksum = self::computeCheckSum($fileContent);
 
 		if ($storedChecksum !== $fileChecksum) {
-			// $document was loaded at the start of the request.
-			// A save request handled in the meantime is not reflected in it
-			// and would be mistaken for an outside change.
-			// Reload the document to compare against the latest saved state.
-			$document = $this->documentMapper->find($documentId);
-			if ($document->getChecksum() !== $fileChecksum) {
-				throw new DocumentSaveConflictException('File changed in the meantime from outside');
-			}
-			// The save request already stored the latest version info.
-			return;
+			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
 
 		$document->setLastSavedVersionTime($fileMtime);
