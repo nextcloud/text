@@ -11,15 +11,25 @@ use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCP\Files\File;
 use OCP\Files\Lock\ILock;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 
 interface IContext {
 	public function getId(): int;
 	public function getType(): string;
 	public function toString(): string;
-	public function buildDocument(): Document|string;
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
+	public function buildDocument(): Document;
 	public function prepareSession(DocumentData $documentData): SessionInfo;
 	public function isReadOnly(): bool;
 	public function updateDocument(Document $document): ?Document;
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
 	public function getFile(): ?File;
 	public function loadContent(): ?string;
 	public function saveWithLock(string $content, callable $doWhileLocked): void;
