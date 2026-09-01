@@ -95,7 +95,7 @@ export default Extension.create<RichTextOptions>({
 			Text,
 			Paragraph,
 			HardBreak,
-			Heading,
+			this.options.editing || !this.options.isEmbedded ? Heading : Heading.extend({ addProseMirrorPlugins: () => [] }),
 			Strong,
 			Highlight,
 			Italic,
@@ -123,7 +123,10 @@ export default Extension.create<RichTextOptions>({
 				isEmbedded: this.options.isEmbedded,
 			}),
 			Underline,
-			Image.configure({ noLazyImages: this.options.noLazyImages }),
+			Image.configure({
+				emitAttachmentEvents: this.options.editing,
+				noLazyImages: this.options.noLazyImages,
+			}),
 			ImageInline.configure({ noLazyImages: this.options.noLazyImages }),
 			Dropcursor.configure({
 				color: 'var(--color-primary-element)',
@@ -131,7 +134,7 @@ export default Extension.create<RichTextOptions>({
 			}),
 			Gapcursor,
 			KeepSyntax,
-			Keymap,
+			...(this.options.editing ? [Keymap] : []),
 			FrontMatter,
 			Mention.configure({
 				suggestion: MentionSuggestion({
@@ -141,7 +144,7 @@ export default Extension.create<RichTextOptions>({
 					},
 				}),
 			}),
-			Search,
+			...(this.options.editing ? [Search] : []),
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
 			}),
@@ -163,6 +166,7 @@ export default Extension.create<RichTextOptions>({
 				notAfter: ['paragraph', 'comments', 'footnotes'],
 			}),
 			TextDirection.configure({
+				inferTextDirectionOnParse: !this.options.editing,
 				types: [
 					'blockquote',
 					'callout',

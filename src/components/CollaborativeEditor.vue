@@ -804,7 +804,7 @@ export default defineComponent({
 		},
 
 		async save() {
-			await this.saveService.save()
+			return await this.saveService.save()
 		},
 
 		async saveWhenDirty() {
