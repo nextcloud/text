@@ -25,7 +25,6 @@ use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
-use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IAppData;
@@ -57,7 +56,6 @@ class DocumentService {
 	public function __construct(
 		private readonly ContextManager $contextManager,
 		private readonly DocumentMapper $documentMapper,
-		private readonly FileService $fileService,
 		private readonly StepMapper $stepMapper,
 		private readonly SessionMapper $sessionMapper,
 		private readonly IAppData $appData,
@@ -65,10 +63,8 @@ class DocumentService {
 		private readonly IRootFolder $rootFolder,
 		ICacheFactory $cacheFactory,
 		private readonly LoggerInterface $logger,
-		private readonly LockService $lockService,
 		IRequest $request,
 		IManager $directManager,
-		private readonly IUserMountCache $userMountCache,
 		private readonly IConfig $config,
 	) {
 		$this->cache = $cacheFactory->createDistributed('text');
@@ -438,44 +434,30 @@ class DocumentService {
 	 * @throws Exception
 	 * @throws NotPermittedException
 	 */
-	public function resetDocument(int $fileId, bool $force = false): void {
+	public function resetDocument(string $contextType, int $contextId, bool $force = false): void {
+		$contextString = $contextType . '(' . $contextId . ')';
+
+		$document = $this->documentMapper->load($contextType, $contextId);
+		if (!$document) {
+			// no document found for the file in question - so nothing to reset.
+			$this->logger->info('did not find document - document not reset.' . $contextString);
+			return;
+		}
+
+		if (!$force && $this->hasUnsavedChanges($document)) {
+			$this->logger->debug('Did not reset document with unsaved changes for ' . $contextString);
+			throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
+		}
+
 		try {
-			$userId = $this->userId;
-			// If no user is provided we need to get any file from existing mounts for cleanup jobs
-			if ($userId === null) {
-				$mounts = $this->userMountCache->getMountsForFileId($fileId);
-				$anyMount = array_shift($mounts);
-				if ($anyMount === null) {
-					throw new NotFoundException('Could not fallback to file from mounts');
-				}
-				$userId = $anyMount->getUser()->getUID();
-			}
-
-			$document = $this->documentMapper->load('file', $fileId);
-			if (!$document) {
-				// no document found for the file in question - so nothing to reset.
-				$this->logger->info('did not find document for file with id - document not reset.' . $fileId);
-				return;
-			}
-			if (!$force && $this->hasUnsavedChanges($document)) {
-				$this->logger->debug('did not reset document for file with id' . $fileId);
-				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
-			}
-
-			try {
-				$file = $this->fileService->getFileById($fileId, $userId);
-				$this->lockService->unlock($file);
-			} catch (NotFoundException) {
-				// Continue with the cleanup even if the file does not exist.
-			}
-
 			$this->stepMapper->deleteAll($document->id);
 			$this->sessionMapper->deleteByDocumentId($document->id);
 			$this->documentMapper->delete($document);
 			$this->getStateFile($document->id)->delete();
 
-			$this->logger->debug('document reset for file with id ' . $fileId);
-		} catch (DoesNotExistException|NotFoundException) {
+			$this->logger->debug('Document reset for ' . $contextString);
+		} catch (DoesNotExistException|NotFoundException $e) {
+			$this->logger->debug('Document not found for for ' . $contextString, ['error' => $e]);
 			// Ignore if document not found or state file not found
 		}
 	}
