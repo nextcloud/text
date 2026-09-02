@@ -9,7 +9,7 @@
 		:context="{ id: fileid, type: 'file' }"
 		:relativePath="filename"
 		:active="active || isEmbedded"
-		:autofocus
+		:autofocus="autofocus ?? true"
 		:shareToken="shareToken || getSharingToken()"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime />
