@@ -83,9 +83,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$document = $this->createDocument('etag1', 1000, 'content');
 		$file = $this->mockFile('etag1', 1000, 'content');
 
-		$this->documentMapper->expects(self::never())->method('find');
 		$this->documentMapper->expects(self::never())->method('update');
-
 		$this->documentService->assertNoOutsideConflict($document, $file);
 	}
 
@@ -103,33 +101,9 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertSame(2000, $document->getLastSavedVersionTime());
 	}
 
-	public function testNoConflictWhenOwnSaveFinishedInTheMeantime(): void {
-		// Loaded at the start of the request - stale by now.
-		$document = $this->createDocument('etag1', 1000, 'old content');
-		// A save request updated the file in the meantime ...
-		$file = $this->mockFile('etag2', 2000, 'new content');
-		// ... and stored the new version info in the document.
-		$freshDocument = $this->createDocument('etag2', 2000, 'new content');
-
-		$this->documentMapper->expects(self::once())
-			->method('find')
-			->with(123)
-			->willReturn($freshDocument);
-		$this->documentMapper->expects(self::never())->method('update');
-
-		$this->documentService->assertNoOutsideConflict($document, $file);
-	}
-
 	public function testConflictWhenFileChangedFromOutside(): void {
 		$document = $this->createDocument('etag1', 1000, 'old content');
 		$file = $this->mockFile('etag2', 2000, 'outside content');
-		// The latest saved state does not match the file either.
-		$freshDocument = $this->createDocument('etag1', 1000, 'old content');
-
-		$this->documentMapper->expects(self::once())
-			->method('find')
-			->with(123)
-			->willReturn($freshDocument);
 
 		$this->expectException(DocumentSaveConflictException::class);
 		$this->documentService->assertNoOutsideConflict($document, $file);
@@ -147,4 +121,17 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$this->documentService->assertNoOutsideConflict($document, $file);
 	}
+
+	public function testNoAutosavingWhileSaveIsUnderWay(): void {
+		$document = $this->createDocument('etag1', 1000, 'new content');
+		$file = $this->mockFile('etag1', 1000, 'old content');
+		$this->cache->method('get')
+			->with('document-save-lock-123')
+			->willReturn(true);
+		$this->documentMapper->expects(self::never())->method('update');
+
+		$result = $this->documentService->autosave($document, $file, 1234, 'new content', 'doc state');
+		self::assertSame($result, $document);
+	}
+
 }
