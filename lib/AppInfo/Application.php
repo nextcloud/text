@@ -11,12 +11,14 @@ namespace OCA\Text\AppInfo;
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCA\Files_Versions\Events\VersionRestoredEvent;
+use OCA\Text\Event\DocumentContentUpdated;
 use OCA\Text\Event\LoadEditor;
 use OCA\Text\Event\RegisterContextEvent;
 use OCA\Text\Listeners\AddMissingIndicesListener;
 use OCA\Text\Listeners\BeforeAssistantNotificationListener;
 use OCA\Text\Listeners\BeforeNodeDeletedListener;
 use OCA\Text\Listeners\BeforeNodeRenamedListener;
+use OCA\Text\Listeners\DocumentContentUpdatedListener;
 use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadEditorListener;
@@ -72,6 +74,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(VersionRestoredEvent::class, VersionRestoredListener::class);
 
 		$context->registerEventListener(RegisterContextEvent::class, RegisterContextEventListener::class);
+		$context->registerEventListener(DocumentContentUpdated::class, DocumentContentUpdatedListener::class);
 
 		$context->registerNotifierService(Notifier::class);
 		$context->registerMiddleware(SessionMiddleware::class);

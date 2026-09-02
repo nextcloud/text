@@ -363,7 +363,10 @@ class DocumentService {
 			if ($updatedDocument !== null) {
 				// Content was overwritten in the meantime and content changed.
 				if ($updatedDocument->getChecksum() !== $document->getChecksum()) {
-					throw new DocumentSaveConflictException($context->loadContent());
+					$content = $context->loadContent();
+					if ($content !== null) {
+						throw new DocumentSaveConflictException($content);
+					}
 				}
 				$document = $updatedDocument;
 				$lastMTime = $document->getLastSavedVersionTime();
