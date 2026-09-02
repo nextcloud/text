@@ -44,12 +44,14 @@ class DocumentContentUpdatedListener implements IEventListener {
 
 		$document = $this->documentMapper->load($context->getType(), $context->getId());
 		if (!$document || $this->documentService->isSaveFromText()) {
+			$this->logger->debug('No document or event triggered by text itself', ['document' => $document]);
 			return;
 		}
 
 		$oldChecksum = $document->getChecksum();
 		$updatedDocument = $context->updateDocument($document);
 		if (!$updatedDocument) {
+			$this->logger->info('Nothing changed', ['document' => $document]);
 			// nothing changed.
 			return;
 		}
@@ -57,13 +59,15 @@ class DocumentContentUpdatedListener implements IEventListener {
 		$newChecksum = $updatedDocument->getChecksum();
 		if ($oldChecksum !== null && $newChecksum !== null && $oldChecksum === $newChecksum) {
 			// Same content: no need to reset document session. Still update document mtime and etag as they might have changed
+			$this->logger->info('Same checksum', ['document' => $document->jsonSerialize(), 'updated' => $updatedDocument->jsonSerialize()]);
 			$this->documentMapper->update($updatedDocument);
 			return;
 		}
 
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
-			$this->documentService->resetDocument($document->id, true);
+			$this->documentService->resetDocument($document->getContextType(), $document->getContextId(), true);
+			$this->logger->info('Reset document', ['document' => $document->jsonSerialize()]);
 		} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
 			// Do not throw during event handling.
 			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
