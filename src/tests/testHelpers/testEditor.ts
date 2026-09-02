@@ -49,7 +49,10 @@ export default baseTest.extend<{
 				}),
 			])
 		} else {
-			await use([Markdown, Document, Text, Paragraph, ...extensions])
+			const additionalExtensionNames = extensions.map((e: AnyExtension) => e.name)
+			const defaultExtensions = [Markdown, Document, Text, Paragraph]
+				.filter((ext) => !additionalExtensionNames.includes(ext.name))
+			await use([...defaultExtensions, ...extensions])
 		}
 	},
 	markdownThroughEditor: async ({ editor, serializeMarkdown }, use) => {
