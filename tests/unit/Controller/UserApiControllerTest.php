@@ -73,7 +73,7 @@ class UserApiControllerTest extends TestCase {
 			->willReturn('Administrator');
 		$this->collaboratorSearch
 			->expects($this->once())
-			->method('search')->willReturn([
+			->method('filteredSearch')->willReturn([
 				[
 					'exact' => [
 						'users' => []
