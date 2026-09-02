@@ -9,8 +9,6 @@ declare(strict_types=1);
 namespace OCA\Text\Context;
 
 use OCA\Text\Db\Document;
-use OCA\Text\Db\DocumentMapper;
-use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\File;
@@ -28,7 +26,6 @@ use Psr\Log\LoggerInterface;
 class FileContext implements IContext {
 
 	public function __construct(
-		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
@@ -143,7 +140,6 @@ class FileContext implements IContext {
 	/**
 	 * Update the document last saved version metadata to be in line with the data saved in the context.
 	 *
-	 * @throws DocumentSaveConflictException
 	 * @throws GenericFileException if the file changed and reading the content fails.
 	 * @throws LockedException if the file changed and a lock prevents reading the content.
 	 * @throws NotPermittedException if the file changed and reading is not allowed.
@@ -165,14 +161,10 @@ class FileContext implements IContext {
 			return null;
 		}
 
-		$storedChecksum = $document->getChecksum();
 		$fileContent = $file->getContent();
 		$fileChecksum = self::computeCheckSum($fileContent);
 
-		if ($storedChecksum !== $fileChecksum) {
-			throw new DocumentSaveConflictException($fileContent);
-		}
-
+		$document->setChecksum($fileChecksum);
 		$document->setLastSavedVersionTime($fileMtime);
 		$document->setLastSavedVersionEtag($fileEtag);
 		return $document;
