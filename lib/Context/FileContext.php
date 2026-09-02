@@ -149,7 +149,7 @@ class FileContext implements IContext {
 		$lastMTime = $document->getLastSavedVersionTime();
 		$lastEtag = $document->getLastSavedVersionEtag();
 
-		if ($lastMTime <= 0 || $this->isReadOnly()) {
+		if ($this->isReadOnly()) {
 			return null;
 		}
 
