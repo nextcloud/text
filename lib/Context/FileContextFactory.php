@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Context;
 
-use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\File;
@@ -21,7 +20,6 @@ use Psr\Log\LoggerInterface;
 class FileContextFactory implements IContextFactory {
 
 	public function __construct(
-		private readonly DocumentMapper $documentMapper,
 		private readonly FileService $fileService,
 		private readonly IL10N $l10n,
 		private readonly LockService $lockService,
@@ -43,7 +41,6 @@ class FileContextFactory implements IContextFactory {
 			$this->fileService->checkSharePermissions($auth);
 		}
 		return new FileContext(
-			$this->documentMapper,
 			$this->fileService,
 			$this->l10n,
 			$this->lockService,
