@@ -385,6 +385,11 @@ class DocumentService {
 
 		$this->assertNoOutsideConflict($document, $file, $force);
 
+		// Abort autosave if already saving.
+		if ($this->cache->get('document-save-lock-' . $documentId) && $manualSave === false) {
+			return $document;
+		}
+
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
@@ -427,7 +432,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $documentId, true, 60);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
