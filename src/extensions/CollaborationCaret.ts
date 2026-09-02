@@ -5,6 +5,7 @@
 
 import { t } from '@nextcloud/l10n'
 import { CollaborationCaret as TiptapCollaborationCaret } from '@tiptap/extension-collaboration-caret'
+import { yCursorPlugin } from '@tiptap/y-tiptap'
 
 export interface AwarenessUser {
 	color: string
@@ -96,6 +97,16 @@ const CollaborationCaret = TiptapCollaborationCaret.extend({
 				lastUpdate: getTimestamp(),
 			})
 		}
+	},
+
+	// Override to stop tiptap from setting its own default user
+	addProseMirrorPlugins() {
+		return [
+			yCursorPlugin(this.options.provider.awareness, {
+				cursorBuilder: this.options.render,
+				selectionBuilder: this.options.selectionRender,
+			}),
+		]
 	},
 })
 
