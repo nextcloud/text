@@ -14,10 +14,7 @@ use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\FileService;
-use OCA\Text\Service\LockService;
 use OCP\DirectEditing\IManager;
-use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
 use OCP\ICache;
@@ -30,24 +27,19 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 	private DocumentService $documentService;
 
 	private DocumentMapper $documentMapper;
-	private FileService $fileService;
 	private ICache $cache;
 
 	public function setUp(): void {
 		$this->documentMapper = $this->createMock(DocumentMapper::class);
-		$this->fileService = $this->createMock(FileService::class);
 		$this->cache = $this->createMock(ICache::class);
 		$cacheFactory = $this->createMock(ICacheFactory::class);
 		$cacheFactory->method('createDistributed')->willReturn($this->cache);
 		$request = $this->createMock(IRequest::class);
 		$request->method('getParam')->willReturn(null);
 
-		$this->fileService->method('isReadOnly')->willReturn(false);
-
 		$this->documentService = new DocumentService(
 			$this->createMock(ContextManager::class),
 			$this->documentMapper,
-			$this->fileService,
 			$this->createMock(StepMapper::class),
 			$this->createMock(SessionMapper::class),
 			$this->createMock(IAppData::class),
@@ -55,10 +47,8 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->createMock(IRootFolder::class),
 			$cacheFactory,
 			$this->createMock(LoggerInterface::class),
-			$this->createMock(LockService::class),
 			$request,
 			$this->createMock(IManager::class),
-			$this->createMock(IUserMountCache::class),
 			$this->createMock(IConfig::class),
 		);
 	}

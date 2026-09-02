@@ -10,6 +10,7 @@ namespace OCA\Text\Listeners;
 
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
@@ -22,6 +23,7 @@ class BeforeNodeDeletedListener implements IEventListener {
 	public function __construct(
 		private readonly AttachmentService $attachmentService,
 		private readonly DocumentService $documentService,
+		private readonly LockService $lockService,
 	) {
 	}
 
@@ -36,6 +38,7 @@ class BeforeNodeDeletedListener implements IEventListener {
 		if ($node->getMimeType() === 'text/markdown') {
 			$this->attachmentService->deleteAttachments($node);
 		}
-		$this->documentService->resetDocument($node->getId(), true);
+		$this->lockService->unlock($node);
+		$this->documentService->resetDocument('file', $node->getId(), true);
 	}
 }
