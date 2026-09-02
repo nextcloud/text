@@ -64,6 +64,7 @@ class ApiService {
 		}
 
 		$sessionInfo = $context->prepareSession($documentData);
+		$this->sessionService->removeInactiveSessionsWithoutSteps($document->id);
 		$session = $this->sessionService->initSession($document->id, $guestName);
 		$displayName = $this->sessionService->getNameForSession($session);
 
