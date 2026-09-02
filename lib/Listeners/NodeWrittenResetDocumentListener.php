@@ -8,32 +8,29 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Db\DocumentMapper;
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
-use OCA\Text\Service\DocumentService;
+use OCA\Text\Context\UnauthorizedFileContext;
+use OCA\Text\Event\DocumentContentUpdated;
+use OCA\Text\Service\FileService;
 use OCP\EventDispatcher\Event;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\EventDispatcher\IEventListener;
-use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
-use Psr\Log\LoggerInterface;
 
 /**
- * @template-implements IEventListener<Event|BeforeNodeWrittenEvent|NodeWrittenEvent>
+ * @template-implements IEventListener<Event|NodeWrittenEvent>
  */
 class NodeWrittenResetDocumentListener implements IEventListener {
-	private array $oldChecksums = [];
 
 	public function __construct(
-		private readonly LoggerInterface $logger,
-		private readonly DocumentService $documentService,
-		private readonly DocumentMapper $documentMapper,
+		private readonly FileService $fileService,
+		private readonly IEventDispatcher $eventDispatcher,
 	) {
 	}
 
 	public function handle(Event $event): void {
-		if (!($event instanceof BeforeNodeWrittenEvent) && !($event instanceof NodeWrittenEvent)) {
+		if (!($event instanceof NodeWrittenEvent)) {
 			return;
 		}
 
@@ -43,37 +40,13 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 		}
 		try {
 			$node->getId();
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			// Handle non existing node (during creation).
 			return;
 		}
-		if (!$this->documentMapper->load('file', $node->getId())) {
-			return;
-		}
-		if ($this->documentService->isSaveFromText()) {
-			return;
-		}
 
-		if ($event instanceof BeforeNodeWrittenEvent) {
-			$this->oldChecksums[$node->getId()] = DocumentService::computeCheckSum($node->getContent());
-		} else {
-			$newChecksum = DocumentService::computeCheckSum($node->getContent());
-			$oldChecksum = $this->oldChecksums[$node->getId()] ?? null;
-			unset($this->oldChecksums[$node->getId()]);
-			if ($oldChecksum !== null && $newChecksum === $oldChecksum) {
-				// Same content: no need to reset document session. Still update document mtime and etag as they might have changed
-				$this->documentService->updateDocumentVersionInfo($node);
-				return;
-			}
-			// Reset document session to avoid manual conflict resolution if there's no unsaved steps
-			try {
-				$this->documentService->resetDocument($node->getId(), true);
-			} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
-				// Do not throw during event handling.
-				// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
-				// NotFoundException: The event was called on a file that was just created so a NonExistingFile object is used that has no id yet
-				$this->logger->warning('Reset document skipped in NodeWrittenResetDocumentListener', ['exception' => $e]);
-			}
-		}
+		$context = new UnauthorizedFileContext($this->fileService, $node);
+		$event = new DocumentContentUpdated($context);
+		$this->eventDispatcher->dispatchTyped($event);
 	}
 }
