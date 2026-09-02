@@ -38,6 +38,13 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
 		expect(markdownThroughEditor('Have an `inline code` element')).toBe('Have an `inline code` element')
 	})
+	test('images with data: URI survive a round-trip (#9108)', ({ markdownThroughEditor }) => {
+		const dataUri = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='
+		// standalone image (block level, wrapped in a figure)
+		expect(markdownThroughEditor(`![pixel](${dataUri})`)).toBe(`![pixel](${dataUri})`)
+		// inline image inside a paragraph
+		expect(markdownThroughEditor(`Before ![pixel](${dataUri}) after`)).toBe(`Before ![pixel](${dataUri}) after`)
+	})
 	test('ul', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('+ foo\n+ bar')).toBe('+ foo\n+ bar')
 		expect(markdownThroughEditor('* foo\n* bar')).toBe('* foo\n* bar')
