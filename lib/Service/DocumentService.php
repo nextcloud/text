@@ -307,7 +307,6 @@ class DocumentService {
 
 	/**
 	 * @throws DocumentSaveConflictException
-	 * @throws DoesNotExistException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
@@ -332,16 +331,7 @@ class DocumentService {
 		$fileChecksum = self::computeCheckSum($fileContent);
 
 		if ($storedChecksum !== $fileChecksum) {
-			// $document was loaded at the start of the request.
-			// A save request handled in the meantime is not reflected in it
-			// and would be mistaken for an outside change.
-			// Reload the document to compare against the latest saved state.
-			$document = $this->documentMapper->find($documentId);
-			if ($document->getChecksum() !== $fileChecksum) {
-				throw new DocumentSaveConflictException('File changed in the meantime from outside');
-			}
-			// The save request already stored the latest version info.
-			return;
+			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
 
 		$document->setLastSavedVersionTime($fileMtime);
@@ -373,6 +363,11 @@ class DocumentService {
 		}
 
 		$this->assertNoOutsideConflict($document, $file, $force);
+
+		// Abort autosave if already saving.
+		if ($this->cache->get('document-save-lock-' . $documentId) && $manualSave === false) {
+			return $document;
+		}
 
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
@@ -412,7 +407,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		$this->cache->set('document-save-lock-' . $documentId, true, 60);
 		try {
 			$this->lockService->runInScope($file, function () use ($file, $autoSaveDocument, $documentState): void {
 				$this->saveFromText = true;
