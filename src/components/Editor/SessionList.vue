@@ -11,6 +11,7 @@
 		<template #trigger="{ attrs }">
 			<div>
 				<NcButton
+					wide
 					:title="label"
 					:aria-label="label"
 					variant="tertiary"
@@ -132,8 +133,7 @@ export default {
 	height: var(--default-clickable-area);
 }
 
-/* Needs to be more specific than 0,2,0 (NcButton) */
-.button-vue--icon-only.avatar-list {
+.session-list .avatar-list {
 	width: min-content !important;
 	padding-inline: var(--default-grid-baseline);
 
@@ -143,8 +143,12 @@ export default {
 		width: min-content;
 
 		.avatar-wrapper {
-			margin: 3px -12px 3px 0;
+			margin: 3px 2px 3px 0;
 			z-index: 1;
+		}
+
+		.avatar-wrapper ~ .avatar-wrapper {
+			margin-right: -12px;
 		}
 	}
 }
