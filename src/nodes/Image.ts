@@ -54,6 +54,10 @@ const Image = TiptapImage.extend<ImageOptions>({
 		return {
 			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
+			// Markdown files can legitimately contain base64 data: URI images.
+			// Parsing them is required, otherwise they are silently dropped on
+			// the next save (issue #9108).
+			allowBase64: true,
 		}
 	},
 
