@@ -1,0 +1,40 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: @tiptap/extension-collaboration developers
+SPDX-FileCopyrightText: @tiptap/extension-collaboration-caret developers
+SPDX-FileCopyrightText: @tiptap/extension-drag-handle developers
+SPDX-FileCopyrightText: @tiptap/extension-drag-handle-vue-3 developers
+SPDX-FileCopyrightText: @tiptap/extension-node-range developers
+SPDX-FileCopyrightText: @tiptap/y-tiptap developers
+SPDX-FileCopyrightText: Kevin Jahns <kevin.jahns@protonmail.com>
+SPDX-FileCopyrightText: Rob Cresswell <robcresswell@pm.me>
+SPDX-FileCopyrightText: text developers
+
+This file is generated from multiple sources. Included packages:
+- @tiptap/extension-collaboration
+	- version: 3.30.5
+	- license: MIT
+- @tiptap/extension-collaboration-caret
+	- version: 3.30.5
+	- license: MIT
+- @tiptap/extension-drag-handle
+	- version: 3.30.5
+	- license: MIT
+- @tiptap/extension-drag-handle-vue-3
+	- version: 3.30.5
+	- license: MIT
+- @tiptap/extension-node-range
+	- version: 3.30.5
+	- license: MIT
+- @tiptap/y-tiptap
+	- version: 3.0.8
+	- license: MIT
+- lib0
+	- version: 0.2.117
+	- license: MIT
+- text
+	- version: 10.0.0-dev.0
+	- license: AGPL-3.0-or-later
+- vue-material-design-icons
+	- version: 5.3.1
+	- license: MIT

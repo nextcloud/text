@@ -1,0 +1,12 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: prosemirror-changeset developers
+SPDX-FileCopyrightText: text developers
+
+This file is generated from multiple sources. Included packages:
+- prosemirror-changeset
+	- version: 2.4.1
+	- license: MIT
+- text
+	- version: 10.0.0-dev.0
+	- license: AGPL-3.0-or-later
