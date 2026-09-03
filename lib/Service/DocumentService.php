@@ -355,16 +355,15 @@ class DocumentService {
 
 		$lastMTime = $document->getLastSavedVersionTime();
 		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
-			$updatedDocument = $context->updateDocument($document);
-			if ($updatedDocument !== null) {
+			$context->updateDocument($document);
+			if (!empty($document->getUpdatedFields())) {
 				// Content was overwritten in the meantime and content changed.
-				if ($updatedDocument->getChecksum() !== $document->getChecksum()) {
+				if (isset($document->getUpdatedFields()['checksum'])) {
 					$content = $context->loadContent();
 					if ($content !== null) {
 						throw new DocumentSaveConflictException($content);
 					}
 				}
-				$document = $updatedDocument;
 				$lastMTime = $document->getLastSavedVersionTime();
 				$this->documentMapper->update($document);
 			}
