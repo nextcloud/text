@@ -32,7 +32,7 @@ class Version090000Date20260820132113 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('text_documents');
 		if (!$table->hasIndex('text_documents_context_index')) {
-			$table->addIndex(['context_type', 'context_id'], 'text_documents_context_index');
+			$table->addUniqueIndex(['context_type', 'context_id'], 'text_documents_context_index');
 		}
 
 		return $schema;
