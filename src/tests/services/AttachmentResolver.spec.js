@@ -36,11 +36,9 @@ function initAttachmentResolver(args) {
 			previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
 		},
 	]
-	const axiosSpy = vi
-		.spyOn(axios, 'post')
+	vi.spyOn(axios, 'post')
 		.mockReturnValue({ data: attachmentList })
 	const resolver = new AttachmentResolver(args)
-	expect(axiosSpy).toHaveBeenCalled()
 	return resolver
 }
 
@@ -54,6 +52,15 @@ describe('Image resolver', () => {
 		uid: 'user-uid',
 	}
 	const currentDirectory = '/parentDir'
+
+	it('does not request attachment metadata for a direct URL', async () => {
+		const axiosSpy = vi.spyOn(axios, 'post').mockResolvedValue({ data: [] })
+		const resolver = new AttachmentResolver({ fileId })
+
+		await resolver.resolve('https://example.org/pic.jpg')
+
+		expect(axiosSpy).not.toHaveBeenCalled()
+	})
 
 	it('is a class with one constructor argument', () => {
 		const resolver = initAttachmentResolver({ fileId })
