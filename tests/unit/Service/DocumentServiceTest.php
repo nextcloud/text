@@ -27,10 +27,12 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 	private DocumentService $documentService;
 
 	private DocumentMapper $documentMapper;
+	private StepMapper $stepMapper;
 	private ICache $cache;
 
 	public function setUp(): void {
 		$this->documentMapper = $this->createMock(DocumentMapper::class);
+		$this->stepMapper = $this->createMock(StepMapper::class);
 		$this->cache = $this->createMock(ICache::class);
 		$cacheFactory = $this->createMock(ICacheFactory::class);
 		$cacheFactory->method('createDistributed')->willReturn($this->cache);
@@ -40,7 +42,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService = new DocumentService(
 			$this->createMock(ContextManager::class),
 			$this->documentMapper,
-			$this->createMock(StepMapper::class),
+			$this->stepMapper,
 			$this->createMock(SessionMapper::class),
 			$this->createMock(IAppData::class),
 			'admin',
@@ -60,6 +62,64 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$document->setChecksum(DocumentService::computeCheckSum($content));
 		$document->generateId();
 		return $document;
+	}
+
+	public function testGetAllPendingAttachmentCleanup(): void {
+		$document = $this->createDocument('etag1', 1000, 'content');
+		$documents = (static function () use ($document): \Generator {
+			yield $document;
+		})();
+		$this->documentMapper->expects(self::once())
+			->method('findAllPendingAttachmentCleanup')->willReturn($documents);
+
+		self::assertSame($documents, $this->documentService->getAllPendingAttachmentCleanup());
+	}
+
+	public function testMarksOnlyTheProcessedSavedTimestamp(): void {
+		$document = $this->createDocument('etag1', 1000, 'content');
+		$document->resetUpdatedFields();
+		$this->documentMapper->expects(self::once())
+			->method('update')->with($document)->willReturn($document);
+
+		$this->documentService->markAttachmentCleanup($document);
+
+		self::assertSame(1000, $document->getLastAttachmentCleanup());
+		self::assertSame(1000, $document->getLastSavedVersionTime());
+		self::assertSame(['lastAttachmentCleanup' => true], $document->getUpdatedFields());
+	}
+
+	public function testDetectsUnsavedChangesWithStringDocumentId(): void {
+		$document = $this->createDocument('etag1', 1000, 'content');
+		$document->setLastSavedVersion(3);
+		$this->stepMapper->expects(self::once())
+			->method('getLatestVersion')->with($document->id)->willReturn(4);
+
+		self::assertTrue($this->documentService->hasUnsavedChanges($document));
+	}
+
+	public function testSavedStepsHaveNoUnsavedChanges(): void {
+		$document = $this->createDocument('etag1', 1000, 'content');
+		$document->setLastSavedVersion(3);
+		$this->stepMapper->expects(self::once())
+			->method('getLatestVersion')->with($document->id)->willReturn(3);
+
+		self::assertFalse($this->documentService->hasUnsavedChanges($document));
+	}
+
+	public function testDocumentWithoutStepsHasNoUnsavedChanges(): void {
+		$document = $this->createDocument('etag1', 1000, 'content');
+		$this->stepMapper->expects(self::once())
+			->method('getLatestVersion')->with($document->id)->willReturn(null);
+
+		self::assertFalse($this->documentService->hasUnsavedChanges($document));
+	}
+
+	public function testCannotCheckUnsavedChangesWithoutDocumentId(): void {
+		$this->stepMapper->expects(self::never())->method('getLatestVersion');
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('Document needs an id to check unsaved changes');
+
+		$this->documentService->hasUnsavedChanges(new Document());
 	}
 
 	public function testNoAutosavingWhileSaveIsUnderWay(): void {
