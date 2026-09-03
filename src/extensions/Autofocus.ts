@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Context } from '../composables/useConnection.ts'
+
 import { Extension } from '@tiptap/core'
 
 export interface AutofocusOptions {
-	id: number | null
+	context: Context | null
 }
 
 declare module '@tiptap/core' {
@@ -20,7 +22,7 @@ declare module '@tiptap/core' {
 export default Extension.create<AutofocusOptions>({
 	addOptions() {
 		return {
-			id: null,
+			context: null,
 		}
 	},
 	addStorage() {
@@ -28,25 +30,20 @@ export default Extension.create<AutofocusOptions>({
 			started: false,
 		}
 	},
-	onCreate() {
-		if (this.options.id === null) {
-			throw new Error('id needs to be provided')
-		}
-	},
 	onSelectionUpdate({ editor }) {
-		if (!this.storage.started) {
+		if (!this.storage.started || !this.options.context) {
 			return
 		}
 
 		const pos = editor.state.selection.$anchor.pos
-		localStorage.setItem('text-lastPos-' + this.options.id, String(pos))
+		localStorage.setItem(itemKey(this.options.context), String(pos))
 	},
 	addCommands() {
 		return {
 			autofocus:
 				() => ({ commands }) => {
 					this.storage.started = true
-					const pos = localStorage.getItem('text-lastPos-' + this.options.id)
+					const pos = this.options.context && localStorage.getItem(itemKey(this.options.context))
 					if (pos) {
 						return commands.focus(Number(pos))
 					}
@@ -56,3 +53,13 @@ export default Extension.create<AutofocusOptions>({
 		}
 	},
 })
+
+/**
+ * Key for local storage to store position in
+ *
+ * @param context from the options to identify the document
+ */
+function itemKey(context: Context): string {
+	const { type, id } = context
+	return `text-lastPos-${type}-${id}`
+}
