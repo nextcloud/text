@@ -287,7 +287,7 @@ export default defineComponent({
 		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
-			Autofocus.configure({ id: props.context.type + '-' + props.context.id }),
+			Autofocus.configure({ context: props.context }),
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
