@@ -48,7 +48,7 @@ class ContextManager {
 	}
 
 	public function getContext(string $type, int $id, IShare|IUser $auth): IContext {
-		$factoryClassName = $this->getContexts()[$type];
+		$factoryClassName = $this->getContexts()[$type] ?? null;
 		if ($factoryClassName === null) {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
 		}
