@@ -33,6 +33,7 @@ class Document extends Entity implements \JsonSerializable {
 	protected int $lastSavedVersion = 0;
 	protected int $initialVersion = 0;
 	protected int $lastSavedVersionTime = 0;
+	protected int $lastAttachmentCleanup = 0;
 	protected string $lastSavedVersionEtag = '';
 	protected string $baseVersionEtag = '';
 	protected ?string $checksum = null;
@@ -43,6 +44,14 @@ class Document extends Entity implements \JsonSerializable {
 		$this->addType('lastSavedVersionTime', 'integer');
 		$this->addType('initialVersion', 'integer');
 		$this->addType('checksum', 'string');
+	}
+
+	public function getLastAttachmentCleanup(): int {
+		return $this->lastAttachmentCleanup;
+	}
+
+	public function setLastAttachmentCleanup(int $time): void {
+		$this->setter('lastAttachmentCleanup', [$time]);
 	}
 
 	public function jsonSerialize(): array {
