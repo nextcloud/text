@@ -60,7 +60,7 @@ export async function openContext(params: OpenContextParams): Promise<{ connecti
  * @param params Parameters identifying the document
  */
 export async function openShare(params: OpenShareParams): Promise<{ connection: Connection, data: OpenData }> {
-	const url = generateUrl('/apps/text/public/session/123/create')
+	const url = generateUrl(`/apps/text/public/session/${params.fileId}/create`)
 	const response = await axios.put(url, params)
 	const { document, session } = response.data
 	const connection = {
