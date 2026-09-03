@@ -16,6 +16,7 @@ use OCA\Text\Context\ContextManager;
 use OCA\Text\Controller\AttachmentController;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IFilenameValidator;
@@ -420,7 +421,13 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 */
 	private function getTextFile(int $documentId, IShare|IUser $auth): File {
-		$document = $this->documentMapper->find($documentId);
+		try {
+			$document = $this->documentMapper->find($documentId);
+		} catch (DoesNotExistException $e) {
+			throw new NotFoundException('Text file for document '
+				. $documentId
+				. ' was not found.', 0, $e);
+		}
 		$type = $document->getContextType();
 		$id = $document->getContextId();
 		$context = $this->contextManager->getContext($type, $id, $auth);
@@ -428,11 +435,9 @@ readonly class AttachmentService {
 		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 			return $file;
 		}
-		throw new NotFoundException('Text file for document'
+		throw new NotFoundException('Text file for document '
 			. $documentId
-			. ' ('
-			. $context->toString()
-			. ') was not found.'
+			. ' was not found.'
 		);
 	}
 
