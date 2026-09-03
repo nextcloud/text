@@ -462,9 +462,7 @@ class DocumentService {
 			return;
 		}
 
-		$stepsVersion = $this->stepMapper->getLatestVersion($document->id) ?: 0;
-		$docVersion = $document->getLastSavedVersion();
-		if (!$force && $stepsVersion !== $docVersion) {
+		if (!$force && $this->hasUnsavedChanges($document)) {
 			$this->logger->debug('Did not reset document with unsaved changes for ' . $contextString);
 			throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 		}
@@ -486,8 +484,20 @@ class DocumentService {
 		return $this->documentMapper->findAll();
 	}
 
-	public function getAllWithNoActiveSession(): \Generator {
-		return $this->documentMapper->findAllWithNoActiveSessions();
+	public function getAllPendingAttachmentCleanup(): \Generator {
+		return $this->documentMapper->findAllPendingAttachmentCleanup();
+	}
+
+	public function markAttachmentCleanup(Document $document): void {
+		$document->setLastAttachmentCleanup($document->getLastSavedVersionTime());
+		$this->documentMapper->update($document);
+	}
+
+	public function hasUnsavedChanges(Document $document): bool {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs an id to check unsaved changes');
+		}
+		return ($this->stepMapper->getLatestVersion($document->id) ?? 0) !== $document->getLastSavedVersion();
 	}
 
 	private function ensureDocumentsFolder(): bool {
