@@ -12,6 +12,12 @@ import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
 import { isUser } from '../services/SyncService.ts'
 
+export function renderEditorContent(content: string, markdown: boolean) {
+	return markdown
+		? markdownit.render(content) + '<p/>'
+		: `<pre>\n${escapeHtml(content)}</pre>`
+}
+
 /**
  *
  * @param editor to apply methods to
@@ -29,12 +35,9 @@ export function useEditorMethods(editor: Editor) {
 	) => void = (content, { addToHistory = true } = {}) => {
 		const hasMarkdownContent
 			= editor.extensionManager.extensions.includes(Markdown)
-		const html = hasMarkdownContent
-			? markdownit.render(content) + '<p/>'
-			: `<pre>\n${escapeHtml(content)}</pre>`
 		editor
 			.chain()
-			.setContent(html, { emitUpdate: addToHistory })
+			.setContent(renderEditorContent(content, hasMarkdownContent), { emitUpdate: addToHistory })
 			.command(({ tr }) => {
 				tr.setMeta('addToHistory', addToHistory)
 				return true

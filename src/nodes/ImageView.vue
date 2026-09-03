@@ -24,8 +24,10 @@
 							v-if="isMediaAttachment"
 							contenteditable="false"
 							class="media">
-							<a
+							<button
+								type="button"
 								class="media-wrapper media-wrapper__attachment"
+								:aria-label="t('text', 'Open attachment {name}', { name: alt || attachment?.name || src })"
 								@click="handleAttachmentClick">
 								<img
 									v-show="loaded"
@@ -37,7 +39,7 @@
 									<span class="name">{{ alt }}</span>
 									<span class="size">{{ attachmentSize }}</span>
 								</div>
-							</a>
+							</button>
 							<div v-if="showDeleteIcon" class="buttons">
 								<NcButton
 									:aria-label="t('text', 'Delete this attachment')"
@@ -50,14 +52,18 @@
 							</div>
 						</div>
 						<div v-else contenteditable="false" class="media media__image">
-							<a class="media-wrapper" @click="handleImageClick">
+							<button
+								type="button"
+								class="media-wrapper"
+								:aria-label="t('text', 'Open image {name}', { name: alt || attachment?.name || src })"
+								@click="handleImageClick">
 								<img
 									v-show="loaded"
 									:src="imageUrl"
 									:alt="alt"
 									class="image__main"
 									@load="onLoaded">
-							</a>
+							</button>
 						</div>
 					</template>
 					<template v-else>
@@ -593,7 +599,11 @@ export default {
 
 	.media-wrapper {
 		display: flex;
-		// Overwrite some global rules for a elments
+		padding: 0;
+		border: 0;
+		background: transparent;
+		font: inherit;
+		cursor: pointer;
 		text-decoration: none;
 		color: var(--color-main-text);
 

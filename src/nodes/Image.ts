@@ -17,6 +17,7 @@ const imageFileDropPluginKey = new PluginKey('imageFileDrop')
 const imageExtractAttachmentsKey = new PluginKey('imageExtractAttachments')
 
 interface ImageOptions extends TiptapImageOptions {
+	emitAttachmentEvents: boolean
 	noLazyImages: boolean
 }
 
@@ -53,6 +54,7 @@ const Image = TiptapImage.extend<ImageOptions>({
 	addOptions() {
 		return {
 			...this.parent?.() as ImageOptions,
+			emitAttachmentEvents: true,
 			noLazyImages: false,
 		}
 	},
@@ -120,31 +122,33 @@ const Image = TiptapImage.extend<ImageOptions>({
 					},
 				},
 			}),
-			new Plugin({
-				key: imageExtractAttachmentsKey,
-				state: {
-					init(_, { doc }) {
-						const attachmentSrcs = extractAttachmentSrcs(doc)
-						emit('text:editor:attachments:updated', { attachmentSrcs })
-						return { attachmentSrcs }
-					},
-					apply(tr, value, _oldState, newState) {
-						if (!tr.docChanged) {
-							return value
-						}
-						const attachmentSrcs = extractAttachmentSrcs(newState.doc)
-						if (
-							JSON.stringify(attachmentSrcs)
-							=== JSON.stringify(value?.attachmentSrcs)
-						) {
-							return value
-						}
+			...(this.options.emitAttachmentEvents
+				? [new Plugin({
+						key: imageExtractAttachmentsKey,
+						state: {
+							init(_, { doc }) {
+								const attachmentSrcs = extractAttachmentSrcs(doc)
+								emit('text:editor:attachments:updated', { attachmentSrcs })
+								return { attachmentSrcs }
+							},
+							apply(tr, value, _oldState, newState) {
+								if (!tr.docChanged) {
+									return value
+								}
+								const attachmentSrcs = extractAttachmentSrcs(newState.doc)
+								if (
+									JSON.stringify(attachmentSrcs)
+									=== JSON.stringify(value?.attachmentSrcs)
+								) {
+									return value
+								}
 
-						emit('text:editor:attachments:updated', { attachmentSrcs })
-						return { attachmentSrcs }
-					},
-				},
-			}),
+								emit('text:editor:attachments:updated', { attachmentSrcs })
+								return { attachmentSrcs }
+							},
+						},
+					})]
+				: []),
 		]
 	},
 

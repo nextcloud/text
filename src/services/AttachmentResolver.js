@@ -22,7 +22,6 @@ export default class AttachmentResolver {
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
 		this.#documentId = fileId ?? session.documentId
-		this.#initAttachmentListPromise = this.#updateAttachmentList()
 	}
 
 	async #updateAttachmentList() {
@@ -52,7 +51,7 @@ export default class AttachmentResolver {
 		if (src.match(directoryRegexp)) {
 			const imageFileName = decodeURIComponent(src.replace(directoryRegexp, '').split('?')[0])
 
-			// Wait until attachment list got fetched (initialized by constructor)
+			this.#initAttachmentListPromise ??= this.#updateAttachmentList()
 			await this.#initAttachmentListPromise
 			attachment = this.#findAttachment(imageFileName)
 

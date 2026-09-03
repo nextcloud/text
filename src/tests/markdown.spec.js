@@ -175,6 +175,7 @@ describe('Markdown though editor', () => {
 
 	test('details', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')).toBe('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')
+		expect(markdownThroughEditor('<details open>\n<summary>summary</summary>\ncontent\n\n</details>\n')).toBe('<details open>\n<summary>summary</summary>\ncontent\n\n</details>\n')
 	})
 
 	test('nested details', ({ markdownThroughEditor }) => {
