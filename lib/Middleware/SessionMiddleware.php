@@ -94,8 +94,6 @@ class SessionMiddleware extends Middleware {
 		$documentId = (int)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
-		$shareToken = (string)$this->request->getParam('token')
-			|| (string)$this->request->getParam('shareToken');
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
