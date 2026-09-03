@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
@@ -17,6 +18,8 @@ use OCP\BackgroundJob\TimedJob;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
+	private const ABANDONED_UNSAVED_CHANGES_AGE = 30 * 24 * 60 * 60;
+
 	public function __construct(
 		ITimeFactory $time,
 		private readonly SessionService $sessionService,
@@ -34,7 +37,21 @@ class Cleanup extends TimedJob {
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllWithNoActiveSession() as $document) {
-			$this->attachmentService->cleanupAttachments($document->getId());
+			$documentId = $document->getId();
+			try {
+				$this->documentService->resetDocument($documentId);
+			} catch (DocumentHasUnsavedChangesException) {
+				$lastStepTime = $this->documentService->getLatestStepTimestamp($documentId);
+				if ($lastStepTime === null || $lastStepTime >= $this->time->getTime() - self::ABANDONED_UNSAVED_CHANGES_AGE) {
+					continue;
+				}
+				$this->documentService->resetDocument($documentId, true);
+				$this->logger->warning('Force reset document with abandoned unsaved changes', [
+					'documentId' => $documentId,
+					'lastStepTime' => $lastStepTime,
+				]);
+			}
+			$this->attachmentService->cleanupAttachments($documentId);
 		}
 
 		$this->logger->debug('Run cleanup job for text sessions');
