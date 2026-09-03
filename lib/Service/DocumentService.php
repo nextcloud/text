@@ -119,7 +119,7 @@ class DocumentService {
 				throw $e;
 			}
 			// Document might have been created in the meantime
-			$document = $this->getDocument($document->id);
+			$document = $this->documentMapper->load($document->getContextType(), $document->getContextId());
 			if ($document === null) {
 				throw $e;
 			}
