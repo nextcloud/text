@@ -72,9 +72,8 @@ class UnauthorizedFileContext implements IContext {
 	 * @throws GenericFileException if the file changed and reading the content fails.
 	 * @throws LockedException if the file changed and a lock prevents reading the content.
 	 * @throws NotPermittedException if the file changed and reading is not allowed.
-	 * @return Document|null Updated document if there was an update
 	 */
-	public function updateDocument(Document $document): ?Document {
+	public function updateDocument(Document $document): void {
 		$lastMTime = $document->getLastSavedVersionTime();
 		$lastEtag = $document->getLastSavedVersionEtag();
 
@@ -83,7 +82,7 @@ class UnauthorizedFileContext implements IContext {
 		$fileEtag = $file->getEtag();
 
 		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return null;
+			return;
 		}
 
 		$fileContent = $file->getContent();
@@ -92,7 +91,7 @@ class UnauthorizedFileContext implements IContext {
 		$document->setChecksum($fileChecksum);
 		$document->setLastSavedVersionTime($fileMtime);
 		$document->setLastSavedVersionEtag($fileEtag);
-		return $document;
+		return;
 	}
 
 	public function loadContent(): ?string {

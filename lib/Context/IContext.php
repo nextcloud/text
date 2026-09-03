@@ -25,7 +25,7 @@ interface IContext {
 	public function buildDocument(): Document;
 	public function prepareSession(DocumentData $documentData): SessionInfo;
 	public function isReadOnly(): bool;
-	public function updateDocument(Document $document): ?Document;
+	public function updateDocument(Document $document): void;
 	/**
 	 * @throws NotFoundException
 	 * @throws NotPermittedException

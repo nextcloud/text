@@ -43,24 +43,26 @@ class DocumentContentUpdatedListener implements IEventListener {
 		}
 
 		$document = $this->documentMapper->load($context->getType(), $context->getId());
-		if (!$document || $this->documentService->isSaveFromText()) {
-			$this->logger->debug('No document or event triggered by text itself', ['document' => $document]);
+		if (!$document) {
+			$this->logger->debug('No document for context.', ['context' => $context->toString()]);
 			return;
 		}
 
-		$oldChecksum = $document->getChecksum();
-		$updatedDocument = $context->updateDocument($document);
-		if (!$updatedDocument) {
-			$this->logger->info('Nothing changed', ['document' => $document]);
-			// nothing changed.
+		if ($this->documentService->isSaveFromText()) {
+			$this->logger->debug('DocumentContentUpdated triggered by text itself', ['document' => $document->jsonSerialize()]);
 			return;
 		}
 
-		$newChecksum = $updatedDocument->getChecksum();
-		if ($oldChecksum !== null && $newChecksum !== null && $oldChecksum === $newChecksum) {
-			// Same content: no need to reset document session. Still update document mtime and etag as they might have changed
-			$this->logger->info('Same checksum', ['document' => $document->jsonSerialize(), 'updated' => $updatedDocument->jsonSerialize()]);
-			$this->documentMapper->update($updatedDocument);
+		$context->updateDocument($document);
+		if (empty($document->getUpdatedFields())) {
+			$this->logger->debug('Nothing changed', ['document' => $document->jsonSerialize()]);
+			return;
+		}
+
+		if (!isset($document->getUpdatedFields()['checksum'])) {
+			// Same content: no need to reset document session. Still update document mtime and etag.
+			$this->logger->debug('DocumentContentUpdated with same checksum', ['document' => $document->jsonSerialize()]);
+			$this->documentMapper->update($document);
 			return;
 		}
 
