@@ -2,10 +2,56 @@
  * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+/* eslint-disable jsdoc/require-jsdoc */
 
 import type { ReporterDescription } from '@playwright/test'
 
 import { defineConfig, devices } from '@playwright/test'
+
+const COMPARISON_E2E = process.env.TEXT_COMPARISON_E2E === '1'
+const COMPARISON_TESTS = /playwright\/comparison\/.*\.spec\.ts/
+const COMPARISON_BASE_URL = process.env.TEXT_COMPARISON_BASE_URL || process.env.baseURL || 'http://localhost:8089/index.php/'
+const EXTERNAL_COMPARISON_SERVER = Boolean(process.env.TEXT_COMPARISON_BASE_URL || process.env.baseURL)
+
+function comparisonProjects() {
+	if (!COMPARISON_E2E) {
+		return []
+	}
+	return [{
+		name: 'comparison-chromium',
+		testMatch: COMPARISON_TESTS,
+		grepInvert: /@memory/,
+		use: {
+			...devices['Desktop Chrome'],
+			baseURL: COMPARISON_BASE_URL,
+			ignoreHTTPSErrors: true,
+			screenshot: 'only-on-failure' as const,
+			trace: 'retain-on-failure' as const,
+		},
+	}, {
+		name: 'comparison-webkit',
+		testMatch: COMPARISON_TESTS,
+		grepInvert: /@memory/,
+		use: {
+			...devices['Desktop Safari'],
+			baseURL: COMPARISON_BASE_URL,
+			ignoreHTTPSErrors: true,
+			screenshot: 'only-on-failure' as const,
+			trace: 'retain-on-failure' as const,
+		},
+	}, {
+		name: 'comparison-chromium-memory',
+		testMatch: COMPARISON_TESTS,
+		grep: /@memory/,
+		use: {
+			...devices['Desktop Chrome'],
+			baseURL: COMPARISON_BASE_URL,
+			ignoreHTTPSErrors: true,
+			screenshot: 'only-on-failure' as const,
+			trace: 'retain-on-failure' as const,
+		},
+	}]
+}
 
 /**
  * Used locally - i.e. if `CI` is not set as an environment variable.
@@ -24,12 +70,37 @@ const CI_CONFIG = {
 	// blob (so we can merge reports and download them for inspection),
 	// dot (so we have a quick overview in the logs while the tests are running)
 	// github (to have annotations in the PR)
-	reporter: [['blob'], ['line'], ['github']] as ReporterDescription[],
+	reporter: [
+		['blob'],
+		['json', { outputFile: 'test-results/results.json' }],
+		['line'],
+		['github'],
+	] as ReporterDescription[],
 	retries: 1,
 	timeout: 45_000,
 	// we shard to speed up the tests so no parallelism in workers
 	workers: 1,
 } as const
+
+function comparisonWebServer() {
+	if (EXTERNAL_COMPARISON_SERVER) {
+		return undefined
+	}
+	return {
+		command: 'npm run start:nextcloud',
+		gracefulShutdown: {
+			signal: 'SIGTERM' as const,
+			timeout: 10000,
+		},
+		reuseExistingServer: false,
+		stderr: 'pipe' as const,
+		stdout: 'pipe' as const,
+		timeout: 5 * 60 * 1000,
+		wait: {
+			stdout: /Nextcloud is now ready to use/,
+		},
+	}
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -37,9 +108,10 @@ const CI_CONFIG = {
 export default defineConfig({
 	testDir: './playwright',
 	...(process.env.CI ? CI_CONFIG : LOCAL_CONFIG),
+	workers: COMPARISON_E2E ? 1 : undefined,
 	use: {
 		// Base URL to use in actions like `await page.goto('./')`.
-		baseURL: process.env.baseURL ?? 'http://localhost:8089/index.php/',
+		baseURL: COMPARISON_BASE_URL,
 		// record traces but only keep them when the test fails
 		trace: 'on-first-retry',
 	},
@@ -47,32 +119,13 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
+			testIgnore: COMPARISON_TESTS,
 			use: {
 				...devices['Desktop Chrome'],
 			},
 		},
+		...comparisonProjects(),
 	],
 
-	webServer: {
-		// Don't set `url` as it would take precedence over `wait.stdout` and tests start too early
-		// url: 'http://127.0.0.1:8089',
-		// Starts the Nextcloud docker container
-		command: 'npm run start:nextcloud',
-		// we use sigterm to notify the script to stop the container
-		// if it does not respond, we force kill it after 10 seconds
-		gracefulShutdown: {
-			signal: 'SIGTERM',
-			timeout: 10000,
-		},
-		// `start-nextcloud-server.mjs` only starts the server if not reachable yet.
-		reuseExistingServer: false,
-		stderr: 'pipe',
-		stdout: 'pipe',
-		// max. 5 minutes for creating the container
-		timeout: 5 * 60 * 1000,
-		wait: {
-			// we wait for this line to appear in the output of the webserver until consider it done
-			stdout: /Nextcloud is now ready to use/,
-		},
-	},
+	webServer: comparisonWebServer(),
 })

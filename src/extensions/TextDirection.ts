@@ -119,6 +119,7 @@ declare module '@tiptap/core' {
 export interface TextDirectionOptions {
 	types: string[]
 	defaultDirection: Direction | null
+	inferTextDirectionOnParse: boolean
 }
 
 export const TextDirection = Extension.create<TextDirectionOptions>({
@@ -128,6 +129,7 @@ export const TextDirection = Extension.create<TextDirectionOptions>({
 		return {
 			types: [],
 			defaultDirection: null,
+			inferTextDirectionOnParse: false,
 		}
 	},
 
@@ -138,7 +140,15 @@ export const TextDirection = Extension.create<TextDirectionOptions>({
 				attributes: {
 					dir: {
 						default: null,
-						parseHTML: (element) => element.dir || this.options.defaultDirection,
+						parseHTML: (element) => {
+							if (!this.options.inferTextDirectionOnParse) {
+								return element.dir || this.options.defaultDirection
+							}
+							const explicitDirection = element.dir as Direction
+							return validDirections.includes(explicitDirection)
+								? explicitDirection
+								: getTextDirection(element.textContent ?? '') ?? this.options.defaultDirection
+						},
 						renderHTML: (attributes) => {
 							if (attributes.dir === this.options.defaultDirection) {
 								return {}
