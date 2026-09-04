@@ -12,6 +12,8 @@
     "Cancel" : "Cancel",
     "Comment" : "Commentario",
     "Reply" : "Responde",
+    "Details" : "Detalios",
+    "Next" : "Proxime",
     "you" : "Tu",
     "edit" : "modificar",
     "Copy link" : "Copiar ligamine",
@@ -23,7 +25,6 @@
     "Translate" : "Translate",
     "Upload" : "Incargar",
     "Done" : "Preste",
-    "Details" : "Detalios",
     "to" : "a"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
