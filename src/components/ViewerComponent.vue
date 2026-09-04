@@ -6,11 +6,11 @@
 <template>
 	<EditorReloader
 		v-if="!useSourceView"
-		:fileId="fileid"
+		:context="{ id: fileid, type: 'file' }"
 		:relativePath="filename"
 		:active="active || isEmbedded"
-		:autofocus
-		:shareToken
+		:autofocus="autofocus ?? true"
+		:shareToken="shareToken || getSharingToken()"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime />
 	<SourceView
@@ -21,120 +21,58 @@
 		:mime
 		:source
 		v-bind="$attrs"
-		@loaded="onLoaded"
+		@loaded="onLoadedHandler"
 		@edit="toggleEdit" />
 </template>
 
-<script>
+<script setup lang="ts">
 import { getSharingToken } from '@nextcloud/sharing/public'
-import { defineComponent } from 'vue'
+import { computed, onMounted, provide, ref, useAttrs } from 'vue'
 import EditorReloader from './EditorReloader.vue'
 import SourceView from './SourceView.vue'
 
-export default defineComponent({
-	name: 'ViewerComponent',
-	components: {
-		SourceView,
-		EditorReloader,
-	},
-
-	provide() {
-		return {
-			isEmbedded: this.isEmbedded,
-		}
-	},
-
+defineOptions({
 	inheritAttrs: false,
-	props: {
-		filename: {
-			type: String,
-			default: null,
-		},
-
-		fileid: {
-			type: Number,
-			default: null,
-		},
-
-		active: {
-			type: Boolean,
-			default: false,
-		},
-
-		autofocus: {
-			type: Boolean,
-			// This is a public interface for Viewer we cannot change for now.
-			// eslint-disable-next-line vue/no-boolean-default
-			default: true,
-		},
-
-		shareToken: {
-			type: String,
-			default: () => getSharingToken(),
-		},
-
-		mime: {
-			type: String,
-			default: null,
-		},
-
-		source: {
-			type: String,
-			default: undefined,
-		},
-
-		isEmbedded: {
-			type: Boolean,
-			default: false,
-		},
-
-		onLoadedHandler: {
-			type: Function,
-			default: () => {},
-		},
-	},
-
-	data() {
-		return {
-			hasToggledInteractiveEmbedding: false,
-		}
-	},
-
-	computed: {
-		/** @return {boolean} */
-		useSourceView() {
-			return (
-				this.source
-				&& (!this.fileid
-					|| this.isEmbedded
-					|| this.isEncrypted)
-				&& !this.hasToggledInteractiveEmbedding
-			)
-		},
-
-		isEncrypted() {
-			return this.$attrs.e2EeIsEncrypted || false
-		},
-	},
-
-	mounted() {
-		if (!this.useSourceView) {
-			this.onLoaded()
-		}
-	},
-
-	methods: {
-		async onLoaded() {
-			this.onLoadedHandler()
-		},
-
-		toggleEdit() {
-			this.hasToggledInteractiveEmbedding = true
-		},
-
-		t,
-	},
 })
+
+const props = defineProps <{
+	filename?: string | undefined
+	fileid?: number | undefined
+	active: boolean
+	autofocus?: boolean
+	shareToken?: string
+	mime?: string | undefined
+	source?: string | undefined
+	isEmbedded: boolean
+	onLoadedHandler?: () => void
+}>()
+
+provide('isEmbedded', props.isEmbedded)
+
+const hasToggledInteractiveEmbedding = ref(false)
+
+const attrs = useAttrs()
+const isEncrypted = computed(() => Boolean(attrs.e2EeIsEncrypted))
+
+const useSourceView = computed(() => props.source
+	&& (!props.fileid
+		|| props.isEmbedded
+		|| isEncrypted.value)
+	&& !hasToggledInteractiveEmbedding.value)
+
+onMounted(() => {
+	if (!useSourceView.value && props.onLoadedHandler) {
+		props.onLoadedHandler()
+	}
+})
+
+/**
+ * Toggle interactive editing
+ */
+function toggleEdit() {
+	hasToggledInteractiveEmbedding.value = true
+}
+
 </script>
 
 <style lang="scss" scoped>

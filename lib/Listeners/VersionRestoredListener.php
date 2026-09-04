@@ -11,6 +11,7 @@ namespace OCA\Text\Listeners;
 use OCA\Files_Versions\Events\VersionRestoredEvent;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\File;
@@ -22,6 +23,7 @@ use OCP\Files\NotFoundException;
 class VersionRestoredListener implements IEventListener {
 	public function __construct(
 		private readonly DocumentService $documentService,
+		private readonly LockService $lockService,
 	) {
 	}
 
@@ -37,7 +39,8 @@ class VersionRestoredListener implements IEventListener {
 
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
-			$this->documentService->resetDocument($sourceFile->getId());
+			$this->lockService->unlock($sourceFile);
+			$this->documentService->resetDocument('file', $sourceFile->getId());
 		} catch (DocumentHasUnsavedChangesException|NotFoundException) {
 			// Do not throw during event handling in this is expected to happen
 			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict

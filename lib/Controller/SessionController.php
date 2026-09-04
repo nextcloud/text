@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Context\ContextManager;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -40,6 +41,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		string $appName,
 		IRequest $request,
 		private ApiService $apiService,
+		private ContextManager $contextManager,
 		private FileService $fileService,
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
@@ -52,33 +54,33 @@ class SessionController extends ApiController implements ISessionAwareController
 	}
 
 	#[NoAdminRequired]
-	public function create(?int $fileId = null, ?string $baseVersionEtag = null): DataResponse {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($fileId === null || $userId === null) {
-			return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
-		}
-
+	public function create(string $type, int $id, ?string $baseVersionEtag = null): DataResponse {
 		try {
-			$file = $this->fileService->getFileById($fileId, $userId);
+			$user = $this->userSession->getUser();
+			if ($user === null) {
+				throw new NotFoundException('No user found.');
+			}
+			$context = $this->contextManager->getContext($type, $id, $user);
 		} catch (NotFoundException|NotPermittedException $e) {
-			$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+			$this->logger->error('No context for ' . $type . ' (' . $id . ') ', [ 'exception' => $e ]);
 			return new DataResponse([
 				'error' => $this->l10n->t('File not found')
 			], Http::STATUS_NOT_FOUND);
 		}
 
-		return $this->apiService->create($file, $baseVersionEtag);
+		return $this->apiService->create($context, $baseVersionEtag);
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		$userId = $this->userSession->getUser()?->getUID();
-		if ($userId === null) {
+		// We also want this to work with a session that has already been closed.
+		// So we cannot rely on RequireDocumentSession to retrieve the user.
+		$user = $this->userSession->getUser();
+		if ($user === null) {
 			throw new InvalidSessionException();
 		}
-		$file = $this->fileService->getFileById($documentId, $userId);
-		return $this->apiService->close($documentId, $sessionId, $sessionToken, $file);
+		return $this->apiService->close($documentId, $sessionId, $sessionToken, $user);
 	}
 
 	#[NoAdminRequired]
@@ -88,7 +90,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function push(int $version, array $steps, string $awareness, ?int $recoveryAttempt = null): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt);
+			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $recoveryAttempt, $this->getUser());
 		} finally {
 			$this->restoreSessionUser();
 		}
@@ -101,7 +103,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function sync(int $version = 0): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->sync($this->getSession(), $this->getDocument(), $version);
+			return $this->apiService->sync($this->getDocument(), $this->getUser(), $version);
 		} finally {
 			$this->restoreSessionUser();
 		}
@@ -114,7 +116,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);
+			return $this->apiService->save($this->getDocument(), $this->getUser(), $version, $autosaveContent, $documentState, $force, $manualSave);
 		} finally {
 			$this->restoreSessionUser();
 		}

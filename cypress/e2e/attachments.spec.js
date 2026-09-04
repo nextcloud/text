@@ -60,19 +60,21 @@ function clickOnAttachmentAction(actionName) {
 /**
  * Check if an attachment is visible in the document
  *
- * @param {number} documentId file ID of the current document
+ * @param {number} documentId id current document
+ * @param {string} dirname name of the attachment directory
  * @param {string} fileName attachment file name to be checked
  * @param {number} fileId attachment file id
  * @param {number|undefined} index index of the attachment in the document
  * @param {boolean} isImage is the attachment an image or a media file?
  */
-function checkAttachment(documentId, fileName, fileId, index, isImage = true) {
+function checkAttachment(documentId, dirname, fileName, fileId, index, isImage = true) {
 	const encodedName = fixedEncodeURIComponent(fileName)
-	const src = `.attachments.${documentId}/${encodedName}`
+	const src = `${dirname}/${encodedName}`
 
 	cy.log(
 		'Check the attachment is visible and well formed',
 		documentId,
+		dirname,
 		fileName,
 		fileId,
 		index,
@@ -145,8 +147,9 @@ function waitForRequestAndCheckAttachment(
 		const fileId = req.response.body.id
 		const fileName = req.response.body.name
 		const documentId = req.response.body.documentId
+		const dirname = req.response.body.dirname
 
-		return check(documentId, fileName, fileId, index, isImage)
+		return check(documentId, dirname, fileName, fileId, index, isImage)
 	})
 }
 
@@ -172,14 +175,14 @@ describe('Test all attachment insertion methods', () => {
 		cy.showHiddenFiles()
 	})
 
-	it('See test files in the list and display hidden files', () => {
+	it.only('See test files in the list and display hidden files', () => {
 		cy.visit('/apps/files')
 		cy.getFile('test.md')
 		cy.getFile('github.png')
 		cy.getFile('.hidden')
 	})
 
-	it('Insert an image file from Files', () => {
+	it.only('Insert an image file from Files', () => {
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
 

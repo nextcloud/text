@@ -7,9 +7,12 @@
 
 namespace OCA\Text\Command;
 
-use OCA\Text\Db\Document;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\FileService;
+use OCA\Text\Service\LockService;
+use OCP\Files\Config\IUserMountCache;
+use OCP\Files\NotFoundException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,6 +21,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ResetDocument extends Command {
 	public function __construct(
 		protected DocumentService $documentService,
+		protected IUserMountCache $userMountCache,
+		protected FileService $fileService,
+		protected LockService $lockService,
 	) {
 		parent::__construct();
 	}
@@ -77,15 +83,31 @@ class ResetDocument extends Command {
 
 		$rc = 0;
 		foreach ($fileIds as $id) {
+
+			$mounts = $this->userMountCache->getMountsForFileId($fileId);
+			$anyMount = array_shift($mounts);
+			if ($anyMount === null) {
+				$output->writeln('Could not fallback to file from mounts for ' . $fileId);
+				continue;
+			}
+			$userId = $anyMount->getUser()->getUID();
+
+			try {
+				$file = $this->fileService->getFileById($fileId, $userId);
+				$this->lockService->unlock($file);
+			} catch (NotFoundException) {
+				// Continue with the cleanup even if the file does not exist.
+			}
+
 			if ($fullReset) {
 				$output->writeln('Force-reset the document session for file ' . $id);
-				$this->documentService->resetDocument($id, true);
+				$this->documentService->resetDocument('file', $id, true);
 				continue;
 			}
 
 			$output->writeln('Reset the document session for file ' . $id);
 			try {
-				$this->documentService->resetDocument($id);
+				$this->documentService->resetDocument('file', $id);
 			} catch (DocumentHasUnsavedChangesException) {
 				$output->writeln('Not resetting due to unsaved changes');
 				$rc = 1;
