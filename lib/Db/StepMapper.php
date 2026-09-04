@@ -56,6 +56,24 @@ class StepMapper extends QBMapper {
 		return $data['id'];
 	}
 
+	public function getLatestTimestamp(int $documentId): ?int {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('timestamp')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->setMaxResults(1)
+			->orderBy('id', 'DESC')
+			->executeQuery();
+
+		$data = $result->fetch();
+		$result->closeCursor();
+		if ($data === false) {
+			return null;
+		}
+
+		return (int)$data['timestamp'];
+	}
+
 	public function getBeforeVersion(int $documentId, int $version, int $offset): int {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('id')

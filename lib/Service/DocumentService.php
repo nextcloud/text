@@ -428,6 +428,10 @@ class DocumentService {
 		return $document;
 	}
 
+	public function getLatestStepTimestamp(int $documentId): ?int {
+		return $this->stepMapper->getLatestTimestamp($documentId);
+	}
+
 	/**
 	 * @throws DocumentHasUnsavedChangesException
 	 * @throws Exception
