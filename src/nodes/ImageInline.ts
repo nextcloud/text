@@ -49,6 +49,9 @@ const ImageInline = TiptapImage.extend<ImageOptions>({
 			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
 			inline: true,
+			// See Image.ts: data: URI images must survive an edit round-trip
+			// instead of being dropped on save (issue #9108).
+			allowBase64: true,
 		}
 	},
 
