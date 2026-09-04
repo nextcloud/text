@@ -109,6 +109,11 @@ export function linkBubble(options: { editor: Editor }) {
 				) {
 					return false
 				}
+
+				// Only show the link bubble while editing.
+				if (!view.editable) {
+					return false
+				}
 				const { state, dispatch } = view
 				const resolved = state.doc.resolve(pos)
 				return setActiveLink(resolved)(state, dispatch)
@@ -184,6 +189,10 @@ export function linkClicking(openLink: (href: string) => void = (href) => {
 					}
 
 					if (event.button === 0) {
+						// In editing mode, let the link bubble handle the click
+						if (view.editable && !event.ctrlKey && !event.metaKey) {
+							return false
+						}
 						// Stop browser from opening the link
 						event.preventDefault()
 
@@ -196,8 +205,8 @@ export function linkClicking(openLink: (href: string) => void = (href) => {
 								target?.scrollIntoView({ block: 'start', behavior: 'smooth' })
 							}
 							window.history.replaceState({}, '', url.href)
-						} else if (event.ctrlKey || event.metaKey) {
-							// Open link directly on Ctrl/Cmd + left click
+						} else {
+							// Open link directly on left click
 							openLink(linkEl.href)
 						}
 					}
