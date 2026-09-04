@@ -16,6 +16,7 @@
     "Save" : "Sačuvaj",
     "Cancel" : "Poništi",
     "Comment" : "Komentar",
+    "Details" : "Detalji",
     "Reload" : "Ponovo učitaj",
     "edit" : "izmeni",
     "Copy link" : "Kopiraj vezu",
@@ -24,11 +25,11 @@
     "Italic" : "Kurziv",
     "Link" : "Veza",
     "Undo" : "Opozovi",
+    "Changes" : "Izmene",
     "Translate" : "Prevedi",
     "Upload" : "Otpremi",
     "Source code" : "Izvorni kôd",
     "Done" : "Gotovo",
-    "Details" : "Detalji",
     "Choose" : "Odaberi",
     "Replace" : "Zameni postojeću"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

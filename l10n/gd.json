@@ -13,13 +13,13 @@
     "Delete" : "Delete",
     "Save" : "Sàbhail",
     "Cancel" : "Sguir dheth",
+    "Details" : "Mion-fhiosrachadh",
     "Copy link" : "Dèan lethbhreac dhen cheangal",
     "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",
     "Translate" : "Eadar-theangaich",
     "Upload" : "Luchdaich suas",
     "Source code" : "Bun-tùs",
-    "Details" : "Mion-fhiosrachadh",
     "Choose" : "Tagh",
     "Replace" : "Cuir ’na àite"
 },"pluralForm" :"nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;"

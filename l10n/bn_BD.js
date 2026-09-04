@@ -12,6 +12,7 @@ OC.L10N.register(
     "Save" : "সংরক্ষণ",
     "Cancel" : "বাতিল করুন",
     "Comment" : "মন্তব্য",
+    "Details" : "বিসতারিত",
     "Reload" : "পূনরায় লোড কর",
     "you" : "তুমি",
     "Copy link" : "লিঙ্ক কপি করো",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Upload" : "আপলোড",
     "Done" : "শেষ হলো",
-    "Details" : "বিসতারিত",
     "Choose" : "বেছে নিন",
     "to" : "প্রতি"
 },

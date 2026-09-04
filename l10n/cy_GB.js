@@ -10,6 +10,7 @@ OC.L10N.register(
     "Save" : "Cadw",
     "Cancel" : "Cancel",
     "Comment" : "Sylw",
+    "Details" : "Manylion",
     "Saved" : "Wedi'u cadw",
     "Keyboard shortcuts" : "Llwybrau byr bysellfwrdd",
     "Bold" : "Trwm",
@@ -20,7 +21,6 @@ OC.L10N.register(
     "Translate" : "Cyfieithu",
     "Upload" : "Llwytho i fyny",
     "Source code" : "Cod ffynhonnell",
-    "Details" : "Manylion",
     "Suggestions" : "Awgrymiadau",
     "Choose" : "Dewisa",
     "to" : "at"
