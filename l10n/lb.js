@@ -20,6 +20,10 @@ OC.L10N.register(
     "Save" : "Späicheren",
     "Cancel" : "Cancel",
     "Comment" : "Kommentar",
+    "Quote" : "Cotéierung",
+    "Details" : "Detailer",
+    "Added" : "Bäigesat",
+    "Previous" : "Zeréck",
     "Reconnect" : "Erëm verbannen",
     "you" : "Du",
     "Copy link" : "Link kopéieren",
@@ -31,7 +35,6 @@ OC.L10N.register(
     "Upload" : "Eroplueden",
     "Done" : "Fäerdeg",
     "Lists" : "Lëschten",
-    "Details" : "Detailer",
     "Choose" : "Auswielen",
     "to" : "bis"
 },

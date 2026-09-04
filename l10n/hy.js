@@ -18,6 +18,7 @@ OC.L10N.register(
     "Save" : "Պահպանել",
     "Cancel" : "չեղարկել",
     "Comment" : "Մեկնաբանել",
+    "Details" : "Մանրամասներ",
     "Copy link" : "Պատճենել հղումը",
     "Saved" : "Պահված",
     "Link" : "Հղում",
@@ -25,7 +26,6 @@ OC.L10N.register(
     "Translate" : "Թարգմանել",
     "Upload" : "Բեռնել",
     "Source code" : "ծրագրի կոդը",
-    "Details" : "Մանրամասներ",
     "Choose" : "Ընտրել"
 },
 "nplurals=2; plural=(n != 1);");

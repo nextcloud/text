@@ -9,6 +9,7 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Simpan",
     "Cancel" : "Cancel",
+    "Previous" : "Sebelum",
     "Saved" : "Disimpan",
     "URL" : "URL",
     "Translate" : "Translate",
