@@ -16,6 +16,7 @@
     "Save" : "Պահպանել",
     "Cancel" : "չեղարկել",
     "Comment" : "Մեկնաբանել",
+    "Details" : "Մանրամասներ",
     "Copy link" : "Պատճենել հղումը",
     "Saved" : "Պահված",
     "Link" : "Հղում",
@@ -23,7 +24,6 @@
     "Translate" : "Թարգմանել",
     "Upload" : "Բեռնել",
     "Source code" : "ծրագրի կոդը",
-    "Details" : "Մանրամասներ",
     "Choose" : "Ընտրել"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

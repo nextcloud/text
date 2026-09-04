@@ -7,12 +7,13 @@
     "Delete" : "Delete",
     "Save" : "சேமிக்க ",
     "Cancel" : "ரத்து செய்",
+    "Details" : "விவரங்கள்",
+    "Previous" : "முன்தைய",
     "Keyboard shortcuts" : "விசைப்பலகை குறுக்குவழிகள்",
     "Link" : "Link",
     "Translate" : "Translate",
     "Upload" : "பதிவேற்றுக",
     "Done" : "Done",
-    "Details" : "விவரங்கள்",
     "Choose" : "தெரிவுசெய்க "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

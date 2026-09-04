@@ -14,6 +14,8 @@ OC.L10N.register(
     "Cancel" : "Cancel",
     "Comment" : "Commentario",
     "Reply" : "Responde",
+    "Details" : "Detalios",
+    "Next" : "Proxime",
     "you" : "Tu",
     "edit" : "modificar",
     "Copy link" : "Copiar ligamine",
@@ -25,7 +27,6 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Upload" : "Incargar",
     "Done" : "Preste",
-    "Details" : "Detalios",
     "to" : "a"
 },
 "nplurals=2; plural=(n != 1);");
