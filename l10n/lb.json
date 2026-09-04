@@ -18,6 +18,10 @@
     "Save" : "Späicheren",
     "Cancel" : "Cancel",
     "Comment" : "Kommentar",
+    "Quote" : "Cotéierung",
+    "Details" : "Detailer",
+    "Added" : "Bäigesat",
+    "Previous" : "Zeréck",
     "Reconnect" : "Erëm verbannen",
     "you" : "Du",
     "Copy link" : "Link kopéieren",
@@ -29,7 +33,6 @@
     "Upload" : "Eroplueden",
     "Done" : "Fäerdeg",
     "Lists" : "Lëschten",
-    "Details" : "Detailer",
     "Choose" : "Auswielen",
     "to" : "bis"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

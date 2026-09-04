@@ -14,8 +14,8 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Save",
     "Cancel" : "Cancelar",
-    "Done" : "Feito",
     "Details" : "Detalles",
+    "Done" : "Feito",
     "Choose" : "Eslechir"
 },
 "nplurals=2; plural=(n != 1);");

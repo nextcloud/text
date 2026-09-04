@@ -6,6 +6,9 @@
     "Save" : "រក្សាទុក",
     "Cancel" : "លើកលែង",
     "Comment" : "មតិ",
+    "Table" : "តារាង",
+    "Details" : "ព័ត៌មាន​លម្អិត",
+    "Previous" : "មុន",
     "Reload" : "ផ្ទុកឡើងវិញ",
     "you" : "អ្នក​",
     "Copy link" : "ចម្លងតំណ",
@@ -13,8 +16,6 @@
     "URL" : "URL",
     "Translate" : "Translate",
     "Upload" : "ផ្ទុក​ឡើង",
-    "Details" : "ព័ត៌មាន​លម្អិត",
-    "Table" : "តារាង",
     "Choose" : "ជ្រើស",
     "to" : "ទៅ"
 },"pluralForm" :"nplurals=1; plural=0;"

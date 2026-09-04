@@ -8,6 +8,9 @@ OC.L10N.register(
     "Save" : "រក្សាទុក",
     "Cancel" : "លើកលែង",
     "Comment" : "មតិ",
+    "Table" : "តារាង",
+    "Details" : "ព័ត៌មាន​លម្អិត",
+    "Previous" : "មុន",
     "Reload" : "ផ្ទុកឡើងវិញ",
     "you" : "អ្នក​",
     "Copy link" : "ចម្លងតំណ",
@@ -15,8 +18,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Translate" : "Translate",
     "Upload" : "ផ្ទុក​ឡើង",
-    "Details" : "ព័ត៌មាន​លម្អិត",
-    "Table" : "តារាង",
     "Choose" : "ជ្រើស",
     "to" : "ទៅ"
 },
