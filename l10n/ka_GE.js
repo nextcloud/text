@@ -27,6 +27,8 @@ OC.L10N.register(
     "Undo" : "დაბრუნება",
     "Save changes" : "ცვილებების შენახვა",
     "URL" : "URL",
+    "Changes" : "ცვლილებები",
+    "Retry" : "ვცადოთ ახლიდან",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Translate" : "გადათარგმნეთ",
     "Upload" : "ატვირთვა",
