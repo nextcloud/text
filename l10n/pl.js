@@ -37,6 +37,7 @@ OC.L10N.register(
     "Task" : "Zadania",
     "Table" : "Tabela",
     "Table row" : "Wiersz tabeli",
+    "Image" : "Obraz",
     "Code block" : "Blok kodu",
     "Quote" : "Oferta",
     "Details" : "Szczegóły",

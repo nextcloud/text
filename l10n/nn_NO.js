@@ -16,6 +16,7 @@ OC.L10N.register(
     "Cancel" : "Cancel",
     "Comment" : "Kommentér",
     "Reply" : "Svare",
+    "Image" : "Bilete",
     "Details" : "Detaljar",
     "Previous" : "Førre",
     "Copy link" : "Kopier lenkje",

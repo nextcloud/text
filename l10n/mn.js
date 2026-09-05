@@ -29,6 +29,7 @@ OC.L10N.register(
     "Comment" : "–°—ç—Ç–≥—ç–≥–¥—ç–ª",
     "Reply" : "Хариулах",
     "Table" : "Хүснэгт",
+    "Image" : "Зураг",
     "Code block" : "Код блок",
     "Details" : "–î—ç–ª–≥—ç—Ä—ç–Ω–≥“Ø–π",
     "Front matter" : "Нүүр хэсэг",

@@ -13,6 +13,7 @@ OC.L10N.register(
     "Cancel" : "বাতিল করুন",
     "Comment" : "মন্তব্য",
     "Details" : "বিসতারিত",
+    "Previous" : "পূর্ববর্তী",
     "Reload" : "পূনরায় লোড কর",
     "you" : "তুমি",
     "Copy link" : "লিঙ্ক কপি করো",
