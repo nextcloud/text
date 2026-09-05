@@ -22,6 +22,7 @@ OC.L10N.register(
     "Cancel" : "Anulare",
     "Comment" : "Comentariu",
     "Heading" : "Antet",
+    "Image" : "Imagine",
     "Details" : "Detalii",
     "Previous" : "Precedentul",
     "Next" : "Următorul",

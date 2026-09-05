@@ -13,6 +13,7 @@ OC.L10N.register(
     "Save" : "Spremi",
     "Cancel" : "Odustani",
     "Comment" : "Komentar",
+    "Previous" : "Prethodno",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
     "Link" : "Veza",
