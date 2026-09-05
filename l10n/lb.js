@@ -31,6 +31,7 @@ OC.L10N.register(
     "Saved" : "Gespäichert",
     "Save changes" : "Ännerunge späicheren",
     "URL" : "URL",
+    "Retry" : "Widderhuelen",
     "Translate" : "Iwwersetzen",
     "Upload" : "Eroplueden",
     "Done" : "Fäerdeg",

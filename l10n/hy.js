@@ -19,6 +19,7 @@ OC.L10N.register(
     "Cancel" : "չեղարկել",
     "Comment" : "Մեկնաբանել",
     "Details" : "Մանրամասներ",
+    "Previous" : "Նախորդ",
     "Copy link" : "Պատճենել հղումը",
     "Saved" : "Պահված",
     "Link" : "Հղում",
