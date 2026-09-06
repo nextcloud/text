@@ -35,12 +35,15 @@ const Image = TiptapImage.extend<ImageOptions>({
 	},
 
 	parseHTML() {
+		if (!this.options.allowBase64) {
+			return [{ tag: 'figure img[src]:not([src^="data:"])' }]
+		}
+		// With base64 parsing on, admit a data: URI only when its mime type is an
+		// image one. A data:text/html src then never becomes a node, so the parse
+		// rule does not have to rely on the content security policy alone.
 		return [
-			{
-				tag: this.options.allowBase64
-					? 'figure img[src]'
-					: 'figure img[src]:not([src^="data:"])',
-			},
+			{ tag: 'figure img[src]:not([src^="data:"])' },
+			{ tag: 'figure img[src^="data:image/"]' },
 		]
 	},
 

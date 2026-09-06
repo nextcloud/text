@@ -45,6 +45,15 @@ describe('Markdown though editor', () => {
 		// inline image inside a paragraph
 		expect(markdownThroughEditor(`Before ![pixel](${dataUri}) after`)).toBe(`Before ![pixel](${dataUri}) after`)
 	})
+	test('a non image data: URI does not become an image node (#9108)', ({ markdownThroughEditor }) => {
+		// allowBase64 on its own admits any mime type. The parse rules narrow it to
+		// data:image/, so the syntax stays literal text instead of turning into an
+		// image whose src could never render. The user's characters are kept either
+		// way, which is the point of #9108.
+		const htmlUri = 'data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=='
+		expect(markdownThroughEditor(`![x](${htmlUri})`)).toBe(`\\![x](${htmlUri})`)
+		expect(markdownThroughEditor(`Before ![x](${htmlUri}) after`)).toBe(`Before \\![x](${htmlUri}) after`)
+	})
 	test('ul', ({ markdownThroughEditor }) => {
 		expect(markdownThroughEditor('+ foo\n+ bar')).toBe('+ foo\n+ bar')
 		expect(markdownThroughEditor('* foo\n* bar')).toBe('* foo\n* bar')
