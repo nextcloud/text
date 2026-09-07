@@ -73,7 +73,7 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+	public function close(string $documentId, int $sessionId, string $sessionToken): DataResponse {
 		// We also want this to work with a session that has already been closed.
 		// So we cannot rely on RequireDocumentSession to retrieve the user.
 		$user = $this->userSession->getUser();
@@ -127,7 +127,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[RequireDocumentSession]
 	#[UserRateLimit(limit: 5, period: 120)]
 	public function mention(string $mention): DataResponse {
-		if ($this->getSession()->isGuest() && !$this->sessionService->isUserInDocument($this->getDocument()->getId(), $mention)) {
+		if ($this->getSession()->isGuest() && !$this->sessionService->isUserInDocument($this->getDocumentId(), $mention)) {
 			return new DataResponse([], 403);
 		}
 

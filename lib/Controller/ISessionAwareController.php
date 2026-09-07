@@ -14,8 +14,8 @@ use OCP\IUser;
 interface ISessionAwareController {
 	public function getSession(): Session;
 	public function setSession(Session $session): void;
-	public function getDocumentId(): int;
-	public function setDocumentId(int $documentId): void;
+	public function getDocumentId(): string;
+	public function setDocumentId(string $documentId): void;
 	public function getDocument(): Document;
 	public function setDocument(Document $document): void;
 	public function getUser(): IUser;

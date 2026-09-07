@@ -54,7 +54,7 @@ class SessionService {
 		$this->cache = $cacheFactory->createDistributed('text_sessions');
 	}
 
-	public function initSession(int $documentId, ?string $guestName = null): Session {
+	public function initSession(string $documentId, ?string $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
 		$session->setUserId($this->userId);
@@ -71,7 +71,7 @@ class SessionService {
 		return $session;
 	}
 
-	public function closeSession(int $documentId, int $sessionId, string $token): void {
+	public function closeSession(string $documentId, int $sessionId, string $token): void {
 		try {
 			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			$this->cache->remove($token);
@@ -80,7 +80,7 @@ class SessionService {
 		}
 	}
 
-	public function getAllSessions(int $documentId): array {
+	public function getAllSessions(string $documentId): array {
 		$sessions = $this->sessionMapper->findAll($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
@@ -92,11 +92,11 @@ class SessionService {
 		}, $sessions);
 	}
 
-	public function countAllSessions(int $documentId): int {
+	public function countAllSessions(string $documentId): int {
 		return $this->sessionMapper->countAll($documentId);
 	}
 
-	public function getActiveSessions(int $documentId): array {
+	public function getActiveSessions(string $documentId): array {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
@@ -122,7 +122,7 @@ class SessionService {
 		return $this->sessionMapper->findAllInactive();
 	}
 
-	public function removeInactiveSessionsWithoutSteps(?int $documentId = null): int {
+	public function removeInactiveSessionsWithoutSteps(?string $documentId = null): int {
 		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
@@ -135,7 +135,7 @@ class SessionService {
 		return $this->sessionMapper->deleteOrphanedSteps($ageInSeconds);
 	}
 
-	public function getSession(int $documentId, int $sessionId, string $token): ?Session {
+	public function getSession(string $documentId, int $sessionId, string $token): ?Session {
 		if ($this->session !== null) {
 			return $this->session;
 		}
@@ -162,7 +162,7 @@ class SessionService {
 		return $this->session;
 	}
 
-	public function getValidSession(int $documentId, int $sessionId, string $token): ?Session {
+	public function getValidSession(string $documentId, int $sessionId, string $token): ?Session {
 		$session = $this->getSession($documentId, $sessionId, $token);
 		if ($session === null) {
 			return null;
@@ -241,7 +241,7 @@ class SessionService {
 		return $randomizer->getBytesFromString(ISecureRandom::CHAR_ALPHANUMERIC . '+/', $length);
 	}
 
-	public function isUserInDocument(int $documentId, string $mention): bool {
+	public function isUserInDocument(string $documentId, string $mention): bool {
 		return $this->sessionMapper->isUserInDocument($documentId, $mention);
 	}
 }
