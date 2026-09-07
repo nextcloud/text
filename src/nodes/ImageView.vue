@@ -285,6 +285,15 @@ export default {
 		},
 	},
 
+	watch: {
+		src(current) {
+			this.attachment = null
+			this.attachmentPromise = this.$attachmentResolver.resolve(current)
+			this.loadAttachmentMetadata()
+			this.loadPreview().catch(this.onImageLoadFailure)
+		},
+	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', this.onUpdate)
