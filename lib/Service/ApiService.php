@@ -28,6 +28,7 @@ use OCP\IL10N;
 use OCP\IUser;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 class ApiService {
 	public function __construct(
@@ -52,11 +53,15 @@ class ApiService {
 
 		try {
 			$document = $this->documentService->getOrCreateDocument($document);
+			$documentId = $document->id;
+			if ($documentId === null) {
+				throw new RuntimeException('Persisted document must have an id.');
+			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
-		$documentData = $this->documentService->getDocumentData($document);
+		$documentData = $this->documentService->getDocumentData($documentId, $document);
 
 		if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
 			$error = $this->l10n->t('Editing session has expired. Please reload the page.');
@@ -64,8 +69,8 @@ class ApiService {
 		}
 
 		$sessionInfo = $context->prepareSession($documentData);
-		$this->sessionService->removeInactiveSessionsWithoutSteps($document->id);
-		$session = $this->sessionService->initSession($document->id, $guestName);
+		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
+		$session = $this->sessionService->initSession($documentId, $guestName);
 		$displayName = $this->sessionService->getNameForSession($session);
 
 		$newSession = new NewSessionData(
@@ -80,7 +85,7 @@ class ApiService {
 		);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken, IShare|IUser $auth): DataResponse {
+	public function close(string $documentId, int $sessionId, string $sessionToken, IShare|IUser $auth): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
@@ -100,6 +105,9 @@ class ApiService {
 	 * @throws NotFoundException
 	 */
 	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, IShare|IUser $auth): DataResponse {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs to have an id to push.');
+		}
 		try {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
@@ -108,7 +116,7 @@ class ApiService {
 		}
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $auth);
-			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
+			$this->addToPushQueue($document->id, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		} catch (DoesNotExistException) {
@@ -120,12 +128,12 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	private function addToPushQueue(Document $document, array $steps): void {
+	private function addToPushQueue(string $documentId, array $steps): void {
 		if ($this->queue === null || !$this->configService->isNotifyPushSyncEnabled()) {
 			return;
 		}
 
-		$sessions = $this->sessionService->getActiveSessions($document->id);
+		$sessions = $this->sessionService->getActiveSessions($documentId);
 		$userIds = array_values(array_filter(array_unique(
 			array_map(fn ($session): ?string => $session['userId'], $sessions)
 		)));
@@ -134,7 +142,7 @@ class ApiService {
 				'user' => $userId,
 				'message' => 'text_steps',
 				'body' => [
-					'documentId' => $document->getId(),
+					'documentId' => $documentId,
 					'steps' => array_values(array_filter($steps)),
 				],
 			]);
@@ -142,6 +150,9 @@ class ApiService {
 	}
 
 	public function sync(Document $document, IShare|IUser $auth, int $version = 0): DataResponse {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs to have an id to sync.');
+		}
 		$result = [];
 		try {
 			$result = [
