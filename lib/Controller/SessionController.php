@@ -132,7 +132,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		}
 
 		$document = $this->getDocument();
-		if ($document->getContextType() !== 'file'){
+		if ($document->getContextType() !== 'file') {
 			return new DataResponse(false);
 		}
 
