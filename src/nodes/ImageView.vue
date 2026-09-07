@@ -286,10 +286,9 @@ export default {
 	},
 
 	watch: {
-		src(cur, old) {
-			console.debug('Image source changed.', { cur, old })
+		src(current) {
 			this.attachment = null
-			this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
+			this.attachmentPromise = this.$attachmentResolver.resolve(current)
 			this.loadAttachmentMetadata()
 			this.loadPreview().catch(this.onImageLoadFailure)
 		},
