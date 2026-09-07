@@ -18,8 +18,8 @@ use OCP\DB\Types;
  * @method setVersion(int $version): void
  * @method getSessionId(): int
  * @method setSessionId(int $sessionId): void
- * @method getDocumentId(): int
- * @method setDocumentId(int $documentId): void
+ * @method getDocumentId(): string
+ * @method setDocumentId(string $documentId): void
  * @method getTimestamp(): int
  * @method setTimestamp(int $timestam): void
  */
@@ -36,12 +36,12 @@ class Step extends Entity implements JsonSerializable {
 	protected string $data = '';
 	protected int $version = 0;
 	protected int $sessionId = 0;
-	protected int $documentId = 0;
+	protected string $documentId = '';
 	protected int $timestamp = 0;
 
 	public function __construct() {
 		$this->addType('version', Types::INTEGER);
-		$this->addType('documentId', Types::INTEGER);
+		$this->addType('documentId', Types::STRING);
 		$this->addType('sessionId', Types::INTEGER);
 		$this->addType('timestamp', Types::INTEGER);
 	}
