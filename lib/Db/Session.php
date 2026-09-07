@@ -10,6 +10,7 @@ namespace OCA\Text\Db;
 use JsonSerializable;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\AppFramework\Db\Entity;
+use OCP\DB\Types;
 
 /**
  * @method void setUserId(?string $userId)
@@ -37,8 +38,8 @@ class Session extends Entity implements JsonSerializable {
 	protected int $documentId = 0;
 
 	public function __construct() {
-		$this->addType('documentId', 'integer');
-		$this->addType('lastContact', 'integer');
+		$this->addType('documentId', Types::INTEGER);
+		$this->addType('lastContact', Types::INTEGER);
 	}
 
 	public function isGuest(): bool {
