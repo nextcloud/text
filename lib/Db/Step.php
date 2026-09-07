@@ -9,6 +9,7 @@ namespace OCA\Text\Db;
 
 use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
+use OCP\DB\Types;
 
 /**
  * @method getData(): string
@@ -39,10 +40,10 @@ class Step extends Entity implements JsonSerializable {
 	protected int $timestamp = 0;
 
 	public function __construct() {
-		$this->addType('version', 'integer');
-		$this->addType('documentId', 'integer');
-		$this->addType('sessionId', 'integer');
-		$this->addType('timestamp', 'integer');
+		$this->addType('version', Types::INTEGER);
+		$this->addType('documentId', Types::INTEGER);
+		$this->addType('sessionId', Types::INTEGER);
+		$this->addType('timestamp', Types::INTEGER);
 	}
 
 	public function jsonSerialize(): array {
