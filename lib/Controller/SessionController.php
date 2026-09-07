@@ -131,7 +131,12 @@ class SessionController extends ApiController implements ISessionAwareController
 			return new DataResponse([], 403);
 		}
 
-		return new DataResponse($this->notificationService->mention($this->getDocument()->getId(), $mention));
+		$document = $this->getDocument();
+		if ($document->getContextType() !== 'file'){
+			return new DataResponse(false);
+		}
+
+		return new DataResponse($this->notificationService->mention($document->getContextId(), $mention));
 	}
 
 	private function loginSessionUser(): void {
