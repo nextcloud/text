@@ -4,6 +4,7 @@
 -->
 <template>
 	<NcActions
+		ref="actions"
 		v-model="open"
 		data-text-link-options="select"
 		class="link-options"
@@ -16,7 +17,7 @@
 			data-text-preview-option="text-only"
 			name="preview-option"
 			value="text-only"
-			:modelValue="type"
+			:modelValue="selectedType"
 			@change="(e) => toggle(e.currentTarget.value)">
 			{{ t('text', 'Text only') }}
 		</NcActionRadio>
@@ -24,7 +25,7 @@
 			data-text-preview-option="link-preview"
 			name="preview-option"
 			value="link-preview"
-			:modelValue="type"
+			:modelValue="selectedType"
 			@change="(e) => toggle(e.currentTarget.value)">
 			{{ t('text', 'Show link preview') }}
 		</NcActionRadio>
@@ -116,6 +117,7 @@ export default {
 	data() {
 		return {
 			open: false,
+			selectedType: this.type,
 		}
 	},
 
@@ -125,13 +127,21 @@ export default {
 		},
 	},
 
+	watch: {
+		type(value) {
+			this.selectedType = value
+		},
+
+	},
+
 	methods: {
 		onOpen() {
 			this.$emit('open')
 		},
 
-		toggle(type) {
-			this.open = false
+		async toggle(type) {
+			this.selectedType = type
+			await this.$refs.actions?.closeMenu(false)
 			this.$emit('toggle', type)
 		},
 
