@@ -8,6 +8,7 @@
 namespace OCA\Text\Db;
 
 use OCP\AppFramework\Db\Entity;
+use OCP\DB\Types;
 
 /**
  * @method getId(): int
@@ -44,13 +45,13 @@ class Document extends Entity implements \JsonSerializable {
 	protected int $contextId = 0;
 
 	public function __construct() {
-		$this->addType('currentVersion', 'integer');
-		$this->addType('lastSavedVersion', 'integer');
-		$this->addType('lastSavedVersionTime', 'integer');
-		$this->addType('initialVersion', 'integer');
-		$this->addType('checksum', 'string');
-		$this->addType('contextType', 'string');
-		$this->addType('contextId', 'integer');
+		$this->addType('currentVersion', Types::INTEGER);
+		$this->addType('lastSavedVersion', Types::INTEGER);
+		$this->addType('lastSavedVersionTime', Types::INTEGER);
+		$this->addType('initialVersion', Types::INTEGER);
+		$this->addType('checksum', Types::STRING);
+		$this->addType('contextType', Types::STRING);
+		$this->addType('contextId', Types::INTEGER);
 	}
 
 	public function jsonSerialize(): array {
