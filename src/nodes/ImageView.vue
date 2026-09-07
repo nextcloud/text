@@ -285,6 +285,16 @@ export default {
 		},
 	},
 
+	watch: {
+		src(cur, old) {
+			console.debug('Image source changed.', { cur, old })
+			this.attachment = null
+			this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
+			this.loadAttachmentMetadata()
+			this.loadPreview().catch(this.onImageLoadFailure)
+		},
+	},
+
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', this.onUpdate)
