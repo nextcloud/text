@@ -37,7 +37,10 @@ describe('The session Api', function() {
 
 		it('returns connection', function() {
 			cy.openFileConnection({ fileId }).then(({ connection }) => {
-				cy.wrap(connection).its('documentId').should('be.greaterThan', 0)
+				cy.wrap(connection)
+					.its('documentId')
+					.then((id) => Number.parseInt(id))
+					.should('be.greaterThan', 1_000_000) // snowflake ids have more than 20 bit.
 				cy.closeConnection(connection)
 			})
 		})

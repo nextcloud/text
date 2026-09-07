@@ -55,10 +55,10 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 	private function createDocument(string $etag, int $mtime, string $content): Document {
 		$document = new Document();
-		$document->setId(123);
 		$document->setLastSavedVersionEtag($etag);
 		$document->setLastSavedVersionTime($mtime);
 		$document->setChecksum(DocumentService::computeCheckSum($content));
+		$document->generateId();
 		return $document;
 	}
 
@@ -66,7 +66,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$document = $this->createDocument('etag1', 1000, 'new content');
 		$context = $this->createMock(FileContext::class);
 		$this->cache->method('get')
-			->with('document-save-lock-123')
+			->with('document-save-lock-' . $document->id)
 			->willReturn(true);
 		$this->documentMapper->expects(self::never())->method('update');
 
