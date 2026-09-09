@@ -193,7 +193,7 @@ OC.L10N.register(
     "After" : "Após",
     "Before document" : "Documento antes",
     "After document" : "Documento depois",
-    "Detailed rendered comparison unavailable" : "Não há comparação detalhada com renderização disponível",
+    "Detailed rendered comparison unavailable" : "Não há comparação detalhada da renderização disponível",
     "Change {current} of {total}: {label}" : "Alteração {current} de {total}: {label}",
     "No rendered changes" : "Não há alterações renderizadas",
     "Version comparison" : "Comparação de versões",
