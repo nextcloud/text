@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+
 export interface Connection {
-	documentId: number
+	documentId: string
 	sessionId: number
 	sessionToken: string
 	baseVersionEtag: string
