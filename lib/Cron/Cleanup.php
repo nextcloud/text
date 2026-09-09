@@ -37,7 +37,7 @@ class Cleanup extends TimedJob {
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllWithNoActiveSession() as $document) {
 			$this->setupManager->tearDown();
-			$this->attachmentService->cleanupAttachments($document->id);
+			$this->attachmentService->cleanupAttachments($document->getContextId());
 		}
 
 		$this->logger->debug('Run cleanup job for text sessions');
