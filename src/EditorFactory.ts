@@ -5,7 +5,7 @@
 
 import type { Extension } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
-import type { Connection } from './composables/useConnection.ts'
+import type { Connection } from './types/Connection.ts'
 
 import { Editor } from '@tiptap/core'
 import hljs from 'highlight.js/lib/core'

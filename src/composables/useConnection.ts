@@ -5,24 +5,13 @@
 
 import type { InjectionKey, ShallowRef } from 'vue'
 import type { OpenData } from '../apis/connect.ts'
-import type { Document, Session } from '../services/SyncService.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Context } from '../types/Context.ts'
+import type { Document } from '../types/Document.ts'
+import type { Session } from '../types/Session.ts'
 
 import { inject, provide, shallowRef } from 'vue'
 import * as api from '../apis/connect.ts'
-
-export interface Context {
-	type: string
-	id: number
-}
-
-export interface Connection {
-	documentId: number
-	sessionId: number
-	sessionToken: string
-	baseVersionEtag: string
-	filePath: string
-	shareToken?: string
-}
 
 export interface InitialData {
 	document: Document
