@@ -12,7 +12,7 @@ import mitt from 'mitt'
 export declare type EventTypes = {
 	notify_push: {
 		messageType: unknown
-		messageBody: { steps: string[], documentId: number }
+		messageBody: { steps: string[], documentId: string }
 	}
 }
 
@@ -29,7 +29,7 @@ if (!window._nc_text_notify) {
 				'text_steps',
 				(
 					messageType: string,
-					messageBody: { steps: string[], documentId: number },
+					messageBody: { steps: string[], documentId: string },
 				) => {
 					window._nc_text_notify?.emit('notify_push', {
 						messageType,
