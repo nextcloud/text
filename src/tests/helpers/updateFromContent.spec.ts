@@ -83,7 +83,7 @@ What's that?
  */
 function contentWithUpdates(...updates: Uint8Array[]) {
 	const dummyConnection: Connection = {
-		documentId: 123,
+		documentId: '123',
 		sessionId: 234,
 		sessionToken: 'token',
 		baseVersionEtag: 'etag',
