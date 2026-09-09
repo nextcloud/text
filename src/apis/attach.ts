@@ -4,7 +4,7 @@
  */
 
 import type { ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection.ts'
+import type { Connection } from '../types/Connection.ts'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
