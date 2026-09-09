@@ -4,9 +4,11 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<NcCheckboxRadioSwitch v-model="showWorkspace" @update:modelValue="toggle">
-			{{ t('text', 'Show folder description') }}
-		</NcCheckboxRadioSwitch>
+		<NcFormBox>
+			<NcFormBoxSwitch v-model="showWorkspace" @update:modelValue="toggle">
+				{{ t('text', 'Show folder description') }}
+			</NcFormBoxSwitch>
+		</NcFormBox>
 	</div>
 </template>
 
@@ -15,12 +17,14 @@ import axios from '@nextcloud/axios'
 import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcFormBox from '@nextcloud/vue/components/NcFormBox'
+import NcFormBoxSwitch from '@nextcloud/vue/components/NcFormBoxSwitch'
 
 export default {
 	name: 'FilesSettings',
 	components: {
-		NcCheckboxRadioSwitch,
+		NcFormBox,
+		NcFormBoxSwitch,
 	},
 
 	data() {
