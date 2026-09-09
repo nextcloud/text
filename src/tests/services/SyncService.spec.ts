@@ -11,7 +11,7 @@ import { SyncService } from '../../services/SyncService.js'
 vi.mock('../../apis/connect')
 
 const connection = {
-	documentId: 123,
+	documentId: '123',
 	sessionId: 345,
 	sessionToken: 'sessionToken',
 	filePath: './',
@@ -24,13 +24,13 @@ const initialData = {
 		token: 'shareToken',
 		color: '#abcabc',
 		lastContact: Date.now(),
-		documentId: 123,
+		documentId: '123',
 		displayName: 'My Name',
 		lastAwarenessMessage: 'hi',
 		clientId: 1,
 	},
 	document: {
-		id: 123,
+		id: '123',
 		baseVersionEtag: 'etag',
 		initialVersion: 0,
 		lastSavedVersion: 345,
