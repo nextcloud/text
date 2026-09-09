@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Context } from '../composables/useConnection.ts'
+import type { Context } from '../types/Context.ts'
 
 import { Extension } from '@tiptap/core'
 
