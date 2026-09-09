@@ -25,6 +25,7 @@ class DocumentMapper extends QBMapper {
 	 * @throws DoesNotExistException
 	 */
 	public function find(int $documentId): Document {
+
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
@@ -36,6 +37,23 @@ class DocumentMapper extends QBMapper {
 		$result->closeCursor();
 		if ($data === false) {
 			throw new DoesNotExistException('Document doesn\'t exist');
+		}
+		return Document::fromRow($data);
+	}
+
+	public function load(string $type, int $id): ?Document {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('*')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('context_type', $qb->createNamedParameter($type)))
+			->andWhere($qb->expr()->eq('context_id', $qb->createNamedParameter($id)))
+			->executeQuery();
+
+		$data = $result->fetchAssociative();
+		$result->closeCursor();
+		if ($data === false) {
+			return null;
 		}
 		return Document::fromRow($data);
 	}

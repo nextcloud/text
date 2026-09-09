@@ -28,7 +28,7 @@ return [
 		['name' => 'Attachment#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
 
 		/** @see Controller\SessionController::create() */
-		['name' => 'Session#create', 'url' => '/session/{documentId}/create', 'verb' => 'PUT'],
+		['name' => 'Session#create', 'url' => '/session/{type}/{id}/create', 'verb' => 'PUT'],
 		/** @see Controller\SessionController::save() */
 		['name' => 'Session#save', 'url' => '/session/{documentId}/save', 'verb' => 'POST'],
 		/** @see Controller\SessionController::sync() */

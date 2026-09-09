@@ -4,8 +4,14 @@
  */
 
 import type { InjectionKey } from 'vue'
+import type { Context } from './useConnection.ts'
 
 import { inject, provide } from 'vue'
+
+interface EditorProps {
+	context: Context
+	relativePath?: string
+}
 
 interface FileProps {
 	fileId?: number
@@ -18,9 +24,9 @@ export const filePropsKey = Symbol('tiptap:file:props') as InjectionKey<FileProp
  *
  * @param props to get the file props from
  */
-export function provideFileProps(props: FileProps) {
+export function provideFileProps(props: EditorProps) {
 	provide(filePropsKey, {
-		fileId: props.fileId,
+		fileId: props.context.type === 'file' ? props.context.id : undefined,
 		relativePath: props.relativePath,
 	})
 }

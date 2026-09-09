@@ -26,12 +26,8 @@ function debug(message: string, context?: Record<string, unknown>) {
 /**
  *
  * @param syncService - the sync service to build upon
- * @param fileId - id of the file to open
  */
-export default function initWebSocketPolyfill(
-	syncService: SyncService,
-	fileId: number,
-) {
+export default function initWebSocketPolyfill(syncService: SyncService) {
 	return class WebSocketPolyfill {
 		binaryType: 'blob' | 'arraybuffer' = 'blob'
 		onmessage?: (message: MessageEvent) => void
@@ -42,14 +38,16 @@ export default function initWebSocketPolyfill(
 		#onSync
 		#onOpened
 		#processingVersion = 0
+		#documentId = 0
 
 		constructor(url: string) {
 			this.#notifyPushBus = getNotifyBus()
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
-			debug('WebSocketPolyfill#constructor', { url, fileId })
+			debug('WebSocketPolyfill#constructor', { url })
 
 			this.#onOpened = (data: OpenData) => {
 				debug('WebSocketPolyfill#onOpen', { data })
+				this.#documentId = data.document.id
 				if (syncService.hasActiveConnection()) {
 					this.onopen?.()
 				}
@@ -135,7 +133,7 @@ export default function initWebSocketPolyfill(
 			messageBody: { documentId: number, steps: string[] }
 		}) {
 			debug('WebSocketPolyfill#onNotifyPush', messageBody)
-			if (messageBody.documentId !== fileId) {
+			if (messageBody.documentId !== this.#documentId) {
 				return
 			}
 			messageBody.steps.forEach((step) => {

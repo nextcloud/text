@@ -94,7 +94,6 @@ class SessionMiddleware extends Middleware {
 		$documentId = (int)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
-		$shareToken = (string)$this->request->getParam('token');
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
@@ -106,6 +105,7 @@ class SessionMiddleware extends Middleware {
 			if ($user === null || !$user->isEnabled()) {
 				throw new AccountDisabledException();
 			}
+			$controller->setUser($user);
 		}
 
 		$document = $this->documentService->getDocument($documentId);
@@ -116,9 +116,6 @@ class SessionMiddleware extends Middleware {
 		$controller->setSession($session);
 		$controller->setDocumentId($documentId);
 		$controller->setDocument($document);
-		if (!$shareToken) {
-			$controller->setUserId($session->getUserId());
-		}
 	}
 
 	/**
@@ -127,19 +124,25 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$fileId = (int)$this->request->getParam('documentId');
+		$documentId = (int)$this->request->getParam('documentId');
 		$shareToken = (string)$this->request->getParam('shareToken');
-		$userId = $this->userSession->getUser()?->getUID();
+		$user = $this->userSession->getUser();
+
+		$document = $this->documentService->getDocument($documentId);
+		if (!$document || $document->getContextType() !== 'file') {
+			throw new InvalidSessionException();
+		}
+		$fileId = $document->getContextId();
 
 		if ($shareToken !== '') {
-			$documentId = $this->fileService->getDocumentIdFromShare($fileId, $shareToken);
+			$this->fileService->checkFileAccessFromShare($fileId, $shareToken);
 			$controller->setDocumentId($documentId);
 			return;
 		}
 
-		if ($userId !== null) {
-			$documentId = $this->fileService->getDocumentIdForUser($fileId, $userId);
-			$controller->setUserId($userId);
+		if ($user !== null) {
+			$this->fileService->checkFileAccessForUser($fileId, $user->getUID());
+			$controller->setUser($user);
 			$controller->setDocumentId($documentId);
 			return;
 		}

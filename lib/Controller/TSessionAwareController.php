@@ -12,12 +12,13 @@ namespace OCA\Text\Controller;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\InvalidSessionException;
+use OCP\IUser;
 
 trait TSessionAwareController {
 	private ?Session $textSession = null;
 	private ?int $documentId = null;
 	private ?Document $document = null;
-	private ?string $userId = null;
+	private ?IUser $user = null;
 
 	public function setSession(?Session $session): void {
 		$this->textSession = $session;
@@ -31,8 +32,8 @@ trait TSessionAwareController {
 		$this->document = $document;
 	}
 
-	public function setUserId(?string $userId): void {
-		$this->userId = $userId;
+	public function setUser(IUser $user): void {
+		$this->user = $user;
 	}
 
 	/**
@@ -71,11 +72,11 @@ trait TSessionAwareController {
 	/**
 	 * @throws InvalidSessionException
 	 */
-	public function getUserId(): string {
-		if ($this->userId === null) {
+	public function getUser(): IUser {
+		if ($this->user === null) {
 			throw new InvalidSessionException();
 		}
 
-		return $this->userId;
+		return $this->user;
 	}
 }

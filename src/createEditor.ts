@@ -5,6 +5,7 @@
 
 import type { EventHandler } from '@nextcloud/event-bus'
 import type { App } from 'vue'
+import type { Context } from './composables/useConnection.ts'
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 
 import { createApp, reactive, shallowRef } from 'vue'
@@ -30,7 +31,7 @@ interface CollaborativeEditorOptions {
 	 * Element to render the editor to
 	 */
 	el: HTMLElement
-	fileId: number
+	context: Context
 	filePath?: string
 	shareToken?: string
 	content?: string
@@ -52,6 +53,8 @@ interface CollaborativeEditorOptions {
 	onSearch?: () => void
 	onAttachmentsUpdated?: (event: { attachmentSrcs: string[] }) => void
 }
+
+type DeprecatedCollaborativeEditorOptions = Omit<CollaborativeEditorOptions, 'context'> & { fileId: number }
 
 interface MarkdownContentEditorOptions {
 	/**
@@ -81,7 +84,7 @@ interface MarkdownContentEditorOptions {
 	onAttachmentsUpdated?: (event: { attachmentSrcs: string[] }) => void
 }
 
-type EditorOptions = (CollaborativeEditorOptions & { useSession?: true })
+type EditorOptions = (DeprecatedCollaborativeEditorOptions & { useSession?: true })
 	| (MarkdownContentEditorOptions & { useSession?: false })
 
 /**
@@ -89,7 +92,7 @@ type EditorOptions = (CollaborativeEditorOptions & { useSession?: true })
  *
  * @param options for the editor in question
  */
-function optionsForCollaboration(options: EditorOptions): options is CollaborativeEditorOptions {
+function optionsForCollaboration(options: EditorOptions): options is DeprecatedCollaborativeEditorOptions {
 	return Boolean(options.fileId) && (options.useSession ?? true)
 }
 
@@ -101,7 +104,10 @@ function optionsForCollaboration(options: EditorOptions): options is Collaborati
  */
 export async function createEditor(options: EditorOptions) {
 	if (optionsForCollaboration(options)) {
-		return createCollaborativeEditor(options)
+		return createCollaborativeEditor({
+			context: { type: 'file', id: options.fileId },
+			...options,
+		})
 	} else {
 		return createMarkdownContentEditor(options)
 	}
@@ -120,7 +126,7 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
 		{
 			...data,
 			active: true,
-			fileId: options.fileId,
+			context: options.context,
 			mime: 'text/markdown',
 			autofocus: options.autofocus ?? true,
 			noLazyImages: options.noLazyImages ?? false,

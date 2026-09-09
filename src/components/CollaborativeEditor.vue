@@ -188,9 +188,9 @@ export default defineComponent({
 			default: '',
 		},
 
-		fileId: {
-			type: Number,
-			default: null,
+		context: {
+			type: Object,
+			required: true,
 		},
 
 		active: {
@@ -287,7 +287,7 @@ export default defineComponent({
 		)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
-			Autofocus.configure({ fileId: props.fileId }),
+			Autofocus.configure({ context: props.context }),
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCaret.configure({ provider: { awareness } }),
 		]
@@ -406,7 +406,7 @@ export default defineComponent({
 		},
 
 		hasDocumentParameters() {
-			return this.fileId || this.shareToken || this.initialSession
+			return this.context || this.shareToken || this.initialSession
 		},
 
 		hasOutdatedDocument() {
@@ -449,7 +449,7 @@ export default defineComponent({
 		},
 
 		indexedDbConflictKey() {
-			return `text-indexeddb-conflict-${this.fileId}`
+			return `text-indexeddb-conflict-${this.context.type}-${this.context.id}`
 		},
 	},
 
@@ -491,9 +491,7 @@ export default defineComponent({
 					this.indexedDbConflictKey,
 					JSON.stringify(conflictData),
 				)
-				logger.debug('Stored conflict to localStorage', {
-					fileId: this.fileId,
-				})
+				logger.debug('Stored conflict to localStorage', this.context)
 			}
 
 			logger.debug('Clearing the outdated cache and connecting without it.')
@@ -559,7 +557,7 @@ export default defineComponent({
 			this.syncProvider = createSyncServiceProvider({
 				ydoc: this.ydoc,
 				syncService: this.syncService,
-				fileId: this.fileId,
+				context: this.context,
 				initialSession: this.initialSession,
 				disableBc: true,
 				awareness: this.awareness,
@@ -628,9 +626,9 @@ export default defineComponent({
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
-			if (session.userId && this.relativePath?.length) {
+			if (session.userId && this.relativePath?.length && this.context.type === 'file') {
 				const node = new File({
-					id: this.fileId,
+					id: this.context.id,
 					root: `/files/${session.userId}`,
 					source: generateRemoteUrl(`dav/files/${session.userId}${this.relativePath}`),
 
@@ -875,7 +873,7 @@ export default defineComponent({
 		 */
 		debugData() {
 			const yjsData = {
-				fileId: this.fileId,
+				context: this.context,
 				filePath: this.relativePath,
 				clientId: this.ydoc.clientID,
 				pendingStructs: this.ydoc.store.pendingStructs,

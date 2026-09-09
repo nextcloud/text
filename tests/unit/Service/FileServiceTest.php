@@ -3,6 +3,7 @@
 namespace OCA\Text\Tests;
 
 use OCA\Text\Exception\InvalidSessionException;
+use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Constants;
@@ -14,6 +15,7 @@ use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
+use Psr\Log\LoggerInterface;
 
 class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	private FileService $fileService;
@@ -28,9 +30,11 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->shareManager = $this->createMock(IManager::class);
 
 		$this->fileService = new FileService(
+			$this->createStub(EncodingService::class),
 			$this->session,
 			$this->rootFolder,
 			$this->createMock(LockService::class),
+			$this->createStub(LoggerInterface::class),
 			$this->shareManager,
 		);
 	}
@@ -75,14 +79,13 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$this->shareManager->method('getShareByToken')->with('invalid')->willThrowException(new ShareNotFound());
 
-		$this->fileService->getDocumentIdFromShare(123, 'invalid');
+		$this->fileService->checkFileAccessFromShare(123, 'invalid');
 	}
 
 	public function testValidTokenWithoutPassword(): void {
 		$share = $this->createShare('plain-share');
 
-		$result = $this->invokeGetDocumentIdFromShare(123, $share);
-		self::assertEquals(123, $result);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
 	public function testValidTokenMissingPassword(): void {
@@ -91,23 +94,21 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$share = $this->createShare('protected-share', 'password');
 		$this->session->method('get')->with('public_link_authenticated')->willReturn(null);
 
-		$this->invokeGetDocumentIdFromShare(123, $share);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
 	public function testValidTokenWithPasswordArray(): void {
 		$share = $this->createShare('42', 'password');
 		$this->session->method('get')->with('public_link_authenticated')->willReturn(['1', '42']);
 
-		$result = $this->invokeGetDocumentIdFromShare(123, $share);
-		self::assertEquals(123, $result);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
 	public function testValidTokenWithSinglePassword(): void {
 		$share = $this->createShare('42', 'password');
 		$this->session->method('get')->with('public_link_authenticated')->willReturn('42');
 
-		$result = $this->invokeGetDocumentIdFromShare(123, $share);
-		self::assertEquals(123, $result);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
 	public function testValidTokenWithOtherPassword(): void {
@@ -116,7 +117,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$share = $this->createShare('42', 'password');
 		$this->session->method('get')->with('public_link_authenticated')->willReturn('10');
 
-		$this->invokeGetDocumentIdFromShare(123, $share);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
 	public function testValidTokenWithOtherPasswords(): void {
@@ -125,17 +126,17 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$share = $this->createShare('42', 'password');
 		$this->session->method('get')->with('public_link_authenticated')->willReturn(['10', '20', '30']);
 
-		$this->invokeGetDocumentIdFromShare(123, $share);
+		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
-	private function invokeGetDocumentIdFromShare(int $fileId, IShare $share): int {
-		$this->shareManager->method('getShareByToken')->willReturn($share);
+	private function invokeCheckFileAccessFromShare(int $fileId, IShare $share): void {
+		$this->shareManager->expects($this->once())->method('getShareByToken')->willReturn($share);
 
 		$folder = $this->createMock(Folder::class);
 		$folder->method('getFirstNodeById')->willReturn($this->createMock(File::class));
 		$this->rootFolder->method('getUserFolder')->with('owner')->willReturn($folder);
 
-		return $this->fileService->getDocumentIdFromShare($fileId, 'token');
+		$this->fileService->checkFileAccessFromShare($fileId, 'token');
 	}
 
 	private function createShare(string $id, ?string $password = null): IShare {
