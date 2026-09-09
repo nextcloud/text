@@ -4,7 +4,8 @@
  */
 
 import type { OpenData } from '../apis/connect.ts'
-import type { Step, SyncService } from './SyncService.ts'
+import type { Step } from '../types/Step.ts'
+import type { SyncService } from './SyncService.ts'
 
 import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.ts'
 import { logger } from '../helpers/logger.js'
