@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+
 export interface UserSession {
 	id: number
 	userId: string
 	color: string
 	lastAwarenessMessage: string
 	lastContact: number
-	documentId: number
+	documentId: string
 	displayName: string
 }
 
@@ -19,7 +20,7 @@ export interface GuestSession {
 	lastAwarenessMessage: string
 	lastContact: number
 	guestName: string
-	documentId: number
+	documentId: string
 }
 
 export type Session = UserSession | GuestSession
