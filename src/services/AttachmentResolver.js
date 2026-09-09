@@ -21,7 +21,7 @@ export default class AttachmentResolver {
 		this.#user = user
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
-		this.#documentId = fileId ?? session.documentId
+		this.#documentId = session.documentId
 	}
 
 	async #updateAttachmentList() {
