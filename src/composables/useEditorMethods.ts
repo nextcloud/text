@@ -5,7 +5,7 @@
 
 import type { Editor } from '@tiptap/core'
 import type { AwarenessUser } from '../extensions/CollaborationCaret.ts'
-import type { Session } from '../services/SyncService.ts'
+import type { Session } from '../types/Session.ts'
 
 import escapeHtml from 'escape-html'
 import Markdown from '../extensions/Markdown.js'

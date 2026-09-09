@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Connection } from '../../composables/useConnection.js'
+import type { Connection } from '../../types/Connection.ts'
 
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { describe, expect, it } from 'vitest'
