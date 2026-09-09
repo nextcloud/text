@@ -75,7 +75,9 @@ class ResetDocument extends Command {
 		if ($all) {
 			$fileIds = [];
 			foreach ($this->documentService->getAll() as $document) {
-				$fileIds[] = $document->id;
+				if ($document->getContextType() === 'file') {
+					$fileIds[] = $document->getContextId();
+				}
 			}
 		} else {
 			$fileIds = [$fileId];
