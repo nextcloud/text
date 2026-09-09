@@ -5,8 +5,8 @@
 
 import type { EventHandler } from '@nextcloud/event-bus'
 import type { App } from 'vue'
-import type { Context } from './composables/useConnection.ts'
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
+import type { Context } from './types/Context.ts'
 
 import { createApp, reactive, shallowRef } from 'vue'
 import {

@@ -4,8 +4,8 @@
  */
 
 import type { ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection.ts'
-import type { Document } from '../services/SyncService.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Document } from '../types/Document.ts'
 
 import { getRequestToken } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'

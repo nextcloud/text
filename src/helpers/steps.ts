@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Session, Step } from '../services/SyncService.ts'
+import type { Session } from '../types/Session.ts'
+import type { Step } from '../types/Step.ts'
 
 import { COLLABORATOR_DISCONNECT_TIME } from '../services/SyncService.ts'
 

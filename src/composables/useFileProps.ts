@@ -4,7 +4,7 @@
  */
 
 import type { InjectionKey } from 'vue'
-import type { Context } from './useConnection.ts'
+import type { Context } from '../types/Context.ts'
 
 import { inject, provide } from 'vue'
 

@@ -24,7 +24,7 @@
 
 <script setup lang='ts'>
 import type { ComponentInstance, ShallowRef } from 'vue'
-import type { Context } from '../composables/useConnection.ts'
+import type { Context } from '../types/Context.ts'
 
 import { useTemplateRef } from 'vue'
 import EditorReloader from '../components/EditorReloader.vue'

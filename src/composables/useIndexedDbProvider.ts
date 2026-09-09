@@ -4,7 +4,7 @@
  */
 
 import type { Doc } from 'yjs'
-import type { Context } from './useConnection.ts'
+import type { Context } from '../types/Context.ts'
 
 import { readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
