@@ -84,6 +84,7 @@ OC.L10N.register(
     "Table column removed" : "Colonne de tableau supprimée",
     "Table column changed" : "Colonne de tableau modifiée",
     "Section: {section}" : "Section : {section}",
+    "Change pages" : "Pages des modifications",
     "Previous" : "Précédent",
     "Showing changes {from}–{to} of {total}" : "Affichage des modifications {from}–{to} sur {total}",
     "Next" : "Suivant",
