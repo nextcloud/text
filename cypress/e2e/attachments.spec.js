@@ -146,7 +146,7 @@ function waitForRequestAndCheckAttachment(
 		// the name of the created file on NC side is returned in the response
 		const fileId = req.response.body.id
 		const fileName = req.response.body.name
-		const documentId = req.response.body.documentId
+		const documentId = req.request.query.documentId || req.request.body.documentId
 		const dirname = req.response.body.dirname
 
 		return check(documentId, dirname, fileName, fileId, index, isImage)
@@ -175,14 +175,14 @@ describe('Test all attachment insertion methods', () => {
 		cy.showHiddenFiles()
 	})
 
-	it.only('See test files in the list and display hidden files', () => {
+	it('See test files in the list and display hidden files', () => {
 		cy.visit('/apps/files')
 		cy.getFile('test.md')
 		cy.getFile('github.png')
 		cy.getFile('.hidden')
 	})
 
-	it.only('Insert an image file from Files', () => {
+	it('Insert an image file from Files', () => {
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
 
@@ -323,7 +323,7 @@ describe('Test all attachment insertion methods', () => {
 
 			return cy.wait('@' + requestAlias).then((req) => {
 				const fileName = req.response.body.name // server echoes back name with RTLO
-				const documentId = req.response.body.documentId
+				const documentId = req.request.query.documentId || req.request.body.documentId
 
 				// insertAttachment strips RTLO from the name before building the src URL and the
 				// alt text. The src URL no longer matches the on-disk filename (which still has
