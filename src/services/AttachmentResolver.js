@@ -12,7 +12,7 @@ export default class AttachmentResolver {
 	#user
 	#shareToken
 	#currentDirectory
-	#documentId
+	#fileId
 	#initAttachmentListPromise
 	#attachmentList = []
 
@@ -21,15 +21,16 @@ export default class AttachmentResolver {
 		this.#user = user
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
-		this.#documentId = session.documentId
+		this.#fileId = fileId
 	}
 
 	async #updateAttachmentList() {
 		const response = await axios.post(generateUrl('/apps/text/attachments'), {
-			documentId: this.#session?.documentId ?? this.#documentId,
+			documentId: this.#session?.documentId,
 			sessionId: this.#session?.id,
 			sessionToken: this.#session?.token,
 			shareToken: this.#shareToken,
+			fileId: this.#fileId,
 		})
 		this.#attachmentList = response.data
 	}
