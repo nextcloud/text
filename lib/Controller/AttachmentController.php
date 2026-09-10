@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
+use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
@@ -70,6 +71,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		private IMimeTypeDetector $mimeTypeDetector,
 		private AttachmentService $attachmentService,
 		private ShareManager $shareManager,
+		private DocumentMapper $documentMapper,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -77,12 +79,14 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSessionOrUserOrShareToken]
-	public function getAttachmentList(string $shareToken = ''): DataResponse {
-		$documentId = $this->getDocumentId();
+	public function getAttachmentList(int $fileId = 0, string $shareToken = ''): DataResponse {
 		try {
 			$session = $this->getSession();
-		} catch (InvalidSessionException) {
+			$documentId = $this->getDocumentId();
+		} catch (InvalidSessionException $e) {
 			$session = null;
+			$document = $this->documentMapper->load('file', $fileId);
+			$documentId = $document->id;
 		}
 		$auth = $this->getAuth($shareToken, false);
 		$attachments = $this->attachmentService->getAttachmentList($documentId, $auth, $session);
