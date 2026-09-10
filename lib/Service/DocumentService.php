@@ -41,6 +41,7 @@ use OCP\IUser;
 use OCP\Lock\LockedException;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use function json_encode;
 
 class DocumentService {
@@ -80,7 +81,7 @@ class DocumentService {
 		}
 	}
 
-	public function getDocument(int $id): ?Document {
+	public function getDocument(string $id): ?Document {
 		try {
 			return $this->documentMapper->find($id);
 		} catch (DoesNotExistException|NotFoundException) {
@@ -111,6 +112,7 @@ class DocumentService {
 
 		$this->logger->info('Create new document of ' . $document->toString());
 		try {
+			$document->generateId();
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
 			$this->cache->set('document-version-' . $document->id, 0);
@@ -127,12 +129,12 @@ class DocumentService {
 		return $document;
 	}
 
-	public function getDocumentData(Document $document): DocumentData {
+	public function getDocumentData(string $documentId, Document $document): DocumentData {
 		$documentState = null;
 		if ($document->getLastSavedVersion() > 0) {
 			$this->logger->debug('Loading saved document state for ' . $document->toString());
 			try {
-				$stateFile = $this->getStateFile($document->id);
+				$stateFile = $this->getStateFile($documentId);
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException) {
 				// If we have no state file we need to load the content from the file
@@ -150,11 +152,11 @@ class DocumentService {
 	}
 
 	/**
-	 * @param int $documentId
+	 * @param string $documentId
 	 * @return ISimpleFile
 	 * @throws NotFoundException
 	 */
-	public function getStateFile(int $documentId): ISimpleFile {
+	public function getStateFile(string $documentId): ISimpleFile {
 		$filename = $documentId . '.yjs';
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
@@ -190,21 +192,21 @@ class DocumentService {
 	}
 
 	/**
-	 * @param int $documentId
+	 * @param string $documentId
 	 *
 	 * @return ISimpleFile
 	 * @throws NotPermittedException
 	 */
-	public function createStateFile(int $documentId): ISimpleFile {
+	public function createStateFile(string $documentId): ISimpleFile {
 		$filename = $documentId . '.yjs';
 		return $this->appData->getFolder('documents')->newFile($filename);
 	}
 
 	/**
-	 * @param int $documentId
+	 * @param string $documentId
 	 * @param string $content
 	 */
-	public function writeDocumentState(int $documentId, string $content): void {
+	public function writeDocumentState(string $documentId, string $content): void {
 		try {
 			$documentStateFile = $this->getStateFile($documentId);
 		} catch (NotFoundException) {
@@ -245,7 +247,7 @@ class DocumentService {
 			$id = $document->getContextId();
 			$context = $this->contextManager->getContext($type, $id, $auth);
 			if (!$context->isReadOnly()) {
-				$this->insertSteps($document, $session, $stepsToInsert);
+				$this->insertSteps($documentId, $session, $stepsToInsert);
 			}
 		}
 
@@ -289,7 +291,7 @@ class DocumentService {
 	}
 
 	/**
-	 * @param Document $document
+	 * @param string $documentId
 	 * @param Session $session
 	 * @param Step[] $steps
 	 *
@@ -298,34 +300,34 @@ class DocumentService {
 	 *
 	 * @psalm-param non-empty-list<mixed> $steps
 	 */
-	private function insertSteps(Document $document, Session $session, array $steps): void {
+	private function insertSteps(string $documentId, Session $session, array $steps): void {
 		$stepsVersion = null;
 		try {
 			$stepsJson = json_encode($steps, JSON_THROW_ON_ERROR);
-			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+			$stepsVersion = $this->stepMapper->getLatestVersion($documentId);
 			$step = new Step();
 			$step->setData($stepsJson);
 			$step->setSessionId($session->getId());
-			$step->setDocumentId($document->getId());
+			$step->setDocumentId($documentId);
 			$step->setVersion(Step::VERSION_STORED_IN_ID);
 			$step->setTimestamp(time());
 			$step = $this->stepMapper->insert($step);
 			$newVersion = $step->getId();
-			$this->logger->debug('Adding steps to ' . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
-			$this->cache->set('document-version-' . $document->getId(), $newVersion);
+			$this->logger->debug('Adding steps to ' . $documentId . ": bumping version from $stepsVersion to $newVersion");
+			$this->cache->set('document-version-' . $documentId, $newVersion);
 			// TODO write steps to cache for quicker reading
 		} catch (\Throwable $e) {
 			if ($stepsVersion !== null) {
 				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
-				$this->cache->set('document-version-' . $document->getId(), $stepsVersion);
-				$this->stepMapper->deleteAfterVersion($document->getId(), $stepsVersion);
+				$this->cache->set('document-version-' . $documentId, $stepsVersion);
+				$this->stepMapper->deleteAfterVersion($documentId, $stepsVersion);
 			}
 			throw $e;
 		}
 	}
 
 	/** @return Step[] */
-	public function getSteps(int $documentId, int $lastVersion): array {
+	public function getSteps(string $documentId, int $lastVersion): array {
 		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
 			return [];
 		}
@@ -349,6 +351,9 @@ class DocumentService {
 	 * @throws Exception
 	 */
 	public function autosave(Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force = false, bool $manualSave = false): Document {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs an id to autosave');
+		}
 		if ($context->isReadOnly()) {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
@@ -437,13 +442,15 @@ class DocumentService {
 		$contextString = $contextType . '(' . $contextId . ')';
 
 		$document = $this->documentMapper->load($contextType, $contextId);
-		if (!$document) {
+		if (!$document || $document->id === null) {
 			// no document found for the file in question - so nothing to reset.
 			$this->logger->info('did not find document - document not reset.' . $contextString);
 			return;
 		}
 
-		if (!$force && $this->hasUnsavedChanges($document)) {
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->id) ?: 0;
+		$docVersion = $document->getLastSavedVersion();
+		if (!$force && $stepsVersion !== $docVersion) {
 			$this->logger->debug('Did not reset document with unsaved changes for ' . $contextString);
 			throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 		}
@@ -467,12 +474,6 @@ class DocumentService {
 
 	public function getAllWithNoActiveSession(): \Generator {
 		return $this->documentMapper->findAllWithNoActiveSessions();
-	}
-
-	public function hasUnsavedChanges(Document $document): bool {
-		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId()) ?: 0;
-		$docVersion = $document->getLastSavedVersion();
-		return $stepsVersion !== $docVersion;
 	}
 
 	private function ensureDocumentsFolder(): bool {

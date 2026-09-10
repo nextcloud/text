@@ -50,7 +50,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCreateNewSession() {
 		$document = new Document();
-		$document->setId(123);
+		$document->generateId();
 		$context = $this->createMock(IContext::class);
 		$documentData = new DocumentData(document: $document, documentState: 'documentState');
 		$sessionInfo = new SessionInfo(content: 'content', readOnly: false, lock: null, hasOwner: true);
@@ -79,6 +79,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$session->setDocumentId(123);
 
 		$document = new Document();
+		$document->generateId();
 		$user = $this->createStub(IUser::class);
 
 		$this->documentService->method('autosave')->willThrowException(new  \OCP\Files\NotPermittedException());

@@ -4,7 +4,7 @@
  */
 
 import type { OpenData } from '../apis/connect.ts'
-import type { Step } from '../services/SyncService.ts'
+import type { Step } from '../types/Step.ts'
 
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'

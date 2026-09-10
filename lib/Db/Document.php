@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -7,10 +9,10 @@
 
 namespace OCA\Text\Db;
 
-use OCP\AppFramework\Db\Entity;
+use OCP\AppFramework\Db\SnowflakeAwareEntity;
+use OCP\DB\Types;
 
 /**
- * @method getId(): int
  * @method getCurrentVersion(): int
  * @method setCurrentVersion(int $version): void
  * @method getLastSavedVersion(): int
@@ -30,7 +32,10 @@ use OCP\AppFramework\Db\Entity;
  * @method getContextId(): int
  * @method setContextId(int $contextId): void
  */
-class Document extends Entity implements \JsonSerializable {
+class Document extends SnowflakeAwareEntity implements \JsonSerializable {
+	/** @var ?string $id
+	 * @psalm-suppress NonInvariantDocblockPropertyType
+	 */
 	public $id = null;
 	// TODO: Remove obsolete field `currentVersion`
 	protected int $currentVersion = 0;
@@ -44,18 +49,19 @@ class Document extends Entity implements \JsonSerializable {
 	protected int $contextId = 0;
 
 	public function __construct() {
-		$this->addType('currentVersion', 'integer');
-		$this->addType('lastSavedVersion', 'integer');
-		$this->addType('lastSavedVersionTime', 'integer');
-		$this->addType('initialVersion', 'integer');
-		$this->addType('checksum', 'string');
-		$this->addType('contextType', 'string');
-		$this->addType('contextId', 'integer');
+		$this->addType('id', Types::STRING);
+		$this->addType('currentVersion', Types::INTEGER);
+		$this->addType('lastSavedVersion', Types::INTEGER);
+		$this->addType('lastSavedVersionTime', Types::INTEGER);
+		$this->addType('initialVersion', Types::INTEGER);
+		$this->addType('checksum', Types::STRING);
+		$this->addType('contextType', Types::STRING);
+		$this->addType('contextId', Types::INTEGER);
 	}
 
 	public function jsonSerialize(): array {
 		return [
-			'id' => $this->getId(),
+			'id' => $this->id,
 			'lastSavedVersion' => $this->lastSavedVersion,
 			'lastSavedVersionTime' => $this->lastSavedVersionTime,
 			'baseVersionEtag' => $this->baseVersionEtag,

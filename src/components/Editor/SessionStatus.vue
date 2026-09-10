@@ -41,7 +41,7 @@ import OfflineState from './OfflineState.vue'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
-import { ERROR_TYPE } from '../../services/SyncService.ts'
+import { ERROR_TYPE } from '../../types/ErrorType.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {

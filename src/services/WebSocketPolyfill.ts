@@ -4,7 +4,8 @@
  */
 
 import type { OpenData } from '../apis/connect.ts'
-import type { Step, SyncService } from './SyncService.ts'
+import type { Step } from '../types/Step.ts'
+import type { SyncService } from './SyncService.ts'
 
 import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.ts'
 import { logger } from '../helpers/logger.js'
@@ -38,7 +39,7 @@ export default function initWebSocketPolyfill(syncService: SyncService) {
 		#onSync
 		#onOpened
 		#processingVersion = 0
-		#documentId = 0
+		#documentId: string | undefined
 
 		constructor(url: string) {
 			this.#notifyPushBus = getNotifyBus()
@@ -130,7 +131,7 @@ export default function initWebSocketPolyfill(syncService: SyncService) {
 		#onNotifyPush({
 			messageBody,
 		}: {
-			messageBody: { documentId: number, steps: string[] }
+			messageBody: { documentId: string, steps: string[] }
 		}) {
 			debug('WebSocketPolyfill#onNotifyPush', messageBody)
 			if (messageBody.documentId !== this.#documentId) {

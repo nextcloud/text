@@ -115,8 +115,9 @@ import { CollaborationCaret } from '../extensions/index.js'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
 import { logger } from '../helpers/logger.ts'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
-import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
+import { IDLE_TIMEOUT } from '../services/SyncService.ts'
 import { fetchNode } from '../services/WebdavClient.ts'
+import { ERROR_TYPE } from '../types/ErrorType.ts'
 import {
 	createPlainEditor,
 	createRichEditor,

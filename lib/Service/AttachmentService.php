@@ -12,11 +12,9 @@ namespace OCA\Text\Service;
 use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Files_Sharing\SharedStorage;
-use OCA\Text\Context\ContextManager;
+use OCA\Text\Context\IContext;
 use OCA\Text\Controller\AttachmentController;
-use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
-use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IFilenameValidator;
@@ -31,7 +29,6 @@ use OCP\IPreview;
 use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\IUser;
-use OCP\IUserManager;
 use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
@@ -48,9 +45,6 @@ readonly class AttachmentService {
 		private IFilenameValidator $filenameValidator,
 		private IFilesMetadataManager $filesMetadataManager,
 		private ISession $session,
-		private DocumentMapper $documentMapper,
-		private ContextManager $contextManager,
-		private IUserManager $userManager,
 	) {
 	}
 
@@ -62,8 +56,8 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getImageFile(int $documentId, string $imageFileName, IShare|IUser $auth, bool $preferRawImage): File|ISimpleFile|null {
-		$textFile = $this->getTextFile($documentId, $auth);
+	public function getImageFile(IContext $context, string $imageFileName, bool $preferRawImage): File|ISimpleFile|null {
+		$textFile = $this->getTextFile($context);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
@@ -102,8 +96,8 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 * @throws NoUserException
 	 */
-	public function getMediaFile(int $documentId, string $mediaFileName, IShare|IUser $auth): ?File {
-		$textFile = $this->getTextFile($documentId, $auth);
+	public function getMediaFile(IContext $context, string $mediaFileName): ?File {
+		$textFile = $this->getTextFile($context);
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
 
@@ -128,8 +122,8 @@ readonly class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function getMediaFilePreview(int $documentId, string $mediaFileName, IShare|IUser $auth): ?array {
-		$textFile = $this->getTextFile($documentId, $auth);
+	public function getMediaFilePreview(IContext $context, string $mediaFileName): ?array {
+		$textFile = $this->getTextFile($context);
 		return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
 	}
 
@@ -170,8 +164,8 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getAttachmentList(int $documentId, IShare|IUser $auth, ?Session $session = null): array {
-		$textFile = $this->getTextFile($documentId, $auth);
+	public function getAttachmentList(IContext $context, IShare|IUser $auth, ?Session $session = null): array {
+		$textFile = $this->getTextFile($context);
 		try {
 
 			$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
@@ -183,8 +177,8 @@ readonly class AttachmentService {
 			? '&shareToken=' . rawurlencode($auth->getToken())
 			: '';
 		$urlParamsBase = $session
-			? '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . rawurlencode($session->getToken()) . $shareTokenUrlString
-			: '?documentId=' . $documentId . $shareTokenUrlString;
+			? '?documentId=' . $session->getDocumentId() . '&sessionId=' . $session->getId() . '&sessionToken=' . rawurlencode($session->getToken()) . $shareTokenUrlString
+			: '?fileId=' . $context->getId() . $shareTokenUrlString;
 
 		$attachments = [];
 
@@ -242,7 +236,7 @@ readonly class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function uploadAttachment(int $documentId, string $newFileName, $newFileResource, IShare|IUser $auth): array {
+	public function uploadAttachment(IContext $context, string $newFileName, $newFileResource, IShare|IUser $auth): array {
 
 		if ($auth instanceof IShare && $auth->getPassword() !== null) {
 			$key = PublicAuth::DAV_AUTHENTICATED;
@@ -261,7 +255,7 @@ readonly class AttachmentService {
 			}
 		}
 
-		$textFile = $this->getTextFile($documentId, $auth);
+		$textFile = $this->getTextFile($context);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = self::getUniqueFileName($saveDir, $newFileName);
 		$this->filenameValidator->validateFilename($fileName);
@@ -270,7 +264,6 @@ readonly class AttachmentService {
 			'name' => $fileName,
 			'dirname' => $saveDir->getName(),
 			'id' => $savedFile->getId(),
-			'documentId' => $documentId,
 		];
 	}
 
@@ -282,8 +275,8 @@ readonly class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function insertAttachmentFile(int $documentId, string $path, IUser $user): array {
-		$textFile = $this->getTextFile($documentId, $user);
+	public function insertAttachmentFile(IContext $context, string $path, IUser $user): array {
+		$textFile = $this->getTextFile($context);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
@@ -296,7 +289,6 @@ readonly class AttachmentService {
 			'name' => $fileName,
 			'dirname' => $saveDir->getName(),
 			'id' => $targetFile->getId(),
-			'documentId' => $documentId,
 			'mimetype' => $targetFile->getMimetype(),
 		];
 	}
@@ -309,8 +301,8 @@ readonly class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function createAttachmentFile(int $documentId, string $newFileName, IUser $user): array {
-		$textFile = $this->getTextFile($documentId, $user);
+	public function createAttachmentFile(IContext $context, string $newFileName, IUser $user): array {
+		$textFile = $this->getTextFile($context);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
@@ -321,7 +313,6 @@ readonly class AttachmentService {
 			'name' => $newFile->getName(),
 			'dirname' => $saveDir->getName(),
 			'id' => $newFile->getId(),
-			'documentId' => $documentId,
 			'mimetype' => $newFile->getMimetype(),
 		];
 	}
@@ -420,24 +411,14 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	private function getTextFile(int $documentId, IShare|IUser $auth): File {
-		try {
-			$document = $this->documentMapper->find($documentId);
-		} catch (DoesNotExistException $e) {
-			throw new NotFoundException('Text file for document '
-				. $documentId
-				. ' was not found.', 0, $e);
-		}
-		$type = $document->getContextType();
-		$id = $document->getContextId();
-		$context = $this->contextManager->getContext($type, $id, $auth);
+	private function getTextFile(IContext $context): File {
 		$file = $context->getFile();
 		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 			return $file;
 		}
-		throw new NotFoundException('Text file for document '
-			. $documentId
-			. ' was not found.'
+		throw new NotFoundException('Text file for '
+			. $context->toString()
+			. ' was not found or download is disabled.'
 		);
 	}
 

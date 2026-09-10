@@ -145,13 +145,15 @@ class SessionMapperTest extends \Test\TestCase {
 		$eightDaysAgo = time() - (8 * 24 * 60 * 60);
 
 		// Create document
-		$document = $this->documentMapper->insert(Document::fromParams([
+		$document = Document::fromParams([
 			'contextId' => 123,
 			'contextType' => 'file',
 			'currentVersion' => 0,
 			'lastSavedVersion' => 100,
 			'lastSavedVersionTime' => time()
-		]));
+		]);
+		$document->generateId();
+		$document = $this->documentMapper->insert($document);
 
 		// Create Orphaned step without document (delete)
 		$this->stepMapper->insert(Step::fromParams([
@@ -165,7 +167,7 @@ class SessionMapperTest extends \Test\TestCase {
 		$this->stepMapper->insert(Step::fromParams([
 			'id' => 1,
 			'sessionId' => 99999,
-			'documentId' => $document->getId(),
+			'documentId' => $document->id,
 			'data' => 'ORPHANED_OLD_VERSION',
 			'timestamp' => $eightDaysAgo,
 			'version' => 1
@@ -175,7 +177,7 @@ class SessionMapperTest extends \Test\TestCase {
 		$this->stepMapper->insert(Step::fromParams([
 			'id' => 100,
 			'sessionId' => 99999,
-			'documentId' => $document->getId(),
+			'documentId' => $document->id,
 			'data' => 'ORPHANED_CURRENT_VERSION',
 			'version' => 2
 		]));
@@ -184,14 +186,14 @@ class SessionMapperTest extends \Test\TestCase {
 		$this->stepMapper->insert(Step::fromParams([
 			'id' => 101,
 			'sessionId' => 99999,
-			'documentId' => $document->getId(),
+			'documentId' => $document->id,
 			'data' => 'ORPHANED_NEW_VERSION',
 			'timestamp' => $eightDaysAgo,
 			'version' => 3
 		]));
 
 		// Verify steps for document 1 and 99999
-		self::assertCount(3, $this->stepMapper->find(1, 0));
+		self::assertCount(3, $this->stepMapper->find($document->id, 0));
 		self::assertCount(1, $this->stepMapper->find(99999, 0));
 
 		// Delete orphaned steps older than 7 days
