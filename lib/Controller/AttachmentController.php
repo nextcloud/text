@@ -86,6 +86,9 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		} catch (InvalidSessionException $e) {
 			$session = null;
 			$document = $this->documentMapper->load('file', $fileId);
+			if ($document === null || $document->id === null) {
+				throw new InvalidSessionException('', 0, $e);
+			}
 			$documentId = $document->id;
 		}
 		$auth = $this->getAuth($shareToken, false);
