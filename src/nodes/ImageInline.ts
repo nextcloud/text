@@ -35,12 +35,15 @@ const ImageInline = TiptapImage.extend<ImageOptions>({
 	},
 
 	parseHTML() {
+		if (!this.options.allowBase64) {
+			return [{ tag: 'img[src]:not([src^="data:"])' }]
+		}
+		// With base64 parsing on, admit a data: URI only when its mime type is an
+		// image one. A data:text/html src then never becomes a node, so the parse
+		// rule does not have to rely on the content security policy alone.
 		return [
-			{
-				tag: this.options.allowBase64
-					? 'img[src]'
-					: 'img[src]:not([src^="data:"])',
-			},
+			{ tag: 'img[src]:not([src^="data:"])' },
+			{ tag: 'img[src^="data:image/"]' },
 		]
 	},
 
@@ -49,6 +52,9 @@ const ImageInline = TiptapImage.extend<ImageOptions>({
 			...this.parent?.() as ImageOptions,
 			noLazyImages: false,
 			inline: true,
+			// See Image.ts: data: URI images must survive an edit round-trip
+			// instead of being dropped on save (issue #9108).
+			allowBase64: true,
 		}
 	},
 
