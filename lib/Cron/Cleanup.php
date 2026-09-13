@@ -18,7 +18,7 @@ use OCP\BackgroundJob\TimedJob;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
-	private const ABANDONED_UNSAVED_CHANGES_AGE = 30 * 24 * 60 * 60;
+	private const int ABANDONED_UNSAVED_CHANGES_AGE = 30 * 24 * 60 * 60;
 
 	public function __construct(
 		ITimeFactory $time,
