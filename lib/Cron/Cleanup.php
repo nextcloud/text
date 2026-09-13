@@ -18,7 +18,7 @@ use OCP\BackgroundJob\TimedJob;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
-	private const int ABANDONED_UNSAVED_CHANGES_AGE = 30 * 24 * 60 * 60;
+	private const string ABANDONED_UNSAVED_CHANGES_AGE = '-30 days';
 
 	public function __construct(
 		ITimeFactory $time,
@@ -36,13 +36,14 @@ class Cleanup extends TimedJob {
 	 */
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
+		$cutoff = $this->time->getDateTime(self::ABANDONED_UNSAVED_CHANGES_AGE)->getTimestamp();
 		foreach ($this->documentService->getAllWithNoActiveSession() as $document) {
 			$documentId = $document->getId();
 			try {
 				$this->documentService->resetDocument($documentId);
 			} catch (DocumentHasUnsavedChangesException) {
 				$lastStepTime = $this->documentService->getLatestStepTimestamp($documentId);
-				if ($lastStepTime === null || $lastStepTime >= $this->time->getTime() - self::ABANDONED_UNSAVED_CHANGES_AGE) {
+				if ($lastStepTime === null || $lastStepTime >= $cutoff) {
 					continue;
 				}
 				$this->documentService->resetDocument($documentId, true);

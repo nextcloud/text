@@ -65,7 +65,7 @@ class StepMapper extends QBMapper {
 			->orderBy('id', 'DESC')
 			->executeQuery();
 
-		$data = $result->fetch();
+		$data = $result->fetchAssociative();
 		$result->closeCursor();
 		if ($data === false) {
 			return null;
