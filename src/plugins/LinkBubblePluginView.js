@@ -62,6 +62,7 @@ class LinkBubblePluginView {
 			props: {
 				editor: this.options.editor,
 				href: null,
+				nodeStart: null,
 			},
 			editor: this.options.editor,
 		})
@@ -112,6 +113,7 @@ class LinkBubblePluginView {
 
 		this.#component?.updateProps({
 			href: domHref(mark),
+			nodeStart,
 		})
 
 		const clientRect = referenceEl?.getBoundingClientRect()
