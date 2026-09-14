@@ -10,8 +10,8 @@ declare(strict_types = 1);
 namespace OCA\Text\Service;
 
 use OCP\Files\File;
-use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\NotFoundException;
 use OCP\SystemTag\ISystemTagObjectMapper;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,7 +22,7 @@ class AiTagServiceTest extends TestCase {
 	private ISystemTagObjectMapper&MockObject $systemTagObjectMapper;
 	private IRootFolder&MockObject $rootFolder;
 	private LoggerInterface&MockObject $logger;
-	private Folder&MockObject $userFolder;
+	private IUserFolder&MockObject $userFolder;
 	private AiTagService $service;
 
 	protected function setUp(): void {
@@ -30,7 +30,7 @@ class AiTagServiceTest extends TestCase {
 		$this->systemTagObjectMapper = $this->createMock(ISystemTagObjectMapper::class);
 		$this->rootFolder = $this->createMock(IRootFolder::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
-		$this->userFolder = $this->createMock(Folder::class);
+		$this->userFolder = $this->createMock(IUserFolder::class);
 
 		$this->rootFolder->method('getUserFolder')
 			->with('testUser')
