@@ -7,8 +7,8 @@ use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Constants;
 use OCP\Files\File;
-use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\NotPermittedException;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -36,7 +36,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGetFileById() {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
 		$file = $this->createMock(\OCP\Files\File::class);
@@ -47,7 +47,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGetFileByIdSortUpdatableFirst() {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
 		$file1 = $this->createMock(\OCP\Files\File::class);
@@ -60,7 +60,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGetFileByIdNoRead() {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
 		$file = $this->createMock(\OCP\Files\File::class);
@@ -131,9 +131,9 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	private function invokeGetDocumentIdFromShare(int $fileId, IShare $share): int {
 		$this->shareManager->method('getShareByToken')->willReturn($share);
 
-		$folder = $this->createMock(Folder::class);
-		$folder->method('getFirstNodeById')->willReturn($this->createMock(File::class));
-		$this->rootFolder->method('getUserFolder')->with('owner')->willReturn($folder);
+		$userFolder = $this->createMock(IUserFolder::class);
+		$userFolder->method('getFirstNodeById')->willReturn($this->createMock(File::class));
+		$this->rootFolder->method('getUserFolder')->with('owner')->willReturn($userFolder);
 
 		return $this->fileService->getDocumentIdFromShare($fileId, 'token');
 	}
