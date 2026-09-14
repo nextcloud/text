@@ -90,6 +90,7 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { getMarkRange } from '@tiptap/core'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { NcReferenceList } from '@nextcloud/vue/components/NcRichText'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
@@ -99,7 +100,6 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import PreviewOptions from '../Editor/PreviewOptions.vue'
 import { useOpenLinkHandler } from '../../composables/useOpenLinkHandler.ts'
-import { logger } from '../../helpers/logger.ts'
 import * as Link from '../../marks/Link.ts'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
@@ -126,6 +126,11 @@ export default {
 
 		href: {
 			type: String,
+			default: null,
+		},
+
+		nodeStart: {
+			type: Number,
 			default: null,
 		},
 	},
@@ -227,6 +232,27 @@ export default {
 			this.openLinkHandler.openLink(href)
 		},
 
+		linkRange() {
+			if (this.nodeStart === null) {
+				return null
+			}
+			const { doc, schema } = this.editor.state
+			try {
+				return getMarkRange(doc.resolve(this.nodeStart), schema.marks.link) ?? null
+			} catch {
+				return null
+			}
+		},
+
+		/**
+		 * Command chain with the active link selected, so commands apply to it
+		 */
+		chainOnLink() {
+			const chain = this.editor.chain()
+			const range = this.linkRange()
+			return range ? chain.setTextSelection(range) : chain
+		},
+
 		onReferenceListLoaded() {
 			this.referenceTitle
 				= this.$refs.referencelist.firstReference?.openGraphObject?.name
@@ -234,7 +260,10 @@ export default {
 		},
 
 		setPreview() {
-			this.editor.chain().hideLinkBubble().setPreview().run()
+			this.chainOnLink()
+				.hideLinkBubble()
+				.setPreview()
+				.run()
 		},
 
 		startEdit() {
@@ -270,9 +299,7 @@ export default {
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			logger.debug('selection', selection)
-			this.editor
-				.chain()
+			this.chainOnLink()
 				.extendMarkRange('link')
 				.setLink({ href })
 				.setTextSelection({ from, to })
@@ -281,8 +308,7 @@ export default {
 		},
 
 		removeLink() {
-			this.editor
-				.chain()
+			this.chainOnLink()
 				// Explicitly hide bubble to prevent flickering before it's removed
 				.hideLinkBubble()
 				.unsetLink()
