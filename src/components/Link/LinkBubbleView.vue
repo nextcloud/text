@@ -90,6 +90,7 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { getMarkRange } from '@tiptap/core'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
@@ -125,6 +126,11 @@ export default {
 		},
 		href: {
 			type: String,
+			default: null,
+		},
+
+		nodeStart: {
+			type: Number,
 			default: null,
 		},
 	},
@@ -220,6 +226,27 @@ export default {
 			this.openLinkHandler.openLink(href)
 		},
 
+		linkRange() {
+			if (this.nodeStart === null) {
+				return null
+			}
+			const { doc, schema } = this.editor.state
+			try {
+				return getMarkRange(doc.resolve(this.nodeStart), schema.marks.link) ?? null
+			} catch {
+				return null
+			}
+		},
+
+		/**
+		 * Command chain with the active link selected, so commands apply to it
+		 */
+		chainOnLink() {
+			const chain = this.editor.chain()
+			const range = this.linkRange()
+			return range ? chain.setTextSelection(range) : chain
+		},
+
 		onReferenceListLoaded() {
 			this.referenceTitle =
 				this.$refs.referencelist.firstReference?.openGraphObject?.name
@@ -227,7 +254,10 @@ export default {
 		},
 
 		setPreview() {
-			this.editor.chain().hideLinkBubble().setPreview().run()
+			this.chainOnLink()
+				.hideLinkBubble()
+				.setPreview()
+				.run()
 		},
 
 		startEdit() {
@@ -263,9 +293,7 @@ export default {
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			console.debug('selection', selection)
-			this.editor
-				.chain()
+			this.chainOnLink()
 				.extendMarkRange('link')
 				.setLink({ href })
 				.setTextSelection({ from, to })
@@ -274,8 +302,7 @@ export default {
 		},
 
 		removeLink() {
-			this.editor
-				.chain()
+			this.chainOnLink()
 				// Explicitly hide bubble to prevent flickering before it's removed
 				.hideLinkBubble()
 				.unsetLink()
