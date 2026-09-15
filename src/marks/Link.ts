@@ -13,6 +13,7 @@ import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { logger } from '../helpers/logger.ts'
 import { linkPill } from '../plugins/linkPill.ts'
+import { focusLinkBubbleInput } from '../plugins/links.ts'
 import { linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
@@ -228,7 +229,14 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					return false
 				}
 				logger.debug('toggle link for selection')
-				return this.editor.commands.toggleLink({ href: '' })
+				return this.editor
+					.chain()
+					.toggleLink({ href: '' })
+					.command(({ state, dispatch }) => {
+						focusLinkBubbleInput(state, dispatch)
+						return true
+					})
+					.run()
 			},
 		}
 	},
