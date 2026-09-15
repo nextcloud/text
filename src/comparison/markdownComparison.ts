@@ -51,6 +51,12 @@ export class ComparisonProjectionError extends Error {
 	}
 }
 
+/**
+ * Check each snapshot against the rendered comparison character, line and line-length limits.
+ *
+ * @param before Earlier Markdown snapshot.
+ * @param after Later Markdown snapshot.
+ */
 export function exceedsRenderedComparisonLimit(before: string, after: string): boolean {
 	return [before, after].some((content) => {
 		if (content.length > LIMITS.maximumCharactersPerSnapshot) {
@@ -74,6 +80,15 @@ export function exceedsRenderedComparisonLimit(before: string, after: string): b
 }
 
 let pluginId = 0
+/**
+ * Create an independently keyed decoration plugin for one unchanged comparison document.
+ * Projection errors propagate; document edits clear the decorations.
+ *
+ * @param descriptors Original-coordinate change descriptors.
+ * @param side Document side to decorate.
+ * @param markerLabel Localized accessible label for change markers.
+ * @param initialState Active and selected descriptor IDs; all descriptors start active by default.
+ */
 export function createComparisonDecorationPlugin(descriptors: readonly Descriptor[], side: Side, markerLabel: string, initialState: State = { activeIds: descriptors.map(({ id }) => id), currentIds: [] }) {
 	const key = new ProseMirrorPluginKey<PluginState>(`markdown-comparison-${side}-${pluginId++}`)
 	const plugin = new Plugin<PluginState>({
@@ -103,6 +118,13 @@ export function createComparisonDecorationPlugin(descriptors: readonly Descripto
 	return { key, plugin }
 }
 
+/**
+ * Dispatch a metadata-only transaction to update active and current decorations.
+ *
+ * @param editor Mounted editor receiving the update.
+ * @param key Key returned with its comparison plugin.
+ * @param state Active and selected descriptor IDs.
+ */
 export function setComparisonDecorationState(editor: Editor, key: ComparisonDecorationKey, state: State) {
 	editor.view.dispatch(editor.state.tr.setMeta(key, state))
 }
@@ -127,6 +149,14 @@ function normalizeDecorationState(descriptors: readonly Descriptor[], state: Sta
 	}
 }
 
+/**
+ * Project nonempty descriptor ranges onto original document nodes without altering content.
+ * Empty ranges need no decoration; unprojectable ranges throw ComparisonProjectionError.
+ *
+ * @param doc Document to decorate.
+ * @param descriptors Change descriptors in original coordinates.
+ * @param side Descriptor side to project.
+ */
 export function prepareComparisonDecorations(doc: Node, descriptors: readonly Descriptor[], side: Side) {
 	const index = createComparisonDocumentIndex(doc)
 	return descriptors.flatMap((descriptor): Prepared[] => {

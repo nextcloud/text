@@ -24,6 +24,13 @@ export interface MarkdownContentComparisonInstance {
 	destroy: () => void
 }
 
+/**
+ * Replace the mount children with a comparison and return an idempotent destroy handle.
+ * Detached mounts are supported: readiness means initialization or fallback, not visible geometry.
+ * Invalid inputs reject. The loaded callback is awaited, but its errors do not remove the comparison.
+ *
+ * @param options Mount, snapshots, resource context and optional loaded/link callbacks.
+ */
 export async function createMarkdownContentComparison(options: MarkdownContentComparisonOptions): Promise<MarkdownContentComparisonInstance> {
 	if (!(options?.el instanceof HTMLElement)) {
 		throw new TypeError('Comparison el must be an HTMLElement')

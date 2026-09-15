@@ -43,6 +43,9 @@ type Region = ComparisonAlignmentRegion
 type Pair = ExactComparisonPair
 type Ledger = ComparisonWorkLedger
 
+/**
+ * Create a mutable work budget shared by all axes of one comparison.
+ */
 export function createComparisonWorkLedger(): Ledger {
 	return {
 		remainingCells: DEFAULT_COMPARISON_CELL_LEDGER,
@@ -50,6 +53,11 @@ export function createComparisonWorkLedger(): Ledger {
 	}
 }
 
+/**
+ * Keep only pairs present in every longest increasing alignment.
+ *
+ * @param pairs Candidate indices on the Before and After axes.
+ */
 export function forcedIncreasingPairs(pairs: readonly Pair[]): readonly Pair[] {
 	if (pairs.length < 2) {
 		return pairs
@@ -73,6 +81,11 @@ export function forcedIncreasingPairs(pairs: readonly Pair[]): readonly Pair[] {
 		&& candidatesPerLevel[left[index]!] === 1)
 }
 
+/**
+ * Find a strictly increasing subsequence and the best length ending at each input index.
+ *
+ * @param values Axis indices in candidate order.
+ */
 export function increasingSubsequence(values: readonly number[]) {
 	const tails: number[] = []
 	const previous = new Int32Array(values.length).fill(-1)
@@ -100,6 +113,13 @@ export function increasingSubsequence(values: readonly number[]) {
 	return { lengths, indices: indices.reverse() }
 }
 
+/**
+ * Align an axis around unique exact matches, preserving coarse regions when attribution is uncertain.
+ *
+ * @param before Original axis items.
+ * @param after Replacement axis items.
+ * @param options Matching functions and the shared work budget consumed by gap solving.
+ */
 export function alignComparisonAxis<T>(before: readonly T[], after: readonly T[], options: Options<T>): readonly Region[] {
 	const beforeKeys = before.map(options.fingerprint)
 	const afterKeys = after.map(options.fingerprint)
@@ -107,6 +127,13 @@ export function alignComparisonAxis<T>(before: readonly T[], after: readonly T[]
 		?? planAxis(before, after, beforeKeys, afterKeys, options, uniqueExactPairs(beforeKeys, afterKeys), true)
 }
 
+/**
+ * Align columns using occurrence rank when repeated exact columns have equal counts.
+ *
+ * @param before Original columns.
+ * @param after Replacement columns.
+ * @param options Matching functions and the shared work budget consumed by gap solving.
+ */
 export function alignComparisonColumns<T>(before: readonly T[], after: readonly T[], options: Options<T>): readonly Region[] {
 	const beforeKeys = before.map(options.fingerprint)
 	const afterKeys = after.map(options.fingerprint)
@@ -245,6 +272,13 @@ interface AlignmentState {
 	signatures: readonly number[]
 }
 
+/**
+ * Resolve a gap to array-index pairs, or return a coarse reason for ambiguity or exhausted work.
+ *
+ * @param before Original items within this gap.
+ * @param after Replacement items within this gap.
+ * @param options Matching functions and mutable budget charged before solving.
+ */
 export function solveWeightedGap<T>(before: readonly T[], after: readonly T[], options: Options<T>): { steps: readonly Step[] } | { coarseReason: CoarseReason } {
 	const cellCharge = before.length * after.length
 	if (cellCharge > options.work.remainingCells) {

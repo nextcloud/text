@@ -28,6 +28,11 @@ interface Mutable extends Omit<Location, 'children'> {
 
 const minimalRootsCache = new WeakMap<readonly Location[], readonly Location[]>()
 
+/**
+ * Index original document positions and parent/child paths. Looking up an absent path throws.
+ *
+ * @param doc Document whose nodes remain unchanged.
+ */
 export function createComparisonDocumentIndex(doc: Node): ComparisonDocumentIndex {
 	const byPath = new Map<string, Mutable>()
 	const locateChildren = (
@@ -70,6 +75,12 @@ export function createComparisonDocumentIndex(doc: Node): ComparisonDocumentInde
 	}
 }
 
+/**
+ * Find intersecting nodes and their ancestors in document order. Empty ranges include touching boundaries.
+ *
+ * @param range Range in original ProseMirror coordinates.
+ * @param roots Indexed subtrees to search.
+ */
 export function findComparisonNodes(range: Range, roots: readonly Location[]) {
 	const found = new Map<string, Location>()
 	const add = (location: Location) => found.set(pathKey(location.path), location)
@@ -89,6 +100,12 @@ export function findComparisonNodes(range: Range, roots: readonly Location[]) {
 	return [...found.values()].toSorted((a, b) => a.from - b.from || a.path.length - b.path.length)
 }
 
+/**
+ * Read a range without duplicating nested roots, using newlines for blocks and U+FFFC for leaves.
+ *
+ * @param range Original document range; an empty range returns an empty string.
+ * @param roots Indexed subtrees containing the range.
+ */
 export function comparisonRangeText(range: Range, roots: readonly Location[]) {
 	if (range.from === range.to) {
 		return ''

@@ -20,6 +20,11 @@ export interface ComparisonSection {
 }
 type Heading = ComparisonHeading
 
+/**
+ * Collect nonempty top-level headings at their original document positions.
+ *
+ * @param doc Document to inspect.
+ */
 export function headingLocations(doc: Node): readonly Heading[] {
 	const headings: Heading[] = []
 	doc.forEach((node, from) => {
@@ -44,6 +49,12 @@ function nearestHeadingIndex(headings: readonly Heading[], position: number) {
 	}
 	return lower - 1
 }
+/**
+ * Return the heading at or before a position, or an empty title before the first heading.
+ *
+ * @param headings Headings ordered by document position.
+ * @param position Original ProseMirror position.
+ */
 export function nearestHeading(headings: readonly Heading[], position: number) {
 	return headings[nearestHeadingIndex(headings, position)]?.text ?? ''
 }
@@ -128,6 +139,14 @@ function resolveSection(edit: ComparisonEdit, before: HeadingIndex, after: Headi
 	return side.keys[nearestHeadingIndex(side.headings, position)] ?? ''
 }
 
+/**
+ * Group consecutive edits under correlated headings, preserving edit order.
+ * Heading correlation groups changes; it does not establish unchanged-block correspondence.
+ *
+ * @param edits Edits in display order.
+ * @param beforeDocument Original Before document.
+ * @param afterDocument Original After document.
+ */
 export function buildComparisonSections(edits: readonly ComparisonEdit[], beforeDocument: Node, afterDocument: Node): readonly ComparisonSection[] {
 	const beforeHeadings = headingLocations(beforeDocument)
 	const afterHeadings = headingLocations(afterDocument)
