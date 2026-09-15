@@ -472,3 +472,9 @@ div.ProseMirror {
 	box-sizing: border-box;
 	visibility: visible !important;
 }
+
+// Take the link bubble out of the flow before popper positions it,
+// otherwise it briefly narrows the editor content and scroll anchoring scrolls the pag
+.editor__content-wrapper > [data-tippy-root] {
+	position: absolute;
+}
