@@ -27,9 +27,126 @@ afterAll(() => {
 	}
 })
 
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => {
+	vi.restoreAllMocks()
+	vi.unstubAllGlobals()
+})
 
 describe('Markdown comparison factory fallback and lifecycle', () => {
+	it.each([1100, 620])('waits for connected width and height at %ipx, then cancels opening corrections on reader input', async (initialWidth) => {
+		let width = initialWidth
+		let height = 0
+		let resize!: () => void
+		const disconnected = vi.fn()
+		const frames = new Map<number, FrameRequestCallback>()
+		let frameId = 0
+		vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+			frames.set(++frameId, callback)
+			return frameId
+		})
+		vi.stubGlobal('cancelAnimationFrame', (id: number) => frames.delete(id))
+		vi.stubGlobal('ResizeObserver', class {
+			constructor(private readonly callback: ResizeObserverCallback) {}
+
+			observe(target: Element) {
+				resize = () => this.callback([{ target, contentRect: { width, height } } as ResizeObserverEntry], this)
+			}
+
+			disconnect = disconnected
+			unobserve() {}
+		})
+		vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockImplementation(function(this: HTMLElement) {
+			return this.isConnected ? width : 0
+		})
+		vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(function(this: HTMLElement) {
+			return this.isConnected ? height : 0
+		})
+		vi.spyOn(HTMLElement.prototype, 'scrollHeight', 'get').mockReturnValue(2000)
+		const scroll = vi.spyOn(HTMLElement.prototype, 'scrollTo').mockClear()
+		const frame = async () => {
+			await nextTick()
+			const queued = [...frames.values()]
+			frames.clear()
+			for (const callback of queued) {
+				await callback(0)
+			}
+			await nextTick()
+		}
+		const detached = document.createElement('div')
+		const host = document.createElement('div')
+		const instance = await createMarkdownContentComparison({ beforeContent: 'Before', afterContent: 'After', el: detached })
+		try {
+			resize()
+			await frame()
+			expect(scroll).not.toHaveBeenCalled()
+			document.body.append(host)
+			host.replaceChildren(...detached.childNodes)
+			resize()
+			await frame()
+			expect(scroll).not.toHaveBeenCalled()
+
+			height = 300
+			resize()
+			await frame()
+			expect(scroll).toHaveBeenCalled()
+			expect(scroll.mock.calls.every(([options]) => (options as ScrollToOptions).behavior === 'auto')).toBe(true)
+			const firstCalls = scroll.mock.calls.length
+			width -= 40
+			height = 260
+			resize()
+			await frame()
+			expect(scroll.mock.calls.length).toBeGreaterThan(firstCalls)
+			if (initialWidth < 760) {
+				const hidden = host.querySelector('.text-comparison__document--after .text-comparison__document-scroller')
+				expect(scroll.mock.contexts).not.toContain(hidden)
+			}
+
+			host.querySelector('.text-comparison')!.dispatchEvent(new Event('wheel'))
+			const callsAfterInput = scroll.mock.calls.length
+			height = 240
+			resize()
+			await frame()
+			expect(scroll).toHaveBeenCalledTimes(callsAfterInput)
+			instance.destroy()
+			await frame()
+			expect(frames.size).toBe(0)
+			expect(disconnected).toHaveBeenCalledOnce()
+		} finally {
+			instance.destroy()
+			host.remove()
+		}
+	})
+
+	it.each([
+		['ordinary', 'Before', 'After'],
+		['formatting-only', 'Same text', '**Same text**'],
+	])('opens %s changes in Documents without moving focus', async (_kind, beforeContent, afterContent) => {
+		const opener = document.createElement('button')
+		document.body.append(opener)
+		opener.focus()
+		const el = document.createElement('div')
+		const onLoaded = vi.fn()
+		const instance = await createMarkdownContentComparison({ beforeContent, afterContent, el, onLoaded })
+
+		expect(el.querySelector('[role="tab"][aria-selected="true"]')?.textContent?.trim()).toBe('Full documents')
+		expect(el.querySelectorAll('.text-comparison__documents .ProseMirror')).toHaveLength(2)
+		expect(el.querySelector('[data-comparison-change][aria-current="true"]')).not.toBeNull()
+		expect(document.activeElement).toBe(opener)
+		expect(onLoaded).toHaveBeenCalledOnce()
+		instance.destroy()
+		instance.destroy()
+		opener.remove()
+	})
+
+	it('opens identical documents in Changes with the no-differences message', async () => {
+		const el = document.createElement('div')
+		const instance = await createMarkdownContentComparison({ beforeContent: 'Same', afterContent: 'Same', el })
+		expect(el.querySelector('[role="tab"][aria-selected="true"]')?.textContent?.trim()).toBe('Changes')
+		expect(el.querySelector('[role="status"]')?.textContent).toContain('No differences.')
+		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(0)
+		instance.destroy()
+	})
+
 	it('V09 reports syntax-only Markdown as no semantic edit and opens Source', async () => {
 		const el = document.createElement('div')
 		const instance = await createMarkdownContentComparison({
@@ -77,10 +194,6 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 		const afterContent = 'Complete projection after'
 		const el = document.createElement('div')
 		const instance = await createMarkdownContentComparison({ beforeContent, afterContent, el })
-		const fullDocuments = [...el.querySelectorAll<HTMLButtonElement>('[role="tab"]')]
-			.find(({ textContent }) => textContent?.trim() === 'Full documents')
-
-		fullDocuments!.click()
 		await vi.waitFor(() => {
 			expect(el.querySelector('[data-comparison-source-fallback]')).not.toBeNull()
 		})
@@ -104,7 +217,8 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 	it('keeps both document editors alive while switching views', async () => {
 		const el = document.createElement('div')
 		const instance = await createMarkdownContentComparison({ beforeContent: 'Before', afterContent: 'After', el })
-		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(0)
+		const editors = [...el.querySelectorAll('.ProseMirror')]
+		expect(editors).toHaveLength(2)
 		expect(el.querySelectorAll('[data-comparison-source-fallback]')).toHaveLength(0)
 		const selectTab = async (label: string) => {
 			const tab = [...el.querySelectorAll<HTMLButtonElement>('[role="tab"]')]
@@ -114,13 +228,12 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 			await nextTick()
 		}
 
-		await selectTab('Full documents')
-		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(2)
 		await selectTab('Changes')
+		await selectTab('Markdown source')
 		await selectTab('Full documents')
 
 		expect(el.querySelector('.text-comparison > [data-comparison-source-fallback]')).toBeNull()
-		expect(el.querySelectorAll('.ProseMirror')).toHaveLength(2)
+		expect([...el.querySelectorAll('.ProseMirror')]).toEqual(editors)
 		instance.destroy()
 	})
 
@@ -143,7 +256,7 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 		instance.destroy()
 	})
 
-	it('AUD-02 publishes the current selection when Documents mounts lazily', async () => {
+	it('AUD-02 updates the current selection in the mounted Documents', async () => {
 		const originalScrollTo = HTMLElement.prototype.scrollTo
 		const scrollTo = vi.fn()
 		HTMLElement.prototype.scrollTo = scrollTo
