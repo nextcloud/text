@@ -101,6 +101,9 @@ test.describe('Text comparison production bundle acceptance', () => {
 			}))
 			await testInfo.attach('opening-geometry.json', { body: JSON.stringify({ measurement, panes: await geometry() }), contentType: 'application/json' })
 			await expect.poll(async () => (await geometry()).every((pane) => pane.top >= pane.viewportTop && pane.bottom <= pane.viewportBottom)).toBe(true)
+			await page.getByRole('tab', { name: 'Changes', exact: true }).click()
+			await page.locator('[data-comparison-select]').first().click()
+			await expect.poll(async () => (await geometry()).every((pane) => pane.top >= pane.viewportTop && pane.bottom <= pane.viewportBottom)).toBe(true)
 		})
 	}
 

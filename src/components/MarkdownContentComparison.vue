@@ -526,11 +526,11 @@ async function loadSource() {
 }
 function setView(next: View) {
 	cancelInitialLocation()
+	view.value = next
 	if (next === 'documents') {
 		showDocuments.value = true
 		locateCurrent(true)
 	}
-	view.value = next
 	nextTick(() => tabRefs.get(next)?.focus())
 }
 function setSide(side: Side) {
