@@ -75,9 +75,6 @@ class LinkBubblePluginView {
 			trigger: 'manual',
 			placement: 'bottom',
 			hideOnClick: 'toggle',
-			popperOptions: {
-				strategy: 'fixed',
-			},
 		})
 	}
 
