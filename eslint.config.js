@@ -11,6 +11,14 @@ export default defineConfig(
 	...recommended,
 	globalIgnores(['src/tests/fixtures/*']),
 	{
+		name: 'production-public-jsdoc',
+		files: ['src/**/*.{js,ts,vue}'],
+		ignores: ['**/*.test.*', '**/*.spec.*', '**/*.cy.*', '**/test/**', '**/tests/**', '**/__tests__/**', '**/__mocks__/**'],
+		rules: {
+			'jsdoc/require-jsdoc': ['warn', { publicOnly: true }],
+		},
+	},
+	{
 		files: ['cypress/**/*.js'],
 		extends: [pluginCypress.configs.globals],
 	},

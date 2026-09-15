@@ -16,6 +16,11 @@ export interface SourceComparisonWorkerRequest {
 
 export type SourceComparisonWorkerResponse = { status: 'ready', changes: Change[] } | { status: 'limited' }
 
+/**
+ * Run the synchronous bounded line diff used by the worker, returning ready changes or a limited result.
+ *
+ * @param request Normalized source strings and the edit-length/time budgets.
+ */
 export function compareMarkdownSourceLines(request: SourceComparisonWorkerRequest): SourceComparisonWorkerResponse {
 	const changes = diffLines(request.before, request.after, {
 		stripTrailingCr: false,

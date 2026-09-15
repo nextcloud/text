@@ -73,10 +73,21 @@ function renderMarkdownSource(source: string, maximumCharacters: number, maximum
 	return { text: visible, complete: true }
 }
 
+/**
+ * Render control and bidi characters as visible tokens without splitting surrogate pairs or tokens.
+ *
+ * @param source Literal source to display.
+ * @param maximumCharacters Maximum rendered UTF-16 length; excess output is omitted.
+ */
 export function displayMarkdownSource(source: string, maximumCharacters = Number.POSITIVE_INFINITY) {
 	return renderMarkdownSource(source, maximumCharacters).text
 }
 
+/**
+ * Render source under input, output and per-line limits, reporting whether any content was omitted.
+ *
+ * @param source Raw source; a truncated prefix does not split a valid surrogate pair.
+ */
 export function displayBoundedMarkdownSource(source: string) {
 	const input = sourcePrefix(source, LIMITS.maximumInputCharactersPerSide)
 	const visible = renderMarkdownSource(

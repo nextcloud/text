@@ -100,6 +100,11 @@ const meaningfulAttributes: Record<string, Record<string, Attr>> = {
 	tableCell: { align: 'table-alignment', colspan: 'table-span', rowspan: 'table-span' },
 	tableHeader: { align: 'table-alignment', colspan: 'table-span', rowspan: 'table-span' },
 }
+/**
+ * Serialize values deterministically with code-unit-sorted object keys, preserving array order.
+ *
+ * @param value Acyclic JSON-like value to encode.
+ */
 function serialize(value: unknown): string {
 	if (value === null || typeof value !== 'object') {
 		return JSON.stringify(value) ?? String(value)
@@ -114,6 +119,11 @@ function serialize(value: unknown): string {
 }
 export { serialize as stableSerialize }
 
+/**
+ * Cache the stable serialization of an immutable node. Callers still verify equality when confirming moves.
+ *
+ * @param node Original ProseMirror node.
+ */
 function fingerprint(node: Node) {
 	let value = fingerprints.get(node)
 	if (value === undefined) {
@@ -124,6 +134,12 @@ function fingerprint(node: Node) {
 }
 export { fingerprint as nodeFingerprint }
 
+/**
+ * Compare strings by UTF-16 code units independently of locale.
+ *
+ * @param a First string.
+ * @param b Second string.
+ */
 export function compareCodeUnits(a: string, b: string) {
 	return a < b ? -1 : a > b ? 1 : 0
 }
@@ -153,6 +169,19 @@ export const semanticTokenEncoder = {
 		return a === b
 	},
 }
+/**
+ * Classify a bounded original-coordinate range pair, including context and previews.
+ * The returned descriptor has an empty ID for the model builder to assign.
+ *
+ * @param beforeDoc Original Before document.
+ * @param afterDoc Original After document.
+ * @param before Requested Before range.
+ * @param after Requested After range.
+ * @param beforeRoots Indexed Before subtrees.
+ * @param afterRoots Indexed After subtrees.
+ * @param detail Inline or block projection detail.
+ * @param excluded Attribute changes already accounted for elsewhere.
+ */
 export function classifyComparisonDescriptor(beforeDoc: Node, afterDoc: Node, before: Range, after: Range, beforeRoots: readonly Location[], afterRoots: readonly Location[], detail: Descriptor['detail'] = 'inline', excluded: readonly Attr[] = []): Descriptor {
 	const safeBefore = boundedRange(before, beforeDoc.content.size)
 	const safeAfter = boundedRange(after, afterDoc.content.size)
@@ -192,6 +221,16 @@ export function classifyComparisonDescriptor(beforeDoc: Node, afterDoc: Node, be
 		signals: deduplicateSignals(signals),
 	}
 }
+/**
+ * Describe direct node markup changes, returning null when type, attributes and marks match.
+ *
+ * @param beforeDoc Original Before document.
+ * @param afterDoc Original After document.
+ * @param before Requested Before range, clamped to the document.
+ * @param after Requested After range, clamped to the document.
+ * @param beforeRoot Indexed Before node.
+ * @param afterRoot Indexed After node.
+ */
 export function classifyNodeMarkupDescriptor(beforeDoc: Node, afterDoc: Node, before: Range, after: Range, beforeRoot: Location, afterRoot: Location): Descriptor | null {
 	const safeBefore = boundedRange(before, beforeDoc.content.size)
 	const safeAfter = boundedRange(after, afterDoc.content.size)
@@ -502,6 +541,12 @@ function coversRange(location: Location, code: ContextCode, range: Range | undef
 function normalizePreview(value: string) {
 	return value.replace(/\s+/gu, ' ').trim()
 }
+/**
+ * Truncate with an ellipsis at a grapheme boundary, falling back to code points without Intl.Segmenter.
+ *
+ * @param value Preview text.
+ * @param maximum Nonnegative whole number of segments to keep.
+ */
 export function truncateGraphemes(value: string, maximum: number) {
 	let count = 0
 	let truncated = ''
@@ -529,6 +574,12 @@ function boundedRange(range: Range, maximum: number) {
 function clamp(value: number, minimum: number, maximum: number) {
 	return Math.min(Math.max(value, minimum), maximum)
 }
+/**
+ * Freeze an object and its unfrozen enumerable descendants in place, returning the same value.
+ * Already frozen objects are not traversed; no clone or deeper TypeScript type is created.
+ *
+ * @param value Value whose object descendants should be frozen.
+ */
 export function deepFreeze<T>(value: T): T {
 	if (value && typeof value === 'object' && !Object.isFrozen(value)) {
 		Object.freeze(value)

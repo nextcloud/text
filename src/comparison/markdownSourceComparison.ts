@@ -89,6 +89,14 @@ export const SOURCE_DIFF_LIMITS = Object.freeze({
 })
 const LIMITS = SOURCE_DIFF_LIMITS
 
+/**
+ * Compare literal source with original line numbers and line endings.
+ * Size or work limits return a limited result; cancellation and worker failures reject.
+ *
+ * @param before Earlier raw Markdown.
+ * @param after Later raw Markdown.
+ * @param signal Optional cancellation signal; abort terminates an active worker.
+ */
 export async function createMarkdownSourceComparison(before: string, after: string, signal?: AbortSignal): Promise<SourceDiffModel> {
 	if (
 		before.length + after.length > LIMITS.maximumCharacters
@@ -119,6 +127,15 @@ export async function createMarkdownSourceComparison(before: string, after: stri
 	)
 }
 
+/**
+ * Read a bounded page of unchanged source rows, normalizing offsets and capping the page size.
+ *
+ * @param before Original earlier source.
+ * @param after Original later source.
+ * @param gap Gap from the corresponding source model.
+ * @param maximumRows Requested page size, capped at the source gap limit.
+ * @param offset Row offset within the gap, clamped to its bounds.
+ */
 export function materializeSourceDiffGap(before: string, after: string, gap: SourceDiffGap, maximumRows: number = LIMITS.maximumGapPageRows, offset: number = 0) {
 	const finiteMaximum = Number.isFinite(maximumRows)
 		? Math.trunc(maximumRows)
