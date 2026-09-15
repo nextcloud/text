@@ -68,6 +68,11 @@
 		<!-- link edit form -->
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
 			<NcTextField
+				v-model="newText"
+				name="newText"
+				:label="t('text', 'Link text')"
+				@keyup.enter.prevent="updateLink" />
+			<NcTextField
 				ref="hrefField"
 				v-model="newHref"
 				name="newHref"
@@ -149,6 +154,7 @@ export default {
 		return {
 			isEditable: false,
 			edit: true,
+			newText: '',
 			newHref: '',
 			referenceTitle: null,
 		}
@@ -235,6 +241,7 @@ export default {
 
 		resetBubble() {
 			this.edit = false
+			this.newText = ''
 			this.newHref = ''
 			this.referenceTitle = null
 		},
@@ -253,6 +260,13 @@ export default {
 			} catch {
 				return null
 			}
+		},
+
+		linkText() {
+			const range = this.linkRange()
+			return range
+				? this.editor.state.doc.textBetween(range.from, range.to)
+				: ''
 		},
 
 		/**
@@ -279,6 +293,7 @@ export default {
 
 		startEdit() {
 			this.edit = true
+			this.newText = this.linkText()
 			this.newHref = this.href ?? ''
 			this.$nextTick(() => {
 				this.$refs.hrefField.focus()
@@ -293,29 +308,45 @@ export default {
 
 		stopEdit() {
 			this.edit = false
+			this.newText = ''
 			this.newHref = ''
 		},
 
 		updateLink() {
-			if (this.href !== this.newHref) {
-				this.setLinkUrl(this.newHref)
+			const text = this.newText === '' || this.newText === this.linkText()
+				? null
+				: this.newText
+			if (text !== null || this.href !== this.newHref) {
+				this.setLinkContent(this.newHref, text)
 			}
 			this.stopEdit()
 		},
 
-		setLinkUrl(href) {
+		setLinkContent(href, text) {
+			const range = this.linkRange()
 			// Store current selection to restore it after setLink
-			const selection = { ...this.editor.view.state.selection }
-			const { ranges } = selection
+			const { ranges } = this.editor.view.state.selection
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			this.chainOnLink()
-				.extendMarkRange('link')
-				.setLink({ href })
-				.setTextSelection({ from, to })
-				.focus()
-				.run()
+			const chain = this.chainOnLink()
+			if (text !== null && range) {
+				const end = range.from + text.length
+				chain
+					.command(({ tr }) => {
+						tr.insertText(text, range.from, range.to)
+						return true
+					})
+					.setTextSelection({ from: range.from, to: end })
+					.setLink({ href })
+					.setTextSelection(end)
+			} else {
+				chain
+					.extendMarkRange('link')
+					.setLink({ href })
+					.setTextSelection({ from, to })
+			}
+			chain.focus().run()
 		},
 
 		removeLink() {

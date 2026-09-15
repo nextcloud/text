@@ -88,6 +88,19 @@ test.describe('link bubble', () => {
 		await expect(editor.content.getByRole('link')).toHaveCount(1)
 	})
 
+	test('edits the link text from the bubble', async ({ editor, page }) => {
+		await editor.content.locator('.link-pill').click()
+		const bubble = page.locator('.link-view-bubble')
+		await bubble.getByRole('button', { name: 'Edit link' }).click()
+		await expect(bubble.getByLabel('Link text')).toHaveValue('Example')
+		await bubble.getByLabel('Link text').fill('Renamed')
+		await bubble.getByLabel('Link text').press('Enter')
+		await expect(editor.content.getByRole('link', { name: 'Renamed' }))
+			.toHaveAttribute('href', href)
+		await expect(editor.content.getByRole('link')).toHaveCount(1)
+		await expect(editor.content).not.toContainText('Example')
+	})
+
 	test('removes the link from the bubble', async ({ editor, page }) => {
 		await editor.content.locator('.link-pill').click()
 		await page.locator('.link-view-bubble .link-options button').click()
