@@ -44,12 +44,27 @@ export function activeLinkFromSelection({ selection, doc }) {
 }
 
 /**
+ * Active link object for the inline node starting at the given position
+ *
+ * @param {object} doc - the prosemirror document
+ * @param {number} pos  - position right before the node
+ */
+export function activeLinkAtPos(doc, pos) {
+	const resolved = doc.resolve(pos)
+	// ignore links in previews
+	if (resolved.parent.type.name === 'preview') {
+		return null
+	}
+	return activeLink(resolved.nodeAfter, pos)
+}
+
+/**
  * Active link object for the given node and nodeStart
  *
  * @param {object} node - node to check
  * @param {number} nodeStart - offset in the document
  */
-function activeLink(node, nodeStart) {
+export function activeLink(node, nodeStart) {
 	const mark = linkMark(node)
 	return mark ? { mark, nodeStart } : null
 }

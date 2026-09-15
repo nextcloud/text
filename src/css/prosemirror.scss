@@ -135,6 +135,29 @@ div.ProseMirror {
 		padding: 0.5em 0;
 	}
 
+	.link-pill[contenteditable='false'] {
+		display: inline-flex;
+		width: var(--default-font-size);
+		height: var(--default-font-size);
+		margin-inline-start: 2px;
+		padding: 1px;
+		vertical-align: middle;
+		cursor: pointer;
+		user-select: none;
+
+		svg {
+			width: 100%;
+			height: 100%;
+			fill: var(--color-text-maxcontrast);
+		}
+
+		&:hover svg,
+		&:focus svg,
+		&:active svg {
+			fill: var(--color-primary-element);
+		}
+	}
+
 	p {
 		position: relative;
 		margin-bottom: 1em;
@@ -525,6 +548,12 @@ div.ProseMirror {
 .tippy-content div {
 	box-sizing: border-box;
 	visibility: visible !important;
+}
+
+// Take the link bubble out of the flow before popper positions it,
+// otherwise it briefly narrows the editor content and scroll anchoring scrolls the page
+.editor__content-wrapper > [data-tippy-root] {
+  position: absolute;
 }
 
 .editor--annotations-hidden div.ProseMirror {
