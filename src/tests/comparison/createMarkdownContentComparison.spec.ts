@@ -237,6 +237,29 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 		instance.destroy()
 	})
 
+	it('measures Documents after revealing its persistent editors during navigation', async () => {
+		const el = document.createElement('div')
+		const instance = await createMarkdownContentComparison({ beforeContent: 'Before', afterContent: 'After', el })
+		const selectTab = async (label: string) => {
+			const tab = [...el.querySelectorAll<HTMLButtonElement>('[role="tab"]')]
+				.find(({ textContent }) => textContent?.trim() === label)!
+			tab.click()
+			await nextTick()
+		}
+		try {
+			await selectTab('Changes')
+			const measuredDisplays: string[] = []
+			vi.spyOn(HTMLElement.prototype, 'scrollTo').mockImplementation(function(this: HTMLElement) {
+				measuredDisplays.push(this.closest<HTMLElement>('.text-comparison__documents')!.style.display)
+			})
+			await selectTab('Full documents')
+			expect(measuredDisplays).toHaveLength(2)
+			expect(measuredDisplays).not.toContain('none')
+		} finally {
+			instance.destroy()
+		}
+	})
+
 	it('omits duplicate heading anchors from the two comparison documents', async () => {
 		const el = document.createElement('div')
 		const instance = await createMarkdownContentComparison({
