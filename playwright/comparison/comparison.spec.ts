@@ -24,9 +24,90 @@ const retainedTableCellEdit: ComparisonContents = {
 }
 
 test.describe('Text comparison production bundle acceptance', () => {
+	test('chooses the initial view from rendered edits without taking focus', async ({ comparison, page }) => {
+		await page.evaluate(() => {
+			const opener = document.createElement('button')
+			opener.id = 'comparison-opener'
+			opener.textContent = 'Open comparison'
+			document.body.append(opener)
+			opener.focus()
+		})
+		for (const [before, after, view] of [
+			['Before', 'After', 'Full documents'],
+			['Same text', '**Same text**', 'Full documents'],
+			['Same text', 'Same text', 'Changes'],
+			['*Same text*', '_Same text_', 'Changes'],
+		]) {
+			await comparison.mount({ before, after, detached: true })
+			await expect(page.getByRole('tab', { name: view, exact: true })).toHaveAttribute('aria-selected', 'true')
+			await expect(page.locator('#comparison-opener')).toBeFocused()
+			if (view === 'Full documents') {
+				await expect(page.locator('.text-comparison__documents .ProseMirror')).toHaveCount(2)
+				await expect(page.locator('[data-comparison-change][aria-current="true"]').first()).toBeVisible()
+			} else {
+				await expect(page.locator('.text-comparison__changes [role="status"]')).toBeVisible()
+			}
+			await comparison.destroy()
+		}
+	})
+
+	for (const interrupted of [false, true]) {
+		test(`handles an opening image above the first edit (reader interrupted: ${interrupted})`, async ({ comparison, page }) => {
+			let release!: () => void
+			const imageReady = new Promise<void>((resolve) => {
+				release = resolve
+			})
+			await page.route('**/comparison-opening-image.svg', async (route) => {
+				await imageReady
+				await route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="1600"><rect width="300" height="1600" fill="blue"/></svg>' })
+			})
+			const prefix = `![Opening image](/comparison-opening-image.svg)\n\n${Array.from({ length: 80 }, (_value, index) => `Unchanged paragraph ${index}.`).join('\n\n')}`
+			try {
+				await comparison.mount({ before: `${prefix}\n\nBefore ending.`, after: `${prefix}\n\nAfter ending.`, detached: true, height: 620 })
+				const scroller = page.locator('.text-comparison__document--before .text-comparison__document-scroller')
+				if (interrupted) {
+					await scroller.hover()
+					await page.mouse.wheel(0, -100_000)
+					await expect.poll(() => scroller.evaluate((element) => element.scrollTop)).toBe(0)
+				}
+				release()
+				await expect(page.locator('.text-comparison__document--before img').first()).toHaveJSProperty('complete', true)
+				if (interrupted) {
+					await expect.poll(() => scroller.evaluate((element) => element.scrollTop)).toBe(0)
+				} else {
+					await expect.poll(() => scroller.evaluate((element) => {
+						const target = element.querySelector('[data-comparison-change][aria-current="true"]')!.getBoundingClientRect()
+						const viewport = element.getBoundingClientRect()
+						return target.top >= viewport.top && target.bottom <= viewport.bottom
+					})).toBe(true)
+				}
+			} finally {
+				release()
+			}
+		})
+	}
+
+	for (const width of [1100, 620]) {
+		test(`opens the first edit after detached child transfer at ${width}px`, async ({ comparison, page }, testInfo) => {
+			const prefix = Array.from({ length: 80 }, (_value, index) => `Unchanged paragraph ${index}.`).join('\n\n')
+			const measurement = await comparison.mount({ before: `${prefix}\n\nBefore ending.`, after: `${prefix}\n\nAfter ending.`, detached: true, width, height: 620 })
+			await expect(page.getByRole('tab', { name: 'Full documents', exact: true })).toHaveAttribute('aria-selected', 'true')
+			const geometry = async () => page.locator('.text-comparison__document:visible').evaluateAll((panes) => panes.map((pane) => {
+				const scroller = pane.querySelector<HTMLElement>('.text-comparison__document-scroller')!
+				const target = pane.querySelector<HTMLElement>('[data-comparison-change][aria-current="true"]')!
+				const viewport = scroller.getBoundingClientRect()
+				const change = target.getBoundingClientRect()
+				return { top: change.top, bottom: change.bottom, viewportTop: viewport.top, viewportBottom: viewport.bottom, scrollTop: scroller.scrollTop }
+			}))
+			await testInfo.attach('opening-geometry.json', { body: JSON.stringify({ measurement, panes: await geometry() }), contentType: 'application/json' })
+			await expect.poll(async () => (await geometry()).every((pane) => pane.top >= pane.viewportTop && pane.bottom <= pane.viewportBottom)).toBe(true)
+		})
+	}
+
 	test('A12: the largest admitted square gap remains precise', async ({ comparison, page }) => {
 		test.setTimeout(180_000)
 		await mountMaximumSquare(comparison)
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		await expect(page.locator('.text-comparison > [data-comparison-source-fallback]')).toHaveCount(0)
 		await expect(page.locator('[data-comparison-select]')).toHaveCount(80)
@@ -35,6 +116,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('T07: one edited retained table column is precise at cell altitude', async ({ comparison, page }) => {
 		await comparison.mount(retainedTableCellEdit)
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const change = page.locator('[data-comparison-select]')
 		await expect(change).toHaveCount(1)
@@ -48,6 +130,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('T18: a later over-budget table coarsens without corrupting the admitted table plan', async ({ comparison, page }) => {
 		test.setTimeout(180_000)
 		await comparison.mount(tableLedgerFixture())
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const changes = page.locator('[data-comparison-select]')
 		const pages = page.getByRole('navigation', { name: 'Change pages' })
@@ -65,6 +148,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V01: one first-class edit owns one row, ordinal, identity, and complete target set', async ({ comparison, page }) => {
 		await comparison.mount(headingReplacement)
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const row = page.locator('[data-comparison-select]')
 		await expect(row).toHaveCount(1)
@@ -93,6 +177,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V03: selecting a Changes row activates the identical edit in both Documents panes', async ({ comparison, page }) => {
 		await comparison.mount({ before: 'Old first.\n\nOld second.', after: 'New first.\n\nNew second.' })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const selectedEdit = page.locator('[data-comparison-select]').nth(1)
 		await selectedEdit.click()
@@ -107,6 +192,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V04: an empty-side change has no synthetic marker and remains navigable', async ({ comparison, page }) => {
 		await comparison.mount({ before: '# Removed first\n\n# Removed second', after: '' })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		await page.locator('[data-comparison-select]').first().click()
 		await expect(page.locator('.text-comparison__document--after [data-comparison-change]')).toHaveCount(0)
@@ -121,6 +207,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('V05: paired Documents panes preserve independent scroll positions', async ({ comparison, page }) => {
 		const paragraphs = Array.from({ length: 100 }, (_, index) => `Paragraph ${index}.`).join('\n\n')
 		await comparison.mount({ before: `Old first.\n\n${paragraphs}\n\nOld tail.`, after: `New first.\n\n${paragraphs}\n\nNew tail.` })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		await page.locator('[data-comparison-select]').first().click()
 		const beforeScroller = page.locator('.text-comparison__document--before .text-comparison__document-scroller')
@@ -138,6 +225,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V06: responsive single-pane Documents retain side and selection state', async ({ comparison, page }) => {
 		await comparison.mount({ before: 'Old first.\n\nOld second.', after: 'New first.\n\nNew second.', width: 620 })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		await page.locator('[data-comparison-select]').nth(1).click()
 		await expect(page.locator('.text-comparison')).toHaveClass(/text-comparison--single/)
@@ -162,7 +250,6 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('AUD-24: narrow Documents show the side that contains a one-sided edit', async ({ comparison, page }) => {
 		await comparison.mount({ before: '', after: '# Added first\n\n# Added second', width: 620 })
 
-		await page.locator('[data-comparison-select]').first().click()
 		const sideTabs = page.getByRole('tablist', { name: 'Version to display' })
 		await expect(sideTabs.getByRole('tab', { name: 'After' })).toHaveAttribute('aria-selected', 'true')
 		await expect(page.locator('.text-comparison__document--after [data-comparison-change][aria-current="true"]')).toBeVisible()
@@ -170,7 +257,6 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 		await comparison.destroy()
 		await comparison.mount({ before: '# Removed first\n\n# Removed second', after: '', width: 620 })
-		await page.locator('[data-comparison-select]').first().click()
 		const deletionTabs = page.getByRole('tablist', { name: 'Version to display' })
 		await deletionTabs.getByRole('tab', { name: 'After' }).click()
 		await page.getByRole('tab', { name: 'Changes' }).click()
@@ -192,6 +278,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V06b: desktop Changes rows keep the reviewed full-width list presentation', async ({ comparison, page }) => {
 		await comparison.mount({ before: '# Old heading\n\nOld paragraph.', after: '# New heading\n\nNew paragraph.', width: 1100 })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const host = page.locator('#text-comparison-harness')
 		const section = page.locator('.text-comparison__section-toggle').first()
@@ -209,6 +296,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('V07: tabs, navigation, focus, and announcements expose accessible state', async ({ comparison, page }) => {
 		await comparison.mount({ before: 'Old first.\n\nOld second.', after: 'New first.\n\nNew second.' })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await comparison.assertAccessibleComparison()
 
 		await page.locator('[data-comparison-select]').first().click()
@@ -232,6 +320,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 			before: `![Before logo](${CORE_LOGO})\n\nOld paragraph.`,
 			after: `![After logo](${CORE_LOGO})\n\nNew paragraph.`,
 		})
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		const changes = page.locator('[data-comparison-select]')
 		await expect(changes).toHaveCount(2)
 		await changes.first().click()
@@ -263,6 +352,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 			before: '| Name |\n| --- |\n| retained |\n| removed |',
 			after: '| Name |\n| --- |\n| retained |',
 		})
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').click()
 		const structuralRow = page.locator('tr.text-comparison-change')
 		await expect(structuralRow).toHaveCount(1)
@@ -315,7 +405,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 		for (let iteration = 0; iteration < 2; iteration++) {
 			const measurement = await comparison.mount({ before: `Before ${iteration}`, after: `After ${iteration}` })
 			expect(measurement.rootCount).toBe(1)
-			expect(measurement.proseMirrorCount).toBe(0)
+			expect(measurement.proseMirrorCount).toBe(2)
 			await page.getByRole('tab', { name: 'Full documents' }).click()
 			await expect(page.locator('.ProseMirror')).toHaveCount(2)
 			await comparison.destroy(2)
@@ -343,7 +433,6 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('F06: projection failure mounts Source without partial Documents', async ({ comparison, page }) => {
 		await comparison.forceProjectionFailure()
 		await comparison.mount({ before: 'Projection before', after: 'Projection after' })
-		await page.getByRole('tab', { name: 'Full documents' }).click()
 
 		const fallback = page.locator('[data-comparison-source-fallback]')
 		await expect(fallback).toContainText('Projection before')
@@ -355,6 +444,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('F11: normal comparison modes emit no unexplained browser or network failures', async ({ comparison, page }) => {
 		comparison.resetCapture()
 		await comparison.mount({ before: 'Old content.', after: '**New content.**' })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').click()
 		await page.getByRole('tab', { name: 'Markdown source' }).click()
 		await expect(page.locator('[data-source-hunk]')).toBeVisible()
@@ -372,9 +462,10 @@ test.describe('Text comparison production bundle acceptance', () => {
 		await attachMeasurement(testInfo, 'near-line-floor', measurement, { weightedDebit: 0 })
 	})
 
-	test('AUD-02: pre-mount selection and filtering initialize both Documents decoration plugins', async ({ comparison, page }) => {
+	test('AUD-02: selection and filtering update both mounted Documents decoration plugins', async ({ comparison, page }) => {
 		for (const width of [1000, 620]) {
 			await comparison.mount({ before: 'Old first.\n\nOld second.', after: 'New first.\n\nNew second.', width })
+			await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 			await page.locator('[data-comparison-select]').nth(1).click()
 			for (const side of ['before', 'after']) {
 				await expect(page.locator(`.text-comparison__document--${side} [data-comparison-change="change-1"][aria-current="true"]`)).toHaveCount(1)
@@ -382,6 +473,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 			await comparison.destroy()
 
 			await comparison.mount({ before: 'Formatting only.\n\nOld content.', after: '**Formatting only.**\n\nNew content.', width })
+			await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 			await page.getByRole('checkbox', { name: 'Hide formatting-only changes' }).check()
 			await page.getByRole('tab', { name: 'Full documents' }).click()
 			await expect(page.locator('.text-comparison__documents .text-comparison-change--formatting')).toHaveCount(0)
@@ -410,6 +502,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('AUD-09: settled image dialog focus is contained and restored on close', async ({ comparison, page }, testInfo) => {
 		await comparison.mount({ before: `![Before logo](${CORE_LOGO})`, after: `![After logo](${CORE_LOGO})` })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').first().click()
 		const action = page.getByRole('button', { name: 'Open image Before logo' })
 		await action.focus()
@@ -429,6 +522,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('AUD-10: Changes tokens wrap with spacing and selected tabs have visible treatment', async ({ comparison, page }) => {
 		await comparison.mount({ before: 'A short value.', after: '**A substantially longer changed value that must remain readable.**' })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 
 		const item = page.locator('.text-comparison__change-item')
 		const content = item.locator('.text-comparison__change-item-content')
@@ -467,6 +561,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 			after: '# B1 duplicate-body deletion\n\n| A | B |\n| --- | --- |\n| x | x |\n| x | x |',
 			width: 340,
 		})
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await expect(page.locator('.text-comparison')).toHaveClass(/text-comparison--single/)
 		const narrowItem = page.locator('.text-comparison__change-item').first()
 		const narrowLabel = narrowItem.getByText('Table column removed', { exact: true })
@@ -490,6 +585,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 	test('AUD-11: revealing a responsive hidden side locates the already-current edit', async ({ comparison, page }) => {
 		const middle = Array.from({ length: 120 }, (_, index) => `Stable paragraph ${index}.`).join('\n\n')
 		await comparison.mount({ before: `Old first.\n\n${middle}\n\nOld tail.`, after: `New first.\n\n${middle}\n\nNew tail.`, width: 620, height: 360 })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').nth(1).click()
 
 		await expect(page.locator('.text-comparison')).toHaveClass(/text-comparison--single/)
@@ -562,6 +658,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 	test('AUD-18: read-only image action is named, focusable, rendered, and operable with Enter', async ({ comparison, page }) => {
 		await comparison.mount({ before: `![Before logo](${CORE_LOGO})`, after: `![After logo](${CORE_LOGO})` })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').first().click()
 		const action = page.getByRole('button', { name: 'Open image Before logo' })
 
@@ -588,6 +685,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 			})
 		})
 		await comparison.mount({ before: '![Before document](.attachments.123/document.pdf)', after: '![After document](.attachments.123/document.pdf)', fileId: 123 })
+		await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 		await page.locator('[data-comparison-select]').first().click()
 		const action = page.getByRole('button', { name: 'Open attachment Before document' })
 
@@ -605,7 +703,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 		await expect(page.locator('.text-comparison')).toBeVisible()
 		await expect(page.locator('[data-comparison-source-fallback]')).toHaveCount(0)
 		await expect(page.locator('[data-comparison-select]')).toHaveCount(1)
-		await expect(page.locator('.ProseMirror')).toHaveCount(0)
+		await expect(page.locator('.ProseMirror')).toHaveCount(2)
 	})
 
 	test('AUD-22: complete Source fallback responds to host width instead of viewport width', async ({ comparison, page }) => {
@@ -721,6 +819,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 
 async function assertFormattingFilterMove(comparison: ComparisonHarness, page: Page, contents: ComparisonContents, direction: 'next' | 'previous') {
 	await comparison.mount(contents)
+	await page.getByRole('tab', { name: 'Changes', exact: true }).click()
 	const rows = page.locator('[data-comparison-select]')
 	const formatting = rows.filter({ hasText: /Bold changed/ })
 	await expect(formatting).toHaveCount(1)
