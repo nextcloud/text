@@ -34,6 +34,14 @@ test.describe('links', () => {
 		expect(popup.url()).toBe(href)
 		await popup.close()
 	})
+})
+
+test.describe('link bubble', () => {
+	test.use({ fileContent: `[Example](${href})\n\nsecond paragraph\n` })
+
+	test.beforeEach(async ({ open }) => {
+		await open()
+	})
 
 	test('hover opens the link bubble', async ({ editor, page }) => {
 		await editor.content.getByRole('link', { name: 'Example' }).hover()
@@ -99,6 +107,20 @@ test.describe('links', () => {
 		const bubble = page.locator('.link-view-bubble')
 		await expect(bubble).toBeVisible()
 		await expect(bubble.locator('.link-view-bubble__title')).toContainText(/example\.com/)
+	})
+
+	test('mod-k turns the selection into a link and focuses the URL field', async ({ editor, page }) => {
+		await editor.content.getByText('second paragraph').click()
+		await editor.press('End')
+		await editor.press('Shift+Home')
+		await editor.press('Control+k')
+		const bubble = page.locator('.link-view-bubble')
+		await expect(bubble).toBeVisible()
+		await expect(bubble.getByLabel('URL')).toBeFocused()
+		await bubble.getByLabel('URL').fill('https://example.com/')
+		await bubble.getByLabel('URL').press('Enter')
+		await expect(editor.content.getByRole('link', { name: 'second paragraph' }))
+			.toHaveAttribute('href', 'https://example.com/')
 	})
 })
 
