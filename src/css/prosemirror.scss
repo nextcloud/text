@@ -550,6 +550,12 @@ div.ProseMirror {
 	visibility: visible !important;
 }
 
+// Take the link bubble out of the flow before popper positions it,
+// otherwise it briefly narrows the editor content and scroll anchoring scrolls the page
+.editor__content-wrapper > [data-tippy-root] {
+  position: absolute;
+}
+
 .editor--annotations-hidden div.ProseMirror {
 	sup[data-type="comment-reference"],
 	sup[data-type="footnote-reference"],
