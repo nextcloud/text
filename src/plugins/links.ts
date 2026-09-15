@@ -35,9 +35,7 @@ export const setActiveLink =
 		return true
 	}
 
-/* Hide the link bubble by setting active state to null
- *
- */
+// Hide the link bubble by setting active state to null
 export const hideLinkBubble: Command = (state, dispatch) => {
 	const pluginState = linkBubbleKey.getState(state)
 	if (!pluginState?.active) {
@@ -45,6 +43,18 @@ export const hideLinkBubble: Command = (state, dispatch) => {
 	}
 	if (dispatch) {
 		dispatch(state.tr.setMeta(linkBubbleKey, { active: null }))
+	}
+	return true
+}
+
+// Open the link bubble for the link at the selection and forus its URL input
+export const focusLinkBubbleInput: Command = (state, dispatch) => {
+	const active = activeLinkFromSelection(state)
+	if (!active) {
+		return false
+	}
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active, focusInput: true }))
 	}
 	return true
 }
@@ -111,14 +121,13 @@ export function linkBubble(options: { editor: Editor }) {
 	const linkBubblePlugin: Plugin = new Plugin({
 		key: linkBubbleKey,
 		state: {
-			init: () => ({ active: null }),
+			init: () => ({ active: null, focusInput: false }),
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
 				if (meta) {
-					return { ...cur, active: meta.active }
-				} else {
-					return cur
+					return { active: meta.active, focusInput: !!meta.focusInput }
 				}
+				return cur
 			},
 		},
 
@@ -132,6 +141,11 @@ export function linkBubble(options: { editor: Editor }) {
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
 			if (oldState?.doc.content.size === 2) {
+				return
+			}
+
+			// Explicit updates of the bubble state take precedence
+			if (transactions.some((tr) => tr.getMeta(linkBubbleKey))) {
 				return
 			}
 

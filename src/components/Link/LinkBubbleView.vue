@@ -133,6 +133,11 @@ export default {
 			type: Number,
 			default: null,
 		},
+
+		focusInput: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup() {
@@ -205,6 +210,12 @@ export default {
 		key() {
 			this.resetBubble()
 			this.startEditIfEmpty()
+		},
+
+		focusInput(value) {
+			if (value && this.isEditable) {
+				this.startEdit()
+			}
 		},
 	},
 
