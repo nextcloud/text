@@ -8,7 +8,7 @@ import type { CommandProps } from '@tiptap/core'
 import { getCurrentUser } from '@nextcloud/auth'
 import { Extension } from '@tiptap/core'
 import { commentBubble, commentBubbleKey, hideCommentBubble, navigateCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
-import { findComment, isEmptyComment } from '../plugins/referenceHelpers.ts'
+import { commentDraftPrefix, findComment, isEmptyComment } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -41,10 +41,10 @@ const CommentBubble = Extension.create({
 				const refNode = state.doc.nodeAt(active.nodeStart)
 				let cursorPos = active.nodeStart + (refNode?.nodeSize ?? 1)
 
-				// Discard a comment taht was created but never submitted
+				// Discard a comment that was created but never submitted
 				const comment = findComment(state.doc, active.referenceId)
 				const currentUserId = getCurrentUser()?.uid ?? ''
-				const hasDraft = !!sessionStorage.getItem('text-comment-draft-' + active.referenceId)
+				const hasDraft = !!sessionStorage.getItem(commentDraftPrefix + active.referenceId)
 				if (comment && isEmptyComment(comment) && comment.firstChild!.attrs.author === currentUserId && !hasDraft) {
 					commands.deleteCommentReply(comment, 0)
 					cursorPos = active.nodeStart
