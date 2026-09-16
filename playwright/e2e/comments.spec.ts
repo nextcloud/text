@@ -139,14 +139,22 @@ test.describe('deletes last comment reply', () => {
 	})
 })
 
-test('hides and shows comment references via annotations toggle', async ({ editor, open }) => {
-	await open()
-	await editor.type('Test[?]')
-	await expect(editor.commentReferences.first()).toBeVisible()
+test.describe('toggles annotations', () => {
+	test.use({
+		fileContent: 'Test[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @[jane](mention://user/jane) *(2026-0716T13:12Z)*\n'
+			+ '      Comment by Jane\n',
+	})
+	test('hides and shows comment references via annotations toggle', async ({ editor, open }) => {
+		await open()
+		await expect(editor.commentReferences.first()).toBeVisible()
 
-	await editor.clickMenu('Annotations', 'Hide annotations')
-	await expect(editor.commentReferences.first()).toBeHidden()
+		await editor.clickMenu('Annotations', 'Hide annotations')
+		await expect(editor.commentReferences).toHaveCount(1)
+		await expect(editor.commentReferences.first()).toBeHidden()
 
-	await editor.clickMenu('Annotations', 'Show annotations')
-	await expect(editor.commentReferences.first()).toBeVisible()
+		await editor.clickMenu('Annotations', 'Show annotations')
+		await expect(editor.commentReferences.first()).toBeVisible()
+	})
 })

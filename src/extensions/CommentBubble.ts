@@ -5,8 +5,10 @@
 
 import type { CommandProps } from '@tiptap/core'
 
+import { getCurrentUser } from '@nextcloud/auth'
 import { Extension } from '@tiptap/core'
 import { commentBubble, commentBubbleKey, hideCommentBubble, navigateCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
+import { findComment, isEmptyComment } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -28,16 +30,27 @@ const CommentBubble = Extension.create({
 					return openCommentBubble(referenceId)(state, dispatch)
 				}
 			},
-			hideCommentBubble: (options?: { refocus?: boolean }) => ({ state, dispatch, chain }) => {
+			hideCommentBubble: (options?: { refocus?: boolean }) => ({ state, dispatch, chain, commands }) => {
 				const pluginState = commentBubbleKey.getState(state)
 				const active = pluginState?.active
 				const result = hideCommentBubble(state, dispatch)
-				if (!result) {
+				if (!result || !active) {
 					return result
 				}
-				if (options?.refocus && active) {
-					const node = state.doc.nodeAt(active.nodeStart)
-					const cursorPos = active.nodeStart + (node?.nodeSize ?? 1)
+
+				const refNode = state.doc.nodeAt(active.nodeStart)
+				let cursorPos = active.nodeStart + (refNode?.nodeSize ?? 1)
+
+				// Discard a comment taht was created but never submitted
+				const comment = findComment(state.doc, active.referenceId)
+				const currentUserId = getCurrentUser()?.uid ?? ''
+				const hasDraft = !!sessionStorage.getItem('text-comment-draft-' + active.referenceId)
+				if (comment && isEmptyComment(comment) && comment.firstChild!.attrs.author === currentUserId && !hasDraft) {
+					commands.deleteCommentReply(comment, 0)
+					cursorPos = active.nodeStart
+				}
+
+				if (options?.refocus) {
 					chain().setTextSelection(cursorPos).focus().run()
 				}
 				return true

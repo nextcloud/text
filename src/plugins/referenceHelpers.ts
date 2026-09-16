@@ -93,3 +93,32 @@ export function footnoteExists(doc: Node, id: string): boolean {
 	})
 	return found
 }
+
+/**
+ * Find the comment node with the given reference id
+ *
+ * @param doc - the ProseMirror node
+ * @param referenceId - the searched reference id
+ */
+export function findComment(doc: Node, referenceId: string): Node | null {
+	let found: Node | null = null
+	doc.descendants((node) => {
+		if (found) {
+			return false
+		}
+		if (node.type.name === 'comment' && node.attrs.referenceId === referenceId) {
+			found = node
+			return false
+		}
+	})
+	return found
+}
+
+/**
+ * Check if a comment thread contains only empty placeholder
+ *
+ * @param comment - the comment node
+ */
+export function isEmptyComment(comment: Node): boolean {
+	return comment.childCount === 1 && comment.firstChild!.textContent === ''
+}
