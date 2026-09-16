@@ -264,6 +264,47 @@ describe('insertComment command', () => {
 		editor.state.doc.forEach((child) => childNames.push(child.type.name))
 		expect(childNames.indexOf('comments')).toBeLessThan(childNames.indexOf('footnotes'))
 	})
+
+	test('inserts the reference after a selected range and keeps the text', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world</p>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		const result = editor.commands.insertComment()
+		expect(result).toBe(true)
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(0).text).toBe('Hello')
+		expect(paragraph.child(1).type.name).toBe('commentReference')
+		expect(paragraph.child(2).text).toBe(' world')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		expect(editor.state.doc.lastChild!.type.name).toBe('comments')
+		expect(editor.state.doc.lastChild!.firstChild!.attrs.referenceId).toBe('comment-1')
+	})
+
+	test('appends into existing comments container with a selected range', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		editor.commands.insertComment()
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(1).type.name).toBe('commentReference')
+		expect(paragraph.child(1).attrs.referenceId).toBe('comment-2')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		const comments = editor.state.doc.lastChild!
+		expect(comments.type.name).toBe('comments')
+		expect(comments.childCount).toBe(2)
+		expect(comments.lastChild!.attrs.referenceId).toBe('comment-2')
+	})
 })
 
 describe('hideCommentBubble command', () => {
