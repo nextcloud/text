@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Connection } from '../composables/useConnection.ts'
-import type { Document, GuestSession, Session } from '../services/SyncService.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Document } from '../types/Document.ts'
+import type { GuestSession, Session } from '../types/Session.ts'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'

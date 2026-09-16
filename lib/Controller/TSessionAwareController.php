@@ -16,7 +16,7 @@ use OCP\IUser;
 
 trait TSessionAwareController {
 	private ?Session $textSession = null;
-	private ?int $documentId = null;
+	private ?string $documentId = null;
 	private ?Document $document = null;
 	private ?IUser $user = null;
 
@@ -24,7 +24,7 @@ trait TSessionAwareController {
 		$this->textSession = $session;
 	}
 
-	public function setDocumentId(int $documentId): void {
+	public function setDocumentId(string $documentId): void {
 		$this->documentId = $documentId;
 	}
 
@@ -50,7 +50,7 @@ trait TSessionAwareController {
 	/**
 	 * @throws InvalidSessionException
 	 */
-	public function getDocumentId(): int {
+	public function getDocumentId(): string {
 		if ($this->documentId === null) {
 			throw new InvalidSessionException();
 		}

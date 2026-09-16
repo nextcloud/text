@@ -77,7 +77,7 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidDocumentBaseVersionEtagException
 	 */
 	private function assertDocumentBaseVersionEtag(): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$documentId = (string)$this->request->getParam('documentId');
 		$baseVersionEtag = $this->request->getParam('baseVersionEtag');
 
 		$document = $this->documentService->getDocument($documentId);
@@ -91,7 +91,7 @@ class SessionMiddleware extends Middleware {
 	 * @throws AccountDisabledException
 	 */
 	private function assertDocumentSession(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$documentId = (string)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
 
@@ -124,7 +124,7 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$documentId = (string)$this->request->getParam('documentId');
 		$shareToken = (string)$this->request->getParam('shareToken');
 		$user = $this->userSession->getUser();
 

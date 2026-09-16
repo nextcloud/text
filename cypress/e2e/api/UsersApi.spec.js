@@ -22,7 +22,10 @@ describe('The user mention API', function() {
 	})
 
 	it('has a valid connection', function() {
-		cy.get('@connection').its('documentId').should('be.greaterThan', 0)
+		cy.get('@connection')
+			.its('documentId')
+			.then((id) => Number.parseInt(id))
+			.should('be.greaterThan', 1_000_000) // snowflake ids have more than 20 bit.
 		cy.closeConnection(this.connection)
 	})
 

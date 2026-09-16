@@ -24,8 +24,8 @@ use OCP\DB\Types;
  * @method void setLastAwarenessMessage(string $message)
  * @method int getLastContact()
  * @method void setLastContact(int $getTime)
- * @method int getDocumentId()
- * @method void setDocumentId(int $documentId)
+ * @method string getDocumentId()
+ * @method void setDocumentId(string $documentId)
  */
 class Session extends Entity implements JsonSerializable {
 	public $id;
@@ -35,10 +35,10 @@ class Session extends Entity implements JsonSerializable {
 	protected ?string $guestName = null;
 	protected ?string $lastAwarenessMessage = '';
 	protected int $lastContact = 0;
-	protected int $documentId = 0;
+	protected string $documentId = '';
 
 	public function __construct() {
-		$this->addType('documentId', Types::INTEGER);
+		$this->addType('documentId', Types::STRING);
 		$this->addType('lastContact', Types::INTEGER);
 	}
 

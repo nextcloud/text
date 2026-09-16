@@ -84,7 +84,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+	public function close(string $documentId, int $sessionId, string $sessionToken): DataResponse {
 		return $this->apiService->close($documentId, $sessionId, $sessionToken, $this->getShare());
 	}
 

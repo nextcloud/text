@@ -24,7 +24,7 @@ class DocumentMapper extends QBMapper {
 	 * @return Document
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $documentId): Document {
+	public function find(string $documentId): Document {
 
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();

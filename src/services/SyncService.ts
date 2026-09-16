@@ -5,7 +5,11 @@
 
 import type { ShallowRef } from 'vue'
 import type { OpenData } from '../apis/connect.ts'
-import type { Connection } from '../composables/useConnection.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Document } from '../types/Document.ts'
+import type { ErrorType } from '../types/ErrorType.ts'
+import type { GuestSession, Session, UserSession } from '../types/Session.ts'
+import type { Step } from '../types/Step.ts'
 
 import mitt from 'mitt'
 import { close } from '../apis/connect.ts'
@@ -13,6 +17,7 @@ import { push } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps.ts'
 import { documentStateToStep } from '../helpers/yjs.ts'
+import { ERROR_TYPE } from '../types/ErrorType.ts'
 import Outbox from './Outbox.ts'
 import PollingBackend from './PollingBackend.ts'
 
@@ -26,58 +31,6 @@ const IDLE_TIMEOUT = 1440
 const COLLABORATOR_IDLE_TIME = 60
 
 const COLLABORATOR_DISCONNECT_TIME = 90
-
-const ERROR_TYPE = {
-	/**
-	 * Failed to save collaborative document due to external change
-	 * collision needs to be resolved manually
-	 */
-	SAVE_COLLISION: 0,
-	/**
-	 * Failed to push changes for MAX_REBASE_RETRY times
-	 */
-	PUSH_FAILURE: 1,
-
-	LOAD_ERROR: 2,
-
-	CONNECTION_FAILED: 3,
-
-	SOURCE_NOT_FOUND: 4,
-
-	PUSH_FORBIDDEN: 5,
-} as const
-
-type ErrorType = (typeof ERROR_TYPE)[keyof typeof ERROR_TYPE]
-
-/*
- * Step as what we expect to be returned from the server right now.
- */
-export interface Step {
-	data: string[]
-	version: number
-	sessionId: number
-}
-
-export interface UserSession {
-	id: number
-	userId: string
-	color: string
-	lastAwarenessMessage: string
-	lastContact: number
-	documentId: number
-	displayName: string
-}
-
-export interface GuestSession {
-	id: number
-	color: string
-	lastAwarenessMessage: string
-	lastContact: number
-	guestName: string
-	documentId: number
-}
-
-export type Session = UserSession | GuestSession
 
 /**
  * Test if a session is a guest session
@@ -95,14 +48,6 @@ export function isGuest(session: Session): session is GuestSession {
  */
 export function isUser(session: Session): session is UserSession {
 	return 'userId' in session && typeof session.userId === 'string'
-}
-
-export interface Document {
-	id: number
-	lastSavedVersion: number
-	lastSavedVersionTime: number
-	baseVersionEtag: string
-	initialVersion: number
 }
 
 export declare type EventTypes = {

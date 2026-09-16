@@ -4,7 +4,8 @@
  */
 
 import type { InjectionKey, ShallowRef } from 'vue'
-import type { Connection, InitialData } from './useConnection.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { InitialData } from './useConnection.ts'
 
 import { inject, provide } from 'vue'
 import { SyncService } from '../services/SyncService.ts'
