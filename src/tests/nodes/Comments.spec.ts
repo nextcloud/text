@@ -430,17 +430,11 @@ describe('Comments Markdown roundtrip', () => {
 		expect(markdownThroughEditor(testOut)).toBe(testOut)
 	})
 	test('idempotent through round-trip with broken metadata #2', ({ markdownThroughEditor }) => {
-		const testIn = 'Foo[^comment-1]\n\n'
+		const test = 'Foo[^comment-1]\n\n'
 			+ '[^comment-1]:\n'
-			+ '    - @jane xyz\n'
+			+ '    - @jane doe\n'
 			+ '      Hello there'
-		const testOut = 'Foo[^comment-1]\n\n'
-			+ '[^comment-1]:\n'
-			+ '    - @jane\n'
-			+ '      xyz\n'
-			+ '      Hello there'
-		expect(markdownThroughEditor(testIn)).toBe(testOut)
-		expect(markdownThroughEditor(testOut)).toBe(testOut)
+		expect(markdownThroughEditor(test)).toBe(test)
 	})
 	test('idempotent through round-trip with broken metadata #3', ({ markdownThroughEditor }) => {
 		const testIn = 'Foo[^comment-1]\n\n'
@@ -468,5 +462,12 @@ describe('Comments Markdown roundtrip', () => {
 		expect(markdownThroughEditor(testIn1)).toBe(testOut)
 		expect(markdownThroughEditor(testIn2)).toBe(testOut)
 		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
+	test('guest comment with multi-word name', ({ markdownThroughEditor }) => {
+		const test = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @Alma Lauer *(2026-09-14T12:51:39.978Z)*\n'
+			+ '      Guest reply'
+		expect(markdownThroughEditor(test)).toBe(test)
 	})
 })
