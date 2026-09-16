@@ -119,10 +119,8 @@ const CommentReference = Node.create({
 				)
 				const newComment = commentType.create({ referenceId }, newCommentItem)
 
-				let c = chain()
-					.insertContent({ type: 'commentReference', attrs: { referenceId } })
-
-				// Find positions of existing containers in the original doc
+				// Insert the comment before the reference: the container positions are read
+				// from the document as it is now and would shift once the reference is added.
 				let commentsInsidePos = -1
 				let footnotesStartPos = -1
 				state.doc.forEach((child, offset) => {
@@ -134,6 +132,7 @@ const CommentReference = Node.create({
 					}
 				})
 
+				let c = chain()
 				if (commentsInsidePos !== -1) {
 					c = c.insertContentAt(commentsInsidePos, newComment.toJSON())
 				} else if (footnotesStartPos !== -1) {
@@ -147,6 +146,9 @@ const CommentReference = Node.create({
 						content: [newComment.toJSON()],
 					})
 				}
+
+				// Insert the reference at the end of the selection
+				c = c.insertContentAt(state.selection.to, { type: 'commentReference', attrs: { referenceId } })
 
 				// Move selection/cursor to reference to avoid it being inside the hidden comments container
 				c = c.command(({ state, dispatch }) => {
