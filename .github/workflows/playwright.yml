@@ -57,6 +57,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium webkit
 
+      - name: Install poppler for PDF snapshots
+        run: sudo apt-get install -y poppler-utils
+
       - name: Run Playwright tests
         run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         env:

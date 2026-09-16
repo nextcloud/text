@@ -841,13 +841,12 @@ export default defineComponent({
 
 		/** @param {Event} event The passed event */
 		preparePrinting(event) {
-			const content = document.getElementById('content')
-			// Hide Content behind modal, this also hides the sidebar if open
-			if (content && event.type === 'beforeprint') {
-				content.style.display = 'none'
-			} else if (content) {
-				content.style.display = ''
+			const content = document.getElementById('content-vue')
+			// Hide Content behind modal, but never the container holding the editor
+			if (!content || content.contains(this.$el)) {
+				return
 			}
+			content.style.display = event.type === 'beforeprint' ? 'none' : ''
 		},
 
 		/**
