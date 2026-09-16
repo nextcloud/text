@@ -419,6 +419,18 @@ export function getMenuEntries(isRichWorkspace: boolean, annotationsHidden?: Ref
 					},
 				},
 				{
+					key: 'mermaid-diagram',
+					label: t('text', 'Mermaid diagram'),
+					isActive: { name: 'codeBlock', attributes: { language: 'mermaid' } },
+					icon: CodeBrackets,
+					action: (command, editor) => {
+						if (editor?.isActive('codeBlock')) {
+							return command.updateAttributes('codeBlock', { language: 'mermaid' })
+						}
+						return command.setCodeBlock({ language: 'mermaid' })
+					},
+				},
+				{
 					key: 'blocks-separator',
 					isSeparator: true,
 				},
