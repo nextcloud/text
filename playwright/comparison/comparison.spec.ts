@@ -52,7 +52,7 @@ test.describe('Text comparison production bundle acceptance', () => {
 	})
 
 	for (const interrupted of [false, true]) {
-		test(`handles an opening image above the first edit (reader interrupted: ${interrupted})`, async ({ comparison, page }) => {
+		test(`browser scroll anchoring preserves the settled image comparison position (reader interrupted: ${interrupted})`, async ({ comparison, page }) => {
 			let release!: () => void
 			const imageReady = new Promise<void>((resolve) => {
 				release = resolve
@@ -70,8 +70,13 @@ test.describe('Text comparison production bundle acceptance', () => {
 					await page.mouse.wheel(0, -100_000)
 					await expect.poll(() => scroller.evaluate((element) => element.scrollTop)).toBe(0)
 				}
+				await page.evaluate(async () => {
+					for (let frame = 0; frame < 4; frame++) {
+						await new Promise(requestAnimationFrame)
+					}
+				})
 				release()
-				await expect(page.locator('.text-comparison__document--before img').first()).toHaveJSProperty('complete', true)
+				await expect(page.locator('.text-comparison__document--before img').first()).toHaveJSProperty('naturalHeight', 1600)
 				if (interrupted) {
 					await expect.poll(() => scroller.evaluate((element) => element.scrollTop)).toBe(0)
 				} else {
