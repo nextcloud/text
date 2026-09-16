@@ -105,85 +105,85 @@ This file is generated from multiple sources. Included packages:
 	- version: 0.2.0
 	- license: Apache-2.0
 - @tiptap/core
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-blockquote
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-bold
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-code
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-code-block
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-code-block-lowlight
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-document
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-hard-break
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-heading
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-highlight
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-horizontal-rule
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-image
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-italic
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-link
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-list
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-mathematics
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-mention
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-paragraph
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-placeholder
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-strike
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-table
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-text
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-typography
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extension-underline
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/extensions
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/suggestion
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @tiptap/vue-3
-	- version: 3.31.2
+	- version: 3.31.3
 	- license: MIT
 - @ungap/structured-clone
 	- version: 1.3.0
