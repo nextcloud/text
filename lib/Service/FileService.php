@@ -8,7 +8,6 @@
 namespace OCA\Text\Service;
 
 use OCA\Files_Sharing\SharedStorage;
-use OCA\Text\Db\Session;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\Constants;
 use OCP\Files\File;
@@ -18,57 +17,33 @@ use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\ISession;
+use OCP\IUser;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
+use Psr\Log\LoggerInterface;
 
 class FileService {
 
 	public function __construct(
+		private readonly EncodingService $encodingService,
 		private readonly ISession $session,
 		private readonly IRootFolder $rootFolder,
 		private readonly LockService $lockService,
+		private readonly LoggerInterface $logger,
 		private readonly ShareManager $shareManager,
 	) {
 	}
 
 	/**
-	 * @throws NotPermittedException
 	 * @throws NotFoundException
 	 */
-	public function getFileForSession(Session $session, ?string $shareToken = null): File {
-		if (!$session->isGuest()) {
-			try {
-				return $this->getFileById($session->getDocumentId(), $session->getUserId());
-			} catch (NotFoundException $e) {
-				if ($shareToken === null) {
-					throw $e;
-				}
-				// We may still have a user session but on a public share link so move on
-			}
-		}
-
-		if ($shareToken === null) {
-			throw new \InvalidArgumentException('No proper share data');
-		}
-		return $this->getFileByIdFromShare($session->getDocumentId(), $shareToken);
-	}
-
-	/**
-	 * @throws NotFoundException
-	 */
-	public function getFileByIdFromShare(int $fileId, string $shareToken): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
+	public function getFileByIdFromShare(int $fileId, IShare $share): File {
 		$node = $share->getNode();
 		if ($node instanceof Folder) {
 			$node = $node->getFirstNodeById($fileId);
 		}
-		if ($node instanceof File) {
+		if ($node instanceof File && $node->getId() === $fileId) {
 			return $node;
 		}
 		throw new NotFoundException();
@@ -94,39 +69,40 @@ class FileService {
 			return $file;
 		}
 
-		// Ideally we'd optimize this part in the future by storing the path and getting the acutal target directly
-		$files = $userFolder->getById($fileId);
+		// Ideally we'd optimize this part in the future by storing the path and getting the actual target directly
+		$files = array_filter($userFolder->getById($fileId), fn (Node $f) => $f instanceof File);
 		if (count($files) === 0) {
 			throw new NotFoundException();
 		}
 
 		// Workaround to always open files with edit permissions if multiple occurrences of
 		// the same file id are in the user home, ideally we should also track the path of the file when opening
-		usort($files, static fn (Node $a, Node $b) => ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE));
-
-		$file = array_shift($files);
-
-		if (!$file instanceof File) {
-			throw new NotFoundException();
+		$readableFile = null;
+		foreach ($files as $file) {
+			$permissions = $file->getPermissions();
+			if ($permissions & Constants::PERMISSION_READ && $permissions & Constants::PERMISSION_UPDATE) {
+				return $file;
+			}
+			if ($permissions & Constants::PERMISSION_READ) {
+				$readableFile = $file;
+			}
+		}
+		if ($readableFile !== null) {
+			return $readableFile;
 		}
 
-		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
-			throw new NotPermittedException();
-		}
-
-		return $file;
+		throw new NotPermittedException();
 	}
 
 	/**
-	 * @throws NotFoundException if the share cannot be found based on the token
 	 * @throws \InvalidArgumentException if the share is not a File share and path is omitted.
 	 */
-	public function getFileByShareToken(string $shareToken, ?string $path = null): File {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
+	public function getFileFromShareByPath(Ishare $share, ?string $path = null): File {
+		/*
+		* Check if we have proper read access (files drop)
+		* If not then well 404 it is.
+		*/
+		$this->checkSharePermissions($share);
 
 		$node = $share->getNode();
 		if ($path !== null && $node instanceof Folder) {
@@ -138,11 +114,11 @@ class FileService {
 		throw new \InvalidArgumentException('Invalid share data.');
 	}
 
-	public function isReadOnly(File $file, ?string $token): bool {
+	public function isReadOnly(File $file, IUser|IShare $auth): bool {
 		$readOnly = !$file->isUpdateable();
-		if ($token !== null) {
+		if ($auth instanceof IShare) {
 			try {
-				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
+				$this->checkSharePermissions($auth, Constants::PERMISSION_UPDATE);
 			} catch (NotFoundException) {
 				$readOnly = true;
 			}
@@ -174,19 +150,13 @@ class FileService {
 	 *
 	 * @psalm-param 1|2 $permission
 	 */
-	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
-		try {
-			$share = $this->shareManager->getShareByToken($shareToken);
-		} catch (ShareNotFound) {
-			throw new NotFoundException();
-		}
-
+	public function checkSharePermissions(IShare $share, int $permission = Constants::PERMISSION_READ): void {
 		if (($share->getPermissions() & $permission) === 0 || ($share->getNode()->getPermissions() & $permission) === 0) {
 			throw new NotFoundException();
 		}
 	}
 
-	public function getDocumentIdFromShare(int $fileId, string $shareToken): int {
+	public function checkFileAccessFromShare(int $fileId, string $shareToken): void {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound) {
@@ -226,15 +196,26 @@ class FileService {
 		if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
 			throw new InvalidSessionException();
 		}
-
-		return $fileId;
 	}
 
-	public function getDocumentIdForUser(int $fileId, string $userId): int {
-		if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($fileId) !== null) {
-			return $fileId;
+	public function checkFileAccessForUser(int $fileId, string $userId): void {
+		if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($fileId) === null) {
+			throw new InvalidSessionException();
 		}
-		throw new InvalidSessionException();
+	}
+
+	public function loadContent(File $file): ?string {
+		try {
+			$content = $file->getContent();
+			$content = $this->encodingService->encodeToUtf8($content);
+			if ($content === null) {
+				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
+			}
+		} catch (NotFoundException $e) {
+			$this->logger->warning($e->getMessage(), ['exception' => $e]);
+			$content = null;
+		}
+		return $content;
 	}
 
 }

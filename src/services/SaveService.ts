@@ -5,15 +5,15 @@
 
 import type { Ref, ShallowRef } from 'vue'
 import type { SaveData } from '../apis/save.ts'
-import type { Connection } from '../composables/useConnection.ts'
-import type { Document } from './SyncService.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Document } from '../types/Document.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 import mitt from 'mitt'
 import { save, saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
-import { ERROR_TYPE } from './SyncService.ts'
+import { ERROR_TYPE } from '../types/ErrorType.ts'
 
 // Time constants in seconds:
 // Only autosave after 1 second typing breaks

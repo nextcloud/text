@@ -12,107 +12,91 @@ namespace OCA\Text\Service;
 use Exception;
 use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
+use OCA\Text\Context\ContextManager;
+use OCA\Text\Context\IContext;
+use OCA\Text\Context\NewSessionData;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\Files\File;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
-use OCP\Lock\LockedException;
+use OCP\IUser;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 class ApiService {
 	public function __construct(
 		private readonly ConfigService $configService,
+		private readonly ContextManager $contextManager,
 		private readonly SessionService $sessionService,
 		private readonly DocumentService $documentService,
-		private readonly FileService $fileService,
-		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
-		private readonly LockService $lockService,
 		private readonly IL10N $l10n,
 		private readonly ?IQueue $queue,
 	) {
 	}
 
-	public function create(File $file, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
+	public function create(IContext $context, ?string $baseVersionEtag, ?string $guestName = null): DataResponse {
 		try {
-			// Block using text for disabled download internal shares
-			if ($this->fileService->isDownloadDisabled($file)) {
-				return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
+			$document = $context->buildDocument();
+		} catch (NotFoundException $e) {
+			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_NOT_FOUND);
+		} catch (NotPermittedException $e) {
+			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_FORBIDDEN);
+		}
+
+		try {
+			$document = $this->documentService->getOrCreateDocument($document);
+			$documentId = $document->id;
+			if ($documentId === null) {
+				throw new RuntimeException('Persisted document must have an id.');
 			}
-
-			$readOnly = $this->fileService->isReadOnly($file, $token);
-
-			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$document = $this->documentService->getOrCreateDocument($file);
-			if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
-				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
-			}
-
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
+		$documentData = $this->documentService->getDocumentData($documentId, $document);
 
-		/** @var Document $document */
-
-		$session = $this->sessionService->initSession($document->getId(), $guestName);
-
-		$documentState = null;
-		$content = null;
-		if ($document->getLastSavedVersion() === 0) {
-			$this->logger->debug('Sending content for unsaved file ' . $file->getId());
-			$content = $this->loadContent($file);
-		} else {
-			$this->logger->debug('Loading saved document state for ' . $file->getId());
-			try {
-				$stateFile = $this->documentService->getStateFile($document->getId());
-				$documentState = $stateFile->getContent();
-			} catch (NotFoundException) {
-				$this->logger->warning('State file not found for saved document' . $file->getId());
-
-				// If we have no state file we need to load the content from the file
-				// On the client side we use this to initialize a idempotent initial y.js document
-				$content = $this->loadContent($file);
-			}
+		if ($baseVersionEtag !== null && $baseVersionEtag !== $document->getBaseVersionEtag()) {
+			$error = $this->l10n->t('Editing session has expired. Please reload the page.');
+			return new DataResponse(['error' => $error], Http::STATUS_PRECONDITION_FAILED);
 		}
 
-		$lockInfo = $this->lockService->getLockByOthers($file);
+		$sessionInfo = $context->prepareSession($documentData);
+		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
+		$session = $this->sessionService->initSession($documentId, $guestName);
+		$displayName = $this->sessionService->getNameForSession($session);
 
-		$hasOwner = $file->getOwner() !== null;
+		$newSession = new NewSessionData(
+			documentData: $documentData,
+			sessionInfo: $sessionInfo,
+			session: $session,
+			displayName: $displayName,
+		);
 
-		// Disable file locking for Readme.md files, because in the
-		// current setup, this makes it almost impossible to delete these files.
-		if (!$readOnly && strcasecmp($file->getName(), 'Readme.md') !== 0) {
-			$isLocked = $this->lockService->lock($file);
-			if (!$isLocked) {
-				$readOnly = true;
-			}
-		}
-
-		return new DataResponse([
-			'document' => $document,
-			'session' => array_merge($session->jsonSerialize(), ['displayName' => $this->sessionService->getNameForSession($session)]),
-			'readOnly' => $readOnly,
-			'content' => $content,
-			'documentState' => $documentState,
-			'lock' => $lockInfo,
-			'hasOwner' => $hasOwner,
-		]);
+		return new DataResponse(
+			$newSession->jsonSerialize()
+		);
 	}
 
-	public function close(int $documentId, int $sessionId, string $sessionToken, File $file): DataResponse {
+	public function close(string $documentId, int $sessionId, string $sessionToken, IShare|IUser $auth): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			$this->lockService->unlock($file);
+			$document = $this->documentService->getDocument($documentId);
+			if ($document !== null) {
+				$type = $document->getContextType();
+				$id = $document->getContextId();
+				$context = $this->contextManager->getContext($type, $id, $auth);
+				$context->cleanup();
+			}
 		}
 		return new DataResponse([]);
 	}
@@ -120,7 +104,10 @@ class ApiService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, ?string $token = null): DataResponse {
+	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, ?int $recoveryAttempt, IShare|IUser $auth): DataResponse {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs to have an id to push.');
+		}
 		try {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
@@ -128,8 +115,8 @@ class ApiService {
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		try {
-			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $token);
-			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
+			$result = $this->documentService->addStep($document, $session, $steps, $version, $recoveryAttempt, $auth);
+			$this->addToPushQueue($document->id, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		} catch (DoesNotExistException) {
@@ -141,12 +128,12 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	private function addToPushQueue(Document $document, array $steps): void {
+	private function addToPushQueue(string $documentId, array $steps): void {
 		if ($this->queue === null || !$this->configService->isNotifyPushSyncEnabled()) {
 			return;
 		}
 
-		$sessions = $this->sessionService->getActiveSessions($document->getId());
+		$sessions = $this->sessionService->getActiveSessions($documentId);
 		$userIds = array_values(array_filter(array_unique(
 			array_map(fn ($session): ?string => $session['userId'], $sessions)
 		)));
@@ -155,26 +142,30 @@ class ApiService {
 				'user' => $userId,
 				'message' => 'text_steps',
 				'body' => [
-					'documentId' => $document->getId(),
+					'documentId' => $documentId,
 					'steps' => array_values(array_filter($steps)),
 				],
 			]);
 		}
 	}
 
-	public function sync(Session $session, Document $document, int $version = 0, ?string $shareToken = null): DataResponse {
-		$documentId = $session->getDocumentId();
+	public function sync(Document $document, IShare|IUser $auth, int $version = 0): DataResponse {
+		if ($document->id === null) {
+			throw new RuntimeException('Document needs to have an id to sync.');
+		}
 		$result = [];
 		try {
 			$result = [
-				'steps' => $this->documentService->getSteps($documentId, $version),
-				'sessions' => $this->sessionService->getAllSessions($documentId),
+				'steps' => $this->documentService->getSteps($document->id, $version),
+				'sessions' => $this->sessionService->getAllSessions($document->id),
 				'document' => $document,
 			];
 
 			// ensure file is still present and accessible
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-			$result['readOnly'] = $this->fileService->isReadOnly($file, $shareToken);
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $auth);
+			$result['readOnly'] = $context->isReadOnly();
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
@@ -190,30 +181,23 @@ class ApiService {
 		return new DataResponse($result, Http::STATUS_OK);
 	}
 
-	public function save(Session $session, Document $document, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+	public function save(Document $document, IShare|IUser $auth, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
-			$file = $this->fileService->getFileForSession($session, $shareToken);
-		} catch (NotPermittedException|NotFoundException $e) {
+			$type = $document->getContextType();
+			$id = $document->getContextId();
+			$context = $this->contextManager->getContext($type, $id, $auth);
+		} catch (NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
-			], Http::STATUS_NOT_FOUND);
-		} catch (DoesNotExistException $e) {
-			$this->logger->info($e->getMessage(), ['exception' => $e]);
-			return new DataResponse([
-				'message' => 'Document no longer exists'
 			], Http::STATUS_NOT_FOUND);
 		}
 
 		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
-		} catch (DocumentSaveConflictException) {
-			try {
-				$result['outsideChange'] = $file->getContent();
-			} catch (LockedException) {
-				// Ignore locked exception since it might happen due to an autosave action happening at the same time
-			}
+			$result['document'] = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave);
+		} catch (DocumentSaveConflictException $e) {
+			$result['outsideChange'] = $e->getContent();
 		} catch (NotPermittedException) {
 			return new DataResponse([
 				'error' => $this->l10n->t('Read-only permission cannot save document changes. Please reload the page.')
@@ -234,17 +218,4 @@ class ApiService {
 		return new DataResponse($this->sessionService->updateSession($session, $guestName));
 	}
 
-	private function loadContent(\OCP\Files\File $file): ?string {
-		try {
-			$content = $file->getContent();
-			$content = $this->encodingService->encodeToUtf8($content);
-			if ($content === null) {
-				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
-			}
-		} catch (NotFoundException $e) {
-			$this->logger->warning($e->getMessage(), ['exception' => $e]);
-			$content = null;
-		}
-		return $content;
-	}
 }

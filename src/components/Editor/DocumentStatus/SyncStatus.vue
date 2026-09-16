@@ -24,7 +24,7 @@
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
-import { ERROR_TYPE } from '../../../services/SyncService.ts'
+import { ERROR_TYPE } from '../../../types/ErrorType.ts'
 
 export default {
 	name: 'SyncStatus',

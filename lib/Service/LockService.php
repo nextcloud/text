@@ -23,6 +23,9 @@ class LockService {
 	) {
 	}
 
+	/**
+	 * @throws PreConditionNotMetException if another lock scope is already active
+	 */
 	public function runInScope(File $file, callable $callback): void {
 		$this->lockManager->runInScope(
 			new LockContext(
@@ -49,10 +52,6 @@ class LockService {
 	}
 
 	public function lock(File $file): bool {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return true;
-		}
-
 		try {
 			$this->lockManager->lock(new LockContext(
 				$file,
@@ -67,10 +66,6 @@ class LockService {
 	}
 
 	public function unlock(File $file): void {
-		if (!$this->lockManager->isLockProviderAvailable()) {
-			return;
-		}
-
 		try {
 			$this->lockManager->unlock(new LockContext(
 				$file,

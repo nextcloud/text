@@ -6,7 +6,7 @@
 import type { ShallowRef } from 'vue'
 import type { OpenData } from '../apis/connect.ts'
 import type { SyncService } from '../services/SyncService.ts'
-import type { Session } from '../services/SyncService.ts'
+import type { Session } from '../types/Session.ts'
 
 import {
 	computed,

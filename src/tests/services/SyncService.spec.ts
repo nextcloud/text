@@ -9,7 +9,7 @@ import { provideConnection } from '../../composables/useConnection.js'
 import { SyncService } from '../../services/SyncService.js'
 
 const connection = {
-	documentId: 123,
+	documentId: '123',
 	sessionId: 345,
 	sessionToken: 'sessionToken',
 	filePath: './',
@@ -22,13 +22,13 @@ const initialData = {
 		token: 'shareToken',
 		color: '#abcabc',
 		lastContact: Date.now(),
-		documentId: 123,
+		documentId: '123',
 		displayName: 'My Name',
 		lastAwarenessMessage: 'hi',
 		clientId: 1,
 	},
 	document: {
-		id: 123,
+		id: '123',
 		baseVersionEtag: 'etag',
 		initialVersion: 0,
 		lastSavedVersion: 345,
@@ -47,14 +47,14 @@ describe('Sync service', () => {
 		const setBaseVersionEtag = vi.fn()
 		const { connection, openConnection, openData } = provideConnection(
 			{
-				fileId: 123,
+				context: { type: 'file', id: 123 },
 				relativePath: './',
 			},
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
 		vi.mock('../../apis/connect')
-		vi.mocked(connect.open).mockResolvedValue(openResult)
+		vi.mocked(connect.openContext).mockResolvedValue(openResult)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
 		service.bus.on('opened', openHandler)

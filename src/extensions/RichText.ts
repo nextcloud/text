@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { AnyExtension, Extensions } from '@tiptap/core'
-import type { Connection } from '../composables/useConnection.ts'
+import type { Connection } from '../types/Connection.ts'
 
 import { t } from '@nextcloud/l10n'
 import { Extension } from '@tiptap/core'

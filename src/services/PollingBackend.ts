@@ -4,14 +4,17 @@
  */
 import type { Emitter } from 'mitt'
 import type { OpenData } from '../apis/connect.ts'
-import type { Connection } from '../composables/useConnection.ts'
+import type { Connection } from '../types/Connection.ts'
+import type { Document } from '../types/Document.ts'
+import type { Session } from '../types/Session.ts'
+import type { Step } from '../types/Step.ts'
 import type { EventTypes } from './NotifyService.ts'
-import type { Document, Session, Step, SyncService } from './SyncService.js'
+import type { SyncService } from './SyncService.js'
 
 import { sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
+import { ERROR_TYPE } from '../types/ErrorType.ts'
 import getNotifyBus from './NotifyService.ts'
-import { ERROR_TYPE } from './SyncService.js'
 
 /**
  * Minimum inverval to refetch the document changes in ms.

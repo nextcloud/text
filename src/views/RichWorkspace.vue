@@ -16,7 +16,7 @@
 			v-if="file"
 			v-show="ready"
 			:key="file.path"
-			:fileId="file.id"
+			:context="{id: file.id, type: 'file'}"
 			:relativePath="file.path"
 			:shareToken
 			:mime="file.mimetype"
