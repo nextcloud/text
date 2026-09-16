@@ -305,14 +305,11 @@ function extractMetadata(inline: Token): Metadata {
 		authorLabel = mention.label || ''
 		children.shift()
 	} else if (first?.type === 'text') {
-		// Guest mention
-		const match = first.content.match(/^@([^\s*]+)/)
+		// Guest mention: the text token runs up to the timestamp or the end of the line
+		const match = first.content.match(/^@(\S.*?)\s*$/)
 		if (match) {
 			authorLabel = match[1]
-			first.content = first.content.slice(match[0].length)
-			if (!first.content) {
-				children.shift()
-			}
+			children.shift()
 		}
 	}
 
