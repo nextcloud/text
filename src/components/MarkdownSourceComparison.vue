@@ -224,7 +224,9 @@ const SourceRow = defineComponent({
 			return h('div', {
 				class: ['text-source-comparison__line', operation && `text-source-comparison__line--${operation}`],
 				hidden: rowProps.layoutMode === 'single' && rowProps.activeSide !== side,
-				'aria-label': operation && t('text', operation === 'removed' ? 'Removed line {line}' : 'Added line {line}', { line: value!.number }),
+				'aria-label': operation && (operation === 'removed'
+					? t('text', 'Removed line {line}', { line: value!.number })
+					: t('text', 'Added line {line}', { line: value!.number })),
 				'data-source-operation': operation,
 			}, value
 				? [
