@@ -176,17 +176,16 @@ import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { useGuestName } from '../../composables/useGuestName.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.ts'
+import { commentDraftPrefix } from '../../plugins/referenceHelpers.ts'
 
 const props = defineProps<{
 	editor: Editor
 	referenceId: string
 }>()
 
-const DRAFT_KEY_PREFIX = 'text-comment-draft-'
-
 // References used in template
 const itemsContainer = ref<HTMLElement | null>(null)
-const replyText = ref(sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`) ?? '')
+const replyText = ref(sessionStorage.getItem(`${commentDraftPrefix}${props.referenceId}`) ?? '')
 const editInput = ref<InstanceType<typeof NcRichContenteditable>[] | null>(null)
 const replyInput = ref<InstanceType<typeof NcRichContenteditable> | null>(null)
 const userData = ref<Record<string, object>>({})
@@ -240,7 +239,7 @@ const { setGuestName } = useGuestName(props.editor)
 
 // Persist draft as user types
 watch(replyText, (val) => {
-	const key = `${DRAFT_KEY_PREFIX}${props.referenceId}`
+	const key = `${commentDraftPrefix}${props.referenceId}`
 	if (val.trim()) {
 		sessionStorage.setItem(key, val)
 	} else {
@@ -250,7 +249,7 @@ watch(replyText, (val) => {
 
 // Restore draft when bubble opens or switches to a different comment
 watch(() => props.referenceId, (id) => {
-	replyText.value = sessionStorage.getItem(`${DRAFT_KEY_PREFIX}${id}`) ?? ''
+	replyText.value = sessionStorage.getItem(`${commentDraftPrefix}${id}`) ?? ''
 })
 
 // Focus input field when switching between comment references.
@@ -315,7 +314,7 @@ function submitReply() {
 		return
 	}
 	props.editor.commands.addOrUpdateCommentReply(commentNode.value, replyText.value.trim())
-	sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
+	sessionStorage.removeItem(`${commentDraftPrefix}${props.referenceId}`)
 	replyText.value = ''
 	nextTick(() => {
 		if (itemsContainer.value) {
@@ -374,7 +373,7 @@ function deleteItem(index: number) {
 		return
 	}
 	if (items.value.length === 1) {
-		sessionStorage.removeItem(`${DRAFT_KEY_PREFIX}${props.referenceId}`)
+		sessionStorage.removeItem(`${commentDraftPrefix}${props.referenceId}`)
 	}
 	props.editor.commands.deleteCommentReply(commentNode.value, index)
 }
