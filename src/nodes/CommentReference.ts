@@ -11,7 +11,7 @@ import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.js'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
-import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
+import { generateReferenceId, isEmptyComment, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -231,7 +231,7 @@ const CommentReference = Node.create({
 				}
 
 				const tr = state.tr
-				const shouldAppendNewReply = itemIndex === undefined
+				const shouldAppendNewReply = itemIndex === undefined && !isEmptyComment(comment)
 					&& !(comment.childCount === 1 && item.textContent === '')
 				if (shouldAppendNewReply) {
 					// Append a new reply item

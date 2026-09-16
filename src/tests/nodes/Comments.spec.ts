@@ -7,17 +7,27 @@ import type { Editor } from '@tiptap/core'
 
 import { Document } from '@tiptap/extension-document'
 import { ListItem } from '@tiptap/extension-list'
-import { describe, expect } from 'vitest'
+import { describe, expect, vi } from 'vitest'
+import CommentBubble from '../../extensions/CommentBubble.ts'
 import KeepSyntax from '../../extensions/KeepSyntax.js'
 import Mention from '../../extensions/Mention.js'
 import BulletList from '../../nodes/BulletList.ts'
 import Comments from '../../nodes/Comments.ts'
 import Footnotes from '../../nodes/Footnotes.ts'
+import { commentBubbleKey } from '../../plugins/commentBubble.ts'
 import testEditor from '../testHelpers/testEditor.ts'
+
+vi.mock('../../plugins/CommentBubblePluginView.ts', () => ({
+	default: class {
+		update() {}
+		destroy() {}
+	},
+}))
 
 const test = testEditor.override('extensions', [
 	Document.extend({ content: 'block+ comments? footnotes?' }),
 	Comments,
+	CommentBubble,
 	Footnotes,
 	BulletList,
 	KeepSyntax,
@@ -253,6 +263,64 @@ describe('insertComment command', () => {
 		const childNames: string[] = []
 		editor.state.doc.forEach((child) => childNames.push(child.type.name))
 		expect(childNames.indexOf('comments')).toBeLessThan(childNames.indexOf('footnotes'))
+	})
+})
+
+describe('hideCommentBubble command', () => {
+	function hasNode(editor: Editor, typeName: string): boolean {
+		let found = false
+		editor.state.doc.descendants((node) => {
+			if (node.type.name === typeName) {
+				found = true
+			}
+		})
+		return found
+	}
+
+	test('removes an empty comment when the bubble is closed', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertComment()
+		expect(commentBubbleKey.getState(editor.state).active?.referenceId).toBe('comment-1')
+
+		editor.commands.hideCommentBubble({ refocus: true })
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(false)
+		expect(hasNode(editor, 'comments')).toBe(false)
+		expect(editor.state.doc.textContent).toBe('Foo')
+		expect(editor.state.selection.from).toBe(4)
+	})
+
+	test('keeps an empty comment with an unsent draft', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertComment()
+		sessionStorage.setItem('text-comment-draft-comment-1', 'work in progress')
+
+		editor.commands.hideCommentBubble()
+		sessionStorage.removeItem('text-comment-draft-comment-1')
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(true)
+		expect(hasNode(editor, 'comment')).toBe(true)
+	})
+
+	test('keeps a comment with content when the bubble is closed', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.openCommentBubble('comment-1')
+		expect(commentBubbleKey.getState(editor.state).active?.referenceId).toBe('comment-1')
+
+		editor.commands.hideCommentBubble()
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(true)
+		expect(hasNode(editor, 'comment')).toBe(true)
 	})
 })
 
