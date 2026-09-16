@@ -6,6 +6,8 @@
 import type { Node } from '@tiptap/pm/model'
 import type { EditorState } from '@tiptap/pm/state'
 
+export const commentDraftPrefix = 'text-comment-draft-'
+
 /**
  * Check if selection is inside a node type
  *

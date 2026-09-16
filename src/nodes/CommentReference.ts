@@ -11,7 +11,7 @@ import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.js'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
-import { generateReferenceId, isEmptyComment, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
+import { commentDraftPrefix, generateReferenceId, isEmptyComment, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -97,7 +97,7 @@ const CommentReference = Node.create({
 				}
 
 				// Clear any stale draft from a previous comment that used this ID
-				sessionStorage.removeItem('text-comment-draft-' + referenceId)
+				sessionStorage.removeItem(commentDraftPrefix + referenceId)
 
 				// In can-check mode, the above guards are sufficient
 				if (!dispatch) {
@@ -232,7 +232,6 @@ const CommentReference = Node.create({
 
 				const tr = state.tr
 				const shouldAppendNewReply = itemIndex === undefined && !isEmptyComment(comment)
-					&& !(comment.childCount === 1 && item.textContent === '')
 				if (shouldAppendNewReply) {
 					// Append a new reply item
 					const commentItemType = state.schema.nodes.commentItem
