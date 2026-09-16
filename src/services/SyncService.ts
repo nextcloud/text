@@ -280,8 +280,10 @@ class SyncService {
 						data: response,
 					})
 				} else if (response?.status === 403) {
-					// either the session is invalid or the document is read only.
-					logger.error('failed to write to document - not allowed')
+					// The server no longer accepts this session (expired, document reset or access revoked).
+					// Stop syncing instead of retrying with a dead session.
+					logger.error('Failed to push steps - session is no longer valid')
+					this.invalidateSession()
 					this.bus.emit('error', {
 						type: ERROR_TYPE.PUSH_FORBIDDEN,
 						data: {},
@@ -331,6 +333,11 @@ class SyncService {
 		}
 		logger.debug('sending final steps')
 		return this.sendStepsNow().catch((err) => logger.error(err))
+	}
+
+	invalidateSession() {
+		this.backend?.disconnect()
+		this.connection.value = undefined
 	}
 
 	async close() {
