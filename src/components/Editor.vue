@@ -389,7 +389,7 @@ export default defineComponent({
 				: '/'
 		},
 		displayed() {
-			return (this.connection && this.active) || this.syncError
+			return (this.active && (this.connection || this.idle)) || this.syncError
 		},
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
@@ -688,15 +688,13 @@ export default defineComponent({
 			}
 
 			if (type === ERROR_TYPE.PUSH_FORBIDDEN) {
+				// Server rejected the session. Behave like an idle disconnect:
+				// read-only editor with a permanent status card offering to reconnect.
+				this.idle = true
+				this.hasConnectionIssues = false
 				this.readOnly = true
 				this.editMode = false
 				this.setEditable(this.editMode)
-				showWarning(
-					t(
-						'text',
-						'Your editing permissions have been revoked. The document is now read-only.',
-					),
-				)
 				this.emit('push:forbidden')
 				return
 			}
