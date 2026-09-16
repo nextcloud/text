@@ -33,7 +33,8 @@ afterEach(() => {
 })
 
 describe('Markdown comparison factory fallback and lifecycle', () => {
-	it.each([1100, 620])('waits for connected width and height at %ipx, then cancels opening corrections on reader input', async (initialWidth) => {
+	it.each([1100, 620].flatMap((width) => ['wheel', 'touchstart', 'pointerdown', 'keydown', 'settled geometry', 'three attempts']
+		.map((stop) => ({ width, stop }))))('waits for usable attachment at $width px and stops opening corrections on $stop', async ({ width: initialWidth, stop }) => {
 		let width = initialWidth
 		let height = 0
 		let resize!: () => void
@@ -95,18 +96,33 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 			height = 260
 			resize()
 			await frame()
-			expect(scroll.mock.calls.length).toBeGreaterThan(firstCalls)
+			expect(scroll).toHaveBeenCalledTimes(firstCalls * 2)
 			if (initialWidth < 760) {
 				const hidden = host.querySelector('.text-comparison__document--after .text-comparison__document-scroller')
 				expect(scroll.mock.contexts).not.toContain(hidden)
 			}
 
-			host.querySelector('.text-comparison')!.dispatchEvent(new Event('wheel'))
-			const callsAfterInput = scroll.mock.calls.length
+			if (stop === 'three attempts') {
+				height = 240
+				resize()
+				await frame()
+				expect(scroll).toHaveBeenCalledTimes(firstCalls * 3)
+				height = 220
+				resize()
+				await frame()
+				expect(scroll).toHaveBeenCalledTimes(firstCalls * 3)
+			} else if (stop === 'settled geometry') {
+				await frame()
+				expect(scroll).toHaveBeenCalledTimes(firstCalls * 2)
+			} else {
+				host.querySelector('.text-comparison')!.dispatchEvent(new Event(stop))
+			}
+			expect(frames.size).toBe(0)
+			const callsAfterStop = scroll.mock.calls.length
 			height = 240
 			resize()
 			await frame()
-			expect(scroll).toHaveBeenCalledTimes(callsAfterInput)
+			expect(scroll).toHaveBeenCalledTimes(callsAfterStop)
 			instance.destroy()
 			await frame()
 			expect(frames.size).toBe(0)

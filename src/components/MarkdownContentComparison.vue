@@ -12,8 +12,7 @@
 		@wheel.passive="cancelInitialLocation"
 		@touchstart.passive="cancelInitialLocation"
 		@pointerdown="cancelInitialLocation"
-		@keydown="cancelInitialLocation"
-		@load.capture="requestInitialLocation">
+		@keydown="cancelInitialLocation">
 		<p class="text-comparison__sr-only" aria-live="polite" aria-atomic="true">
 			{{ announcement }}
 		</p>
