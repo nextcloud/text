@@ -324,6 +324,7 @@ OC.L10N.register(
     "Increase indentation" : "Zväčšiť odsadenie",
     "Decrease indentation" : "Zmenšiť odsadenia",
     "Blocks" : "Blokovania",
+    "Mermaid diagram" : "Mermaid diagram",
     "Inline math" : "Inline matematika",
     "Block math" : "Bloková matematika",
     "Info callout" : "Popisok Info",
