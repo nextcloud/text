@@ -38,12 +38,22 @@ const marks: Record<MarkCode, readonly [number, Label]> = {
 	'inline-code': [101, () => t('text', 'Inline code')],
 }
 
+/**
+ * Choose the highest-priority signal, keeping the first on ties and returning undefined for an empty list.
+ *
+ * @param signals Signals attached to a descriptor.
+ */
 export function selectComparisonSignal(signals: readonly Signal[]): Signal | undefined {
 	return signals.reduce<Signal | undefined>((selected, signal) => (
 		!selected || signalPriority(signal) > signalPriority(selected) ? signal : selected
 	), undefined)
 }
 
+/**
+ * Localize attribute and mark signals; other signal kinds have no label here.
+ *
+ * @param signal Descriptor signal to describe.
+ */
 export function comparisonSignalLabel(signal: Signal) {
 	if (signal.type === 'attribute') {
 		return attributes[signal.attribute][1]()

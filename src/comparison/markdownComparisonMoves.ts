@@ -15,6 +15,14 @@ export interface ReservedExactMovePair {
 }
 type Pair = ReservedExactMovePair
 
+/**
+ * Confirm unique, equal move candidates and group pairs contiguous on both axes.
+ * Fingerprints repeated anywhere in either document are rejected.
+ *
+ * @param before Earlier document used to count fingerprints.
+ * @param after Later document used to count fingerprints.
+ * @param candidates Reserved exact pairs to verify.
+ */
 export function confirmReservedExactMoves(
 	before: Node,
 	after: Node,

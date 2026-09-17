@@ -17,6 +17,12 @@ interface ComparisonEditorOptions {
 	schema?: Schema
 }
 
+/**
+ * Create a read-only embedded Markdown editor. The caller owns attachment and destruction.
+ *
+ * @param content Markdown snapshot; non-string input throws.
+ * @param options Accessibility, resource, link and optional shared-schema settings.
+ */
 export function createComparisonEditor(content: string, options: ComparisonEditorOptions = {}) {
 	if (typeof content !== 'string') {
 		throw new TypeError('Comparison content must be a string')

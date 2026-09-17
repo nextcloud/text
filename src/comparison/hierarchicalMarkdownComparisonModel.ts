@@ -79,6 +79,15 @@ const ABSENT_CELL_TOKEN = '\u0006'
 
 const profileCache = new WeakMap<Node, readonly string[]>()
 
+/**
+ * Build a recursively frozen model in original document coordinates without modifying either document.
+ * Schema normalization must preserve content and positions. Ambiguous regions stay coarse;
+ * exceeding the descriptor limit throws ComparisonModelLimitError.
+ *
+ * @param originalBefore Earlier document.
+ * @param originalAfter Later document, whose schema is used for comparison.
+ * @param options Optional descriptor budget.
+ */
 export function createHierarchicalMarkdownComparisonModel(originalBefore: Node, originalAfter: Node, options: ComparisonModelOptions = {}): Model {
 	const comparisonBefore = normalizeSchema(originalBefore, originalAfter)
 	const originalBeforeIndex = indexDocument(originalBefore)

@@ -12,6 +12,12 @@ import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
 import { isUser } from '../services/SyncService.ts'
 
+/**
+ * Render Markdown as editor HTML with a trailing paragraph, or escape plain text inside a pre element.
+ *
+ * @param content Source content to render.
+ * @param markdown Whether to interpret the source as Markdown.
+ */
 export function renderEditorContent(content: string, markdown: boolean) {
 	return markdown
 		? markdownit.render(content) + '<p/>'
