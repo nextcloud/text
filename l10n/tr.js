@@ -324,6 +324,7 @@ OC.L10N.register(
     "Increase indentation" : "Girintiyi artır",
     "Decrease indentation" : "Girintiyi azalt",
     "Blocks" : "Bloklar",
+    "Mermaid diagram" : "Mermaid çizimi",
     "Inline math" : "Satır arası matematik ifade",
     "Block math" : "Blok matematik ifade",
     "Info callout" : "Bilgi bildirimi",

@@ -324,6 +324,7 @@ OC.L10N.register(
     "Increase indentation" : "Aumentar indentação",
     "Decrease indentation" : "Diminuir indentação",
     "Blocks" : "Blocos",
+    "Mermaid diagram" : "Diagrama Mermaid",
     "Inline math" : "Matemática em linha",
     "Block math" : "Bloco de matemática",
     "Info callout" : "Bloco de informação",
