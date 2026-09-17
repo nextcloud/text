@@ -324,6 +324,7 @@ OC.L10N.register(
     "Increase indentation" : "Einrückung vergrößern",
     "Decrease indentation" : "Einrückung verkleinern",
     "Blocks" : "Blöcke",
+    "Mermaid diagram" : "Mermaid-Diagramm",
     "Inline math" : "Inline-Mathematik",
     "Block math" : "Block-Mathematik",
     "Info callout" : "Info-Textbox",
