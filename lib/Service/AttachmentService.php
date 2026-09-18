@@ -610,8 +610,9 @@ readonly class AttachmentService {
 					// this only happens if the attachment dir was deleted by the user while editing the document
 					return 0;
 				}
-				$contentAttachmentFileIds = self::getAttachmentIdsFromContent($textFile->getContent());
-				$contentAttachmentNames = self::getAttachmentNamesFromContent($textFile->getContent(), $fileId);
+				$content = $textFile->getContent();
+				$contentAttachmentFileIds = self::getAttachmentIdsFromContent($content);
+				$contentAttachmentNames = self::getAttachmentNamesFromContent($content, $fileId);
 
 				$toDelete = array_filter($attachmentDir->getDirectoryListing(),
 					function ($node) use ($contentAttachmentFileIds, $contentAttachmentNames) {
