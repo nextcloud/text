@@ -51,6 +51,13 @@ namespace OC\User {
 	}
 }
 
+namespace OC\Files {
+	class SetupManager {
+		public function tearDown(): void {
+		}
+	}
+}
+
 namespace OCA\Files_Sharing {
 	abstract class SharedStorage implements \OCP\Files\Storage\IStorage {
 		abstract public function getShare(): \OCP\Share\IShare;
