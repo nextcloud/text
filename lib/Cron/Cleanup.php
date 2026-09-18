@@ -11,12 +11,14 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
+use OC\Files\SetupManager;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
+use OCP\Server;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
@@ -36,11 +38,13 @@ class Cleanup extends TimedJob {
 	 */
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
+		$setupManager = Server::get(SetupManager::class);
 		foreach ($this->documentService->getAllWithNoActiveSession() as $document) {
 			try {
 				$this->documentService->resetDocument($document->getId());
 			} catch (DocumentHasUnsavedChangesException) {
 			}
+			$setupManager->tearDown();
 			$this->attachmentService->cleanupAttachments($document->getId());
 		}
 
