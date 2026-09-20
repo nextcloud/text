@@ -324,6 +324,7 @@ OC.L10N.register(
     "Increase indentation" : "Méadú ar eangú",
     "Decrease indentation" : "Laghdú eangú",
     "Blocks" : "Bloic",
+    "Mermaid diagram" : "Léaráid Mermaid",
     "Inline math" : "Matamaitic inlíne",
     "Block math" : "Matamaitic bloc",
     "Info callout" : "Glao amach faisnéise",
