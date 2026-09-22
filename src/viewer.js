@@ -1,3 +1,6 @@
+import { t } from '@nextcloud/l10n'
+import { registerHandler } from '@nextcloud/viewer'
+import { defineCustomElement } from 'vue'
 import { logger } from './helpers/logger.ts'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
@@ -7,40 +10,24 @@ import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js
  */
 import 'vite/modulepreload-polyfill'
 
-/**
- * Wrapper for async registration of ViewerComponent.
- * Note: it should be named function - the name is used for component registration.
- *
- * @return {Promise<import('./views/ViewerView.js')>} ViewerComponent
- */
-function AsyncTextViewerComponent() {
-	return import('./views/ViewerView.js')
+const tagname = 'oca-text-viewer'
+const allMimes = new Set([...openMimetypesMarkdown, ...openMimetypesPlainText])
+
+async function registerTextCustomElement() {
+	const { default: TextViewerWrapper } = await import('./views/TextViewerWrapper.vue')
+	if (window.customElements.get(tagname) === undefined) {
+		window.customElements.define(tagname, defineCustomElement(TextViewerWrapper, { shadowRoot: false }))
+	}
 }
 
-if (typeof OCA.Viewer === 'undefined') {
-	logger.error('Viewer app is not installed')
-} else {
-	OCA.Viewer.registerHandler({
-		id: 'text',
-		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: AsyncTextViewerComponent,
-		group: null,
-		theme: 'default',
-		canCompare: true,
-		downloadCallback: async (fileInfo) => {
-			// Save any unsaved changes before download
-			const editors = window.OCA?.Text?.editorComponents
-			if (editors instanceof Set) {
-				for (const editor of editors) {
-					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
-						logger.debug('Saving file before download', {
-							fileId: fileInfo.fileid,
-						})
-						await editor.save()
-						return
-					}
-				}
-			}
-		},
-	})
-}
+registerTextCustomElement().catch((error) => logger.error('Failed to register text viewer element', { error }))
+
+registerHandler({
+	id: 'text',
+	displayName: t('text', 'Text'),
+	tagname,
+	enabled: (nodes) => nodes.every((node) => allMimes.has(node.mime ?? '')),
+	theme: 'default',
+})
+
+logger.debug('Text viewer handler registered', { tagname, mimes: [...allMimes] })
