@@ -17,7 +17,7 @@ describe('linkBubble prosemirror plugin', () => {
 		const plugin = linkBubble()
 		const state = createState({ plugins: [plugin] })
 		expect(state.plugins).toContain(plugin)
-		expect(plugin.getState(state)).toEqual({ active: null })
+		expect(plugin.getState(state)).toEqual({ active: null, focusInput: false })
 	})
 
 	test('updates plugin state active on transaction', () => {
@@ -26,7 +26,7 @@ describe('linkBubble prosemirror plugin', () => {
 		const dummy = { was: 'active' }
 		const tr = state.tr.setMeta(plugin, { active: dummy })
 		const after = state.apply(tr)
-		expect(plugin.getState(after)).toEqual({ active: dummy })
+		expect(plugin.getState(after)).toEqual({ active: dummy, focusInput: false })
 	})
 
 	test('setActiveLink requires a link mark', () => {
