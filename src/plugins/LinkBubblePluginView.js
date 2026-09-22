@@ -78,19 +78,22 @@ class LinkBubblePluginView {
 		})
 	}
 
+	#timer = null
+
 	update(view) {
 		const { active, focusInput } = this.plugin.getState(view.state)
 		if (view.composing) {
 			return
 		}
 		this.createTooltip()
+		clearTimeout(this.#timer)
 		if (active?.mark) {
-			setTimeout(() => {
+			this.#timer = setTimeout(() => {
 				this.updateTooltip(view, active, focusInput)
 			}, 100)
 		} else {
 			this.removeEventListeners()
-			setTimeout(() => {
+			this.#timer = setTimeout(() => {
 				this.tippy?.hide()
 			}, 100)
 		}
@@ -126,6 +129,7 @@ class LinkBubblePluginView {
 	}
 
 	destroy() {
+		clearTimeout(this.#timer)
 		this.tippy?.destroy()
 	}
 }
