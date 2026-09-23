@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "無法開啟使用不安全通訊協定的連結",
     "Edit link" : "編輯連結",
     "Save changes" : "保存更改",
+    "Link text" : "連結文字",
     "URL" : "URL",
     "Changes" : "更改",
     "Full documents" : "完整文件",

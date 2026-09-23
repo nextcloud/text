@@ -183,6 +183,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Ebaturvalisi protokolle kasutavaid linke ei saa avada",
     "Edit link" : "Muuda linki",
     "Save changes" : "Salvesta muudatused",
+    "Link text" : "Lingi tekst",
     "URL" : "Võrguaadress",
     "Changes" : "Muudatused",
     "Full documents" : "Täismahus dokumendid",

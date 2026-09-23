@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Kan inte öppna länkar med osäkra protokoll",
     "Edit link" : "Redigera länk",
     "Save changes" : "Spara ändringar",
+    "Link text" : "Länktext",
     "URL" : "URL",
     "Changes" : "Ändringar",
     "Full documents" : "Hela dokument",

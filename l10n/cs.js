@@ -144,6 +144,7 @@ OC.L10N.register(
     "Open link" : "Otevřít okaz",
     "Edit link" : "Upravit odkaz",
     "Save changes" : "Uložit změny",
+    "Link text" : "Text odkazu",
     "URL" : "URL",
     "Changes" : "Změny",
     "Before" : "Před",

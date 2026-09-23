@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Ní féidir naisc a oscailt le prótacail neamhshábháilte",
     "Edit link" : "Cuir nasc in eagar",
     "Save changes" : "Sabháil na hathruithe",
+    "Link text" : "Téacs naisc",
     "URL" : "URL",
     "Changes" : "Athruithe",
     "Full documents" : "Doiciméid iomlána",
