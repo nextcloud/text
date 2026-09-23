@@ -17,7 +17,14 @@ describe('linkClicking plugin', () => {
 	}
 
 	function click(el: Element, init: MouseEventInit = {}) {
-		el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0, ...init }))
+		el.dispatchEvent(
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+				button: 0,
+				...init,
+			}),
+		)
 	}
 
 	afterEach(() => {
@@ -26,21 +33,27 @@ describe('linkClicking plugin', () => {
 	})
 
 	it('opens the link on left click', () => {
-		const { editor, openLink, link } = setup('<p><a href="https://example.org/">Test</a></p>')
+		const { editor, openLink, link } = setup(
+			'<p><a href="https://example.org/">Test</a></p>',
+		)
 		click(link)
 		expect(openLink).toHaveBeenCalledWith('https://example.org/')
 		editor.destroy()
 	})
 
 	it('opens the link on ctrl click', () => {
-		const { editor, openLink, link } = setup('<p><a href="https://example.org/">Test</a></p>')
+		const { editor, openLink, link } = setup(
+			'<p><a href="https://example.org/">Test</a></p>',
+		)
 		click(link, { ctrlKey: true })
 		expect(openLink).toHaveBeenCalledWith('https://example.org/')
 		editor.destroy()
 	})
 
 	it('does not open the link when text is selected', () => {
-		const { editor, openLink, link } = setup('<p><a href="https://example.org/">Test</a></p>')
+		const { editor, openLink, link } = setup(
+			'<p><a href="https://example.org/">Test</a></p>',
+		)
 		const range = document.createRange()
 		range.selectNodeContents(link)
 		document.getSelection()?.addRange(range)
@@ -50,7 +63,9 @@ describe('linkClicking plugin', () => {
 	})
 
 	it('does not open anchor links', () => {
-		const { editor, openLink, link } = setup('<p><a href="#heading">Test</a></p>')
+		const { editor, openLink, link } = setup(
+			'<p><a href="#heading">Test</a></p>',
+		)
 		click(link)
 		expect(openLink).not.toHaveBeenCalled()
 		editor.destroy()

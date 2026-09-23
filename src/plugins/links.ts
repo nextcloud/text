@@ -80,7 +80,9 @@ export function linkHoverHandlers() {
 
 	return {
 		mouseover: (view: EditorView, event: MouseEvent) => {
-			const linkEl = (event.target as Element | null)?.closest('a[data-text-el="text-only-link"]')
+			const linkEl = (event.target as Element | null)?.closest(
+				'a[data-text-el="text-only-link"]',
+			)
 			if (!linkEl || linkEl === hovered) {
 				return false
 			}
@@ -88,7 +90,7 @@ export function linkHoverHandlers() {
 			hovered = linkEl
 			timer = setTimeout(() => {
 				timer = null
-				if (view.isDestroyed) {												 
+				if (view.isDestroyed) {
 					return
 				}
 				const pos = view.posAtDOM(linkEl, 0)
@@ -198,8 +200,14 @@ export function linkClicking(
 		key: linkClickingKey,
 		props: {
 			handleClick: (_view, _pos, event) => {
-				const linkEl = (event.target as Element | null)?.closest('a[data-text-el="text-only-link"]')
-				return !!linkEl && event.button === 0 && (event.ctrlKey || event.metaKey)
+				const linkEl = (event.target as Element | null)?.closest(
+					'a[data-text-el="text-only-link"]',
+				)
+				return (
+					!!linkEl
+					&& event.button === 0
+					&& (event.ctrlKey || event.metaKey)
+				)
 			},
 			handleDOMEvents: {
 				// Open link in new tab on middle click
@@ -249,7 +257,10 @@ export function linkClicking(
 						const hash = url.hash
 						if (hash) {
 							const target = view.dom.querySelector(hash)
-							target?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+							target?.scrollIntoView({
+								block: 'start',
+								behavior: 'smooth',
+							})
 						}
 						window.history.replaceState({}, '', url.href)
 					} else if (document.getSelection()?.isCollapsed !== false) {

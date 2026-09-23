@@ -95,10 +95,10 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import { getMarkRange } from '@tiptap/core'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getMarkRange } from '@tiptap/core'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
@@ -250,7 +250,10 @@ export default {
 			}
 			const { doc, schema } = this.editor.state
 			try {
-				return getMarkRange(doc.resolve(this.nodeStart), schema.marks.link) ?? null
+				return (
+					getMarkRange(doc.resolve(this.nodeStart), schema.marks.link)
+					?? null
+				)
 			} catch {
 				return null
 			}
@@ -279,10 +282,7 @@ export default {
 		},
 
 		setPreview() {
-			this.chainOnLink()
-				.hideLinkBubble()
-				.setPreview()
-				.run()
+			this.chainOnLink().hideLinkBubble().setPreview().run()
 		},
 
 		startEdit() {
@@ -307,9 +307,10 @@ export default {
 		},
 
 		updateLink() {
-			const text = this.newText === '' || this.newText === this.linkText()
-				? null
-				: this.newText
+			const text =
+				this.newText === '' || this.newText === this.linkText()
+					? null
+					: this.newText
 			if (text !== null || this.href !== this.newHref) {
 				this.setLinkContent(this.newHref, text)
 			}

@@ -33,9 +33,10 @@ export function findLinkSpans(doc: Node): LinkSpan[] {
 	const results: LinkSpan[] = []
 	let current = null as LinkSpan | null
 	doc.descendants((node, pos, parent) => {
-		const link = node.isText && parent?.type.name !== 'preview'
-			? activeLink(node, pos)
-			: null
+		const link =
+			node.isText && parent?.type.name !== 'preview'
+				? activeLink(node, pos)
+				: null
 		if (current && link?.mark.eq(current.mark)) {
 			current.end = pos + node.nodeSize
 			return
@@ -44,7 +45,11 @@ export function findLinkSpans(doc: Node): LinkSpan[] {
 			results.push(current)
 		}
 		current = link
-			? { end: pos + node.nodeSize, nodeStart: link.nodeStart, mark: link.mark }
+			? {
+					end: pos + node.nodeSize,
+					nodeStart: link.nodeStart,
+					mark: link.mark,
+				}
 			: null
 	})
 	if (current) {
@@ -77,7 +82,11 @@ function createPillDom({ mark, nodeStart }: LinkSpan) {
 		const openBubble = (event: Event) => {
 			event.preventDefault()
 			event.stopPropagation()
-			view.dispatch(view.state.tr.setMeta(linkBubbleKey, { active: { mark, nodeStart } }))
+			view.dispatch(
+				view.state.tr.setMeta(linkBubbleKey, {
+					active: { mark, nodeStart },
+				}),
+			)
 		}
 		// Keep editor selection and an already open bubble untouched
 		pill.addEventListener('mousedown', (event) => {
@@ -98,15 +107,13 @@ function createPillDom({ mark, nodeStart }: LinkSpan) {
  * @param doc the document node
  */
 function buildDecorations(doc: Node): DecorationSet {
-	const decorations = findLinkSpans(doc).map((linkSpan) => Decoration.widget(
-		linkSpan.end,
-		createPillDom(linkSpan),
-		{
+	const decorations = findLinkSpans(doc).map((linkSpan) =>
+		Decoration.widget(linkSpan.end, createPillDom(linkSpan), {
 			side: 1,
 			stopEvent: () => true,
 			key: `link-pill-${linkSpan.nodeStart}-${linkSpan.mark.attrs.href}`,
-		},
-	))
+		}),
+	)
 	return DecorationSet.create(doc, decorations)
 }
 
@@ -118,9 +125,10 @@ export function linkPill() {
 		key: linkPillPluginKey,
 		state: {
 			init: (_, { doc }) => buildDecorations(doc),
-			apply: (tr, value) => tr.docChanged
-				? buildDecorations(tr.doc)
-				: value.map(tr.mapping, tr.doc),
+			apply: (tr, value) =>
+				tr.docChanged
+					? buildDecorations(tr.doc)
+					: value.map(tr.mapping, tr.doc),
 		},
 		props: {
 			decorations(state) {

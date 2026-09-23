@@ -25,7 +25,9 @@ describe('linkPill plugin', () => {
 	})
 
 	it('skips anchor links', () => {
-		const editor = createCustomEditor('<p><a href="#heading">Test</a></p>', [Link])
+		const editor = createCustomEditor('<p><a href="#heading">Test</a></p>', [
+			Link,
+		])
 		expect(findLinkSpans(editor.state.doc)).toHaveLength(0)
 		expect(editor.view.dom.querySelectorAll('.link-pill')).toHaveLength(0)
 		editor.destroy()
@@ -41,7 +43,9 @@ describe('linkPill plugin', () => {
 		expect(pills[0].previousSibling?.nodeName).toBe('A')
 
 		const dispatch = vi.spyOn(editor.view, 'dispatch')
-		pills[0].dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
+		pills[0].dispatchEvent(
+			new MouseEvent('click', { bubbles: true, cancelable: true }),
+		)
 		expect(dispatch).toHaveBeenCalledTimes(1)
 		const active = dispatch.mock.calls[0][0].getMeta(linkBubbleKey).active
 		expect(active.nodeStart).toBe(1)
