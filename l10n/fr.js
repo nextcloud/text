@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Impossible d'ouvrir les liens utilisant des protocoles non sécurisés",
     "Edit link" : "Modifier le lien",
     "Save changes" : "Enregistrer les modifications",
+    "Link text" : "Texte du lien",
     "URL" : "URL",
     "Changes" : "Modifications",
     "Full documents" : "Documents complets",

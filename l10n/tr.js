@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Güvenli olmayan iletişim kuralları kullanan bağlantılar açılamaz",
     "Edit link" : "Bağlantıyı düzenle",
     "Save changes" : "Değişiklikleri kaydet",
+    "Link text" : "Bağlantı yazısı",
     "URL" : "Adres",
     "Changes" : "Değişiklikler",
     "Full documents" : "Tam belgeler",

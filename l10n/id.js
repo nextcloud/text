@@ -185,6 +185,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Tidak dapat membuka tautan dengan protokol yang tidak aman",
     "Edit link" : "Edit tautan",
     "Save changes" : "Simpan perubahan",
+    "Link text" : "Teks tautan",
     "URL" : "URL",
     "Changes" : "Perubahan",
     "Full documents" : "Dokumen lengkap",

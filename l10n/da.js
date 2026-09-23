@@ -130,6 +130,7 @@ OC.L10N.register(
     "Open link" : "Åbn link",
     "Edit link" : "Redigér link",
     "Save changes" : "Gem ændringer",
+    "Link text" : "Link",
     "URL" : "URL",
     "Changes" : "Ændringer",
     "Before" : "Før",
