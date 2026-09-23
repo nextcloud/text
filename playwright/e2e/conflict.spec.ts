@@ -146,7 +146,9 @@ test.describe('Plaintext conflict resolution', () => {
 			await expect(editor.el).toBeVisible()
 			await editor.type('Hello world')
 			// Wait for the steps to be pushed so the editor knows about unsaved changes
-			await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
+			await expect(editor.saveIndicator).toHaveAccessibleName(
+				/Unsaved changes/,
+			)
 			await user.uploadFile({ name: file.name, content: 'Good bye' })
 
 			// Verify both verisons are shown
