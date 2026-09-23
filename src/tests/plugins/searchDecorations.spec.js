@@ -96,7 +96,7 @@ describe('search plugin', () => {
 				{ from: 37, to: 40 },
 				{ from: 55, to: 58 },
 			],
-			total: 5,
+			total: 4,
 			index: 0,
 		}
 
@@ -132,7 +132,7 @@ const testSearch = (content, query, expectedSearchResults) => {
 	const editor = createCustomEditor(content, [Mentions])
 	const doc = editor.state.doc
 	const searched = runSearch(doc, query)
-	expect(searched).toHaveProperty('results', expectedSearchResults.results)
+	expect(searched).toMatchObject(expectedSearchResults)
 	expect(highlightResults(doc, searched.results)).toEqual(
 		highlightResults(doc, expectedSearchResults.results),
 	)
