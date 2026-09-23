@@ -13,8 +13,7 @@ import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
 import { logger } from '../helpers/logger.ts'
 import { linkPill } from '../plugins/linkPill.ts'
-import { focusLinkBubbleInput } from '../plugins/links.ts'
-import { linkClicking } from '../plugins/links.ts'
+import { focusLinkBubbleInput, linkClicking } from '../plugins/links.ts'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
