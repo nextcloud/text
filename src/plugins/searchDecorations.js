@@ -96,18 +96,18 @@ export function runSearch(doc, query, options) {
 		: query.trim().toLowerCase()
 
 	doc.descendants((node, offset) => {
-		// Add decorations for text matches
-		if (node.isText) {
-			const matches = node.text.matchAll(new RegExp(query, 'gi'))
+		// Search the whole textblock so matches can sparn mark boundaries.
+		// Inline leaf nodes take one position each, so map them to one char.
+		if (node.isTextblock) {
+			const text = node.textBetween(0, node.content.size, undefined, '\uFFFC')
+			const matches = text.matchAll(new RegExp(query, 'gi'))
 
 			for (const match of matches) {
 				results.push({
-					from: match.index + offset,
-					to: match.index + offset + query.length,
+					from: offset + 1 + match.index,
+					to: offset + 1 + match.index + match[0].length,
 				})
 			}
-
-			return
 		}
 
 		// Add decorations for mention matches
@@ -121,6 +121,9 @@ export function runSearch(doc, query, options) {
 			}
 		}
 	})
+
+	// Text matches of a block are pushed before its mentions; restore document order
+	results.sort((a, b) => a.from - b.from)
 
 	if (options.matchAll) {
 		return {
