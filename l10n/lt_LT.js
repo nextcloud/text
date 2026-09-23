@@ -150,6 +150,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Negalima atidaryti nuorodų su nesaugiais protokolais",
     "Edit link" : "Redaguoti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
+    "Link text" : "Nuorodos tekstas",
     "URL" : "URL",
     "Changes" : "Pakeitimai",
     "Before" : "Prieš",
