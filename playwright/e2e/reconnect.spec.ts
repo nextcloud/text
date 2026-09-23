@@ -14,6 +14,9 @@ const test = mergeTests(editorTest, offlineTest, uploadFileTest)
 // we cannot run tests in parallel.
 test.describe.configure({ mode: 'serial' })
 
+// Upload with an old mtime so the server accepts the first autosave after reopening
+test.use({ mtime: Date.now() / 1000 - 10 })
+
 test.beforeEach(async ({ open }) => {
 	await open()
 })
@@ -32,9 +35,9 @@ test('opening a file with unsaved changes', async ({
 	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
 	await close()
 	await setOnline()
-	await expect(await file.getContent()).toBe('')
+	expect(await file.getContent()).toBe('')
 	await open()
 	await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/)
-	await expect(await file.getContent()).toBe('## Hello world')
+	expect(await file.getContent()).toBe('## Hello world')
 })

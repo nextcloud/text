@@ -98,14 +98,13 @@ resolutionVariants.forEach(({ source, buttonName, headingName }) => {
 		container,
 		editor,
 		file,
-		page,
 		reader,
 		user,
 	}) => {
 		await expect(editor.el).toBeVisible()
-		const pushPromise = page.waitForRequest(/push/)
 		await editor.typeHeading('Hello world')
-		await pushPromise
+		// Wait for the steps to be pushed so the editor knows about unsaved changes
+		await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
 		await user.uploadFile({ name: file.name, content: '## Good bye' })
 
 		// Verify both verisons are shown
@@ -146,6 +145,10 @@ test.describe('Plaintext conflict resolution', () => {
 		}) => {
 			await expect(editor.el).toBeVisible()
 			await editor.type('Hello world')
+			// Wait for the steps to be pushed so the editor knows about unsaved changes
+			await expect(editor.saveIndicator).toHaveAccessibleName(
+				/Unsaved changes/,
+			)
 			await user.uploadFile({ name: file.name, content: 'Good bye' })
 
 			// Verify both verisons are shown
@@ -164,16 +167,16 @@ test('[conflict] automatic resolution if no unsaved changes', async ({
 	container,
 	editor,
 	file,
-	page,
 	reader,
 	user,
 }) => {
 	await expect(editor.el).toBeVisible()
 	await editor.typeHeading('Hello world')
-	const requestPromise = page.waitForRequest(/save/)
+	// Wait for the steps to be pushed so the editor knows about unsaved changes
+	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
 	await editor.saveIndicator.click()
-	await requestPromise
-	await page.waitForTimeout(500) // More robust against 423 Locked
+	// Wait until client has successfully saved
+	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/)
 
 	await user.uploadFile({ name: file.name, content: '## Good bye' })
 
