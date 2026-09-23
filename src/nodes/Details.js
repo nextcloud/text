@@ -64,9 +64,6 @@ const Details = Node.create({
 
 	addAttributes() {
 		return {
-			openDetails: {
-				default: false,
-			},
 			open: {
 				default: false,
 				parseHTML: (element) => element.hasAttribute('open'),
@@ -131,9 +128,6 @@ const Details = Node.create({
 							},
 							{
 								type: this.name,
-								attrs: {
-									openDetails: true,
-								},
 								content: [
 									{ type: 'detailsSummary' },
 									{
@@ -200,12 +194,6 @@ const Details = Node.create({
 				}
 
 				const details = detailsParentInfo($from, schema)
-				if (!details.node.attrs.openDetails) {
-					editor.commands.updateAttributes('details', {
-						openDetails: true,
-					})
-				}
-
 				const detailsContent = childFromNode(
 					details.node,
 					schema.nodes.detailsContent,
