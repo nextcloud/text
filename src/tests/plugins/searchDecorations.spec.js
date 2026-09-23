@@ -59,6 +59,31 @@ describe('search plugin', () => {
 		testSearch('<p>cat dinosaur bird dog cat</p>', 'cat', expected)
 	})
 
+	it('finds matches spanning different marks', () => {
+		const expected = {
+			results: [{ from: 1, to: 11 }],
+			total: 1,
+			index: 0,
+		}
+
+		testSearch(
+			'<p>test<strong>string</strong> other</p>',
+			'teststring',
+			expected,
+		)
+	})
+
+	it('finds matches after an inline node', () => {
+		const doc =
+			'<p>a<span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span>teststring</p>'
+
+		const expected = {
+			results: [{ from: 3, to: 13 }],
+		}
+
+		testSearch(doc, 'teststring', expected)
+	})
+
 	it('finds matches in separate blocks', () => {
 		const doc =
 			'<p>cat dinosaur bird dog cat</p>'
