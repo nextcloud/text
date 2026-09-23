@@ -6,11 +6,13 @@
 import type { Editor } from '@tiptap/core'
 import type { ResolvedPos } from '@tiptap/pm/model'
 import type { Command } from '@tiptap/pm/state'
+import type { EditorView } from '@tiptap/pm/view'
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { isMobileDevice } from '../helpers/isMobileDevice.js'
 import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
-import { activeLinkFromSelection } from './linkHelpers.js'
+import { activeLinkAtPos, activeLinkFromSelection } from './linkHelpers.js'
 
 // Commands
 
@@ -33,9 +35,7 @@ export const setActiveLink =
 		return true
 	}
 
-/* Hide the link bubble by setting active state to null
- *
- */
+// Hide the link bubble by setting active state to null
 export const hideLinkBubble: Command = (state, dispatch) => {
 	const pluginState = linkBubbleKey.getState(state)
 	if (!pluginState?.active) {
@@ -47,7 +47,72 @@ export const hideLinkBubble: Command = (state, dispatch) => {
 	return true
 }
 
+// Open the link bubble for the link at the selection and forus its URL input
+export const focusLinkBubbleInput: Command = (state, dispatch) => {
+	const active = activeLinkFromSelection(state)
+	if (!active) {
+		return false
+	}
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active, focusInput: true }))
+	}
+	return true
+}
+
 export const linkBubbleKey = new PluginKey('linkBubble')
+
+export const LINK_HOVER_DELAY = 300
+
+/**
+ * DOM event handlers that open the link bubble after hovering a link with delay
+ */
+export function linkHoverHandlers() {
+	let hovered: Element | null = null
+	let timer: ReturnType<typeof setTimeout> | null = null
+
+	const cancel = () => {
+		if (timer) {
+			clearTimeout(timer)
+			timer = null
+		}
+		hovered = null
+	}
+
+	return {
+		mouseover: (view: EditorView, event: MouseEvent) => {
+			const linkEl = (event.target as Element | null)?.closest(
+				'a[data-text-el="text-only-link"]',
+			)
+			if (!linkEl || linkEl === hovered) {
+				return false
+			}
+			cancel()
+			hovered = linkEl
+			timer = setTimeout(() => {
+				timer = null
+				if (view.isDestroyed) {
+					return
+				}
+				const pos = view.posAtDOM(linkEl, 0)
+				const active = activeLinkAtPos(view.state.doc, pos)
+				const current = linkBubbleKey.getState(view.state)?.active
+				if (!active || current?.nodeStart === active.nodeStart) {
+					return
+				}
+				view.dispatch(view.state.tr.setMeta(linkBubbleKey, { active }))
+			}, LINK_HOVER_DELAY)
+			return false
+		},
+		mouseout: (_view: EditorView, event: MouseEvent) => {
+			const related = event.relatedTarget as Node | null
+			if (hovered && !(related && hovered.contains(related))) {
+				cancel()
+			}
+			return false
+		},
+	}
+}
+
 /**
  * Prosemirror link bubble plugin
  *
@@ -58,14 +123,13 @@ export function linkBubble(options: { editor: Editor }) {
 	const linkBubblePlugin: Plugin = new Plugin({
 		key: linkBubbleKey,
 		state: {
-			init: () => ({ active: null }),
+			init: () => ({ active: null, focusInput: false }),
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
 				if (meta) {
-					return { ...cur, active: meta.active }
-				} else {
-					return cur
+					return { active: meta.active, focusInput: !!meta.focusInput }
 				}
+				return cur
 			},
 		},
 
@@ -79,6 +143,11 @@ export function linkBubble(options: { editor: Editor }) {
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
 			if (oldState?.doc.content.size === 2) {
+				return
+			}
+
+			// Explicit updates of the bubble state take precedence
+			if (transactions.some((tr) => tr.getMeta(linkBubbleKey))) {
 				return
 			}
 
@@ -97,25 +166,8 @@ export function linkBubble(options: { editor: Editor }) {
 		},
 
 		props: {
-			// Required for read-only mode on Firefox.
-			// For some reason, editor selection doesn't get updated
-			// when clicking a link in read-only mode on Firefox.
-			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
-				// Only regard left clicks without Ctrl/Meta
-				if (
-					!direct
-					|| event.button !== 0
-					|| event.ctrlKey
-					|| event.metaKey
-				) {
-					return false
-				}
-				const { state, dispatch } = view
-				const resolved = state.doc.resolve(pos)
-				return setActiveLink(resolved)(state, dispatch)
-			},
-
 			handleDOMEvents: {
+				...(isMobileDevice ? {} : linkHoverHandlers()),
 				// Handled here because `handleKeyDown` does not work in read only editor.
 				keydown: (view, event) => {
 					const { state, dispatch } = view
@@ -135,8 +187,7 @@ export const linkClickingKey = new PluginKey('textHandleClickLink')
  * Prosemirror plugin for special handling for clicks on links
  *
  * - Open link in new tab on middle click rather than pasting.
- * - Only open link on ctrl/cmd + left click.
- *   We use the link bubble otherwise.
+ * - Open link with the given handler on left click, unless the click finished a text selection.
  *
  * @param openLink - the openLink callback function
  */
@@ -148,9 +199,19 @@ export function linkClicking(
 	return new Plugin({
 		key: linkClickingKey,
 		props: {
+			handleClick: (_view, _pos, event) => {
+				const linkEl = (event.target as Element | null)?.closest(
+					'a[data-text-el="text-only-link"]',
+				)
+				return (
+					!!linkEl
+					&& event.button === 0
+					&& (event.ctrlKey || event.metaKey)
+				)
+			},
 			handleDOMEvents: {
 				// Open link in new tab on middle click
-				auxclick: (view, event) => {
+				auxclick: (_view, event) => {
 					const linkEl = (event.target as Element | null)?.closest('a')
 					if (
 						linkEl
@@ -175,37 +236,36 @@ export function linkClicking(
 						event.stopImmediatePropagation()
 					}
 				},
-				// Prevent open link for text-only links on left click. Required for read-only mode.
+				// Open text-only links ourselves. Required for read-only mode.
 				click: (view, event) => {
 					const linkEl = (event.target as Element | null)?.closest('a')
 					// Only text-only links need special handling (e.g. don't handle links inside preview or mermaid diagrams)
 					if (
 						!linkEl
 						|| !linkEl.matches('a[data-text-el="text-only-link"]')
+						|| event.button !== 0
 					) {
 						return false
 					}
 
-					if (event.button === 0) {
-						// Stop browser from opening the link
-						event.preventDefault()
+					// Stop browser from opening the link
+					event.preventDefault()
 
-						if (isLinkToSelfWithHash(linkEl.href)) {
-							// Directly scroll to anchor links
-							const url = new URL(linkEl.href, window.location.href)
-							const hash = url.hash
-							if (hash) {
-								const target = view.dom.querySelector(hash)
-								target?.scrollIntoView({
-									block: 'start',
-									behavior: 'smooth',
-								})
-							}
-							window.history.replaceState({}, '', url.href)
-						} else if (event.ctrlKey || event.metaKey) {
-							// Open link directly on Ctrl/Cmd + left click
-							openLink(linkEl.href)
+					if (isLinkToSelfWithHash(linkEl.href)) {
+						// Directly scroll to anchor links
+						const url = new URL(linkEl.href, window.location.href)
+						const hash = url.hash
+						if (hash) {
+							const target = view.dom.querySelector(hash)
+							target?.scrollIntoView({
+								block: 'start',
+								behavior: 'smooth',
+							})
 						}
+						window.history.replaceState({}, '', url.href)
+					} else if (document.getSelection()?.isCollapsed !== false) {
+						// Don't open the link when the click finished a text selection
+						openLink(linkEl.href)
 					}
 				},
 			},

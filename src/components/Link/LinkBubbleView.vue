@@ -68,6 +68,11 @@
 		<!-- link edit form -->
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
 			<NcTextField
+				v-model="newText"
+				name="newText"
+				:label="t('text', 'Link text')"
+				@keyup.enter.prevent="updateLink" />
+			<NcTextField
 				ref="hrefField"
 				name="newHref"
 				:label="t('text', 'URL')"
@@ -93,6 +98,7 @@ import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getMarkRange } from '@tiptap/core'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
@@ -127,6 +133,16 @@ export default {
 			type: String,
 			default: null,
 		},
+
+		nodeStart: {
+			type: Number,
+			default: null,
+		},
+
+		focusInput: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup() {
@@ -138,6 +154,7 @@ export default {
 		return {
 			isEditable: false,
 			edit: true,
+			newText: null,
 			newHref: null,
 			referenceTitle: null,
 		}
@@ -200,6 +217,12 @@ export default {
 			this.resetBubble()
 			this.startEditIfEmpty()
 		},
+
+		focusInput(value) {
+			if (value && this.isEditable) {
+				this.startEdit()
+			}
+		},
 	},
 
 	beforeMount() {
@@ -212,12 +235,44 @@ export default {
 	methods: {
 		resetBubble() {
 			this.edit = false
+			this.newText = null
 			this.newHref = null
 			this.referenceTitle = null
 		},
 
 		openLink(href) {
 			this.openLinkHandler.openLink(href)
+		},
+
+		linkRange() {
+			if (this.nodeStart === null) {
+				return null
+			}
+			const { doc, schema } = this.editor.state
+			try {
+				return (
+					getMarkRange(doc.resolve(this.nodeStart), schema.marks.link)
+					?? null
+				)
+			} catch {
+				return null
+			}
+		},
+
+		linkText() {
+			const range = this.linkRange()
+			return range
+				? this.editor.state.doc.textBetween(range.from, range.to)
+				: ''
+		},
+
+		/**
+		 * Command chain with the active link selected, so commands apply to it
+		 */
+		chainOnLink() {
+			const chain = this.editor.chain()
+			const range = this.linkRange()
+			return range ? chain.setTextSelection(range) : chain
 		},
 
 		onReferenceListLoaded() {
@@ -227,11 +282,12 @@ export default {
 		},
 
 		setPreview() {
-			this.editor.chain().hideLinkBubble().setPreview().run()
+			this.chainOnLink().hideLinkBubble().setPreview().run()
 		},
 
 		startEdit() {
 			this.edit = true
+			this.newText = this.linkText()
 			this.newHref = this.href
 			this.$nextTick(() => {
 				this.$refs.hrefField.focus()
@@ -246,36 +302,50 @@ export default {
 
 		stopEdit() {
 			this.edit = false
+			this.newText = null
 			this.newHref = null
 		},
 
 		updateLink() {
-			if (this.href !== this.newHref) {
-				this.setLinkUrl(this.newHref)
+			const text =
+				this.newText === '' || this.newText === this.linkText()
+					? null
+					: this.newText
+			if (text !== null || this.href !== this.newHref) {
+				this.setLinkContent(this.newHref, text)
 			}
 			this.stopEdit()
 		},
 
-		setLinkUrl(href) {
+		setLinkContent(href, text) {
+			const range = this.linkRange()
 			// Store current selection to restore it after setLink
-			const selection = { ...this.editor.view.state.selection }
-			const { ranges } = selection
+			const { ranges } = this.editor.view.state.selection
 			const from = Math.min(...ranges.map((range) => range.$from.pos))
 			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-			console.debug('selection', selection)
-			this.editor
-				.chain()
-				.extendMarkRange('link')
-				.setLink({ href })
-				.setTextSelection({ from, to })
-				.focus()
-				.run()
+			const chain = this.chainOnLink()
+			if (text !== null && range) {
+				const end = range.from + text.length
+				chain
+					.command(({ tr }) => {
+						tr.insertText(text, range.from, range.to)
+						return true
+					})
+					.setTextSelection({ from: range.from, to: end })
+					.setLink({ href })
+					.setTextSelection(end)
+			} else {
+				chain
+					.extendMarkRange('link')
+					.setLink({ href })
+					.setTextSelection({ from, to })
+			}
+			chain.focus().run()
 		},
 
 		removeLink() {
-			this.editor
-				.chain()
+			this.chainOnLink()
 				// Explicitly hide bubble to prevent flickering before it's removed
 				.hideLinkBubble()
 				.unsetLink()

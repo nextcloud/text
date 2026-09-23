@@ -12,7 +12,8 @@ import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { domHref, parseHref } from '../helpers/links.js'
-import { linkClicking } from '../plugins/links'
+import { linkPill } from '../plugins/linkPill'
+import { focusLinkBubbleInput, linkClicking } from '../plugins/links'
 
 export const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
@@ -257,7 +258,14 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 					return false
 				}
 				console.debug('toggle link for selection')
-				return this.editor.commands.toggleLink({ href: '' })
+				return this.editor
+					.chain()
+					.toggleLink({ href: '' })
+					.command(({ state, dispatch }) => {
+						focusLinkBubbleInput(state, dispatch)
+						return true
+					})
+					.run()
 			},
 		}
 	},
@@ -267,8 +275,8 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 			// remove upstream link click handle plugin
 			.filter((plugin) => !plugin.props.handleClick)
 
-		// Add our own click handler plugin
-		return [...plugins, linkClicking(this.options.openLink)]
+		// Add our own click handler plugin and the pill plugin
+		return [...plugins, linkClicking(this.options.openLink), linkPill()]
 	},
 
 	// @ts-expect-error - toMarkdown is a custom field not part of the official Tiptap API
