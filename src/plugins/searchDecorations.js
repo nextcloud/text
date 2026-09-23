@@ -4,6 +4,7 @@
  */
 
 import { emit } from '@nextcloud/event-bus'
+import { escapeForRegEx } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import { searchQueryPluginKey } from './searchQuery.js'
@@ -95,14 +96,15 @@ export function runSearch(doc, query, options) {
 		? query.trim().slice(1).toLowerCase()
 		: query.trim().toLowerCase()
 
-	doc.descendants((node, offset, _position) => {
+	const regex = new RegExp(escapeForRegEx(query), 'gi')
+
+	doc.descendants((node, offset) => {
 		// Search the whole textblock so matches can sparn mark boundaries.
 		// Inline leaf nodes take one position each, so map them to one char.
 		if (node.isTextblock) {
 			const text = node.textBetween(0, node.content.size, undefined, '\uFFFC')
-			const matches = text.matchAll(new RegExp(query, 'gi'))
 
-			for (const match of matches) {
+			for (const match of text.matchAll(regex)) {
 				results.push({
 					from: offset + 1 + match.index,
 					to: offset + 1 + match.index + match[0].length,
