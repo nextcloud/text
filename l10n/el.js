@@ -131,6 +131,7 @@ OC.L10N.register(
     "Open link" : "Άνοιγμα συνδέσμου",
     "Edit link" : "Επεξεργασία συνδέσμου",
     "Save changes" : "Αποθήκευσε τις αλλαγές",
+    "Link text" : "Κείμενο συνδέσμου",
     "URL" : "URL",
     "Changes" : "Αλλαγές",
     "Before" : "Πριν",

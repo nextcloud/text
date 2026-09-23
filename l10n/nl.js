@@ -142,6 +142,7 @@ OC.L10N.register(
     "Cannot open links with unsafe protocols" : "Kan geen links met onveilige protocollen openen",
     "Edit link" : "Bewerk link",
     "Save changes" : "Wijzigingen opslaan",
+    "Link text" : "Linktekst",
     "URL" : "URL",
     "Changes" : "Wijzigingen",
     "Before" : "Voor",
