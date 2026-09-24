@@ -345,7 +345,7 @@ OC.L10N.register(
     "Suggestions" : "Vorschläge",
     "Formatting" : "Formatierung",
     "Link a file" : "Datei verlinken",
-    "Start writing or type '/' to add…" : "Beginne mit dem Schreiben oder gebe '/' zum Hinzufügen ein…",
+    "Start writing or type '/' to add…" : "Beginne mit dem Schreiben oder gib '/' zum Hinzufügen ein…",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
     "Choose" : "Auswählen",
     "Choose {file}" : "{file} auswählen",
