@@ -26,6 +26,10 @@ const hasPdftoppm = (() => {
 	}
 })()
 
+/**
+ * @param pdf - the pdf file
+ * @param dir - the target directory
+ */
 function renderPdfPages(pdf: Buffer, dir: string): Buffer[] {
 	const pdfPath = join(dir, 'print.pdf')
 	writeFileSync(pdfPath, pdf)

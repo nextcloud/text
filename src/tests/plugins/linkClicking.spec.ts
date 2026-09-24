@@ -8,6 +8,9 @@ import Link from '../../marks/Link.ts'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('linkClicking plugin', () => {
+	/**
+	 * @param content - the editor content
+	 */
 	function setup(content: string) {
 		const openLink = vi.fn()
 		const editor = createCustomEditor(content, [Link.configure({ openLink })])
@@ -16,6 +19,10 @@ describe('linkClicking plugin', () => {
 		return { editor, openLink, link }
 	}
 
+	/**
+	 * @param el - the DOM element
+	 * @param init - mouse event init
+	 */
 	function click(el: Element, init: MouseEventInit = {}) {
 		el.dispatchEvent(
 			new MouseEvent('click', {
