@@ -518,6 +518,7 @@ export default {
 	padding: 7px 6px;
 	margin-bottom: 26px;
 	position: relative;
+	text-align: center;
 }
 
 .image__main {
