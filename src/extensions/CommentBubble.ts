@@ -63,6 +63,13 @@ const CommentBubble = Extension.create({
 		}
 	},
 
+	addKeyboardShortcuts() {
+		return {
+			'Mod-Alt-ArrowLeft': () => this.editor.commands.navigateCommentBubble('prev'),
+			'Mod-Alt-ArrowRight': () => this.editor.commands.navigateCommentBubble('next'),
+		}
+	},
+
 	addProseMirrorPlugins() {
 		return [commentBubble({ editor: this.editor })]
 	},

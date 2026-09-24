@@ -7,27 +7,30 @@
 	<div
 		:id="`comment-bubble-${referenceId}`"
 		class="comment-bubble"
-		@keydown.escape.prevent.stop="closeAndRefocus">
+		@keydown="onKeyDown">
 		<div class="comment-bubble__header">
-			<span class="comment-bubble__title">{{ t('text', 'Comments') }}</span>
-			<div v-if="commentCount > 1" class="comment-bubble__nav">
+			<div class="comment-bubble__nav">
 				<NcButton
+					v-if="commentCount > 1"
 					variant="tertiary"
 					size="small"
-					:title="t('text', 'Previous comment')"
+					:aria-label="t('text', 'Previous comment')"
+					:title="previousTitle"
 					@click="navigate('prev')">
 					<template #icon>
-						<ChevronUpIcon :size="16" />
+						<ChevronLeftIcon :size="16" />
 					</template>
 				</NcButton>
-				<span class="comment-bubble__nav-position">{{ commentPosition }} / {{ commentCount }}</span>
+				<span class="comment-bubble__title">{{ title }}</span>
 				<NcButton
+					v-if="commentCount > 1"
 					variant="tertiary"
 					size="small"
-					:title="t('text', 'Next comment')"
+					:aria-label="t('text', 'Next comment')"
+					:title="nextTitle"
 					@click="navigate('next')">
 					<template #icon>
-						<ChevronDownIcon :size="16" />
+						<ChevronRightIcon :size="16" />
 					</template>
 				</NcButton>
 			</div>
@@ -169,14 +172,15 @@ import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichContenteditable from '@nextcloud/vue/components/NcRichContenteditable'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
-import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
-import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue'
+import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue'
+import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { useGuestName } from '../../composables/useGuestName.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.ts'
 import { commentDraftPrefix } from '../../plugins/referenceHelpers.ts'
+import { MODIFIERS, TRANSLATIONS } from '../Menu/keys.js'
 
 const props = defineProps<{
 	editor: Editor
@@ -199,6 +203,14 @@ const commentRefIds = ref<string[]>([])
 const commentCount = computed(() => commentRefIds.value.length)
 const commentPosition = computed(() => commentRefIds.value.indexOf(props.referenceId) + 1)
 const commentNode = computed<Node | null>(() => commentNodesMap.value[props.referenceId] ?? null)
+
+const title = computed(() => (commentCount.value > 1
+	? t('text', 'Comment {position} of {count}', { position: commentPosition.value, count: commentCount.value })
+	: t('text', 'Comment')))
+
+const shortcutPrefix = `${TRANSLATIONS[MODIFIERS.Mod]} + ${TRANSLATIONS[MODIFIERS.Alt]} + `
+const previousTitle = t('text', 'Previous comment ({shortcut})', { shortcut: shortcutPrefix + '←' })
+const nextTitle = t('text', 'Next comment ({shortcut})', { shortcut: shortcutPrefix + '→' })
 
 const editingItemIndex = ref<number | null>(null)
 const editText = ref('')
@@ -397,6 +409,25 @@ async function submitGuestName() {
 function closeAndRefocus() {
 	props.editor.commands.hideCommentBubble({ refocus: true })
 }
+
+function onKeyDown(event: KeyboardEvent) {
+	if (event.key === 'Escape') {
+		event.preventDefault()
+		event.stopPropagation()
+		closeAndRefocus()
+		return
+	}
+	if (!(event.ctrlKey || event.metaKey) || !event.altKey) {
+		return
+	}
+	if (event.key === 'ArrowLeft') {
+		event.preventDefault()
+		navigate('prev')
+	} else if (event.key === 'ArrowRight') {
+		event.preventDefault()
+		navigate('next')
+	}
+}
 </script>
 
 <style scoped lang="scss">
@@ -425,19 +456,13 @@ function closeAndRefocus() {
 		font-weight: bold;
 		font-size: 0.9em;
 		color: var(--color-text-maxcontrast);
+		white-space: nowrap;
 	}
 
 	&__nav {
 		display: flex;
 		align-items: center;
 		gap: var(--default-grid-baseline);
-		margin-inline-start: auto;
-	}
-
-	&__nav-position {
-		font-size: 0.8em;
-		color: var(--color-text-maxcontrast);
-		white-space: nowrap;
 	}
 
 	&__items {
