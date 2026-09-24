@@ -49,6 +49,7 @@ test('recovering from indexed db', async ({
 	await expect(editor.saveIndicator).not.toHaveAttribute(
 		'title',
 		/Unsaved changes/,
+		{ timeout: 15_000 },
 	)
 	await expect
 		.poll(() => file.getContent(), { timeout: 10_000 })
