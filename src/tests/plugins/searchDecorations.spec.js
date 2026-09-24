@@ -59,6 +59,31 @@ describe('search plugin', () => {
 		testSearch('<p>cat dinosaur bird dog cat</p>', 'cat', expected)
 	})
 
+	it('finds matches spanning different marks', () => {
+		const expected = {
+			results: [{ from: 1, to: 11 }],
+			total: 1,
+			index: 0,
+		}
+
+		testSearch(
+			'<p>test<strong>string</strong> other</p>',
+			'teststring',
+			expected,
+		)
+	})
+
+	it('finds matches after an inline node', () => {
+		const doc =
+			'<p>a<span class="mention" data-type="user" data-id="jane.doe" data-label="Jane Doe">Jane Doe</span>teststring</p>'
+
+		const expected = {
+			results: [{ from: 3, to: 13 }],
+		}
+
+		testSearch(doc, 'teststring', expected)
+	})
+
 	it('finds matches in separate blocks', () => {
 		const doc =
 			'<p>cat dinosaur bird dog cat</p>'
@@ -71,7 +96,7 @@ describe('search plugin', () => {
 				{ from: 37, to: 40 },
 				{ from: 55, to: 58 },
 			],
-			total: 5,
+			total: 4,
 			index: 0,
 		}
 
@@ -107,7 +132,7 @@ const testSearch = (content, query, expectedSearchResults) => {
 	const editor = createCustomEditor(content, [Mentions])
 	const doc = editor.state.doc
 	const searched = runSearch(doc, query)
-	expect(searched).toHaveProperty('results', expectedSearchResults.results)
+	expect(searched).toMatchObject(expectedSearchResults)
 	expect(highlightResults(doc, searched.results)).toEqual(
 		highlightResults(doc, expectedSearchResults.results),
 	)
