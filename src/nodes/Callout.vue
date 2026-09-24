@@ -74,6 +74,7 @@ export default {
 
 	.callout__content {
 		margin-inline-start: 1em;
+		min-width: 0;
 		&:deep(p) {
 			&:last-child {
 				margin-bottom: 0;
