@@ -47,7 +47,7 @@
 			tag="div"
 			name="comment-item"
 			class="comment-bubble__items">
-			<div v-for="(item, i) in items" :key="item.author + item.timestamp?.toISOString()" class="comment-bubble__item">
+			<div v-for="(item, i) in items" :key="i" class="comment-bubble__item">
 				<div class="comment-bubble__meta">
 					<NcAvatar
 						v-if="item.author"
