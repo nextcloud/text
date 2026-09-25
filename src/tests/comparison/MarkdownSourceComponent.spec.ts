@@ -99,6 +99,44 @@ describe('Markdown source component', () => {
 		}
 	})
 
+	it('labels changed lines with their own source numbers and leaves context unlabelled', async () => {
+		const contextLines = Array.from({ length: 10 }, (_value, index) => `context ${index}`).join('\n')
+		const wrapper = mount(MarkdownSourceComparison, {
+			props: {
+				beforeContent: `${contextLines}\nold\nlast\n`,
+				afterContent: `inserted\n${contextLines}\nnew\nlast\n`,
+				layoutMode: 'paired',
+			},
+		})
+		await vi.waitFor(() => expect(wrapper.find('[data-source-hunk]').exists()).toBe(true))
+
+		expect(wrapper.find('[data-source-operation="removed"]').attributes('aria-label')).toBe('Removed line 11')
+		expect(wrapper.findAll('[data-source-operation="added"]').map((line) => line.attributes('aria-label')))
+			.toEqual(['Added line 1', 'Added line 12'])
+		const context = wrapper.findAll('.text-source-comparison__line').filter((line) => line.find('code').exists() && line.find('code').text() === 'last')
+		expect(context).toHaveLength(2)
+		for (const line of context) {
+			expect(line.attributes()).not.toHaveProperty('aria-label')
+		}
+		wrapper.unmount()
+	})
+
+	it.each([
+		['addition', '', 'added\n', 'Added line 1', 0],
+		['deletion', 'removed\n', '', 'Removed line 1', 1],
+	] as const)('renders a pure %s without labelling or dereferencing its missing side', async (_name, beforeContent, afterContent, label, missingSide) => {
+		const wrapper = mount(MarkdownSourceComparison, {
+			props: { beforeContent, afterContent, layoutMode: 'paired' },
+		})
+		await vi.waitFor(() => expect(wrapper.find('[data-source-hunk]').exists()).toBe(true))
+
+		expect(wrapper.find('[data-source-operation]').attributes('aria-label')).toBe(label)
+		const missing = wrapper.findAll('.text-source-comparison__line')[missingSide]!
+		expect(missing.text()).toBe('')
+		expect(missing.attributes()).not.toHaveProperty('aria-label')
+		wrapper.unmount()
+	})
+
 	it('omits per-line badges when paired line endings match', async () => {
 		const wrapper = mount(MarkdownSourceComparison, {
 			props: {
