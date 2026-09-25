@@ -17,6 +17,7 @@ export interface ComparisonContents {
 	rejectLoaded?: boolean
 	width?: number
 	height?: number
+	detached?: boolean
 }
 
 export interface ComparisonMeasurement {
@@ -177,17 +178,18 @@ export class ComparisonHarness {
 		if (contents.rejectLoaded) {
 			this.allowFailure(/acceptance forced loaded callback failure/)
 		}
-		return this.page.evaluate(async ({ before, after, fileId, rejectLoaded = false, width = 1100, height = 760 }) => {
+		return this.page.evaluate(async ({ before, after, fileId, rejectLoaded = false, width = 1100, height = 760, detached = false }) => {
 			const state = window.__textComparisonAcceptance
 			const host = document.querySelector<HTMLElement>('#text-comparison-harness')!
 			host.style.inlineSize = `${width}px`
 			host.style.blockSize = `${height}px`
 			const started = performance.now()
 			let loadedCallbackCalls = 0
+			const mount = detached ? document.createElement('div') : host
 			const instance = await window.OCA.Text.createMarkdownContentComparison({
 				afterContent: after,
 				beforeContent: before,
-				el: host,
+				el: mount,
 				fileId,
 				noLazyImages: true,
 				onLoaded: rejectLoaded
@@ -197,6 +199,9 @@ export class ComparisonHarness {
 					}
 					: undefined,
 			})
+			if (detached) {
+				host.replaceChildren(...mount.childNodes)
+			}
 			const durationMilliseconds = performance.now() - started
 			state.instances.push(instance)
 			await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
