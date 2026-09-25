@@ -11,7 +11,7 @@ import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.js'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
-import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
+import { commentDraftPrefix, generateReferenceId, isEmptyComment, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -97,7 +97,7 @@ const CommentReference = Node.create({
 				}
 
 				// Clear any stale draft from a previous comment that used this ID
-				sessionStorage.removeItem('text-comment-draft-' + referenceId)
+				sessionStorage.removeItem(commentDraftPrefix + referenceId)
 
 				// In can-check mode, the above guards are sufficient
 				if (!dispatch) {
@@ -119,10 +119,8 @@ const CommentReference = Node.create({
 				)
 				const newComment = commentType.create({ referenceId }, newCommentItem)
 
-				let c = chain()
-					.insertContent({ type: 'commentReference', attrs: { referenceId } })
-
-				// Find positions of existing containers in the original doc
+				// Insert the comment before the reference: the container positions are read
+				// from the document as it is now and would shift once the reference is added.
 				let commentsInsidePos = -1
 				let footnotesStartPos = -1
 				state.doc.forEach((child, offset) => {
@@ -134,6 +132,7 @@ const CommentReference = Node.create({
 					}
 				})
 
+				let c = chain()
 				if (commentsInsidePos !== -1) {
 					c = c.insertContentAt(commentsInsidePos, newComment.toJSON())
 				} else if (footnotesStartPos !== -1) {
@@ -147,6 +146,9 @@ const CommentReference = Node.create({
 						content: [newComment.toJSON()],
 					})
 				}
+
+				// Insert the reference at the end of the selection
+				c = c.insertContentAt(state.selection.to, { type: 'commentReference', attrs: { referenceId } })
 
 				// Move selection/cursor to reference to avoid it being inside the hidden comments container
 				c = c.command(({ state, dispatch }) => {
@@ -231,8 +233,7 @@ const CommentReference = Node.create({
 				}
 
 				const tr = state.tr
-				const shouldAppendNewReply = itemIndex === undefined
-					&& !(comment.childCount === 1 && item.textContent === '')
+				const shouldAppendNewReply = itemIndex === undefined && !isEmptyComment(comment)
 				if (shouldAppendNewReply) {
 					// Append a new reply item
 					const commentItemType = state.schema.nodes.commentItem

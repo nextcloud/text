@@ -88,10 +88,10 @@ const FootnoteReference = Node.create({
 				const paragraphType = state.schema.nodes.paragraph
 
 				let c = chain()
-					.insertContent({ type: 'footnoteReference', attrs: { referenceId } })
 
 				if (!existingFootnote) {
-					// Create footnote
+					// Create the footnote before the reference: the container positions are read
+					// from the document as it is now and would shift once the reference is added.
 					const newFootnote = footnoteType.create({ referenceId }, paragraphType.create())
 					const lastChild = state.doc.lastChild
 					const hasFootnotesBlock = lastChild?.type === footnotesType
@@ -107,7 +107,11 @@ const FootnoteReference = Node.create({
 							content: [newFootnote.toJSON()],
 						})
 					}
-				} else {
+				}
+
+				c = c.insertContentAt(state.selection.to, { type: 'footnoteReference', attrs: { referenceId } }, { updateSelection: false })
+
+				if (existingFootnote) {
 					// Jump cursor into existing footnote
 					c = c.command(({ tr }) => {
 						let target: number | null = null

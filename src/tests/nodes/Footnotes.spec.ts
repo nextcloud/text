@@ -120,6 +120,56 @@ describe('insertFootnote command', () => {
 		const footnote = editor.state.doc.lastChild!.firstChild!
 		expect(footnote.attrs.referenceId).toBe('custom')
 	})
+
+	test('inserts the reference after a selected range and keeps the text', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world</p>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		const result = editor.commands.insertFootnote()
+		expect(result).toBe(true)
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(0).text).toBe('Hello')
+		expect(paragraph.child(1).type.name).toBe('footnoteReference')
+		expect(paragraph.child(2).text).toBe(' world')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		expect(editor.state.doc.lastChild!.type.name).toBe('footnotes')
+	})
+
+	test('places the cursor inside the new footnote', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world</p>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		editor.commands.insertFootnote()
+
+		const $from = editor.state.selection.$from
+		expect(editor.state.selection.empty).toBe(true)
+		expect($from.node(1).type.name).toBe('footnotes')
+		expect($from.node(2).type.name).toBe('footnote')
+		expect($from.node(2).attrs.referenceId).toBe('1')
+	})
+
+	test('appends into existing footnotes container with a selected range', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		editor.commands.insertFootnote()
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(1).attrs.referenceId).toBe('2')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		const footnotes = editor.state.doc.lastChild!
+		expect(footnotes.type.name).toBe('footnotes')
+		expect(footnotes.childCount).toBe(2)
+		expect(footnotes.lastChild!.attrs.referenceId).toBe('2')
+	})
 })
 
 describe('Footnotes cleanup', () => {
@@ -157,7 +207,7 @@ describe('Footnotes cleanup', () => {
 
 	test('removes footnotes when last reference is deleted', ({ editor }) => {
 		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
-			+ '<section> data-type="footnotes">'
+			+ '<section data-type="footnotes">'
 			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
 			+ '</section>')
 		deleteFirstReference(editor)

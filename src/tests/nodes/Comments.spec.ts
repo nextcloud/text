@@ -7,17 +7,27 @@ import type { Editor } from '@tiptap/core'
 
 import { Document } from '@tiptap/extension-document'
 import { ListItem } from '@tiptap/extension-list'
-import { describe, expect } from 'vitest'
+import { describe, expect, vi } from 'vitest'
+import CommentBubble from '../../extensions/CommentBubble.ts'
 import KeepSyntax from '../../extensions/KeepSyntax.js'
 import Mention from '../../extensions/Mention.js'
 import BulletList from '../../nodes/BulletList.ts'
 import Comments from '../../nodes/Comments.ts'
 import Footnotes from '../../nodes/Footnotes.ts'
+import { commentBubbleKey } from '../../plugins/commentBubble.ts'
 import testEditor from '../testHelpers/testEditor.ts'
+
+vi.mock('../../plugins/CommentBubblePluginView.ts', () => ({
+	default: class {
+		update() {}
+		destroy() {}
+	},
+}))
 
 const test = testEditor.override('extensions', [
 	Document.extend({ content: 'block+ comments? footnotes?' }),
 	Comments,
+	CommentBubble,
 	Footnotes,
 	BulletList,
 	KeepSyntax,
@@ -254,6 +264,105 @@ describe('insertComment command', () => {
 		editor.state.doc.forEach((child) => childNames.push(child.type.name))
 		expect(childNames.indexOf('comments')).toBeLessThan(childNames.indexOf('footnotes'))
 	})
+
+	test('inserts the reference after a selected range and keeps the text', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world</p>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		const result = editor.commands.insertComment()
+		expect(result).toBe(true)
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(0).text).toBe('Hello')
+		expect(paragraph.child(1).type.name).toBe('commentReference')
+		expect(paragraph.child(2).text).toBe(' world')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		expect(editor.state.doc.lastChild!.type.name).toBe('comments')
+		expect(editor.state.doc.lastChild!.firstChild!.attrs.referenceId).toBe('comment-1')
+	})
+
+	test('appends into existing comments container with a selected range', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		editor.commands.insertComment()
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.textContent).toBe('Hello world')
+		expect(paragraph.child(1).type.name).toBe('commentReference')
+		expect(paragraph.child(1).attrs.referenceId).toBe('comment-2')
+
+		expect(editor.state.doc.childCount).toBe(2)
+		const comments = editor.state.doc.lastChild!
+		expect(comments.type.name).toBe('comments')
+		expect(comments.childCount).toBe(2)
+		expect(comments.lastChild!.attrs.referenceId).toBe('comment-2')
+	})
+})
+
+describe('hideCommentBubble command', () => {
+	function hasNode(editor: Editor, typeName: string): boolean {
+		let found = false
+		editor.state.doc.descendants((node) => {
+			if (node.type.name === typeName) {
+				found = true
+			}
+		})
+		return found
+	}
+
+	test('removes an empty comment when the bubble is closed', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertComment()
+		expect(commentBubbleKey.getState(editor.state).active?.referenceId).toBe('comment-1')
+
+		editor.commands.hideCommentBubble({ refocus: true })
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(false)
+		expect(hasNode(editor, 'comments')).toBe(false)
+		expect(editor.state.doc.textContent).toBe('Foo')
+		expect(editor.state.selection.from).toBe(4)
+	})
+
+	test('keeps an empty comment with an unsent draft', ({ editor }) => {
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+		editor.commands.insertComment()
+		sessionStorage.setItem('text-comment-draft-comment-1', 'work in progress')
+
+		editor.commands.hideCommentBubble()
+		sessionStorage.removeItem('text-comment-draft-comment-1')
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(true)
+		expect(hasNode(editor, 'comment')).toBe(true)
+	})
+
+	test('keeps a comment with content when the bubble is closed', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+		editor.commands.openCommentBubble('comment-1')
+		expect(commentBubbleKey.getState(editor.state).active?.referenceId).toBe('comment-1')
+
+		editor.commands.hideCommentBubble()
+
+		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
+		expect(hasNode(editor, 'commentReference')).toBe(true)
+		expect(hasNode(editor, 'comment')).toBe(true)
+	})
 })
 
 describe('Comments Markdown roundtrip', () => {
@@ -321,17 +430,11 @@ describe('Comments Markdown roundtrip', () => {
 		expect(markdownThroughEditor(testOut)).toBe(testOut)
 	})
 	test('idempotent through round-trip with broken metadata #2', ({ markdownThroughEditor }) => {
-		const testIn = 'Foo[^comment-1]\n\n'
+		const test = 'Foo[^comment-1]\n\n'
 			+ '[^comment-1]:\n'
-			+ '    - @jane xyz\n'
+			+ '    - @jane doe\n'
 			+ '      Hello there'
-		const testOut = 'Foo[^comment-1]\n\n'
-			+ '[^comment-1]:\n'
-			+ '    - @jane\n'
-			+ '      xyz\n'
-			+ '      Hello there'
-		expect(markdownThroughEditor(testIn)).toBe(testOut)
-		expect(markdownThroughEditor(testOut)).toBe(testOut)
+		expect(markdownThroughEditor(test)).toBe(test)
 	})
 	test('idempotent through round-trip with broken metadata #3', ({ markdownThroughEditor }) => {
 		const testIn = 'Foo[^comment-1]\n\n'
@@ -359,5 +462,12 @@ describe('Comments Markdown roundtrip', () => {
 		expect(markdownThroughEditor(testIn1)).toBe(testOut)
 		expect(markdownThroughEditor(testIn2)).toBe(testOut)
 		expect(markdownThroughEditor(testOut)).toBe(testOut)
+	})
+	test('guest comment with multi-word name', ({ markdownThroughEditor }) => {
+		const test = 'Foo[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @Alma Lauer *(2026-09-14T12:51:39.978Z)*\n'
+			+ '      Guest reply'
+		expect(markdownThroughEditor(test)).toBe(test)
 	})
 })
