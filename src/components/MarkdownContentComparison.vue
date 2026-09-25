@@ -8,7 +8,11 @@
 		ref="root"
 		class="text-comparison"
 		:class="`text-comparison--${layoutMode}`"
-		:aria-label="t('text', 'Version comparison')">
+		:aria-label="t('text', 'Version comparison')"
+		@wheel.passive="cancelInitialLocation"
+		@touchstart.passive="cancelInitialLocation"
+		@pointerdown="cancelInitialLocation"
+		@keydown="cancelInitialLocation">
 		<p class="text-comparison__sr-only" aria-live="polite" aria-atomic="true">
 			{{ announcement }}
 		</p>
@@ -237,6 +241,10 @@ const SourceView = shallowRef<Component | null>(null)
 let observer: ResizeObserver | null = null
 let didReady = false
 let destroyed = false
+let pendingInitialLocation = false
+let initialLocationFrame: number | null = null
+let initialGeometry = ''
+let initialLocationAttempts = 0
 
 const resolver = props.fileId
 	? new AttachmentResolver({
@@ -296,6 +304,11 @@ try {
 		plugins[side] = [decoration.plugin]
 		pluginKeys[side] = decoration.key
 	}
+	if (model.edits.length) {
+		view.value = 'documents'
+		showDocuments.value = true
+		pendingInitialLocation = true
+	}
 } catch {
 	activateFallback()
 }
@@ -321,7 +334,10 @@ watch(activeIds, (ids) => {
 	)
 	updateDecorations()
 })
-watch(currentId, refreshDocuments)
+watch(currentId, () => {
+	updateDecorations()
+	locateCurrent(true)
+})
 watch(view, (next) => {
 	if (next === 'source' && !SourceView.value) {
 		loadSource()
@@ -340,20 +356,24 @@ onMounted(() => {
 				= (entry?.contentRect.width ?? root.value?.clientWidth ?? 760) < 760
 					? 'single'
 					: 'paired'
-			if (nextLayout === layoutMode.value) {
-				return
-			}
+			const changed = nextLayout !== layoutMode.value
 			layoutMode.value = nextLayout
-			locateCurrent(true)
+			if (pendingInitialLocation) {
+				requestInitialLocation()
+			} else if (changed) {
+				locateCurrent(true)
+			}
 		})
 	}
 	if (root.value) {
 		observer?.observe(root.value)
 	}
+	requestInitialLocation()
 	ready()
 })
 onBeforeUnmount(() => {
 	destroyed = true
+	cancelInitialLocation()
 	observer?.disconnect()
 	observer = null
 	destroyEditors()
@@ -380,22 +400,72 @@ function updateDecorations() {
 }
 function refreshDocuments() {
 	updateDecorations()
-	locateCurrent(true)
+	requestInitialLocation()
+}
+/**
+ * End the opening phase and discard queued measurements.
+ */
+function cancelInitialLocation() {
+	pendingInitialLocation = false
+	if (initialLocationFrame !== null) {
+		cancelAnimationFrame(initialLocationFrame)
+		initialLocationFrame = null
+	}
+}
+/**
+ * Locate after usable attachment, allowing at most three opening layout corrections.
+ */
+function requestInitialLocation() {
+	if (!pendingInitialLocation || initialLocationFrame !== null || typeof requestAnimationFrame === 'undefined') {
+		return
+	}
+	nextTick(() => {
+		if (!pendingInitialLocation || initialLocationFrame !== null) {
+			return
+		}
+		initialLocationFrame = requestAnimationFrame(async () => {
+			initialLocationFrame = null
+			if (!pendingInitialLocation || !root.value?.isConnected) {
+				return
+			}
+			const visible = sides.filter((side) => layoutMode.value === 'paired' || activeSide.value === side)
+			if (visible.some((side) => {
+				const scroller = sideElements[side].scroller
+				return !scroller?.clientWidth || !scroller.clientHeight || !editors[side]?.view.dom.isConnected
+			})) {
+				return
+			}
+			const geometry = visible.map((side) => {
+				const scroller = sideElements[side].scroller!
+				return `${side}:${scroller.clientWidth}:${scroller.clientHeight}:${scroller.scrollHeight}`
+			}).join('|')
+			if (geometry === initialGeometry || initialLocationAttempts === 3) {
+				cancelInitialLocation()
+				return
+			}
+			initialGeometry = geometry
+			initialLocationAttempts++
+			await locateCurrent(true, 'auto')
+			requestInitialLocation()
+		})
+	})
 }
 function selectEdit(id: string) {
+	cancelInitialLocation()
 	currentId.value = id
 	if (!isPureFormatting(model.edits.find((edit) => edit.id === id)!)) {
 		setView('documents')
 	}
 }
 function move(offset: number) {
+	cancelInitialLocation()
 	currentId.value = moveCurrentId(
 		activeIds.value,
 		currentId.value,
 		offset,
 	)
 }
-function locateCurrent(selectVisibleSide = false) {
+function locateCurrent(selectVisibleSide = false, behavior = scrollBehavior()) {
 	const edit = model.edits.find(({ id }) => id === currentId.value)
 	if (!edit) {
 		return
@@ -408,7 +478,7 @@ function locateCurrent(selectVisibleSide = false) {
 			activeSide.value = other
 		}
 	}
-	nextTick(() => {
+	return nextTick(() => {
 		for (const side of ['before', 'after'] as const) {
 			const editor = editors[side]
 			const { pane, scroller } = sideElements[side]
@@ -417,7 +487,7 @@ function locateCurrent(selectVisibleSide = false) {
 				pane,
 				scroller,
 				edit.primary.id,
-				scrollBehavior(),
+				behavior,
 				() => {
 					if (!editor || editor.isDestroyed) {
 						return null
@@ -436,6 +506,7 @@ function ready() {
 	}
 }
 function activateFallback() {
+	cancelInitialLocation()
 	failure.value = true
 	destroyEditors()
 }
@@ -453,14 +524,16 @@ async function loadSource() {
 	}
 }
 function setView(next: View) {
+	cancelInitialLocation()
+	view.value = next
 	if (next === 'documents') {
 		showDocuments.value = true
 		locateCurrent(true)
 	}
-	view.value = next
 	nextTick(() => tabRefs.get(next)?.focus())
 }
 function setSide(side: Side) {
+	cancelInitialLocation()
 	activeSide.value = side
 	locateCurrent()
 	nextTick(() => sideElements[side].tab?.focus())
