@@ -91,7 +91,6 @@ import { getMarkAttributes, isActive } from '@tiptap/core'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActions from '@nextcloud/vue/components/NcActions'
-import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { useFileProps } from '../../composables/useFileProps.ts'
 import { useLinkFile } from '../../composables/useLinkFile.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
@@ -229,13 +228,8 @@ export default {
 		},
 
 		linkPicker() {
-			getLinkWithPicker(null, true)
-				.then((link) => {
-					this.insertLink(link)
-				})
-				.catch((error) => {
-					logger.error('Smart picker promise rejected', error)
-				})
+			this.menuOpen = false
+			this.editor?.chain().focus().insertContent('/').run()
 		},
 
 		linkCustomAction() {
