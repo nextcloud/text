@@ -62,6 +62,8 @@ class LinkBubblePluginView {
 			props: {
 				editor: this.options.editor,
 				href: null,
+				nodeStart: null,
+				focusInput: false,
 			},
 			editor: this.options.editor,
 		})
@@ -74,31 +76,31 @@ class LinkBubblePluginView {
 			trigger: 'manual',
 			placement: 'bottom',
 			hideOnClick: 'toggle',
-			popperOptions: {
-				strategy: 'fixed',
-			},
 		})
 	}
 
+	#timer = null
+
 	update(view) {
-		const { active } = this.plugin.getState(view.state)
+		const { active, focusInput } = this.plugin.getState(view.state)
 		if (view.composing) {
 			return
 		}
 		this.createTooltip()
+		clearTimeout(this.#timer)
 		if (active?.mark) {
-			setTimeout(() => {
-				this.updateTooltip(view, active)
+			this.#timer = setTimeout(() => {
+				this.updateTooltip(view, active, focusInput)
 			}, 100)
 		} else {
 			this.removeEventListeners()
-			setTimeout(() => {
+			this.#timer = setTimeout(() => {
 				this.tippy?.hide()
 			}, 100)
 		}
 	}
 
-	updateTooltip(view, { mark, nodeStart }) {
+	updateTooltip(view, { mark, nodeStart }, focusInput = false) {
 		let referenceEl
 		try {
 			referenceEl = view.nodeDOM(nodeStart)
@@ -112,6 +114,8 @@ class LinkBubblePluginView {
 
 		this.#component?.updateProps({
 			href: domHref(mark),
+			nodeStart,
+			focusInput,
 		})
 
 		const clientRect = referenceEl?.getBoundingClientRect()
@@ -126,6 +130,7 @@ class LinkBubblePluginView {
 	}
 
 	destroy() {
+		clearTimeout(this.#timer)
 		this.tippy?.destroy()
 	}
 }
