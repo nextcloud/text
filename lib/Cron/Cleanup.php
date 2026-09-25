@@ -14,6 +14,7 @@ use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
+use OCP\Files\ISetupManager;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
@@ -23,6 +24,7 @@ class Cleanup extends TimedJob {
 		private readonly DocumentService $documentService,
 		private readonly AttachmentService $attachmentService,
 		private readonly LoggerInterface $logger,
+		private readonly ISetupManager $setupManager,
 	) {
 		parent::__construct($time);
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
@@ -34,6 +36,7 @@ class Cleanup extends TimedJob {
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllWithNoActiveSession() as $document) {
+			$this->setupManager->tearDown();
 			$this->attachmentService->cleanupAttachments($document->getId());
 		}
 
