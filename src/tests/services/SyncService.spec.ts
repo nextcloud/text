@@ -8,6 +8,8 @@ import * as connect from '../../apis/connect.ts'
 import { provideConnection } from '../../composables/useConnection.js'
 import { SyncService } from '../../services/SyncService.js'
 
+vi.mock('../../apis/connect')
+
 const connection = {
 	documentId: 123,
 	sessionId: 345,
@@ -53,7 +55,6 @@ describe('Sync service', () => {
 			getBaseVersionEtag,
 			setBaseVersionEtag,
 		)
-		vi.mock('../../apis/connect')
 		vi.mocked(connect.open).mockResolvedValue(openResult)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
