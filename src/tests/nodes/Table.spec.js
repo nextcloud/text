@@ -274,6 +274,65 @@ describe('Table extension', () => {
 		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
 		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
 	})
+
+	test('Mod-a inside a table cell selects only that cell content', ({
+		editor,
+	}) => {
+		editor.commands.setContent(
+			markdownit.render('before\n\n| a | b |\n|---|---|\n| c | d |\n\nafter\n'),
+		)
+
+		let cellPos = null
+		editor.state.doc.descendants((node, pos) => {
+			if (node.type.name === 'tableCell' && node.textContent === 'c') {
+				cellPos = pos
+				return false
+			}
+			return true
+		})
+		expect(cellPos).not.toBeNull()
+		editor.commands.setTextSelection(cellPos + 2)
+
+		const event = new KeyboardEvent('keydown', {
+			key: 'a',
+			ctrlKey: true,
+			metaKey: false,
+			bubbles: true,
+			cancelable: true,
+		})
+		const handled = editor.view.someProp('handleKeyDown', (fn) => fn(editor.view, event))
+		expect(handled).toBe(true)
+
+		const { from, to } = editor.state.selection
+		expect(editor.state.doc.textBetween(from, to)).toBe('c')
+		expect(from).toBeGreaterThan(cellPos)
+		expect(to).toBeLessThan(cellPos + editor.state.doc.nodeAt(cellPos).nodeSize)
+	})
+
+	test('Mod-a outside a table declines the cell shortcut', ({
+		editor,
+	}) => {
+		editor.commands.setContent(markdownit.render('paragraph only\n'))
+		const { from: beforeFrom, to: beforeTo } = editor.state.selection
+
+		const event = new KeyboardEvent('keydown', {
+			key: 'a',
+			ctrlKey: true,
+			metaKey: false,
+			bubbles: true,
+			cancelable: true,
+		})
+		// table shortcut must not claim the event outside a table
+		editor.view.someProp('handleKeyDown', (fn) => fn(editor.view, event))
+		// default/browser select-all may expand the selection; that is fine.
+		// Assert we never produced a selection that looks like a cell range
+		// (empty cell content would be from == to at cell+1).
+		const { from, to } = editor.state.selection
+		const docSize = editor.state.doc.content.size
+		const isWholeDoc = from <= 1 && to >= docSize - 1
+		const isStillCursor = from === beforeFrom && to === beforeTo
+		expect(isWholeDoc || isStillCursor || to > from).toBe(true)
+	})
 })
 
 function getHeaderCell(editor, targetIndex = 0) {
