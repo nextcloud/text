@@ -39,12 +39,17 @@ export default {
 	},
 
 	props: {
+		editor: {
+			type: Object,
+			required: true,
+		},
+
 		node: {
 			type: Object,
 			required: true,
 		},
 
-		updateAttributes: {
+		getPos: {
 			type: Function,
 			required: true,
 		},
@@ -57,23 +62,18 @@ export default {
 	},
 
 	watch: {
-		'node.attrs.openDetails': function(open) {
-			if (open) {
-				this.open = true
-				this.updateAttributes({ openDetails: false })
-			}
-		},
-
 		'node.attrs.open': function(open) {
 			this.open = open
 		},
 	},
 
 	beforeMount() {
-		this.open = this.node.attrs.open || this.node.attrs.openDetails
-		if (this.node.attrs.openDetails) {
-			this.updateAttributes({ openDetails: false })
-		}
+		this.open = this.node.attrs.open || this.selectionInside(this.nodeRange())
+		this.editor.on('selectionUpdate', this.onSelectionUpdate)
+	},
+
+	beforeUnmount() {
+		this.editor.off('selectionUpdate', this.onSelectionUpdate)
 	},
 
 	methods: {
@@ -81,6 +81,31 @@ export default {
 
 		toggleOpen() {
 			this.open = !this.open
+		},
+
+		onSelectionUpdate() {
+			if (this.open) {
+				return
+			}
+			this.open = this.selectionInside(this.contentRange())
+		},
+
+		nodeRange() {
+			const from = this.getPos()
+			return { from, to: from + this.node.nodeSize }
+		},
+
+		contentRange() {
+			const { from, to } = this.nodeRange()
+			return {
+				from: from + 1 + this.node.firstChild.nodeSize,
+				to: to - 1,
+			}
+		},
+
+		selectionInside({ from, to }) {
+			const { selection } = this.editor.state
+			return selection.from >= from && selection.to <= to
 		},
 	},
 }
