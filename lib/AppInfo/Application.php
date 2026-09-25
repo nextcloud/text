@@ -28,11 +28,11 @@ use OCA\Text\Listeners\VersionRestoredListener;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
 use OCA\TpAssistant\Event\BeforeAssistantNotificationEvent;
-use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent as HttpBeforeTemplateRenderedEvent;
 use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
@@ -53,7 +53,7 @@ class Application extends App implements IBootstrap {
 		$context->registerConfigLexicon(\OCA\Text\ConfigLexicon::class);
 
 		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);
-		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
+		$context->registerEventListener(HttpBeforeTemplateRenderedEvent::class, LoadViewerListener::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
 		$context->registerEventListener(BeforeTemplateRenderedEvent::class, FilesSharingLoadAdditionalScriptsListener::class);
 		$context->registerEventListener(LoadEditor::class, LoadEditorListener::class);

@@ -8,30 +8,24 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Service\InitialStateProvider;
-use OCA\Viewer\Event\LoadViewer;
-use OCP\Collaboration\Reference\RenderReferenceEvent;
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
+use OCP\AppFramework\Http\TemplateResponse;
 use OCP\EventDispatcher\Event;
-use OCP\EventDispatcher\IEventDispatcher;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
-/** @implements IEventListener<Event|LoadViewer> */
+/** @implements IEventListener<BeforeTemplateRenderedEvent> */
 class LoadViewerListener implements IEventListener {
-	public function __construct(
-		private readonly InitialStateProvider $initialStateProvider,
-		private readonly IEventDispatcher $eventDispatcher,
-	) {
-	}
-
 	public function handle(Event $event): void {
-		if (!$event instanceof LoadViewer) {
+		if (!($event instanceof BeforeTemplateRenderedEvent)) {
 			return;
 		}
-		Util::addScript('text', 'text-viewer', 'viewer');
-		Util::addStyle('text', 'text-viewer');
-		$this->eventDispatcher->dispatchTyped(new RenderReferenceEvent());
 
-		$this->initialStateProvider->provideState();
+		if ($event->getResponse()->getRenderAs() === TemplateResponse::RENDER_AS_ERROR) {
+			return;
+		}
+
+		Util::addInitScript('text', 'text-viewer');
+		Util::addStyle('text', 'text-viewer');
 	}
 }
