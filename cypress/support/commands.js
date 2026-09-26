@@ -8,7 +8,7 @@ import { addCommands } from '@nextcloud/e2e-test-server/cypress'
 import { emit } from '@nextcloud/event-bus'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
-Cypress.env('baseUrl', url)
+Cypress.expose('baseUrl', url)
 const silent = { log: false }
 
 // prepare main cypress window so we can use axios there
