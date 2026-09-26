@@ -124,7 +124,7 @@
     "@vue/test-utils": "^2.5.0",
     "@vue/tsconfig": "^0.9.1",
     "@vueuse/core": "^14.4.0",
-    "cypress": "^15.21.1",
+    "cypress": "^16.1.0",
     "cypress-split": "^1.25.0",
     "cypress-vite": "^1.10.2",
     "eslint": "^10.11.0",
