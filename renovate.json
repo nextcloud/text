@@ -50,6 +50,10 @@
 			"matchPackageNames": ["typescript", "typedoc"]
 		},
 		{
+			"groupName": "markdown-id",
+			"matchPackageNames": ["**{/,}markdown-it*", "@mdit/*"]
+		},
+		{
 			"matchUpdateTypes": ["major"],
 			"matchBaseBranches": ["stable35", "stable34", "stable33", "stable32"],
 			"enabled": false
