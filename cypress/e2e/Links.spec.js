@@ -29,11 +29,11 @@ describe('test link marks', function() {
 			cy.getFile(fileName).then(($el) => {
 				const id = $el.data('cyFilesListRowFileid')
 
-				const link = `${Cypress.env('baseUrl')}/apps/files/?dir=/&openfile=${id}#relPath=/${fileName}`
+				const link = `${Cypress.expose('baseUrl')}/apps/files/?dir=/&openfile=${id}#relPath=/${fileName}`
 				cy.clearContent()
 				cy.insertLine(link)
 
-				cy.getContent().find(`a[href*="${Cypress.env('baseUrl')}"]`)
+				cy.getContent().find(`a[href*="${Cypress.expose('baseUrl')}"]`)
 			})
 		})
 
