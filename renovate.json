@@ -50,7 +50,7 @@
 			"matchPackageNames": ["typescript", "typedoc"]
 		},
 		{
-			"groupName": "markdown-id",
+			"groupName": "markdown-it",
 			"matchPackageNames": ["**{/,}markdown-it*", "@mdit/*"]
 		},
 		{
