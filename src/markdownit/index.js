@@ -9,7 +9,6 @@ import frontMatter from 'markdown-it-front-matter'
 import implicitFigures from 'markdown-it-image-figures'
 import mark from 'markdown-it-mark'
 import multimdTable from 'markdown-it-multimd-table'
-import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 import callouts from './callouts.js'
 import comments from './comments.ts'
 import details from './details.ts'
@@ -23,6 +22,17 @@ import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
 import underline from './underline.js'
 import wikiLinks from './wikiLinks.ts'
+
+/**
+ * markdown-it-multimd-table calls `md.utils.assign`, which markdown-it 15 removed
+ *
+ * @param {import('markdown-it').MarkdownIt} md Markdown object
+ * @param {object} options multimd-table options
+ */
+function multimdTableCompat(md, options) {
+	md.utils = { ...md.utils, assign: Object.assign }
+	multimdTable(md, options)
+}
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
@@ -44,17 +54,17 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(implicitFigures)
 	.use(mark)
 	.use(mathematics)
-	.use(multimdTable, {
+	.use(multimdTableCompat, {
 		multiline: true,
 		rowspan: false,
 		multibody: false,
 	})
 
 // Render front matter tokens
-markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
+markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${markdownit.utils.escapeHtml(tokens[idx].meta)}</code></pre>`
 
 // Render horizontal rules with markup attribute
-markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${escapeHtml(tokens[idx].markup || '---')}" />\n`
+markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${markdownit.utils.escapeHtml(tokens[idx].markup || '---')}" />\n`
 
 // Render lists with bullet attribute
 markdownit.renderer.rules.bullet_list_open = (tokens, idx, options) => {

@@ -4,7 +4,7 @@
  */
 
 /**
- * @param {import('markdown-it')} md Markdown object
+ * @param {import('markdown-it').MarkdownIt} md Markdown object
  */
 export default function splitMixedLists(md) {
 	md.core.ruler.after('task-lists', 'split-mixed-task-lists', (state) => {

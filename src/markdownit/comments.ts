@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type MarkdownIt from 'markdown-it'
-import type StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
-import type Token from 'markdown-it/lib/token.mjs'
-
-import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
+import type { MarkdownIt, StateCore, Token } from 'markdown-it'
 
 const COMMENT_REF_PREFIX = 'comment-'
 
@@ -17,7 +13,7 @@ const COMMENT_REF_PREFIX = 'comment-'
  * @param token markdown-it token
  */
 function labelOf(token: Token): string {
-	return token.meta?.label || String(token.meta?.id ?? '')
+	return String(token.meta?.label || (token.meta?.id ?? ''))
 }
 
 /**
@@ -354,6 +350,7 @@ function extractMetadata(inline: Token): Metadata {
  * @param md  markdown-it Markdown object
  */
 export default function comments(md: MarkdownIt): void {
+	const { escapeHtml } = md.utils
 	md.core.ruler.after('footnote_tail', 'split_comments', splitComments)
 	md.core.ruler.after('split_comments', 'extract_comment_metadata', extractCommentMetadata)
 
@@ -370,9 +367,9 @@ export default function comments(md: MarkdownIt): void {
 	md.renderer.rules.comment_close = () => '</div>\n'
 	md.renderer.rules.comment_item_open = (tokens, idx) => {
 		const token = tokens[idx]
-		const author = token.attrGet('data-author') || ''
-		const authorLabel = token.attrGet('data-author-label') || ''
-		const timestamp = token.attrGet('data-timestamp') || ''
+		const author = String(token.attrGet('data-author') || '')
+		const authorLabel = String(token.attrGet('data-author-label') || '')
+		const timestamp = String(token.attrGet('data-timestamp') || '')
 		return `<div data-type="comment-item" data-author="${escapeHtml(author)}" data-author-label="${escapeHtml(authorLabel)}" data-timestamp="${escapeHtml(timestamp)}">\n`
 	}
 	md.renderer.rules.comment_item_close = () => '</div>\n'

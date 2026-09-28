@@ -5,7 +5,7 @@
 
 /* eslint-disable @stylistic/max-statements-per-line */
 
-import type MarkdownIt from 'markdown-it'
+import type { MarkdownIt } from 'markdown-it'
 
 /**
  * markdown-it plugin: parse Obsidian-style wiki links and wiki image links

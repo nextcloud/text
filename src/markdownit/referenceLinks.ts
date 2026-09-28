@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type MarkdownIt from 'markdown-it'
-import type StateInline from 'markdown-it/lib/rules_inline/state_inline.mjs'
-
-import linkRule from 'markdown-it/lib/rules_inline/link.mjs'
+import type { MarkdownIt, StateInline } from 'markdown-it'
 
 type RefType = 'full' | 'collapsed' | 'shortcut'
 
@@ -98,5 +95,6 @@ function wrap(original: (state: StateInline, silent: boolean) => boolean) {
  * @param md - markdown-it instance to extend
  */
 export default function referenceLinks(md: MarkdownIt): void {
-	md.inline.ruler.at('link', wrap(linkRule))
+	const { ruler } = md.inline
+	ruler.at('link', wrap(ruler.__rules__[ruler.__find__('link')].fn))
 }

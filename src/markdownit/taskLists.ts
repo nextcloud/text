@@ -9,10 +9,9 @@
 // https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments
 // https://github.com/blog/1825-task-lists-in-all-markdown-documents
 
-import type MarkdownIt from 'markdown-it'
-import type StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
+import type { MarkdownIt, StateCore, Token } from 'markdown-it'
 
-import Token from 'markdown-it/lib/token.mjs'
+import markdownit from 'markdown-it'
 
 interface TaskListsOptions {
 	enabled: boolean
@@ -75,7 +74,7 @@ function processToken(state: StateCore, options: TaskListsOptions): boolean {
 
 		const parentToken = findParentToken(allTokens, i - 2)
 		if (parentToken) {
-			const classes = parentToken.attrGet('class') ?? ''
+			const classes = String(parentToken.attrGet('class') ?? '')
 			if (!classes.match(/(^| )contains-task-list/)) {
 				parentToken.attrJoin('class', 'contains-task-list')
 			}
@@ -157,7 +156,7 @@ function generateIdForToken(token: Token): string {
  * @param id - ID of the taskLists item
  */
 function createCheckboxToken(token: Token, enabled: boolean, id: string): Token {
-	const checkbox = new Token('taskListItemCheckbox', '', 0)
+	const checkbox = new markdownit.Token('taskListItemCheckbox', '', 0)
 	if (!enabled) {
 		checkbox.attrSet('disabled', 'true')
 	}
@@ -181,7 +180,7 @@ function createCheckboxToken(token: Token, enabled: boolean, id: string): Token 
  * @param id - ID of the taskLists item
  */
 function createLabelBeginToken(id: string): Token {
-	const labelBeginToken = new Token('taskListItemLabel_open', '', 1)
+	const labelBeginToken = new markdownit.Token('taskListItemLabel_open', '', 1)
 	labelBeginToken.attrSet('id', id)
 	return labelBeginToken
 }
@@ -190,7 +189,7 @@ function createLabelBeginToken(id: string): Token {
  *
  */
 function createLabelEndToken(): Token {
-	return new Token('taskListItemLabel_close', '', -1)
+	return new markdownit.Token('taskListItemLabel_close', '', -1)
 }
 
 /**

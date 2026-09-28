@@ -9,7 +9,7 @@
  * These will then be picked up by the mathematics nodes.
  */
 
-import type MarkdownIt from 'markdown-it'
+import type { MarkdownIt } from 'markdown-it'
 
 import { tex } from '@mdit/plugin-tex'
 

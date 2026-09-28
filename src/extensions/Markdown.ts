@@ -30,7 +30,6 @@ import type { MarkdownSerializerState } from 'prosemirror-markdown'
 import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { normalizeReference } from 'markdown-it/lib/common/utils.mjs'
 import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
 import markdownit from '../markdownit/index.js'
 import Link from '../marks/Link.ts'
@@ -210,7 +209,7 @@ function createMarkdownSerializer(schema: {
 					title?: string
 				}
 				if (label && type) {
-					const key = normalizeReference(label)
+					const key = markdownit.utils.normalizeReference(label)
 					if (!referenceDefinitions.has(key)) {
 						referenceDefinitions.set(key, {
 							label,
