@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { MarkdownIt } from 'markdown-it'
+
 /**
  * Add information about used markdown syntax to HTML hard breaks
  *
- * @param {import('markdown-it').MarkdownIt} md Markdown object
+ * @param md Markdown object
  */
-export default function keepHardbreakSyntax(md) {
+export default function keepHardbreakSyntax(md: MarkdownIt) {
 	const { ruler } = md.inline
 	const markdownitNewline = ruler.__rules__[ruler.__find__('newline')].fn
 	const markdownitEscape = ruler.__rules__[ruler.__find__('escape')].fn
