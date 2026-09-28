@@ -31,6 +31,16 @@ describe('pairTopLevelBlocks', () => {
 		])
 	})
 
+	it('pairs edited blocks without words', () => {
+		expect(pairs('Intro\n\n🎉🎉\n\n✓ ✓\n\nOutro', 'Intro\n\n🎉🎉🎉\n\n✓ ✓ ✓\n\nOutro')).toEqual([
+			{ before: 0, after: 0 },
+			{ before: 1, after: 1 },
+			{ before: 2, after: 2 },
+			{ before: 3, after: 3 },
+			{ before: 4, after: 4 },
+		])
+	})
+
 	it('pairs changed blocks through their changes', () => {
 		expect(pairs('Old text\n\n- one\n\nEnd', 'New text\n\n- one\n- two\n\nEnd')).toEqual([
 			{ before: 0, after: 0 },
