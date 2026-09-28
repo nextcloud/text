@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Transaction } from '@tiptap/pm/state'
+
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { Plugin, TextSelection } from '@tiptap/pm/state'
 import { footnoteExists, generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
@@ -18,6 +20,22 @@ declare module '@tiptap/core' {
 			insertFootnote: (options?: { referenceId?: string }) => ReturnType
 		}
 	}
+}
+
+// Append an empty footnote to the trailing footnotes container, creating the container
+// if missing, and place the cursor inside it
+function insertIntoFootnotesContainer(tr: Transaction, referenceId: string): void {
+	const { footnotes, footnote, paragraph } = tr.doc.type.schema.nodes
+	const newFootnote = footnote.create({ referenceId }, paragraph.create())
+	let footnotePos: number
+	if (tr.doc.lastChild?.type === footnotes) {
+		footnotePos = tr.doc.content.size - 1
+		tr.insert(footnotePos, newFootnote)
+	} else {
+		footnotePos = tr.doc.content.size + 1
+		tr.insert(tr.doc.content.size, footnotes.create(null, newFootnote))
+	}
+	tr.setSelection(TextSelection.create(tr.doc, footnotePos + 2))
 }
 
 const FootnoteReference = Node.create({
@@ -83,30 +101,14 @@ const FootnoteReference = Node.create({
 
 				const existingFootnote = footnoteExists(state.doc, referenceId)
 
-				const footnotesType = state.schema.nodes.footnotes
-				const footnoteType = state.schema.nodes.footnote
-				const paragraphType = state.schema.nodes.paragraph
-
 				let c = chain()
-					.insertContent({ type: 'footnoteReference', attrs: { referenceId } })
+					.insertContentAt(state.selection.to, { type: 'footnoteReference', attrs: { referenceId } }, { updateSelection: false })
 
 				if (!existingFootnote) {
-					// Create footnote
-					const newFootnote = footnoteType.create({ referenceId }, paragraphType.create())
-					const lastChild = state.doc.lastChild
-					const hasFootnotesBlock = lastChild?.type === footnotesType
-
-					if (hasFootnotesBlock) {
-						// Append footnote inside the existing footnotes container
-						const insertPos = state.doc.content.size - 1
-						c = c.insertContentAt(insertPos, newFootnote.toJSON())
-					} else {
-						// Create footnotes container + footnote
-						c = c.insertContentAt(state.doc.content.size, {
-							type: 'footnotes',
-							content: [newFootnote.toJSON()],
-						})
-					}
+					c = c.command(({ tr }) => {
+						insertIntoFootnotesContainer(tr, referenceId)
+						return true
+					})
 				} else {
 					// Jump cursor into existing footnote
 					c = c.command(({ tr }) => {

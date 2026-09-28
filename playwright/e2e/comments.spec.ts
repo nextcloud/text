@@ -139,14 +139,48 @@ test.describe('deletes last comment reply', () => {
 	})
 })
 
-test('hides and shows comment references via annotations toggle', async ({ editor, open }) => {
-	await open()
-	await editor.type('Test[?]')
-	await expect(editor.commentReferences.first()).toBeVisible()
+test.describe('toggles annotations', () => {
+	test.use({
+		fileContent: 'Test[^comment-1]\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @[jane](mention://user/jane) *(2026-0716T13:12Z)*\n'
+			+ '      Comment by Jane\n',
+	})
+	test('hides and shows comment references via annotations toggle', async ({ editor, open }) => {
+		await open()
+		await expect(editor.commentReferences.first()).toBeVisible()
 
-	await editor.clickMenu('Annotations', 'Hide annotations')
-	await expect(editor.commentReferences.first()).toBeHidden()
+		await editor.clickMenu('Annotations', 'Hide annotations')
+		await expect(editor.commentReferences).toHaveCount(1)
+		await expect(editor.commentReferences.first()).toBeHidden()
 
-	await editor.clickMenu('Annotations', 'Show annotations')
-	await expect(editor.commentReferences.first()).toBeVisible()
+		await editor.clickMenu('Annotations', 'Show annotations')
+		await expect(editor.commentReferences.first()).toBeVisible()
+	})
+})
+
+test.describe('navigates between comments', () => {
+	test.use({
+		fileContent: 'The quick[^comment-1] brown[^comment-2] fox.\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @[jane](mention://user/jane) *(2026-07-16T13:12Z)*\n'
+			+ '      First comment\n\n'
+			+ '[^comment-2]:\n'
+			+ '    - @[bob](mention://user/bob) *(2026-07-16T13:13Z)*\n'
+			+ '      Second comment\n',
+	})
+
+	test('shows the position and moves with buttons and shortcut', async ({ open, editor }) => {
+		await open()
+		await editor.getCommentReference('comment-1').click()
+		await expect(editor.commentBubble).toContainText('Comment 1 of 2')
+		await expect(editor.commentBubble).toContainText('First comment')
+
+		await editor.commentBubble.getByRole('button', { name: 'Next comment' }).click()
+		await expect(editor.commentBubble).toContainText('Comment 2 of 2')
+		await expect(editor.commentBubble).toContainText('Second comment')
+
+		await editor.commentBubble.press('ControlOrMeta+Alt+ArrowLeft')
+		await expect(editor.commentBubble).toContainText('Comment 1 of 2')
+	})
 })
