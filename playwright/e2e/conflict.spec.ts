@@ -161,31 +161,35 @@ test.describe('Plaintext conflict resolution', () => {
 	})
 })
 
-test('[conflict] automatic resolution if no unsaved changes', async ({
-	container,
-	editor,
-	file,
-	reader,
-	user,
-}) => {
-	await expect(editor.el).toBeVisible()
-	await editor.typeHeading('Hello world')
-	// Wait for the steps to be pushed so the editor knows about unsaved changes
-	await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
-	await editor.saveIndicator.click()
-	// Wait until client has successfully saved
-	await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/)
+test.describe('without unsaved changes', () => {
+	// Files were created 10 seconds ago so the server accepts the first autosave.
+	test.use({ mtime: Date.now() / 1000 - 10 })
 
-	await user.uploadFile({ name: file.name, content: '## Good bye' })
+	test('[conflict] automatic resolution if no unsaved changes', async ({
+		container,
+		editor,
+		file,
+		reader,
+		user,
+	}) => {
+		await expect(editor.el).toBeVisible()
+		await editor.typeHeading('Hello world')
+		// Wait for the steps to be pushed so the editor knows about unsaved changes
+		await expect(editor.saveIndicator).toHaveAccessibleName(/Unsaved changes/)
+		// Autosave is debounced until all pushed steps are acknowledged.
+		await expect(editor.saveIndicator).not.toHaveAccessibleName(/Unsaved changes/)
 
-	// Should show latest content, no conflict dialog
-	await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
-		timeout: 10_000,
+		await user.uploadFile({ name: file.name, content: '## Good bye' })
+
+		// Should show latest content, no conflict dialog
+		await expect(editor.getHeading({ name: 'Good bye' })).toBeVisible({
+			timeout: 10_000,
+		})
+		await expect(reader.content).not.toBeVisible()
+		await expect(container.getButton({
+			name: /Keep my local changes and overwrite the remote version/,
+		})).not.toBeVisible()
 	})
-	await expect(reader.content).not.toBeVisible()
-	await expect(container.getButton({
-		name: /Keep my local changes and overwrite the remote version/,
-	})).not.toBeVisible()
 })
 
 test('readonly session hides conflict dialog', async ({
