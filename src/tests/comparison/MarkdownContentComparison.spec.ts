@@ -28,10 +28,14 @@ describe('MarkdownContentComparison', () => {
 	it('lists changes and highlights the selected one in both documents', async () => {
 		const { el, instance } = await create('Old first\n\nSame', 'New first\n\nSame\n\nAdded')
 
+		expect(tab(el, 'Full documents').getAttribute('aria-selected')).toBe('true')
+		expect(el.querySelector('[aria-live="polite"]')?.textContent).toContain('Change 1 of 2')
+		expect(el.querySelectorAll('.text-comparison__document--before .text-comparison-change--current')).toHaveLength(1)
+
+		tab(el, 'Changes').click()
+		await nextTick()
 		const rows = el.querySelectorAll<HTMLButtonElement>('[data-comparison-select]')
 		expect(rows).toHaveLength(2)
-		expect(el.querySelector('[aria-live="polite"]')?.textContent).toContain('Change 1 of 2')
-
 		rows[1]!.click()
 		await nextTick()
 		expect(tab(el, 'Full documents').getAttribute('aria-selected')).toBe('true')

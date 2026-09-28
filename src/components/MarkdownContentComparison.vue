@@ -113,9 +113,9 @@ const props = defineProps<{
 const MAX_CONTENT_LENGTH = 1_000_000
 
 type View = 'changes' | 'documents'
-const tabs: readonly View[] = ['changes', 'documents']
+const tabs: readonly View[] = ['documents', 'changes']
 const sides: readonly Side[] = ['before', 'after']
-const tabLabels = { changes: t('text', 'Changes'), documents: t('text', 'Full documents') }
+const tabLabels = { documents: t('text', 'Full documents'), changes: t('text', 'Changes') }
 const sideLabels = { before: t('text', 'Before'), after: t('text', 'After') }
 const sideLegends = { before: t('text', 'Removed'), after: t('text', 'Added') }
 
@@ -162,7 +162,7 @@ try {
 	destroyEditors()
 }
 
-const view = ref<View>('changes')
+const view = ref<View>('documents')
 const hideFormatting = ref(false)
 const currentId = ref<string | null>(changes[0]?.id ?? null)
 const formattingCount = changes.filter(({ category }) => category === 'formatting').length
