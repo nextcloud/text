@@ -345,6 +345,16 @@ function destroyEditors() {
 <style lang="scss">
 @use './../css/prosemirror.scss';
 
+// Wrapper created by createMarkdownContentComparison inside the caller's element
+.text-comparison-root {
+      display: flex;
+      flex: 1;
+      min-inline-size: 0;
+      block-size: 100%;
+      min-block-size: 0;
+      overflow: hidden;
+}
+
 .text-comparison {
 	display: flex;
 	flex: 1;
