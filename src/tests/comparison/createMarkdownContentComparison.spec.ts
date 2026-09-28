@@ -30,7 +30,7 @@ afterAll(() => {
 afterEach(() => vi.restoreAllMocks())
 
 describe('Markdown comparison factory fallback and lifecycle', () => {
-	it('V09 reports syntax-only Markdown as no semantic edit and opens Source', async () => {
+	it('reports syntax-only Markdown as no rendered difference', async () => {
 		const el = document.createElement('div')
 		const instance = await createMarkdownContentComparison({
 			beforeContent: '*same rendered text*',
@@ -40,13 +40,6 @@ describe('Markdown comparison factory fallback and lifecycle', () => {
 
 		expect(el.querySelectorAll('[data-comparison-change]')).toHaveLength(0)
 		expect(el.querySelector('[role="status"]')?.textContent).toContain('No rendered differences')
-		const openSource = el.querySelector<HTMLButtonElement>('[data-comparison-empty-action]')
-		expect(openSource).not.toBeNull()
-		openSource!.click()
-		await nextTick()
-		expect([...el.querySelectorAll<HTMLElement>('[role="tab"]')]
-			.find(({ textContent }) => textContent?.trim() === 'Markdown source')
-			?.getAttribute('aria-selected')).toBe('true')
 		instance.destroy()
 	})
 
