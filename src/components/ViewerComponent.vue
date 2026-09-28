@@ -9,7 +9,7 @@
 		:context="{ id: fileid, type: 'file' }"
 		:relativePath="filename"
 		:active="active || isEmbedded"
-		:autofocus="autofocus ?? true"
+		autofocus
 		:shareToken="shareToken || getSharingToken()"
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime />
@@ -39,7 +39,6 @@ const props = defineProps <{
 	filename?: string | undefined
 	fileid?: number | undefined
 	active: boolean
-	autofocus?: boolean
 	shareToken?: string
 	mime?: string | undefined
 	source?: string | undefined
