@@ -32,6 +32,8 @@ function summarize({ operation, category, attribute, block, context, preview }: 
 	}
 }
 
+const LOREM = 'Lorem ipsum dolor sit amet consectetur adipiscing elit.'
+
 const cases = [
 	{
 		name: 'equal documents',
@@ -150,6 +152,38 @@ const cases = [
 		],
 	},
 	{
+		name: 'paragraph split by an inserted image',
+		before: 'First\n\nAlpha beta gamma delta epsilon zeta\n\nLast',
+		after: 'First\n\nAlpha beta gamma\n\n![pic](pic.png)\n\ndelta epsilon zeta\n\nLast',
+		expected: [
+			{ operation: 'delete', category: 'text', block: false, context: 'paragraph', before: 'delta epsilon zeta', after: '' },
+			{ operation: 'insert', category: 'text', block: true, context: 'image', before: '', after: '' },
+			{ operation: 'insert', category: 'text', block: true, context: 'paragraph', before: '', after: 'delta epsilon zeta' },
+		],
+	},
+	{
+		name: 'edited and split paragraphs among equal ones',
+		before: `Intro\n\n${LOREM}\n\n${LOREM}\n\n${LOREM}\n\n${LOREM}\n\nEnd`,
+		after: `Intro\n\nLorem ipsum dolor sit\n\n![pic](pic.png)\n\namet consectetur adipiscing elit.\n\n${LOREM}\n\nLorem ipsum dolor sit amet adipiscing elit.\n\n${LOREM}\n\nEnd`,
+		expected: [
+			{ operation: 'delete', category: 'text', block: false, context: 'paragraph', before: 'amet consectetur adipiscing elit.', after: '' },
+			{ operation: 'insert', category: 'text', block: true, context: 'image', before: '', after: '' },
+			{ operation: 'insert', category: 'text', block: true, context: 'paragraph', before: '', after: 'amet consectetur adipiscing elit.' },
+			{ operation: 'delete', category: 'text', block: false, context: 'paragraph', before: 'consectetur', after: '' },
+		],
+	},
+	{
+		name: 'rewritten paragraphs are removed and added',
+		before: 'One thing\n\nAnother thing\n\nKeep',
+		after: 'Completely different\n\nTotally new\n\nKeep',
+		expected: [
+			{ operation: 'delete', category: 'text', block: true, context: 'paragraph', before: 'One thing', after: '' },
+			{ operation: 'delete', category: 'text', block: true, context: 'paragraph', before: 'Another thing', after: '' },
+			{ operation: 'insert', category: 'text', block: true, context: 'paragraph', before: '', after: 'Completely different' },
+			{ operation: 'insert', category: 'text', block: true, context: 'paragraph', before: '', after: 'Totally new' },
+		],
+	},
+	{
 		name: 'text and formatting in one paragraph',
 		before: 'Plain start and end',
 		after: '**Plain** start and finish',
@@ -166,7 +200,7 @@ describe('compareDocuments', () => {
 	})
 
 	it('orders changes by position and numbers their ids', () => {
-		const changes = compare('a\n\nb\n\nc', 'x\n\nb\n\ny')
+		const changes = compare('Alpha one\n\nBeta\n\nGamma one', 'Alpha two\n\nBeta\n\nGamma two')
 		expect(changes.map(({ id }) => id)).toEqual(['change-0', 'change-1'])
 		expect(changes[0]!.after.from).toBeLessThan(changes[1]!.after.from)
 	})

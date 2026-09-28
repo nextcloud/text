@@ -76,7 +76,7 @@ describe('MarkdownContentComparison', () => {
 	})
 
 	it('hides formatting-only changes on request', async () => {
-		const { el, instance } = await create('Plain text\n\nOld', '**Plain** text\n\nNew')
+		const { el, instance } = await create('Plain text\n\nOld content', '**Plain** text\n\nNew content')
 
 		expect(el.querySelectorAll('[data-comparison-select]')).toHaveLength(2)
 		const filter = el.querySelector<HTMLInputElement>('input[type="checkbox"]')!

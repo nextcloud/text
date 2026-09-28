@@ -7,7 +7,6 @@ import type { Mark, Node } from '@tiptap/pm/model'
 
 import { ChangeSet, simplifyChanges } from '@tiptap/pm/changeset'
 import { StepMap } from '@tiptap/pm/transform'
-import { diffArrays } from 'diff'
 
 export type ChangeOperation = 'insert' | 'delete' | 'replace'
 export type ChangeCategory = 'text' | 'formatting' | 'attribute' | 'structure'
@@ -43,8 +42,18 @@ interface Child {
 	to: number
 }
 
+/** Matched child indexes on both sides. */
+interface Match {
+	before: number
+	after: number
+}
+
 const PREVIEW_LENGTH = 80
 const LEAF_TEXT = '￼'
+/** Blocks less similar than this are reported as removed and added rather than paired. */
+const MIN_SIMILARITY = 0.35
+/** Gaps with more candidate pairs than this are paired by position instead of similarity. */
+const MAX_SCORED_PAIRS = 250_000
 
 const attributeNames: Record<string, ChangeAttribute> = {
 	heading: 'heading-level',
@@ -58,8 +67,8 @@ const attributeNames: Record<string, ChangeAttribute> = {
 /**
  * Compare two documents and describe the differences in document positions.
  *
- * Sibling nodes are aligned with a diff on node equality, paired nodes are compared
- * recursively and textblocks are compared inline. Changes are ordered by position.
+ * Sibling nodes are paired by similarity, paired nodes are compared recursively
+ * and textblocks are compared inline. Changes are ordered by position.
  *
  * @param before Earlier document.
  * @param after Later document.
@@ -68,7 +77,9 @@ export function compareDocuments(before: Node, after: Node): Change[] {
 	const changes: PendingChange[] = []
 	compareChildren(before, sameSchema(before, after), 0, 0, changes)
 	return changes
-		.sort((a, b) => a.after.from - b.after.from || a.before.from - b.before.from)
+		.sort((a, b) => a.after.from - b.after.from
+			|| Number(a.operation !== 'delete') - Number(b.operation !== 'delete')
+			|| a.before.from - b.before.from)
 		.map((change, index) => ({ ...change, id: `change-${index}` }))
 }
 
@@ -83,49 +94,22 @@ function sameSchema(before: Node, after: Node) {
 function compareChildren(before: Node, after: Node, beforeFrom: number, afterFrom: number, changes: PendingChange[]) {
 	const beforeChildren = children(before, beforeFrom)
 	const afterChildren = children(after, afterFrom)
-	const parts = diffArrays(beforeChildren, afterChildren, {
-		comparator: (a, b) => a.node.eq(b.node),
-	})
-	let beforeIndex = 0
-	let afterIndex = 0
-	let beforeCursor = beforeFrom
-	let afterCursor = afterFrom
-	let removed: Child[] = []
-	let added: Child[] = []
-
-	const flush = () => {
-		const paired = Math.min(removed.length, added.length)
-		for (let index = 0; index < paired; index++) {
-			compareNodes(removed[index]!, added[index]!, changes)
+	// Unmatched children are reported at the end of the last matched child on the other side
+	let next = { before: 0, after: 0 }
+	let position = { before: beforeFrom, after: afterFrom }
+	for (const match of [...alignChildren(beforeChildren, afterChildren), { before: beforeChildren.length, after: afterChildren.length }]) {
+		for (const child of beforeChildren.slice(next.before, match.before)) {
+			changes.push(blockChange(child, null, position.after))
 		}
-		const afterPosition = added.at(-1)?.to ?? afterCursor
-		const beforePosition = removed.at(-1)?.to ?? beforeCursor
-		for (const child of removed.slice(paired)) {
-			changes.push(blockChange(child, null, afterPosition))
+		for (const child of afterChildren.slice(next.after, match.after)) {
+			changes.push(blockChange(null, child, position.before))
 		}
-		for (const child of added.slice(paired)) {
-			changes.push(blockChange(null, child, beforePosition))
+		if (match.before < beforeChildren.length) {
+			compareNodes(beforeChildren[match.before]!, afterChildren[match.after]!, changes)
+			position = { before: beforeChildren[match.before]!.to, after: afterChildren[match.after]!.to }
 		}
-		removed = []
-		added = []
+		next = { before: match.before + 1, after: match.after + 1 }
 	}
-
-	for (const part of parts) {
-		if (part.removed) {
-			removed.push(...part.value)
-			beforeIndex += part.value.length
-		} else if (part.added) {
-			added.push(...part.value)
-			afterIndex += part.value.length
-		} else {
-			flush()
-			beforeIndex += part.value.length
-			afterIndex += part.value.length
-			beforeCursor = beforeChildren[beforeIndex - 1]!.to
-			afterCursor = afterChildren[afterIndex - 1]!.to
-		}
-	}
-	flush()
 }
 
 function children(parent: Node, contentFrom: number): Child[] {
@@ -137,6 +121,176 @@ function children(parent: Node, contentFrom: number): Child[] {
 	return result
 }
 
+// Equal children that are unique on both sides anchor the alignment. The children between
+// two anchors are paired by similarity, so an edited or split block pairs with its origin
+// even among equal-looking siblings.
+function alignChildren(before: Child[], after: Child[]): Match[] {
+	const matches: Match[] = []
+	let start = { before: 0, after: 0 }
+	for (const anchor of [...uniqueAnchors(before, after), { before: before.length, after: after.length }]) {
+		for (const match of alignGap(before.slice(start.before, anchor.before), after.slice(start.after, anchor.after))) {
+			matches.push({ before: start.before + match.before, after: start.after + match.after })
+		}
+		if (anchor.before < before.length) {
+			matches.push(anchor)
+		}
+		start = { before: anchor.before + 1, after: anchor.after + 1 }
+	}
+	return matches
+}
+
+function uniqueAnchors(before: Child[], after: Child[]): Match[] {
+	const beforeIndexes = indexByFingerprint(before)
+	const afterIndexes = indexByFingerprint(after)
+	const pairs = [...beforeIndexes].flatMap(([key, indexes]) => {
+		const afterIndex = afterIndexes.get(key)
+		return indexes.length === 1 && afterIndex?.length === 1
+			? [{ before: indexes[0]!, after: afterIndex[0]! }]
+			: []
+	})
+	return increasing(pairs.sort((a, b) => a.before - b.before))
+}
+
+function indexByFingerprint(items: Child[]) {
+	const indexes = new Map<string, number[]>()
+	items.forEach(({ node }, index) => {
+		const key = fingerprint(node)
+		indexes.set(key, [...(indexes.get(key) ?? []), index])
+	})
+	return indexes
+}
+
+// Longest subsequence of pairs that also increases on the after side.
+function increasing(pairs: Match[]): Match[] {
+	const tails: number[] = []
+	const previous: number[] = []
+	pairs.forEach((pair, index) => {
+		let low = 0
+		let high = tails.length
+		while (low < high) {
+			const middle = (low + high) >> 1
+			if (pairs[tails[middle]!]!.after < pair.after) {
+				low = middle + 1
+			} else {
+				high = middle
+			}
+		}
+		previous[index] = low > 0 ? tails[low - 1]! : -1
+		tails[low] = index
+	})
+	const result: Match[] = []
+	for (let index = tails.at(-1) ?? -1; index >= 0; index = previous[index]!) {
+		result.push(pairs[index]!)
+	}
+	return result.reverse()
+}
+
+// Pair the children of a gap by maximising the summed similarity of the pairs, keeping order.
+// A single child on each side is an edit of that child, however different its text.
+function alignGap(before: Child[], after: Child[]): Match[] {
+	const rows = before.length
+	const columns = after.length
+	if (rows === 1 && columns === 1) {
+		return compatible(before[0]!, after[0]!) ? [{ before: 0, after: 0 }] : []
+	}
+	if (rows * columns > MAX_SCORED_PAIRS) {
+		return Array.from({ length: Math.min(rows, columns) }, (_value, index) => ({ before: index, after: index }))
+	}
+	const width = columns + 1
+	const score = new Float64Array((rows + 1) * width)
+	const paired = new Uint8Array((rows + 1) * width)
+	for (let row = 1; row <= rows; row++) {
+		for (let column = 1; column <= columns; column++) {
+			const cell = row * width + column
+			const pairScore = similarity(before[row - 1]!, after[column - 1]!)
+			const skip = Math.max(score[cell - width]!, score[cell - 1]!)
+			const pair = pairScore >= MIN_SIMILARITY ? score[cell - width - 1]! + pairScore : 0
+			score[cell] = Math.max(skip, pair)
+			paired[cell] = Number(pair > skip)
+		}
+	}
+	const matches: Match[] = []
+	for (let row = rows, column = columns; row > 0 && column > 0;) {
+		const cell = row * width + column
+		if (paired[cell]) {
+			matches.push({ before: --row, after: --column })
+		} else if (score[cell - width]! >= score[cell - 1]!) {
+			row--
+		} else {
+			column--
+		}
+	}
+	return matches.reverse()
+}
+
+// Similarity between 0 and 1: equal nodes score 1, incompatible nodes 0. Text scores by shared
+// words, or by a shared start and end, where a shared start weighs more: a block that keeps its
+// beginning is the same block, edited, extended or split.
+function similarity(before: Child, after: Child) {
+	if (before.node.eq(after.node)) {
+		return 1
+	}
+	if (!compatible(before, after)) {
+		return 0
+	}
+	const a = text(before.node)
+	const b = text(after.node)
+	if (!a.content && !b.content) {
+		return before.node.type.name === after.node.type.name ? 0.5 : 0
+	}
+	let shared = 0
+	for (const [word, count] of a.words) {
+		shared += Math.min(count, b.words.get(word) ?? 0)
+	}
+	const shorter = Math.min(a.content.length, b.content.length)
+	let prefix = 0
+	while (prefix < shorter && a.content[prefix] === b.content[prefix]) {
+		prefix++
+	}
+	let suffix = 0
+	while (suffix < shorter - prefix && a.content.at(-1 - suffix) === b.content.at(-1 - suffix)) {
+		suffix++
+	}
+	return Math.min(1, Math.max(
+		(2 * shared) / (a.total + b.total),
+		(3 * prefix + suffix) / (a.content.length + b.content.length),
+	))
+}
+
+function compatible(before: Child, after: Child) {
+	return before.node.type.name === after.node.type.name
+		|| (before.node.isTextblock && after.node.isTextblock)
+}
+
+const textCache = new WeakMap<Node, { content: string, words: Map<string, number>, total: number }>()
+
+function text(node: Node) {
+	let entry = textCache.get(node)
+	if (!entry) {
+		const content = node.textBetween(0, node.content.size, ' ', ' ').trim()
+		const words = new Map<string, number>()
+		let total = 0
+		for (const word of content.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean)) {
+			words.set(word, (words.get(word) ?? 0) + 1)
+			total++
+		}
+		entry = { content, words, total }
+		textCache.set(node, entry)
+	}
+	return entry
+}
+
+const fingerprints = new WeakMap<Node, string>()
+
+function fingerprint(node: Node) {
+	let value = fingerprints.get(node)
+	if (value === undefined) {
+		value = JSON.stringify(node.toJSON())
+		fingerprints.set(node, value)
+	}
+	return value
+}
+
 function compareNodes(before: Child, after: Child, changes: PendingChange[]) {
 	if (before.node.eq(after.node)) {
 		return
@@ -145,14 +299,10 @@ function compareNodes(before: Child, after: Child, changes: PendingChange[]) {
 		changes.push({ ...blockChange(before, after, 0), category: 'structure' })
 		return
 	}
-	if (before.node.isLeaf) {
-		changes.push(attributeChange(before, after))
-		return
+	if (before.node.isLeaf || !sameAttributes(before.node, after.node)) {
+		changes.push({ ...blockChange(before, after, 0), category: 'attribute', attribute: attributeNames[after.node.type.name] ?? 'other' })
 	}
-	if (!sameAttributes(before.node, after.node)) {
-		changes.push(attributeChange(before, after))
-	}
-	if (before.node.content.eq(after.node.content)) {
+	if (before.node.isLeaf || before.node.content.eq(after.node.content)) {
 		return
 	}
 	if (before.node.isTextblock) {
@@ -256,14 +406,6 @@ function blockChange(before: Child | null, after: Child | null, absentPosition: 
 			before: preview(before?.node.textContent ?? ''),
 			after: preview(after?.node.textContent ?? ''),
 		},
-	}
-}
-
-function attributeChange(before: Child, after: Child): PendingChange {
-	return {
-		...blockChange(before, after, 0),
-		category: 'attribute',
-		attribute: attributeNames[after.node.type.name] ?? 'other',
 	}
 }
 
