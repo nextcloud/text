@@ -82,18 +82,20 @@
 
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
+import type { BlockPair, ComparisonSpacers } from '../comparison/alignment.ts'
 import type { Change } from '../comparison/compare.ts'
 import type { ComparisonDecorationKey, ComparisonSide as Side } from '../comparison/decorations.ts'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { t } from '@nextcloud/l10n'
 import { EditorContent } from '@tiptap/vue-3'
-import { computed, nextTick, onBeforeUnmount, provide, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import ComparisonChangeList from './ComparisonChangeList.vue'
 import MarkdownSourceFallback from './MarkdownSourceFallback.vue'
+import { adjustSpacers, pairTopLevelBlocks } from '../comparison/alignment.ts'
 import { compareDocuments } from '../comparison/compare.ts'
-import { createComparisonDecorationPlugin, setComparisonDecorations } from '../comparison/decorations.ts'
+import { createComparisonDecorationPlugin, createComparisonSpacerPlugin, setComparisonDecorations, setComparisonSpacers } from '../comparison/decorations.ts'
 import { createComparisonEditor } from '../comparison/editor.ts'
 import { logger } from '../helpers/logger.ts'
 import AttachmentResolver from '../services/AttachmentResolver.js'
@@ -136,8 +138,12 @@ provide(EDITOR_UPLOAD, false)
 
 const editors = {} as Record<Side, ReturnType<typeof createComparisonEditor>>
 const decorationKeys = {} as Record<Side, ComparisonDecorationKey>
+const spacerKeys = {} as Record<Side, ComparisonDecorationKey>
 const scrollers: Record<Side, HTMLElement | null> = { before: null, after: null }
 let changes: Change[] = []
+let blockPairs: BlockPair[] = []
+let spacers: ComparisonSpacers = { before: new Map(), after: new Map() }
+let observer: ResizeObserver | null = null
 const failed = ref(false)
 
 try {
@@ -154,8 +160,12 @@ try {
 		const { key, plugin } = createComparisonDecorationPlugin(side)
 		editors[side].registerPlugin(plugin)
 		decorationKeys[side] = key
+		const spacer = createComparisonSpacerPlugin()
+		editors[side].registerPlugin(spacer.plugin)
+		spacerKeys[side] = spacer.key
 	}
 	changes = compareDocuments(editors.before.state.doc, editors.after.state.doc)
+	blockPairs = pairTopLevelBlocks(editors.before.state.doc, editors.after.state.doc, changes)
 } catch (error) {
 	logger.warn('Falling back to plain source comparison', { error })
 	failed.value = true
@@ -201,7 +211,26 @@ watch([currentId, hideFormatting], () => {
 }, { immediate: true })
 watch([currentId, view], () => nextTick(scrollToCurrent))
 
-onBeforeUnmount(destroyEditors)
+onMounted(() => {
+	if (failed.value) {
+		return
+	}
+	const panes = sides.map((side) => scrollers[side]).filter((pane) => pane !== null)
+	if (typeof ResizeObserver === 'undefined') {
+		nextTick(alignDocuments)
+		return
+	}
+	observer = new ResizeObserver(alignDocuments)
+	for (const pane of panes) {
+		observer.observe(pane)
+		// Images and other embeds change block heights once they have loaded
+		pane.addEventListener('load', alignDocuments, true)
+	}
+})
+onBeforeUnmount(() => {
+	observer?.disconnect()
+	destroyEditors()
+})
 
 function selectChange(id: string) {
 	currentId.value = id
@@ -212,6 +241,35 @@ function move(offset: number) {
 	const count = visibleChanges.value.length
 	const index = (Math.max(currentIndex.value, 0) + offset + count) % count
 	currentId.value = visibleChanges.value[index]!.id
+}
+
+/**
+ * Pad top-level blocks so paired blocks start at the same offset in both panes.
+ * Measuring includes the spacers already in place, so a few rounds settle margin effects.
+ */
+function alignDocuments() {
+	for (let round = 0; round < 3; round++) {
+		const tops = { before: blockTops(editors.before), after: blockTops(editors.after) }
+		const adjusted = adjustSpacers(blockPairs, tops, spacers)
+		if (adjusted.largest === 0) {
+			break
+		}
+		spacers = adjusted.spacers
+		for (const side of sides) {
+			setComparisonSpacers(editors[side], spacerKeys[side], spacers[side])
+		}
+	}
+	scrollToCurrent()
+}
+
+function blockTops(editor: ReturnType<typeof createComparisonEditor>) {
+	const origin = editor.view.dom.getBoundingClientRect().top
+	const tops: number[] = []
+	editor.state.doc.forEach((_node, offset) => {
+		const dom = editor.view.nodeDOM(offset)
+		tops.push(dom instanceof HTMLElement ? dom.getBoundingClientRect().top - origin : 0)
+	})
+	return tops
 }
 
 function scrollToCurrent() {
@@ -413,6 +471,10 @@ function destroyEditors() {
 	.text-comparison-change--current {
 		outline: 2px solid var(--color-primary-element);
 		outline-offset: 2px;
+	}
+
+	.text-comparison-spacer {
+		display: block;
 	}
 
 	@container (max-width: 759px) {

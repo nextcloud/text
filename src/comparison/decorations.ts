@@ -57,6 +57,57 @@ export function setComparisonDecorations(editor: Editor, key: ComparisonDecorati
 	editor.view.dispatch(editor.state.tr.setMeta(key, state))
 }
 
+/**
+ * Create a plugin that pads top-level blocks so both sides of a comparison line up.
+ * The spacer heights are set with setComparisonSpacers.
+ */
+export function createComparisonSpacerPlugin() {
+	const key: ComparisonDecorationKey = new PluginKey('comparison-spacers')
+	const plugin = new Plugin<DecorationSet>({
+		key,
+		state: {
+			init: () => DecorationSet.empty,
+			apply: (transaction, decorations) => {
+				const spacers = transaction.getMeta(key) as ReadonlyMap<number, number> | undefined
+				return spacers
+					? buildSpacers(transaction.doc, spacers)
+					: decorations.map(transaction.mapping, transaction.doc)
+			},
+		},
+		props: {
+			decorations: (state) => key.getState(state),
+		},
+	})
+	return { key, plugin }
+}
+
+/**
+ * Replace the spacers of an editor.
+ *
+ * @param editor Editor with the spacer plugin registered.
+ * @param key Key returned with the plugin.
+ * @param spacers Spacer height in pixels by top-level block index.
+ */
+export function setComparisonSpacers(editor: Editor, key: ComparisonDecorationKey, spacers: ReadonlyMap<number, number>) {
+	editor.view.dispatch(editor.state.tr.setMeta(key, spacers))
+}
+
+function buildSpacers(doc: Node, spacers: ReadonlyMap<number, number>) {
+	const decorations: Decoration[] = []
+	doc.forEach((_node, offset, index) => {
+		const height = spacers.get(index)
+		if (height) {
+			decorations.push(Decoration.widget(offset, () => {
+				const spacer = document.createElement('div')
+				spacer.className = 'text-comparison-spacer'
+				spacer.style.height = `${height}px`
+				return spacer
+			}, { key: `spacer-${index}-${height}`, side: -1, ignoreSelection: true }))
+		}
+	})
+	return DecorationSet.create(doc, decorations)
+}
+
 function buildDecorations(doc: Node, side: ComparisonSide, { changes, currentId, hideFormatting }: ComparisonDecorationState) {
 	const decorations: Decoration[] = []
 	for (const change of changes) {
