@@ -62,7 +62,7 @@ test('stops syncing and offers to reconnect once the session is rejected', async
 	expect(pushCount).toBe(pushesUntilRejected)
 
 	await page.unroute(SESSION_REQUESTS, rejectSession)
-	const createRequest = page.waitForRequest(/\/apps\/text\/session\/\d+\/create$/)
+	const createRequest = page.waitForRequest(/\/apps\/text\/session\/file\/\d+\/create$/)
 	await status.getByRole('button', { name: 'Reconnect' }).click()
 	await createRequest
 
