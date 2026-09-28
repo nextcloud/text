@@ -266,6 +266,34 @@ describe('insertComment command', () => {
 		expect(childNames.indexOf('comments')).toBeLessThan(childNames.indexOf('footnotes'))
 	})
 
+	test('appends into existing comments container when footnotes follow', ({ editor }) => {
+		editor.commands.setContent('<p>Hello world<sup data-type="comment-reference" data-reference-id="comment-1"></sup>'
+			+ '<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>fn</p></div>'
+			+ '</section>')
+		editor.commands.setTextSelection({ from: 1, to: 6 })
+
+		editor.commands.insertComment()
+
+		const paragraph = editor.state.doc.firstChild!
+		expect(paragraph.child(1).type.name).toBe('commentReference')
+		expect(paragraph.child(1).attrs.referenceId).toBe('comment-2')
+
+		expect(editor.state.doc.childCount).toBe(3)
+		const comments = editor.state.doc.child(1)
+		expect(comments.type.name).toBe('comments')
+		expect(comments.childCount).toBe(2)
+		expect(comments.lastChild!.attrs.referenceId).toBe('comment-2')
+		expect(editor.state.doc.lastChild!.type.name).toBe('footnotes')
+		expect(editor.state.doc.lastChild!.childCount).toBe(1)
+	})
+
 	test('inserts the reference after a selected range and keeps the text', ({ editor }) => {
 		editor.commands.setContent('<p>Hello world</p>')
 		editor.commands.setTextSelection({ from: 1, to: 6 })
