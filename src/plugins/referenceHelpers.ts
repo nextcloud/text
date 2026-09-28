@@ -6,7 +6,39 @@
 import type { Node } from '@tiptap/pm/model'
 import type { EditorState } from '@tiptap/pm/state'
 
-export const commentDraftPrefix = 'text-comment-draft-'
+const commentDraftPrefix = 'text-comment-draft-'
+
+/**
+ * Get the unsubmitted reply draft for a comment
+ *
+ * @param referenceId the comment reference id
+ */
+export function getCommentDraft(referenceId: string): string {
+	return sessionStorage.getItem(commentDraftPrefix + referenceId) ?? ''
+}
+
+/**
+ * Store the unsubmitted reply draft for a comment, removing it if blank
+ *
+ * @param referenceId the comment reference id
+ * @param value - the draft text
+ */
+export function setCommentDraft(referenceId: string, value: string): void {
+	if (value.trim()) {
+		sessionStorage.setItem(commentDraftPrefix + referenceId, value)
+	} else {
+		removeCommentDraft(referenceId)
+	}
+}
+
+/**
+ * Remove the reply draft for a comment
+ *
+ * @param referenceId - the comment reference id
+ */
+export function removeCommentDraft(referenceId: string): void {
+	sessionStorage.removeItem(commentDraftPrefix + referenceId)
+}
 
 /**
  * Check if selection is inside a node type

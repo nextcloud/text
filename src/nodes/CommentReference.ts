@@ -11,7 +11,7 @@ import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.ts'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
-import { commentDraftPrefix, generateReferenceId, isEmptyComment, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
+import { generateReferenceId, isEmptyComment, isInsideCommentOrFootnote, removeCommentDraft } from '../plugins/referenceHelpers.ts'
 
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
@@ -97,7 +97,7 @@ const CommentReference = Node.create({
 				}
 
 				// Clear any stale draft from a previous comment that used this ID
-				sessionStorage.removeItem(commentDraftPrefix + referenceId)
+				removeCommentDraft(referenceId)
 
 				// In can-check mode, the above guards are sufficient
 				if (!dispatch) {

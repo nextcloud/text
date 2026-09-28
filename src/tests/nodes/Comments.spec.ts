@@ -15,6 +15,7 @@ import BulletList from '../../nodes/BulletList.ts'
 import Comments from '../../nodes/Comments.ts'
 import Footnotes from '../../nodes/Footnotes.ts'
 import { commentBubbleKey } from '../../plugins/commentBubble.ts'
+import { removeCommentDraft, setCommentDraft } from '../../plugins/referenceHelpers.ts'
 import testEditor from '../testHelpers/testEditor.ts'
 
 vi.mock('../../plugins/CommentBubblePluginView.ts', () => ({
@@ -337,10 +338,10 @@ describe('hideCommentBubble command', () => {
 		editor.commands.setContent('<p>Foo</p>')
 		editor.commands.focus('end')
 		editor.commands.insertComment()
-		sessionStorage.setItem('text-comment-draft-comment-1', 'work in progress')
+		setCommentDraft('comment-1', 'work in progress')
 
 		editor.commands.hideCommentBubble()
-		sessionStorage.removeItem('text-comment-draft-comment-1')
+		removeCommentDraft('comment-1')
 
 		expect(commentBubbleKey.getState(editor.state).active).toBeNull()
 		expect(hasNode(editor, 'commentReference')).toBe(true)
