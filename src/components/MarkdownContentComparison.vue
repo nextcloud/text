@@ -501,6 +501,18 @@ function destroyEditors() {
 
 	.text-comparison-change--block {
 		box-shadow: inset 0 0 0 2px var(--color-border-dark);
+
+		&.text-comparison-change--added {
+			box-shadow: inset 0 0 0 2px var(--color-success);
+		}
+
+		&.text-comparison-change--removed {
+			box-shadow: inset 0 0 0 2px var(--color-error);
+		}
+
+		&.text-comparison-change--attribute {
+			box-shadow: inset 0 0 0 2px var(--color-warning);
+		}
 	}
 
 	.text-comparison-change--current {
