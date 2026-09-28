@@ -19,7 +19,7 @@
     "Read-only permission cannot save document changes. Please reload the page." : "S oprávnením iba na čítanie nemožno uložiť zmeny dokumentu. Znova načítajte stránku.",
     "Readme" : "Čítajma",
     "Text" : "Text",
-    "📝 Collaborative document editing" : "Spoločná úprava dokumentov",
+    "📝 Collaborative document editing" : "📝 Spoločná úprava dokumentov",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Spoločná úprava dokumentov**\n\n- **📝 Sústredené písanie:** Žiadne rozptyľovanie, len formát, ktorý naozaj potrebujete\n- **🙋 Pracujte spoločne:** Spolupracujte s kolegami, či už používajú Nextcloud alebo nie.\n- **💾 Otvorený formát:** Súbory sa ukladaju vo formáte [Markdown] (https://en.wikipedia.org/wiki/Markdown), takže ich je možné upravovať v akomkoľvek textovom editore.\n- **✊ Solídne základy:** Používame [🐈 tiptap](https://tiptap.scrumpy.io) založený na [🦉 ProseMirror](https://prosemirror.net) – patrí im veľká vďaka!",
     "Your editing permissions have been revoked. The document is now read-only." : "Vaše oprávnenia na úpravy boli odvolané. Dokument je teraz iba na čítanie.",
     "You now have edit permissions for this document." : "Teraz máte oprávnenia na úpravu tohto dokumentu.",
