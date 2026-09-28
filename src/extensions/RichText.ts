@@ -95,7 +95,7 @@ export default Extension.create<RichTextOptions>({
 			Text,
 			Paragraph,
 			HardBreak,
-			this.options.editing || !this.options.isEmbedded ? Heading : Heading.extend({ addProseMirrorPlugins: () => [] }),
+			Heading,
 			Strong,
 			Highlight,
 			Italic,
@@ -134,7 +134,7 @@ export default Extension.create<RichTextOptions>({
 			}),
 			Gapcursor,
 			KeepSyntax,
-			...(this.options.editing ? [Keymap] : []),
+			Keymap,
 			FrontMatter,
 			Mention.configure({
 				suggestion: MentionSuggestion({
@@ -144,7 +144,7 @@ export default Extension.create<RichTextOptions>({
 					},
 				}),
 			}),
-			...(this.options.editing ? [Search] : []),
+			Search,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
 			}),
@@ -166,7 +166,6 @@ export default Extension.create<RichTextOptions>({
 				notAfter: ['paragraph', 'comments', 'footnotes'],
 			}),
 			TextDirection.configure({
-				inferTextDirectionOnParse: !this.options.editing,
 				types: [
 					'blockquote',
 					'callout',
