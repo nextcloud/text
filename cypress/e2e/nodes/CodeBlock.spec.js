@@ -72,7 +72,7 @@ describe('Front matter support', function() {
 				.click()
 			// FIXME: Label behaviour changed, should be back once https://github.com/nextcloud-libraries/nextcloud-vue/pull/4484 is merged
 			// cy.get('.action-input__text-label').contains('Code block language')
-			cy.get('.input-field__input:visible').clear()
+			cy.get('.action-input .input-field__input').clear()
 
 			cy.getContent().find('code').eq(1).click()
 
@@ -89,7 +89,7 @@ describe('Front matter support', function() {
 				.find('[data-cy="code-action-group"]')
 				.find('div:first-child')
 				.click()
-			cy.get('.input-field__input:visible').type('javascript')
+			cy.get('.action-input .input-field__input').type('javascript')
 
 			cy.getContent()
 				.find('code')

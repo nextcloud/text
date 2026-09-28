@@ -39,7 +39,7 @@ describe('Hard break support', function() {
 				expect($p[0]).to.contain('Hello')
 				expect($p[1]).to.contain('world')
 			})
-		cy.getContent().type('{home}{backspace}')
+		cy.getContent().type('{home}{backspace}', { delay: 10 })
 		cy.getContent().find('p br').should('exist')
 	})
 
