@@ -56,6 +56,21 @@ describe('comments (markdown-it)', () => {
 			+ '</section>\n')
 	})
 
+	it('guest comment with multi-word name', () => {
+		const md = 'The quick[^comment-1] brown fox.\n\n'
+			+ '[^comment-1]:\n'
+			+ '    - @Alma Lauer *(2026-09-14T12:51:39.978Z)*\n'
+			+ '      Guest reply\n'
+		expect(markdownit.render(md)).to.eq('<p>The quick<sup data-type="comment-reference" data-reference-id="comment-1"></sup> brown fox.</p>\n'
+			+ '<section data-type="comments">\n'
+			+ '<div data-type="comment" data-reference-id="comment-1">\n'
+			+ '<div data-type="comment-item" data-author="" data-author-label="Alma Lauer" data-timestamp="2026-09-14T12:51:39.978Z">\n'
+			+ '<p>Guest reply</p>\n'
+			+ '</div>\n'
+			+ '</div>\n'
+			+ '</section>\n')
+	})
+
 	it('comment without metadata', () => {
 		const md = 'Foo[^comment-1] bar\n\n'
 			+ '[^comment-1]:\n'
