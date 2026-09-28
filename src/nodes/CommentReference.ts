@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Node as ProseMirrorNode } from '@tiptap/pm/model'
+import type { Node as ProseMirrorNode, Schema } from '@tiptap/pm/model'
+import type { Transaction } from '@tiptap/pm/state'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
@@ -21,6 +22,36 @@ declare module '@tiptap/core' {
 			deleteCommentReply: (comment: ProseMirrorNode, itemIndex: number) => ReturnType
 		}
 	}
+}
+
+function createEmptyComment(schema: Schema, referenceId: string): ProseMirrorNode {
+	const currentUser = getCurrentUser()
+	const commentItem = schema.nodes.commentItem.create({
+		author: currentUser?.uid ?? '',
+		authorLabel: currentUser?.displayName ?? localStorage.getItem('nick') ?? '',
+		timestamp: new Date().toISOString(),
+	}, schema.nodes.paragraph.create())
+	return schema.nodes.comment.create({ referenceId }, commentItem)
+}
+
+// Append a comment to the comments container, creating the container before footnotes if missing
+function insertIntoCommentsContainer(tr: Transaction, comment: ProseMirrorNode): void {
+	let commentsInsidePos = -1
+	let footnotesStartPos = -1
+	tr.doc.forEach((child, offset) => {
+		if (child.type.name === 'comments') {
+			commentsInsidePos = offset + child.nodeSize - 1
+		}
+		if (child.type.name === 'footnotes') {
+			footnotesStartPos = offset
+		}
+	})
+	if (commentsInsidePos !== -1) {
+		tr.insert(commentsInsidePos, comment)
+		return
+	}
+	const comments = tr.doc.type.schema.nodes.comments.create(null, comment)
+	tr.insert(footnotesStartPos !== -1 ? footnotesStartPos : tr.doc.content.size, comments)
 }
 
 const CommentReference = Node.create({
@@ -104,51 +135,14 @@ const CommentReference = Node.create({
 					return true
 				}
 
-				const currentUser = getCurrentUser()
-				const author = currentUser?.uid ?? ''
-				const authorLabel = currentUser?.displayName ?? localStorage.getItem('nick') ?? ''
-				const timestamp = new Date().toISOString()
-
-				const commentType = state.schema.nodes.comment
-				const commentItemType = state.schema.nodes.commentItem
-				const paragraphType = state.schema.nodes.paragraph
-
-				const newCommentItem = commentItemType.create(
-					{ author, authorLabel, timestamp },
-					paragraphType.create(),
-				)
-				const newComment = commentType.create({ referenceId }, newCommentItem)
-
-				// Insert the comment before the reference: the container positions are read
-				// from the document as it is now and would shift once the reference is added.
-				let commentsInsidePos = -1
-				let footnotesStartPos = -1
-				state.doc.forEach((child, offset) => {
-					if (child.type.name === 'comments') {
-						commentsInsidePos = offset + child.nodeSize - 1
-					}
-					if (child.type.name === 'footnotes') {
-						footnotesStartPos = offset
-					}
-				})
+				const newComment = createEmptyComment(state.schema, referenceId)
 
 				let c = chain()
-				if (commentsInsidePos !== -1) {
-					c = c.insertContentAt(commentsInsidePos, newComment.toJSON())
-				} else if (footnotesStartPos !== -1) {
-					c = c.insertContentAt(footnotesStartPos, {
-						type: 'comments',
-						content: [newComment.toJSON()],
+					.insertContentAt(state.selection.to, { type: 'commentReference', attrs: { referenceId } })
+					.command(({ tr }) => {
+						insertIntoCommentsContainer(tr, newComment)
+						return true
 					})
-				} else {
-					c = c.insertContentAt(state.doc.content.size, {
-						type: 'comments',
-						content: [newComment.toJSON()],
-					})
-				}
-
-				// Insert the reference at the end of the selection
-				c = c.insertContentAt(state.selection.to, { type: 'commentReference', attrs: { referenceId } })
 
 				// Move selection/cursor to reference to avoid it being inside the hidden comments container
 				c = c.command(({ state, dispatch }) => {
