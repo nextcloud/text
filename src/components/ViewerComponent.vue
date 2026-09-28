@@ -4,8 +4,15 @@
 -->
 
 <template>
+	<ViewerVersionComparison
+		v-if="versionComparison"
+		:source
+		:currentSource="versionComparison.currentSource"
+		:fileId="versionComparison.fileId"
+		:filePath="versionComparison.filePath"
+		@loaded="onLoaded" />
 	<EditorReloader
-		v-if="!useSourceView"
+		v-else-if="!useSourceView"
 		:fileId="fileid"
 		:relativePath="filename"
 		:active="active || isEmbedded"
@@ -30,12 +37,15 @@ import { getSharingToken } from '@nextcloud/sharing/public'
 import { defineComponent } from 'vue'
 import EditorReloader from './EditorReloader.vue'
 import SourceView from './SourceView.vue'
+import ViewerVersionComparison from './ViewerVersionComparison.vue'
+import { openMimetypesMarkdown } from '../helpers/mime.js'
 
 export default defineComponent({
 	name: 'ViewerComponent',
 	components: {
 		SourceView,
 		EditorReloader,
+		ViewerVersionComparison,
 	},
 
 	provide() {
@@ -97,6 +107,7 @@ export default defineComponent({
 	data() {
 		return {
 			hasToggledInteractiveEmbedding: false,
+			versionComparison: this.findVersionComparison(),
 		}
 	},
 
@@ -118,12 +129,32 @@ export default defineComponent({
 	},
 
 	mounted() {
-		if (!this.useSourceView) {
+		if (!this.useSourceView && !this.versionComparison) {
 			this.onLoaded()
 		}
 	},
 
 	methods: {
+		/**
+		 * Viewer renders this component for the older version when comparing versions.
+		 * Return the current file to compare against in that case, null otherwise.
+		 */
+		findVersionComparison() {
+			const viewer = window.OCA?.Viewer
+			const current = viewer?.fileInfo
+			if (!this.source
+				|| viewer?.compareFileInfo?.source !== this.source
+				|| !current?.source
+				|| !openMimetypesMarkdown.includes(this.mime)) {
+				return null
+			}
+			return {
+				currentSource: current.source,
+				fileId: current.fileid,
+				filePath: current.filename,
+			}
+		},
+
 		async onLoaded() {
 			this.onLoadedHandler()
 		},
@@ -170,6 +201,11 @@ body .toastify.dialogs {
 .viewer--split .source-viewer .editor__content-wrapper {
 	// Account for missing menubar for old version in version comparison
 	margin-top: calc(var(--default-clickable-area) + 2 * var(--default-grid-baseline));
+}
+
+// The Markdown version comparison shows both versions itself
+.viewer--split .viewer__file-wrapper:has(.text-version-comparison) ~ .viewer__file-wrapper {
+	display: none;
 }
 
 .viewer[data-handler="text"] .modal-wrapper .modal-container {
