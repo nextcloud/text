@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 
 describe('reference style links (markdown-it)', () => {
 	it('renders a reference link of type shortcut (omitted label)', () => {

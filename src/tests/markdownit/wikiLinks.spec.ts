@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 
 describe('wiki image links (markdown-it)', () => {
 	it('renders a standalone wiki image as a figure', () => {

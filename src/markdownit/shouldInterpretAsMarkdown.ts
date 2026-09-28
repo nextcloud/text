@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import hasMarkdownSyntax from './hasMarkdownSyntax.js'
-import isValidMarkdown from './isValidMarkdown.js'
+import hasMarkdownSyntax from './hasMarkdownSyntax.ts'
+import isValidMarkdown from './isValidMarkdown.ts'
 
 /**
  * Check if the content has Markdown syntax
  *
- * @param {string} content Markdown object
+ * @param content Markdown object
  */
-export default function shouldInterpretAsMarkdown(content) {
+export default function shouldInterpretAsMarkdown(content: string) {
 	return hasMarkdownSyntax(content) && isValidMarkdown(content)
 }

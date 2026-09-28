@@ -5,7 +5,7 @@
 
 import { getExtensionField } from '@tiptap/core'
 import { describe, expect } from 'vitest'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
 import testEditor from '../testHelpers/testEditor.ts'
 

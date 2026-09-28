@@ -8,7 +8,7 @@ import escapeHtml from 'escape-html'
 import { prosemirrorToYXmlFragment } from 'y-prosemirror'
 import { applyUpdate, Doc, encodeStateAsUpdate, XmlFragment } from 'yjs'
 import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 
 /**
  * Apply an update to the ydoc that will change it to match content

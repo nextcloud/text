@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type MarkdownIt from 'markdown-it'
-import type Token from 'markdown-it/lib/token.mjs'
+import type { MarkdownIt, Token } from 'markdown-it'
 
 import footnote from 'markdown-it-footnote'
-import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 
 /**
  * Return footnote label
@@ -15,7 +13,7 @@ import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
  * @param token markdown-it token
  */
 function labelOf(token: Token): string {
-	return token.meta?.label || String(token.meta?.id ?? '')
+	return String(token.meta?.label || (token.meta?.id ?? ''))
 }
 
 /**
@@ -24,6 +22,8 @@ function labelOf(token: Token): string {
  * @param md markdown-it markdown object
  */
 export default function footnotes(md: MarkdownIt): void {
+	const { escapeHtml } = md.utils
+
 	md.use(footnote)
 
 	md.renderer.rules.footnote_ref = (tokens, idx) => {

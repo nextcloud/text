@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownitEscape from 'markdown-it/lib/rules_inline/escape.mjs'
-import markdownitNewline from 'markdown-it/lib/rules_inline/newline.mjs'
+import type { MarkdownIt } from 'markdown-it'
 
 /**
  * Add information about used markdown syntax to HTML hard breaks
  *
- * @param {import('markdown-it')} md Markdown object
+ * @param md Markdown object
  */
-export default function keepHardbreakSyntax(md) {
+export default function keepHardbreakSyntax(md: MarkdownIt): void {
+	const { ruler } = md.inline
+	const markdownitNewline = ruler.__rules__[ruler.__find__('newline')].fn
+	const markdownitEscape = ruler.__rules__[ruler.__find__('escape')].fn
 	// Add syntax information to hard line breaks using double spaces
 	md.inline.ruler.at('newline', (state, silent) => {
 		const rval = markdownitNewline(state, silent)
 		if (
-			rval
+			!silent
+			&& rval
 			&& state.tokens.length
 			&& state.tokens[state.tokens.length - 1].type === 'hardbreak'
 		) { state.tokens[state.tokens.length - 1].attrSet('syntax', '  ') }
@@ -27,7 +30,8 @@ export default function keepHardbreakSyntax(md) {
 	md.inline.ruler.at('escape', (state, silent) => {
 		const rval = markdownitEscape(state, silent)
 		if (
-			rval
+			!silent
+			&& rval
 			&& state.tokens.length
 			&& state.tokens[state.tokens.length - 1].type === 'hardbreak'
 		) { state.tokens[state.tokens.length - 1].attrSet('syntax', '\\') }
@@ -35,12 +39,14 @@ export default function keepHardbreakSyntax(md) {
 	})
 
 	// Add rule for parsing `<br>` tags (as we have HTML disabled)
-	md.inline.ruler.after('html_inline', 'html_breaks', (state) => {
+	md.inline.ruler.after('html_inline', 'html_breaks', (state, silent) => {
 		const res = state.src.slice(state.pos).match(/^\s*<br\s*\/?>/)
 
 		if (res) {
-			const token = state.push('hardbreak', 'br', 0)
-			token.attrPush(['syntax', 'html'])
+			if (!silent) {
+				const token = state.push('hardbreak', 'br', 0)
+				token.attrPush(['syntax', 'html'])
+			}
 			state.pos += res[0].length
 			return true
 		}

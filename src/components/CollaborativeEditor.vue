@@ -123,7 +123,7 @@ import {
 	serializePlainText,
 } from './../EditorFactory.ts'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
-import markdownit from './../markdownit/index.js'
+import markdownit from './../markdownit/index.ts'
 import isMobile from './../mixins/isMobile.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'

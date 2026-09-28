@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { MarkdownIt } from 'markdown-it'
+
 /**
- * @param {object} md Markdown object
+ * @param md Markdown object
  */
-export default function markdownUnderlines(md) {
+export default function markdownUnderlines(md: MarkdownIt) {
 	md.inline.ruler2.after('emphasis', 'underline', (state) => {
 		const tokens = state.tokens
 

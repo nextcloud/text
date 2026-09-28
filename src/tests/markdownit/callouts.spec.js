@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { typesAvailable } from '../../markdownit/callouts.js'
-import markdownit from '../../markdownit/index.js'
+import { typesAvailable } from '../../markdownit/callouts.ts'
+import markdownit from '../../markdownit/index.ts'
 import stripIndent from './stripIndent.js'
 
 describe('callouts', () => {

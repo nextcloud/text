@@ -9,25 +9,36 @@ import frontMatter from 'markdown-it-front-matter'
 import implicitFigures from 'markdown-it-image-figures'
 import mark from 'markdown-it-mark'
 import multimdTable from 'markdown-it-multimd-table'
-import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
-import callouts from './callouts.js'
+import callouts from './callouts.ts'
 import comments from './comments.ts'
 import details from './details.ts'
 import footnotes from './footnotes.ts'
-import hardbreak from './hardbreak.js'
-import keepSyntax from './keepSyntax.js'
+import hardbreak from './hardbreak.ts'
+import keepSyntax from './keepSyntax.ts'
 import mathematics from './mathematics.ts'
-import preview from './preview.js'
+import preview from './preview.ts'
 import referenceLinks from './referenceLinks.ts'
-import splitMixedLists from './splitMixedLists.js'
+import splitMixedLists from './splitMixedLists.ts'
 import taskLists from './taskLists.ts'
-import underline from './underline.js'
+import underline from './underline.ts'
 import wikiLinks from './wikiLinks.ts'
+
+/**
+ * markdown-it-multimd-table calls `md.utils.assign`, which markdown-it 15 removed
+ *
+ * @param md Markdown object
+ * @param options multimd-table options
+ */
+function multimdTableCompat(md: InstanceType<typeof MarkdownIt>, options: Parameters<typeof multimdTable>[1]): void {
+	const utils = { ...md.utils, assign: Object.assign }
+	md.utils = utils
+	multimdTable(md, options)
+}
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
 	.enable('table')
-	.use(taskLists, { enable: true, labelAfter: true })
+	.use(taskLists)
 	.use(frontMatter, () => {})
 	.use(splitMixedLists) // needs task Lists to be used first
 	.use(underline)
@@ -44,17 +55,17 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(implicitFigures)
 	.use(mark)
 	.use(mathematics)
-	.use(multimdTable, {
+	.use(multimdTableCompat, {
 		multiline: true,
 		rowspan: false,
 		multibody: false,
 	})
 
 // Render front matter tokens
-markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
+markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${markdownit.utils.escapeHtml(String(tokens[idx].meta))}</code></pre>`
 
 // Render horizontal rules with markup attribute
-markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${escapeHtml(tokens[idx].markup || '---')}" />\n`
+markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${markdownit.utils.escapeHtml(tokens[idx].markup || '---')}" />\n`
 
 // Render lists with bullet attribute
 markdownit.renderer.rules.bullet_list_open = (tokens, idx, options) => {

@@ -6,9 +6,9 @@
 /**
  * Check if the content has Markdown syntax
  *
- * @param {string} content Markdown object
+ * @param content Markdown object
  */
-export default function hasMarkdownSyntax(content) {
+export default function hasMarkdownSyntax(content: string) {
 	// Regular expressions for common Markdown patterns
 	const markdownPatterns = [
 		/\*\*.*?\*\*/, // Bold: **text**

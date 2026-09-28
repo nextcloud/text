@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type MarkdownIt from 'markdown-it'
-import type StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
-import type Token from 'markdown-it/lib/token.mjs'
+import type { MarkdownIt, StateBlock, Token } from 'markdown-it'
 
 const DETAILS_START_REGEX = /^<details(?<open>\s+open(?:=(?:""|''|open))?)?>\s*$/
 const DETAILS_AND_SUMMARY_START_REGEX = /^<details(?<open>\s+open(?:=(?:""|''|open))?)?>\s*<summary>(?<summary>.*)<\/summary>\s*$/

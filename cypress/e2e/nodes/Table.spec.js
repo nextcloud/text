@@ -7,7 +7,7 @@
 import testData from '../../fixtures/Table.md?raw'
 import { initUserAndFiles, randUser } from '../../utils/index.js'
 import Markdown from './../../../src/extensions/Markdown.js'
-import markdownit from './../../../src/markdownit/index.js'
+import markdownit from './../../../src/markdownit/index.ts'
 import EditableTable from './../../../src/nodes/EditableTable.js'
 import { createCustomEditor } from './../../support/components.js'
 import { expectMarkdown, runCommands } from './helpers.js'

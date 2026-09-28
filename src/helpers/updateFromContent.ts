@@ -7,7 +7,7 @@ import { Collaboration } from '@tiptap/extension-collaboration'
 import escapeHtml from 'escape-html'
 import { applyUpdate, Doc, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 
 /**
  * Compute an update that changes baseDoc to have content
