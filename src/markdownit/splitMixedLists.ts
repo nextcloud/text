@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { MarkdownIt, StateCore, Token } from 'markdown-it'
+
 /**
- * @param {import('markdown-it').MarkdownIt} md Markdown object
+ * @param md Markdown object
  */
-export default function splitMixedLists(md) {
+export default function splitMixedLists(md: MarkdownIt): void {
 	md.core.ruler.after('task-lists', 'split-mixed-task-lists', (state) => {
 		const tokens = state.tokens
 
@@ -17,8 +19,8 @@ export default function splitMixedLists(md) {
 			}
 			const firstChild = tokens[i + 1]
 			const startsWithTask = includesClass(firstChild, 'task-list-item')
-			if (!startsWithTask) {
-				token.attrs.splice(token.attrIndex('class'))
+			if (!startsWithTask && token.attrs) {
+				token.attrs.splice(token.attrIndex('class'), 1)
 				if (token.attrs.length === 0) {
 					token.attrs = null
 				}
@@ -39,19 +41,19 @@ export default function splitMixedLists(md) {
 }
 
 /**
- * @param {object} token MarkdownIT token
- * @param {string} cls Class name to query
+ * @param token MarkdownIT token
+ * @param cls Class name to query
  */
-function includesClass(token, cls) {
-	return token.attrGet('class')?.split(' ').includes(cls) || false
+function includesClass(token: Token, cls: string): boolean {
+	return String(token.attrGet('class') ?? '').split(' ').includes(cls)
 }
 
 /**
- * @param {Array} tokens - all the tokens in the doc
- * @param {number} index - index into the tokens array where to split
- * @param {object} TokenConstructor - constructor provided by Markdown-it
+ * @param tokens - all the tokens in the doc
+ * @param index - index into the tokens array where to split
+ * @param TokenConstructor - constructor provided by Markdown-it
  */
-function splitListAt(tokens, index, TokenConstructor) {
+function splitListAt(tokens: Token[], index: number, TokenConstructor: StateCore['Token']): void {
 	const closeList = new TokenConstructor('bullet_list_close', 'ul', -1)
 	closeList.block = true
 	const openList = new TokenConstructor('bullet_list_open', 'ul', 1)
@@ -62,11 +64,11 @@ function splitListAt(tokens, index, TokenConstructor) {
 }
 
 /**
- * @param {Array} tokens - all the tokens in the doc
- * @param {number} parentIndex - index of the parent in the tokens array
- * @param {() => boolean} predicate - test function returned child needs to pass
+ * @param tokens - all the tokens in the doc
+ * @param parentIndex - index of the parent in the tokens array
+ * @param predicate - test function returned child needs to pass
  */
-function findChildOf(tokens, parentIndex, predicate) {
+function findChildOf(tokens: Token[], parentIndex: number, predicate: (child: Token) => boolean): number {
 	const searchLevel = tokens[parentIndex].level + 1
 	for (let i = parentIndex + 1; i < tokens.length; i++) {
 		const token = tokens[i]
