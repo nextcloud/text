@@ -11,7 +11,7 @@ import markdownit from './index.ts'
  */
 export default function isValidMarkdown(content: string): boolean {
 	try {
-		markdownit.parse(content)
+		markdownit.parse(content, {})
 		return true
 	} catch {
 		return false
