@@ -216,19 +216,19 @@ onMounted(() => {
 	if (failed.value) {
 		return
 	}
-	const panes = sides.map((side) => scrollers[side]).filter((pane) => pane !== null)
-	for (const pane of panes) {
-		pane.addEventListener('scroll', syncScroll, { passive: true })
-		// Images and other embeds change block heights once they have loaded
-		pane.addEventListener('load', alignDocuments, true)
+	for (const side of sides) {
+		scrollers[side]?.addEventListener('scroll', syncScroll, { passive: true })
 	}
 	if (typeof ResizeObserver === 'undefined') {
 		nextTick(alignDocuments)
 		return
 	}
-	observer = new ResizeObserver(alignDocuments)
-	for (const pane of panes) {
-		observer.observe(pane)
+	// Any layout change of either document re-aligns: pane resizes, images that
+	// appear once loaded, fonts. Aligning changes the observed size itself, so
+	// run it a frame later to keep the observer from reporting a loop.
+	observer = new ResizeObserver(() => requestAnimationFrame(alignDocuments))
+	for (const side of sides) {
+		observer.observe(editors[side].view.dom)
 	}
 })
 onBeforeUnmount(() => {
@@ -498,8 +498,14 @@ function destroyEditors() {
 		outline-offset: 2px;
 	}
 
-	.text-comparison-spacer {
+	// Spacers must render at exactly the requested height, whatever the editor styles for divs
+	.ProseMirror > .text-comparison-spacer {
 		display: block;
+		box-sizing: content-box;
+		min-block-size: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
 	}
 
 	@container (max-width: 759px) {
