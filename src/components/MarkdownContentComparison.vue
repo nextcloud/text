@@ -99,18 +99,7 @@
 					}}
 				</div>
 				<div v-else-if="rawDifferent" class="empty" role="status">
-					<p>
-						{{
-							t('text', 'No rendered differences — Markdown syntax differs.')
-						}}
-					</p>
-					<NcButton
-						data-comparison-empty-action
-						type="button"
-						variant="tertiary"
-						@click="setView('source')">
-						{{ t('text', 'Open Markdown source') }}
-					</NcButton>
+					{{ t('text', 'No rendered differences — Markdown syntax differs.') }}
 				</div>
 				<p v-else class="empty" role="status">
 					{{ t('text', 'No differences.') }}
@@ -164,35 +153,17 @@
 					</article>
 				</div>
 			</section>
-
-			<section v-if="view === 'source'" role="tabpanel" class="source">
-				<p class="source-explanation">
-					{{
-						t(
-							'text',
-							'Source compares literal Markdown, so its change groups can differ from rendered changes.',
-						)
-					}}
-				</p>
-				<MarkdownSourceFallback v-if="!SourceView" :beforeContent="beforeContent" :afterContent="afterContent" />
-				<component
-					:is="SourceView"
-					v-else
-					:beforeContent="beforeContent"
-					:afterContent="afterContent"
-					:layoutMode="layoutMode" />
-			</section>
 		</template>
 	</section>
 </template>
 
 <script setup lang="ts">
-import type { Component, ComponentPublicInstance as Public } from 'vue'
+import type { ComponentPublicInstance as Public } from 'vue'
 import type { ComparisonEdit as Edit, ComparisonSide as Side } from '../comparison/markdownComparisonTypes.ts'
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { n, t } from '@nextcloud/l10n'
-import { computed, markRaw, nextTick, onBeforeUnmount, onErrorCaptured, onMounted, provide, ref, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onErrorCaptured, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import ComparisonChangeList from './ComparisonChangeList.vue'
 import ComparisonEditorContent from './ComparisonEditorContent.vue'
@@ -213,10 +184,10 @@ const props = defineProps<{
 	openLinkHandler?: (href: string) => void
 }>()
 const emit = defineEmits<{ ready: [] }>()
-type View = 'changes' | 'documents' | 'source'
-const tabs: readonly View[] = ['changes', 'documents', 'source']
+type View = 'changes' | 'documents'
+const tabs: readonly View[] = ['changes', 'documents']
 const sides: readonly Side[] = ['before', 'after']
-const tabLabels = { changes: t('text', 'Changes'), documents: t('text', 'Full documents'), source: t('text', 'Markdown source') }
+const tabLabels = { changes: t('text', 'Changes'), documents: t('text', 'Full documents') }
 const sideLabels = { before: t('text', 'Before'), after: t('text', 'After') }
 const sideLegends = { before: t('text', 'Removed'), after: t('text', 'Added') }
 const root = ref<HTMLElement | null>(null)
@@ -233,7 +204,6 @@ const hideFormatting = ref(false)
 const currentId = ref<string | null>(null)
 const currentLabel = ref('')
 const failure = ref(false)
-const SourceView = shallowRef<Component | null>(null)
 let observer: ResizeObserver | null = null
 let didReady = false
 let destroyed = false
@@ -322,11 +292,6 @@ watch(activeIds, (ids) => {
 	updateDecorations()
 })
 watch(currentId, refreshDocuments)
-watch(view, (next) => {
-	if (next === 'source' && !SourceView.value) {
-		loadSource()
-	}
-})
 
 onErrorCaptured(() => {
 	activateFallback()
@@ -445,13 +410,6 @@ function destroyEditors() {
 		editors[side] = null
 	}
 }
-async function loadSource() {
-	try {
-		SourceView.value = markRaw((await import('./MarkdownSourceComparison.vue')).default)
-	} catch {
-		SourceView.value = null
-	}
-}
 function setView(next: View) {
 	if (next === 'documents') {
 		showDocuments.value = true
@@ -534,8 +492,7 @@ $primary: var(--color-primary-element);
 	}
 	.status,
 	.changes-count,
-	.empty p,
-	.source-explanation {
+	.empty p {
 		margin: 0;
 	}
 	.status {
@@ -576,8 +533,7 @@ $primary: var(--color-primary-element);
 	}
 	.changes-count,
 	.filter,
-	.hidden-formatting,
-	.source-explanation {
+	.hidden-formatting {
 		color: var(--color-text-maxcontrast);
 		font-size: var(--font-size-small);
 	}
@@ -610,15 +566,13 @@ $primary: var(--color-primary-element);
 		text-align: center;
 	}
 	&__documents,
-	&__document,
-	.source {
+	&__document {
 		display: flex;
 		flex-direction: column;
 		min-block-size: 0;
 		overflow: hidden;
 	}
-	&__documents,
-	.source {
+	&__documents {
 		flex: 1;
 	}
 	.side-tabs {
@@ -731,9 +685,6 @@ $primary: var(--color-primary-element);
 		overflow: hidden;
 		clip-path: inset(50%);
 		white-space: nowrap;
-	}
-	.source-explanation {
-		padding: calc(2 * $g) calc(3 * $g) 0;
 	}
 	&--single {
 		.toolbar {
