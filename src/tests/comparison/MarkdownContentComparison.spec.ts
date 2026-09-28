@@ -47,6 +47,34 @@ describe('MarkdownContentComparison', () => {
 		expect(el.childElementCount).toBe(0)
 	})
 
+	it('keeps both document panes at the same scroll position', async () => {
+		const { el, instance } = await create('One\n\nTwo', 'One\n\nThree')
+		const scrollers = el.querySelectorAll<HTMLElement>('.text-comparison__document-scroller')
+		// jsdom has no layout, so give the panes a scroll position to mirror
+		for (const scroller of scrollers) {
+			let top = 0
+			Object.defineProperty(scroller, 'scrollTop', {
+				get: () => top,
+				set: (value: number) => {
+					top = value
+				},
+			})
+		}
+
+		scrollers[0]!.scrollTop = 120
+		scrollers[0]!.dispatchEvent(new Event('scroll'))
+		expect(scrollers[1]!.scrollTop).toBe(120)
+		// The mirrored pane reports its new position after the source moved on: no push back
+		scrollers[0]!.scrollTop = 150
+		scrollers[1]!.dispatchEvent(new Event('scroll'))
+		expect(scrollers[0]!.scrollTop).toBe(150)
+		scrollers[1]!.scrollTop = 40
+		scrollers[1]!.dispatchEvent(new Event('scroll'))
+		expect(scrollers[0]!.scrollTop).toBe(40)
+
+		instance.destroy()
+	})
+
 	it('hides formatting-only changes on request', async () => {
 		const { el, instance } = await create('Plain text\n\nOld', '**Plain** text\n\nNew')
 

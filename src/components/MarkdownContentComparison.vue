@@ -140,6 +140,7 @@ const editors = {} as Record<Side, ReturnType<typeof createComparisonEditor>>
 const decorationKeys = {} as Record<Side, ComparisonDecorationKey>
 const spacerKeys = {} as Record<Side, ComparisonDecorationKey>
 const scrollers: Record<Side, HTMLElement | null> = { before: null, after: null }
+const mirrored: Record<Side, number | null> = { before: null, after: null }
 let changes: Change[] = []
 let blockPairs: BlockPair[] = []
 let spacers: ComparisonSpacers = { before: new Map(), after: new Map() }
@@ -216,6 +217,11 @@ onMounted(() => {
 		return
 	}
 	const panes = sides.map((side) => scrollers[side]).filter((pane) => pane !== null)
+	for (const pane of panes) {
+		pane.addEventListener('scroll', syncScroll, { passive: true })
+		// Images and other embeds change block heights once they have loaded
+		pane.addEventListener('load', alignDocuments, true)
+	}
 	if (typeof ResizeObserver === 'undefined') {
 		nextTick(alignDocuments)
 		return
@@ -223,8 +229,6 @@ onMounted(() => {
 	observer = new ResizeObserver(alignDocuments)
 	for (const pane of panes) {
 		observer.observe(pane)
-		// Images and other embeds change block heights once they have loaded
-		pane.addEventListener('load', alignDocuments, true)
 	}
 })
 onBeforeUnmount(() => {
@@ -272,6 +276,7 @@ function blockTops(editor: ReturnType<typeof createComparisonEditor>) {
 	return tops
 }
 
+/** Scroll one pane to the current change; the other pane follows through syncScroll. */
 function scrollToCurrent() {
 	if (view.value !== 'documents' || currentId.value === null) {
 		return
@@ -279,12 +284,33 @@ function scrollToCurrent() {
 	for (const side of sides) {
 		const scroller = scrollers[side]
 		const target = scroller?.querySelector<HTMLElement>(`[data-comparison-change="${currentId.value}"]`)
-		if (!scroller || !target) {
-			continue
+		if (scroller && target) {
+			const offset = target.getBoundingClientRect().top - scroller.getBoundingClientRect().top
+			scroller.scrollTop += offset - (scroller.clientHeight - target.offsetHeight) / 2
+			return
 		}
-		const offset = target.getBoundingClientRect().top - scroller.getBoundingClientRect().top
-		scroller.scrollTop += offset - (scroller.clientHeight - target.offsetHeight) / 2
 	}
+}
+
+/**
+ * Mirror the scroll position of one pane onto the other.
+ * A pane that was just positioned by the mirror reports that position in its own scroll event;
+ * that echo must not be mirrored back, as assigning scrollTop would cancel a running scroll animation.
+ *
+ * @param event Scroll event of one of the panes.
+ */
+function syncScroll(event: Event) {
+	const sourceSide: Side = event.currentTarget === scrollers.before ? 'before' : 'after'
+	const targetSide: Side = sourceSide === 'before' ? 'after' : 'before'
+	const source = scrollers[sourceSide]!
+	const target = scrollers[targetSide]
+	const echo = mirrored[sourceSide] === source.scrollTop
+	mirrored[sourceSide] = null
+	if (echo || !target || target.scrollTop === source.scrollTop) {
+		return
+	}
+	target.scrollTop = source.scrollTop
+	mirrored[targetSide] = target.scrollTop
 }
 
 function setScroller(side: Side, element: Element | ComponentPublicInstance | null) {
@@ -437,7 +463,6 @@ function destroyEditors() {
 		min-block-size: 0;
 		padding-inline: calc(4 * $g);
 		overflow: auto;
-		scroll-behavior: smooth;
 
 		.ProseMirror {
 			inline-size: auto;
@@ -487,12 +512,6 @@ function destroyEditors() {
 			border-inline-start: 0;
 			border-block-start: 1px solid var(--color-border);
 		}
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.text-comparison__document-scroller {
-		scroll-behavior: auto;
 	}
 }
 </style>
