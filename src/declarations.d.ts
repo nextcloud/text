@@ -13,4 +13,22 @@ declare module '@nextcloud/vue/composables/useIsMobile' {
 	export function useIsMobile(): Ref<boolean>
 }
 
+declare module '@quartzy/markdown-it-mentions' {
+	import type { MarkdownIt } from 'markdown-it'
+	const plugin: (md: MarkdownIt) => void
+	export default plugin
+}
+
+declare module 'markdown-it-image-figures' {
+	import type { MarkdownIt } from 'markdown-it'
+	const plugin: (md: MarkdownIt) => void
+	export default plugin
+}
+
+declare module 'markdown-it-mark' {
+	import type { MarkdownIt } from 'markdown-it'
+	const plugin: (md: MarkdownIt) => void
+	export default plugin
+}
+
 declare module 'vite/modulepreload-polyfill'

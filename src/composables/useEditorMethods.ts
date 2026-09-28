@@ -9,7 +9,7 @@ import type { Session } from '../services/SyncService.ts'
 
 import escapeHtml from 'escape-html'
 import Markdown from '../extensions/Markdown.js'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 import { isUser } from '../services/SyncService.ts'
 
 /**

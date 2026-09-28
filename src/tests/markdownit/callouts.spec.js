@@ -4,7 +4,7 @@
  */
 
 import { typesAvailable } from '../../markdownit/callouts.js'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 import stripIndent from './stripIndent.js'
 
 describe('callouts', () => {

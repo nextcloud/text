@@ -6,7 +6,7 @@
 
 import { builders } from 'prosemirror-test-builder'
 import RichText from '../../extensions/RichText.js'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 import EditableTable from '../../nodes/EditableTable.js'
 import output from '../fixtures/tables/basic/table.html?raw'
 import input from '../fixtures/tables/basic/table.md?raw'

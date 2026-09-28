@@ -9,7 +9,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { InputRule, mergeAttributes, Node } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
 import { generateReferenceId, isInsideCommentOrFootnote } from '../plugins/referenceHelpers.ts'
 

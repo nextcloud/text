@@ -5,7 +5,7 @@
 
 import { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
 import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
-import markdownit from './../../../src/markdownit/index.js'
+import markdownit from './../../../src/markdownit/index.ts'
 
 /**
  *

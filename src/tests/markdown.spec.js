@@ -4,7 +4,7 @@
  */
 
 import { typesAvailable } from '../markdownit/callouts.js'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 import testEditor from './testHelpers/testEditor.js'
 
 const test = testEditor

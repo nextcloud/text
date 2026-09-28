@@ -16,28 +16,29 @@ import footnotes from './footnotes.ts'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
 import mathematics from './mathematics.ts'
-import preview from './preview.js'
+import preview from './preview.ts'
 import referenceLinks from './referenceLinks.ts'
 import splitMixedLists from './splitMixedLists.js'
 import taskLists from './taskLists.ts'
-import underline from './underline.js'
+import underline from './underline.ts'
 import wikiLinks from './wikiLinks.ts'
 
 /**
  * markdown-it-multimd-table calls `md.utils.assign`, which markdown-it 15 removed
  *
- * @param {import('markdown-it').MarkdownIt} md Markdown object
- * @param {object} options multimd-table options
+ * @param md Markdown object
+ * @param options multimd-table options
  */
-function multimdTableCompat(md, options) {
-	md.utils = { ...md.utils, assign: Object.assign }
+function multimdTableCompat(md: InstanceType<typeof MarkdownIt>, options: Parameters<typeof multimdTable>[1]): void {
+	const utils = { ...md.utils, assign: Object.assign }
+	md.utils = utils
 	multimdTable(md, options)
 }
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
 	.enable('table')
-	.use(taskLists, { enable: true, labelAfter: true })
+	.use(taskLists)
 	.use(frontMatter, () => {})
 	.use(splitMixedLists) // needs task Lists to be used first
 	.use(underline)
@@ -61,7 +62,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	})
 
 // Render front matter tokens
-markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${markdownit.utils.escapeHtml(tokens[idx].meta)}</code></pre>`
+markdownit.renderer.rules.front_matter = (tokens, idx) => `<pre id="frontmatter"><code>${markdownit.utils.escapeHtml(String(tokens[idx].meta))}</code></pre>`
 
 // Render horizontal rules with markup attribute
 markdownit.renderer.rules.hr = (tokens, idx) => `<hr data-markup="${markdownit.utils.escapeHtml(tokens[idx].markup || '---')}" />\n`

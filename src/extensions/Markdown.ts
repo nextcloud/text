@@ -31,7 +31,7 @@ import { Extension, getExtensionField } from '@tiptap/core'
 import { DOMParser } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { defaultMarkdownSerializer, MarkdownSerializer } from 'prosemirror-markdown'
-import markdownit from '../markdownit/index.js'
+import markdownit from '../markdownit/index.ts'
 import Link from '../marks/Link.ts'
 import transformPastedHTML from './transformPastedHTML.ts'
 

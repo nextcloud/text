@@ -5,7 +5,7 @@
 
 import { ListItem } from '@tiptap/extension-list'
 import { describe, expect } from 'vitest'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 import BulletList from '../../nodes/BulletList.ts'
 import HardBreak from '../../nodes/HardBreak.js'
 import OrderedList from '../../nodes/OrderedList.ts'

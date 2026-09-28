@@ -5,7 +5,7 @@
 
 import { createRichEditor } from '../../EditorFactory.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import markdownit from '../../markdownit/index.js'
+import markdownit from '../../markdownit/index.ts'
 
 /**
  * Ease markdown through TipTap editor and return serialized markdown
