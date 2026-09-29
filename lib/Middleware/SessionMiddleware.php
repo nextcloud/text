@@ -9,6 +9,7 @@ namespace OCA\Text\Middleware;
 
 use OC\User\NoUserException;
 use OCA\Text\Controller\ISessionAwareController;
+use OCA\Text\Db\Document;
 use OCA\Text\Exception\AccountDisabledException;
 use OCA\Text\Exception\InvalidDocumentBaseVersionEtagException;
 use OCA\Text\Exception\InvalidSessionException;
@@ -37,6 +38,7 @@ use OCP\Share\IManager as ShareManager;
 use ReflectionException;
 
 class SessionMiddleware extends Middleware {
+	private ?Document $document = null;
 
 	public function __construct(
 		private IRequest $request,
@@ -88,7 +90,7 @@ class SessionMiddleware extends Middleware {
 		$documentId = (int)$this->request->getParam('documentId');
 		$baseVersionEtag = $this->request->getParam('baseVersionEtag');
 
-		$document = $this->documentService->getDocument($documentId);
+		$document = $this->getDocument($documentId);
 		if ($baseVersionEtag && $document?->getBaseVersionEtag() !== $baseVersionEtag) {
 			throw new InvalidDocumentBaseVersionEtagException();
 		}
@@ -116,7 +118,7 @@ class SessionMiddleware extends Middleware {
 			}
 		}
 
-		$document = $this->documentService->getDocument($documentId);
+		$document = $this->getDocument($documentId);
 		if (!$document) {
 			throw new InvalidSessionException();
 		}
@@ -192,6 +194,13 @@ class SessionMiddleware extends Middleware {
 		}
 
 		throw new InvalidSessionException();
+	}
+
+	private function getDocument(int $documentId): ?Document {
+		if ($this->document?->getId() !== $documentId) {
+			$this->document = $this->documentService->getDocument($documentId);
+		}
+		return $this->document;
 	}
 
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
