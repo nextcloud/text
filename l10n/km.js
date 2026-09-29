@@ -1,13 +1,13 @@
 OC.L10N.register(
     "text",
     {
+    "Comment" : "មតិ",
     "Close" : "បិទ",
     "guest" : "ភ្ញៀវ",
     "Edit" : "កែប្រែ",
     "Delete" : "Delete",
     "Save" : "រក្សាទុក",
     "Cancel" : "លើកលែង",
-    "Comment" : "មតិ",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",
     "Previous" : "មុន",
