@@ -58,13 +58,13 @@ describe('Sync', () => {
 	})
 
 	it('recovers from a short lost connection', () => {
-		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/**', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
 			'contain',
 			'The document could not be loaded.',
 		)
-		cy.intercept('**/apps/text/session/*/*', (req) => req.continue()).as('alive')
+		cy.intercept('**/apps/text/session/**', (req) => req.continue()).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('syncAfterRecovery')
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
@@ -84,10 +84,10 @@ describe('Sync', () => {
 	})
 
 	it('handles brief network outages', () => {
-		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/**', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		// bring back the network connection
-		cy.intercept('**/apps/text/session/*/*', (req) => {
+		cy.intercept('**/apps/text/session/**', (req) => {
 			req.continue()
 		}).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
@@ -96,13 +96,13 @@ describe('Sync', () => {
 	})
 
 	it('reconnects via button after a short lost connection', () => {
-		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/**', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
 			'contain',
 			'The document could not be loaded.',
 		)
-		cy.intercept('**/apps/text/session/*/*/create').as('create')
+		cy.intercept('**/apps/text/session/**/create').as('create')
 		cy.get('#editor-container .document-status').find('button').click()
 		// let first attempt fail
 		cy.wait('@create', { timeout: 10000 })
@@ -111,7 +111,7 @@ describe('Sync', () => {
 			'The document could not be loaded.',
 		)
 		// bring back the network connection
-		cy.intercept('**/apps/text/session/*/*', (req) => {
+		cy.intercept('**/apps/text/session/**', (req) => {
 			req.continue()
 		}).as('alive')
 		cy.get('#editor-container .document-status').find('button').click()
@@ -126,7 +126,7 @@ describe('Sync', () => {
 	it('recovers from a lost and closed connection', () => {
 		let reconnect = false
 		// block all requests until the session is closed and reopened
-		cy.intercept('**/apps/text/session/*/*', (req) => {
+		cy.intercept('**/apps/text/session/**', (req) => {
 			if (
 				req.url.includes('close')
 				|| req.url.includes('create')
@@ -180,7 +180,7 @@ describe('Sync', () => {
 
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/*/create' }).as('create')
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/**/create' }).as('create')
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')
