@@ -110,6 +110,16 @@ describe('Table extension', () => {
 		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
+	test('md table with multiple pipes in cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| a \\| b \\| c | d |
+|-------------|---|
+| 1 \\| 2 \\| 3 | 4 |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
 	test('Load into editor', ({ editor, expectDocument }) => {
 		editor.commands.setContent(markdownit.render(input))
 

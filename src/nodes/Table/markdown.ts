@@ -187,7 +187,7 @@ function tableToMarkdown(state: MarkdownSerializerState, node: Node) {
 			const lines = md
 				.split(/\r?\n/)
 				// Escape pipe character
-				.map((line) => line.replace(/\|/, '\\$&'))
+				.map((line) => line.replace(/\|/g, '\\$&'))
 
 			row.length = Math.max(row.length, lines.length)
 			const lineLength = Math.max(...lines.map((line) => line.length))
