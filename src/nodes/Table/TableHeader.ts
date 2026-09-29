@@ -9,7 +9,11 @@ import { TableHeader } from '@tiptap/extension-table'
 export default TableHeader.extend({
 	content: 'inline*',
 
-	toMarkdown() {},
+	toMarkdown(state, node) {
+		// Header cells are inline-parsed, so no escaping of block syntax at line start
+		state.renderInline(node, false)
+		state.closeBlock(node)
+	},
 
 	parseHTML() {
 		return [

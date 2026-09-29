@@ -89,6 +89,26 @@ describe('Table extension', () => {
 		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
+	test('md table with marks in header cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| **bold** | *italic* | ~~strike~~ | \`code\` | [link](https://example.org) |
+|----------|----------|------------|--------|-----------------------------|
+| 1        | 2        | 3          | 4      | 5                           |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
+	test('md table with block syntax at start of header cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| # | - item | 1. item | > quote |
+|---|--------|---------|---------|
+| 1 | 2      | 3       | 4       |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
 	test('Load into editor', ({ editor, expectDocument }) => {
 		editor.commands.setContent(markdownit.render(input))
 

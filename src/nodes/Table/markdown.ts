@@ -175,8 +175,11 @@ function tableToMarkdown(state: MarkdownSerializerState, node: Node) {
 		cellNodes.forEach((node, cellIdx) => {
 			columnWidths[cellIdx] = columnWidths[cellIdx] ?? 0
 
-			// Serialize cell content with all child nodes and split lines
-			const md = serializer.serialize(node)
+			// Serialize cell content with all child nodes and split lines.
+			// Cells with inline content (header cells) are serialized by their own toMarkdown().
+			const md = serializer.serialize(node.inlineContent
+				? node.type.schema.topNodeType.create(null, node)
+				: node)
 			const nodeTypes = new Set<string>()
 			node.descendants((descendant) => {
 				nodeTypes.add(descendant.type.name)
