@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TableRow from './TableRow.js'
+import TableRow from './TableRow.ts'
 
 export default TableRow.extend({
 	name: 'tableHeadRow',

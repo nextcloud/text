@@ -5,7 +5,7 @@
 
 import { Extension } from '@tiptap/core'
 import Text from '@tiptap/extension-text'
-import EditableTable from './../nodes/EditableTable.js'
+import EditableTable from './../nodes/EditableTable.ts'
 import Paragraph from './../nodes/Paragraph.js'
 import PlainTableDocument from './../nodes/PlainTableDocument.js'
 import Keymap from './Keymap.js'
