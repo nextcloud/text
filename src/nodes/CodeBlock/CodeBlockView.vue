@@ -7,7 +7,7 @@
 	<NodeViewWrapper as="div" :data-mode="viewMode" class="code-block">
 		<div class="code-block-header">
 			<div class="view-switch">
-				<NcActions :aria-label="t('text', 'Copy code block')">
+				<NcActions size="small" :aria-label="t('text', 'Copy code block')">
 					<NcActionButton
 						v-if="hasCode"
 						data-cy="copy-code"
@@ -23,6 +23,7 @@
 
 				<NcActions
 					v-if="isEditable"
+					size="small"
 					data-cy="code-action-group"
 					:aria-label="t('text', 'Code block options')">
 					<NcActionInput
@@ -82,7 +83,7 @@
 		</div>
 		<div :class="{ 'split-view': showCode && showPreview }">
 			<pre v-show="showCode" class="split-view__code"><NodeViewContent
-spellcheck="false"
+				spellcheck="false"
 				as="code"
 				:contenteditable="isEditable" /></pre>
 			<div
@@ -293,12 +294,9 @@ export default {
 
 .code-block-header {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: stretch;
-	position: absolute;
-	right: 12px;
-	margin-top: 9px;
+	justify-content: flex-end;
+	padding-block-start: 6px;
+	padding-inline-end: 6px;
 }
 
 .split-view {
@@ -315,6 +313,10 @@ export default {
 	&__preview {
 		text-align: center;
 	}
+}
+
+.split-view__code {
+	padding-top: 0;
 }
 
 @media only screen and (max-width: 600px) {
