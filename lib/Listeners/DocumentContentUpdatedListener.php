@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 /**
- * SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Context\IContext;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Event\DocumentContentUpdated;
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
+use OCP\DB\Exception;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -37,19 +36,14 @@ class DocumentContentUpdatedListener implements IEventListener {
 
 		$context = $event->getContext();
 
-		if (!$context instanceof IContext) {
-			$this->logger->warning('DocumentContentUpdated called with invalid context', ['context' => $context]);
+		if ($this->documentService->isSaveFromText()) {
+			$this->logger->debug('DocumentContentUpdated triggered by text itself', ['context' => $context->toString()]);
 			return;
 		}
 
 		$document = $this->documentMapper->load($context->getType(), $context->getId());
 		if (!$document) {
 			$this->logger->debug('No document for context.', ['context' => $context->toString()]);
-			return;
-		}
-
-		if ($this->documentService->isSaveFromText()) {
-			$this->logger->debug('DocumentContentUpdated triggered by text itself', ['document' => $document->jsonSerialize()]);
 			return;
 		}
 
@@ -70,11 +64,9 @@ class DocumentContentUpdatedListener implements IEventListener {
 		try {
 			$this->documentService->resetDocument($document->getContextType(), $document->getContextId(), true);
 			$this->logger->info('Reset document', ['document' => $document->jsonSerialize()]);
-		} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
+		} catch (Exception|NotPermittedException $e) {
 			// Do not throw during event handling.
-			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
-			// NotFoundException: The event was called on a file that was just created so a NonExistingFile object is used that has no id yet
-			$this->logger->warning('Reset document skipped in NodeWrittenResetDocumentListener', ['exception' => $e]);
+			$this->logger->warning('Reset document skipped in DocumentContentUpdatedListener', ['exception' => $e]);
 		}
 	}
 }
