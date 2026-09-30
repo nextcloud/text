@@ -13,6 +13,7 @@ use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -86,30 +87,15 @@ class ResetDocument extends Command {
 		$rc = 0;
 		foreach ($fileIds as $id) {
 
-			$mounts = $this->userMountCache->getMountsForFileId($id);
-			$anyMount = array_shift($mounts);
-			if ($anyMount === null) {
-				$output->writeln('Could not fallback to file from mounts for ' . $id);
-				continue;
-			}
-			$userId = $anyMount->getUser()->getUID();
-
-			try {
-				$file = $this->fileService->getFileById($id, $userId);
-				$this->lockService->unlock($file);
-			} catch (NotFoundException) {
-				// Continue with the cleanup even if the file does not exist.
-			}
-
 			if ($fullReset) {
 				$output->writeln('Force-reset the document session for file ' . $id);
-				$this->documentService->resetDocument('file', $id, true);
-				continue;
+			} else {
+				$output->writeln('Reset the document session for file ' . $id);
 			}
 
-			$output->writeln('Reset the document session for file ' . $id);
 			try {
-				$this->documentService->resetDocument('file', $id);
+				$this->documentService->resetDocument('file', $id, $fullReset);
+				$this->tryToUnlock($id, $output);
 			} catch (DocumentHasUnsavedChangesException) {
 				$output->writeln('Not resetting due to unsaved changes');
 				$rc = 1;
@@ -117,5 +103,22 @@ class ResetDocument extends Command {
 		}
 
 		return $rc;
+	}
+
+	protected function tryToUnlock(int $fileId, OutputInterface $output): void {
+		$mounts = $this->userMountCache->getMountsForFileId($fileId);
+		$anyMount = array_shift($mounts);
+		if ($anyMount === null) {
+			$output->writeln('Could not fallback to file from mounts for ' . $fileId);
+			return;
+		}
+		$userId = $anyMount->getUser()->getUID();
+
+		try {
+			$file = $this->fileService->getFileById($fileId, $userId);
+			$this->lockService->unlock($file);
+		} catch (NotFoundException|NotPermittedException) {
+			// Continue with the cleanup even if the file does not exist.
+		}
 	}
 }
