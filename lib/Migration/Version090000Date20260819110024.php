@@ -35,12 +35,14 @@ class Version090000Date20260819110024 extends SimpleMigrationStep {
 	 */
 	public function preSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
 		$qb = $this->connection->getQueryBuilder();
-		$qb->update('text_documents', 'd')
+		$qb->update('text_documents')
 			->set('context_type', $qb->createNamedParameter('file'))
 			->where($qb->expr()->isNull('context_type'))
 			->executeStatement();
-		$qb->update('text_documents', 'd')
-			->set('context_id', 'd.id')
+
+		$qb = $this->connection->getQueryBuilder();
+		$qb->update('text_documents')
+			->set('context_id', 'id')
 			->where($qb->expr()->isNull('context_id'))
 			->executeStatement();
 	}
