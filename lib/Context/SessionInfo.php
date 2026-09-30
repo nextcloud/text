@@ -10,12 +10,19 @@ namespace OCA\Text\Context;
 
 use OCP\Files\Lock\ILock;
 
-readonly class SessionInfo {
+class SessionInfo {
+	// Set explicitely by the ApiService when needed.
+	public ?string $content = null;
+
+	/**
+	 * @param bool $readOnly Prevent editing
+	 * @param bool $canAttachFiles Allow attachment handling
+	 * @param ?ILock $lock Lock held by others when locked
+	 */
 	public function __construct(
-		public ?string $content,
 		public bool $readOnly,
-		public ?ILock $lock,
 		public bool $canAttachFiles,
+		public ?ILock $lock,
 	) {
 	}
 

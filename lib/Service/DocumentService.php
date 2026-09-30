@@ -418,7 +418,7 @@ class DocumentService {
 		$this->cache->set('document-save-lock-' . $document->id, true, 60);
 		$this->saveFromText = true;
 		try {
-			$context->saveWithLock($autoSaveDocument, function () use ($document, $documentState): void {
+			$context->save($autoSaveDocument, function () use ($document, $documentState): void {
 				$this->writeDocumentState($document->id, $documentState);
 			});
 			$context->updateDocument($document);
