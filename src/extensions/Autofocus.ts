@@ -32,7 +32,6 @@ export default Extension.create<AutofocusOptions>({
 		if (this.options.fileId === null) {
 			throw new Error('fileId needs to be provided')
 		}
-		this.storage.started = true
 	},
 	onSelectionUpdate({ editor }) {
 		if (!this.storage.started) {
@@ -47,6 +46,7 @@ export default Extension.create<AutofocusOptions>({
 			autofocus:
 				() =>
 				({ commands }) => {
+					this.storage.started = true
 					const pos = localStorage.getItem(
 						'text-lastPos-' + this.options.fileId,
 					)
