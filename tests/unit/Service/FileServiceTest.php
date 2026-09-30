@@ -2,6 +2,7 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
@@ -11,8 +12,10 @@ use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\IUserFolder;
 use OCP\Files\NotPermittedException;
+use OCP\Files\Storage\IStorage;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IAttributes;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
@@ -149,4 +152,47 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		return $share;
 	}
 
+	public function testIsDownloadDisabledNotShared(): void {
+		$storage = $this->createMock(IStorage::class);
+		$storage->method('instanceOfStorage')->willReturn(false);
+		$file = $this->createMock(File::class);
+		$file->method('getStorage')->willReturn($storage);
+
+		$this->assertFalse($this->fileService->isDownloadDisabled($file));
+	}
+
+	public function testIsDownloadDisabledSharedWithoutAttributes(): void {
+		$file = $this->createSharedFile(null);
+		$this->assertFalse($this->fileService->isDownloadDisabled($file));
+	}
+
+	public function testIsDownloadDisabledSharedDownloadAllowed(): void {
+		$file = $this->createSharedFile(true);
+		$this->assertFalse($this->fileService->isDownloadDisabled($file));
+	}
+
+	public function testIsDownloadDisabledSharedDownloadDisabled(): void {
+		$file = $this->createSharedFile(false);
+		$this->assertTrue($this->fileService->isDownloadDisabled($file));
+	}
+
+	private function createSharedFile(?bool $download): File {
+		$share = $this->createMock(IShare::class);
+		$share->method('getAttributes')
+			->willReturn($download === null ? null : $this->createAttributes($download));
+		$storage = $this->createMock(SharedStorage::class);
+		$storage->method('instanceOfStorage')->willReturn(true);
+		$storage->method('getShare')->willReturn($share);
+		$file = $this->createMock(File::class);
+		$file->method('getStorage')->willReturn($storage);
+		return $file;
+	}
+
+	private function createAttributes(bool $download): IAttributes {
+		$attributes = $this->createMock(IAttributes::class);
+		$attributes->method('getAttribute')
+			->with('permissions', 'download')
+			->willReturn($download);
+		return $attributes;
+	}
 }
