@@ -99,8 +99,12 @@ class ApiService {
 			if ($document !== null) {
 				$type = $document->getContextType();
 				$id = $document->getContextId();
-				$context = $this->contextManager->getContext($type, $id, $auth);
-				$context->cleanup();
+				try {
+					$context = $this->contextManager->getContext($type, $id, $auth);
+					$context->cleanup();
+				} catch (NotFoundException|NotPermittedException $e) {
+					$this->logger->info('Could not clean up context after closing the last session', ['exception' => $e]);
+				}
 			}
 		}
 		return new DataResponse([]);
