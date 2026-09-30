@@ -35,7 +35,6 @@ class LockService {
 			),
 			$callback
 		);
-		return;
 	}
 
 	public function getLockByOthers(File $file): ?ILock {
