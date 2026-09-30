@@ -86,16 +86,16 @@ class ResetDocument extends Command {
 		$rc = 0;
 		foreach ($fileIds as $id) {
 
-			$mounts = $this->userMountCache->getMountsForFileId($fileId);
+			$mounts = $this->userMountCache->getMountsForFileId($id);
 			$anyMount = array_shift($mounts);
 			if ($anyMount === null) {
-				$output->writeln('Could not fallback to file from mounts for ' . $fileId);
+				$output->writeln('Could not fallback to file from mounts for ' . $id);
 				continue;
 			}
 			$userId = $anyMount->getUser()->getUID();
 
 			try {
-				$file = $this->fileService->getFileById($fileId, $userId);
+				$file = $this->fileService->getFileById($id, $userId);
 				$this->lockService->unlock($file);
 			} catch (NotFoundException) {
 				// Continue with the cleanup even if the file does not exist.
