@@ -39,8 +39,8 @@ class VersionRestoredListener implements IEventListener {
 
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
-			$this->lockService->unlock($sourceFile);
 			$this->documentService->resetDocument('file', $sourceFile->getId());
+			$this->lockService->unlock($sourceFile);
 		} catch (DocumentHasUnsavedChangesException|NotFoundException) {
 			// Do not throw during event handling in this is expected to happen
 			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
