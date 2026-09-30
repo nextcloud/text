@@ -41,7 +41,6 @@ use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
-use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\Template\RegisterTemplateCreatorEvent;
@@ -63,7 +62,6 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(LoadEditor::class, LoadEditorListener::class);
 		// for attachments
 		$context->registerEventListener(NodeCopiedEvent::class, NodeCopiedListener::class);
-		$context->registerEventListener(BeforeNodeWrittenEvent::class, NodeWrittenResetDocumentListener::class);
 		$context->registerEventListener(NodeWrittenEvent::class, NodeWrittenResetDocumentListener::class);
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
