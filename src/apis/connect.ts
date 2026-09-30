@@ -32,7 +32,7 @@ export interface OpenData {
 	content: string
 	documentState?: string
 	lock?: object
-	hasOwner: boolean
+	canAttachFiles: boolean
 }
 
 /**

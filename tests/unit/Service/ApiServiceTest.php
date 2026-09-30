@@ -53,7 +53,7 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$document->generateId();
 		$context = $this->createMock(IContext::class);
 		$documentData = new DocumentData(document: $document, documentState: 'documentState');
-		$sessionInfo = new SessionInfo(content: 'content', readOnly: false, lock: null, hasOwner: true);
+		$sessionInfo = new SessionInfo(content: 'content', readOnly: false, lock: null, canAttachFiles: true);
 		$context
 			->expects($this->once())
 			->method('buildDocument')
