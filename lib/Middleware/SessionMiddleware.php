@@ -121,31 +121,25 @@ class SessionMiddleware extends Middleware {
 	}
 
 	/**
+	 * Fallback for loading attachments without a session.
+	 *
 	 * @throws NotPermittedException
 	 * @throws NoUserException
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$documentId = (string)$this->request->getParam('documentId');
+		$fileId = (int)$this->request->getParam('fileId');
 		$shareToken = (string)$this->request->getParam('shareToken');
 		$user = $this->userSession->getUser();
 
-		$document = $this->documentService->getDocument($documentId);
-		if (!$document || $document->getContextType() !== 'file') {
-			throw new InvalidSessionException();
-		}
-		$fileId = $document->getContextId();
-
-		if ($shareToken !== '') {
+		if ($shareToken !== '' && $fileId > 0) {
 			$this->fileService->checkFileAccessFromShare($fileId, $shareToken);
-			$controller->setDocumentId($documentId);
 			return;
 		}
 
-		if ($user !== null) {
+		if ($user !== null && $fileId > 0) {
 			$this->fileService->checkFileAccessForUser($fileId, $user->getUID());
 			$controller->setUser($user);
-			$controller->setDocumentId($documentId);
 			return;
 		}
 
