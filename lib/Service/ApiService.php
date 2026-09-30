@@ -68,7 +68,12 @@ class ApiService {
 			return new DataResponse(['error' => $error], Http::STATUS_PRECONDITION_FAILED);
 		}
 
-		$sessionInfo = $context->prepareSession($documentData);
+		$sessionInfo = $context->prepareSession();
+		if ($documentData->documentState === null) {
+			$this->logger->debug('Sending content for ' . $document->toString());
+			$sessionInfo->content = $context->loadContent();
+		}
+
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$session = $this->sessionService->initSession($documentId, $guestName);
 		$displayName = $this->sessionService->getNameForSession($session);
