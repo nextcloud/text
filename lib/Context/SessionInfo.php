@@ -15,7 +15,7 @@ readonly class SessionInfo {
 		public ?string $content,
 		public bool $readOnly,
 		public ?ILock $lock,
-		public bool $hasOwner,
+		public bool $canAttachFiles,
 	) {
 	}
 
@@ -24,7 +24,7 @@ readonly class SessionInfo {
 			'content' => $this->content,
 			'readOnly' => $this->readOnly,
 			'lock' => $this->lock,
-			'hasOwner' => $this->hasOwner,
+			'canAttachFiles' => $this->canAttachFiles,
 		];
 	}
 }
