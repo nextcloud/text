@@ -360,17 +360,25 @@ class DocumentService {
 
 		$lastMTime = $document->getLastSavedVersionTime();
 		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
-			$context->updateDocument($document);
-			if (!empty($document->getUpdatedFields())) {
-				// Content was overwritten in the meantime and content changed.
-				if (isset($document->getUpdatedFields()['checksum'])) {
-					$content = $context->loadContent();
-					if ($content !== null) {
+			try {
+				$context->updateDocument($document);
+				if (!empty($document->getUpdatedFields())) {
+					// Content was overwritten in the meantime and content changed.
+					if (isset($document->getUpdatedFields()['checksum'])) {
+						$content = $context->loadContent();
+						if ($content === null) {
+							// Keep the stored checksum so the next save detects the outside change again.
+							$this->logger->warning('Could not load outside change, skipping save for ' . $document->toString());
+							return $document;
+						}
 						throw new DocumentSaveConflictException($content);
 					}
+					$lastMTime = $document->getLastSavedVersionTime();
+					$this->documentMapper->update($document);
 				}
-				$lastMTime = $document->getLastSavedVersionTime();
-				$this->documentMapper->update($document);
+			} catch (LockedException) {
+				// The file is being written right now, check again with the next save.
+				return $document;
 			}
 		}
 
@@ -408,7 +416,13 @@ class DocumentService {
 		}
 
 		// Version changed but the content remains the same
-		if ($autoSaveDocument === $context->loadContent()) {
+		try {
+			$currentContent = $context->loadContent();
+		} catch (LockedException) {
+			// The file is being written right now, try again with the next save.
+			return $document;
+		}
+		if ($autoSaveDocument === $currentContent) {
 			$this->writeDocumentState($document->id, $documentState);
 			$document->setLastSavedVersion($version);
 			$this->documentMapper->update($document);
