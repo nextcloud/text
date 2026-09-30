@@ -50,8 +50,7 @@ class NodeWrittenResetDocumentListener implements IEventListener {
 			return;
 		}
 
-		$this->lockService->unlock($node);
-		$context = new UnauthorizedFileContext($this->fileService, $node);
+		$context = new UnauthorizedFileContext($this->fileService, $this->lockService, $node);
 		$event = new DocumentContentUpdated($context);
 		$this->logger->debug('Dispatching document content updated event', ['event' => $event]);
 		$this->eventDispatcher->dispatchTyped($event);

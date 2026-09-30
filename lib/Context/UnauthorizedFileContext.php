@@ -10,6 +10,7 @@ namespace OCA\Text\Context;
 
 use OCA\Text\Db\Document;
 use OCA\Text\Service\FileService;
+use OCA\Text\Service\LockService;
 use OCP\Files\File;
 use OCP\Files\GenericFileException;
 use OCP\Files\NotFoundException;
@@ -21,6 +22,7 @@ class UnauthorizedFileContext implements IContext {
 
 	public function __construct(
 		private readonly FileService $fileService,
+		private readonly LockService $lockService,
 		private readonly File $file,
 	) {
 	}
@@ -104,7 +106,7 @@ class UnauthorizedFileContext implements IContext {
 
 	#[Override]
 	public function cleanup(): void {
-		throw new NotPermittedException();
+		$this->lockService->unlock($this->file);
 	}
 
 	private function computeCheckSum(?string $content = null): string {
