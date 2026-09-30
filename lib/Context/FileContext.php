@@ -106,30 +106,11 @@ class FileContext implements IContext {
 	}
 
 	#[Override]
-	public function prepareSession(DocumentData $documentData): SessionInfo {
-		$document = $documentData->document;
-		$documentState = $documentData->documentState;
-
-		$content = null;
-		if ($documentState === null) {
-			$this->logger->debug('Sending content for ' . $document->toString());
-			$content = $this->loadContent();
-		}
-
-		$readOnly = $this->isReadOnly();
-		$lockInfo = $this->getLockInfo();
-		if (!$readOnly) {
-			$isLocked = $this->lock();
-			if (!$isLocked) {
-				$readOnly = true;
-			}
-		}
-
+	public function prepareSession(): SessionInfo {
 		return new SessionInfo(
-			content: $content,
-			readOnly: $readOnly,
-			lock: $lockInfo,
-			hasOwner: $this->getOwner() !== null,
+			readOnly: $this->isReadOnly() || !$this->lock(),
+			canAttachFiles: $this->getOwner() !== null,
+			lock: $this->getLockInfo(),
 		);
 	}
 
@@ -172,10 +153,10 @@ class FileContext implements IContext {
 		return $this->fileService->loadContent($this->getFile());
 	}
 
-	public function saveWithLock(string $content, callable $doWhileLocked): void {
-		$this->lockService->runInScope($this->getFile(), function () use ($content, $doWhileLocked): void {
+	public function save(string $content, callable $afterSave): void {
+		$this->lockService->runInScope($this->getFile(), function () use ($content, $afterSave): void {
 			$this->getFile()->putContent($content);
-			$doWhileLocked();
+			$afterSave();
 		});
 	}
 

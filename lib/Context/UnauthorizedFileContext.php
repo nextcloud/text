@@ -58,7 +58,7 @@ class UnauthorizedFileContext implements IContext {
 	}
 
 	#[Override]
-	public function prepareSession(DocumentData $documentData): SessionInfo {
+	public function prepareSession(): SessionInfo {
 		throw new NotPermittedException();
 	}
 
@@ -98,7 +98,7 @@ class UnauthorizedFileContext implements IContext {
 		return $this->fileService->loadContent($this->getFile());
 	}
 
-	public function saveWithLock(string $content, callable $doWhileLocked): void {
+	public function save(string $content, callable $afterSave): void {
 		throw new NotPermittedException();
 	}
 
