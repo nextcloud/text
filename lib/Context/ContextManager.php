@@ -48,6 +48,10 @@ class ContextManager {
 	}
 
 	public function getContext(string $type, int $id, IShare|IUser $auth): IContext {
+		if ($auth instanceof IShare && $type !== 'file') {
+			// Collaborative editing not supported yet for non-file public shares. Exit early to minimize attack vector.
+			throw new NotFoundException('Context of type "' . $type . '" cannot be accessed through a share.');
+		}
 		$factoryClassName = $this->getContexts()[$type] ?? null;
 		if ($factoryClassName === null) {
 			throw new NotFoundException('Context of type "' . $type . '" was not registered!');
