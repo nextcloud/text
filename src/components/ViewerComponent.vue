@@ -38,11 +38,11 @@ defineOptions({
 const props = defineProps <{
 	filename?: string | undefined
 	fileid?: number | undefined
-	active: boolean
+	active?: boolean
 	shareToken?: string
 	mime?: string | undefined
 	source?: string | undefined
-	isEmbedded: boolean
+	isEmbedded?: boolean
 	onLoadedHandler?: () => void
 }>()
 
