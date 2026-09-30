@@ -421,6 +421,7 @@ class DocumentService {
 			$context->saveWithLock($autoSaveDocument, function () use ($document, $documentState): void {
 				$this->writeDocumentState($document->id, $documentState);
 			});
+			$context->updateDocument($document);
 			$document->setLastSavedVersion($version);
 			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
