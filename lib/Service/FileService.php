@@ -132,11 +132,14 @@ class FileService {
 		if (!$storage->instanceOfStorage(SharedStorage::class)) {
 			return false;
 		}
-		/** @var IShare $share */
-		$share = $storage->getShare();
-		$shareAttribtues = $share->getAttributes();
-		return $shareAttribtues !== null
-			&& $shareAttribtues->getAttribute('permissions', 'download') === false;
+		/** @var SharedStorage $storage */
+		return $this->isShareDownloadDisabled($storage->getShare());
+	}
+
+	public function isShareDownloadDisabled(IShare $share): bool {
+		$attributes = $share->getAttributes();
+		return $attributes !== null
+			&& $attributes->getAttribute('permissions', 'download') === false;
 	}
 
 	/**
@@ -190,8 +193,7 @@ class FileService {
 			throw new InvalidSessionException();
 		}
 
-		$attributes = $share->getAttributes();
-		if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
+		if ($this->isShareDownloadDisabled($share)) {
 			throw new InvalidSessionException();
 		}
 	}
