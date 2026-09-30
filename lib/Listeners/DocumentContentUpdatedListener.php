@@ -14,6 +14,7 @@ use OCA\Text\Service\DocumentService;
 use OCP\DB\Exception;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use Psr\Log\LoggerInterface;
 
@@ -63,8 +64,9 @@ class DocumentContentUpdatedListener implements IEventListener {
 		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
 			$this->documentService->resetDocument($document->getContextType(), $document->getContextId(), true);
+			$context->cleanup();
 			$this->logger->info('Reset document', ['document' => $document->jsonSerialize()]);
-		} catch (Exception|NotPermittedException $e) {
+		} catch (Exception|NotFoundException|NotPermittedException $e) {
 			// Do not throw during event handling.
 			$this->logger->warning('Reset document skipped in DocumentContentUpdatedListener', ['exception' => $e]);
 		}
