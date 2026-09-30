@@ -301,7 +301,7 @@ describe('Test all attachment insertion methods', () => {
 
 	it('Upload a local image file with RTLO character in name (RTLO is stripped)', () => {
 		const filename = randHash() + '.md'
-		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.uploadFile('empty.md', 'text/markdown', filename).as('fileId')
 		cy.visit('/apps/files')
 		cy.openFile(filename)
 
@@ -331,7 +331,9 @@ describe('Test all attachment insertion methods', () => {
 				// real file extension instead of the visually spoofed one.
 				const strippedName = fileName.replaceAll('\u202e', '')
 				const encodedName = fixedEncodeURIComponent(strippedName)
-				cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`).should('exist')
+				cy.get('@fileId').then((fileId => {
+					cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${fileId}/${encodedName}"]`).should('exist')
+				})
 			})
 		})
 		cy.closeFile()
