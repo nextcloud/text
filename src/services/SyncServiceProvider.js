@@ -25,7 +25,7 @@ export default function createSyncServiceProvider({
 }) {
 	if (!context) {
 		// We need a file id as a unique identifier for y.js as otherwise state might leak between different files
-		throw new Error('fileId is required')
+		throw new Error('context is required')
 	}
 	const WebSocketPolyfill = initWebSocketPolyfill(syncService)
 	const websocketProvider = new WebsocketProvider(
