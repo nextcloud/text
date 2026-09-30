@@ -24,6 +24,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
+use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -163,7 +164,16 @@ class SessionMiddleware extends Middleware {
 		}
 
 		if ($exception instanceof InvalidSessionException) {
-			return new JSONResponse([], 403);
+			return new JSONResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		if ($controller instanceof ISessionAwareController) {
+			if ($exception instanceof NotFoundException) {
+				return new JSONResponse([], Http::STATUS_NOT_FOUND);
+			}
+			if ($exception instanceof NotPermittedException) {
+				return new JSONResponse([], Http::STATUS_FORBIDDEN);
+			}
 		}
 
 		return parent::afterException($controller, $methodName, $exception);
