@@ -85,11 +85,11 @@ function checkAttachment(documentId, dirname, fileName, fileId, index, isImage =
 		.find('.image__view') // wait for load finish
 		.within(($el) => {
 			// keep track that we have created this attachment in the attachment dir
-			if (!attachmentFileNameToId[documentId]) {
-				attachmentFileNameToId[documentId] = {}
+			if (!attachmentFileNameToId[dirname]) {
+				attachmentFileNameToId[dirname] = {}
 			}
 
-			attachmentFileNameToId[documentId][fileName] = fileId
+			attachmentFileNameToId[dirname][fileName] = fileId
 
 			if (index > 0) {
 				expect(fileName).include(`(${index + 1})`)
@@ -323,7 +323,6 @@ describe('Test all attachment insertion methods', () => {
 
 			return cy.wait('@' + requestAlias).then((req) => {
 				const fileName = req.response.body.name // server echoes back name with RTLO
-				const documentId = req.request.query.documentId || req.request.body.documentId
 
 				// insertAttachment strips RTLO from the name before building the src URL and the
 				// alt text. The src URL no longer matches the on-disk filename (which still has
@@ -331,7 +330,7 @@ describe('Test all attachment insertion methods', () => {
 				// real file extension instead of the visually spoofed one.
 				const strippedName = fileName.replaceAll('\u202e', '')
 				const encodedName = fixedEncodeURIComponent(strippedName)
-				cy.get('@fileId').then((fileId => {
+				cy.get('@fileId').then((fileId) => {
 					cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${fileId}/${encodedName}"]`).should('exist')
 				})
 			})
@@ -370,11 +369,12 @@ describe('Test all attachment insertion methods', () => {
 
 		cy.getFile('test.md')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
+			.then((fileId) => {
+				const attachmentsFolder = `.attachments.${fileId}`
+				const files = attachmentFileNameToId[attachmentsFolder]
 
 				cy.expect(Object.keys(files)).to.have.lengthOf(5)
-				cy.openFolder('.attachments.' + documentId)
+				cy.openFolder('.attachments.' + fileId)
 				for (const name in files) {
 					cy.getFile(name)
 						.should('exist')
@@ -408,10 +408,11 @@ describe('Test all attachment insertion methods', () => {
 			cy.getFile('test.md')
 				.should('exist')
 				.should('have.attr', 'data-cy-files-list-row-fileid')
-				.then((documentId) => {
-					const files = attachmentFileNameToId[documentId]
-					cy.get('@createdFileId').should('eq', parseInt(documentId))
-					cy.openFolder('.attachments.' + documentId)
+				.then((fileId) => {
+					const attachmentsFolder = `.attachments.${fileId}`
+					const files = attachmentFileNameToId[attachmentsFolder]
+					cy.get('@createdFileId').should('eq', parseInt(fileId))
+					cy.openFolder(attachmentsFolder)
 					for (const name in files) {
 						cy.getFile(name)
 							.should('exist')
@@ -444,10 +445,11 @@ describe('Test all attachment insertion methods', () => {
 		cy.getFile('testCopied.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
+			.then((fileId) => {
+				const attachmentsFolder = `.attachments.${fileId}`
+				const files = attachmentFileNameToId[attachmentsFolder]
 
-				cy.openFolder('.attachments.' + documentId)
+				cy.openFolder(attachmentsFolder)
 				for (const name in files) {
 					cy.getFile(name)
 						.should('exist')
