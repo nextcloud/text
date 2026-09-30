@@ -26,7 +26,7 @@ window.OCA.Text.editorComponents = editorComponents
  */
 export function debugYjs() {
 	const intro
-		= 'Editor Yjs debug data. Copy the objects above that start with "fileId".'
+		= 'Editor Yjs debug data. Copy the objects above that start with "context".'
 	const introChrome = '- In Chrome, select "Copy" at the end of the line.'
 	const introFirefox
 		= '- In Firefox, right-click on the object and select "Copy object".'
