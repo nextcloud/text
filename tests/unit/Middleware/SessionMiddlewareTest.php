@@ -29,6 +29,7 @@ class SessionMiddlewareTest extends TestCase {
 	private IUserManager $userManager;
 	private FileService $fileService;
 	private string $documentId;
+	private int $fileId = 999;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -41,7 +42,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->fileService = $this->createMock(FileService::class);
 
 		$document = new Document();
-		$document->setContextId(999);
+		$document->setContextId($this->fileId);
 		$document->setContextType('file');
 		$document->generateId();
 		$this->documentId = $document->id;
@@ -78,7 +79,6 @@ class SessionMiddlewareTest extends TestCase {
 
 		$controller = $this->createMock(ISessionAwareController::class);
 		$controller->expects($this->never())->method('setUser');
-		$controller->expects($this->once())->method('setDocumentId');
 
 		$this->invokeMiddleware('token', 'user1', $controller);
 	}
@@ -91,7 +91,6 @@ class SessionMiddlewareTest extends TestCase {
 
 		$controller = $this->createMock(ISessionAwareController::class);
 		$controller->expects($this->once())->method('setUser');
-		$controller->expects($this->once())->method('setDocumentId');
 
 		$this->invokeMiddleware(null, 'user1', $controller);
 	}
@@ -204,7 +203,7 @@ class SessionMiddlewareTest extends TestCase {
 
 	private function invokeMiddleware(?string $token, ?string $userName = null, ?ISessionAwareController $controller = null): void {
 		$this->request->method('getParam')->willReturnMap([
-			['documentId', null, $this->documentId],
+			['fileId', null, $this->fileId],
 			['shareToken', null, $token],
 		]);
 
