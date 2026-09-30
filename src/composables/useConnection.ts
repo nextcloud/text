@@ -20,7 +20,7 @@ export interface InitialData {
 	content: string
 	documentState?: string
 	lock?: object
-	hasOwner: boolean
+	canAttachFiles: boolean
 }
 
 export const connectionKey = Symbol('text:connection') as InjectionKey<

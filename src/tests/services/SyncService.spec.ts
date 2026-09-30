@@ -38,7 +38,7 @@ const initialData = {
 	},
 	readOnly: false,
 	content: '',
-	hasOwner: true,
+	canAttachFiles: true,
 }
 
 const openResult = { connection, data: initialData }
@@ -62,6 +62,6 @@ describe('Sync service', () => {
 		await service.open()
 		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
 		expect(openHandler).toHaveBeenCalledWith(expect.objectContaining({ session: initialData.session }))
-		expect(openData.value?.hasOwner).toBe(true)
+		expect(openData.value?.canAttachFiles).toBe(true)
 	})
 })
