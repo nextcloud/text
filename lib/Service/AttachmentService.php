@@ -237,7 +237,6 @@ readonly class AttachmentService {
 	 * @throws NoUserException
 	 */
 	public function uploadAttachment(IContext $context, string $newFileName, $newFileResource, IShare|IUser $auth): array {
-
 		if ($auth instanceof IShare && $auth->getPassword() !== null) {
 			$key = PublicAuth::DAV_AUTHENTICATED;
 
@@ -256,6 +255,9 @@ readonly class AttachmentService {
 		}
 
 		$textFile = $this->getTextFile($context);
+		if (!$textFile->isUpdateable()) {
+			throw new NotPermittedException('No write permissions');
+		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = self::getUniqueFileName($saveDir, $newFileName);
 		$this->filenameValidator->validateFilename($fileName);
