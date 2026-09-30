@@ -98,10 +98,8 @@ class FileService {
 	 * @throws \InvalidArgumentException if the share is not a File share and path is omitted.
 	 */
 	public function getFileFromShareByPath(Ishare $share, ?string $path = null): File {
-		/*
-		* Check if we have proper read access (files drop)
-		* If not then well 404 it is.
-		*/
+		// Check if we have proper read access (files drop)
+		// If not then well 404 it is.
 		$this->checkSharePermissions($share);
 
 		$node = $share->getNode();
