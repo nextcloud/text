@@ -60,7 +60,7 @@ export function provideConnection(
 		const { connection: opened, data }
 			= openInitialSession(props, baseVersionEtag)
 				|| await openShare(props, baseVersionEtag, guestName)
-				|| await openFile(props, baseVersionEtag)
+				|| await openContext(props, baseVersionEtag)
 		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
@@ -162,7 +162,7 @@ async function openShare(
  * @param props.relativePath Relative path to the file.
  * @param baseVersionEtag Etag from the last editing session.
  */
-async function openFile(
+async function openContext(
 	props: {
 		context: Context
 		relativePath: string
