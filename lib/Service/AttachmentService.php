@@ -11,7 +11,6 @@ namespace OCA\Text\Service;
 
 use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Context\IContext;
 use OCA\Text\Controller\AttachmentController;
 use OCA\Text\Db\Session;
@@ -45,6 +44,7 @@ readonly class AttachmentService {
 		private IFilenameValidator $filenameValidator,
 		private IFilesMetadataManager $filesMetadataManager,
 		private ISession $session,
+		private FileService $fileService,
 	) {
 	}
 
@@ -110,7 +110,7 @@ readonly class AttachmentService {
 	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File && !$this->fileService->isDownloadDisabled($mediaFile)) {
 			return $mediaFile;
 		}
 		return null;
@@ -138,7 +138,7 @@ readonly class AttachmentService {
 	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File && !$this->fileService->isDownloadDisabled($mediaFile)) {
 			if ($this->previewManager->isMimeSupported($mediaFile->getMimeType())) {
 				try {
 					return [
@@ -382,28 +382,11 @@ readonly class AttachmentService {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists($filePath)) {
 			$file = $userFolder->get($filePath);
-			if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+			if ($file instanceof File && !$this->fileService->isDownloadDisabled($file)) {
 				return $file;
 			}
 		}
 		throw new NotFoundException();
-	}
-
-	/**
-	 * @throws NotFoundException
-	 */
-	private function isDownloadDisabled(File $file): bool {
-		$storage = $file->getStorage();
-		if ($storage->instanceOfStorage(SharedStorage::class)) {
-			/** @var SharedStorage $storage */
-			$share = $storage->getShare();
-			$attributes = $share->getAttributes();
-			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -415,7 +398,7 @@ readonly class AttachmentService {
 	 */
 	private function getTextFile(IContext $context): File {
 		$file = $context->getFile();
-		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+		if ($file instanceof File && !$this->fileService->isDownloadDisabled($file)) {
 			return $file;
 		}
 		throw new NotFoundException('Text file for '
