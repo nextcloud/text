@@ -8,6 +8,7 @@
 		v-if="!reloading"
 		ref="editor-component"
 		v-bind="props"
+		:context="props.context"
 		@focus="$emit('focus')"
 		@push:forbidden="$emit('push:forbidden')"
 		@reload="reloading = true">
