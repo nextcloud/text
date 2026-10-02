@@ -406,7 +406,7 @@ Cypress.Commands.add(
 
 		cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
 		cy.get('.files-list__header [data-cy-upload-picker] button.action-item__menutoggle').click()
-		cy.get('li.upload-picker__menu-entry button').contains(buttonLabel).click()
+		cy.get('button[role="menuitem"]').contains(buttonLabel).click()
 
 		cy.wait('@addDescription')
 	},
