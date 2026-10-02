@@ -37,7 +37,7 @@ class SessionMapper extends QBMapper {
 	 * @return Session
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $documentId, int $sessionId, string $token): Session {
+	public function find(string $documentId, int $sessionId, string $token): Session {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
@@ -60,7 +60,7 @@ class SessionMapper extends QBMapper {
 	 *
 	 * @psalm-return array<Session>
 	 */
-	public function findAll(int $documentId): array {
+	public function findAll(string $documentId): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -69,7 +69,7 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function countAll(int $documentId): int {
+	public function countAll(string $documentId): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -85,7 +85,7 @@ class SessionMapper extends QBMapper {
 	 *
 	 * @psalm-return array<Session>
 	 */
-	public function findAllActive(int $documentId): array {
+	public function findAllActive(string $documentId): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -109,7 +109,7 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function deleteInactiveWithoutSteps(?int $documentId = null): int {
+	public function deleteInactiveWithoutSteps(?string $documentId = null): int {
 		$lastContact = time() - SessionService::SESSION_VALID_TIME;
 
 		$inactiveSessionBuilder = $this->db->getQueryBuilder();
@@ -217,7 +217,7 @@ class SessionMapper extends QBMapper {
 		return $deletedCount;
 	}
 
-	public function deleteByDocumentId(int $documentId): int {
+	public function deleteByDocumentId(string $documentId): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
@@ -230,7 +230,7 @@ class SessionMapper extends QBMapper {
 			->executeStatement();
 	}
 
-	public function isUserInDocument(int $documentId, string $userId): bool {
+	public function isUserInDocument(string $documentId, string $userId): bool {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())
