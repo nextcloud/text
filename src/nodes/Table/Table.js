@@ -373,6 +373,31 @@ export default Table.extend({
 				}
 				return this.editor.commands.goToPreviousCell()
 			},
+			/**
+			 * <Mod>-<A> inside a table cell
+			 * Select only the current cell content, not the whole document.
+			 * Outside a table the default document-wide select-all still runs.
+			 */
+			'Mod-a': () => {
+				if (!isInTable(this.editor.state)) {
+					return false
+				}
+
+				const { $from } = this.editor.state.selection
+				for (let d = $from.depth; d > 0; d -= 1) {
+					const role = $from.node(d).type.spec.tableRole
+					if (role === 'cell' || role === 'header_cell') {
+						const from = $from.start(d)
+						const to = $from.end(d)
+						if (!(to >= from)) {
+							return false
+						}
+						return this.editor.commands.setTextSelection({ from, to })
+					}
+				}
+
+				return false
+			},
 		}
 	},
 })
