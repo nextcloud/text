@@ -25,3 +25,17 @@ Cypress.on('window:before:load', (win) => {
 before(() => {
 	chai.use(chaiExtension)
 })
+
+// Defer ResizeObserver callbacks one frame to break floating UI sync loops
+// that otherwise tank the renderer and trigger Electron's unresponsive kill.
+// Taken from: https://github.com/nextcloud/server/pull/60189
+Cypress.on('window:before:load', (win) => {
+	const Original = win.ResizeObserver
+	win.ResizeObserver = class extends Original {
+		constructor(callback) {
+			super((entries, observer) => {
+				win.requestAnimationFrame(() => callback(entries, observer))
+			})
+		}
+	}
+})
