@@ -97,15 +97,15 @@ export default TableCell.extend({
 						) {
 							const tableChild = slice.content.firstChild.firstChild
 							if (
-								(tableChild.childCount === 1
+								(tableChild?.childCount === 1
 									&& tableChild.type.name === 'tableRow')
-								|| tableChild.type.name === 'tableHeadRow'
+								|| tableChild?.type.name === 'tableHeadRow'
 							) {
 								const rowChild = tableChild.firstChild
 								if (
-									(rowChild.childCount === 1
+									(rowChild?.childCount === 1
 										&& rowChild.type.name === 'tableCell')
-									|| rowChild.type.name === 'tableHeader'
+									|| rowChild?.type.name === 'tableHeader'
 								) {
 									return new Slice(rowChild.content, 0, 0)
 								}

@@ -4,7 +4,7 @@
  */
 
 import { getExtensionField } from '@tiptap/core'
-import EditableTable from '../../nodes/EditableTable.js'
+import EditableTable from '../../nodes/EditableTable.ts'
 import testEditor from '../testHelpers/testEditor.js'
 import RichText from './../../extensions/RichText.js'
 import TaskItem from './../../nodes/TaskItem.ts'
