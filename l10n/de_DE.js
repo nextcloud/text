@@ -333,7 +333,7 @@ OC.L10N.register(
     "Block math" : "Block-Mathematik",
     "Info callout" : "Info-Textbox",
     "Success callout" : "Erfolg-Textbox",
-    "Warning callout" : "Warnung-Textbox",
+    "Warning callout" : "Warnungs-Textbox",
     "Danger callout" : "Gefahr-Textbox",
     "Question callout" : "Frageaufruf",
     "Annotations" : "Notizen",

@@ -158,7 +158,7 @@ OC.L10N.register(
     "Highlight" : "Zvýrazniť",
     "Highlighted text" : "Zvýraznený text",
     "Heading 1" : "Nadpis 1",
-    "Heading level 1" : "Nadpis level 1",
+    "Heading level 1" : "Nadpis úrovne 1",
     "Heading 6" : "Nadpis 6",
     "Heading level 6" : "Nadpis level 6",
     "Unordered list" : "Neusporiadaný zoznam",
