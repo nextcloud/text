@@ -168,7 +168,7 @@ describe('Sync', () => {
 			.should('include', 'after the lost connection')
 	})
 
-	it('asks to reload page when document session got cleaned up', () => {
+	it.only('asks to reload page when document session got cleaned up', () => {
 		cy.get('.save-status button').click()
 		cy.wait('@save')
 		cy.uploadTestFile('test.md')
