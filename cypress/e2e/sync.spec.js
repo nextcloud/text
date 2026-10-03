@@ -171,6 +171,7 @@ describe('Sync', () => {
 	it.only('asks to reload page when document session got cleaned up', () => {
 		cy.get('.save-status button').click()
 		cy.wait('@save')
+		cy.wait(1_000) // ensure that the etag changes
 		cy.uploadTestFile('test.md')
 
 		cy.getContent().should('not.exist')
