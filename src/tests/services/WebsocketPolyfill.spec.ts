@@ -8,14 +8,15 @@ import { shallowRef } from 'vue'
 import { SyncService } from '../../services/SyncService.ts'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
+vi.mock(import('../../services/SyncService.ts'), () => {
+	const SyncService = vi.fn()
+	SyncService.prototype.bus = { on: vi.fn() }
+	SyncService.prototype.open = vi.fn().mockImplementation(async () => ({}))
+	SyncService.prototype.hasActiveConnection = vi.fn()
+	return { SyncService }
+})
+
 describe('Init function', () => {
-	vi.mock(import('../../services/SyncService.ts'), () => {
-		const SyncService = vi.fn()
-		SyncService.prototype.bus = { on: vi.fn() }
-		SyncService.prototype.open = vi.fn().mockImplementation(async () => ({}))
-		SyncService.prototype.hasActiveConnection = vi.fn()
-		return { SyncService }
-	})
 	const mockSyncService = () => new SyncService({
 		connection: shallowRef(undefined),
 		openConnection: vi.fn(),
