@@ -24,6 +24,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
+use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -79,7 +80,7 @@ class SessionMiddleware extends Middleware {
 	 * @throws InvalidDocumentBaseVersionEtagException
 	 */
 	private function assertDocumentBaseVersionEtag(): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$documentId = (string)$this->request->getParam('documentId');
 		$baseVersionEtag = $this->request->getParam('baseVersionEtag');
 
 		$document = $this->getDocument($documentId);
@@ -93,10 +94,9 @@ class SessionMiddleware extends Middleware {
 	 * @throws AccountDisabledException
 	 */
 	private function assertDocumentSession(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
+		$documentId = (string)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
-		$shareToken = (string)$this->request->getParam('token');
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
@@ -108,6 +108,7 @@ class SessionMiddleware extends Middleware {
 			if ($user === null || !$user->isEnabled()) {
 				throw new AccountDisabledException();
 			}
+			$controller->setUser($user);
 		}
 
 		$document = $this->getDocument($documentId);
@@ -118,38 +119,35 @@ class SessionMiddleware extends Middleware {
 		$controller->setSession($session);
 		$controller->setDocumentId($documentId);
 		$controller->setDocument($document);
-		if (!$shareToken) {
-			$controller->setUserId($session->getUserId());
-		}
 	}
 
 	/**
+	 * Fallback for loading attachments without a session.
+	 *
 	 * @throws NotPermittedException
 	 * @throws NoUserException
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$fileId = (int)$this->request->getParam('documentId');
+		$fileId = (int)$this->request->getParam('fileId');
 		$shareToken = (string)$this->request->getParam('shareToken');
-		$userId = $this->userSession->getUser()?->getUID();
+		$user = $this->userSession->getUser();
 
-		if ($shareToken !== '') {
-			$documentId = $this->fileService->getDocumentIdFromShare($fileId, $shareToken);
-			$controller->setDocumentId($documentId);
+		if ($shareToken !== '' && $fileId > 0) {
+			$this->fileService->checkFileAccessFromShare($fileId, $shareToken);
 			return;
 		}
 
-		if ($userId !== null) {
-			$documentId = $this->fileService->getDocumentIdForUser($fileId, $userId);
-			$controller->setUserId($userId);
-			$controller->setDocumentId($documentId);
+		if ($user !== null && $fileId > 0) {
+			$this->fileService->checkFileAccessForUser($fileId, $user->getUID());
+			$controller->setUser($user);
 			return;
 		}
 
 		throw new InvalidSessionException();
 	}
 
-	private function getDocument(int $documentId): ?Document {
+	private function getDocument(string $documentId): ?Document {
 		if ($this->document?->getId() !== $documentId) {
 			$this->document = $this->documentService->getDocument($documentId);
 		}
@@ -166,7 +164,16 @@ class SessionMiddleware extends Middleware {
 		}
 
 		if ($exception instanceof InvalidSessionException) {
-			return new JSONResponse([], 403);
+			return new JSONResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		if ($controller instanceof ISessionAwareController) {
+			if ($exception instanceof NotFoundException) {
+				return new JSONResponse([], Http::STATUS_NOT_FOUND);
+			}
+			if ($exception instanceof NotPermittedException) {
+				return new JSONResponse([], Http::STATUS_FORBIDDEN);
+			}
 		}
 
 		return parent::afterException($controller, $methodName, $exception);

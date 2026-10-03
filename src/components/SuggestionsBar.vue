@@ -104,7 +104,7 @@ export default {
 
 	computed: {
 		isUploadDisabled() {
-			return !this.openData?.hasOwner || !this.networkOnline
+			return !this.openData?.canAttachFiles || !this.networkOnline
 		},
 
 		uploadTitle() {
