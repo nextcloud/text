@@ -19,14 +19,29 @@ env:
   CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/Cypress
 
 jobs:
-  init:
+  cypress:
     runs-on: ubuntu-latest
-    outputs:
-      nodeVersion: ${{ steps.versions.outputs.nodeVersion }}
-      npmVersion: ${{ steps.versions.outputs.npmVersion }}
+    timeout-minutes: 30
+
     strategy:
+      fail-fast: false
       matrix:
         server-versions: ['stable35']
+        containers: [1]
+        php-versions: ['8.3']
+
+    name: runner ${{ matrix.containers }}
+
+    services:
+      postgres:
+        image: ghcr.io/nextcloud/continuous-integration-postgres-16:latest # zizmor: ignore[unpinned-images]
+        ports:
+          - 4444:5432/tcp
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: rootpassword
+          POSTGRES_DB: nextcloud
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
 
     steps:
       - name: Checkout server
@@ -73,55 +88,6 @@ jobs:
         run: |
           npm ci
           TESTING=true npm run build --if-present
-
-      - name: Save context
-        uses: buildjet/cache/save@3e70d19e31d6a8030aeddf6ed8dbe601f94d09f4 # v4.0.2
-        with:
-          key: cypress-context-${{ github.run_id }}
-          path: |
-            ./
-
-  cypress:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs: init
-
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1]
-        php-versions: ['8.3']
-
-    name: runner ${{ matrix.containers }}
-
-    services:
-      postgres:
-        image: ghcr.io/nextcloud/continuous-integration-postgres-16:latest # zizmor: ignore[unpinned-images]
-        ports:
-          - 4444:5432/tcp
-        env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: rootpassword
-          POSTGRES_DB: nextcloud
-        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
-
-    steps:
-      - name: Restore context
-        uses: buildjet/cache/restore@3e70d19e31d6a8030aeddf6ed8dbe601f94d09f4 # v4.0.2
-        with:
-          fail-on-cache-miss: true
-          key: cypress-context-${{ github.run_id }}
-          path: |
-            ./
-
-      - name: Set up node ${{ needs.init.outputs.nodeVersion }}
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          cache: 'npm'
-          node-version: ${{ needs.init.outputs.nodeVersion }}
-
-      - name: Set up npm ${{ needs.init.outputs.npmVersion }}
-        run: npm i -g 'npm@${{ needs.init.outputs.npmVersion }}'
 
       - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
@@ -197,7 +163,7 @@ jobs:
 
   summary:
     runs-on: ubuntu-latest-low
-    needs: [init, cypress]
+    needs: [cypress]
 
     if: always()
 
@@ -205,4 +171,4 @@ jobs:
 
     steps:
       - name: Summary status
-        run: if ${{ needs.init.result != 'success' || ( needs.cypress.result != 'success' && needs.cypress.result != 'skipped' ) }}; then exit 1; fi
+        run: if ${{ ( needs.cypress.result != 'success' && needs.cypress.result != 'skipped' ) }}; then exit 1; fi
