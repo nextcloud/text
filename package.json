@@ -131,7 +131,7 @@
     "eslint-plugin-cypress": "^7.0.2",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^30.0.1",
-    "prosemirror-schema-basic": "^1.2.4",
+    "prosemirror-schema-basic": "^1.2.5",
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^4.0.0",
     "typescript": "^6.0.3",
