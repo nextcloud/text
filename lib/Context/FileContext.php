@@ -130,6 +130,7 @@ class FileContext implements IContext {
 		$lastEtag = $document->getLastSavedVersionEtag();
 
 		if ($this->isReadOnly()) {
+			$this->logger->debug('Not updating read only document', ['context' => $this->toString()]);
 			return;
 		}
 
@@ -139,6 +140,7 @@ class FileContext implements IContext {
 
 		$fileContent = $file->getContent();
 		$fileChecksum = self::computeCheckSum($fileContent);
+		$this->logger->debug('computed checksum', ['checksum' => $fileChecksum]);
 
 		$document->setChecksum($fileChecksum);
 		$document->setLastSavedVersionTime($fileMtime);
