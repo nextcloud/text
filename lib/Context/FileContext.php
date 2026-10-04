@@ -137,10 +137,6 @@ class FileContext implements IContext {
 		$fileMtime = $file->getMtime();
 		$fileEtag = $file->getEtag();
 
-		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return;
-		}
-
 		$fileContent = $file->getContent();
 		$fileChecksum = self::computeCheckSum($fileContent);
 
