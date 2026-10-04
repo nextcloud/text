@@ -437,7 +437,6 @@ class DocumentService {
 			});
 			$context->updateDocument($document);
 			$document->setLastSavedVersion($version);
-			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException) {
 			// Ignore lock since it might occur when multiple people save at the same time
