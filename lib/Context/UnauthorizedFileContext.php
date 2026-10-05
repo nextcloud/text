@@ -39,7 +39,7 @@ class UnauthorizedFileContext implements IContext {
 
 	#[Override]
 	public function toString(): string {
-		return $this->getType() . ' (' . $this->getId() . ')';
+		return 'unauthorized ' . $this->getType() . ' (' . $this->getId() . ')';
 	}
 
 	/**
@@ -82,10 +82,6 @@ class UnauthorizedFileContext implements IContext {
 		$file = $this->getFile();
 		$fileMtime = $file->getMtime();
 		$fileEtag = $file->getEtag();
-
-		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return;
-		}
 
 		$fileContent = $file->getContent();
 		$fileChecksum = self::computeCheckSum($fileContent);
