@@ -84,7 +84,7 @@
     "escape-html": "^1.0.3",
     "highlight.js": "^11.12.0",
     "katex": "^0.18.9",
-    "lib0": "^0.2.117",
+    "lib0": "^0.2.119",
     "lowlight": "^3.3.0",
     "markdown-it": "^15.0.2",
     "markdown-it-container": "^4.0.0",
