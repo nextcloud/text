@@ -274,7 +274,7 @@ OC.L10N.register(
     "Copy code" : "Code kopieren",
     "Code block options" : "Codeblock-Optionen",
     "Code block language" : "Codeblock-Sprache",
-    "e.g. php, javascript, json…" : "Z. B. php, javascript, json…",
+    "e.g. php, javascript, json…" : "Z. B. php, javascript, json…",
     "Source code" : "Quellcode",
     "Diagram" : "Diagramm",
     "Both" : "Beide",
