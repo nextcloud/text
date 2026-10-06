@@ -76,20 +76,10 @@ class UnauthorizedFileContext implements IContext {
 	 * @throws NotPermittedException if the file changed and reading is not allowed.
 	 */
 	public function updateDocument(Document $document): void {
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
-
 		$file = $this->getFile();
-		$fileMtime = $file->getMtime();
-		$fileEtag = $file->getEtag();
-
-		$fileContent = $file->getContent();
-		$fileChecksum = self::computeCheckSum($fileContent);
-
-		$document->setChecksum($fileChecksum);
-		$document->setLastSavedVersionTime($fileMtime);
-		$document->setLastSavedVersionEtag($fileEtag);
-		return;
+		$document->setChecksum($this->computeCheckSum());
+		$document->setLastSavedVersionTime($file->getMtime());
+		$document->setLastSavedVersionEtag($file->getEtag());
 	}
 
 	public function loadContent(): ?string {

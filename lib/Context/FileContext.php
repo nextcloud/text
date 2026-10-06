@@ -126,25 +126,18 @@ class FileContext implements IContext {
 	 * @throws NotPermittedException if the file changed and reading is not allowed.
 	 */
 	public function updateDocument(Document $document): void {
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
-
 		if ($this->isReadOnly()) {
 			$this->logger->debug('Not updating read only document', ['context' => $this->toString()]);
 			return;
 		}
 
 		$file = $this->getFile();
-		$fileMtime = $file->getMtime();
-		$fileEtag = $file->getEtag();
-
-		$fileContent = $file->getContent();
-		$fileChecksum = self::computeCheckSum($fileContent);
+		$fileChecksum = $this->computeCheckSum();
 		$this->logger->debug('computed checksum', ['checksum' => $fileChecksum]);
 
 		$document->setChecksum($fileChecksum);
-		$document->setLastSavedVersionTime($fileMtime);
-		$document->setLastSavedVersionEtag($fileEtag);
+		$document->setLastSavedVersionTime($file->getMTime());
+		$document->setLastSavedVersionEtag($file->getEtag());
 	}
 
 	public function loadContent(): ?string {
