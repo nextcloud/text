@@ -22,6 +22,9 @@ const emit = defineEmits<{
 
 // An end-to-end encrypted file is read from its source, not opened collaboratively
 const isEncrypted = computed(() => Boolean(props.file.attributes?.['e2ee-is-encrypted']))
+// So is an older version of a file, which carries the file's own id: with it,
+// the editor would open the current document rather than that version
+const isVersion = computed(() => props.file.root?.startsWith('/versions/') ?? false)
 
 // Swiping to select text would otherwise step to the next file
 onMounted(() => emit('update:canSwipe', false))
@@ -30,10 +33,21 @@ onMounted(() => emit('update:canSwipe', false))
 <template>
 	<ViewerComponent
 		:filename="file.path"
-		:fileid="file.fileid"
+		:fileid="isVersion ? null : file.fileid"
 		:mime="file.mime"
 		:source="file.encodedSource"
 		:e2EeIsEncrypted="isEncrypted"
 		active
 		:onLoadedHandler="() => emit('loaded')" />
 </template>
+
+<style lang="scss">
+// The viewer centres the element a handler renders and leaves it to size
+// itself, which suits a picture. The editor takes the width of its parent
+// instead, so left inline the two sized each other and never settled.
+text-viewer {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+</style>
