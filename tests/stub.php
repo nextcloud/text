@@ -35,11 +35,6 @@ namespace OCA\Files\Event {
 	}
 }
 
-namespace OCA\Viewer\Event {
-	class LoadViewer extends \OCP\EventDispatcher\Event {
-	}
-}
-
 namespace OCA\Files_Sharing\Event {
 	abstract class BeforeTemplateRenderedEvent extends \OCP\EventDispatcher\Event {
 		abstract public function getShare(): \OCP\Share\IShare;

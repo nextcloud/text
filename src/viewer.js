@@ -1,46 +1,33 @@
-import { logger } from './helpers/logger.ts'
-import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
-
 /**
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+
+import { t } from '@nextcloud/l10n'
+import { registerHandler } from '@nextcloud/viewer'
+import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
+
 import 'vite/modulepreload-polyfill'
 
-/**
- * Wrapper for async registration of ViewerComponent.
- * Note: it should be named function - the name is used for component registration.
- *
- * @return {Promise<import('./views/ViewerView.js')>} ViewerComponent
- */
-function AsyncTextViewerComponent() {
-	return import('./views/ViewerView.js')
-}
+const tagName = 'text-viewer'
+const mimes = new Set([...openMimetypesMarkdown, ...openMimetypesPlainText])
 
-if (typeof OCA.Viewer === 'undefined') {
-	logger.error('Viewer app is not installed')
-} else {
-	OCA.Viewer.registerHandler({
-		id: 'text',
-		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: AsyncTextViewerComponent,
-		group: null,
-		theme: 'default',
-		canCompare: true,
-		downloadCallback: async (fileInfo) => {
-			// Save any unsaved changes before download
-			const editors = window.OCA?.Text?.editorComponents
-			if (editors instanceof Set) {
-				for (const editor of editors) {
-					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
-						logger.debug('Saving file before download', {
-							fileId: fileInfo.fileid,
-						})
-						await editor.save()
-						return
-					}
-				}
-			}
-		},
-	})
-}
+// This script runs on every page: the editor is only loaded, and its element
+// defined, the first time the viewer opens a text file
+registerHandler({
+	id: 'text',
+	displayName: t('text', 'Text'),
+	tagName,
+	enabled: (nodes) => nodes.every((node) => mimes.has(node.mime ?? '')),
+	onInit: async () => {
+		const [{ defineCustomElement }, { default: TextViewerWrapper }] = await Promise.all([
+			import('vue'),
+			import('./views/TextViewerWrapper.vue'),
+		])
+		if (window.customElements.get(tagName) === undefined) {
+			window.customElements.define(tagName, defineCustomElement(TextViewerWrapper, { shadowRoot: false }))
+		}
+	},
+	theme: 'default',
+	canCompare: true,
+})
