@@ -32,7 +32,7 @@
 		display: none !important;
 	}
 
-	#viewer[data-handler='text'] {
+	.viewer__modal[data-handler='text'] {
 		// Hide top border
 		border: none;
 		width: 100% !important;
@@ -43,9 +43,20 @@
 			// Hide modal header (close button)
 			display: none !important;
 		}
-		.modal-container {
-			// Make sure top aligned as we hided the menubar */
-			top: 0px;
+		.modal-wrapper {
+			height: fit-content;
+		}
+		.modal-container, .modal-container__content {
+			// Make sure top aligned as we hided the menubar, and let the
+			// content run over as many pages as it needs: the viewer pins
+			// the container between its header and its footer, and both
+			// scroll what does not fit
+			top: 0 !important;
+			bottom: auto !important;
+			height: fit-content !important;
+			overflow: visible !important;
+		}
+		text-viewer {
 			height: fit-content;
 		}
 	}
