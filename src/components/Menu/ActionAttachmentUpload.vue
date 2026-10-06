@@ -133,14 +133,14 @@ export default {
 		},
 
 		isUploadDisabled() {
-			return !this.openData?.hasOwner || !this.networkOnline
+			return !this.openData?.canAttachFiles || !this.networkOnline
 		},
 
 		menuTitle() {
 			if (!this.networkOnline) {
 				return t('text', 'Disabled because you are currently offline.')
 			}
-			if (!this.openData?.hasOwner) {
+			if (!this.openData?.canAttachFiles) {
 				return t(
 					'text',
 					'Attachments cannot be created or uploaded because this file is shared from another cloud.',

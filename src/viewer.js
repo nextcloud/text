@@ -32,7 +32,9 @@ if (typeof OCA.Viewer === 'undefined') {
 			const editors = window.OCA?.Text?.editorComponents
 			if (editors instanceof Set) {
 				for (const editor of editors) {
-					if (editor?.fileId === fileInfo.fileid && editor?.dirty) {
+					if (editor?.context?.type === 'file'
+						&& editor.context.id === fileInfo.fileid
+						&& editor?.dirty) {
 						logger.debug('Saving file before download', {
 							fileId: fileInfo.fileid,
 						})

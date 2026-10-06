@@ -28,6 +28,8 @@ class SessionMiddlewareTest extends TestCase {
 	private IUserSession $userSession;
 	private IUserManager $userManager;
 	private FileService $fileService;
+	private string $documentId;
+	private int $fileId = 999;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -38,6 +40,13 @@ class SessionMiddlewareTest extends TestCase {
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->fileService = $this->createMock(FileService::class);
+
+		$document = new Document();
+		$document->setContextId($this->fileId);
+		$document->setContextType('file');
+		$document->generateId();
+		$this->documentId = $document->id;
+		$this->documentService->method('getDocument')->with($document->id)->willReturn($document);
 
 		$this->middleware = new SessionMiddleware(
 			$this->request,
@@ -53,24 +62,23 @@ class SessionMiddlewareTest extends TestCase {
 	public function testUnauthenticatedAccessBlocked(): void {
 		$this->expectException(InvalidSessionException::class);
 
-		$this->fileService->method('getDocumentIdFromShare')->with(999, 'token')->willThrowException(new InvalidSessionException());
+		$this->fileService->expects($this->once())->method('checkFileAccessFromShare')->with(999, 'token')->willThrowException(new InvalidSessionException());
 
 		$this->invokeMiddleware('token');
 	}
 
 	public function testAuthenticatedSingleIdAllowed(): void {
-		$this->fileService->method('getDocumentIdFromShare')->with(999, 'token')->willReturn(999);
+		$this->fileService->expects($this->once())->method('checkFileAccessFromShare')->with(999, 'token');
 
 		$this->invokeMiddleware('token');
 		$this->assertTrue(true);
 	}
 
 	public function testLoggedInUserWithValidToken(): void {
-		$this->fileService->method('getDocumentIdFromShare')->with(999, 'token')->willReturn(999);
+		$this->fileService->expects($this->once())->method('checkFileAccessFromShare')->with(999, 'token');
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
-		$controller->expects($this->once())->method('setDocumentId');
+		$controller->expects($this->never())->method('setUser');
 
 		$this->invokeMiddleware('token', 'user1', $controller);
 	}
@@ -79,11 +87,10 @@ class SessionMiddlewareTest extends TestCase {
 		$user = $this->createMock(IUser::class);
 		$user->method('getUID')->willReturn('user1');
 
-		$this->fileService->method('getDocumentIdForUser')->with(999, 'user1')->willReturn(999);
+		$this->fileService->expects($this->once())->method('checkFileAccessForUser')->with(999, 'user1');
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->once())->method('setUserId');
-		$controller->expects($this->once())->method('setDocumentId');
+		$controller->expects($this->once())->method('setUser');
 
 		$this->invokeMiddleware(null, 'user1', $controller);
 	}
@@ -94,7 +101,7 @@ class SessionMiddlewareTest extends TestCase {
 		$user = $this->createMock(IUser::class);
 		$user->method('getUID')->willReturn('user1');
 
-		$this->fileService->method('getDocumentIdForUser')->with(999, 'user1')->willThrowException(new InvalidSessionException());
+		$this->fileService->expects($this->once())->method('checkFileAccessForUser')->with(999, 'user1')->willThrowException(new InvalidSessionException());
 
 		$this->invokeMiddleware(null, 'user1');
 	}
@@ -105,7 +112,7 @@ class SessionMiddlewareTest extends TestCase {
 		$user = $this->createMock(IUser::class);
 		$user->method('getUID')->willReturn('user1');
 
-		$this->fileService->method('getDocumentIdFromShare')->with(999, 'token')->willThrowException(new InvalidSessionException());
+		$this->fileService->expects($this->once())->method('checkFileAccessFromShare')->with(999, 'token')->willThrowException(new InvalidSessionException());
 
 		$this->invokeMiddleware('token', 'user1');
 	}
@@ -122,7 +129,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->documentService->method('getDocument')->willReturn($this->createMock(Document::class));
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->once())->method('setUserId')->with('alice');
+		$controller->expects($this->once())->method('setUser')->with($user);
 
 		$this->invokeAssertDocumentSession($controller);
 		$this->assertTrue(true);
@@ -141,7 +148,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->userManager->method('get')->with('alice')->willReturn($user);
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->never())->method('setUser');
 
 		$this->invokeAssertDocumentSession($controller);
 	}
@@ -156,7 +163,7 @@ class SessionMiddlewareTest extends TestCase {
 		$this->userManager->method('get')->with('alice')->willReturn(null);
 
 		$controller = $this->createMock(ISessionAwareController::class);
-		$controller->expects($this->never())->method('setUserId');
+		$controller->expects($this->never())->method('setUser');
 
 		$this->invokeAssertDocumentSession($controller);
 	}
@@ -185,7 +192,7 @@ class SessionMiddlewareTest extends TestCase {
 
 	private function invokeAssertDocumentSession(ISessionAwareController $controller, ?string $shareToken = null): void {
 		$this->request->method('getParam')->willReturnMap([
-			['documentId', null, 999],
+			['documentId', null, $this->documentId],
 			['sessionId', null, 1],
 			['sessionToken', null, 'sessionToken'],
 			['token', null, $shareToken],
@@ -196,7 +203,7 @@ class SessionMiddlewareTest extends TestCase {
 
 	private function invokeMiddleware(?string $token, ?string $userName = null, ?ISessionAwareController $controller = null): void {
 		$this->request->method('getParam')->willReturnMap([
-			['documentId', null, 999],
+			['fileId', null, $this->fileId],
 			['shareToken', null, $token],
 		]);
 
