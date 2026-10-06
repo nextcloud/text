@@ -7,7 +7,7 @@ import { initUserAndFiles, randUser } from '../utils/index.js'
 const user = randUser()
 
 describe('Open test.md in viewer', function() {
-	const getViewer = () => cy.get('#viewer')
+	const getViewer = () => cy.get('.viewer__modal')
 
 	before(function() {
 		initUserAndFiles(user, 'test.md', 'empty.md')
@@ -67,8 +67,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Closes the editor', function() {
 		cy.openFile('test.md')
-		cy.get('#viewer .modal-header button.header-close').click()
-		cy.get('#viewer').should('not.exist')
+		cy.get('.viewer__modal .modal-header button.header-close').click()
+		cy.get('.viewer__modal').should('not.exist')
 	})
 
 	it('Can use tab keys for list in the viewer', function() {
