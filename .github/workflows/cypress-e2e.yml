@@ -37,14 +37,6 @@ jobs:
           ref: ${{ matrix.server-versions }}
           submodules: true
 
-      - name: Checkout viewer
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          persist-credentials: false
-          repository: nextcloud/viewer
-          ref: ${{ matrix.server-versions }}
-          path: apps/viewer
-
       - name: Checkout assistant
         if: matrix.server-versions == 'main'
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -162,7 +154,6 @@ jobs:
           export OC_PASS=1234561
           php occ user:add --password-from-env user1
           php occ user:add --password-from-env user2
-          php occ app:enable viewer
           php occ app:enable text
           php occ app:enable assistant --force
           php occ app:enable testing

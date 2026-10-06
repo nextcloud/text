@@ -464,5 +464,7 @@ Cypress.Commands.add('createDirectEditingLinkForNewFile', (path) => {
 
 Cypress.on(
 	'uncaught:exception',
-	(err) => !err.message.includes('ResizeObserver loop limit exceeded'),
+	// Chrome said "limit exceeded", it now says "completed with undelivered
+	// notifications": a warning either way, not an error of the page
+	(err) => !err.message.includes('ResizeObserver loop'),
 )
