@@ -26,7 +26,7 @@ test.describe('Text PROPFIND extension', () => {
 			const properties = [PROPERTY_WORKSPACE_FLAT, PROPERTY_WORKSPACE_FILE_FLAT]
 			const fiveSecondsAgo = Math.floor(Date.now() / 1000) - 5
 
-			await page.goto('/apps/dashboard')
+			await page.goto('apps/dashboard')
 			await user.uploadFile({ name: 'Readme.md', content: '', mtime: fiveSecondsAgo })
 
 			const [root1] = await propfindFolder(user, '/', 0, properties)
@@ -44,7 +44,7 @@ test.describe('Text PROPFIND extension', () => {
 		test('never adds rich workspace property to nested folders for flat properties', async ({ page, user }) => {
 			const properties = [PROPERTY_WORKSPACE_FLAT, PROPERTY_WORKSPACE_FILE_FLAT]
 
-			await page.goto('/apps/dashboard')
+			await page.goto('apps/dashboard')
 			await createFolder({ name: 'workspace-flat', owner: user })
 
 			const results1 = await propfindFolder(user, '/', 1, properties)
@@ -61,7 +61,7 @@ test.describe('Text PROPFIND extension', () => {
 		test('adds rich workspace property to nested folders for the default properties', async ({ page, user }) => {
 			const properties = [PROPERTY_WORKSPACE, PROPERTY_WORKSPACE_FILE]
 
-			await page.goto('/apps/dashboard')
+			await page.goto('apps/dashboard')
 			await createFolder({ name: 'workspace', owner: user })
 
 			const results1 = await propfindFolder(user, '/', 1, properties)
@@ -81,7 +81,7 @@ test.describe('Text PROPFIND extension', () => {
 		})
 
 		test('does not return a rich workspace property', async ({ page, user }) => {
-			await page.goto('/apps/dashboard')
+			await page.goto('apps/dashboard')
 
 			const results1 = await propfindFolder(user, '/', 1, [PROPERTY_WORKSPACE_FLAT, PROPERTY_WORKSPACE_FILE_FLAT])
 			for (const result of results1) {

@@ -12,7 +12,7 @@ const fileTest = mergeTests(uploadFileTest, test)
 test.describe('editor API at window.OCA.Text - MarkdownContentEditor.vue without collaboration session', () => {
 	test.beforeEach(async ({ page }) => {
 		// Open the files app so we're somewhere with `window.OCA.Text` available
-		await page.goto('/apps/files')
+		await page.goto('apps/files')
 
 		// Load the editor API bundle
 		const textRoot = await page.evaluate(() => (window as any).OC.appswebroots.text)
@@ -65,7 +65,7 @@ fileTest.describe(
 
 		fileTest.beforeEach(async ({ page }) => {
 			// Open the files app so we're somewhere with `window.OCA.Text` available
-			await page.goto('/apps/files')
+			await page.goto('apps/files')
 
 			// Load the editor API bundle
 			const textRoot = await page.evaluate(() => (window as any).OC.appswebroots.text)

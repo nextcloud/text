@@ -10,7 +10,7 @@ import { test as randomUserTest } from '../../support/fixtures/random-user.ts'
 const test = mergeTests(editorTest, randomUserTest)
 
 test('from new menu', async ({ page, editor }) => {
-	await page.goto('/apps/files')
+	await page.goto('apps/files')
 	await page.getByRole('button', { name: 'New' }).click()
 	await page.getByRole('menuitem', { name: 'Add folder description' }).click()
 	await editor.content.click()

@@ -23,7 +23,7 @@ export const test = base.extend<FolderDescriptionFixture>({
 	open: ({ file, page }, use) => use(async () => {
 		// Make sure file is initialized.
 		expect(file.name).toBe('Readme.md')
-		await page.goto('/apps/files')
+		await page.goto('apps/files')
 	}),
 
 })
