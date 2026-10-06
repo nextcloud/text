@@ -32,7 +32,9 @@
 		display: none !important;
 	}
 
-	.viewer__modal[data-handler='text'] {
+	// .modal-mask as well, to outweigh the viewer's own rules for its container,
+	// which are as specific and load after these
+	.viewer__modal.modal-mask[data-handler='text'] {
 		// Hide top border
 		border: none;
 		width: 100% !important;
