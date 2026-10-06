@@ -18,7 +18,8 @@ export class ViewerSection {
 	}
 
 	public async openSidebarTab(name: 'Versions') {
-		await this.clickAction('Open sidebar')
+		// A button in the viewer's header, not an entry of its menu
+		await this.el.getByRole('button', { name: 'Open sidebar' }).click()
 		await this.page.getByRole('tab', { name }).click()
 		return this.page.getByRole('tabpanel', { name })
 	}
