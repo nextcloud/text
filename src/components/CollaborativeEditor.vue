@@ -358,7 +358,6 @@ export default defineComponent({
 			displayConnectionIssue,
 			saveService,
 			serialize,
-			setDirty,
 			setEditable,
 			syncProvider,
 			syncService,
