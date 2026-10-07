@@ -9,7 +9,7 @@ import { test } from '../support/fixtures/editor-api.ts'
 test.describe('createTable API', () => {
 	test.beforeEach(async ({ page }) => {
 		// Open the files app so we're somewhere with `window.OCA.Text` available
-		await page.goto('/apps/files')
+		await page.goto('apps/files')
 
 		// Load the editor API bundle
 		const textRoot = await page.evaluate(() => (window as any).OC.appswebroots.text)

@@ -94,7 +94,7 @@ describe('Public Share with attachments', () => {
 		cy.visit(`/s/${this.token}`)
 		cy.get('.editor__content-wrapper').should('exist')
 		cy.get('.editor__content-wrapper .name', { timeout: 10_000 }).click()
-		cy.get('.viewer').should('exist')
+		cy.get('.viewer__modal').should('exist')
 		cy.get('.language-plaintext').should('contain', 'multiple lines')
 	})
 })

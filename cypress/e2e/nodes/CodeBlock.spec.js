@@ -148,7 +148,7 @@ describe('Front matter support', function() {
 					.contains('function')
 
 				// Mermaid diagram
-				cy.get('#viewer .modal-container__content').scrollTo('bottom')
+				cy.get('.viewer__modal .modal-container__content').scrollTo('bottom')
 				cy.getContent()
 					.find('.split-view__preview')
 					.eq(2)

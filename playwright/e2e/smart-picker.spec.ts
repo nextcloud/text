@@ -29,6 +29,10 @@ test('Create heading', async ({ editor }) => {
 test('Insert Link', async ({ editor }) => {
 	await editor.type('/Any')
 	await editor.getSuggestion('Any link').click()
+	// The picker focuses its field once its dialog is ready; until then, the
+	// viewer around the editor keeps the focus, and what is typed lands in
+	// the document
+	await expect(editor.referencePicker).toBeFocused()
 	await editor.referencePicker.fill('https://github.com')
 	await expect(editor.referenceWidget).toContainText('GitHub')
 	await editor.referencePicker.press('Enter')

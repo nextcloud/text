@@ -10,7 +10,9 @@ namespace OCA\Text\Listeners;
 
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Text\Service\InitialStateProvider;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\EventDispatcher\Event;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\EventDispatcher\IEventListener;
 
 /**
@@ -19,6 +21,7 @@ use OCP\EventDispatcher\IEventListener;
 class FilesLoadAdditionalScriptsListener implements IEventListener {
 	public function __construct(
 		private readonly InitialStateProvider $initialStateProvider,
+		private readonly IEventDispatcher $eventDispatcher,
 	) {
 	}
 
@@ -34,5 +37,8 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 		\OCP\Util::addStyle('text', 'text-files');
 
 		$this->initialStateProvider->provideState();
+		// The viewer no longer has an event of its own to hang this on: the
+		// smart picker and link previews of a file opened from here need it
+		$this->eventDispatcher->dispatchTyped(new RenderReferenceEvent());
 	}
 }
