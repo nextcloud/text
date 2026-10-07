@@ -296,6 +296,7 @@ export default defineComponent({
 
 		const { document, saveService } = provideSaveService(
 			connection,
+			editor,
 			syncService,
 			serialize,
 			ydoc,
@@ -618,8 +619,8 @@ export default defineComponent({
 			// Save and push unsaved changes from offline editing session.
 			Promise.all([this.whenSynced, this.editorReady]).then(() => {
 				if (this.dirty) {
-					// the update will trigger an autosave
 					this.syncProvider.sendUpdateFromDoc('offline', this.ydoc)
+					this.saveService.autosave()
 				}
 			})
 			this.updateUser(session)
