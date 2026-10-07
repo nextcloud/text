@@ -9,6 +9,11 @@ import { ChangeSet, simplifyChanges } from '@tiptap/pm/changeset'
 import { StepMap } from '@tiptap/pm/transform'
 
 export type ChangeOperation = 'insert' | 'delete' | 'replace'
+// Kind of difference, used to label and color changes:
+// - text: the text differs, or a whole node was added or removed.
+// - formatting: the text is the same but marks differ, such as bold or italic. Can be hidden.
+// - attribute: same node with different attributes, such as heading level, code language, image source.
+// - structure: a node was replaced by one of another type, like paragraph to heading.
 export type ChangeCategory = 'text' | 'formatting' | 'attribute' | 'structure'
 export type ChangeAttribute = 'heading-level' | 'task-state' | 'link' | 'image' | 'code-language' | 'list-start' | 'other'
 
@@ -89,6 +94,9 @@ function sameSchema(before: Node, after: Node) {
 	return before.type.schema.nodeFromJSON(after.toJSON())
 }
 
+// Align the children of two matching nodes, report unmatched children as removed or added
+// and compare matched children recursively. beforeFrom and afterFrom are the document
+// positions where each node's content starts.
 function compareChildren(before: Node, after: Node, beforeFrom: number, afterFrom: number, changes: PendingChange[]) {
 	const beforeChildren = children(before, beforeFrom)
 	const afterChildren = children(after, afterFrom)
@@ -110,6 +118,7 @@ function compareChildren(before: Node, after: Node, beforeFrom: number, afterFro
 	}
 }
 
+// Children of a node with their document positions (to, from)
 function children(parent: Node, contentFrom: number): Child[] {
 	const result: Child[] = []
 	parent.forEach((node, offset) => {
@@ -119,9 +128,9 @@ function children(parent: Node, contentFrom: number): Child[] {
 	return result
 }
 
-// Equal children that are unique on both sides anchor the alignment. The children between
-// two anchors are paired by similarity, so an edited or split block pairs with its origin
-// even among equal-looking siblings.
+// Returns equal children that are unique on both sides anchor the alignment. The children
+// between two anchors are paired by similarity, so an edited or split block pairs with its
+// origin even among equal-looking siblings.
 function alignChildren(before: Child[], after: Child[]): Match[] {
 	const matches: Match[] = []
 	let start = { before: 0, after: 0 }
@@ -137,6 +146,8 @@ function alignChildren(before: Child[], after: Child[]): Match[] {
 	return matches
 }
 
+// Returns pairs of child indexes whose nodes are equal and occur exactly once on each side,
+// reduced to those that keep their order on both sides
 function uniqueAnchors(before: Child[], after: Child[]): Match[] {
 	const beforeIndexes = indexByFingerprint(before)
 	const afterIndexes = indexByFingerprint(after)
@@ -149,6 +160,8 @@ function uniqueAnchors(before: Child[], after: Child[]): Match[] {
 	return increasing(pairs.sort((a, b) => a.before - b.before))
 }
 
+// Returns child indexes grouped by their node's fingerprint (serialized JSON), so equal
+// nodes share one entry.
 function indexByFingerprint(items: Child[]) {
 	const indexes = new Map<string, number[]>()
 	items.forEach(({ node }, index) => {
@@ -158,7 +171,8 @@ function indexByFingerprint(items: Child[]) {
 	return indexes
 }
 
-// Longest subsequence of pairs that also increases on the after side.
+// Given pairs of matched child indexes sorted by their before index, keep the largest
+// subset whose after indexes increase too, so no two pairs cross.
 function increasing(pairs: Match[]): Match[] {
 	const tails: number[] = []
 	const previous: number[] = []
@@ -166,7 +180,7 @@ function increasing(pairs: Match[]): Match[] {
 		let low = 0
 		let high = tails.length
 		while (low < high) {
-			const middle = (low + high) >> 1
+			const middle = Math.floor((low + high) / 2)
 			if (pairs[tails[middle]!]!.after < pair.after) {
 				low = middle + 1
 			} else {
@@ -278,15 +292,10 @@ function text(node: Node) {
 	return entry
 }
 
-const fingerprints = new WeakMap<Node, string>()
-
+// Serialized JSON of a node, including attributes, marks and content. Equal nodes
+// have equal fingerprints, so it works as a map key.
 function fingerprint(node: Node) {
-	let value = fingerprints.get(node)
-	if (value === undefined) {
-		value = JSON.stringify(node.toJSON())
-		fingerprints.set(node, value)
-	}
-	return value
+	return JSON.stringify(node.toJSON())
 }
 
 function compareNodes(before: Child, after: Child, changes: PendingChange[]) {
