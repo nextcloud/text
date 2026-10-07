@@ -9,11 +9,13 @@ import { ChangeSet, simplifyChanges } from '@tiptap/pm/changeset'
 import { StepMap } from '@tiptap/pm/transform'
 
 export type ChangeOperation = 'insert' | 'delete' | 'replace'
-// Kind of difference, used to label and color changes:
-// - text: the text differs, or a whole node was added or removed.
-// - formatting: the text is the same but marks differ, such as bold or italic. Can be hidden.
-// - attribute: same node with different attributes, such as heading level, code language, image source.
-// - structure: a node was replaced by one of another type, like paragraph to heading.
+/**
+ * Kind of difference, used to label and color changes:
+ * - text: the text differs, or a whole node was added or removed.
+ * - formatting: the text is the same but marks differ, such as bold or italic. Can be hidden.
+ * - attribute: same node with different attributes, such as heading level, code language, image source.
+ * - structure: a node was replaced by one of another type, like paragraph to heading.
+ */
 export type ChangeCategory = 'text' | 'formatting' | 'attribute' | 'structure'
 export type ChangeAttribute = 'heading-level' | 'task-state' | 'link' | 'image' | 'code-language' | 'list-start' | 'other'
 
@@ -53,9 +55,27 @@ interface Match {
 	after: number
 }
 
+/** Range of child indexes */
+interface IndexRange {
+	start: number
+	end: number
+}
+
+/**
+ * Children between two consecutive matches, or before the first or after the last match.
+ * None of them is matched. Either side may be empty.
+ */
+interface Gap {
+	before: IndexRange
+	after: IndexRange
+}
+
 const PREVIEW_LENGTH = 80
 const LEAF_TEXT = '￼'
-/** Blocks less similar than this are reported as removed and added rather than paired. */
+/**
+ * Blocks in a gap less similar than this are reported as a removed and an added block instead
+ * of being compared as an edit of the same block.
+ */
 const MIN_SIMILARITY = 0.35
 /** Gaps with more candidate pairs than this are paired by position instead of similarity. */
 const MAX_SCORED_PAIRS = 250_000
@@ -72,8 +92,15 @@ const attributeNames: Record<string, ChangeAttribute> = {
 /**
  * Compare two documents and describe the differences in document positions.
  *
- * Sibling nodes are paired by similarity, paired nodes are compared recursively
- * and textblocks are compared inline. Changes are ordered by position.
+ * Starting with the two documents, the children of each matched pair of nodes are aligned:
+ * 1. Anchors: children that are equal and occur once on each side are matched first,
+ *    as long as they keep their order.
+ * 2. Gaps: the unmatched children between two anchors form a gap. Children in a gap are
+ *    matched by similarity.
+ * 3. Children still unmatched are reported as removed or added. Matched children are
+ *    compared: textblocks character by character, other nodes by aligning their children.
+ *
+ * Changes are ordered by position.
  *
  * @param before Earlier document.
  * @param after Later document.
@@ -89,7 +116,7 @@ export function compareDocuments(before: Node, after: Node): Change[] {
 }
 
 // Each editor brings its own schema instance. To make node types comparable in node
-// equality checks, rebuild the after document in the before schema. It keeps all position.
+// equality checks, rebuild the after document in the before schema. It keeps all positions.
 function sameSchema(before: Node, after: Node) {
 	return before.type.schema.nodeFromJSON(after.toJSON())
 }
@@ -100,25 +127,24 @@ function sameSchema(before: Node, after: Node) {
 function compareChildren(before: Node, after: Node, beforeFrom: number, afterFrom: number, changes: PendingChange[]) {
 	const beforeChildren = children(before, beforeFrom)
 	const afterChildren = children(after, afterFrom)
-	// Unmatched children are reported at the end of the last matched child on the other side
-	let next = { before: 0, after: 0 }
-	let position = { before: beforeFrom, after: afterFrom }
-	for (const match of [...alignChildren(beforeChildren, afterChildren), { before: beforeChildren.length, after: afterChildren.length }]) {
-		for (const child of beforeChildren.slice(next.before, match.before)) {
-			changes.push(blockChange(child, null, position.after))
+	const matches = alignChildren(beforeChildren, afterChildren)
+	for (const match of matches) {
+		compareNodes(beforeChildren[match.before]!, afterChildren[match.after]!, changes)
+	}
+	for (const gap of gapsBetween(matches, beforeChildren.length, afterChildren.length)) {
+		// Unmatched children are reported at the end of the matched child before the gap
+		const beforePosition = beforeChildren[gap.before.start - 1]?.to ?? beforeFrom
+		const afterPosition = afterChildren[gap.after.start - 1]?.to ?? afterFrom
+		for (const child of beforeChildren.slice(gap.before.start, gap.before.end)) {
+			changes.push(blockChange(child, null, afterPosition))
 		}
-		for (const child of afterChildren.slice(next.after, match.after)) {
-			changes.push(blockChange(null, child, position.before))
+		for (const child of afterChildren.slice(gap.after.start, gap.after.end)) {
+			changes.push(blockChange(null, child, beforePosition))
 		}
-		if (match.before < beforeChildren.length) {
-			compareNodes(beforeChildren[match.before]!, afterChildren[match.after]!, changes)
-			position = { before: beforeChildren[match.before]!.to, after: afterChildren[match.after]!.to }
-		}
-		next = { before: match.before + 1, after: match.after + 1 }
 	}
 }
 
-// Children of a node with their document positions (to, from)
+// Children of a node with their document positions (from, to)
 function children(parent: Node, contentFrom: number): Child[] {
 	const result: Child[] = []
 	parent.forEach((node, offset) => {
@@ -128,22 +154,29 @@ function children(parent: Node, contentFrom: number): Child[] {
 	return result
 }
 
-// Returns equal children that are unique on both sides anchor the alignment. The children
-// between two anchors are paired by similarity, so an edited or split block pairs with its
-// origin even among equal-looking siblings.
+// Match children in two steps: children that are equal and unique on both sides become
+// anchors, then the children in each gap between anchors are matched by similarity.
 function alignChildren(before: Child[], after: Child[]): Match[] {
-	const matches: Match[] = []
+	const anchors = uniqueAnchors(before, after)
+	const gapMatches = gapsBetween(anchors, before.length, after.length)
+		.flatMap((gap) => alignGap(before.slice(gap.before.start, gap.before.end), after.slice(gap.after.start, gap.after.end))
+			.map((match) => ({ before: gap.before.start + match.before, after: gap.after.start + match.after })))
+	return [...anchors, ...gapMatches].sort((a, b) => a.before - b.before)
+}
+
+// The gaps around ordered matches: one before each match and one after the last.
+function gapsBetween(matches: Match[], beforeCount: number, afterCount: number): Gap[] {
+	const gaps: Gap[] = []
 	let start = { before: 0, after: 0 }
-	for (const anchor of [...uniqueAnchors(before, after), { before: before.length, after: after.length }]) {
-		for (const match of alignGap(before.slice(start.before, anchor.before), after.slice(start.after, anchor.after))) {
-			matches.push({ before: start.before + match.before, after: start.after + match.after })
-		}
-		if (anchor.before < before.length) {
-			matches.push(anchor)
-		}
-		start = { before: anchor.before + 1, after: anchor.after + 1 }
+	// The end of both child lists closes the last gap
+	for (const end of [...matches, { before: beforeCount, after: afterCount }]) {
+		gaps.push({
+			before: { start: start.before, end: end.before },
+			after: { start: start.after, end: end.after },
+		})
+		start = { before: end.before + 1, after: end.after + 1 }
 	}
-	return matches
+	return gaps
 }
 
 // Returns pairs of child indexes whose nodes are equal and occur exactly once on each side,
@@ -245,28 +278,40 @@ function similarity(before: Child, after: Child) {
 	if (!compatible(before, after)) {
 		return 0
 	}
-	const a = text(before.node)
-	const b = text(after.node)
-	if (!a.content && !b.content) {
+	const beforeText = text(before.node)
+	const afterText = text(after.node)
+	if (!beforeText.content && !afterText.content) {
 		return before.node.type.name === after.node.type.name ? 0.5 : 0
 	}
-	let shared = 0
-	for (const [word, count] of a.words) {
-		shared += Math.min(count, b.words.get(word) ?? 0)
+	return Math.min(1, Math.max(sharedWords(beforeText, afterText), sharedEdges(beforeText.content, afterText.content)))
+}
+
+// Share of words both texts contain, from 0 to 1
+function sharedWords(before: ReturnType<typeof text>, after: ReturnType<typeof text>) {
+	const total = before.total + after.total
+	if (total === 0) {
+		return 0
 	}
-	const shorter = Math.min(a.content.length, b.content.length)
+	let shared = 0
+	for (const [word, count] of before.words) {
+		shared += Math.min(count, after.words.get(word) ?? 0)
+	}
+	return (2 * shared) / total
+}
+
+// Share of characters in a common start and end. The start counts three times, so the
+// result can exceed 1.
+function sharedEdges(before: string, after: string) {
+	const shorter = Math.min(before.length, after.length)
 	let prefix = 0
-	while (prefix < shorter && a.content[prefix] === b.content[prefix]) {
+	while (prefix < shorter && before[prefix] === after[prefix]) {
 		prefix++
 	}
 	let suffix = 0
-	while (suffix < shorter - prefix && a.content.at(-1 - suffix) === b.content.at(-1 - suffix)) {
+	while (suffix < shorter - prefix && before.at(-1 - suffix) === after.at(-1 - suffix)) {
 		suffix++
 	}
-	return Math.min(1, Math.max(
-		a.total + b.total ? (2 * shared) / (a.total + b.total) : 0,
-		(3 * prefix + suffix) / (a.content.length + b.content.length),
-	))
+	return (3 * prefix + suffix) / (before.length + after.length)
 }
 
 function compatible(before: Child, after: Child) {
