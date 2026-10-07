@@ -83,12 +83,10 @@ export function compareDocuments(before: Node, after: Node): Change[] {
 		.map((change, index) => ({ ...change, id: `change-${index}` }))
 }
 
-// Node equality requires one schema instance. Rebuilding the after document
-// in the before schema keeps all positions.
+// Each editor brings its own schema instance. To make node types comparable in node
+// equality checks, rebuild the after document in the before schema. It keeps all position.
 function sameSchema(before: Node, after: Node) {
-	return before.type.schema === after.type.schema
-		? after
-		: before.type.schema.nodeFromJSON(after.toJSON())
+	return before.type.schema.nodeFromJSON(after.toJSON())
 }
 
 function compareChildren(before: Node, after: Node, beforeFrom: number, afterFrom: number, changes: PendingChange[]) {
