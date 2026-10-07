@@ -60,15 +60,26 @@ test.describe('Versions with distant timestamps', () => {
 		await page
 			.getByRole('menuitem', { name: 'Compare to current version' })
 			.click()
-		const oldVersion = page.getByRole('textbox')
-		const current = page.locator('.ProseMirror[contenteditable="true"]')
-		await expect(oldVersion.getByRole('heading', { name: 'V1' })).toBeVisible()
-		await expect(current.getByRole('heading', { name: 'V3' })).toBeVisible()
 
-		// Test that version contents are vertically aligned
-		const oldBox = await oldVersion.getByRole('heading', { name: 'V1' }).boundingBox()
-		const currentBox = await oldVersion.getByRole('heading', { name: 'V3' }).boundingBox()
-		expect(Math.abs(oldBox!.y - currentBox!.y)).toBeLessThan(5)
+		const comparison = page.getByRole('region', { name: 'Version comparison' })
+		await expect(comparison.getByRole('tab', { name: 'Full documents' })).toHaveAttribute('aria-selected', 'true')
+		const before = comparison.getByRole('article', { name: 'Before' })
+		const after = comparison.getByRole('article', { name: 'After' })
+		await expect(before.getByRole('heading', { name: 'V1' })).toBeVisible()
+		await expect(after.getByRole('heading', { name: 'V3' })).toBeVisible()
+		await expect(comparison.locator('.text-comparison-change--current')).toHaveCount(2)
+		await expect(comparison).toContainText('Change 1 of 1')
+		// The comparison replaces the side-by-side view of the current file
+		await expect(page.locator('.ProseMirror[contenteditable="true"]')).toBeHidden()
+
+		await comparison.getByRole('tab', { name: 'Changes' }).click()
+		const change = comparison.locator('[data-comparison-select]')
+		await expect(change).toHaveCount(1)
+		await expect(change).toContainText('Text changed')
+		await expect(change.locator('del')).toHaveText('1')
+		await expect(change.locator('ins')).toHaveText('3')
+		await change.click()
+		await expect(comparison.getByRole('tab', { name: 'Full documents' })).toHaveAttribute('aria-selected', 'true')
 	})
 })
 

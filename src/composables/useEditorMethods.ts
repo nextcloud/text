@@ -13,18 +13,6 @@ import markdownit from '../markdownit/index.ts'
 import { isUser } from '../services/SyncService.ts'
 
 /**
- * Render Markdown as editor HTML with a trailing paragraph, or escape plain text inside a pre element.
- *
- * @param content Source content to render.
- * @param markdown Whether to interpret the source as Markdown.
- */
-export function renderEditorContent(content: string, markdown: boolean) {
-	return markdown
-		? markdownit.render(content) + '<p/>'
-		: `<pre>\n${escapeHtml(content)}</pre>`
-}
-
-/**
  *
  * @param editor to apply methods to
  */
@@ -41,9 +29,12 @@ export function useEditorMethods(editor: Editor) {
 	) => void = (content, { addToHistory = true } = {}) => {
 		const hasMarkdownContent
 			= editor.extensionManager.extensions.includes(Markdown)
+		const html = hasMarkdownContent
+			? markdownit.render(content) + '<p/>'
+			: `<pre>\n${escapeHtml(content)}</pre>`
 		editor
 			.chain()
-			.setContent(renderEditorContent(content, hasMarkdownContent), { emitUpdate: addToHistory })
+			.setContent(html, { emitUpdate: addToHistory })
 			.command(({ tr }) => {
 				tr.setMeta('addToHistory', addToHistory)
 				return true

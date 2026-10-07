@@ -79,7 +79,6 @@
     "@tiptap/vue-3": "^3.31.3",
     "@vueuse/shared": "^15.0.0",
     "debounce": "^3.0.0",
-    "diff": "^9.0.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.12.0",
     "katex": "^0.18.9",
@@ -109,7 +108,6 @@
     "yjs": "^13.6.33"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.13.0",
     "@nextcloud/babel-config": "^2.0.0",
     "@nextcloud/browserslist-config": "^3.1.2",
     "@nextcloud/e2e-test-server": "^0.6.1",
