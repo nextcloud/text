@@ -46,7 +46,6 @@ export function provideSaveService(
 
 	const saveService = new SaveService({
 		connection,
-		document,
 		getSaveData,
 	})
 
