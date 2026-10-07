@@ -5,6 +5,7 @@
 
 import type { Extension } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
+import type { Raw } from 'vue'
 import type { Connection } from './types/Connection.ts'
 
 import { Editor } from '@tiptap/core'
@@ -68,7 +69,7 @@ function createRichEditor({
 	mentionSearch?: (query: string) => Promise<Record<string, string>>
 	openLink?: (href: string) => void
 	noLazyImages?: boolean
-} = {}) {
+} = {}): Raw<Editor> {
 	return markRaw(new Editor({
 		editorProps,
 		extensions: [
@@ -95,7 +96,7 @@ function createRichEditor({
 function createPlainEditor({
 	language = 'plaintext',
 	extensions = [],
-}: { language?: string, extensions?: Extension[] } = {}) {
+}: { language?: string, extensions?: Extension[] } = {}): Raw<Editor> {
 	return markRaw(new Editor({
 		editorProps,
 		extensions: [
