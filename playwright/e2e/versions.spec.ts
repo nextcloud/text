@@ -67,7 +67,7 @@ test.describe('Versions with distant timestamps', () => {
 
 		// Test that version contents are vertically aligned
 		const oldBox = await oldVersion.getByRole('heading', { name: 'V1' }).boundingBox()
-		const currentBox = await oldVersion.getByRole('heading', { name: 'V3' }).boundingBox()
+		const currentBox = await current.getByRole('heading', { name: 'V3' }).boundingBox()
 		expect(Math.abs(oldBox!.y - currentBox!.y)).toBeLessThan(5)
 	})
 })
