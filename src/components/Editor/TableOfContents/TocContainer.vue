@@ -4,9 +4,9 @@
 -->
 
 <template>
-	<div class="editor__toc-container">
-		<!-- desktop -->
-		<div v-if="!isMobile" class="editor__toc-content">
+	<!-- desktop -->
+	<div v-if="!isMobile" class="editor__toc-container">
+		<div class="editor__toc-content">
 			<TocOutline
 				v-if="!displayToc && headings.length > 1"
 				@show-toc="setDisplayToc(true)" />
@@ -14,14 +14,14 @@
 				<TableOfContents />
 			</TocDesktop>
 		</div>
-
-		<!-- mobile -->
-		<TocMobile v-else-if="isMobile && displayToc" @close="setDisplayToc(false)">
-			<TableOfContents
-				:show-close="false"
-				@heading-clicked="setDisplayToc(false)" />
-		</TocMobile>
 	</div>
+
+	<!-- mobile -->
+	<TocMobile v-else-if="displayToc" @close="setDisplayToc(false)">
+		<TableOfContents
+			:show-close="false"
+			@heading-clicked="setDisplayToc(false)" />
+	</TocMobile>
 </template>
 
 <script setup>
