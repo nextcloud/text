@@ -284,6 +284,7 @@ export default defineComponent({
 
 		const { document, saveService } = provideSaveService(
 			connection,
+			editor,
 			syncService,
 			serialize,
 			ydoc,

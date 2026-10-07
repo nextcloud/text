@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
+import type { Transaction } from '@tiptap/pm/state'
 import type { InjectionKey, ShallowRef } from 'vue'
 import type { Doc } from 'yjs'
 import type { SaveData } from '../apis/save.ts'
@@ -18,6 +20,7 @@ const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
 /**
  *
  * @param connection to the api
+ * @param editor the tiptap instance
  * @param syncService mostly used for the event bus and events
  * @param serialize to extract the document markdown content
  * @param ydoc to extract the document state from
@@ -25,6 +28,7 @@ const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
  */
 export function provideSaveService(
 	connection: ShallowRef<Connection | undefined>,
+	editor: Editor,
 	syncService: SyncService,
 	serialize: () => string,
 	ydoc: Doc,
@@ -49,11 +53,15 @@ export function provideSaveService(
 		getSaveData,
 	})
 
-	syncService.bus.on('changesPushed', saveService.autosave)
-	syncService.bus.on('close', saveService.clear)
-	onUnmounted(() => {
-		syncService.bus.off('changesPushed', saveService.autosave)
-		syncService.bus.off('close', saveService.clear)
+	const autosaveOnUpdate = ({ transaction }: { transaction: Transaction }) => {
+		if (transaction.getMeta('addToHistory') !== false) {
+			saveService.autosave()
+		}
+	}
+
+	editor.on('update', autosaveOnUpdate)
+	editor.on('destroy', () => {
+		editor.off('update', autosaveOnUpdate)
 	})
 
 	/**
