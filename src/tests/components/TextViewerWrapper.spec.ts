@@ -7,13 +7,16 @@ import type { IFile } from '@nextcloud/files'
 
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { defineComponent } from 'vue'
+import { defineComponent, defineCustomElement, nextTick } from 'vue'
+
+const saveWhenDirty = vi.hoisted(() => vi.fn(async () => {}))
 
 // The editor itself is not what is tested here, only what it is handed
 vi.mock('../../components/ViewerComponent.vue', () => ({
 	default: defineComponent({
 		name: 'ViewerComponent',
 		props: ['filename', 'fileid', 'mime', 'source', 'e2EeIsEncrypted', 'active', 'onLoadedHandler'],
+		methods: { saveWhenDirty },
 		template: '<div />',
 	}),
 }))
@@ -48,6 +51,23 @@ describe('the text viewer wrapper', () => {
 
 		expect(editor.props('fileid')).toBeNull()
 		expect(editor.props('source')).toBe(version.encodedSource)
+	})
+
+	// A download from the viewer would otherwise get the last saved version
+	it('saves edits not written yet before the viewer downloads the file', async () => {
+		window.customElements.define('text-viewer-test', defineCustomElement(TextViewerWrapper, { shadowRoot: false }))
+		const element = document.createElement('text-viewer-test') as HTMLElement & { file: IFile }
+		element.file = makeFile()
+		document.body.append(element)
+		await nextTick()
+
+		const pending: Promise<unknown>[] = []
+		element.dispatchEvent(new CustomEvent('before-download', { detail: { file: element.file, waitUntil: (promise: Promise<unknown>) => pending.push(promise) } }))
+		await Promise.all(pending)
+
+		expect(saveWhenDirty).toHaveBeenCalledOnce()
+		expect(pending).toHaveLength(1)
+		element.remove()
 	})
 
 	it('stops the viewer from swiping, so text can be selected', () => {

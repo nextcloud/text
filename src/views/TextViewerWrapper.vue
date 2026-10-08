@@ -5,8 +5,9 @@
 
 <script setup lang="ts">
 import type { IFile } from '@nextcloud/files'
+import type { ViewerBeforeDownloadDetail } from '@nextcloud/viewer'
 
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, useHost, useTemplateRef } from 'vue'
 import ViewerComponent from '../components/ViewerComponent.vue'
 
 // Of what the viewer gives a handler's element (`ViewerProps` in
@@ -28,10 +29,18 @@ const isVersion = computed(() => props.file.root?.startsWith('/versions/') ?? fa
 
 // Swiping to select text would otherwise step to the next file
 onMounted(() => emit('update:canSwipe', false))
+
+// A download from the viewer gets the edits not saved yet too
+const viewerComponent = useTemplateRef<InstanceType<typeof ViewerComponent>>('viewerComponent')
+useHost()?.addEventListener('before-download', (event) => {
+	const { detail } = event as CustomEvent<ViewerBeforeDownloadDetail>
+	detail.waitUntil(viewerComponent.value?.saveWhenDirty() ?? Promise.resolve())
+})
 </script>
 
 <template>
 	<ViewerComponent
+		ref="viewerComponent"
 		:filename="file.path"
 		:fileid="isVersion ? null : file.fileid"
 		:mime="file.mime"
