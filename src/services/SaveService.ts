@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Ref, ShallowRef } from 'vue'
+import type { ShallowRef } from 'vue'
 import type { SaveData } from '../apis/save.ts'
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
@@ -34,7 +34,6 @@ export declare type EventTypes = {
 class SaveService {
 	bus = mitt<EventTypes>()
 	connection: ShallowRef<Connection | undefined>
-	document: Ref<Document | undefined>
 	lastSaveAttempt = 0
 	pendingAutosave = 0
 	getSaveData
@@ -43,15 +42,12 @@ class SaveService {
 
 	constructor({
 		connection,
-		document,
 		getSaveData,
 	}: {
 		connection: ShallowRef<Connection | undefined>
-		document: Ref<Document | undefined>
 		getSaveData: () => SaveData
 	}) {
 		this.connection = connection
-		this.document = document
 		this.getSaveData = getSaveData
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
 		this.clear = this.clearAutosave.bind(this)
