@@ -60,19 +60,21 @@ function clickOnAttachmentAction(actionName) {
 /**
  * Check if an attachment is visible in the document
  *
- * @param {number} documentId file ID of the current document
+ * @param {number} documentId id current document
+ * @param {string} dirname name of the attachment directory
  * @param {string} fileName attachment file name to be checked
  * @param {number} fileId attachment file id
  * @param {number|undefined} index index of the attachment in the document
  * @param {boolean} isImage is the attachment an image or a media file?
  */
-function checkAttachment(documentId, fileName, fileId, index, isImage = true) {
+function checkAttachment(documentId, dirname, fileName, fileId, index, isImage = true) {
 	const encodedName = fixedEncodeURIComponent(fileName)
-	const src = `.attachments.${documentId}/${encodedName}`
+	const src = `${dirname}/${encodedName}`
 
 	cy.log(
 		'Check the attachment is visible and well formed',
 		documentId,
+		dirname,
 		fileName,
 		fileId,
 		index,
@@ -83,11 +85,11 @@ function checkAttachment(documentId, fileName, fileId, index, isImage = true) {
 		.find('.image__view') // wait for load finish
 		.within(($el) => {
 			// keep track that we have created this attachment in the attachment dir
-			if (!attachmentFileNameToId[documentId]) {
-				attachmentFileNameToId[documentId] = {}
+			if (!attachmentFileNameToId[dirname]) {
+				attachmentFileNameToId[dirname] = {}
 			}
 
-			attachmentFileNameToId[documentId][fileName] = fileId
+			attachmentFileNameToId[dirname][fileName] = fileId
 
 			if (index > 0) {
 				expect(fileName).include(`(${index + 1})`)
@@ -144,9 +146,10 @@ function waitForRequestAndCheckAttachment(
 		// the name of the created file on NC side is returned in the response
 		const fileId = req.response.body.id
 		const fileName = req.response.body.name
-		const documentId = req.response.body.documentId
+		const documentId = req.request.query.documentId || req.request.body.documentId
+		const dirname = req.response.body.dirname
 
-		return check(documentId, fileName, fileId, index, isImage)
+		return check(documentId, dirname, fileName, fileId, index, isImage)
 	})
 }
 
@@ -298,7 +301,7 @@ describe('Test all attachment insertion methods', () => {
 
 	it('Upload a local image file with RTLO character in name (RTLO is stripped)', () => {
 		const filename = randHash() + '.md'
-		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.uploadFile('empty.md', 'text/markdown', filename).as('fileId')
 		cy.visit('/apps/files')
 		cy.openFile(filename)
 
@@ -320,7 +323,6 @@ describe('Test all attachment insertion methods', () => {
 
 			return cy.wait('@' + requestAlias).then((req) => {
 				const fileName = req.response.body.name // server echoes back name with RTLO
-				const documentId = req.response.body.documentId
 
 				// insertAttachment strips RTLO from the name before building the src URL and the
 				// alt text. The src URL no longer matches the on-disk filename (which still has
@@ -328,7 +330,9 @@ describe('Test all attachment insertion methods', () => {
 				// real file extension instead of the visually spoofed one.
 				const strippedName = fileName.replaceAll('\u202e', '')
 				const encodedName = fixedEncodeURIComponent(strippedName)
-				cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${documentId}/${encodedName}"]`).should('exist')
+				cy.get('@fileId').then((fileId) => {
+					cy.get(`.text-editor__main [data-component="image-view"][data-src=".attachments.${fileId}/${encodedName}"]`).should('exist')
+				})
 			})
 		})
 		cy.closeFile()
@@ -365,11 +369,12 @@ describe('Test all attachment insertion methods', () => {
 
 		cy.getFile('test.md')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
+			.then((fileId) => {
+				const attachmentsFolder = `.attachments.${fileId}`
+				const files = attachmentFileNameToId[attachmentsFolder]
 
 				cy.expect(Object.keys(files)).to.have.lengthOf(5)
-				cy.openFolder('.attachments.' + documentId)
+				cy.openFolder('.attachments.' + fileId)
 				for (const name in files) {
 					cy.getFile(name)
 						.should('exist')
@@ -403,10 +408,11 @@ describe('Test all attachment insertion methods', () => {
 			cy.getFile('test.md')
 				.should('exist')
 				.should('have.attr', 'data-cy-files-list-row-fileid')
-				.then((documentId) => {
-					const files = attachmentFileNameToId[documentId]
-					cy.get('@createdFileId').should('eq', parseInt(documentId))
-					cy.openFolder('.attachments.' + documentId)
+				.then((fileId) => {
+					const attachmentsFolder = `.attachments.${fileId}`
+					const files = attachmentFileNameToId[attachmentsFolder]
+					cy.get('@createdFileId').should('eq', parseInt(fileId))
+					cy.openFolder(attachmentsFolder)
 					for (const name in files) {
 						cy.getFile(name)
 							.should('exist')
@@ -439,10 +445,11 @@ describe('Test all attachment insertion methods', () => {
 		cy.getFile('testCopied.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				const files = attachmentFileNameToId[documentId]
+			.then((fileId) => {
+				const attachmentsFolder = `.attachments.${fileId}`
+				const files = attachmentFileNameToId[attachmentsFolder]
 
-				cy.openFolder('.attachments.' + documentId)
+				cy.openFolder(attachmentsFolder)
 				for (const name in files) {
 					cy.getFile(name)
 						.should('exist')

@@ -46,7 +46,7 @@ describe('the text viewer wrapper', () => {
 		const version = makeFile('/versions/alice/versions/42', 'https://cloud.example.com/remote.php/dav/versions/alice/versions/42/1691420501')
 		const editor = mount(TextViewerWrapper, { props: { file: version } }).findComponent({ name: 'ViewerComponent' })
 
-		expect(editor.props('fileid')).toBeNull()
+		expect(editor.props('fileid')).toBeUndefined()
 		expect(editor.props('source')).toBe(version.encodedSource)
 	})
 

@@ -33,7 +33,7 @@ onMounted(() => emit('update:canSwipe', false))
 <template>
 	<ViewerComponent
 		:filename="file.path"
-		:fileid="isVersion ? null : file.fileid"
+		:fileid="isVersion ? undefined : file.fileid"
 		:mime="file.mime"
 		:source="file.encodedSource"
 		:e2EeIsEncrypted="isEncrypted"

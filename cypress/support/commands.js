@@ -269,7 +269,7 @@ Cypress.Commands.add('closeFile', (params = {}) => {
 let closeData = null
 Cypress.Commands.add('interceptCreate', () => {
 	return cy
-		.intercept({ method: 'PUT', url: '**/session/*/create' }, (req) => {
+		.intercept({ method: 'PUT', url: '**/session/**/create' }, (req) => {
 			closeData = {
 				url: ('' + req.url).replace('create', 'close'),
 			}

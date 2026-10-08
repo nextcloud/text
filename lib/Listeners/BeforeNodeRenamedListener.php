@@ -11,6 +11,7 @@ namespace OCA\Text\Listeners;
 use Exception;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
@@ -25,6 +26,7 @@ class BeforeNodeRenamedListener implements IEventListener {
 		private readonly AttachmentService $attachmentService,
 		private readonly DocumentService $documentService,
 		private readonly LoggerInterface $logger,
+		private readonly LockService $lockService,
 	) {
 	}
 
@@ -45,7 +47,8 @@ class BeforeNodeRenamedListener implements IEventListener {
 		// Reset document state if mimetype changes from/to markdown as this means another editor is loaded
 		if ($sourceIsMarkdown xor $targetIsMarkdown) {
 			try {
-				$this->documentService->resetDocument($source->getId(), true);
+				$this->lockService->unlock($source);
+				$this->documentService->resetDocument('file', $source->getId(), true);
 			} catch (Exception $e) {
 				$this->logger->error($e->getMessage(), ['exception' => $e]);
 			}
