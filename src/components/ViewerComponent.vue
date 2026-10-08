@@ -6,6 +6,7 @@
 <template>
 	<EditorReloader
 		v-if="!useSourceView"
+		ref="editor"
 		:fileId="fileid"
 		:relativePath="filename"
 		:active="active || isEmbedded"
@@ -130,6 +131,13 @@ export default defineComponent({
 
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
+		},
+
+		/**
+		 * Write edits not saved yet, if any
+		 */
+		async saveWhenDirty() {
+			await this.$refs.editor?.saveWhenDirty?.()
 		},
 
 		t,
