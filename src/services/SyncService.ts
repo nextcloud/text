@@ -347,16 +347,20 @@ class SyncService {
 
 	async close() {
 		this.backend?.disconnect()
-		if (this.hasActiveConnection()) {
-			close(this.connection.value)
+
+		const activeConnection = this.connection.value
+
+		// Clear connection immediately so hasActiveConnection turns false and we can reconnect.
+		this.connection.value = undefined
+		this.bus.emit('close')
+
+		if (activeConnection) {
+			await close(activeConnection)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })
 				})
 		}
-		// Clear connection so hasActiveConnection turns false and we can reconnect.
-		this.connection.value = undefined
-		this.bus.emit('close')
 	}
 }
 
