@@ -3,6 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Table from './Table/Table.js'
+import Table from './Table/Table.ts'
 
 export default Table

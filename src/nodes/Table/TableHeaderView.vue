@@ -104,7 +104,7 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
 import NcActions from '@nextcloud/vue/components/NcActions'
@@ -137,22 +137,7 @@ export default {
 		SortDescending,
 	},
 
-	props: {
-		editor: {
-			type: Object,
-			required: true,
-		},
-
-		getPos: {
-			type: Function,
-			required: true,
-		},
-
-		node: {
-			type: Object,
-			required: true,
-		},
-	},
+	props: nodeViewProps,
 
 	data() {
 		return {
