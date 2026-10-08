@@ -466,8 +466,8 @@ function blockChange(before: Child | null, after: Child | null, absentPosition: 
 		before: before ? { from: before.from, to: before.to } : { from: absentPosition, to: absentPosition },
 		after: after ? { from: after.from, to: after.to } : { from: absentPosition, to: absentPosition },
 		preview: {
-			before: preview(before ? before.node.textBetween(0, before.node.content.size, ' ', ' ') : ''),
-			after: preview(after ? after.node.textBetween(0, after.node.content.size, ' ', ' ') : ''),
+			before: preview(before ? text(before.node).content : ''),
+			after: preview(after ? text(after.node).content : ''),
 		},
 	}
 }

@@ -49,7 +49,6 @@ import { computed } from 'vue'
 const props = defineProps<{
 	changes: readonly Change[]
 	currentId: string | null
-	beforeDocument: Node
 	afterDocument: Node
 }>()
 const emit = defineEmits<{ select: [id: string] }>()
@@ -150,38 +149,35 @@ const otherBlockLabels: Record<ChangeOperation, string> = {
 	replace: t('text', 'Block changed'),
 }
 
-const beforeHeadings = computed(() => headings(props.beforeDocument))
-const afterHeadings = computed(() => headings(props.afterDocument))
-
-const sections = computed(() => {
-	const result: Array<{ id: string, title: string, changes: Change[] }> = []
-	for (const change of props.changes) {
-		const title = change.operation === 'delete'
-			? headingBefore(beforeHeadings.value, change.before.from)
-			: headingBefore(afterHeadings.value, change.after.from)
-		const current = result.at(-1)
-		if (current && current.title === title) {
-			current.changes.push(change)
-		} else {
-			result.push({ id: change.id, title, changes: [change] })
-		}
-	}
-	return result
-})
-
-function headings(doc: Node) {
+const headings = computed(() => {
 	const result: Array<{ from: number, text: string }> = []
-	doc.forEach((node, from) => {
+	props.afterDocument.forEach((node, from) => {
 		if (node.type.name === 'heading') {
 			result.push({ from, text: node.textContent })
 		}
 	})
 	return result
-}
+})
 
-function headingBefore(list: ReadonlyArray<{ from: number, text: string }>, position: number) {
-	return list.findLast((heading) => heading.from <= position)?.text ?? ''
-}
+// Changes under the heading they follow in the newer document. Removed blocks count where
+// they were removed, so the changes, ordered by that position, form one section per heading.
+// That position is the end of the block before, which a heading right after it does not cover.
+const sections = computed(() => {
+	const result: Array<{ id: string, from: number, title: string, changes: Change[] }> = []
+	for (const change of props.changes) {
+		const heading = headings.value.findLast(({ from }) => change.operation === 'delete'
+			? from < change.after.from
+			: from <= change.after.from)
+		const from = heading?.from ?? -1
+		const current = result.at(-1)
+		if (current?.from === from) {
+			current.changes.push(change)
+		} else {
+			result.push({ id: change.id, from, title: heading?.text ?? '', changes: [change] })
+		}
+	}
+	return result
+})
 
 function label(change: Change) {
 	if (change.category === 'attribute') {

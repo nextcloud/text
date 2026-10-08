@@ -20,7 +20,7 @@ afterAll(() => {
 
 function mountList(currentId: string | null = null) {
 	return mount(ComparisonChangeList, {
-		props: { changes, currentId, beforeDocument: before.state.doc, afterDocument: after.state.doc },
+		props: { changes, currentId, afterDocument: after.state.doc },
 	})
 }
 
