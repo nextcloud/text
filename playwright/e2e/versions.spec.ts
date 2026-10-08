@@ -60,27 +60,25 @@ test.describe('Versions with distant timestamps', () => {
 		await page
 			.getByRole('menuitem', { name: 'Compare to current version' })
 			.click()
-		// The viewer opens side by side, D shows the differences
-		await page.keyboard.press('d')
 
-		const comparison = page.getByRole('region', { name: 'Version comparison' })
-		await expect(comparison.getByRole('tab', { name: 'Full documents' })).toHaveAttribute('aria-selected', 'true')
-		const before = comparison.getByRole('article', { name: 'Before' })
-		const after = comparison.getByRole('article', { name: 'After' })
+		// Side by side: the older version on the left, the current file on the right
+		const before = page.getByRole('article', { name: 'Before' })
+		const after = page.getByRole('article', { name: 'After' })
 		await expect(before.getByRole('heading', { name: 'V1' })).toBeVisible()
 		await expect(after.getByRole('heading', { name: 'V3' })).toBeVisible()
-		await expect(comparison.locator('.text-comparison-change--current')).toHaveCount(2)
-		await expect(comparison).toContainText('Change 1 of 1')
-		await expect(page.locator('.ProseMirror[contenteditable="true"]')).toBeHidden()
+		await expect(page.locator('.text-comparison-change--current')).toHaveCount(2)
+		await expect(page.locator('.text-comparison__navigation')).toContainText('Change 1 of 1')
+		// Both are only read
+		await expect(page.locator('.ProseMirror[contenteditable="true"]')).toHaveCount(0)
 
-		await comparison.getByRole('tab', { name: 'Changes' }).click()
-		const change = comparison.locator('[data-comparison-select]')
+		// D shows the list of changes
+		await page.keyboard.press('d')
+		const change = page.locator('[data-comparison-select]')
 		await expect(change).toHaveCount(1)
 		await expect(change).toContainText('Text changed')
 		await expect(change.locator('del')).toHaveText('1')
 		await expect(change.locator('ins')).toHaveText('3')
-		await change.click()
-		await expect(comparison.getByRole('tab', { name: 'Full documents' })).toHaveAttribute('aria-selected', 'true')
+		await expect(before).toHaveCount(0)
 	})
 })
 

@@ -20,7 +20,7 @@ vi.mock('../../components/ViewerComponent.vue', () => ({
 vi.mock('../../components/ViewerVersionComparison.vue', () => ({
 	default: defineComponent({
 		name: 'ViewerVersionComparison',
-		props: ['source', 'currentSource', 'fileId', 'filePath'],
+		props: ['base', 'file', 'part'],
 		template: '<div />',
 	}),
 }))
@@ -36,16 +36,18 @@ const versionSource = 'https://cloud.example.com/remote.php/dav/versions/alice/v
  * @param root - Where the file lives
  * @param source - Its URL
  */
-function makeFile(root = '/files/alice', source = currentSource): IFile {
+function makeFile(root = '/files/alice', source = currentSource, mime = 'text/markdown'): IFile {
 	// Only what the wrapper reads: @nextcloud/files is mocked for all tests
-	return { fileid: 42, source, encodedSource: source, root, path: '/notes.md', mime: 'text/markdown', attributes: {} } as unknown as IFile
+	return { fileid: 42, source, encodedSource: source, root, path: '/notes.md', mime, attributes: {} } as unknown as IFile
 }
 
 /**
  * An older version of the markdown file.
+ *
+ * @param mime - Its mime type
  */
-function makeVersion(): IFile {
-	return makeFile('/versions/alice/versions/42', versionSource)
+function makeVersion(mime = 'text/markdown'): IFile {
+	return makeFile('/versions/alice/versions/42', versionSource, mime)
 }
 
 describe('the text viewer wrapper', () => {
@@ -73,20 +75,34 @@ describe('the text viewer wrapper', () => {
 		expect(wrapper.emitted('update:canSwipe')).toEqual([[false]])
 	})
 
-	it('shows what changed from the first file compared to the second', () => {
+	it('lists the changes in the differences view', () => {
 		const version = makeVersion()
 		const file = makeFile()
 		const wrapper = mount(TextViewerWrapper, { props: { file, files: [version, file], comparison: 'differences' } })
 		const comparison = wrapper.findComponent({ name: 'ViewerVersionComparison' })
 
-		expect(comparison.props('source')).toBe(versionSource)
-		expect(comparison.props('currentSource')).toBe(currentSource)
-		expect(comparison.props('fileId')).toBe(42)
-		expect(comparison.props('filePath')).toBe('/notes.md')
+		expect(comparison.props('base')).toEqual(version)
+		expect(comparison.props('file')).toEqual(file)
+		expect(comparison.props('part')).toBe('changes')
 		expect(wrapper.findComponent({ name: 'ViewerComponent' }).exists()).toBe(false)
 	})
 
-	it('reports the differences view loaded once the comparison has', () => {
+	it.each([
+		['older', 'before'],
+		['newer', 'after'],
+	])('shows the %s Markdown document side by side', (which, part) => {
+		const version = makeVersion()
+		const file = makeFile()
+		const shown = which === 'older' ? version : file
+		const wrapper = mount(TextViewerWrapper, { props: { file: shown, files: [version, file], comparison: 'side-by-side' } })
+		const comparison = wrapper.findComponent({ name: 'ViewerVersionComparison' })
+
+		expect(comparison.props('base')).toEqual(version)
+		expect(comparison.props('file')).toEqual(file)
+		expect(comparison.props('part')).toBe(part)
+	})
+
+	it('reports a comparison loaded once it has', () => {
 		const file = makeFile()
 		const wrapper = mount(TextViewerWrapper, { props: { file, files: [makeVersion(), file], comparison: 'differences' } })
 
@@ -95,20 +111,13 @@ describe('the text viewer wrapper', () => {
 		expect(wrapper.emitted('loaded')).toHaveLength(1)
 	})
 
-	it('shows its own file side by side', () => {
-		const version = makeVersion()
-		const file = makeFile()
-		const wrapper = mount(TextViewerWrapper, { props: { file: version, files: [version, file], comparison: 'side-by-side' } })
-
-		expect(wrapper.findComponent({ name: 'ViewerComponent' }).props('source')).toBe(versionSource)
-		expect(wrapper.findComponent({ name: 'ViewerVersionComparison' }).exists()).toBe(false)
-	})
-
-	it('opens current file read-only in side by side comparison', () => {
-		const file = makeFile()
-		const wrapper = mount(TextViewerWrapper, { props: { file, files: [makeVersion(), file], comparison: 'side-by-side' } })
+	it('shows plain text side by side, only read', () => {
+		const version = makeVersion('text/plain')
+		const file = makeFile(undefined, undefined, 'text/plain')
+		const wrapper = mount(TextViewerWrapper, { props: { file, files: [version, file], comparison: 'side-by-side' } })
 		const editor = wrapper.findComponent({ name: 'ViewerComponent' })
 
+		expect(wrapper.findComponent({ name: 'ViewerVersionComparison' }).exists()).toBe(false)
 		expect(editor.props('fileid')).toBeUndefined()
 		expect(editor.props('source')).toBe(currentSource)
 	})

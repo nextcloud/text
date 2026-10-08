@@ -4,66 +4,104 @@
 -->
 
 <template>
-	<div class="text-version-comparison" data-text-el="version-comparison">
-		<NcLoadingIcon v-if="loading" :size="44" />
-		<NcEmptyContent v-else-if="error" :name="t('text', 'Could not load the versions to compare')" />
-		<MarkdownContentComparison
-			v-else
-			:beforeContent="beforeContent"
-			:afterContent="afterContent"
-			:fileId="fileId"
-			:filePath="filePath" />
-	</div>
+	<section
+		class="text-comparison text-version-comparison"
+		:aria-label="t('text', 'Version comparison')"
+		data-text-el="version-comparison">
+		<NcEmptyContent v-if="error" :name="t('text', 'Could not load the versions to compare')" />
+		<NcLoadingIcon v-else-if="!session" class="text-version-comparison__loading" :size="44" />
+		<MarkdownSourceFallback
+			v-else-if="session.failed"
+			:beforeContent="session.beforeContent"
+			:afterContent="session.afterContent"
+			:side="part === 'changes' ? undefined : part" />
+		<template v-else>
+			<!-- One header across the panes: the filter on the left, the navigation on the right -->
+			<header class="text-comparison__header">
+				<ComparisonNavigation v-if="part === 'after'" :session="session" />
+				<ComparisonFilter v-else :session="session" />
+			</header>
+			<section v-if="part === 'changes'" class="text-comparison__changes">
+				<ComparisonChanges :session="session" @select="selectChange" />
+			</section>
+			<template v-else>
+				<p
+					v-if="part === 'after'"
+					class="text-comparison__sr-only"
+					aria-live="polite"
+					aria-atomic="true">
+					{{ session.status.value }}
+				</p>
+				<ComparisonDocument :session="session" :side="part" />
+			</template>
+		</template>
+	</section>
 </template>
 
 <script setup lang="ts">
-import axios from '@nextcloud/axios'
+import type { IFile } from '@nextcloud/files'
+import type { ComparisonSide } from '../comparison/decorations.ts'
+
 import { t } from '@nextcloud/l10n'
-import { defineAsyncComponent, onMounted, ref } from 'vue'
+import { watch } from 'vue'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
-import { logger } from '../helpers/logger.ts'
+import ComparisonChanges from './ComparisonChanges.vue'
+import ComparisonDocument from './ComparisonDocument.vue'
+import ComparisonFilter from './ComparisonFilter.vue'
+import ComparisonNavigation from './ComparisonNavigation.vue'
+import MarkdownSourceFallback from './MarkdownSourceFallback.vue'
+import { useSharedComparison } from '../comparison/sharedComparison.ts'
+import { useComparisonAttachments } from '../composables/useComparisonAttachments.ts'
 
 const props = defineProps<{
-	/** WebDAV URL of the older version. */
-	source: string
-	/** WebDAV URL of the current file. */
-	currentSource: string
-	fileId?: number
-	filePath?: string
+	/** The older file */
+	base: IFile
+	/** The newer file */
+	file: IFile
+	/** One of the documents side by side, or the list of changes */
+	part: ComparisonSide | 'changes'
 }>()
-const emit = defineEmits<{ loaded: [] }>()
 
-const MarkdownContentComparison = defineAsyncComponent(() => import('./MarkdownContentComparison.vue'))
-const loading = ref(true)
-const error = ref(false)
-const beforeContent = ref('')
-const afterContent = ref('')
+const emit = defineEmits<{
+	loaded: []
+	select: [id: string]
+}>()
 
-onMounted(async () => {
-	try {
-		const [before, after] = await Promise.all([
-			axios.get<string>(props.source, { responseType: 'text' }),
-			axios.get<string>(props.currentSource, { responseType: 'text' }),
-		])
-		beforeContent.value = before.data
-		afterContent.value = after.data
-	} catch (exception) {
-		logger.error('Failed to load versions for comparison', { exception })
-		error.value = true
+useComparisonAttachments({ fileId: props.file.fileid, filePath: props.file.path })
+
+const { session, error } = useSharedComparison(props.base, props.file)
+
+watch(() => session.value !== undefined || error.value, (settled) => {
+	if (settled) {
+		emit('loaded')
 	}
-	loading.value = false
-	emit('loaded')
-})
+}, { immediate: true })
+
+/**
+ * Make a change picked in the list the current one.
+ *
+ * @param id Id of the change.
+ */
+function selectChange(id: string) {
+	session.value!.select(id)
+	emit('select', id)
+}
 </script>
 
 <style lang="scss">
+@use './../css/comparison.scss';
+
 .text-version-comparison {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	inline-size: 100%;
-	block-size: 100%;
 	background-color: var(--color-main-background);
+
+	// Both panes' headers line up, whatever each holds
+	.text-comparison__header {
+		min-block-size: calc(var(--default-clickable-area) + 2 * var(--default-grid-baseline));
+	}
+
+	&__loading {
+		margin: auto;
+	}
 }
 </style>
