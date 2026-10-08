@@ -26,7 +26,11 @@ describe('the text viewer handler', () => {
 	})
 
 	it('is registered under a tag name starting with the app id', () => {
-		expect(handler).toMatchObject({ id: 'text', tagName: 'text-viewer', canCompare: true })
+		expect(handler).toMatchObject({ id: 'text', tagName: 'text-viewer' })
+	})
+
+	it.each(['text/markdown', 'text/plain'])('offers comparing versions of %s', (mime) => {
+		expect(handler.canCompare!([{ mime }] as never)).toBe(true)
 	})
 
 	it.each(['text/markdown', 'text/plain', 'application/json'])('opens %s', (mime) => {
@@ -47,5 +51,14 @@ describe('the text viewer handler', () => {
 
 		// A second call, from another copy of the viewer, must not throw
 		await expect(handler.onInit!()).resolves.toBeUndefined()
+	})
+
+	it('can show differences between two Markdown files in one view', () => {
+		expect(handler.canShowDifferences!([{ mime: 'text/markdown' }, { mime: 'text/markdown' }] as never)).toBe(true)
+	})
+
+	it('shows plain text side by side only', () => {
+		expect(handler.canShowDifferences!([{ mime: 'text/plain' }, { mime: 'text/plain' }] as never)).toBe(false)
+		expect(handler.canShowDifferences!([{ mime: 'text/markdown' }, { mime: 'text/plain' }] as never)).toBe(false)
 	})
 })

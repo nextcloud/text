@@ -60,6 +60,8 @@ test.describe('Versions with distant timestamps', () => {
 		await page
 			.getByRole('menuitem', { name: 'Compare to current version' })
 			.click()
+		// The viewer opens side by side, D shows the differences
+		await page.keyboard.press('d')
 
 		const comparison = page.getByRole('region', { name: 'Version comparison' })
 		await expect(comparison.getByRole('tab', { name: 'Full documents' })).toHaveAttribute('aria-selected', 'true')
@@ -69,7 +71,6 @@ test.describe('Versions with distant timestamps', () => {
 		await expect(after.getByRole('heading', { name: 'V3' })).toBeVisible()
 		await expect(comparison.locator('.text-comparison-change--current')).toHaveCount(2)
 		await expect(comparison).toContainText('Change 1 of 1')
-		// The comparison replaces the side-by-side view of the current file
 		await expect(page.locator('.ProseMirror[contenteditable="true"]')).toBeHidden()
 
 		await comparison.getByRole('tab', { name: 'Changes' }).click()
