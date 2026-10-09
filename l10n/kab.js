@@ -1,11 +1,11 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Ulac afaylu",
     "The file was uploaded" : "Ulac afaylu yettwaznen",
     "The file was only partially uploaded" : "Afaylu, cwiṭ kan i yettwaznen segs",
     "No file was uploaded" : "Ulac afaylu i d-yettwasulin",
     "Missing a temporary folder" : "Ixuṣ ukaram akudan",
-    "File not found" : "Ulac afaylu",
     "Nextcloud Text" : "Aḍris n Nextcloud",
     "Text" : "Aḍris",
     "Comment" : "Awennit",

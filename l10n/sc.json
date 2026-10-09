@@ -1,4 +1,5 @@
 { "translations": {
+    "File not found" : "Archìviu no agatadu",
     "The file was uploaded" : "S'archìviu est istadu carrigadu",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "S'archìviu carrigadu passat sa diretiva upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "S'archìviu carrigadu passat sa diretiva MAX_FILE_SIZE ispetzificada in su mòdulu HTML",
@@ -8,7 +9,6 @@
     "Could not write file to disk" : "Non faghet a iscrìere s'archìviu in su discu",
     "A PHP extension stopped the file upload" : "Un'estensione PHP at firmadu su carrigamentu de s'archìviu",
     "No file uploaded or file size exceeds maximum of %s" : "Perun'archìviu carrigadu o sa mannària de s'archìviu superat su màssimu de %s",
-    "File not found" : "Archìviu no agatadu",
     "Nextcloud Text" : "Testu Nextcloud",
     "Create new text file" : "Crea un'archìviu de testu nou",
     "Editing session has expired. Please reload the page." : "Sessione de editzione iscadida. Torra a carrigare sa pàgina.",

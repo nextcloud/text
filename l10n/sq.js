@@ -1,11 +1,11 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "S’u gjet kartelë",
     "The file was uploaded" : "Skedari u ngarkua",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Kartela e ngarkuar tejkalon udhëzimin MAX_FILE_SIZE që qe përcaktuar te formulari HTML",
     "No file was uploaded" : "S’u ngarkua kartelë",
     "Missing a temporary folder" : "Mungon një dosje e përkohshme",
-    "File not found" : "S’u gjet kartelë",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Redaktimi i dokumenteve bashkëpunuese",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝Redaktimi i dokumenteve bashkëpunuese**\n\n- **📝 Shkrim i fokusuar:** Jo shpërqëndrime, vetëm formatimi që ju nevojitet.\n- **🙋 Punoni sëbashku** Shpërnda dhe bashkëpuno me shokët dhe kolegët, nuk ka rëndësi nëse përdorin apo jo Nextcloud !\n- **💾 Format i hapur:** Skedarët janë ruajtur si [Markdown](https://en.wikipedia.org/wiki/Markdown), kështu që ju mund ti ndryshoni nga çdo aplikacion tjetër teksti gjithashtu.\n- **✊ Fondacion i fortë:** Ne përdorim [🐈 tiptap](https://tiptap.scrumpy.io) bazuar në [🦉 ProseMirror](https://prosemirror.net) –falenderim i madh për ta!",

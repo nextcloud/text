@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Filen hittades inte",
+    "This file cannot be displayed as download is disabled by the share" : "Den här filen kan inte visas eftersom hämtning har inaktiverats för delningen.",
     "The file was uploaded" : "Filen har laddats upp",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Den uppladdade filen är större än vad som tillåts av upload_max_filesize i php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Den uppladdade filen överstiger MAX_FILE_SIZE-direktivet som specificerades i HTML-formuläret",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Det gick inte att skriva filen till disken",
     "A PHP extension stopped the file upload" : "Ett PHP-tillägg stoppade filuppladdningen",
     "No file uploaded or file size exceeds maximum of %s" : "Ingen fil uppladdad eller filstorleken överstiger max %s",
-    "File not found" : "Filen hittades inte",
     "Nextcloud Text" : "Nextcloud Text",
     "Text document" : "Textdokument",
     "Create new text file" : "Skapa ny textfil",
     "Editing session has expired. Please reload the page." : "Redigeringssessionen har löpt ut. Läs in sidan igen.",
     "{user} has mentioned you in the text document {node}" : "{user} har nämnt dig i textdokument {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Den här filen kan inte visas eftersom hämtning har inaktiverats för delningen.",
     "This document is read-only." : "Det här dokumentet är skrivskyddat.",
     "Read-only permission cannot save document changes. Please reload the page." : "Med skrivskyddad behörighet går det inte att spara ändringar i dokumentet. Läs in sidan igen.",
     "Readme" : "Readme",
