@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "فایل پیدا نشد",
+    "This file cannot be displayed as download is disabled by the share" : "این فایل قابل نمایش نیست زیرا دانلود توسط اشتراک‌گذاری غیرفعال شده است",
     "The file was uploaded" : "فایل آپلود شد",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "فایل آپلود شده از مقدار upload_max_filesize در php.ini بیشتر است",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "فایل آپلود شده از مقدار MAX_FILE_SIZE که در فرم HTML مشخص شده بیشتر است",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "امکان نوشتن فایل روی دیسک وجود نداشت",
     "A PHP extension stopped the file upload" : "یک افزونه PHP آپلود فایل را متوقف کرد",
     "No file uploaded or file size exceeds maximum of %s" : "فایلی آپلود نشد یا حجم فایل از حداکثر %s بیشتر است",
-    "File not found" : "فایل پیدا نشد",
     "Nextcloud Text" : "نکست‌کلود تکست",
     "Text document" : "سند متنی",
     "Create new text file" : "ایجاد فایل متنی جدید",
     "Editing session has expired. Please reload the page." : "نشست ویرایش منقضی شده است. لطفاً صفحه را بارگذاری مجدد کنید.",
     "{user} has mentioned you in the text document {node}" : "{user} شما را در سند متنی {node} منشن کرده است",
-    "This file cannot be displayed as download is disabled by the share" : "این فایل قابل نمایش نیست زیرا دانلود توسط اشتراک‌گذاری غیرفعال شده است",
     "This document is read-only." : "این سند فقط قابل خواندن است.",
     "Read-only permission cannot save document changes. Please reload the page." : "مجوز فقط خواندنی نمی‌تواند تغییرات سند را ذخیره کند. لطفاً صفحه را دوباره بارگذاری کنید.",
     "Readme" : "راهنما",

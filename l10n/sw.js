@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Faili halipatikani",
     "The file was uploaded" : "Faili lilipakiwa",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Faili lililopakiwa linazidi kiwango cha juu cha ukubwa wa faili linalielekea katika php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Faili iliyopakiliwa imezidi kiwango cha ukubwa wa faili iliyoelekezwa maalum katika fomu ya HTML",
@@ -10,7 +11,6 @@ OC.L10N.register(
     "Could not write file to disk" : "Haikuweza kuandika faili kwenye disk",
     "A PHP extension stopped the file upload" : "Uongezaji wa PHP umesimamisha upakiaji wa faili",
     "No file uploaded or file size exceeds maximum of %s" : "Hakuna faili lililopakiwa au faili lilizidi kiwango cha juu cha %s",
-    "File not found" : "Faili halipatikani",
     "Text" : "Maandishi",
     "Comment" : "Maoni",
     "Close" : "Funga",

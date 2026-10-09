@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Dosya bulunamadı",
+    "This file cannot be displayed as download is disabled by the share" : "Paylaşım tarafından indirme özelliği kapatılmış olduğundan bu dosya görüntülenemiyor",
     "The file was uploaded" : "Dosya yüklendi",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Yüklenen dosya php.ini dosyasındaki yüklenebilecek dosya boyutunu belirten upload_max_filesize değişkeninin değerini aşıyor",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Yüklenen dosya HTML formundaki yüklenebilecek dosya boyutunu belirten MAX_FILE_SIZE değişkeninin değerini aşıyor",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Dosya diske yazılamadı",
     "A PHP extension stopped the file upload" : "Bir PHP eklentisi dosyanın yüklenmesini engelledi",
     "No file uploaded or file size exceeds maximum of %s" : "Herhangi bir dosya yüklenmedi ya da %s olan en büyük dosya boyutu sınırı aşıldı",
-    "File not found" : "Dosya bulunamadı",
     "Nextcloud Text" : "Nextcloud Yazı",
     "Text document" : "Yazı belgesi",
     "Create new text file" : "Yeni yazı dosyası oluştur",
     "Editing session has expired. Please reload the page." : "Düzenleme oturumunun süresi dolmuş. Lütfen sayfayı yeniden yükleyin.",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} yazı belgesinde sizi andı",
-    "This file cannot be displayed as download is disabled by the share" : "Paylaşım tarafından indirme özelliği kapatılmış olduğundan bu dosya görüntülenemiyor",
     "This document is read-only." : "Bu belge salt okunur.",
     "Read-only permission cannot save document changes. Please reload the page." : "Salt okunur izniyle belge değişiklikleri kaydedilemez. Lütfen sayfayı yeniden yükleyin.",
     "Readme" : "Benioku",

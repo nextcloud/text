@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "ບໍ່ພົບໄຟລ໌",
+    "This file cannot be displayed as download is disabled by the share" : "ບໍ່ສາມາດສະແດງໄຟລ໌ນີ້ໄດ້ເນື່ອງຈາກການດາວໂຫລດຖືກປິດການໃຊ້ງານໂດຍການແບ່ງປັນ",
     "The file was uploaded" : "ຟາຍຖຶກອັບໂຫລດສຳເລັດ",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "ໄຟລ໌ທີ່ອັບໂຫລດມີຂະໜາດເກີນ upload_max_filesize directive ໃນ php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "ໄຟລ໌ທີ່ອັບໂຫລດມີຂະໜາດເກີນ MAX_FILE_SIZE directive ທີ່ລະບຸໄວ້ໃນແບບຟອມ HTML",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "ບໍ່ສາມາດຂຽນໄຟລ໌ລົງໃສ່ດິສໄດ້",
     "A PHP extension stopped the file upload" : "ສ່ວນຂະຫຍາຍ PHP ຢຸດການອັບໂຫລດໄຟລ໌",
     "No file uploaded or file size exceeds maximum of %s" : "ບໍ່ມີໄຟລ໌ໃດຖືກອັບໂຫລດ ຫຼື ຂະໜາດໄຟລ໌ໃຫຍ່ກວ່າຂະໜາດສູງສຸດ %s",
-    "File not found" : "ບໍ່ພົບໄຟລ໌",
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "ສ້າງໄຟລ໌ຂໍ້ຄວາມໃໝ່",
     "Editing session has expired. Please reload the page." : "ເຊດຊັນການແກ້ໄຂໝົດອາຍຸແລ້ວ. ກະລຸນາໂຫລດໜ້າເວັບຄືນໃໝ່.",
     "{user} has mentioned you in the text document {node}" : "{user} ໄດ້ກ່າວເຖິງທ່ານໃນເອກະສານຂໍ້ຄວາມ {node}",
-    "This file cannot be displayed as download is disabled by the share" : "ບໍ່ສາມາດສະແດງໄຟລ໌ນີ້ໄດ້ເນື່ອງຈາກການດາວໂຫລດຖືກປິດການໃຊ້ງານໂດຍການແບ່ງປັນ",
     "Readme" : "ອ່ານກ່ອນ",
     "Text" : "ຂໍ້ຄວາມ",
     "📝 Collaborative document editing" : "📝 ການແກ້ໄຂເອກະສານຮ່ວມກັນ",

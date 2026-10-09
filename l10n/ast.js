@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Nun s'atopó'l ficheru",
+    "This file cannot be displayed as download is disabled by the share" : "Esti ficheru nun se pue amosar darréu que l'elementu compartíu desactivó la descarga",
     "The file was uploaded" : "Xubióse'l ficheru",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "El ficheru xubíu supera la direutiva «upload_max_filesize» del ficheru php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El ficheru xubíu supera la direutiva «MAX_FILE_SIZE» que s'especificó nel formulariu HTML",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Nun se pudo escribir el ficheru nel discu",
     "A PHP extension stopped the file upload" : "Una estensión PHP paró la xuba de ficheros",
     "No file uploaded or file size exceeds maximum of %s" : "Nun se xubió nengún ficheru o'l tamañu del ficheru supera'l máximu de %s",
-    "File not found" : "Nun s'atopó'l ficheru",
     "Nextcloud Text" : "Testu de Nextcloud",
     "Create new text file" : "Crear un ficheru de testu",
     "Editing session has expired. Please reload the page." : "La sesión d'edición caducó. Volvi cargar la páxina.",
     "{user} has mentioned you in the text document {node}" : "{user} mentóte nel documentu de testu «{node}»",
-    "This file cannot be displayed as download is disabled by the share" : "Esti ficheru nun se pue amosar darréu que l'elementu compartíu desactivó la descarga",
     "Readme" : "Lleime",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "📝 Edición collaborativa de documentos",

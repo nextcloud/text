@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Finner ikke filen",
+    "This file cannot be displayed as download is disabled by the share" : "Denne filen kan ikke vises ettersom nedlastingen er deaktivert av den delte ressursen",
     "The file was uploaded" : "Filen ble lastet opp",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Filen er større enn definert grense i upload_max_filesize satt i php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Filen er større enn definert grense i MAX_FILE_SIZE  satt i HTML-formen.",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Skriving til disk mislyktes",
     "A PHP extension stopped the file upload" : "En PHP-utvidelse stoppet filopplastingen.",
     "No file uploaded or file size exceeds maximum of %s" : "Ingen fil lastet opp eller filen er større enn %s",
-    "File not found" : "Finner ikke filen",
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Opprett ny tekstfil",
     "Editing session has expired. Please reload the page." : "Redigeringsøkten er utløpt. Last inn siden på nytt.",
     "{user} has mentioned you in the text document {node}" : "{user} har nevnt deg i tekstdokumentet {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Denne filen kan ikke vises ettersom nedlastingen er deaktivert av den delte ressursen",
     "Readme" : "Lesmeg",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Dokumentredigering med samarbeidspartnere",

@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "ھۆججەت تېپىلمىدى",
+    "This file cannot be displayed as download is disabled by the share" : "چۈشۈرۈش ئارقىلىق چەكلەنگەنلىكى ئۈچۈن بۇ ھۆججەتنى كۆرسەتكىلى بولمايدۇ",
     "The file was uploaded" : "ھۆججەت يۈكلەندى",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "يۈكلەنگەن ھۆججەت php.ini دىكى upload_max_filesize كۆرسەتمىسىدىن ئېشىپ كەتتى",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "يۈكلەنگەن ھۆججەت HTML شەكلىدە كۆرسىتىلگەن MAX_FILE_SIZE كۆرسەتمىسىدىن ئېشىپ كەتتى",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "دىسكىغا ھۆججەت يازالمىدى",
     "A PHP extension stopped the file upload" : "PHP كېڭەيتىلمىسى ھۆججەت يوللاشنى توختاتتى",
     "No file uploaded or file size exceeds maximum of %s" : "يۈكلەنگەن ياكى ھۆججەتنىڭ چوڭلۇقى ئەڭ كۆپ بولغاندا%s دىن ئېشىپ كەتمەيدۇ",
-    "File not found" : "ھۆججەت تېپىلمىدى",
     "Nextcloud Text" : "Nextcloud تېكىست",
     "Create new text file" : "يېڭى تېكىست ھۆججىتى قۇرۇش",
     "Editing session has expired. Please reload the page." : "تەھرىرلەش ۋاقتى توشتى. بۇ بەتنى قايتا يۈكلەڭ.",
     "{user} has mentioned you in the text document {node}" : "{user} تېكىست ھۆججىتىدە {node} سىزنى تىلغا ئالدى",
-    "This file cannot be displayed as download is disabled by the share" : "چۈشۈرۈش ئارقىلىق چەكلەنگەنلىكى ئۈچۈن بۇ ھۆججەتنى كۆرسەتكىلى بولمايدۇ",
     "Readme" : "مېنى ئوقۇ",
     "Text" : "تېكىست",
     "📝 Collaborative document editing" : "Document ھەمكارلىشىپ ھۆججەت تەھرىرلەش",

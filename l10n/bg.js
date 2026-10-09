@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Файлът не е намерен",
+    "This file cannot be displayed as download is disabled by the share" : "Този файл не може да бъде показан, тъй като изтеглянето е деактивирано от споделянето",
     "The file was uploaded" : "Файлът е качен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Размерът на каченият файл надвишава директивата upload_max_filesize в php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Размерът на каченият файл надвишава максималния размер, определен от MAX_FILE_SIZE в HTML формата.",
@@ -10,10 +12,8 @@ OC.L10N.register(
     "Could not write file to disk" : " Файлът не можа да бъде записан на диск",
     "A PHP extension stopped the file upload" : "PHP разширение спря качването на файла",
     "No file uploaded or file size exceeds maximum of %s" : "Няма качен файл или размерът на файла надвишава максимума от %s",
-    "File not found" : "Файлът не е намерен",
     "Nextcloud Text" : "Nextcloud Text",
     "{user} has mentioned you in the text document {node}" : "{user} ви спомена в текстовия документ {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Този файл не може да бъде показан, тъй като изтеглянето е деактивирано от споделянето",
     "Readme" : "Прочети ме",
     "Text" : "Текст",
     "📝 Collaborative document editing" : "📝 Съвместно редактиране на документи ",

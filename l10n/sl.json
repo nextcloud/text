@@ -1,4 +1,6 @@
 { "translations": {
+    "File not found" : "Datoteke ni mogoče najti",
+    "This file cannot be displayed as download is disabled by the share" : "Datoteke ni mogoče prikazati, ker je na tem mestu souporabe prejem onemogočen",
     "The file was uploaded" : "Datoteka je uspešno poslana.",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Poslana datoteka presega največjo dovoljeno velikost, kot je to določeno v datoteki php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Poslana datoteka presega velikost, ki je določena kot omejitev MAX_FILE_SIZE v zapisu HTML.",
@@ -8,11 +10,9 @@
     "Could not write file to disk" : "Datoteke ni mogoče zapisati na disk",
     "A PHP extension stopped the file upload" : "Razširitev PHP onemogoča pošiljanje datoteke",
     "No file uploaded or file size exceeds maximum of %s" : "Ali ni poslane datoteke ali pa velikost datoteke presega omejitev %s",
-    "File not found" : "Datoteke ni mogoče najti",
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Ustvari novo besedilno datoteko",
     "{user} has mentioned you in the text document {node}" : "{user} vas omeni v besedili datoteki »{node}«.",
-    "This file cannot be displayed as download is disabled by the share" : "Datoteke ni mogoče prikazati, ker je na tem mestu souporabe prejem onemogočen",
     "Readme" : "Preberime",
     "Text" : "Besedilo",
     "📝 Collaborative document editing" : "📝 Sodelovalno urejanje dokumentov",
