@@ -1,4 +1,5 @@
 { "translations": {
+    "File not found" : "Lêer nie gevind nie",
     "The file was uploaded" : "Die lêer is opgelaai",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Die opgelaaide lêer oorskry die upload_max_filesize riglyn in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Die opgelaaide lêer oorskry die MAX_FILE_SIZE riglyn wat in die HTML vorm gespesifiseer is",
@@ -6,7 +7,6 @@
     "No file was uploaded" : "Geen lêer is opgelaai",
     "Missing a temporary folder" : "Ontbrekende tydelike gids",
     "A PHP extension stopped the file upload" : "’n PHP-uitbreiding het die oplaai gestaak",
-    "File not found" : "Lêer nie gevind nie",
     "Readme" : "Leesmy",
     "Text" : "Teks",
     "📝 Collaborative document editing" : "📝 Samewerkende dokumentredigering",

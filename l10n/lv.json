@@ -1,4 +1,5 @@
 { "translations": {
+    "File not found" : "Datne nav atrasta",
     "The file was uploaded" : "Datne tika augšupielādēta",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Augšupielādētā datne pārsniedz php.ini norādīto upload_max_filesize vērtību",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Augšupielādētā datne pārsniedz MAX_FILE_SIZE norādi, kas ir norādīta HTML formā",
@@ -7,7 +8,6 @@
     "Missing a temporary folder" : "Trūkst pagaidu mapes",
     "Could not write file to disk" : "Nevarēja ierakstīt datni diskā",
     "A PHP extension stopped the file upload" : "PHP paplašinājums apturēja datnes augšupielādi",
-    "File not found" : "Datne nav atrasta",
     "Editing session has expired. Please reload the page." : "Labošanas sesija ir beigusies. Lūgums pārlādēt lapu.",
     "{user} has mentioned you in the text document {node}" : "{user} pieminēja Tevi teksta dokumentā {node}",
     "Text" : "Teksts",

@@ -1,4 +1,5 @@
 { "translations": {
+    "File not found" : "Fișierul nu a fost găsit",
     "The file was uploaded" : "Fișierul a fost încărcat",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Fișierul încărcat depășește directiva upload_max_filesize din php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Fișierul încărcat depășește directiva MAX_FILE_SIZE specificată în formularul HTML",
@@ -8,7 +9,6 @@
     "Could not write file to disk" : "Nu s-a putut scrie fișierul pe disc",
     "A PHP extension stopped the file upload" : "O extensie PHP a oprit încărcarea fișierelor",
     "No file uploaded or file size exceeds maximum of %s" : "Niciun fișier pentru încărcare sau s-a depășit maximul de %s",
-    "File not found" : "Fișierul nu a fost găsit",
     "Text" : "Text",
     "Comment" : "Comentariu",
     "Close" : "Închide",

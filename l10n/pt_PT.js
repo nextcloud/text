@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Ficheiro não encontrado",
+    "This file cannot be displayed as download is disabled by the share" : "Este arquivo não pode ser exibido porque o download está desabilitado pelo compartilhamento",
     "The file was uploaded" : "O ficheiro foi carregado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O ficheiro carregado excede a diretiva upload_max_filesize no php.ini ",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O ficheiro carregado excede a diretiva MAX_FILE_SIZE especificada no formulário HTML",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Não foi possível escrever o ficheiro no disco.",
     "A PHP extension stopped the file upload" : "Uma extensão PHP parou o carregamento do ficheiro",
     "No file uploaded or file size exceeds maximum of %s" : "Nenhum ficheiro carregado ou o tamanho do ficheiro excede o máximo de%s",
-    "File not found" : "Ficheiro não encontrado",
     "Nextcloud Text" : "Nextcloud Texto",
     "Text document" : "Documento de texto",
     "Create new text file" : "Criar novo arquivo de texto",
     "Editing session has expired. Please reload the page." : "A sessão de edição expirou. Por favor, recarregue a página.",
     "{user} has mentioned you in the text document {node}" : "{user} mencionou você no documento de texto {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Este arquivo não pode ser exibido porque o download está desabilitado pelo compartilhamento",
     "This document is read-only." : "Este documento é somente para leitura.",
     "Read-only permission cannot save document changes. Please reload the page." : "A permissão de somente leitura não permite salvar alterações no documento. Recarregue a página.",
     "Readme" : "Leiame",

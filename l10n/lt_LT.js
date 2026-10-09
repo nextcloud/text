@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Failas nerastas",
+    "This file cannot be displayed as download is disabled by the share" : "Šio failo negalima peržiūrėti, nes jo bendrinimo nustatymuose išjungta atsisiuntimo funkcija",
     "The file was uploaded" : "Failas buvo įkeltas",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Įkeliamas failas viršija upload_max_filesize direktyvą, esančią faile php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Įkeltas failas viršija MAX_FILE_SIZE direktyvą, kuri buvo nurodyta HTML formoje",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Nepavyko rašyti į diską",
     "A PHP extension stopped the file upload" : "PHP plėtinys sustabdė failo įkėlimą",
     "No file uploaded or file size exceeds maximum of %s" : "Neįkeltas joks failas arba failo dydis viršija maksimalų %s dydį",
-    "File not found" : "Failas nerastas",
     "Nextcloud Text" : "„Nextcloud Tekstas“",
     "Text document" : "Tekstinis dokumentas",
     "Create new text file" : "Sukurti naują tekstinį failą",
     "Editing session has expired. Please reload the page." : "Redagavimo sesija baigėsi. Atnaujinkite puslapį.",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Šio failo negalima peržiūrėti, nes jo bendrinimo nustatymuose išjungta atsisiuntimo funkcija",
     "This document is read-only." : "Šį dokumentą galima tik skaityti.",
     "Read-only permission cannot save document changes. Please reload the page." : "Turint tik skaitymo teises, negalima išsaugoti dokumento pakeitimų. Prašome atnaujinti puslapį.",
     "Readme" : "Skaityk",

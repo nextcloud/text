@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "File non trovato",
+    "This file cannot be displayed as download is disabled by the share" : "Questo file non può essere visualizzato poiché il download è disattivato dalla condivisione",
     "The file was uploaded" : "Il file è stato caricato",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Il file caricato supera la direttiva upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Il file caricato supera la direttiva MAX_FILE_SIZE specificata nel modulo HTML",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Impossibile scrivere il file su disco",
     "A PHP extension stopped the file upload" : "Un'estensione PHP ha fermato il caricamento del file",
     "No file uploaded or file size exceeds maximum of %s" : "Nessun file caricato o la dimensione del file supera il massimo di %s",
-    "File not found" : "File non trovato",
     "Nextcloud Text" : "Testo di Nextcloud",
     "Create new text file" : "Crea nuovo file di testo",
     "Editing session has expired. Please reload the page." : "La sessione di modifica è scaduta. Ricarica la pagina.",
     "{user} has mentioned you in the text document {node}" : "{user} ti ha menzionato nel documento di testo {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Questo file non può essere visualizzato poiché il download è disattivato dalla condivisione",
     "Readme" : "Leggimi",
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
