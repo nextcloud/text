@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Файл не найден",
+    "This file cannot be displayed as download is disabled by the share" : "Этот файл не может быть показан, так как скачивание файлов запрещено внутри этого совместно используемого ресурса",
     "The file was uploaded" : "Файл загружен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Загруженный файл превышает размер параметра upload_max_filesize в php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Загруженный файл превышает размер параметра MAX_FILE_SIZE, который был указан в HTML-форме",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Не удалось записать файл на диск",
     "A PHP extension stopped the file upload" : "Загрузка файла была прервана модулем расширений PHP",
     "No file uploaded or file size exceeds maximum of %s" : "Файл не загружен или его размер превышает %s",
-    "File not found" : "Файл не найден",
     "Nextcloud Text" : "Текстовый редактор",
     "Text document" : "Текстовый документ",
     "Create new text file" : "Создать новый текстовый файл",
     "Editing session has expired. Please reload the page." : "Сессия редактирования истекла. Пожалуйста, перезагрузите страницу.",
     "{user} has mentioned you in the text document {node}" : "Вы были упомянуты пользователем {user} в текстовом документе {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Этот файл не может быть показан, так как скачивание файлов запрещено внутри этого совместно используемого ресурса",
     "This document is read-only." : "Этот документ доступен только для чтения.",
     "Read-only permission cannot save document changes. Please reload the page." : "Разрешение только для чтения не может сохранять изменения в документе. Пожалуйста, перезагрузите страницу.",
     "Readme" : "Readme",

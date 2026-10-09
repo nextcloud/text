@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "تعذر العثور على الملف",
+    "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف لإن التنزيل معطل من قبل المشاركة",
     "The file was uploaded" : "تمّ رفع الملف",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "حجم الملف المرفوع يتجاوز \"الحدّ الأقصى لحجم الملفات المرفوعة\"  upload_max_filesize كما هو في ملف php.ini ",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "حجم الملف الذي تريد رفعه يتجاوز الحد المسموح به في نماذج الـ HTML.",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "تعذر نسخ الملف الى القرص",
     "A PHP extension stopped the file upload" : "إمتداد PHP أوقف تحميل الملف",
     "No file uploaded or file size exceeds maximum of %s" : "لم يتم تحميل أي ملف أو أن حجم الملف يتجاوز الحد الأقصى %s",
-    "File not found" : "تعذر العثور على الملف",
     "Nextcloud Text" : "\"نصوص نكست كلاود\" Nextcloud Text",
     "Create new text file" : "إنشاء ملف نصّي جديد",
     "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
-    "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف لإن التنزيل معطل من قبل المشاركة",
     "Readme" : "إقرأني",
     "Text" : "نص",
     "📝 Collaborative document editing" : "📝تحرير المستندات تعاونيّاً Collaborative document editing",

@@ -1,9 +1,9 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Restr ebet kavet",
     "The file was uploaded" : "Kaset eo bet ar restr",
     "No file was uploaded" : "N'eus restr ebet a zo bet kaset",
-    "File not found" : "Restr ebet kavet",
     "Text" : "Testenn",
     "Comment" : "Displegadenn",
     "Close" : "Serriñ",

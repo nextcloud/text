@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Skrá finnst ekki",
+    "This file cannot be displayed as download is disabled by the share" : "Ekki hægt að birta þessa skrá þar sem niðurhal er gert óvirkt af sameigninni",
     "The file was uploaded" : "Skráin var send inn",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Innsend skrá er stærri en upload_max stillingin í php.ini:",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Innsenda skráin er stærri en MAX_FILE_SIZE sem skilgreint er í HTML sniðinu.",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Tókst ekki að skrifa skrá á disk.",
     "A PHP extension stopped the file upload" : "PHP-viðbót stöðvaði innsendingu skráar",
     "No file uploaded or file size exceeds maximum of %s" : "Engin innsend skrá eða að skráarstærð fór fram úr hámarksstæðinni %s",
-    "File not found" : "Skrá finnst ekki",
     "Nextcloud Text" : "Nextcloud Texti",
     "Create new text file" : "Búa til nýja textaskrá",
     "Editing session has expired. Please reload the page." : "Breytingasetan er útrunnin. Þú ættir að hlaða síðunni inn aftur.",
     "{user} has mentioned you in the text document {node}" : "{user} minntist á þig í textaskjalinu {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Ekki hægt að birta þessa skrá þar sem niðurhal er gert óvirkt af sameigninni",
     "Readme" : "Readme upplýsingaskrá",
     "Text" : "Texti",
     "📝 Collaborative document editing" : "📝 Samstarfsforrit til vinnslu skjala",

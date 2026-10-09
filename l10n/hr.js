@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Datoteka nije pronađena",
+    "This file cannot be displayed as download is disabled by the share" : "Ovu datoteku nije moguće prikazati jer je preuzimanje onemogućeno u dijeljenju",
     "The file was uploaded" : "Datoteka je učitana",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Učitana datoteka premašuje postavku upload_max_filesize u datoteci php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Učitana datoteka premašuje postavku MAX_FILE_SIZE koja je navedena u obrascu HTML-a",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Nije moguće zapisati datoteku na disk",
     "A PHP extension stopped the file upload" : "Proširenje PHP-a zaustavilo je učitavanje datoteke",
     "No file uploaded or file size exceeds maximum of %s" : "Nijedna datoteka nije učitana ili veličina datoteke premašuje maksimalnu veličinu od %s",
-    "File not found" : "Datoteka nije pronađena",
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Stvori novi tekst dokument",
     "Editing session has expired. Please reload the page." : "Sesija uređivanja je istekla. Ponovno učitajte stranicu.",
     "{user} has mentioned you in the text document {node}" : "{user} vas je spomenuo/la u tekstualnom dokumentu {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Ovu datoteku nije moguće prikazati jer je preuzimanje onemogućeno u dijeljenju",
     "Readme" : "Informacije",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Zajedničko obrađivanje dokumenata",
