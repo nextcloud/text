@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "This file cannot be displayed as download is disabled by the share" : "No se puede mostrar este archivo ya que la descarga está desactivada por el recurso compartido",
     "The file was uploaded" : "El archivo fue cargado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "El archivo cargado excede el valor establecido en la directiva upload_max_filesize en el archivo php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El archivo cargado excede el valor especificado de la directiva MAX_FILE_SIZE en la forma de HTML",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Nextcloud Text" : "Texto de Nextcloud",
     "Create new text file" : "Crear nuevo archivo de texto",
     "{user} has mentioned you in the text document {node}" : "{user} te ha mencionado en el documento de texto {node}",
-    "This file cannot be displayed as download is disabled by the share" : "No se puede mostrar este archivo ya que la descarga está desactivada por el recurso compartido",
     "Readme" : "Leerme",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",

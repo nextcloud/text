@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Faili ei leidu",
+    "This file cannot be displayed as download is disabled by the share" : "Faili ei saa näidata, sest jagamise seadistustes on allalaadimine keelatud",
     "The file was uploaded" : "Fail laaditi üles",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Üleslaaditud fail on suurem, kui php.ini failis määratud upload_max_filesize",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Üleslaaditud fail on suurem, kui MAX_FILE_SIZE atribuut, mis seadistati HTML vormis",
@@ -10,13 +12,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Faili kirjutamine kettale ei õnnestunud",
     "A PHP extension stopped the file upload" : "PHP laiendus peatas faili üleslaadimise",
     "No file uploaded or file size exceeds maximum of %s" : "Faili ei laaditud üles või selle suurus ületab maksimaalse %s",
-    "File not found" : "Faili ei leidu",
     "Nextcloud Text" : "Nextcloudi tekstiredaktor (Nextcloud Text)",
     "Text document" : "Tekstidokument",
     "Create new text file" : "Loo uus tekstifail",
     "Editing session has expired. Please reload the page." : "Muutmissessioon on aegunud. Palun laadi leht uuesti.",
     "{user} has mentioned you in the text document {node}" : "„{user}“ mainis sind tekstidokumendis „{node}“",
-    "This file cannot be displayed as download is disabled by the share" : "Faili ei saa näidata, sest jagamise seadistustes on allalaadimine keelatud",
     "This document is read-only." : "See dokument on vaid loetav",
     "Read-only permission cannot save document changes. Please reload the page." : "Vaid loetavasse dokumenti ei saa muudatusi salvestada. Palun laadi leht uuesti.",
     "Readme" : "Loemind",

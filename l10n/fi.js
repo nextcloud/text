@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Tiedostoa ei löytynyt",
     "The file was uploaded" : "Tiedosto lähetettiin",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Ladattu tiedosto on suurempi kuin php.ini-tiedostossa määritelty upload_max_filesize",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Ladattu tiedosto on suurempi kuin HTML-lomakkeessa määritelty MAX_FILE_SIZE",
@@ -10,7 +11,6 @@ OC.L10N.register(
     "Could not write file to disk" : "Ei voitu kirjoittaa levylle",
     "A PHP extension stopped the file upload" : "PHP-laajennus pysäytti tiedoston lähetyksen",
     "No file uploaded or file size exceeds maximum of %s" : "Tiedostoa ei lähetetty tai sen koko ylitti maksimin %s",
-    "File not found" : "Tiedostoa ei löytynyt",
     "Nextcloud Text" : "Nextcloud Text",
     "Text document" : "Tekstiasiakirja",
     "Create new text file" : "Luo uusi tekstitiedosto",

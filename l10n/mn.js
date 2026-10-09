@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "–§–∞–π–ª –æ–ª–¥—Å–æ–Ω–≥“Ø–π",
+    "This file cannot be displayed as download is disabled by the share" : "Хуваалцалт татахыг идэвхгүй болгосон тул энэ файлыг харуулах боломжгүй",
     "The file was uploaded" : "Файл байршуулагдлаа",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Байршуулсан файл php.ini дахь upload_max_filesize хязгаараас хэтэрсэн",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Байршуулсан файл HTML маягтад заасан MAX_FILE_SIZE зааврыг давсан байна",
@@ -10,12 +12,10 @@ OC.L10N.register(
     "Could not write file to disk" : "Файлыг диск рүү бичиж чадсангүй",
     "A PHP extension stopped the file upload" : "PHP өргөтгөл файл байршуулалтыг зогсоосон",
     "No file uploaded or file size exceeds maximum of %s" : "Файл байршуулаагүй эсвэл файлын хэмжээ %s хамгийн ихээс хэтэрсэн",
-    "File not found" : "–§–∞–π–ª –æ–ª–¥—Å–æ–Ω–≥“Ø–π",
     "Nextcloud Text" : "Nextcloud Текст",
     "Create new text file" : "Шинэ текст файл үүсгэх",
     "Editing session has expired. Please reload the page." : "Засварлах сессийн хугацаа дууссан. Хуудсыг дахин ачаална уу.",
     "{user} has mentioned you in the text document {node}" : "{user} таныг {node} текст баримт бичигт дурдсан",
-    "This file cannot be displayed as download is disabled by the share" : "Хуваалцалт татахыг идэвхгүй болгосон тул энэ файлыг харуулах боломжгүй",
     "Readme" : "Readme",
     "Text" : "Текст",
     "Comment" : "–°—ç—Ç–≥—ç–≥–¥—ç–ª",
