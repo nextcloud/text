@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { adjustSpacers, pairTopLevelBlocks } from '../../comparison/alignment.ts'
+import { adjustSpacers, pairTopLevelBlocks, spacerMargins } from '../../comparison/alignment.ts'
 import { compareDocuments } from '../../comparison/compare.ts'
 import { createComparisonEditor } from '../../comparison/editor.ts'
 
@@ -69,7 +69,7 @@ describe('adjustSpacers', () => {
 
 	it('accounts for spacers already in place and corrects residual differences', () => {
 		const current = { before: new Map([[1, 40]]), after: new Map<number, number>() }
-		// Measured with the spacer in place, the second pair is 4px off because of a collapsed margin
+		// Measured with the spacer in place, the second pair is still 4px off, e.g. once an image above it has loaded
 		const { spacers, largest } = adjustSpacers(blockPairs, {
 			before: [0, 60, 80],
 			after: [0, 20, 64, 84],
@@ -89,5 +89,69 @@ describe('adjustSpacers', () => {
 
 		expect([...spacers.after]).toEqual([[2, 20]])
 		expect(spacers.before.size).toBe(0)
+	})
+})
+
+describe('spacerMargins', () => {
+	it('sets the top margin to the gap above the block plus its spacer', () => {
+		const margins = spacerMargins([0, 15, 24], new Map(), new Map([[2, 10]]))
+
+		expect([...margins]).toEqual([[2, 34]])
+	})
+
+	it('takes the spacer already in place out of the measured gap', () => {
+		const margins = spacerMargins([0, 15, 34], new Map([[2, 10]]), new Map([[2, 4]]))
+
+		expect([...margins]).toEqual([[2, 28]])
+	})
+})
+
+describe('aligning blocks with collapsing margins', () => {
+	interface Block { height: number, marginTop: number, marginBottom: number }
+
+	/**
+	 * Lay out blocks the way CSS does: the gap between two blocks is the larger
+	 * of the upper block's bottom margin and the lower block's top margin.
+	 *
+	 * @param blocks The blocks, top to bottom.
+	 * @param margins Top margins set on blocks, by index.
+	 */
+	function layout(blocks: Block[], margins: ReadonlyMap<number, number>) {
+		const tops: number[] = []
+		const gaps: number[] = []
+		let bottom = 0
+		let marginBottom = 0
+		blocks.forEach((block, index) => {
+			const gap = Math.max(marginBottom, margins.get(index) ?? block.marginTop)
+			tops.push(bottom + gap)
+			gaps.push(gap)
+			bottom += gap + block.height
+			marginBottom = block.marginBottom
+		})
+		return { tops, gaps }
+	}
+
+	it('lines up a heading below paragraphs of different heights, and keeps it there', () => {
+		const paragraph = (height: number) => ({ height, marginTop: 0, marginBottom: 15 })
+		const heading = { height: 30, marginTop: 24, marginBottom: 12 }
+		const blocks = { before: [paragraph(20), heading], after: [paragraph(25), heading] }
+		const blockPairs = [{ before: 0, after: 0 }, { before: 1, after: 1 }]
+		let spacers = { before: new Map<number, number>(), after: new Map<number, number>() }
+		const margins = { before: new Map<number, number>(), after: new Map<number, number>() }
+		const measure = () => ({ before: layout(blocks.before, margins.before), after: layout(blocks.after, margins.after) })
+
+		for (let round = 0; round < 3; round++) {
+			const measured = measure()
+			const adjusted = adjustSpacers(blockPairs, { before: measured.before.tops, after: measured.after.tops }, spacers)
+			for (const side of ['before', 'after'] as const) {
+				margins[side] = spacerMargins(measured[side].gaps, spacers[side], adjusted.spacers[side])
+			}
+			spacers = adjusted.spacers
+		}
+
+		const { before, after } = measure()
+		expect(before.tops[1]).toBe(after.tops[1])
+		expect([...spacers.before]).toEqual([[1, 5]])
+		expect(spacers.after.size).toBe(0)
 	})
 })

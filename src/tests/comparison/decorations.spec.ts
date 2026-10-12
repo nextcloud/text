@@ -5,7 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { compareDocuments } from '../../comparison/compare.ts'
-import { createComparisonDecorationPlugin, setComparisonDecorations } from '../../comparison/decorations.ts'
+import { createComparisonDecorationPlugin, createComparisonSpacerPlugin, setComparisonDecorations, setComparisonSpacers } from '../../comparison/decorations.ts'
 import { createComparisonEditor } from '../../comparison/editor.ts'
 
 const before = createComparisonEditor('Hello world\n\nRemoved paragraph\n\nLast')
@@ -54,5 +54,26 @@ describe('comparison decorations', () => {
 		expect(marked(after)).toEqual([
 			['change-2', 'text-comparison-change text-comparison-change--added text-comparison-change--block text-comparison-change--current'],
 		])
+	})
+})
+
+describe('comparison spacers', () => {
+	it('sets the top margin of a block instead of adding an element', () => {
+		const editor = createComparisonEditor('First\n\n## Second')
+		const spacers = createComparisonSpacerPlugin()
+		editor.mount(document.createElement('div'))
+		editor.registerPlugin(spacers.plugin)
+		const blocks = () => [...editor.view.dom.children] as HTMLElement[]
+		const count = blocks().length
+
+		setComparisonSpacers(editor, spacers.key, new Map([[1, 34]]))
+
+		expect(blocks()).toHaveLength(count)
+		expect(blocks()[0]!.style.marginBlockStart).toBe('')
+		expect(blocks()[1]!.style.marginBlockStart).toBe('34px')
+
+		setComparisonSpacers(editor, spacers.key, new Map())
+		expect(blocks()[1]!.style.marginBlockStart).toBe('')
+		editor.destroy()
 	})
 })

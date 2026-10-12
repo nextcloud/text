@@ -10,7 +10,7 @@ import type { ComparisonDecorationKey, ComparisonSide as Side } from './decorati
 import { t } from '@nextcloud/l10n'
 import { computed, effectScope, nextTick, ref, watch } from 'vue'
 import { logger } from '../helpers/logger.ts'
-import { adjustSpacers, pairTopLevelBlocks } from './alignment.ts'
+import { adjustSpacers, pairTopLevelBlocks, spacerMargins } from './alignment.ts'
 import { compareDocuments } from './compare.ts'
 import { createComparisonDecorationPlugin, createComparisonSpacerPlugin, setComparisonDecorations, setComparisonSpacers } from './decorations.ts'
 import { createComparisonEditor } from './editor.ts'
@@ -175,40 +175,46 @@ export function createComparisonSession(beforeContent: string, afterContent: str
 	}
 
 	/**
-	 * Pad top-level blocks so paired blocks start at the same offset in both documents.
-	 * Measuring includes the spacers already in place, so a few rounds settle margin effects.
+	 * Move top-level blocks down so paired blocks start at the same offset in both documents.
+	 * Measuring includes the spacers already in place, so a further round corrects what is left.
 	 */
 	function alignDocuments() {
 		if (failed || !scrollers.before || !scrollers.after) {
 			return
 		}
 		for (let round = 0; round < 3; round++) {
-			const tops = { before: blockTops(editors.before), after: blockTops(editors.after) }
-			const adjusted = adjustSpacers(blockPairs, tops, spacers)
+			const layout = { before: blockLayout(editors.before), after: blockLayout(editors.after) }
+			const adjusted = adjustSpacers(blockPairs, { before: layout.before.tops, after: layout.after.tops }, spacers)
 			if (adjusted.largest === 0) {
 				break
 			}
-			spacers = adjusted.spacers
 			for (const side of comparisonSides) {
-				setComparisonSpacers(editors[side], spacerKeys[side], spacers[side])
+				setComparisonSpacers(editors[side], spacerKeys[side], spacerMargins(layout[side].gaps, spacers[side], adjusted.spacers[side]))
 			}
+			spacers = adjusted.spacers
 		}
 		scrollToCurrent()
 	}
 
 	/**
-	 * Offsets of the top-level blocks of a document from its top.
+	 * Offsets of the top-level blocks of a document from its top, and the gap above each.
 	 *
 	 * @param editor Editor of the document.
 	 */
-	function blockTops(editor: ComparisonEditor) {
-		const origin = editor.view.dom.getBoundingClientRect().top
+	function blockLayout(editor: ComparisonEditor) {
+		const box = editor.view.dom.getBoundingClientRect()
+		const style = getComputedStyle(editor.view.dom)
+		let bottom = box.top + (parseFloat(style.borderTopWidth) || 0) + (parseFloat(style.paddingTop) || 0)
 		const tops: number[] = []
+		const gaps: number[] = []
 		editor.state.doc.forEach((_node, offset) => {
 			const dom = editor.view.nodeDOM(offset)
-			tops.push(dom instanceof HTMLElement ? dom.getBoundingClientRect().top - origin : 0)
+			const rect = dom instanceof HTMLElement ? dom.getBoundingClientRect() : null
+			tops.push(rect ? rect.top - box.top : 0)
+			gaps.push(rect ? rect.top - bottom : 0)
+			bottom = rect?.bottom ?? bottom
 		})
-		return tops
+		return { tops, gaps }
 	}
 
 	/** Scroll one document to the current change; the other follows through syncScroll. */
