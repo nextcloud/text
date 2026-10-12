@@ -1,0 +1,23 @@
+SPDX-License-Identifier: Apache-2.0
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: @chevrotain/gast developers
+SPDX-FileCopyrightText: @chevrotain/regexp-to-ast developers
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: Shahar Soel
+
+This file is generated from multiple sources. Included packages:
+- @chevrotain/gast
+	- version: 13.2.0
+	- license: Apache-2.0
+- @chevrotain/regexp-to-ast
+	- version: 13.2.0
+	- license: Apache-2.0
+- @chevrotain/utils
+	- version: 13.2.0
+	- license: Apache-2.0
+- chevrotain
+	- version: 13.2.0
+	- license: Apache-2.0
+- mermaid
+	- version: 12.1.0
+	- license: MIT
