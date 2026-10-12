@@ -13,7 +13,7 @@ import { defineComponent } from 'vue'
 vi.mock('../../components/ViewerComponent.vue', () => ({
 	default: defineComponent({
 		name: 'ViewerComponent',
-		props: ['filename', 'fileid', 'mime', 'source', 'e2EeIsEncrypted', 'active', 'onLoadedHandler'],
+		props: ['filename', 'fileid', 'forceSource', 'mime', 'source', 'e2EeIsEncrypted', 'active', 'onLoadedHandler'],
 		template: '<div />',
 	}),
 }))
@@ -55,17 +55,19 @@ describe('the text viewer wrapper', () => {
 		const file = makeFile()
 		const editor = mount(TextViewerWrapper, { props: { file } }).findComponent({ name: 'ViewerComponent' })
 
+		expect(editor.props('forceSource')).toBe(false)
 		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(file.encodedSource)
 	})
 
-	// A version carries the id of the file it belongs to: handed that, the
-	// editor opened the current document instead of the version
+	// A version carries the id of the file it belongs to. It is still read
+	// from its source, but keeps the id to resolve its attachments
 	it('opens an older version from its source, to read', () => {
 		const version = makeVersion()
 		const editor = mount(TextViewerWrapper, { props: { file: version } }).findComponent({ name: 'ViewerComponent' })
 
-		expect(editor.props('fileid')).toBeUndefined()
+		expect(editor.props('forceSource')).toBe(true)
+		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(version.encodedSource)
 	})
 
@@ -118,7 +120,8 @@ describe('the text viewer wrapper', () => {
 		const editor = wrapper.findComponent({ name: 'ViewerComponent' })
 
 		expect(wrapper.findComponent({ name: 'ViewerVersionComparison' }).exists()).toBe(false)
-		expect(editor.props('fileid')).toBeUndefined()
+		expect(editor.props('forceSource')).toBe(true)
+		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(currentSource)
 	})
 })

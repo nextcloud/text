@@ -28,11 +28,11 @@ const emit = defineEmits<{
 
 // An end-to-end encrypted file is read from its source, not opened collaboratively
 const isEncrypted = computed(() => Boolean(props.file.attributes?.['e2ee-is-encrypted']))
-// So is an older version of a file, which carries the file's own id: with it,
-// the editor would open the current document rather than that version
+// So is an older version of a file. It carries the file's own id, which is
+// still needed to resolve its attachments
 const isVersion = computed(() => props.file.root?.startsWith('/versions/') ?? false)
 // Side by side, the current file is only read too, like the version next to it
-const isReadOnly = computed(() => isVersion.value || props.comparison === 'side-by-side')
+const forceSource = computed(() => isVersion.value || props.comparison === 'side-by-side')
 
 const isMarkdown = (file: IFile) => openMimetypesMarkdown.includes(file.mime ?? '')
 
@@ -72,7 +72,8 @@ onMounted(() => emit('update:canSwipe', false))
 	<ViewerComponent
 		v-else
 		:filename="file.path"
-		:fileid="isReadOnly ? undefined : file.fileid"
+		:fileid="file.fileid"
+		:forceSource
 		:mime="file.mime"
 		:source="file.encodedSource"
 		:e2EeIsEncrypted="isEncrypted"

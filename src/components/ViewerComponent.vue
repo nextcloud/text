@@ -43,6 +43,7 @@ const props = defineProps <{
 	mime?: string | undefined
 	source?: string | undefined
 	isEmbedded?: boolean
+	forceSource?: boolean
 	onLoadedHandler?: () => void
 }>()
 
@@ -56,6 +57,7 @@ const isEncrypted = computed(() => Boolean(attrs.e2EeIsEncrypted))
 const useSourceView = computed(() => props.source
 	&& (!props.fileid
 		|| props.isEmbedded
+		|| props.forceSource
 		|| isEncrypted.value)
 	&& !hasToggledInteractiveEmbedding.value)
 
