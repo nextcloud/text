@@ -13,7 +13,7 @@ export interface BlockPair {
 	after: number
 }
 
-/** Spacer heights in pixels by top-level block index, per side. */
+/** How far to move each top-level block down, in pixels by block index, per side. */
 export type ComparisonSpacers = Record<ComparisonSide, Map<number, number>>
 
 /**
@@ -64,8 +64,8 @@ export function pairTopLevelBlocks(before: Node, after: Node, changes: readonly 
 /**
  * Adjust the spacers so paired blocks start at the same offset.
  *
- * Offsets are measured with the current spacers in place, so repeated calls
- * converge even when block margins change around a spacer.
+ * Offsets are measured with the current spacers in place, so a later call
+ * corrects differences that appeared since, e.g. once images have loaded.
  *
  * @param pairs Paired top-level blocks in document order.
  * @param tops Measured block offsets per side, by block index.
@@ -106,6 +106,27 @@ export function adjustSpacers(pairs: readonly BlockPair[], tops: Record<Comparis
 		}
 	}
 	return { spacers, largest }
+}
+
+/**
+ * Top margins that move blocks down by their spacer.
+ *
+ * The top margin of a block collapses with the bottom margin of the block
+ * above it, so the gap between them is the larger of both. A top margin of
+ * the gap plus the spacer moves the block down by exactly the spacer, while a
+ * separate element of the spacer's height would also stop the two margins
+ * from collapsing.
+ *
+ * @param gaps Measured gap above each block, with the current spacers in place.
+ * @param current Spacers that were in place while measuring.
+ * @param next Spacers to apply.
+ */
+export function spacerMargins(gaps: readonly number[], current: ReadonlyMap<number, number>, next: ReadonlyMap<number, number>) {
+	const margins = new Map<number, number>()
+	for (const [index, spacer] of next) {
+		margins.set(index, gaps[index]! - (current.get(index) ?? 0) + spacer)
+	}
+	return margins
 }
 
 function topLevelIndex(doc: Node, range: ChangeRange) {

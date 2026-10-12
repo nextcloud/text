@@ -118,15 +118,5 @@ onBeforeUnmount(() => props.session.attachScroller(props.side, null))
 		outline: 2px solid var(--color-primary-element);
 		outline-offset: 2px;
 	}
-
-	// Spacers must render at exactly the requested height, whatever the editor styles for divs
-	.ProseMirror > .text-comparison-spacer {
-		display: block;
-		box-sizing: content-box;
-		min-block-size: 0;
-		margin: 0;
-		padding: 0;
-		border: 0;
-	}
 }
 </style>

@@ -58,8 +58,8 @@ export function setComparisonDecorations(editor: Editor, key: ComparisonDecorati
 }
 
 /**
- * Create a plugin that pads top-level blocks so both sides of a comparison line up.
- * The spacer heights are set with setComparisonSpacers.
+ * Create a plugin that sets the top margin of top-level blocks so both sides of a comparison line up.
+ * The margins are set with setComparisonSpacers.
  */
 export function createComparisonSpacerPlugin() {
 	const key: ComparisonDecorationKey = new PluginKey('comparison-spacers')
@@ -82,27 +82,22 @@ export function createComparisonSpacerPlugin() {
 }
 
 /**
- * Replace the spacers of an editor.
+ * Replace the top margins of an editor's blocks.
  *
  * @param editor Editor with the spacer plugin registered.
  * @param key Key returned with the plugin.
- * @param spacers Spacer height in pixels by top-level block index.
+ * @param margins Top margin in pixels by top-level block index.
  */
-export function setComparisonSpacers(editor: Editor, key: ComparisonDecorationKey, spacers: ReadonlyMap<number, number>) {
-	editor.view.dispatch(editor.state.tr.setMeta(key, spacers))
+export function setComparisonSpacers(editor: Editor, key: ComparisonDecorationKey, margins: ReadonlyMap<number, number>) {
+	editor.view.dispatch(editor.state.tr.setMeta(key, margins))
 }
 
-function buildSpacers(doc: Node, spacers: ReadonlyMap<number, number>) {
+function buildSpacers(doc: Node, margins: ReadonlyMap<number, number>) {
 	const decorations: Decoration[] = []
-	doc.forEach((_node, offset, index) => {
-		const height = spacers.get(index)
-		if (height) {
-			decorations.push(Decoration.widget(offset, () => {
-				const spacer = document.createElement('div')
-				spacer.className = 'text-comparison-spacer'
-				spacer.style.height = `${height}px`
-				return spacer
-			}, { key: `spacer-${index}-${height}`, side: -1, ignoreSelection: true }))
+	doc.forEach((node, offset, index) => {
+		const margin = margins.get(index)
+		if (margin !== undefined) {
+			decorations.push(Decoration.node(offset, offset + node.nodeSize, { style: `margin-block-start: ${margin}px` }))
 		}
 	})
 	return DecorationSet.create(doc, decorations)
