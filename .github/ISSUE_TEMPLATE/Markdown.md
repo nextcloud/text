@@ -1,7 +1,11 @@
 ---
 name: Markdown related issue
 about: Create a report to help us improve the markdown support
-labels: "bug, formatting: markdown"
+title: ''
+labels: 0. Needs triage, bug
+assignees: ''
+type: Bug
+
 ---
 
 ## Short summary of the issue
@@ -30,4 +34,4 @@ Please add your example markdown file here
 <!-- Please insert a screenshot here -->
 
 ## Details
-- Nextcloud version: 
+- Nextcloud version:
