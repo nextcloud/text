@@ -1,7 +1,11 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-labels: enhancement
+title: ''
+labels: 0. Needs triage, enhancement
+assignees: ''
+type: Enhancement
+
 ---
 
 **Is your feature request related to a problem? Please describe.**

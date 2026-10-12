@@ -1,7 +1,11 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: bug
+title: ''
+labels: 0. Needs triage, bug
+assignees: ''
+type: Bug
+
 ---
 
 **Describe the bug**
