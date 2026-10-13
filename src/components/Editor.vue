@@ -804,6 +804,16 @@ export default {
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
+
+			// Update the file in Files with the latest size, mtime, the lock state
+			if (this.fileNode) {
+				const updatedNode = await fetchNode(this.fileNode)
+					.catch((err) => logger.warn('Failed to fetch node', { err }))
+				if (updatedNode) {
+					emit('files:node:updated', updatedNode)
+				}
+			}
+
 			return true
 		},
 
