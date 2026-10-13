@@ -141,14 +141,12 @@ export default {
 				markdown,
 			})
 		})
-		if (this.fileId) {
-			this.attachmentResolver = new AttachmentResolver({
-				currentDirectory: this.relativePath?.match(/.*\//),
-				user: getCurrentUser(),
-				shareToken: this.shareToken,
-				fileId: this.fileId,
-			})
-		}
+		this.attachmentResolver = new AttachmentResolver({
+			currentDirectory: this.relativePath?.match(/.*\//),
+			user: getCurrentUser(),
+			shareToken: this.shareToken,
+			fileId: this.fileId,
+		})
 	},
 
 	beforeUnmount() {
