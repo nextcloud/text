@@ -32,4 +32,5 @@ registerHandler({
 	theme: 'default',
 	canCompare: () => true,
 	canShowDifferences: (files) => files.every((file) => markdownMimes.has(file.mime ?? '')),
+	canSlideshow: false,
 })
