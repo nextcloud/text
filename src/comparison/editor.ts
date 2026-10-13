@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Schema } from '@tiptap/pm/model'
-
 import { Editor } from '@tiptap/vue-3'
-import { renderEditorContent } from '../composables/useEditorMethods.ts'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import RichText from '../extensions/RichText.ts'
 
 interface ComparisonEditorOptions {
@@ -14,21 +12,16 @@ interface ComparisonEditorOptions {
 	filePath?: string
 	noLazyImages?: boolean
 	openLink?: (href: string) => void
-	schema?: Schema
 }
 
 /**
- * Create a read-only embedded Markdown editor. The caller owns attachment and destruction.
+ * Create a read-only editor showing one side of a comparison.
  *
- * @param content Markdown snapshot; non-string input throws.
- * @param options Accessibility, resource, link and optional shared-schema settings.
+ * @param content Markdown content.
+ * @param options Accessibility, attachment and link settings.
  */
 export function createComparisonEditor(content: string, options: ComparisonEditorOptions = {}) {
-	if (typeof content !== 'string') {
-		throw new TypeError('Comparison content must be a string')
-	}
 	const editor = new Editor({
-		content: renderEditorContent(content, true),
 		editable: false,
 		editorProps: options.ariaLabel ? { attributes: { 'aria-label': options.ariaLabel } } : {},
 		extensions: [RichText.configure({
@@ -39,12 +32,7 @@ export function createComparisonEditor(content: string, options: ComparisonEdito
 			openLink: options.openLink,
 			relativePath: options.filePath,
 		})],
-		onBeforeCreate: ({ editor }) => {
-			if (options.schema) {
-				editor.schema = options.schema
-				editor.extensionManager.schema = options.schema
-			}
-		},
 	})
+	useEditorMethods(editor).setContent(content, { addToHistory: false })
 	return editor
 }

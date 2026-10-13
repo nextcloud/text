@@ -1,0 +1,43 @@
+/**
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+// Layout shared by every view of a comparison
+.text-comparison {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-inline-size: 0;
+	block-size: 100%;
+	min-block-size: 0;
+	overflow: hidden;
+	container-type: inline-size;
+
+	$g: var(--default-grid-baseline);
+
+	&__header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: calc(2 * $g);
+		padding-inline: calc(2 * $g);
+		border-block-end: 1px solid var(--color-border);
+	}
+
+	&__sr-only {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		margin: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	&__changes {
+		flex: 1;
+		min-block-size: 0;
+		overflow: auto;
+	}
+}

@@ -11,6 +11,7 @@ import 'vite/modulepreload-polyfill'
 
 const tagName = 'text-viewer'
 const mimes = new Set([...openMimetypesMarkdown, ...openMimetypesPlainText])
+const markdownMimes = new Set(openMimetypesMarkdown)
 
 // This script runs on every page: the editor is only loaded, and its element
 // defined, the first time the viewer opens a text file
@@ -29,5 +30,6 @@ registerHandler({
 		}
 	},
 	theme: 'default',
-	canCompare: true,
+	canCompare: () => true,
+	canShowDifferences: (files) => files.every((file) => markdownMimes.has(file.mime ?? '')),
 })

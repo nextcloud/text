@@ -60,15 +60,25 @@ test.describe('Versions with distant timestamps', () => {
 		await page
 			.getByRole('menuitem', { name: 'Compare to current version' })
 			.click()
-		const oldVersion = page.getByRole('textbox')
-		const current = page.locator('.ProseMirror[contenteditable="true"]')
-		await expect(oldVersion.getByRole('heading', { name: 'V1' })).toBeVisible()
-		await expect(current.getByRole('heading', { name: 'V3' })).toBeVisible()
 
-		// Test that version contents are vertically aligned
-		const oldBox = await oldVersion.getByRole('heading', { name: 'V1' }).boundingBox()
-		const currentBox = await current.getByRole('heading', { name: 'V3' }).boundingBox()
-		expect(Math.abs(oldBox!.y - currentBox!.y)).toBeLessThan(5)
+		// Side by side: the older version on the left, the current file on the right
+		const before = page.getByRole('article', { name: 'Before' })
+		const after = page.getByRole('article', { name: 'After' })
+		await expect(before.getByRole('heading', { name: 'V1' })).toBeVisible()
+		await expect(after.getByRole('heading', { name: 'V3' })).toBeVisible()
+		await expect(page.locator('.text-comparison-change--current')).toHaveCount(2)
+		await expect(page.locator('.text-comparison__navigation')).toContainText('Change 1 of 1')
+		// Both are only read
+		await expect(page.locator('.ProseMirror[contenteditable="true"]')).toHaveCount(0)
+
+		// D shows the list of changes
+		await page.keyboard.press('d')
+		const change = page.locator('[data-comparison-select]')
+		await expect(change).toHaveCount(1)
+		await expect(change).toContainText('Text changed')
+		await expect(change.locator('del')).toHaveText('1')
+		await expect(change.locator('ins')).toHaveText('3')
+		await expect(before).toHaveCount(0)
 	})
 })
 

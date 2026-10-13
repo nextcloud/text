@@ -6,30 +6,30 @@
 <template>
 	<section class="text-source-fallback" data-comparison-source-fallback :aria-label="t('text', 'Complete Markdown source')">
 		<p>{{ t('text', 'Complete Markdown source is shown because a detailed comparison is unavailable.') }}</p>
-		<p v-if="before.truncated || after.truncated" role="status">
-			{{ t('text', 'Source preview was truncated to the display limit.') }}
-		</p>
-		<div class="text-source-fallback__documents">
-			<article>
+		<div class="text-source-fallback__documents" :class="{ 'text-source-fallback__documents--single': side }">
+			<article v-if="side !== 'after'">
 				<h2>{{ t('text', 'Before') }}</h2>
-				<pre tabindex="0"><code>{{ before.text }}</code></pre>
+				<pre tabindex="0"><code>{{ beforeContent }}</code></pre>
 			</article>
-			<article>
+			<article v-if="side !== 'before'">
 				<h2>{{ t('text', 'After') }}</h2>
-				<pre tabindex="0"><code>{{ after.text }}</code></pre>
+				<pre tabindex="0"><code>{{ afterContent }}</code></pre>
 			</article>
 		</div>
 	</section>
 </template>
 
 <script setup lang="ts">
-import { t } from '@nextcloud/l10n'
-import { computed } from 'vue'
-import { displayBoundedMarkdownSource } from '../comparison/markdownSourceDisplay.ts'
+import type { ComparisonSide } from '../comparison/decorations.ts'
 
-const props = defineProps<{ beforeContent: string, afterContent: string }>()
-const before = computed(() => displayBoundedMarkdownSource(props.beforeContent))
-const after = computed(() => displayBoundedMarkdownSource(props.afterContent))
+import { t } from '@nextcloud/l10n'
+
+defineProps<{
+	beforeContent: string
+	afterContent: string
+	/** Show only this side, as one of two panes does */
+	side?: ComparisonSide
+}>()
 </script>
 
 <style lang="scss">
@@ -44,6 +44,10 @@ const after = computed(() => displayBoundedMarkdownSource(props.afterContent))
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 16px;
+
+		&--single {
+			grid-template-columns: minmax(0, 1fr);
+		}
 	}
 
 	pre {
