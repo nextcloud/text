@@ -42,6 +42,7 @@ class Document extends SnowflakeAwareEntity implements \JsonSerializable {
 	protected int $lastSavedVersion = 0;
 	protected int $initialVersion = 0;
 	protected int $lastSavedVersionTime = 0;
+	protected int $lastAttachmentCleanup = 0;
 	protected string $lastSavedVersionEtag = '';
 	protected string $baseVersionEtag = '';
 	protected ?string $checksum = null;
@@ -53,10 +54,19 @@ class Document extends SnowflakeAwareEntity implements \JsonSerializable {
 		$this->addType('currentVersion', Types::INTEGER);
 		$this->addType('lastSavedVersion', Types::INTEGER);
 		$this->addType('lastSavedVersionTime', Types::INTEGER);
+		$this->addType('lastAttachmentCleanup', Types::BIGINT);
 		$this->addType('initialVersion', Types::INTEGER);
 		$this->addType('checksum', Types::STRING);
 		$this->addType('contextType', Types::STRING);
 		$this->addType('contextId', Types::INTEGER);
+	}
+
+	public function getLastAttachmentCleanup(): int {
+		return $this->lastAttachmentCleanup;
+	}
+
+	public function setLastAttachmentCleanup(int $time): void {
+		$this->setter('lastAttachmentCleanup', [$time]);
 	}
 
 	public function jsonSerialize(): array {

@@ -72,12 +72,14 @@ class DocumentMapper extends QBMapper {
 		}
 	}
 
-	public function findAllWithNoActiveSessions(): Generator {
+	public function findAllPendingAttachmentCleanup(): Generator {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('d.*')
 			->from($this->getTableName(), 'd')
 			->leftJoin('d', 'text_sessions', 's', $qb->expr()->eq('s.document_id', 'd.id'))
 			->where($qb->expr()->isNull('s.id'))
+			->andWhere($qb->expr()->gt('d.last_saved_version_time', 'd.last_attachment_cleanup'))
+			->andWhere($qb->expr()->eq('d.context_type', $qb->createNamedParameter('file')))
 			->executeQuery();
 		try {
 			while ($row = $result->fetchAssociative()) {
