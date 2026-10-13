@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { TextSelection } from '@tiptap/pm/state'
 import { builders } from 'prosemirror-test-builder'
 import RichText from '../../extensions/RichText.js'
 import markdownit from '../../markdownit/index.ts'
-import EditableTable from '../../nodes/EditableTable.js'
+import EditableTable from '../../nodes/EditableTable.ts'
 import output from '../fixtures/tables/basic/table.html?raw'
 import input from '../fixtures/tables/basic/table.md?raw'
 import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
@@ -84,6 +85,36 @@ describe('Table extension', () => {
 | abc                   |                                  | \\
 |                       |                                  | \\
 | > quote               |                                  |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
+	test('md table with marks in header cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| **bold** | *italic* | ~~strike~~ | \`code\` | [link](https://example.org) |
+|----------|----------|------------|--------|-----------------------------|
+| 1        | 2        | 3          | 4      | 5                           |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
+	test('md table with block syntax at start of header cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| # | - item | 1. item | > quote |
+|---|--------|---------|---------|
+| 1 | 2      | 3       | 4       |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
+	test('md table with multiple pipes in cells is preserved through editor', ({ markdownThroughEditor }) => {
+		const table = `
+| a \\| b \\| c | d |
+|-------------|---|
+| 1 \\| 2 \\| 3 | 4 |
 `.trimStart()
 
 		expect(markdownThroughEditor(table)).toBe(table)
@@ -273,6 +304,25 @@ describe('Table extension', () => {
 
 		expect(getBodyColumnValues(editor, 0)).toEqual(['1', '2', '10'])
 		expect(getBodyColumnValues(editor, 1)).toEqual(['c', 'b', 'a'])
+	})
+
+	test('multiline text pasted into header cell is flattened to single line', ({ editor, serializeMarkdown }) => {
+		editor.commands.setContent('<table><tr><th>X</th><th>b</th></tr><tr><td>1</td><td>2</td></tr></table>')
+		editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, 4)))
+		editor.view.pasteText('Street 1\nCity\n\nCountry')
+		expect(serializeMarkdown()).toBe('| XStreet 1 City Country | b |\n|------------------------|---|\n| 1                      | 2 |\n')
+	})
+
+	test('blocks and hard breaks pasted into header cell are flattened keeping marks', ({ editor, serializeMarkdown }) => {
+		editor.commands.setContent('<table><tr><th>X</th></tr><tr><td>1</td></tr></table>')
+		editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, 4)))
+		editor.view.pasteHTML('<p>one <strong>bold</strong></p><ul><li>item</li></ul><p>a<br>b</p>')
+		expect(serializeMarkdown()).toBe('| Xone **bold** item a b |\n|------------------------|\n| 1                      |\n')
+	})
+
+	test('multiline header cell in markdown is loaded as single line', ({ markdownThroughEditor }) => {
+		const table = '| a | b | \\\n| c |   |\n|---|---|\n| 1 | 2 |\n'
+		expect(markdownThroughEditor(table)).toBe('| a c | b |\n|-----|---|\n| 1   | 2 |\n')
 	})
 })
 
