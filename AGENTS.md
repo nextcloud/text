@@ -118,7 +118,6 @@ PHPUnit tests depend on Nextcloud's OCP interfaces; they **cannot run standalone
 
 ## Cypress prerequisites
 
-- The Nextcloud [Viewer app](https://github.com/nextcloud/viewer) must be installed and enabled.
 - `CYPRESS_INSTALL_BINARY=0` skips binary download when only building (set in CI non-cypress steps).
 - CI also enables `assistant` and `whiteboard` apps.
 - `offline_readonly_delay` is set to `5000` ms in CI to speed up sync/recovery tests.
