@@ -17,9 +17,6 @@
     "Delete" : "Delete",
     "Save" : "Späicheren",
     "Cancel" : "Cancel",
-    "Quote" : "Cotéierung",
-    "Details" : "Detailer",
-    "Added" : "Bäigesat",
     "Previous" : "Zeréck",
     "Reconnect" : "Erëm verbannen",
     "you" : "Du",
@@ -28,12 +25,15 @@
     "Saved" : "Gespäichert",
     "Save changes" : "Ännerunge späicheren",
     "URL" : "URL",
-    "Retry" : "Widderhuelen",
     "Translate" : "Iwwersetzen",
     "Upload" : "Eroplueden",
+    "Added" : "Bäigesat",
     "Done" : "Fäerdeg",
     "Lists" : "Lëschten",
+    "Details" : "Detailer",
     "Choose" : "Auswielen",
-    "to" : "bis"
+    "to" : "bis",
+    "Quote" : "Cotéierung",
+    "Retry" : "Widderhuelen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -19,9 +19,6 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Späicheren",
     "Cancel" : "Cancel",
-    "Quote" : "Cotéierung",
-    "Details" : "Detailer",
-    "Added" : "Bäigesat",
     "Previous" : "Zeréck",
     "Reconnect" : "Erëm verbannen",
     "you" : "Du",
@@ -30,12 +27,15 @@ OC.L10N.register(
     "Saved" : "Gespäichert",
     "Save changes" : "Ännerunge späicheren",
     "URL" : "URL",
-    "Retry" : "Widderhuelen",
     "Translate" : "Iwwersetzen",
     "Upload" : "Eroplueden",
+    "Added" : "Bäigesat",
     "Done" : "Fäerdeg",
     "Lists" : "Lëschten",
+    "Details" : "Detailer",
     "Choose" : "Auswielen",
-    "to" : "bis"
+    "to" : "bis",
+    "Quote" : "Cotéierung",
+    "Retry" : "Widderhuelen"
 },
 "nplurals=2; plural=(n != 1);");

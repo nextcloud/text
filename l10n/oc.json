@@ -20,11 +20,6 @@
     "Delete" : "Delete",
     "Save" : "Enregistrar",
     "Cancel" : "Anullar",
-    "Paragraph" : "Paragraf",
-    "Task" : "Prètzfach",
-    "Table" : "Tablèu",
-    "Code block" : "Còdi",
-    "Details" : "Per lo Menut",
     "Previous" : "Precedent",
     "Next" : "Seguent",
     "Reload" : "Recargar",
@@ -46,6 +41,7 @@
     "Unordered list" : "Lista pas ordenada",
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
+    "Code block" : "Còdi",
     "Link" : "Ligam",
     "Undo" : "Anullar",
     "Redo" : "Refar",
@@ -53,7 +49,6 @@
     "Save changes" : "Salvar modificacions",
     "URL" : "URL",
     "Changes" : "Modificacions",
-    "Retry" : "Tornar ensajar",
     "Insert" : "Inserir",
     "Translate" : "Translate",
     "Remaining actions" : "Mai d’accions",
@@ -65,6 +60,8 @@
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
+    "Details" : "Per lo Menut",
+    "Table" : "Tablèu",
     "Insert link" : "Inserir un ligam",
     "Insert attachment" : "Inserir una pèça junta",
     "Insert emoji" : "Inserir emoji",
@@ -75,6 +72,9 @@
     "Insert an attachment" : "Inserir una pèça junta",
     "Saving …" : "Enregistrament...",
     "Select language" : "Causir lenga",
-    "to" : "a"
+    "to" : "a",
+    "Paragraph" : "Paragraf",
+    "Task" : "Prètzfach",
+    "Retry" : "Tornar ensajar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

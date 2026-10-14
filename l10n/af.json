@@ -18,8 +18,6 @@
     "Delete" : "Delete",
     "Save" : "Stoor",
     "Cancel" : "Cancel",
-    "Paragraph" : "Paragraaf",
-    "Details" : "Besonderhede",
     "Previous" : "Vorige",
     "Reconnect" : "Herverbind",
     "you" : "u",
@@ -37,16 +35,18 @@
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
     "Changes" : "Veranderinge",
-    "Retry" : "Herprobeer",
     "Upload" : "Oplaai",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
     "Heading 3" : "Kop 3",
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
+    "Details" : "Besonderhede",
     "Choose" : "Kies",
     "text document" : "teksdokument",
     "Saving …" : "Bewaar tans…",
-    "to" : "aan"
+    "to" : "aan",
+    "Paragraph" : "Paragraaf",
+    "Retry" : "Herprobeer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

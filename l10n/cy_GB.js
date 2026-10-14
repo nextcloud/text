@@ -10,7 +10,6 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Cadw",
     "Cancel" : "Cancel",
-    "Details" : "Manylion",
     "Previous" : "Blaenorol",
     "Saved" : "Wedi'u cadw",
     "Keyboard shortcuts" : "Llwybrau byr bysellfwrdd",
@@ -20,12 +19,13 @@ OC.L10N.register(
     "Undo" : "Dadwneud",
     "URL" : "URL",
     "Changes" : "Newidiadau",
-    "Retry" : "Ceisio eto",
     "Translate" : "Cyfieithu",
     "Upload" : "Llwytho i fyny",
     "Source code" : "Cod ffynhonnell",
+    "Details" : "Manylion",
     "Suggestions" : "Awgrymiadau",
     "Choose" : "Dewisa",
-    "to" : "at"
+    "to" : "at",
+    "Retry" : "Ceisio eto"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");
