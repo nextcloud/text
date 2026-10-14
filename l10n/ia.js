@@ -13,7 +13,6 @@ OC.L10N.register(
     "Save" : "Salveguardar",
     "Cancel" : "Cancel",
     "Reply" : "Responde",
-    "Details" : "Detalios",
     "Previous" : "Previe",
     "Next" : "Proxime",
     "you" : "Tu",
@@ -28,6 +27,7 @@ OC.L10N.register(
     "Translate" : "Translate",
     "Upload" : "Incargar",
     "Done" : "Preste",
+    "Details" : "Detalios",
     "to" : "a"
 },
 "nplurals=2; plural=(n != 1);");

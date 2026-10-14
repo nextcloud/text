@@ -14,8 +14,6 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Guardar",
     "Cancel" : "Cancel",
-    "Details" : "Detalles",
-    "Changed" : "Cambiado",
     "Previous" : "Anterior",
     "Reload" : "Volver a cargar",
     "you" : "tú",
@@ -30,15 +28,17 @@ OC.L10N.register(
     "Save changes" : "Guardar Cambios",
     "URL" : "URL",
     "Changes" : "Cambios",
-    "Retry" : "Reintentar",
     "Formatting help" : "Ayuda de formato",
     "Translate" : "Traducir",
     "Upload" : "Cargar",
     "Source code" : "Código fuente",
+    "Details" : "Detalles",
     "Choose" : "Seleccionar",
     "New text file" : "Nuevo archivo de texto",
     "Select language" : "Seleccionar idioma",
     "to" : "para",
-    "Replace" : "Reemplazar"
+    "Replace" : "Reemplazar",
+    "Changed" : "Cambiado",
+    "Retry" : "Reintentar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

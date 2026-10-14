@@ -21,10 +21,6 @@ OC.L10N.register(
     "Save" : "დამახსოვრება",
     "Cancel" : "Cancel",
     "Reply" : "Reply",
-    "Heading" : "Heading",
-    "Image" : "Image",
-    "Details" : "Details",
-    "Changed" : "Changed",
     "Previous" : "წინა",
     "Next" : "Next",
     "Reload" : "Reload",
@@ -43,7 +39,6 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "URL" : "URL",
     "Changes" : "Changes",
-    "Retry" : "თავიდან ცდა",
     "Formatting help" : "Formatting help",
     "Translate" : "Translate",
     "Nextcloud Assistant" : "Nextcloud-ის ასისტენტი",
@@ -54,6 +49,7 @@ OC.L10N.register(
     "Done" : "Done",
     "Headings" : "Headings",
     "Lists" : "Lists",
+    "Details" : "Details",
     "Command" : "Command",
     "Ctrl" : "Ctrl",
     "Suggestions" : "Suggestions",
@@ -67,6 +63,10 @@ OC.L10N.register(
     "Select language" : "Select language",
     "to" : "to",
     "Translate to" : "Translate to",
-    "Replace" : "Replace"
+    "Replace" : "Replace",
+    "Heading" : "Heading",
+    "Image" : "Image",
+    "Changed" : "Changed",
+    "Retry" : "თავიდან ცდა"
 },
 "nplurals=2; plural=(n!=1);");

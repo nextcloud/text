@@ -18,7 +18,6 @@ OC.L10N.register(
     "Delete" : "Obriši",
     "Save" : "Sačuvaj",
     "Cancel" : "Poništi",
-    "Details" : "Detalji",
     "Reload" : "Ponovo učitaj",
     "edit" : "izmeni",
     "Copy link" : "Kopiraj vezu",
@@ -32,6 +31,7 @@ OC.L10N.register(
     "Upload" : "Otpremi",
     "Source code" : "Izvorni kôd",
     "Done" : "Gotovo",
+    "Details" : "Detalji",
     "Choose" : "Odaberi",
     "Replace" : "Zameni postojeću"
 },

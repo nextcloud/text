@@ -10,7 +10,6 @@
     "Delete" : "Delete",
     "Save" : "সংরক্ষণ",
     "Cancel" : "বাতিল করুন",
-    "Details" : "বিসতারিত",
     "Previous" : "পূর্ববর্তী",
     "Reload" : "পূনরায় লোড কর",
     "you" : "তুমি",
@@ -21,6 +20,7 @@
     "Translate" : "Translate",
     "Upload" : "আপলোড",
     "Done" : "শেষ হলো",
+    "Details" : "বিসতারিত",
     "Choose" : "বেছে নিন",
     "to" : "প্রতি"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
