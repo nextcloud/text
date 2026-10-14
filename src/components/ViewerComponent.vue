@@ -6,6 +6,7 @@
 <template>
 	<EditorReloader
 		v-if="!useSourceView"
+		ref="editor"
 		:context="{ id: fileid, type: 'file' }"
 		:relativePath="filename"
 		:active="active || isEmbedded"
@@ -27,7 +28,7 @@
 
 <script setup lang="ts">
 import { getSharingToken } from '@nextcloud/sharing/public'
-import { computed, onMounted, provide, ref, useAttrs } from 'vue'
+import { computed, onMounted, provide, ref, useAttrs, useTemplateRef } from 'vue'
 import EditorReloader from './EditorReloader.vue'
 import SourceView from './SourceView.vue'
 
@@ -74,6 +75,16 @@ function toggleEdit() {
 	hasToggledInteractiveEmbedding.value = true
 }
 
+const editor = useTemplateRef('editor')
+
+/**
+ * Write edits not saved yet, if any
+ */
+async function saveWhenDirty() {
+	await editor.value?.saveWhenDirty?.()
+}
+
+defineExpose({ saveWhenDirty })
 </script>
 
 <style lang="scss" scoped>
