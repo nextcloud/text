@@ -13,8 +13,6 @@
     "Save" : "Lagre",
     "Cancel" : "Cancel",
     "Reply" : "Svare",
-    "Image" : "Bilete",
-    "Details" : "Detaljar",
     "Previous" : "Førre",
     "Copy link" : "Kopier lenkje",
     "Saving …" : "Lagrar …",
@@ -26,16 +24,18 @@
     "URL" : "URL",
     "Changes" : "Endringar",
     "After" : "Etter",
-    "Retry" : "Forsøk att",
     "Translate" : "Translate",
     "Upload" : "Last opp",
     "Done" : "Ferdig",
     "Lists" : "Lister",
+    "Details" : "Detaljar",
     "Choose" : "Vel",
     "Choose {file}" : "Vel {file}",
     "Saving …" : "Lagrar …",
     "Select language" : "Vel språk",
     "to" : "til",
-    "Replace" : "Erstatt"
+    "Replace" : "Erstatt",
+    "Image" : "Bilete",
+    "Retry" : "Forsøk att"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

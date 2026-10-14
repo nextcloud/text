@@ -16,9 +16,6 @@
     "Save" : "Saqlash",
     "Cancel" : "Bekor qilish",
     "Reply" : "Javob bering",
-    "Table" : "Jadval",
-    "Table row" : "Jadval qatori",
-    "Details" : "Details",
     "Previous" : "Oldingi",
     "Next" : "Keyingisi",
     "Reload" : "Qayta yuklash",
@@ -36,7 +33,6 @@
     "Save changes" : "Save changes",
     "URL" : "URL",
     "Changes" : "Changes",
-    "Retry" : "Qayta urinish",
     "Translate" : "Tarjima",
     "Nextcloud Assistant" : "Next bulut yordamchisi",
     "Upload" : "Yuklash",
@@ -44,12 +40,16 @@
     "Delete this attachment" : "Ushbu biriktirmani oʻchirib tashlang",
     "Done" : "Bajarildi",
     "Lists" : "Ro'yxatlar",
+    "Details" : "Details",
+    "Table" : "Jadval",
     "Option" : "Variant",
     "Suggestions" : "Takliflar",
     "Formatting" : "Formatlash",
     "Choose" : "Tanlang",
     "Choose {file}" : " {file}ta tanlash",
     "Saving …" : "Saqlanmoqda...",
-    "to" : "пф"
+    "to" : "пф",
+    "Table row" : "Jadval qatori",
+    "Retry" : "Qayta urinish"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
