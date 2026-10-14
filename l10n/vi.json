@@ -26,10 +26,6 @@
     "Save" : "Lưu",
     "Cancel" : "Hủy",
     "Reply" : "Trả lời",
-    "Paragraph" : "Đoạn văn",
-    "Image" : "Hình ảnh",
-    "Code block" : "Khối mã",
-    "Details" : "Chi tiết",
     "Previous" : "Trước",
     "Next" : "Tiếp theo",
     "Reload" : "Tải lại",
@@ -61,6 +57,7 @@
     "Ordered list" : "Đánh số",
     "Blockquote" : "Trích dẫn",
     "Quoted text" : "Văn bản được trích dẫn",
+    "Code block" : "Khối mã",
     "Link" : "Liên kết",
     "Action" : "Hành động",
     "Undo" : "Hoàn tác",
@@ -69,8 +66,6 @@
     "Save changes" : "Lưu thay đổi",
     "URL" : "URL",
     "Changes" : "Các thay đổi",
-    "Show" : "Hiển thị",
-    "Retry" : "Thử lại",
     "Formatting help" : "Định dạng trợ giúp",
     "Insert result" : "Chèn kết quả",
     "Could not copy result to clipboard" : "Không thể sao chép kết quả vào bộ nhớ tạm",
@@ -89,6 +84,7 @@
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
     "Lists" : "Danh sách",
+    "Details" : "Chi tiết",
     "Insert attachment" : "Thêm đính kèm",
     "Insert emoji" : "Chèn emoji",
     "Command" : "Lệnh",
@@ -105,6 +101,10 @@
     "Insert an attachment" : "Chèn phần đính kèm",
     "Saving …" : "Đang lưu ...",
     "to" : "đến",
-    "Replace" : "Thay thế"
+    "Replace" : "Thay thế",
+    "Paragraph" : "Đoạn văn",
+    "Image" : "Hình ảnh",
+    "Show" : "Hiển thị",
+    "Retry" : "Thử lại"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
