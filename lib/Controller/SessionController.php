@@ -76,7 +76,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	public function close(string $documentId, int $sessionId, string $sessionToken): DataResponse {
 		// We also want this to work with a session that has already been closed.
 		// So we cannot rely on RequireDocumentSession to retrieve the user.
-		$user = $this->userSession->getUser();
+		$user = $this->userSession->getUser() ?? $this->getSessionUser($documentId, $sessionId, $sessionToken);
 		if ($user === null) {
 			throw new InvalidSessionException();
 		}
@@ -155,5 +155,15 @@ class SessionController extends ApiController implements ISessionAwareController
 		if ($this->restoreUser) {
 			$this->userSession->setUser($this->userToRestore);
 		}
+	}
+
+	private function getSessionUser(string $documentId, int $sessionId, string $sessionToken): ?IUser {
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		if ($session === null || $session->isGuest()) {
+			return null;
+		}
+
+		$user = $this->userManager->get($session->getUserId());
+		return $user?->isEnabled() ? $user : null;
 	}
 }
