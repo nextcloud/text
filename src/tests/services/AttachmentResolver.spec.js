@@ -105,4 +105,15 @@ describe('Image resolver', () => {
 		expect(attachment.isImage).toBe(true)
 		expect(attachment.previewUrl).toBe('http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
 	})
+
+	it('matches attachment names regardless of Unicode normalization', async () => {
+		const nfcName = 'B\u00FCcher.pdf'
+		const nfdName = 'Bu\u0308cher.pdf'
+		vi.spyOn(axios, 'post')
+			.mockReturnValue({ data: [{ fileId: 1237, name: nfcName, mimetype: 'application/pdf', isImage: false }] })
+		const resolver = new AttachmentResolver({ session })
+		const attachment = await resolver.resolve(`.attachments.${session.documentId}/${encodeURIComponent(nfdName)}`)
+		expect(attachment.isImage).toBe(false)
+		expect(attachment.name).toBe(nfcName)
+	})
 })
