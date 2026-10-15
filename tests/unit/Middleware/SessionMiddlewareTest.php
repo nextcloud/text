@@ -19,6 +19,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use Test\TestCase;
+use Psr\Log\LoggerInterface;
 
 class SessionMiddlewareTest extends TestCase {
 	private SessionMiddleware $middleware;
@@ -56,6 +57,7 @@ class SessionMiddlewareTest extends TestCase {
 			$this->createMock(IL10N::class),
 			$this->userManager,
 			$this->fileService,
+			$this->createMock(LoggerInterface::class),
 		);
 	}
 
