@@ -196,6 +196,7 @@ OC.L10N.register(
     "Show folder description" : "Zobrazit popis složky",
     "Removed" : "Odebráno",
     "Added" : "Přidáno",
+    "No changes" : "Žádné změny",
     "Hide outline" : "Skrýt osnovu",
     "Show outline" : "Zobrazit osnovu",
     "Done" : "Dokončeno",
