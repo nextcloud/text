@@ -123,6 +123,7 @@ OC.L10N.register(
     "Delete this row" : "Desaniciar esta filera",
     "Delete this table" : "Desaniciar esta tabla",
     "Show folder description" : "Amosar la descripción de les carpetes",
+    "No changes" : "Nun hai nengún cambéu",
     "Done" : "Fecho",
     "Headings" : "Testeres",
     "Heading 2" : "Testera 2",

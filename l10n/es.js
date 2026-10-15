@@ -182,6 +182,7 @@ OC.L10N.register(
     "Show folder description" : "Mostrar descripción de la carpeta",
     "Removed" : "Eliminado",
     "Added" : "Añadido",
+    "No changes" : "Sin cambios",
     "Hide outline" : "Ocultar contorno",
     "Show outline" : "Mostrar contorno",
     "Done" : "Listo",
