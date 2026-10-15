@@ -174,6 +174,7 @@ OC.L10N.register(
     "Show folder description" : "أظهِر وصف المجلد",
     "Removed" : "تم الإزالة",
     "Added" : "مضاف",
+    "No changes" : "No changes",
     "Hide outline" : "إخفِ قائمة المحتويات outline",
     "Show outline" : "أظهِر قائمة المحتويات outline",
     "Done" : "تمّ",

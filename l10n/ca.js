@@ -167,6 +167,7 @@ OC.L10N.register(
     "Show folder description" : "Mostra la descripció de la carpeta",
     "Removed" : "S'ha suprimit",
     "Added" : "Afegit",
+    "No changes" : "Sense canvis",
     "Hide outline" : "Amaga l'esquema",
     "Show outline" : "Mostra l'esquema",
     "Done" : "Fet",
