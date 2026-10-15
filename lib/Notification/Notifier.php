@@ -26,6 +26,7 @@ use OCP\Notification\UnknownNotificationException;
 class Notifier implements INotifier {
 	public const TYPE_MENTIONED = 'mentioned';
 	public const SUBJECT_MENTIONED_SOURCE_USER = 'sourceUser';
+	public const SUBJECT_MENTIONED_SOURCE_GUEST = 'sourceGuest';
 	public const SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
 
 	public function __construct(
@@ -55,14 +56,33 @@ class Notifier implements INotifier {
 		switch ($notification->getSubject()) {
 			case self::TYPE_MENTIONED:
 				$parameters = $notification->getSubjectParameters();
-				$sourceUser = $parameters[self::SUBJECT_MENTIONED_SOURCE_USER];
-				$sourceUserDisplayName = $this->userManager->getDisplayName($sourceUser);
+				$sourceUser = $parameters[self::SUBJECT_MENTIONED_SOURCE_USER] ?? null;
+				$sourceGuest = $parameters[self::SUBJECT_MENTIONED_SOURCE_GUEST] ?? null;
+
+				if (is_string($sourceUser)) {
+					$sourceUserDisplayName = $this->userManager->getDisplayName($sourceUser);
+					if ($sourceUserDisplayName === null) {
+						throw new UnknownNotificationException();
+					}
+					$sourceParameter = [
+						'type' => 'user',
+						'id' => $sourceUser,
+						'name' => $sourceUserDisplayName,
+					];
+				} elseif (is_string($sourceGuest)) {
+					$sourceParameter = [
+						'type' => 'guest',
+						'id' => 'guest',
+						'name' => $sourceGuest !== ''
+							? $l->t('%s (guest)', [$sourceGuest])
+							: $l->t('A guest'),
+					];
+				} else {
+					throw new AlreadyProcessedException();
+				}
+
 				$targetUser = $notification->getUser();
 				$fileId = (int)$notification->getObjectId();
-
-				if ($sourceUserDisplayName === null) {
-					throw new UnknownNotificationException();
-				}
 
 				try {
 					$userFolder = $this->rootFolder->getUserFolder($targetUser);
@@ -79,11 +99,7 @@ class Notifier implements INotifier {
 
 				$notification->setLink($fileLink);
 				$notification->setRichSubject($l->t('{user} has mentioned you in the text document {node}'), [
-					'user' => [
-						'type' => 'user',
-						'id' => $sourceUser,
-						'name' => $sourceUserDisplayName,
-					],
+					'user' => $sourceParameter,
 					'node' => [
 						'type' => 'file',
 						'id' => (string)$node->getId(),
