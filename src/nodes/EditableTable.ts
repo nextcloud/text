@@ -3,23 +3,26 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node, NodeViewProps } from '@tiptap/vue-3'
+import type { Component } from 'vue'
+
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import TableHeaderView from './Table/TableHeaderView.vue'
 import TableRowView from './Table/TableRowView.vue'
 import TableView from './Table/TableView.vue'
-import Table from './Table/Table.js'
-import TableCaption from './Table/TableCaption.js'
-import TableCell from './Table/TableCell.js'
-import TableHeader from './Table/TableHeader.js'
-import TableHeadRow from './Table/TableHeadRow.js'
-import TableRow from './Table/TableRow.js'
+import Table from './Table/Table.ts'
+import TableCaption from './Table/TableCaption.ts'
+import TableCell from './Table/TableCell.ts'
+import TableHeader from './Table/TableHeader.ts'
+import TableHeadRow from './Table/TableHeadRow.ts'
+import TableRow from './Table/TableRow.ts'
 
 /**
  *
- * @param {object} node - the node to add the view to.
- * @param {object} view - the node view to add to the node.
+ * @param node - the node to add the view to.
+ * @param view - the node view to add to the node.
  */
-function extendNodeWithView(node, view) {
+function extendNodeWithView(node: Node, view: Component<NodeViewProps>) {
 	return node.extend({
 		addNodeView() {
 			return VueNodeViewRenderer(view)

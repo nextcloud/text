@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node as PMNode, ResolvedPos, Schema } from '@tiptap/pm/model'
+import type { Selection } from '@tiptap/pm/state'
+
 import { mergeAttributes } from '@tiptap/core'
 import { Table } from '@tiptap/extension-table'
 import { TextSelection } from '@tiptap/pm/state'
@@ -15,21 +18,43 @@ import {
 	selectionCell,
 } from '@tiptap/pm/tables'
 import { tableToMarkdown } from './markdown.ts'
-import TableCaption from './TableCaption.js'
-import TableCell from './TableCell.js'
-import TableHeader from './TableHeader.js'
-import TableHeadRow from './TableHeadRow.js'
-import TableRow from './TableRow.js'
+import TableCaption from './TableCaption.ts'
+import TableCell from './TableCell.ts'
+import TableHeader from './TableHeader.ts'
+import TableHeadRow from './TableHeadRow.ts'
+import TableRow from './TableRow.ts'
+
+declare module '@tiptap/core' {
+	interface Commands<ReturnType> {
+		text_table: {
+			/**
+			 * Move the selection to the node after the table
+			 */
+			leaveTable: () => ReturnType
+			/**
+			 * Move the selection to the same cell in the next row
+			 */
+			goToNextRow: () => ReturnType
+			/**
+			 * Sort the body rows by the column of the given cell
+			 *
+			 * @param direction Sort direction
+			 * @param cell Table cell or header node of the column to sort by
+			 */
+			sortColumn: (direction?: 'asc' | 'desc', cell?: PMNode | null) => ReturnType
+		}
+	}
+}
 
 /**
  *
- * @param {object} schema - schema of the editor
- * @param {number} rowsCount - number of rows in the table
- * @param {number} colsCount - number of cols in the table
+ * @param schema - schema of the editor
+ * @param rowsCount - number of rows in the table
+ * @param colsCount - number of cols in the table
  */
-function createTable(schema, rowsCount, colsCount) {
-	const headerCells = []
-	const cells = []
+function createTable(schema: Schema, rowsCount: number, colsCount: number) {
+	const headerCells: PMNode[] = []
+	const cells: PMNode[] = []
 	for (let index = 0; index < colsCount; index += 1) {
 		const cell = schema.nodes.tableCell.createAndFill()
 		if (cell) {
@@ -50,9 +75,9 @@ function createTable(schema, rowsCount, colsCount) {
 
 /**
  *
- * @param {object} $cell - resolved position of the current cell
+ * @param $cell - resolved position of the current cell
  */
-function findSameCellInNextRow($cell) {
+function findSameCellInNextRow($cell: ResolvedPos) {
 	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
 		return null
 	}
@@ -69,14 +94,15 @@ function findSameCellInNextRow($cell) {
 		}
 		cellStart += rowNode.nodeSize
 	}
+	return null
 }
 
 /**
  * Return the node type name if the selection sits inside a listItem/taskItem.
  *
- * @param {object} selection - the editor selection
+ * @param selection - the editor selection
  */
-function findListItemAtSelection(selection) {
+function findListItemAtSelection(selection: Selection) {
 	const { $from } = selection
 	for (let depth = $from.depth; depth > 0; depth--) {
 		const name = $from.node(depth).type.name
@@ -95,7 +121,7 @@ export default Table.extend({
 
 	addCommands() {
 		return {
-			...this.parent(),
+			...this.parent?.(),
 			addRowAfter:
 				() => ({ chain, dispatch }) => {
 					return chain()
@@ -150,11 +176,11 @@ export default Table.extend({
 					})
 					.run(),
 			insertTable:
-				() => ({ tr, dispatch, editor }) => {
-					if (isInTable(tr)) {
+				() => ({ state, tr, dispatch, editor }) => {
+					if (isInTable(state)) {
 						return false
 					}
-					const node = createTable(editor.schema, 3, 3, true)
+					const node = createTable(editor.schema, 3, 3)
 					if (dispatch) {
 						const offset = tr.selection.anchor + 1
 						tr.replaceSelectionWith(node)
@@ -165,8 +191,8 @@ export default Table.extend({
 				},
 			// move to the next node after the table from the last cell
 			leaveTable:
-				() => ({ tr, dispatch }) => {
-					if (!isInTable(tr)) {
+				() => ({ state, tr, dispatch }) => {
+					if (!isInTable(state)) {
 						return false
 					}
 					const { $head, empty } = tr.selection
@@ -183,13 +209,13 @@ export default Table.extend({
 					return true
 				},
 			goToNextRow:
-				() => ({ tr, dispatch }) => {
-					if (!isInTable(tr)) {
+				() => ({ state, tr, dispatch }) => {
+					if (!isInTable(state)) {
 						return false
 					}
-					const cell = findSameCellInNextRow(selectionCell(tr))
+					const cell = findSameCellInNextRow(selectionCell(state))
 					if (cell === null) {
-						return
+						return false
 					}
 					if (dispatch) {
 						const $cell = tr.doc.resolve(cell)
@@ -210,9 +236,10 @@ export default Table.extend({
 						return false
 					}
 
-					// find the table, its position and the column index of the cell
-					let table = null
-					let tablePos = null
+					// Find the table, its position and the column index of the cell
+					// Assigned in the descendants() callback, which TypeScript cannot narrow through
+					let table = null as PMNode | null
+					let tablePos = null as number | null
 					let columnIndex = -1
 
 					state.doc.descendants((node, pos) => {
@@ -247,8 +274,8 @@ export default Table.extend({
 						return false
 					}
 
-					const bodyRows = []
-					const nonBodyChildren = []
+					const bodyRows: PMNode[] = []
+					const nonBodyChildren: PMNode[] = []
 					table.forEach((child) => {
 						if (child.type.name === 'tableRow') {
 							bodyRows.push(child)
@@ -339,7 +366,7 @@ export default Table.extend({
 
 	addKeyboardShortcuts() {
 		return {
-			...this.parent(),
+			...this.parent?.(),
 			/**
 			 * <Tab> inside a table cell
 			 * When inside a list, indent the list item. Otherwise jump to

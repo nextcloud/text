@@ -57,7 +57,7 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-3'
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -82,22 +82,7 @@ export default {
 		TrashCan,
 	},
 
-	props: {
-		editor: {
-			type: Object,
-			required: true,
-		},
-
-		deleteNode: {
-			type: Function,
-			required: true,
-		},
-
-		node: {
-			type: Object,
-			required: true,
-		},
-	},
+	props: nodeViewProps,
 
 	data() {
 		return {
