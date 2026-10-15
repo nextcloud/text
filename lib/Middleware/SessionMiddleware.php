@@ -30,6 +30,7 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 use ReflectionException;
 
 class SessionMiddleware extends Middleware {
@@ -43,6 +44,7 @@ class SessionMiddleware extends Middleware {
 		private readonly IL10N $l10n,
 		private readonly IUserManager $userManager,
 		private readonly FileService $fileService,
+		private readonly LoggerInterface $logger,
 	) {
 	}
 
@@ -164,6 +166,7 @@ class SessionMiddleware extends Middleware {
 	}
 
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
+		$this->logger->debug('After exception', ['exception' => $exception]);
 		if ($exception instanceof InvalidDocumentBaseVersionEtagException) {
 			return new JSONResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
