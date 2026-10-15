@@ -719,9 +719,18 @@ readonly class AttachmentService {
 					continue;
 				}
 
-				if ($targetNode instanceof File && $targetAttachmentDir instanceof Folder) {
+				if ($targetNode instanceof File
+					&& $sourceAttachmentDir instanceof Folder
+					&& $targetAttachmentDir instanceof Folder) {
+					$fileIdMapping = [];
+					foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
+						if ($sourceAttachment instanceof File && $targetAttachmentDir->nodeExists($sourceAttachment->getName())) {
+							$fileIdMapping[] = [$sourceAttachment->getId(), $targetAttachmentDir->get($sourceAttachment->getName())->getId()];
+						}
+					}
 					$targetAttachmentDir->move($targetFolder->getPath() . '/' . $targetAttachmentDirName);
 					self::replaceAttachmentFolderId($sourceNode, $targetNode);
+					self::replaceAttachmentFileIds($targetNode, $fileIdMapping);
 				}
 			}
 		}

@@ -6,6 +6,14 @@ use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\AttachmentService;
 use OCP\Files\File;
 use OCP\Files\Folder;
+use OCP\Files\IFilenameValidator;
+use OCP\Files\IMimeTypeDetector;
+use OCP\Files\IRootFolder;
+use OCP\FilesMetadata\IFilesMetadataManager;
+use OCP\IPreview;
+use OCP\ISession;
+use OCP\IURLGenerator;
+use OCP\Share\IManager as ShareManager;
 use PHPUnit\Framework\TestCase;
 
 class AttachmentServiceTest extends TestCase {
@@ -266,5 +274,63 @@ class AttachmentServiceTest extends TestCase {
 
 		AttachmentService::replaceAttachmentFileIds($target, [[1, 2]]);
 		$this->assertEquals($sourceContent, $replacedContent);
+	}
+
+	public function testCopyAttachmentsInFolderRewritesFolderAndFileIds(): void {
+		$service = new AttachmentService(
+			$this->createMock(IRootFolder::class),
+			$this->createMock(ShareManager::class),
+			$this->createMock(IPreview::class),
+			$this->createMock(IMimeTypeDetector::class),
+			$this->createMock(IURLGenerator::class),
+			$this->createMock(IFilenameValidator::class),
+			$this->createMock(IFilesMetadataManager::class),
+			$this->createMock(ISession::class),
+		);
+
+		$sourceMd = $this->createMock(File::class);
+		$sourceMd->method('getId')->willReturn(1);
+		$sourceMd->method('getName')->willReturn('page.md');
+		$sourceMd->method('getMimeType')->willReturn('text/markdown');
+
+		$sourceAttachment = $this->createMock(File::class);
+		$sourceAttachment->method('getId')->willReturn(10);
+		$sourceAttachment->method('getName')->willReturn('board.whiteboard');
+
+		$sourceAttachmentDir = $this->createMock(Folder::class);
+		$sourceAttachmentDir->method('getDirectoryListing')->willReturn([$sourceAttachment]);
+
+		$sourceFolder = $this->createMock(Folder::class);
+		$sourceFolder->method('getDirectoryListing')->willReturn([$sourceMd]);
+		$sourceFolder->method('get')->with('.attachments.1')->willReturn($sourceAttachmentDir);
+
+		$content = "![a.png](.attachments.1/a.png)\n\n[board](https://localhost/f/10 (preview))\n";
+		$targetMd = $this->createMock(File::class);
+		$targetMd->method('getId')->willReturn(2);
+		$targetMd->method('getContent')->willReturnCallback(function () use (&$content) {
+			return $content;
+		});
+		$targetMd->method('putContent')->willReturnCallback(function (string $new) use (&$content): void {
+			$content = $new;
+		});
+
+		$targetAttachment = $this->createMock(File::class);
+		$targetAttachment->method('getId')->willReturn(20);
+
+		$targetAttachmentDir = $this->createMock(Folder::class);
+		$targetAttachmentDir->method('nodeExists')->with('board.whiteboard')->willReturn(true);
+		$targetAttachmentDir->method('get')->with('board.whiteboard')->willReturn($targetAttachment);
+		$targetAttachmentDir->expects($this->once())->method('move')->with('/target/.attachments.2');
+
+		$targetFolder = $this->createMock(Folder::class);
+		$targetFolder->method('getPath')->willReturn('/target');
+		$targetFolder->method('get')->willReturnMap([
+			['page.md', $targetMd],
+			['.attachments.1', $targetAttachmentDir],
+		]);
+
+		$service->copyAttachmentsInFolder($sourceFolder, $targetFolder);
+
+		$this->assertEquals("![a.png](.attachments.2/a.png)\n\n[board](https://localhost/f/20 (preview))\n", $content);
 	}
 }
