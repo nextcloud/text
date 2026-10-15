@@ -22,17 +22,24 @@ class NotificationService {
 		$this->userId = $userId;
 	}
 
-	public function mention(int $fileId, string $userId): bool {
+	public function mention(int $fileId, string $userId, ?string $guestName = null): bool {
+		if ($this->userId === null && $guestName === null) {
+			return false;
+		}
+
 		if ($userId === $this->userId) {
 			// We allow self mentions in documents but do not notify about it
 			return false;
 		}
 
+		$source = $this->userId !== null
+			? [Notifier::SUBJECT_MENTIONED_SOURCE_USER => $this->userId]
+			: [Notifier::SUBJECT_MENTIONED_SOURCE_GUEST => $guestName];
+
 		$notification = $this->manager->createNotification();
 		$notification->setUser($userId)
 			->setApp('text')
-			->setSubject(Notifier::TYPE_MENTIONED, [
-				Notifier::SUBJECT_MENTIONED_SOURCE_USER => $this->userId,
+			->setSubject(Notifier::TYPE_MENTIONED, $source + [
 				Notifier::SUBJECT_MENTIONED_TARGET_USER => $userId,
 			])
 			->setObject('file', (string)$fileId);
