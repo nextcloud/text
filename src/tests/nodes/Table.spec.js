@@ -4,8 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { showWarning } from '@nextcloud/dialogs'
 import { TextSelection } from '@tiptap/pm/state'
+import { CellSelection } from '@tiptap/pm/tables'
 import { builders } from 'prosemirror-test-builder'
+import { vi } from 'vitest'
 import RichText from '../../extensions/RichText.js'
 import markdownit from '../../markdownit/index.js'
 import EditableTable from '../../nodes/EditableTable.ts'
@@ -324,6 +327,62 @@ describe('Table extension', () => {
 		const table = '| a | b | \\\n| c |   |\n|---|---|\n| 1 | 2 |\n'
 		expect(markdownThroughEditor(table)).toBe('| a c | b |\n|-----|---|\n| 1   | 2 |\n')
 	})
+
+	describe('pasting cells into a table', () => {
+		const table = '<table><tr><th>H1</th><th>H2</th></tr>'
+			+ '<tr><td><p>a1</p></td><td><p>a2</p></td></tr>'
+			+ '<tr><td><p>b1</p><ul><li><p>item</p></li></ul></td><td><p>b2</p></td></tr></table>'
+
+		test('single copied cell is pasted as content of the target cell', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyCells(editor, 4, 4)
+			placeCursorInCell(editor, 3)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2       |\n|--------|----------|\n| a1     | b1       | \\\n|        |          | \\\n|        | - itema2 |\n| b1     | b2       | \\\n|        |          | \\\n| - item |          |\n')
+		})
+
+		test('copied block of cells overwrites target cells and adds rows', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyCells(editor, 2, 5)
+			placeCursorInCell(editor, 4)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2 |\n|--------|----|\n| a1     | a2 |\n| a1     | a2 |\n| b1     | b2 | \\\n|        |    | \\\n| - item |    |\n')
+		})
+
+		test('copied row of cells adds columns', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyCells(editor, 2, 3)
+			placeCursorInCell(editor, 5)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2 |    |\n|--------|----|----|\n| a1     | a2 |    |\n| b1     | a1 | a2 | \\\n|        |    |    | \\\n| - item |    |    |\n')
+		})
+
+		test('copied header cell is pasted as body cell content', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyCells(editor, 0, 2)
+			placeCursorInCell(editor, 5)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2 |\n|--------|----|\n| a1     | a2 |\n| b1     | H1 | \\\n|        |    | \\\n| - item |    |\n|        | a1 |\n')
+		})
+
+		test('table from a spreadsheet app is pasted cell by cell', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			placeCursorInCell(editor, 2)
+			editor.view.pasteHTML('<table><colgroup><col width="85"></colgroup>'
+				+ '<tr><td>x1</td><td>y1</td></tr>'
+				+ '<tr><td>x2</td><td><b>y2</b></td></tr></table>')
+			expect(serializeMarkdown()).toBe('| H1 | H2     |\n|----|--------|\n| x1 | y1     |\n| x2 | **y2** |\n')
+		})
+
+		test('table with other content is rejected as nested table', ({ editor, serializeMarkdown }) => {
+			vi.mocked(showWarning).mockClear()
+			editor.commands.setContent(table)
+			placeCursorInCell(editor, 2)
+			editor.view.pasteHTML('<p>text</p><table><tr><td>x1</td></tr><tr><td>x2</td></tr></table>')
+			expect(showWarning).toHaveBeenCalledOnce()
+			expect(serializeMarkdown()).toBe('| H1     | H2 |\n|--------|----|\n| a1     | a2 |\n| b1     | b2 | \\\n|        |    | \\\n| - item |    |\n')
+		})
+	})
 })
 
 function getHeaderCell(editor, targetIndex = 0) {
@@ -358,4 +417,44 @@ function getBodyColumnValues(editor, columnIndex) {
 
 function formatHTML(html) {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
+}
+
+/**
+ * Positions of all table cells in document order
+ *
+ * @param {object} editor - the tiptap editor
+ */
+function getCellPositions(editor) {
+	const positions = []
+	editor.state.doc.descendants((node, pos) => {
+		if (['tableHeader', 'tableCell'].includes(node.type.name)) {
+			positions.push(pos)
+		}
+	})
+	return positions
+}
+
+/**
+ * Select cells and return the HTML that copying them puts into the clipboard
+ *
+ * @param {object} editor - the tiptap editor
+ * @param {number} anchor - index of the first selected cell
+ * @param {number} head - index of the last selected cell
+ */
+function copyCells(editor, anchor, head) {
+	const positions = getCellPositions(editor)
+	const selection = CellSelection.create(editor.state.doc, positions[anchor], positions[head])
+	editor.view.dispatch(editor.state.tr.setSelection(selection))
+	return editor.view.serializeForClipboard(selection.content()).dom.innerHTML
+}
+
+/**
+ * Place the cursor at the start of a body cell
+ *
+ * @param {object} editor - the tiptap editor
+ * @param {number} index - index of the cell
+ */
+function placeCursorInCell(editor, index) {
+	const pos = getCellPositions(editor)[index] + 2
+	editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, pos)))
 }

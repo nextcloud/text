@@ -12,6 +12,14 @@ export default TableRow.extend({
 	toMarkdown() {},
 
 	parseHTML() {
-		return [{ tag: 'tr', priority: 70 }]
+		return [
+			{ tag: 'tr', priority: 70 },
+			{
+				tag: 'tr',
+				priority: 90,
+				// Body rows copied from a ProseMirror editor stay body rows, even as first row
+				getAttrs: (el) => (el.closest('table[data-pm-slice]') && el.querySelector(':scope > td') ? null : false),
+			},
+		]
 	},
 })
