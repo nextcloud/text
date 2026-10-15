@@ -117,7 +117,7 @@
     "@types/jsdom": "^30.0.0",
     "@types/markdown-it": "^14.1.2",
     "@types/markdown-it-footnote": "^3.0.4",
-    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitejs/plugin-vue": "^6.0.10",
     "@vitest/coverage-v8": "^4.1.11",
     "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
@@ -133,7 +133,7 @@
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^4.0.1",
     "typescript": "^6.0.3",
-    "vite": "^7.3.6",
+    "vite": "^7.3.7",
     "vite-plugin-commonjs": "^0.10.4",
     "vitest": "^4.1.11",
     "vue-tsc": "^3.3.13"
