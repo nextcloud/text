@@ -36,7 +36,11 @@ export default class AttachmentResolver {
 	}
 
 	#findAttachment(fileName) {
-		return this.#attachmentList.find((a) => a.name === fileName)
+		// Attachment srcs may use NFD (e.g. uploads from macOS), the attachment list uses NFC
+		const normalizedName = fileName.normalize('NFC')
+		return this.#attachmentList.find(
+			(a) => a.name.normalize('NFC') === normalizedName,
+		)
 	}
 
 	/*

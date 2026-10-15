@@ -284,6 +284,11 @@ readonly class AttachmentService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
+		// The filecache stores names in Unicode NFC, while uploads from macOS may use NFD
+		$normalizedFileName = \Normalizer::normalize($newFileName, \Normalizer::FORM_C);
+		if ($normalizedFileName !== false) {
+			$newFileName = $normalizedFileName;
+		}
 		$fileName = self::getUniqueFileName($saveDir, $newFileName);
 		$this->filenameValidator->validateFilename($fileName);
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
