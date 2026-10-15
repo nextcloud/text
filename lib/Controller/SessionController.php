@@ -18,6 +18,7 @@ use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\AnonRateLimit;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\Attribute\UserRateLimit;
@@ -126,6 +127,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[PublicPage]
 	#[RequireDocumentSession]
 	#[UserRateLimit(limit: 5, period: 120)]
+	#[AnonRateLimit(limit: 5, period: 120)]
 	public function mention(string $mention): DataResponse {
 		if ($this->getSession()->isGuest() && !$this->sessionService->isUserInDocument($this->getDocumentId(), $mention)) {
 			return new DataResponse([], 403);
@@ -136,7 +138,12 @@ class SessionController extends ApiController implements ISessionAwareController
 			return new DataResponse(false);
 		}
 
-		return new DataResponse($this->notificationService->mention($document->getContextId(), $mention));
+		$session = $this->getSession();
+		return new DataResponse($this->notificationService->mention(
+			$document->getContextId(),
+			$mention,
+			$session->isGuest() ? ($session->getGuestName() ?? '') : null,
+		));
 	}
 
 	private function loginSessionUser(): void {
