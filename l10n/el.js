@@ -184,6 +184,7 @@ OC.L10N.register(
     "Show folder description" : "Εμφάνιση περιγραφής φακέλου",
     "Removed" : "Αφαιρέθηκε",
     "Added" : "Προστέθηκε",
+    "No changes" : "Καμία αλλαγή",
     "Hide outline" : "Απόκρυψη περιγράμματος",
     "Show outline" : "Εμφάνιση περιγράμματος",
     "Done" : "Ολοκληρώθηκε",

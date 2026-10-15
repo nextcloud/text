@@ -231,6 +231,7 @@ OC.L10N.register(
     "Show folder description" : "Show folder description",
     "Removed" : "Removed",
     "Added" : "Added",
+    "No changes" : "No changes",
     "No differences." : "No differences.",
     "No rendered differences — Markdown syntax differs." : "No rendered differences — Markdown syntax differs.",
     "Hide outline" : "Hide outline",
