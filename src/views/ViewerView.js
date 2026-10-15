@@ -23,11 +23,31 @@ export default defineComponent({
 	render: (h) => h('div', { style: { display: 'contents' } }),
 	props: ViewerComponent.props,
 	inheritAttrs: false,
+	data() {
+		return {
+			hasLoaded: false,
+		}
+	},
+
+	watch: {
+		// Viewer creates a new file object when the same file is opened again,
+		// e.g. for a version comparison, and resets its loaded flag while its
+		// component is kept. Report loaded again in that case.
+		'$attrs.loaded': function(loaded) {
+			if (!loaded && this.hasLoaded) {
+				this.$emit('update:loaded', true)
+			}
+		},
+	},
+
 	mounted() {
 		innerApp = createApp(ViewerComponent, {
 			...this.$props,
 			...this.$attrs,
-			onLoadedHandler: () => this.$emit('update:loaded', true),
+			onLoadedHandler: () => {
+				this.hasLoaded = true
+				this.$emit('update:loaded', true)
+			},
 		})
 		innerApp.mount(this.$el)
 	},
