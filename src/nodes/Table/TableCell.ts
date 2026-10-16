@@ -101,6 +101,11 @@ export default TableCell.extend({
 							return slice
 						}
 
+						const cellContent = unwrapCellContent(slice)
+						if (cellContent) {
+							return cellContent
+						}
+
 						const bodySlice = new Slice(
 							toBodyCells(slice.content, view.state.schema),
 							slice.openStart,
@@ -130,6 +135,29 @@ export default TableCell.extend({
 		]
 	},
 })
+
+/**
+ * Content copied from inside a table cell is pasted wrapped in the table,
+ * row and cell it was copied from. Return the content without them.
+ *
+ * @param slice - the pasted slice
+ */
+function unwrapCellContent(slice: Slice): Slice | null {
+	let { content, openStart, openEnd } = slice
+	while (content.childCount === 1 && openStart > 0 && openEnd > 0) {
+		const node = content.firstChild!
+		if (!node.type.name.startsWith('table')) {
+			return null
+		}
+		content = node.content
+		openStart--
+		openEnd--
+		if (['tableCell', 'tableHeader'].includes(node.type.name)) {
+			return new Slice(content, openStart, openEnd)
+		}
+	}
+	return null
+}
 
 /**
  * Convert header rows and cells to body rows and cells and drop captions,

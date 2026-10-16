@@ -382,6 +382,30 @@ describe('Table extension', () => {
 			expect(showWarning).toHaveBeenCalledOnce()
 			expect(serializeMarkdown()).toBe('| H1     | H2 |\n|--------|----|\n| a1     | a2 |\n| b1     | b2 | \\\n|        |    | \\\n| - item |    |\n')
 		})
+
+		test('text copied inside a cell is pasted as text', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyText(editor, 'a1', 'a1')
+			placeCursorInCell(editor, 5)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2   |\n|--------|------|\n| a1     | a2   |\n| b1     | a1b2 | \\\n|        |      | \\\n| - item |      |\n')
+		})
+
+		test('blocks copied inside a cell are pasted as blocks', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyText(editor, 'b1', 'item')
+			placeCursorInCell(editor, 3)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2       |\n|--------|----------|\n| a1     | b1       | \\\n|        |          | \\\n|        | - itema2 |\n| b1     | b2       | \\\n|        |          | \\\n| - item |          |\n')
+		})
+
+		test('text copied inside a header cell is pasted as text', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(table)
+			const html = copyText(editor, 'H1', 'H1')
+			placeCursorInCell(editor, 5)
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2   |\n|--------|------|\n| a1     | a2   |\n| b1     | H1b2 | \\\n|        |      | \\\n| - item |      |\n')
+		})
 	})
 })
 
@@ -446,6 +470,38 @@ function copyCells(editor, anchor, head) {
 	const selection = CellSelection.create(editor.state.doc, positions[anchor], positions[head])
 	editor.view.dispatch(editor.state.tr.setSelection(selection))
 	return editor.view.serializeForClipboard(selection.content()).dom.innerHTML
+}
+
+/**
+ * Select text and return the HTML that copying it puts into the clipboard
+ *
+ * @param {object} editor - the tiptap editor
+ * @param {string} first - text at the start of the selection
+ * @param {string} last - text at the end of the selection
+ */
+function copyText(editor, first, last) {
+	const from = findText(editor, first)
+	const to = findText(editor, last) + last.length
+	const selection = TextSelection.create(editor.state.doc, from, to)
+	editor.view.dispatch(editor.state.tr.setSelection(selection))
+	return editor.view.serializeForClipboard(selection.content()).dom.innerHTML
+}
+
+/**
+ * Position of the first occurrence of a text in the document
+ *
+ * @param {object} editor - the tiptap editor
+ * @param {string} text - the text to find
+ */
+function findText(editor, text) {
+	let found
+	editor.state.doc.descendants((node, pos) => {
+		if (found === undefined && node.isText && node.text.includes(text)) {
+			found = pos + node.text.indexOf(text)
+		}
+		return found === undefined
+	})
+	return found
 }
 
 /**
