@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "テキストドキュメント",
     "Create new text file" : "新規のテキストファイルを作成する",
     "Editing session has expired. Please reload the page." : "編集セッションの有効期限が切れました。ページを再読み込みしてください。",
+    "%s (guest)" : "%s(ゲスト)",
     "{user} has mentioned you in the text document {node}" : "{user} が、テキストファイル {} であなたに言及しました",
     "This document is read-only." : "このドキュメントは読み取り専用です。",
     "Read-only permission cannot save document changes. Please reload the page." : "読み取り専用権限では、ドキュメントの変更を保存できません。ページを再読み込みしてください。",
@@ -264,13 +265,6 @@ OC.L10N.register(
     "to" : "訳文の言語",
     "Translate to" : "翻訳先",
     "Translated text result" : "テキスト翻訳の結果",
-    "Replace" : "入れ替え",
-    "Paragraph" : "段落",
-    "Heading" : "見出し",
-    "Task" : "タスク",
-    "Image" : "画像",
-    "Changed" : "変更時刻",
-    "Show" : "表示",
-    "Retry" : "リトライ"
+    "Replace" : "入れ替え"
 },
 "nplurals=1; plural=0;");

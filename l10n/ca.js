@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Text del Nextcloud",
     "Create new text file" : "Crea un fitxer de text nou",
     "Editing session has expired. Please reload the page." : "La sessió d'edició ha caducat. Torneu a carregar la pàgina.",
+    "%s (guest)" : "%s (convidat)",
     "{user} has mentioned you in the text document {node}" : "{user} us ha esmentat en el document de text {node}",
     "Readme" : "Llegeix-me",
     "Text" : "Text",
@@ -221,14 +222,6 @@ OC.L10N.register(
     "to" : "a",
     "Translate to" : "Traduir a",
     "Translated text result" : "Text traduït",
-    "Replace" : "Substitueix",
-    "Paragraph" : "Paràgraf",
-    "Heading" : "Capçalera",
-    "Task" : "Tasca",
-    "Image" : "Imatge",
-    "Quote" : "Cita",
-    "Changed" : "S'ha canviat",
-    "Retry" : "Torna-ho a provar",
-    "Inline code" : "Codi en línia"
+    "Replace" : "Substitueix"
 },
 "nplurals=2; plural=(n != 1);");

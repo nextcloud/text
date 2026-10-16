@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Utwórz nowy plik tekstowy",
     "Editing session has expired. Please reload the page." : "Sesja edycji wygasła. Proszę przeładować stronę.",
+    "%s (guest)" : "%s (gość)",
     "{user} has mentioned you in the text document {node}" : "{user} wspomniał o Tobie w dokumencie tekstowym {node}",
     "Readme" : "Przeczytaj",
     "Text" : "Tekst",
@@ -255,16 +256,6 @@ OC.L10N.register(
     "to" : "do",
     "Translate to" : "Przetłumacz na",
     "Translated text result" : "Wynik tłumaczenia",
-    "Replace" : "Zamień",
-    "Paragraph" : "Ustęp",
-    "Heading" : "Nagłówek",
-    "Task" : "Zadania",
-    "Table row" : "Wiersz tabeli",
-    "Image" : "Obraz",
-    "Quote" : "Oferta",
-    "Changed" : "Zmieniono",
-    "No content" : "Brak treści",
-    "Show" : "Pokaż",
-    "Retry" : "Powtórz"
+    "Replace" : "Zamień"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

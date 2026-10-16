@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Texto Nextcloud",
     "Create new text file" : "Crear nuevo archivo de texto",
     "Editing session has expired. Please reload the page." : "La sesión de edición ha expirado. Por favor, recargue la página.",
+    "%s (guest)" : "%s (invitado)",
     "{user} has mentioned you in the text document {node}" : "{user} le ha mencionado en el documento de texto {node}",
     "Readme" : "Léeme",
     "Text" : "Text",
@@ -239,17 +240,6 @@ OC.L10N.register(
     "to" : "para",
     "Translate to" : "Traducir a",
     "Translated text result" : "Resultado del texto traducido",
-    "Replace" : "Reemplazar",
-    "Paragraph" : "Párrafo",
-    "Heading" : "Título",
-    "Task" : "Tarea",
-    "Table row" : "Fila de la tabla",
-    "Image" : "Imagen",
-    "Quote" : "Presupuesto",
-    "Changed" : "Cambiado",
-    "No content" : "Sin contenido",
-    "Show" : "Mostrar",
-    "Retry" : "Reintentar",
-    "Inline code" : "Código en línea"
+    "Replace" : "Reemplazar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

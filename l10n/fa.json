@@ -14,6 +14,7 @@
     "Text document" : "سند متنی",
     "Create new text file" : "ایجاد فایل متنی جدید",
     "Editing session has expired. Please reload the page." : "نشست ویرایش منقضی شده است. لطفاً صفحه را بارگذاری مجدد کنید.",
+    "%s (guest)" : "%s (مهمان)",
     "{user} has mentioned you in the text document {node}" : "{user} شما را در سند متنی {node} منشن کرده است",
     "This document is read-only." : "این سند فقط قابل خواندن است.",
     "Read-only permission cannot save document changes. Please reload the page." : "مجوز فقط خواندنی نمی‌تواند تغییرات سند را ذخیره کند. لطفاً صفحه را دوباره بارگذاری کنید.",
@@ -261,15 +262,6 @@
     "to" : "به",
     "Translate to" : "ترجمه به",
     "Translated text result" : "نتیجه متن ترجمه شده",
-    "Replace" : "جایگزینی",
-    "Heading" : "عنوان",
-    "Task" : "وظیفه",
-    "Table row" : "ردیف جدول",
-    "Image" : "تصویر",
-    "Quote" : "نقل قول",
-    "Changed" : "تغییر یافته",
-    "No content" : "بدون محتوا",
-    "Retry" : "تلاش مجدد",
-    "Inline code" : "کد درون‌خطی"
+    "Replace" : "جایگزینی"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

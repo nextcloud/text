@@ -14,6 +14,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Testu Nextcloud",
     "Create new text file" : "Crea un'archìviu de testu nou",
     "Editing session has expired. Please reload the page." : "Sessione de editzione iscadida. Torra a carrigare sa pàgina.",
+    "%s (guest)" : "%s (persone invitada)",
     "Readme" : "Leghe·mi",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "📝 Modìfica de archìvios collaborativa",
@@ -86,11 +87,6 @@ OC.L10N.register(
     "Saving …" : "Sarvende ...",
     "Select language" : "Seletziona una limba",
     "to" : "a",
-    "Replace" : "Càmbia cun àteru",
-    "Paragraph" : "Paràgrafu",
-    "Image" : "Immàgine",
-    "Quote" : "Preventivu",
-    "Changed" : "Cambiadas",
-    "Show" : "Mustra"
+    "Replace" : "Càmbia cun àteru"
 },
 "nplurals=2; plural=(n != 1);");

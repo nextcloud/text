@@ -13,6 +13,7 @@
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Opprett ny tekstfil",
     "Editing session has expired. Please reload the page." : "Redigeringsøkten er utløpt. Last inn siden på nytt.",
+    "%s (guest)" : "%s (gjest)",
     "{user} has mentioned you in the text document {node}" : "{user} har nevnt deg i tekstdokumentet {node}",
     "Readme" : "Lesmeg",
     "Text" : "Tekst",
@@ -211,15 +212,6 @@
     "to" : "til",
     "Translate to" : "Oversett til",
     "Translated text result" : "Resultat av oversatt tekst",
-    "Replace" : "Erstatt",
-    "Paragraph" : "Paragraf",
-    "Heading" : "Overskrift",
-    "Task" : "Oppgaver",
-    "Table row" : "Tabellrad",
-    "Image" : "Bilde",
-    "Quote" : "Sitat",
-    "Changed" : "Endret",
-    "Show" : "Vis",
-    "Retry" : "Prøv igjen"
+    "Replace" : "Erstatt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

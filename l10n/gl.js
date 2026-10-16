@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "Documento de texto",
     "Create new text file" : "Crear un novo ficheiro de texto",
     "Editing session has expired. Please reload the page." : "A sesión de edición caducou. Volva cargar a páxina.",
+    "%s (guest)" : "%s (convidado)",
     "{user} has mentioned you in the text document {node}" : "{user} mencionouno a Vde. no documento de texto {node}",
     "Readme" : "Léeme",
     "Text" : "Texto",
@@ -259,17 +260,6 @@ OC.L10N.register(
     "to" : "ata",
     "Translate to" : "Traducir a",
     "Translated text result" : "Resultado do texto traducido",
-    "Replace" : "Substituír",
-    "Paragraph" : "Parágrafo",
-    "Heading" : "Título",
-    "Task" : "Tarefa",
-    "Table row" : "Fila da táboa",
-    "Image" : "Imaxe",
-    "Quote" : "Orzamento",
-    "Changed" : "Cambiado",
-    "No content" : "Sen contido",
-    "Show" : "Amosar",
-    "Retry" : "Volver tentar",
-    "Inline code" : "Código en liña"
+    "Replace" : "Substituír"
 },
 "nplurals=2; plural=(n != 1);");

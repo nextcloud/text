@@ -11,6 +11,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "No se ha subido ningún archivo o el tamaño del archivo supera el máximo de %s",
     "Nextcloud Text" : "Texto de Nextcloud",
     "Create new text file" : "Crear nuevo archivo de texto",
+    "%s (guest)" : "%s (invitado)",
     "{user} has mentioned you in the text document {node}" : "{user} te ha mencionado en el documento de texto {node}",
     "Readme" : "Leerme",
     "Text" : "Texto",
@@ -158,12 +159,6 @@
     "Select language" : "Selecciona el idioma",
     "to" : "para",
     "Translate to" : "Traducir a",
-    "Replace" : "Reemplazar",
-    "Task" : "Tarea",
-    "Image" : "Imagen",
-    "Quote" : "Cita",
-    "Changed" : "Cambiado",
-    "Retry" : "Reintentar",
-    "Inline code" : "Código en línea"
+    "Replace" : "Reemplazar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
