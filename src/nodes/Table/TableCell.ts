@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node as PMNode, Schema } from '@tiptap/pm/model'
+
 import { showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { mergeAttributes } from '@tiptap/core'
 import { TableCell } from '@tiptap/extension-table'
 import { Fragment, Slice } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { __pastedCells as pastedCells } from '@tiptap/pm/tables'
 
 export default TableCell.extend({
 	content: 'block+',
@@ -19,6 +22,13 @@ export default TableCell.extend({
 		return [
 			{ tag: 'td', preserveWhitespace: true },
 			{ tag: 'th', preserveWhitespace: true },
+			{
+				// Cells copied from a ProseMirror editor keep their type, even in the first row
+				tag: 'td',
+				priority: 90,
+				preserveWhitespace: true,
+				getAttrs: (el) => (el.closest('table[data-pm-slice]') ? null : false),
+			},
 			{
 				tag: 'table thead ~ tbody th',
 				priority: 70,
@@ -75,7 +85,7 @@ export default TableCell.extend({
 				},
 				props: {
 					// Prevent nested table when pasting to a table cell
-					transformPasted: (slice) => {
+					transformPasted: (slice, view) => {
 						if (!this.editor.isActive(this.type.name)) {
 							return slice
 						}
@@ -91,25 +101,23 @@ export default TableCell.extend({
 							return slice
 						}
 
-						if (
-							slice.content.childCount === 1
-							&& slice.content.firstChild?.type.name === 'table'
-						) {
-							const tableChild = slice.content.firstChild.firstChild
-							if (
-								(tableChild?.childCount === 1
-									&& tableChild.type.name === 'tableRow')
-								|| tableChild?.type.name === 'tableHeadRow'
-							) {
-								const rowChild = tableChild.firstChild
-								if (
-									(rowChild?.childCount === 1
-										&& rowChild.type.name === 'tableCell')
-									|| rowChild?.type.name === 'tableHeader'
-								) {
-									return new Slice(rowChild.content, 0, 0)
-								}
-							}
+						const cellContent = unwrapCellContent(slice)
+						if (cellContent) {
+							return cellContent
+						}
+
+						const bodySlice = new Slice(
+							toBodyCells(slice.content, view.state.schema),
+							slice.openStart,
+							slice.openEnd,
+						)
+						const cells = pastedCells(bodySlice)
+						if (cells?.width === 1 && cells.height === 1) {
+							return openParagraphEdges(cells.rows[0].firstChild!.content)
+						}
+						if (cells) {
+							// Inserted into the target cells by the paste handler of prosemirror-tables
+							return bodySlice
 						}
 
 						// eslint-disable-next-line no-console
@@ -127,3 +135,70 @@ export default TableCell.extend({
 		]
 	},
 })
+
+/**
+ * Content copied from inside a table cell is pasted wrapped in the table,
+ * row and cell it was copied from. Return the content without them.
+ *
+ * @param slice - the pasted slice
+ */
+function unwrapCellContent(slice: Slice): Slice | null {
+	let { content, openStart, openEnd } = slice
+	while (content.childCount === 1 && openStart > 0 && openEnd > 0) {
+		const node = content.firstChild!
+		if (!node.type.name.startsWith('table')) {
+			return null
+		}
+		content = node.content
+		openStart--
+		openEnd--
+		if (['tableCell', 'tableHeader'].includes(node.type.name)) {
+			return new Slice(content, openStart, openEnd)
+		}
+	}
+	return null
+}
+
+/**
+ * Slice of the given blocks that only merges with the text around the cursor
+ * where the blocks start or end with a paragraph.
+ *
+ * @param content - the blocks to paste
+ */
+function openParagraphEdges(content: Fragment): Slice {
+	return new Slice(
+		content,
+		content.firstChild?.isTextblock ? 1 : 0,
+		content.lastChild?.isTextblock ? 1 : 0,
+	)
+}
+
+/**
+ * Convert header rows and cells to body rows and cells and drop captions,
+ * so that pasted cells fit into body rows.
+ *
+ * @param fragment - content of a pasted slice or of one of its table nodes
+ * @param schema - the editor schema
+ */
+function toBodyCells(fragment: Fragment, schema: Schema): Fragment {
+	const nodes: PMNode[] = []
+	fragment.forEach((node) => {
+		switch (node.type.name) {
+			case 'tableCaption':
+				return
+			case 'tableHeader':
+				nodes.push(schema.nodes.tableCell.create(node.attrs, schema.nodes.paragraph.create(null, node.content)))
+				return
+			case 'tableHeadRow':
+				nodes.push(schema.nodes.tableRow.create(node.attrs, toBodyCells(node.content, schema)))
+				return
+			case 'table':
+			case 'tableRow':
+				nodes.push(node.copy(toBodyCells(node.content, schema)))
+				return
+			default:
+				nodes.push(node)
+		}
+	})
+	return Fragment.from(nodes)
+}

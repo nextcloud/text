@@ -26,6 +26,7 @@ vi.mock('@nextcloud/files', () => ({
 vi.mock('@nextcloud/dialogs', () => ({
 	FilePickerType: {},
 	getFilePickerBuilder: () => {},
+	showWarning: vi.fn(),
 }))
 
 vi.mock('@nextcloud/capabilities', async () => {
