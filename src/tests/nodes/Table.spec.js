@@ -338,7 +338,17 @@ describe('Table extension', () => {
 			const html = copyCells(editor, 4, 4)
 			placeCursorInCell(editor, 3)
 			editor.view.pasteHTML(html)
-			expect(serializeMarkdown()).toBe('| H1     | H2       |\n|--------|----------|\n| a1     | b1       | \\\n|        |          | \\\n|        | - itema2 |\n| b1     | b2       | \\\n|        |          | \\\n| - item |          |\n')
+			expect(serializeMarkdown()).toBe('| H1     | H2     |\n|--------|--------|\n| a1     | b1     | \\\n|        |        | \\\n|        | - item | \\\n|        |        | \\\n|        | a2     |\n| b1     | b2     | \\\n|        |        | \\\n| - item |        |\n')
+		})
+
+		test('single copied cell starting with a list keeps the list', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent('<table><tr><th>H1</th><th>H2</th></tr>'
+				+ '<tr><td><ul><li><p>item</p></li></ul><p>a1</p></td><td><p>xy</p></td></tr></table>')
+			const html = copyCells(editor, 2, 2)
+			const pos = findText(editor, 'xy') + 1
+			editor.view.dispatch(editor.state.tr.setSelection(TextSelection.create(editor.state.doc, pos)))
+			editor.view.pasteHTML(html)
+			expect(serializeMarkdown()).toBe('| H1     | H2     |\n|--------|--------|\n| - item | x      | \\\n|        |        | \\\n| a1     | - item | \\\n|        |        | \\\n|        | a1y    |\n')
 		})
 
 		test('copied block of cells overwrites target cells and adds rows', ({ editor, serializeMarkdown }) => {

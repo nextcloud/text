@@ -113,7 +113,7 @@ export default TableCell.extend({
 						)
 						const cells = pastedCells(bodySlice)
 						if (cells?.width === 1 && cells.height === 1) {
-							return Slice.maxOpen(cells.rows[0].firstChild!.content)
+							return openParagraphEdges(cells.rows[0].firstChild!.content)
 						}
 						if (cells) {
 							// Inserted into the target cells by the paste handler of prosemirror-tables
@@ -157,6 +157,20 @@ function unwrapCellContent(slice: Slice): Slice | null {
 		}
 	}
 	return null
+}
+
+/**
+ * Slice of the given blocks that only merges with the text around the cursor
+ * where the blocks start or end with a paragraph.
+ *
+ * @param content - the blocks to paste
+ */
+function openParagraphEdges(content: Fragment): Slice {
+	return new Slice(
+		content,
+		content.firstChild?.isTextblock ? 1 : 0,
+		content.lastChild?.isTextblock ? 1 : 0,
+	)
 }
 
 /**
