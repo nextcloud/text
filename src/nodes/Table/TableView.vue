@@ -45,6 +45,7 @@
 			v-if="isEditable"
 			class="table-add-row"
 			size="small"
+			wide
 			:aria-label="t('text', 'Add row below')"
 			:title="t('text', 'Add row below')"
 			@click="addRowAfter">
@@ -215,7 +216,7 @@ export default {
 
 	// Needed to overwrite forced button width with nextcloud-vue v9
 	&.editable .table-add-row.button-vue {
-		width: calc(100% - var(--clickable-area-small) - 4px) !important;
+		width: calc(100% - var(--clickable-area-small) - 4px);
 	}
 }
 </style>
