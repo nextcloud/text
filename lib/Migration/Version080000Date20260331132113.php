@@ -56,7 +56,7 @@ class Version080000Date20260331132113 extends SimpleMigrationStep {
 			if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_POSTGRES) {
 				$stm = $this->connection->prepare('CREATE INDEX CONCURRENTLY text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
 			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_ORACLE) {
-				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC) ONLINE;');
+				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON `*PREFIX*text_steps` (`document_id`, `id` DESC) ONLINE');
 			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_SQLITE) {
 				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
 			} else {
