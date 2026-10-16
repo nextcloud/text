@@ -11,6 +11,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Could not write file to disk",
     "A PHP extension stopped the file upload" : "A PHP extension stopped the file upload",
     "No file uploaded or file size exceeds maximum of %s" : "No file uploaded or file size exceeds maximum of %s",
+    "%s (guest)" : "%s (guest)",
     "Text" : "Text",
     "Comment" : "კომენტარი",
     "Close" : "Close",
@@ -63,10 +64,6 @@ OC.L10N.register(
     "Select language" : "Select language",
     "to" : "to",
     "Translate to" : "Translate to",
-    "Replace" : "Replace",
-    "Heading" : "Heading",
-    "Image" : "Image",
-    "Changed" : "Changed",
-    "Retry" : "თავიდან ცდა"
+    "Replace" : "Replace"
 },
 "nplurals=2; plural=(n!=1);");

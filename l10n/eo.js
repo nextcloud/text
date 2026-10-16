@@ -63,8 +63,6 @@ OC.L10N.register(
     "New text file" : "Nova tekstodosiero",
     "Saving …" : "Konservado...",
     "to" : "al",
-    "Replace" : "Anstataŭigi",
-    "Paragraph" : "Alineo",
-    "Retry" : "Reprovi"
+    "Replace" : "Anstataŭigi"
 },
 "nplurals=2; plural=(n != 1);");

@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ali ni poslane datoteke ali pa velikost datoteke presega omejitev %s",
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Ustvari novo besedilno datoteko",
+    "%s (guest)" : "%s (gost)",
     "{user} has mentioned you in the text document {node}" : "{user} vas omeni v besedili datoteki »{node}«.",
     "Readme" : "Preberime",
     "Text" : "Besedilo",
@@ -169,14 +170,6 @@ OC.L10N.register(
     "Select language" : "Izbor jezika",
     "to" : "do",
     "Translate to" : "Prevedi v",
-    "Replace" : "Zamenjaj",
-    "Paragraph" : "Odstavek",
-    "Heading" : "Glava",
-    "Task" : "Naloga",
-    "Image" : "Slika",
-    "Quote" : "Ponudba",
-    "Changed" : "Spremenjeno",
-    "Show" : "Pokaži",
-    "Retry" : "Poskusi znova     "
+    "Replace" : "Zamenjaj"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

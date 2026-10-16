@@ -34,8 +34,6 @@ OC.L10N.register(
     "New text file" : "Nuevo archivo de texto",
     "Select language" : "Seleccionar idioma",
     "to" : "para",
-    "Replace" : "Reemplazar",
-    "Changed" : "Cambiado",
-    "Retry" : "Reintentar"
+    "Replace" : "Reemplazar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -13,6 +13,7 @@
     "Nextcloud Text" : "Texto de Nextcloud",
     "Create new text file" : "Crear nuevo archivo de texto",
     "Editing session has expired. Please reload the page." : "La sesión de edición ha caducado. Por favor, recargue la página.",
+    "%s (guest)" : "%s (invitado)",
     "{user} has mentioned you in the text document {node}" : "{user} lo ha mencionado en el documento de texto {node}",
     "Readme" : "Leame",
     "Text" : "Texto",
@@ -193,10 +194,6 @@
     "Text to translate from" : "Texto a traducir desde",
     "to" : "para",
     "Translated text result" : "Resultado del texto traducido",
-    "Replace" : "Reemplazar",
-    "Paragraph" : "Párrafo",
-    "Image" : "Imagen",
-    "Changed" : "Cambiado",
-    "Retry" : "Reintentar"
+    "Replace" : "Reemplazar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

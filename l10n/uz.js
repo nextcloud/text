@@ -50,8 +50,6 @@ OC.L10N.register(
     "Choose" : "Tanlang",
     "Choose {file}" : " {file}ta tanlash",
     "Saving …" : "Saqlanmoqda...",
-    "to" : "пф",
-    "Table row" : "Jadval qatori",
-    "Retry" : "Qayta urinish"
+    "to" : "пф"
 },
 "nplurals=1; plural=0;");

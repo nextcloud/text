@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Κειμενογράφος Nextcloud",
     "Create new text file" : "Δημιουργία νέου αρχείου κειμένου",
     "Editing session has expired. Please reload the page." : "Η περίοδος επεξεργασίας έχει λήξει. Παρακαλώ ανανεώστε τη σελίδα.",
+    "%s (guest)" : "%s (επισκέπτης)",
     "{user} has mentioned you in the text document {node}" : "Ο/Η {user} σας αναφέρει στο κείμενο {node}",
     "Readme" : "Γενικές πληροφορίες",
     "Text" : "Κείμενο",
@@ -245,16 +246,6 @@ OC.L10N.register(
     "to" : "προς",
     "Translate to" : "Μετάφραση σε",
     "Translated text result" : "Αποτέλεσμα μεταφρασμένου κειμένου",
-    "Replace" : "Αντικατάσταση",
-    "Paragraph" : "Παράγραφος",
-    "Heading" : "Επικεφαλίδα",
-    "Task" : "Εργασία",
-    "Table row" : "Γραμμή πίνακα",
-    "Image" : "Εικόνα",
-    "Quote" : "Παράθεση",
-    "Changed" : "Άλλαξε",
-    "Show" : "Εμφάνιση",
-    "Retry" : "Δοκιμάστε ξανά",
-    "Inline code" : "Ενσωματωμένος κώδικας"
+    "Replace" : "Αντικατάσταση"
 },
 "nplurals=2; plural=(n != 1);");

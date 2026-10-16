@@ -13,6 +13,7 @@
     "Nextcloud Text" : "Nextcloud 텍스트",
     "Create new text file" : "새 텍스트 파일 만들기",
     "Editing session has expired. Please reload the page." : "편집 세션이 만료되었습니다. 페이지를 새로고침 해주세요.",
+    "%s (guest)" : "%s (손님)",
     "{user} has mentioned you in the text document {node}" : "{user}님이 {node} 텍스트 문서에서 당신을 언급했습니다.",
     "Readme" : "Readme",
     "Text" : "텍스트",
@@ -221,12 +222,6 @@
     "to" : "에서",
     "Translate to" : "다음으로 번역",
     "Translated text result" : "번역된 텍스트 결과",
-    "Replace" : "바꾸기",
-    "Heading" : "제목",
-    "Task" : "작업",
-    "Image" : "이미지",
-    "Quote" : "ㅇ",
-    "Changed" : "변경됨",
-    "Retry" : "다시 시도"
+    "Replace" : "바꾸기"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

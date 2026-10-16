@@ -11,6 +11,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Haikuweza kuandika faili kwenye disk",
     "A PHP extension stopped the file upload" : "Uongezaji wa PHP umesimamisha upakiaji wa faili",
     "No file uploaded or file size exceeds maximum of %s" : "Hakuna faili lililopakiwa au faili lilizidi kiwango cha juu cha %s",
+    "%s (guest)" : "%s (mgeni)",
     "Text" : "Maandishi",
     "Comment" : "Maoni",
     "Close" : "Funga",
@@ -93,12 +94,6 @@ OC.L10N.register(
     "Select language" : "Chagua lugha",
     "to" : "kwa",
     "Translate to" : "Translate to",
-    "Replace" : "Replace",
-    "Table row" : "Jedwali la safu",
-    "Image" : "Picha",
-    "Quote" : "Nukuu",
-    "No content" : "Hakuna maudhui",
-    "Retry" : "Jaribu tena",
-    "Inline code" : "Msimbo wa ndani"
+    "Replace" : "Replace"
 },
 "nplurals=2; plural=(n != 1);");

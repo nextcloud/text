@@ -47,8 +47,6 @@ OC.L10N.register(
     "Choose" : "Kies",
     "text document" : "teksdokument",
     "Saving …" : "Bewaar tans…",
-    "to" : "aan",
-    "Paragraph" : "Paragraaf",
-    "Retry" : "Herprobeer"
+    "to" : "aan"
 },
 "nplurals=2; plural=(n != 1);");

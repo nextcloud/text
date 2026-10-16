@@ -11,6 +11,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Nevarēja ierakstīt datni diskā",
     "A PHP extension stopped the file upload" : "PHP paplašinājums apturēja datnes augšupielādi",
     "Editing session has expired. Please reload the page." : "Labošanas sesija ir beigusies. Lūgums pārlādēt lapu.",
+    "%s (guest)" : "%s (viesis)",
     "{user} has mentioned you in the text document {node}" : "{user} pieminēja Tevi teksta dokumentā {node}",
     "Text" : "Teksts",
     "Comment" : "Piebilde",
@@ -60,11 +61,6 @@ OC.L10N.register(
     "Saving …" : "Saglabā ...",
     "Select language" : "Atlasīt valodu",
     "to" : "kam",
-    "Replace" : "Aizvietot",
-    "Heading" : "Virsraksts",
-    "Image" : "Attēli",
-    "Quote" : "Citāts",
-    "Changed" : "Mainīts",
-    "Retry" : "Mēģināt vēlreiz"
+    "Replace" : "Aizvietot"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

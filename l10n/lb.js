@@ -34,8 +34,6 @@ OC.L10N.register(
     "Lists" : "Lëschten",
     "Details" : "Detailer",
     "Choose" : "Auswielen",
-    "to" : "bis",
-    "Quote" : "Cotéierung",
-    "Retry" : "Widderhuelen"
+    "to" : "bis"
 },
 "nplurals=2; plural=(n != 1);");
