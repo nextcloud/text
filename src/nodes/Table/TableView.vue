@@ -122,7 +122,7 @@ export default {
 				.focus()
 				.setTextSelection(this.getPos() + headerRowNode.nodeSize - 1)
 				.addColumnAfter()
-				.setTextSelection(this.getPos() + headerRowNode.nodeSize)
+				.setTextSelection(this.getPos() + headerRowNode.nodeSize + 1)
 				.run()
 		},
 
@@ -133,7 +133,7 @@ export default {
 				.focus()
 				.setTextSelection(this.getPos() + this.node.nodeSize - lastRowNode.nodeSize + 1)
 				.addRowAfter()
-				.setTextSelection(this.getPos() + this.node.nodeSize + 1)
+				.setTextSelection(this.getPos() + this.node.nodeSize + 2)
 				.run()
 		},
 
