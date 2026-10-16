@@ -36,8 +36,6 @@ OC.L10N.register(
     "Saving …" : "Lagrar …",
     "Select language" : "Vel språk",
     "to" : "til",
-    "Replace" : "Erstatt",
-    "Image" : "Bilete",
-    "Retry" : "Forsøk att"
+    "Replace" : "Erstatt"
 },
 "nplurals=2; plural=(n != 1);");

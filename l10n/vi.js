@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Chưa có tệp nào được tải lên hoặc kích thước tệp vượt quá giới hạn của %s",
     "Nextcloud Text" : "Văn bản vWorkspace",
     "Create new text file" : "Tạo tập tin văn bản mới",
+    "%s (guest)" : "%s (khách mời)",
     "{user} has mentioned you in the text document {node}" : "{user} đã đề cập đến bạn trong tài liệu văn bản {node}",
     "Readme" : "Readme",
     "Text" : "Văn bản",
@@ -103,10 +104,6 @@ OC.L10N.register(
     "Insert an attachment" : "Chèn phần đính kèm",
     "Saving …" : "Đang lưu ...",
     "to" : "đến",
-    "Replace" : "Thay thế",
-    "Paragraph" : "Đoạn văn",
-    "Image" : "Hình ảnh",
-    "Show" : "Hiển thị",
-    "Retry" : "Thử lại"
+    "Replace" : "Thay thế"
 },
 "nplurals=1; plural=0;");

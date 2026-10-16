@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "Stvori novi tekst dokument",
     "Editing session has expired. Please reload the page." : "Sesija uređivanja je istekla. Ponovno učitajte stranicu.",
+    "%s (guest)" : "%s (gost)",
     "{user} has mentioned you in the text document {node}" : "{user} vas je spomenuo/la u tekstualnom dokumentu {node}",
     "Readme" : "Informacije",
     "Text" : "Tekst",
@@ -248,13 +249,6 @@ OC.L10N.register(
     "to" : "do",
     "Translate to" : "Prevedi na",
     "Translated text result" : "Rezultat prijevoda teksta",
-    "Replace" : "Zamijeni",
-    "Paragraph" : "Odjeljak",
-    "Image" : "Slika",
-    "Quote" : "Ponuda",
-    "Changed" : "Promijenjeno",
-    "No content" : "Nema sadržaja",
-    "Show" : "Prikaži",
-    "Retry" : "Pokušaj ponovno"
+    "Replace" : "Zamijeni"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

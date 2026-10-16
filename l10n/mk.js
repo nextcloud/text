@@ -13,6 +13,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Нема прикачена дадотека или големината го надмминува максимумот од %s",
     "Nextcloud Text" : "Текст",
     "Create new text file" : "Креирај нова текстуална датотека",
+    "%s (guest)" : "%s (гостин)",
     "{user} has mentioned you in the text document {node}" : "{user} те спомна во текстуална датотека {node}",
     "Readme" : "Прочитај",
     "Text" : "Текст",
@@ -130,9 +131,6 @@ OC.L10N.register(
     "Saving …" : "Зачувува ...",
     "Select language" : "Изберете јазик",
     "to" : "до",
-    "Replace" : "Преклопи",
-    "Image" : "Слика",
-    "Show" : "Прикажи",
-    "Retry" : "Обидете се повторно"
+    "Replace" : "Преклопи"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

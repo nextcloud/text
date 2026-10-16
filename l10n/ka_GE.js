@@ -35,8 +35,6 @@ OC.L10N.register(
     "New text file" : "ახალი ტექსტ ფაილი",
     "Select language" : "აირჩიეთ ენა",
     "to" : "ვის",
-    "Replace" : "ჩანაცვლება",
-    "Changed" : "შეცვლილია",
-    "Retry" : "ვცადოთ ახლიდან"
+    "Replace" : "ჩანაცვლება"
 },
 "nplurals=2; plural=(n!=1);");
