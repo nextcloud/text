@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Texti",
     "Create new text file" : "Búa til nýja textaskrá",
     "Editing session has expired. Please reload the page." : "Breytingasetan er útrunnin. Þú ættir að hlaða síðunni inn aftur.",
+    "%s (guest)" : "%s (gestur)",
     "{user} has mentioned you in the text document {node}" : "{user} minntist á þig í textaskjalinu {node}",
     "Readme" : "Readme upplýsingaskrá",
     "Text" : "Texti",
@@ -217,12 +218,6 @@ OC.L10N.register(
     "to" : "til",
     "Translate to" : "Þýða yfir á",
     "Translated text result" : "Niðurstaða þýdds texta",
-    "Replace" : "Skipta út",
-    "Paragraph" : "Málsgrein",
-    "Heading" : "Fyrirsögn",
-    "Image" : "Mynd",
-    "Changed" : "Breytt",
-    "No content" : "Ekkert efni",
-    "Retry" : "Reyna aftur"
+    "Replace" : "Skipta út"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

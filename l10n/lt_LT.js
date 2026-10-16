@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "Tekstinis dokumentas",
     "Create new text file" : "Sukurti naują tekstinį failą",
     "Editing session has expired. Please reload the page." : "Redagavimo sesija baigėsi. Atnaujinkite puslapį.",
+    "%s (guest)" : "%s (svečias)",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
     "This document is read-only." : "Šį dokumentą galima tik skaityti.",
     "Read-only permission cannot save document changes. Please reload the page." : "Turint tik skaitymo teises, negalima išsaugoti dokumento pakeitimų. Prašome atnaujinti puslapį.",
@@ -273,17 +274,6 @@ OC.L10N.register(
     "to" : "iki",
     "Translate to" : "Versti į",
     "Translated text result" : "Išversto teksto rezultatas",
-    "Replace" : "Pakeisti",
-    "Paragraph" : "Pastraipa",
-    "Heading" : "Antraštė",
-    "Task" : "Užduotis",
-    "Table row" : "Lentelės eilutė",
-    "Image" : "Paveikslas",
-    "Quote" : "Citata",
-    "Changed" : "Pakeista",
-    "No content" : "Nėra turinio",
-    "Show" : "Rodyti",
-    "Retry" : "Bandyti dar kartą",
-    "Inline code" : "Įterptasis kodas"
+    "Replace" : "Pakeisti"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

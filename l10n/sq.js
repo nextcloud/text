@@ -47,10 +47,6 @@ OC.L10N.register(
     "New text file" : "Skedar teksti i ri ",
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
-    "Replace" : "Mbishkruaj",
-    "Heading" : "Krye",
-    "Quote" : "Citat",
-    "Changed" : "Ndryshuar",
-    "Retry" : "Riprovoni"
+    "Replace" : "Mbishkruaj"
 },
 "nplurals=2; plural=(n != 1);");

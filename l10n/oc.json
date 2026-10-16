@@ -9,6 +9,7 @@
     "Could not write file to disk" : "Escritura impossibla al disc",
     "A PHP extension stopped the file upload" : "Una extension PHP a arrestat lo mandadís de fichièr",
     "Nextcloud Text" : "Nextcloud Text",
+    "%s (guest)" : "%s (convidat)",
     "Readme" : "Readme",
     "Text" : "Tèxt",
     "📝 Collaborative document editing" : "📝 Edicion collaborativa de document",
@@ -72,9 +73,6 @@
     "Insert an attachment" : "Inserir una pèça junta",
     "Saving …" : "Enregistrament...",
     "Select language" : "Causir lenga",
-    "to" : "a",
-    "Paragraph" : "Paragraf",
-    "Task" : "Prètzfach",
-    "Retry" : "Tornar ensajar"
+    "to" : "a"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

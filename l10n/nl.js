@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "Tekstdocument",
     "Create new text file" : "Nieuw tekstbestand maken",
     "Editing session has expired. Please reload the page." : "De bewerkingssessie is verlopen. Laad de pagina opnieuw.",
+    "%s (guest)" : "%s (gast)",
     "{user} has mentioned you in the text document {node}" : "{user} heeft jou vermeld in het tekstdocument {node}",
     "Readme" : "Leesmij",
     "Text" : "Tekst",
@@ -259,16 +260,6 @@ OC.L10N.register(
     "to" : "aan",
     "Translate to" : "Vertaal naar",
     "Translated text result" : "Resultaat vertaalde tekst",
-    "Replace" : "Vervangen",
-    "Paragraph" : "Paragraaf",
-    "Heading" : "Kopstijl",
-    "Task" : "Taak",
-    "Table row" : "Tabelrij",
-    "Image" : "Afbeelding",
-    "Quote" : "Quote",
-    "Changed" : "Gewijzigd",
-    "No content" : "Geen inhoud",
-    "Show" : "Toon",
-    "Retry" : "Opnieuw"
+    "Replace" : "Vervangen"
 },
 "nplurals=2; plural=(n != 1);");

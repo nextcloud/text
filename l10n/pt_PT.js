@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "Documento de texto",
     "Create new text file" : "Criar novo arquivo de texto",
     "Editing session has expired. Please reload the page." : "A sessão de edição expirou. Por favor, recarregue a página.",
+    "%s (guest)" : "%s (convidado)",
     "{user} has mentioned you in the text document {node}" : "{user} mencionou você no documento de texto {node}",
     "This document is read-only." : "Este documento é somente para leitura.",
     "Read-only permission cannot save document changes. Please reload the page." : "A permissão de somente leitura não permite salvar alterações no documento. Recarregue a página.",
@@ -243,17 +244,6 @@ OC.L10N.register(
     "to" : "Para",
     "Translate to" : "Traduzir para",
     "Translated text result" : "Resultado do texto traduzido",
-    "Replace" : "Substitua",
-    "Paragraph" : "Parágrafo",
-    "Heading" : "Cabeçalho",
-    "Task" : "Tarefa",
-    "Table row" : "Linha de tabela",
-    "Image" : "Imagem",
-    "Quote" : "Citação",
-    "Changed" : "Alterado",
-    "No content" : "Sem conteúdo",
-    "Show" : "Mostrar",
-    "Retry" : "Repetir",
-    "Inline code" : "Código embutido"
+    "Replace" : "Substitua"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

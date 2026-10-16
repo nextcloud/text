@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Nincs fájl feltöltve, vagy a fájl meghaladja a maximumot: %s",
     "Nextcloud Text" : "Nextcloud Szöveg",
     "Create new text file" : "Új szöveges fájl létrehozása",
+    "%s (guest)" : "%s (vendég)",
     "{user} has mentioned you in the text document {node}" : "{user} megemlítette a(z) {node} szöveges dokumentumban",
     "Readme" : "Olvass el",
     "Text" : "Szöveg",
@@ -202,16 +203,6 @@ OC.L10N.register(
     "Select language" : "Nyelvválasztás",
     "to" : "eddig:",
     "Translate to" : "Fordítás a következőre:",
-    "Replace" : "Csere",
-    "Paragraph" : "Bekezdés",
-    "Heading" : "Címsor",
-    "Task" : "Feladat",
-    "Table row" : "Tábla sor",
-    "Image" : "Kép",
-    "Quote" : "Árajánlat",
-    "Changed" : "Módosítva",
-    "No content" : "Nincs tartalom",
-    "Show" : "Megjelenítés",
-    "Retry" : "Újra"
+    "Replace" : "Csere"
 },
 "nplurals=2; plural=(n != 1);");
