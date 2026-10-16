@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Некстклауд Текст",
     "Create new text file" : "Креирај нови текст фајл",
     "Editing session has expired. Please reload the page." : "Истекла је сесија уређивања. Молимо вас да поново учитате страницу.",
+    "%s (guest)" : "%s (гост)",
     "{user} has mentioned you in the text document {node}" : "{user} вас је поменуо у текст документу {node}",
     "Readme" : "Прочитај ме",
     "Text" : "Текст",
@@ -240,14 +241,6 @@ OC.L10N.register(
     "to" : "за",
     "Translate to" : "Преведи на",
     "Translated text result" : "Резултат преведеног текста",
-    "Replace" : "Замени",
-    "Paragraph" : "Пасус",
-    "Heading" : "Наслов",
-    "Task" : "Задатак",
-    "Table row" : "Ред табеле",
-    "Image" : "Слика",
-    "Quote" : "Понуда",
-    "Changed" : "Измењено",
-    "Retry" : "Покушај поново"
+    "Replace" : "Замени"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

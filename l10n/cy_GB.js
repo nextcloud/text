@@ -25,7 +25,6 @@ OC.L10N.register(
     "Details" : "Manylion",
     "Suggestions" : "Awgrymiadau",
     "Choose" : "Dewisa",
-    "to" : "at",
-    "Retry" : "Ceisio eto"
+    "to" : "at"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

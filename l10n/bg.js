@@ -13,6 +13,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "PHP разширение спря качването на файла",
     "No file uploaded or file size exceeds maximum of %s" : "Няма качен файл или размерът на файла надвишава максимума от %s",
     "Nextcloud Text" : "Nextcloud Text",
+    "%s (guest)" : "%s (гост)",
     "{user} has mentioned you in the text document {node}" : "{user} ви спомена в текстовия документ {node}",
     "Readme" : "Прочети ме",
     "Text" : "Текст",
@@ -168,13 +169,6 @@ OC.L10N.register(
     "Translation failed" : "Неуспешен превод",
     "Select language" : "Изберете език",
     "to" : "до",
-    "Replace" : "Замяна",
-    "Task" : "Задача",
-    "Table row" : "Табличен ред",
-    "Image" : "Изображение",
-    "Quote" : "Оферта",
-    "Changed" : "Променен",
-    "Show" : "Показване",
-    "Retry" : "Опитай отново"
+    "Replace" : "Замяна"
 },
 "nplurals=2; plural=(n != 1);");

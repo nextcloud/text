@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Text",
     "Create new text file" : "ສ້າງໄຟລ໌ຂໍ້ຄວາມໃໝ່",
     "Editing session has expired. Please reload the page." : "ເຊດຊັນການແກ້ໄຂໝົດອາຍຸແລ້ວ. ກະລຸນາໂຫລດໜ້າເວັບຄືນໃໝ່.",
+    "%s (guest)" : "%s (guest)",
     "{user} has mentioned you in the text document {node}" : "{user} ໄດ້ກ່າວເຖິງທ່ານໃນເອກະສານຂໍ້ຄວາມ {node}",
     "Readme" : "ອ່ານກ່ອນ",
     "Text" : "ຂໍ້ຄວາມ",
@@ -238,12 +239,6 @@ OC.L10N.register(
     "to" : "ເປັນ",
     "Translate to" : "ແປເປັນ",
     "Translated text result" : "ຜົນການແປຂໍ້ຄວາມ",
-    "Replace" : "ປ່ຽນແທນ",
-    "Task" : "ໜ້າວຽກ",
-    "Table row" : "ແຖວຕາຕະລາງ",
-    "Image" : "ຮູບພາບ",
-    "Quote" : "ຂໍ້ຄວາມອ້າງອີງ",
-    "Changed" : "Changed",
-    "Retry" : "ລອງໃໝ່"
+    "Replace" : "ປ່ຽນແທນ"
 },
 "nplurals=1; plural=0;");

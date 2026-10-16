@@ -13,6 +13,7 @@
     "Nextcloud Text" : "Nextcloud تېكىست",
     "Create new text file" : "يېڭى تېكىست ھۆججىتى قۇرۇش",
     "Editing session has expired. Please reload the page." : "تەھرىرلەش ۋاقتى توشتى. بۇ بەتنى قايتا يۈكلەڭ.",
+    "%s (guest)" : "%s (مېھمان)",
     "{user} has mentioned you in the text document {node}" : "{user} تېكىست ھۆججىتىدە {node} سىزنى تىلغا ئالدى",
     "Readme" : "مېنى ئوقۇ",
     "Text" : "تېكىست",
@@ -248,15 +249,6 @@
     "to" : "غا",
     "Translate to" : "تەرجىمە قىلىڭ",
     "Translated text result" : "تەرجىمە قىلىنغان تېكىست نەتىجىسى",
-    "Replace" : "ئالماشتۇرۇڭ",
-    "Heading" : "ماۋزۇ",
-    "Task" : "ۋەزىپە",
-    "Table row" : "جەدىۋەل قۇرى",
-    "Image" : "رەسىم",
-    "Quote" : "نەقىل",
-    "Changed" : "ئۆزگەرتىلدى",
-    "No content" : "مەزمۇن يوق",
-    "Retry" : "قايتا سىناڭ",
-    "Inline code" : "ئىچكى كود"
+    "Replace" : "ئالماشتۇرۇڭ"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

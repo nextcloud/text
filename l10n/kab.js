@@ -72,13 +72,6 @@ OC.L10N.register(
     "Select language" : "Fren tutlayt",
     "to" : "ɣer",
     "Translate to" : "Suqel ar",
-    "Replace" : "Semselsi",
-    "Heading" : "Inixef",
-    "Task" : "Tawuri",
-    "Table row" : "Adur n tfelwit",
-    "Image" : "Tugna",
-    "Quote" : "Tanebdurt",
-    "Retry" : "Ɛreḍ tikkelt-nniḍen",
-    "Inline code" : "Tangalt tagensut"
+    "Replace" : "Semselsi"
 },
 "nplurals=2; plural=(n != 1);");

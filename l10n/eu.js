@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Testua",
     "Create new text file" : "Sortu testu fitxategi berria",
     "Editing session has expired. Please reload the page." : "Editatze saioa iraungi da. Mesedez, freskatu orria.",
+    "%s (guest)" : "%s (gonbidatua)",
     "{user} has mentioned you in the text document {node}" : "{user}(e)k {node} testu-dokumentuan aipatu zaitu",
     "Readme" : "IrakurNazazu",
     "Text" : "Testu",
@@ -249,14 +250,6 @@ OC.L10N.register(
     "to" : "honi",
     "Translate to" : "Itzuli honetara",
     "Translated text result" : "Itzulitako testu-emaitza",
-    "Replace" : "Ordeztu",
-    "Paragraph" : "Paragrafoa",
-    "Heading" : "Goiburua",
-    "Task" : "Zeregina",
-    "Image" : "Irudia",
-    "Quote" : "Aurrekontua",
-    "Changed" : "Aldatuta",
-    "Show" : "Erakutsi",
-    "Retry" : "saiatu berriro"
+    "Replace" : "Ordeztu"
 },
 "nplurals=2; plural=(n != 1);");

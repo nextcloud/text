@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text document" : "Текстовий документ",
     "Create new text file" : "Створіть новий текстовий файл",
     "Editing session has expired. Please reload the page." : "Сесія редагування тексту закінчилася. Оновіть цю сторінку.",
+    "%s (guest)" : "%s(гість)",
     "{user} has mentioned you in the text document {node}" : "{user} згадав вас у текстовому документі {node}",
     "This document is read-only." : "Документ тільки для читання.",
     "Read-only permission cannot save document changes. Please reload the page." : "Повноваження лише для читання не дозволяють зберегти документи. Перезавантажте сторінку.",
@@ -273,15 +274,6 @@ OC.L10N.register(
     "to" : "до",
     "Translate to" : "Перекласти",
     "Translated text result" : "Перекладений текст",
-    "Replace" : "Замінити",
-    "Paragraph" : "Параграф",
-    "Heading" : "Заголовок",
-    "Task" : "Завдання",
-    "Table row" : "Рядок таблиці",
-    "Image" : "Зображення",
-    "Quote" : "Цитата",
-    "Changed" : "Змінено",
-    "No content" : "Відсутній вміст",
-    "Retry" : "Спробувати ще раз"
+    "Replace" : "Замінити"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

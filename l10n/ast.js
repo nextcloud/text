@@ -153,10 +153,6 @@ OC.L10N.register(
     "Insert an attachment" : "Inxertar un axuntu",
     "Saving …" : "Guardando…",
     "to" : "pa",
-    "Replace" : "Trocar",
-    "Heading" : "Testera",
-    "Task" : "Xera",
-    "Image" : "Imaxe",
-    "Retry" : "Retentar"
+    "Replace" : "Trocar"
 },
 "nplurals=2; plural=(n != 1);");

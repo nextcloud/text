@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Текст",
     "Create new text file" : "Шинэ текст файл үүсгэх",
     "Editing session has expired. Please reload the page." : "Засварлах сессийн хугацаа дууссан. Хуудсыг дахин ачаална уу.",
+    "%s (guest)" : "%s (зочин)",
     "{user} has mentioned you in the text document {node}" : "{user} таныг {node} текст баримт бичигт дурдсан",
     "Readme" : "Readme",
     "Text" : "Текст",
@@ -241,9 +242,6 @@ OC.L10N.register(
     "to" : "–î—É—É—Å–∞—Ö –Ω—å",
     "Translate to" : "Орчуулах хэл",
     "Translated text result" : "Орчуулсан текстийн үр дүн",
-    "Replace" : "–°–æ–ª–∏—Ö",
-    "Image" : "Зураг",
-    "Changed" : "Өөрчилсөн",
-    "Retry" : "–î–∞—Ö–∏–Ω –æ—Ä–æ–ª–¥–æ—Ö"
+    "Replace" : "–°–æ–ª–∏—Ö"
 },
 "nplurals=2; plural=(n != 1);");
