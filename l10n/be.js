@@ -15,6 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Тэкст",
     "Create new text file" : "Стварыць новы тэкставы файл",
     "Editing session has expired. Please reload the page." : "Сеанс рэдагавання скончыўся. Перазагрузіце старонку.",
+    "%s (guest)" : "%s (госць)",
     "{user} has mentioned you in the text document {node}" : "{user} згадаў(-ла) вас у тэкставым дакуменце {node}",
     "Readme" : "Readme",
     "Text" : "Тэкст",

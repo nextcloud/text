@@ -15,6 +15,7 @@
     "Create new text file" : "Neue Textdatei erstellen",
     "Editing session has expired. Please reload the page." : "Die Bearbeitungssitzung ist abgelaufen. Bitte laden Sie die Seite neu.",
     "%s (guest)" : "%s (Gast)",
+    "A guest" : "Ein Gast",
     "{user} has mentioned you in the text document {node}" : "{user} hat Sie in dem Textdokument {node} erwähnt.",
     "This document is read-only." : "Dieses Dokument ist schreibgeschützt",
     "Read-only permission cannot save document changes. Please reload the page." : "Mit der Berechtigung \"Nur Lesen\" können keine Änderungen am Dokument gespeichert werden. Bitte diese Seite erneut laden.",
