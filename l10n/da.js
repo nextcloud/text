@@ -17,6 +17,7 @@ OC.L10N.register(
     "Create new text file" : "Opret ny tekstfil",
     "Editing session has expired. Please reload the page." : "Redigeringssessionen er udløbet. Genindlæs siden.",
     "%s (guest)" : "%s (gæst)",
+    "A guest" : "En gæst",
     "{user} has mentioned you in the text document {node}" : "{user} har omtalt dig i tekstdokumentet {node}",
     "This document is read-only." : "Dette dokument er skrivebeskyttet.",
     "Read-only permission cannot save document changes. Please reload the page." : "Med læserettighed kan ændringer i dokumentet ikke gemmes. Genindlæs siden.",

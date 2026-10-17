@@ -17,6 +17,7 @@ OC.L10N.register(
     "Create new text file" : "Vytvoriť nový textový súbor",
     "Editing session has expired. Please reload the page." : "Platnosť relácie pre úpravy vypršala. Načítajte stránku znova.",
     "%s (guest)" : "%s (guest)",
+    "A guest" : "Hosť",
     "{user} has mentioned you in the text document {node}" : "Užívateľ {user} vás zmienil v textovom dokumente {node}",
     "This document is read-only." : "Tento dokument je iba na čítanie.",
     "Read-only permission cannot save document changes. Please reload the page." : "S oprávnením iba na čítanie nemožno uložiť zmeny dokumentu. Znova načítajte stránku.",

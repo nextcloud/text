@@ -13,6 +13,7 @@
     "Nextcloud Text" : "\"نصوص نكست كلاود\" Nextcloud Text",
     "Create new text file" : "إنشاء ملف نصّي جديد",
     "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
+    "%s (guest)" : "%s (ضيف)",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
     "Readme" : "إقرأني",
     "Text" : "نص",

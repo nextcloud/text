@@ -15,6 +15,7 @@
     "Create new text file" : "Yeni yazı dosyası oluştur",
     "Editing session has expired. Please reload the page." : "Düzenleme oturumunun süresi dolmuş. Lütfen sayfayı yeniden yükleyin.",
     "%s (guest)" : "%s (konuk)",
+    "A guest" : "Bir konuk",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} yazı belgesinde sizi andı",
     "This document is read-only." : "Bu belge salt okunur.",
     "Read-only permission cannot save document changes. Please reload the page." : "Salt okunur izniyle belge değişiklikleri kaydedilemez. Lütfen sayfayı yeniden yükleyin.",
