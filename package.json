@@ -117,7 +117,7 @@
     "@playwright/test": "^1.63.0",
     "@types/jsdom": "^30.0.0",
     "@types/markdown-it-footnote": "^3.0.4",
-    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitejs/plugin-vue": "^6.0.10",
     "@vitest/coverage-v8": "^5.0.3",
     "@vue/test-utils": "^2.5.1",
     "@vue/tsconfig": "^0.9.1",
