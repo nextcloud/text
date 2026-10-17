@@ -13,6 +13,7 @@
     "Nextcloud Text" : "Testu de Nextcloud",
     "Create new text file" : "Crear un ficheru de testu",
     "Editing session has expired. Please reload the page." : "La sesión d'edición caducó. Volvi cargar la páxina.",
+    "%s (guest)" : "%s (convidáu)",
     "{user} has mentioned you in the text document {node}" : "{user} mentóte nel documentu de testu «{node}»",
     "Readme" : "Lleime",
     "Text" : "Testu",

@@ -17,6 +17,7 @@ OC.L10N.register(
     "Create new text file" : "建立新文字檔案",
     "Editing session has expired. Please reload the page." : "編輯工作階段已過期。請重新載入頁面。",
     "%s (guest)" : "%s（訪客）",
+    "A guest" : "訪客",
     "{user} has mentioned you in the text document {node}" : "{user} 在文字文件 {node} 中提到您",
     "This document is read-only." : "此文件為唯讀。",
     "Read-only permission cannot save document changes. Please reload the page." : "唯讀權限無法儲存文件變更。請重新載入頁面。",
