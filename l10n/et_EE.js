@@ -17,6 +17,7 @@ OC.L10N.register(
     "Create new text file" : "Loo uus tekstifail",
     "Editing session has expired. Please reload the page." : "Muutmissessioon on aegunud. Palun laadi leht uuesti.",
     "%s (guest)" : "%s (külaline)",
+    "A guest" : "Külaline",
     "{user} has mentioned you in the text document {node}" : "„{user}“ mainis sind tekstidokumendis „{node}“",
     "This document is read-only." : "See dokument on vaid loetav",
     "Read-only permission cannot save document changes. Please reload the page." : "Vaid loetavasse dokumenti ei saa muudatusi salvestada. Palun laadi leht uuesti.",
