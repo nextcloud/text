@@ -114,7 +114,7 @@
     "@nextcloud/e2e-test-server": "^0.6.1",
     "@nextcloud/eslint-config": "^9.0.1",
     "@nextcloud/vite-config": "^2.5.4",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.0",
     "@types/jsdom": "^30.0.0",
     "@types/markdown-it-footnote": "^3.0.4",
     "@vitejs/plugin-vue": "^6.0.10",
