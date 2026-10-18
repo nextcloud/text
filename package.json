@@ -100,7 +100,7 @@
     "slug": "^12.0.1",
     "tippy.js": "^6.3.7",
     "uuid": "^14.0.3",
-    "vue": "^3.5.43",
+    "vue": "^3.5.44",
     "vue-material-design-icons": "^5.4.0",
     "webdav": "^5.11.0",
     "y-indexeddb": "^9.0.12",
