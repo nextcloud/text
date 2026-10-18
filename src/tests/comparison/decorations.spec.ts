@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { compareDocuments } from '../../comparison/compare.ts'
 import { createComparisonDecorationPlugin, createComparisonSpacerPlugin, setComparisonDecorations, setComparisonSpacers } from '../../comparison/decorations.ts'
 import { createComparisonEditor } from '../../comparison/editor.ts'
@@ -15,8 +15,6 @@ const beforePlugin = createComparisonDecorationPlugin('before')
 const afterPlugin = createComparisonDecorationPlugin('after')
 
 beforeEach(() => {
-	before.mount(document.createElement('div'))
-	after.mount(document.createElement('div'))
 	before.registerPlugin(beforePlugin.plugin)
 	after.registerPlugin(afterPlugin.plugin)
 })
@@ -24,8 +22,11 @@ beforeEach(() => {
 afterEach(() => {
 	before.unregisterPlugin(beforePlugin.key)
 	after.unregisterPlugin(afterPlugin.key)
-	before.unmount()
-	after.unmount()
+})
+
+afterAll(() => {
+	before.destroy()
+	after.destroy()
 })
 
 function marked(editor: typeof before) {
@@ -61,7 +62,6 @@ describe('comparison spacers', () => {
 	it('sets the top margin of a block instead of adding an element', () => {
 		const editor = createComparisonEditor('First\n\n## Second')
 		const spacers = createComparisonSpacerPlugin()
-		editor.mount(document.createElement('div'))
 		editor.registerPlugin(spacers.plugin)
 		const blocks = () => [...editor.view.dom.children] as HTMLElement[]
 		const count = blocks().length
