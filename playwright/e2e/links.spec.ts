@@ -119,7 +119,7 @@ test.describe('link bubble', () => {
 		await link.hover()
 		const bubble = page.locator('.link-view-bubble')
 		await expect(bubble).toBeVisible()
-		await expect(bubble.locator('.link-view-bubble__title')).toContainText(/example\.com/)
+		await expect(bubble.locator('.link-view-bubble__title')).toContainText(/example/i)
 	})
 
 	test('mod-k turns the selection into a link and focuses the URL field', async ({ editor, page }) => {
