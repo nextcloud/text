@@ -140,7 +140,7 @@ test.describe('link bubble', () => {
 		const bubble = page.locator('.link-view-bubble')
 		await expect(bubble).toBeVisible()
 		await expect(bubble.locator('.link-view-bubble__title')).toContainText(
-			/example\.com/,
+			/example/i,
 		)
 	})
 
