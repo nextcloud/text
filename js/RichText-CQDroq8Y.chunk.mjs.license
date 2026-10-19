@@ -321,7 +321,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.5.10
 	- license: MIT
 - uuid
-	- version: 14.0.2
+	- version: 14.0.3
 	- license: MIT
 - vite-plugin-node-polyfills
 	- version: 0.28.0
