@@ -15,6 +15,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\IRequest;
 
 class AiController extends ApiController {
@@ -33,6 +34,8 @@ class AiController extends ApiController {
 			return new DataResponse([]);
 		} catch (NotFoundException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		} catch (NotPermittedException) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 	}
 }
