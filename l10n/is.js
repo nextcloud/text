@@ -204,8 +204,6 @@ OC.L10N.register(
     "Link to this section" : "Tengja í þennan hluta",
     "text document" : "textaskjal",
     "New text file" : "Ný textaskrá",
-    "Close outline view" : "Loka efnisskipulagssýn",
-    "Outline" : "Efnisskipan",
     "Insert an attachment" : "Setja inn viðhengi",
     "Saving …" : "Vista …",
     "Translate from {language}" : "Þýða úr {language}",

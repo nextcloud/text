@@ -245,8 +245,6 @@ OC.L10N.register(
     "New text file" : "Nieuw tekstbestand",
     "Overwrite the file and save the current changes" : "Overschrijf het bestand en bewaar de huidige wijzgingen",
     "Discard the current changes and load the latest version" : "Negeer de huidige wijzgingen en laad de laatste versie",
-    "Close outline view" : "Sluit overzichtsweergave",
-    "Outline" : "Overzicht",
     "Not connected. Cannot update guest name." : "Niet verbonden. Kan gastnaam niet aanpassen.",
     "Insert an attachment" : "Een bijlage invoegen",
     "Saving …" : "Opslaan ...",

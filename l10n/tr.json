@@ -332,8 +332,6 @@
     "New text file" : "Yeni yazı dosyası",
     "Overwrite the file and save the current changes" : "Dosyanın üzerine yaz ve geçerli değişiklikleri kaydet",
     "Discard the current changes and load the latest version" : "Geçerli değişiklikleri at ve son sürümü yükle",
-    "Close outline view" : "Özet görünümünü kapat",
-    "Outline" : "Özet",
     "Not connected. Cannot update guest name." : "Bağlı değil. Konuk adı güncellenemedi.",
     "Insert an attachment" : "Bir ek dosya ekle",
     "Saving …" : "Kaydediliyor …",

@@ -226,8 +226,6 @@ OC.L10N.register(
     "New text file" : "Нови текстуални фајл",
     "Overwrite the file and save the current changes" : "Препиши фајл и сачувај текуће измене",
     "Discard the current changes and load the latest version" : "Одбаци текуће измене и учитај последњу верзију",
-    "Close outline view" : "Затвори контурни приказ",
-    "Outline" : "Контура",
     "Not connected. Cannot update guest name." : "Нема везе. Не може да се ажурира име госта.",
     "Insert an attachment" : "Уметни прилог",
     "Saving …" : "Чувам…",

@@ -149,8 +149,6 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
     "text document" : "documentu de testu",
     "New text file" : "Ficheru de testu nuevu",
-    "Close outline view" : "Zarrar la visualización d'esquemes",
-    "Outline" : "Esquema",
     "Insert an attachment" : "Inxertar un axuntu",
     "Saving …" : "Guardando…",
     "to" : "pa",

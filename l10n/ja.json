@@ -248,8 +248,6 @@
     "New text file" : "新規のテキストファイル",
     "Overwrite the file and save the current changes" : "ファイルを上書きし現在の変更を保存します",
     "Discard the current changes and load the latest version" : "現在の変更を破棄し、最新バージョンをロードします",
-    "Close outline view" : "目次の表示を閉じる",
-    "Outline" : "目次",
     "Not connected. Cannot update guest name." : "接続されていません。ゲスト名を更新できません。",
     "Insert an attachment" : "添付ファイルを挿入する",
     "Saving …" : "保存中 ...",

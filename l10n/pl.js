@@ -241,8 +241,6 @@ OC.L10N.register(
     "New text file" : "Nowy plik tekstowy",
     "Overwrite the file and save the current changes" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
     "Discard the current changes and load the latest version" : "Odrzuć bieżące zmiany i wczytaj najnowszą wersję",
-    "Close outline view" : "Zamknij widok konspektu",
-    "Outline" : "Konspekt",
     "Not connected. Cannot update guest name." : "Nie połączono. Nie można zaktualizować nazwy gościa.",
     "Insert an attachment" : "Wstaw załącznik",
     "Saving …" : "Zapisywanie…",

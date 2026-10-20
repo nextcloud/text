@@ -200,8 +200,6 @@ OC.L10N.register(
     "Link to this section" : "Kobling til denne seksjonen",
     "text document" : "tekstdokument",
     "New text file" : "Ny tekstfil",
-    "Close outline view" : "Lukk konturvisning",
-    "Outline" : "Omriss",
     "Insert an attachment" : "Sett inn som vedlegg",
     "Saving …" : "Lagrer ...",
     "Translate from {language}" : "Oversett fra {language}",

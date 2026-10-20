@@ -234,8 +234,6 @@ OC.L10N.register(
     "New text file" : "Novi tekst datoteka",
     "Overwrite the file and save the current changes" : "Prepiši datoteku i spremi trenutne promjene",
     "Discard the current changes and load the latest version" : "Odbaci trenutne promjene i učitaj najnoviju verziju",
-    "Close outline view" : "Zatvori prikaz strukture",
-    "Outline" : "Struktura",
     "Not connected. Cannot update guest name." : "Niste povezani. Nije moguće ažurirati ime gosta.",
     "Insert an attachment" : "Umetni privitak",
     "Saving …" : "Spremanje…",

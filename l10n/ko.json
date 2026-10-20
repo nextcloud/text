@@ -208,8 +208,6 @@
     "New text file" : "새 텍스트 파일",
     "Overwrite the file and save the current changes" : "파일을 덮어쓰고 현재의 변경사항을 저장하기",
     "Discard the current changes and load the latest version" : "현재의 변경사항을 취소하고 최신 버전을 불러오기",
-    "Close outline view" : "개요 닫기",
-    "Outline" : "개요",
     "Insert an attachment" : "첨부 파일 삽입",
     "Saving …" : "저장중 …",
     "Translate from {language}" : "{language}에서 번역",

@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Uus tekstifail",
     "Overwrite the file and save the current changes" : "Salvesta senised muudatused ja sellega kirjuta senine fail üle",
     "Discard the current changes and load the latest version" : "Loodu senistest muudatustest ja laadi fail uuesti",
-    "Close outline view" : "Sulge struktuurivaade",
-    "Outline" : "Teksti struktuur",
     "Not connected. Cannot update guest name." : "Võrguühendus puudub. Külalise nime ei saa uuendada.",
     "Insert an attachment" : "Lisa manus",
     "Saving …" : "Salvestan…",
