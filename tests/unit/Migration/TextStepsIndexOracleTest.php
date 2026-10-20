@@ -45,6 +45,33 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 		$this->assertSchemaComparisonWorks();
 	}
 
+	public function testRepairReplacesDescendingIndex(): void {
+		$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
+		$this->connection->executeStatement('CREATE INDEX ' . self::INDEX_NAME . ' ON `*PREFIX*text_steps` (`document_id`, `id` DESC)');
+
+		try {
+			try {
+				$this->connection->migrateToSchema($this->connection->createSchema(), true);
+				self::fail('A descending index on Oracle is expected to break the schema comparison');
+			} catch (\Doctrine\DBAL\Schema\SchemaException) {
+			}
+
+			$this->executeStep('080000Date20261020120000');
+
+			self::assertSame(['document_id', 'id'], $this->getIndexColumns());
+			$this->assertSchemaComparisonWorks();
+		} finally {
+			// Leave an ascending index behind for the rest of the suite, whatever happened above
+			$table = $this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps');
+			if ($table->hasIndex(self::INDEX_NAME) && $this->getIndexColumns() !== ['document_id', 'id']) {
+				$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
+			}
+			if (!$this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps')->hasIndex(self::INDEX_NAME)) {
+				$this->connection->executeStatement('CREATE INDEX ' . self::INDEX_NAME . ' ON `*PREFIX*text_steps` (`document_id`, `id`)');
+			}
+		}
+	}
+
 	private function executeStep(string $version): void {
 		(new MigrationService('text', $this->connection))->executeStep($version);
 	}
