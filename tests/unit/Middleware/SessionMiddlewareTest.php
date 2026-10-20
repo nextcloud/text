@@ -181,6 +181,53 @@ class SessionMiddlewareTest extends TestCase {
 		$this->assertTrue(true);
 	}
 
+	public static function incompleteSessionParamsProvider(): array {
+		return [
+			'no session params' => [null, null, null],
+			'missing documentId' => [null, 1, 'sessionToken'],
+			'missing sessionId' => ['123', null, 'sessionToken'],
+			'missing sessionToken' => ['123', 1, null],
+		];
+	}
+
+	/**
+	 * @dataProvider incompleteSessionParamsProvider
+	 */
+	public function testDocumentSessionWithIncompleteParamsSkipsLookup(?string $documentId, ?int $sessionId, ?string $sessionToken): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$this->request->method('getParam')->willReturnMap([
+			['documentId', null, $documentId],
+			['sessionId', null, $sessionId],
+			['sessionToken', null, $sessionToken],
+		]);
+		$this->sessionService->expects($this->never())->method('getValidSession');
+
+		$controller = $this->createMock(ISessionAwareController::class);
+		self::invokePrivate($this->middleware, 'assertDocumentSession', [$controller]);
+	}
+
+	public function testBaseVersionEtagWithoutDocumentIdSkipsLookup(): void {
+		$this->request->method('getParam')->willReturnMap([
+			['documentId', null, null],
+			['baseVersionEtag', null, 'etag'],
+		]);
+
+		$documentService = $this->createMock(DocumentService::class);
+		$documentService->expects($this->never())->method('getDocument');
+		$middleware = new SessionMiddleware(
+			$this->request,
+			$this->sessionService,
+			$documentService,
+			$this->userSession,
+			$this->createMock(IL10N::class),
+			$this->userManager,
+			$this->fileService,
+		);
+
+		self::invokePrivate($middleware, 'assertDocumentBaseVersionEtag');
+	}
+
 	public function testAfterExceptionMapsAccountDisabledToForbidden(): void {
 		$controller = $this->createMock(ISessionAwareController::class);
 

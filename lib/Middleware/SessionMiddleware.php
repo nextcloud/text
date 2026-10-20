@@ -81,6 +81,11 @@ class SessionMiddleware extends Middleware {
 	 */
 	private function assertDocumentBaseVersionEtag(): void {
 		$documentId = (string)$this->request->getParam('documentId');
+
+		if ($documentId === '') {
+			return;
+		}
+
 		$baseVersionEtag = $this->request->getParam('baseVersionEtag');
 
 		$document = $this->getDocument($documentId);
@@ -97,6 +102,10 @@ class SessionMiddleware extends Middleware {
 		$documentId = (string)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
+
+		if ($documentId === '' || $sessionId <= 0 || $token === '') {
+			throw new InvalidSessionException();
+		}
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
