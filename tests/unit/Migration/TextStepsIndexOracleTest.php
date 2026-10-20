@@ -20,8 +20,6 @@ use OCP\Server;
  * @group DB
  */
 class TextStepsIndexOracleTest extends \Test\TestCase {
-	private const INDEX_NAME = 'text_steps_doc_id_id_index';
-
 	private Connection $connection;
 
 	public function setUp(): void {
@@ -37,7 +35,7 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 	}
 
 	public function testUpgradeCreatesAscendingIndex(): void {
-		$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
+		$this->connection->executeStatement('DROP INDEX text_steps_doc_id_id_index');
 
 		$this->executeStep('080000Date20260331132113');
 
@@ -46,8 +44,8 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 	}
 
 	public function testRepairReplacesDescendingIndex(): void {
-		$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
-		$this->connection->executeStatement('CREATE INDEX ' . self::INDEX_NAME . ' ON `*PREFIX*text_steps` (`document_id`, `id` DESC)');
+		$this->connection->executeStatement('DROP INDEX text_steps_doc_id_id_index');
+		$this->connection->executeStatement('CREATE INDEX text_steps_doc_id_id_index ON `*PREFIX*text_steps` (`document_id`, `id` DESC)');
 
 		try {
 			try {
@@ -63,11 +61,11 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 		} finally {
 			// Leave an ascending index behind for the rest of the suite, whatever happened above
 			$table = $this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps');
-			if ($table->hasIndex(self::INDEX_NAME) && $this->getIndexColumns() !== ['document_id', 'id']) {
-				$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
+			if ($table->hasIndex('text_steps_doc_id_id_index') && $this->getIndexColumns() !== ['document_id', 'id']) {
+				$this->connection->executeStatement('DROP INDEX text_steps_doc_id_id_index');
 			}
-			if (!$this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps')->hasIndex(self::INDEX_NAME)) {
-				$this->connection->executeStatement('CREATE INDEX ' . self::INDEX_NAME . ' ON `*PREFIX*text_steps` (`document_id`, `id`)');
+			if (!$this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps')->hasIndex('text_steps_doc_id_id_index')) {
+				$this->connection->executeStatement('CREATE INDEX text_steps_doc_id_id_index ON `*PREFIX*text_steps` (`document_id`, `id`)');
 			}
 		}
 	}
@@ -80,7 +78,7 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 		$table = $this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps');
 		return array_map(
 			static fn (string $column): string => trim($column, '"'),
-			$table->getIndex(self::INDEX_NAME)->getColumns(),
+			$table->getIndex('text_steps_doc_id_id_index')->getColumns(),
 		);
 	}
 
