@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Ny textfil",
     "Overwrite the file and save the current changes" : "Skriv över filen och spara de aktuella ändringarna",
     "Discard the current changes and load the latest version" : "Ignorera de aktuella ändringarna och läs in den senaste versionen",
-    "Close outline view" : "Stäng översiktsvy",
-    "Outline" : "Översikt",
     "Not connected. Cannot update guest name." : "Inte ansluten. Det går inte att uppdatera gästnamnet.",
     "Insert an attachment" : "Infoga en bilaga",
     "Saving …" : "Sparar …",

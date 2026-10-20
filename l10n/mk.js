@@ -125,8 +125,6 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Неможе да се копира во клипборд.",
     "text document" : "текстуален документ",
     "New text file" : "Нова текстуална датотека",
-    "Close outline view" : "Затвори преглед",
-    "Outline" : "Преглед",
     "Insert an attachment" : "Вметни прилог",
     "Saving …" : "Зачувува ...",
     "Select language" : "Изберете јазик",

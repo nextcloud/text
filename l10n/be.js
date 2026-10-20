@@ -216,8 +216,6 @@ OC.L10N.register(
     "New text file" : "Новы тэкставы файл",
     "Overwrite the file and save the current changes" : "Перазапісаць файл і захаваць бягучыя змены",
     "Discard the current changes and load the latest version" : "Адхіліць бягучыя змены і загрузіць апошнюю версію",
-    "Close outline view" : "Закрыць рэжым структуры",
-    "Outline" : "Структура",
     "Not connected. Cannot update guest name." : "Няма злучэння. Немагчыма абнавіць імя госця.",
     "Insert an attachment" : "Уставіць далучэнне",
     "Saving …" : "Захаванне …",

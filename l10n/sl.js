@@ -161,8 +161,6 @@ OC.L10N.register(
     "Link to this section" : "Poveži s tem odsekom",
     "text document" : "besedilni dokument",
     "New text file" : "Nova besedilna datoteka",
-    "Close outline view" : "Zapri obrisni pogled",
-    "Outline" : "Obrisni pogled",
     "Insert an attachment" : "Vstavi prilogo",
     "Saving …" : "Poteka shranjevanje ...",
     "Translation failed" : "Prevajanje je spodletelo",

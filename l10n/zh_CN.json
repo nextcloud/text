@@ -257,8 +257,6 @@
     "New text file" : "新建文本文件",
     "Overwrite the file and save the current changes" : "覆盖文件并保存当前更改",
     "Discard the current changes and load the latest version" : "放弃当前更改并加载最新版本",
-    "Close outline view" : "关闭大纲视图",
-    "Outline" : "大纲",
     "Not connected. Cannot update guest name." : "未连接。无法更新访客名称。",
     "Insert an attachment" : "插入附件",
     "Saving …" : "保存中 …",

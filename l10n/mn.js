@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Шинэ текст файл",
     "Overwrite the file and save the current changes" : "Файлыг дарж бичиж одоогийн өөрчлөлтийг хадгалах",
     "Discard the current changes and load the latest version" : "Одоогийн өөрчлөлтийг хаяж хамгийн сүүлийн хувилбарыг ачаалах",
-    "Close outline view" : "Тоймын харагдацыг хаах",
-    "Outline" : "Тойм",
     "Not connected. Cannot update guest name." : "Холбогдоогүй. Зочны нэрийг шинэчлэх боломжгүй.",
     "Insert an attachment" : "Хавсралт оруулах",
     "Saving …" : "Хадгалж байна …",
