@@ -15,12 +15,12 @@ use OCP\IDBConnection;
 use OCP\Server;
 
 /**
- * Fresh installs only run changeSchema, so this drives the upgrade path explicitly.
+ * Fresh installs only run changeSchema, so the upgrade path is driven explicitly.
  *
  * @group DB
  */
 class TextStepsIndexOracleTest extends \Test\TestCase {
-	private const string INDEX_NAME = 'text_steps_doc_id_id_index';
+	private const INDEX_NAME = 'text_steps_doc_id_id_index';
 
 	private Connection $connection;
 
@@ -32,24 +32,33 @@ class TextStepsIndexOracleTest extends \Test\TestCase {
 		}
 	}
 
-	public function testUpgradeCreatesAscendingIndex(): void {
-		if ($this->getTextStepsTable()->hasIndex(self::INDEX_NAME)) {
-			$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
-		}
-
-		(new MigrationService('text', $this->connection))->executeStep('080000Date20260331132113');
-
-		$columns = array_map(
-			static fn (string $column): string => trim($column, '"'),
-			$this->getTextStepsTable()->getIndex(self::INDEX_NAME)->getColumns(),
-		);
-		self::assertSame(['document_id', 'id'], $columns);
-
-		// A DESC key would be a hidden column here and break this comparison for every later migration
-		self::assertIsString($this->connection->migrateToSchema($this->connection->createSchema(), true));
+	public function testFreshInstallHasAscendingIndex(): void {
+		self::assertSame(['document_id', 'id'], $this->getIndexColumns());
 	}
 
-	private function getTextStepsTable(): \Doctrine\DBAL\Schema\Table {
-		return $this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps');
+	public function testUpgradeCreatesAscendingIndex(): void {
+		$this->connection->executeStatement('DROP INDEX ' . self::INDEX_NAME);
+
+		$this->executeStep('080000Date20260331132113');
+
+		self::assertSame(['document_id', 'id'], $this->getIndexColumns());
+		$this->assertSchemaComparisonWorks();
+	}
+
+	private function executeStep(string $version): void {
+		(new MigrationService('text', $this->connection))->executeStep($version);
+	}
+
+	private function getIndexColumns(): array {
+		$table = $this->connection->createSchema()->getTable($this->connection->getPrefix() . 'text_steps');
+		return array_map(
+			static fn (string $column): string => trim($column, '"'),
+			$table->getIndex(self::INDEX_NAME)->getColumns(),
+		);
+	}
+
+	private function assertSchemaComparisonWorks(): void {
+		// A DESC key would be a hidden column here and break this comparison for every later migration
+		self::assertIsString($this->connection->migrateToSchema($this->connection->createSchema(), true));
 	}
 }
