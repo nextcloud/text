@@ -162,8 +162,6 @@ OC.L10N.register(
     "Link to this section" : "Връзка към този раздел",
     "text document" : " текстов документ",
     "New text file" : "Нов текстов файл",
-    "Close outline view" : "Затваряне на структурния изглед",
-    "Outline" : "Структура",
     "Insert an attachment" : "Вмъкване на прикачен файл",
     "Saving …" : "Записване …",
     "Translation failed" : "Неуспешен превод",

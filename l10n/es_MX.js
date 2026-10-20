@@ -183,8 +183,6 @@ OC.L10N.register(
     "Link to this section" : "Enlace a esta sección",
     "text document" : "documento de texto",
     "New text file" : "Nuevo archivo de texto",
-    "Close outline view" : "Cerrar la vista de esquema",
-    "Outline" : "Esquema",
     "Insert an attachment" : "Insertar adjunto",
     "Saving …" : "Guardando ...",
     "Translate from {language}" : "Traducir desde {language}",

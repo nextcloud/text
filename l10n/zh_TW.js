@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "新文字檔",
     "Overwrite the file and save the current changes" : "覆寫檔案並儲存目前變更",
     "Discard the current changes and load the latest version" : "放棄目前變更並載入最新版本",
-    "Close outline view" : "關閉大綱檢視",
-    "Outline" : "大綱",
     "Not connected. Cannot update guest name." : "未連線。無法更新訪客名稱。",
     "Insert an attachment" : "插入附件",
     "Saving …" : "正在儲存……",

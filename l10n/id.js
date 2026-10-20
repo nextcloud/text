@@ -282,8 +282,6 @@ OC.L10N.register(
     "New text file" : "Berkas teks baru",
     "Overwrite the file and save the current changes" : "Timpa file dan simpan perubahan saat ini",
     "Discard the current changes and load the latest version" : "Buang perubahan saat ini dan muat versi terbaru",
-    "Close outline view" : "Tutup tampilan kerangka",
-    "Outline" : "Kerangka",
     "Not connected. Cannot update guest name." : "Tidak terhubung. Tidak dapat memperbarui nama tamu.",
     "Insert an attachment" : "Sisipkan lampiran",
     "Saving …" : "Menyimpan …",

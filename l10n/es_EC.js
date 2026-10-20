@@ -152,8 +152,6 @@ OC.L10N.register(
     "Link to this section" : "Enlace a esta sección",
     "text document" : "documento de texto",
     "New text file" : "Nuevo archivo de texto",
-    "Close outline view" : "Cerrar vista de esquema",
-    "Outline" : "Esquema",
     "Insert an attachment" : "Insertar un adjunto",
     "Saving …" : "Saving …",
     "Translation failed" : "Traducción fallida",

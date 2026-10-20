@@ -236,8 +236,6 @@ OC.L10N.register(
     "New text file" : "يېڭى تېكىست ھۆججىتى",
     "Overwrite the file and save the current changes" : "ھۆججەتنى ئۈستىلەپ باز ھەمدە نۆۋەتتىكى ئۆزگەرتىشلەرنى ساقلا",
     "Discard the current changes and load the latest version" : "نۆۋەتتىكى ئۆزگەرتىشلەرنى تاشلىۋەت ھەمدە ئالدىنقى نۇسخىسىنى يۈكلە",
-    "Close outline view" : "سىزىق كۆرۈنۈشىنى تاقاش",
-    "Outline" : "قىسقىچە چۈشەنچە",
     "Not connected. Cannot update guest name." : "ئۇلانمىدى، مىھمان ئىسمىنى ئۆزگەرتەلمىدى.",
     "Insert an attachment" : "قوشۇمچە قىستۇر",
     "Saving …" : "ساقلاۋاتىدۇ…",

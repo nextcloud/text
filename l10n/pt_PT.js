@@ -230,8 +230,6 @@ OC.L10N.register(
     "text document" : "documento de texto",
     "New text file" : "Novo ficheiro de texto",
     "Discard the current changes and load the latest version" : "Descartar as alterações atuais e carregar a versão mais recente",
-    "Close outline view" : "Fechar visualização de estrutura",
-    "Outline" : "Estrutura",
     "Not connected. Cannot update guest name." : "Não conectado. Não é possível atualizar o nome do convidado.",
     "Insert an attachment" : "Inserir um anexo",
     "Saving …" : "A guardar...",

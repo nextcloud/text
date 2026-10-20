@@ -286,8 +286,6 @@ OC.L10N.register(
     "New text file" : "New text file",
     "Overwrite the file and save the current changes" : "Overwrite the file and save the current changes",
     "Discard the current changes and load the latest version" : "Discard the current changes and load the latest version",
-    "Close outline view" : "Close outline view",
-    "Outline" : "Outline",
     "Not connected. Cannot update guest name." : "Not connected. Cannot update guest name.",
     "Insert an attachment" : "Insert an attachment",
     "Saving …" : "Saving …",
