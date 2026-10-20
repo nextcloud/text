@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Comhad téacs nua",
     "Overwrite the file and save the current changes" : "Forscríobh an comhad agus sábháil na hathruithe reatha",
     "Discard the current changes and load the latest version" : "Scrios na hathruithe reatha agus luchtaigh an leagan is déanaí",
-    "Close outline view" : "Amharc imlíne gar",
-    "Outline" : "Imlíne",
     "Not connected. Cannot update guest name." : "Gan cheangal. Ní féidir ainm an aoi a nuashonrú.",
     "Insert an attachment" : "Cuir isteach ceangaltán",
     "Saving …" : "Shábháil …",

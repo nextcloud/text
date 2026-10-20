@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Fișier text nou",
     "Overwrite the file and save the current changes" : "Suprascrie fișierul și salvează modificările curente",
     "Discard the current changes and load the latest version" : "Renunță la modificările curente și încarcă cea mai recentă versiune",
-    "Close outline view" : "Închide vizualizarea cuprinsului",
-    "Outline" : "Cuprins",
     "Not connected. Cannot update guest name." : "Nu există conexiune. Numele de invitat nu poate fi actualizat.",
     "Insert an attachment" : "Inserează un atașament",
     "Saving …" : "Se salvează …",

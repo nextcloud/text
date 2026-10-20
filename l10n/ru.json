@@ -332,8 +332,6 @@
     "New text file" : "Новый текстовый файл",
     "Overwrite the file and save the current changes" : "Перезаписать файл и сохранить текущие изменения",
     "Discard the current changes and load the latest version" : "Отменить текущие изменения и загрузить последнюю версию",
-    "Close outline view" : "Закрыть оглавление",
-    "Outline" : "Оглавление",
     "Not connected. Cannot update guest name." : "Нет соединения. Невозможно обновить имя гостя.",
     "Insert an attachment" : "Вставить вложение",
     "Saving …" : "Сохранение…",

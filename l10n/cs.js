@@ -244,8 +244,6 @@ OC.L10N.register(
     "New text file" : "Nový textový soubor",
     "Overwrite the file and save the current changes" : "Přepsat soubor a uložit stávající změny",
     "Discard the current changes and load the latest version" : "Zahodit stávající změny a načíst nejnovější verzi",
-    "Close outline view" : "Zavřít ohraničené zobrazení",
-    "Outline" : "Osnova",
     "Not connected. Cannot update guest name." : "Nepřipojeno. Nebylo možné zaktualizovat jméno hosta.",
     "Insert an attachment" : "Vložit přílohu",
     "Saving …" : "Ukládání …",

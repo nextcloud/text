@@ -259,8 +259,6 @@ OC.L10N.register(
     "New text file" : "Naujas tekstinis failas",
     "Overwrite the file and save the current changes" : "Pakeisti failą ir išsaugoti dabartinius pakeitimus",
     "Discard the current changes and load the latest version" : "Atmeskite dabartinius pakeitimus ir įkelkite naujausią versiją",
-    "Close outline view" : "Uždaryti kontūro rodinį",
-    "Outline" : "Kontūras",
     "Not connected. Cannot update guest name." : "Neprisijungta. Nepavyksta atnaujinti svečio vardo.",
     "Insert an attachment" : "Įterpti priedą",
     "Saving …" : "Įrašoma…",

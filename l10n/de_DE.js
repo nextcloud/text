@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Neue Textdatei",
     "Overwrite the file and save the current changes" : "Datei überschreiben und die aktuellen Änderungen speichern",
     "Discard the current changes and load the latest version" : "Aktuelle Änderungen verwerfen und die letzte Version laden",
-    "Close outline view" : "Gliederungsansicht schließen",
-    "Outline" : "Gliederung",
     "Not connected. Cannot update guest name." : "Nicht verbunden. Gastname kann nicht aktualisiert werden.",
     "Insert an attachment" : "Einen Anhang einfügen",
     "Saving …" : "Speichern …",

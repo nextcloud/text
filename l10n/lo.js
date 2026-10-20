@@ -224,8 +224,6 @@ OC.L10N.register(
     "New text file" : "ໄຟລ໌ຂໍ້ຄວາມໃໝ່",
     "Overwrite the file and save the current changes" : "ຂຽນທັບໄຟລ໌ ແລະ ບັນທຶກການປ່ຽນແປງປັດຈຸບັນ",
     "Discard the current changes and load the latest version" : "ຍົກເລີກການປ່ຽນແປງປັດຈຸບັນ ແລະ ໂຫລດເວີຊັນຫຼ້າສຸດ",
-    "Close outline view" : "ປິດມຸມມອງໂຄງຮ່າງ",
-    "Outline" : "ໂຄງຮ່າງ",
     "Not connected. Cannot update guest name." : "ບໍ່ໄດ້ເຊື່ອມຕໍ່. ບໍ່ສາມາດອັບເດດຊື່ແຂກໄດ້.",
     "Insert an attachment" : "ແຊກໄຟລ໌ແນບ",
     "Saving …" : "ກຳລັງບັນທຶກ...",

@@ -334,8 +334,6 @@ OC.L10N.register(
     "New text file" : "Nouveau fichier texte",
     "Overwrite the file and save the current changes" : "Écraser le fichier et enregistrer les modifications actuelles",
     "Discard the current changes and load the latest version" : "Abandonner les modifications et charger la dernière version",
-    "Close outline view" : "Fermer la vue du plan",
-    "Outline" : "Plan",
     "Not connected. Cannot update guest name." : "Hors ligne. Impossible de mettre à jour le nom de l’invité.",
     "Insert an attachment" : "Insérer une pièce jointe",
     "Saving …" : "Enregistrement…",

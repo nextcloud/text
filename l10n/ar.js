@@ -217,8 +217,6 @@ OC.L10N.register(
     "New text file" : "ملف نصّي جديد",
     "Overwrite the file and save the current changes" : "إستبدِل الملف واحفظ التغييرات الحالية",
     "Discard the current changes and load the latest version" : "تجاهل التغييرات الحالية وارفع آخر نسخة",
-    "Close outline view" : "أغلق العرض التخطيطي outline view",
-    "Outline" : "عرض تخطيطي outline",
     "Insert an attachment" : "أدخل مٌرفقاً",
     "Saving …" : "الحفظ جارٍ …",
     "Translate from {language}" : "ترجِم من {language}",

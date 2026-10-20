@@ -192,8 +192,6 @@ OC.L10N.register(
     "Link to this section" : "Hivatkozás erre a szakaszra",
     "text document" : "szöveges dokumentum",
     "New text file" : "Új szöveges fájl",
-    "Close outline view" : "Vázlatnézet bezárása",
-    "Outline" : "Vázlat",
     "Insert an attachment" : "Melléklet beszúrása",
     "Saving …" : "Mentés…",
     "Translate from {language}" : "{language} nyelvről fordítva",

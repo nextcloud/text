@@ -208,8 +208,6 @@ OC.L10N.register(
     "Link to this section" : "Enllaç a aquesta secció",
     "text document" : "document de text",
     "New text file" : "Fitxer de text nou",
-    "Close outline view" : "Tanca la visualització d'esquema",
-    "Outline" : "Esquema",
     "Insert an attachment" : "Insereix un fitxer adjunt",
     "Saving …" : "S'està desant…",
     "Translate from {language}" : "Tradueix de {language}",
