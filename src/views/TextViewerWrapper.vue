@@ -13,12 +13,14 @@ import ViewerVersionComparison from '../components/ViewerVersionComparison.vue'
 import { openMimetypesMarkdown } from '../helpers/mime.js'
 
 // Of what the viewer gives a handler's element (`ViewerProps` in
-// @nextcloud/viewer), the editor only needs the file, and when comparing,
-// the files compared and how
+// @nextcloud/viewer), the editor only needs the file, when comparing the
+// files compared and how, and whether it is shown inline, outside the
+// viewer: read-only then, with its own button to edit
 const props = defineProps<{
 	file: IFile
 	files?: IFile[]
 	comparison?: 'side-by-side' | 'differences'
+	embedded?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -86,6 +88,7 @@ useHost()?.addEventListener('before-download', (event) => {
 		:mime="file.mime"
 		:source="file.encodedSource"
 		:e2EeIsEncrypted="isEncrypted"
+		:isEmbedded="embedded"
 		active
 		:onLoadedHandler="() => emit('loaded')" />
 </template>

@@ -15,7 +15,7 @@ const saveWhenDirty = vi.hoisted(() => vi.fn(async () => {}))
 vi.mock('../../components/ViewerComponent.vue', () => ({
 	default: defineComponent({
 		name: 'ViewerComponent',
-		props: ['filename', 'fileid', 'forceSource', 'mime', 'source', 'e2EeIsEncrypted', 'active', 'onLoadedHandler'],
+		props: ['filename', 'fileid', 'forceSource', 'mime', 'source', 'e2EeIsEncrypted', 'isEmbedded', 'active', 'onLoadedHandler'],
 		methods: { saveWhenDirty },
 		template: '<div />',
 	}),
@@ -61,6 +61,20 @@ describe('the text viewer wrapper', () => {
 		expect(editor.props('forceSource')).toBe(false)
 		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(file.encodedSource)
+	})
+
+	// Shown where it is mentioned, as the preview of a link to it: read, with
+	// a button to edit it there
+	it('shows the file read-only when embedded outside the viewer', () => {
+		const editor = mount(TextViewerWrapper, { props: { file: makeFile(), embedded: true } }).findComponent({ name: 'ViewerComponent' })
+
+		expect(editor.props('isEmbedded')).toBe(true)
+	})
+
+	it('is not embedded in the viewer', () => {
+		const editor = mount(TextViewerWrapper, { props: { file: makeFile() } }).findComponent({ name: 'ViewerComponent' })
+
+		expect(editor.props('isEmbedded')).toBe(false)
 	})
 
 	// A version carries the id of the file it belongs to. It is still read
