@@ -33,20 +33,6 @@ class Version080000Date20261020120000 extends SimpleMigrationStep {
 	}
 
 	#[Override]
-	public function preSchemaChange(IOutput $output, Closure $schemaClosure, array $options): void {
-		if ($this->connection->getDatabaseProvider() !== IDBConnection::PLATFORM_ORACLE) {
-			return;
-		}
-
-		/** @var ISchemaWrapper $schema */
-		$schema = $schemaClosure();
-		if ($this->hasHiddenIndexColumn($schema)) {
-			// The schema API cannot drop it, because the comparison is what fails
-			$this->connection->executeStatement('DROP INDEX text_steps_doc_id_id_index');
-		}
-	}
-
-	#[Override]
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		if ($this->connection->getDatabaseProvider() !== IDBConnection::PLATFORM_ORACLE) {
 			return null;
@@ -54,11 +40,12 @@ class Version080000Date20261020120000 extends SimpleMigrationStep {
 
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
+		$table = $schema->getTable('text_steps');
 		if ($this->hasHiddenIndexColumn($schema)) {
-			throw new \RuntimeException('Index text_steps_doc_id_id_index on text_steps still references a hidden column, drop it and run the upgrade again');
+			// Dropped from the target schema, so the comparison never rebuilds it and only emits a DROP INDEX
+			$table->dropIndex('text_steps_doc_id_id_index');
 		}
 
-		$table = $schema->getTable('text_steps');
 		if (!$table->hasIndex('text_steps_doc_id_id_index')) {
 			$table->addIndex(['document_id', 'id'], 'text_steps_doc_id_id_index');
 			return $schema;
