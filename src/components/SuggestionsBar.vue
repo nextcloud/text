@@ -58,7 +58,6 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import { getLinkWithPicker } from '@nextcloud/vue/components/NcRichText'
 import { Folder, Shape, Table as TableIcon, Upload } from '../components/icons.js'
 import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
@@ -66,7 +65,6 @@ import { useFileProps } from '../composables/useFileProps.ts'
 import { useLinkFile } from '../composables/useLinkFile.ts'
 import { useNetworkState } from '../composables/useNetworkState.ts'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
-import { logger } from '../helpers/logger.ts'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
@@ -132,22 +130,11 @@ export default {
 
 	methods: {
 		/**
-		 * Open smart picker dialog
+		 * Open smart picker inline menu
 		 * Triggered by the "Smart Picker" button
 		 */
 		linkPicker() {
-			getLinkWithPicker(null, true)
-				.then((link) => {
-					const chain = this.editor.chain()
-					if (this.editor.view.state.selection.empty) {
-						chain.focus().insertPreview(link).run()
-					} else {
-						chain.setLink({ href: link }).focus().run()
-					}
-				})
-				.catch((error) => {
-					logger.error('Smart picker promise rejected', error)
-				})
+			this.editor.chain().focus().insertContent('/').run()
 		},
 
 		/**
