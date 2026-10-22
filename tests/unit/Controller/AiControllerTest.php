@@ -13,6 +13,7 @@ use OCA\Text\Service\AiTagService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\IRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
@@ -62,6 +63,18 @@ class AiControllerTest extends TestCase {
 		$response = $this->controller->tagFile(42);
 
 		$this->assertSame(Http::STATUS_NOT_FOUND, $response->getStatus());
+		$this->assertSame([], $response->getData());
+	}
+
+	public function testTagFileReturnsForbiddenWhenNotPermitted(): void {
+		$this->aiTagService->expects($this->once())
+			->method('tagFileAsAiGenerated')
+			->with(42)
+			->willThrowException(new NotPermittedException('No permission to assign tag to 42'));
+
+		$response = $this->controller->tagFile(42);
+
+		$this->assertSame(Http::STATUS_FORBIDDEN, $response->getStatus());
 		$this->assertSame([], $response->getData());
 	}
 }
