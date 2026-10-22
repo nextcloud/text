@@ -9,10 +9,12 @@ declare(strict_types = 1);
 
 namespace OCA\Text\Service;
 
+use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\IUserFolder;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\SystemTag\ISystemTagObjectMapper;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -61,9 +63,9 @@ class AiTagServiceTest extends TestCase {
 
 	public function testTagFileAsAiGeneratedThrowsWhenFileNotAccessible(): void {
 		$this->userFolder->expects($this->once())
-			->method('getFirstNodeById')
+			->method('getById')
 			->with(42)
-			->willReturn(null);
+			->willReturn([]);
 
 		$this->systemTagObjectMapper->expects($this->never())
 			->method('assignGeneratedByAITag');
@@ -72,12 +74,32 @@ class AiTagServiceTest extends TestCase {
 		$this->service->tagFileAsAiGenerated(42);
 	}
 
-	public function testTagFileAsAiGeneratedTagsWhenAccessible(): void {
+	public function testTagFileAsAiGeneratedThrowsWhenFileIsReadOnly(): void {
 		$file = $this->createMock(File::class);
+		$file->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
+
 		$this->userFolder->expects($this->once())
-			->method('getFirstNodeById')
+			->method('getById')
 			->with(42)
-			->willReturn($file);
+			->willReturn([$file]);
+
+		$this->systemTagObjectMapper->expects($this->never())
+			->method('assignGeneratedByAITag');
+
+		$this->expectException(NotPermittedException::class);
+		$this->service->tagFileAsAiGenerated(42);
+	}
+
+	public function testTagFileAsAiGeneratedTagsWhenUpdateIsAllowed(): void {
+		$readOnly = $this->createMock(File::class);
+		$readOnly->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
+		$writable = $this->createMock(File::class);
+		$writable->method('getPermissions')->willReturn(Constants::PERMISSION_UPDATE);
+
+		$this->userFolder->expects($this->once())
+			->method('getById')
+			->with(42)
+			->willReturn([$readOnly, $writable]);
 
 		$this->systemTagObjectMapper->expects($this->once())
 			->method('assignGeneratedByAITag')
