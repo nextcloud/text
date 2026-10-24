@@ -139,7 +139,7 @@
     "vue-tsc": "^3.3.13"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.64.6"
+    "@rollup/rollup-linux-x64-gnu": "^4.64.12"
   },
   "engines": {
     "node": "^24.0.0",
