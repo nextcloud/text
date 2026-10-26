@@ -158,6 +158,19 @@ window.OCA.Text.createEditor({
 })
 ```
 
+## Teams integration
+
+Text implements `OCP\Teams\ITeamAppProvider` and declares it through
+`IRegistrationContext::registerTeamAppProvider()`, without a registration event.
+It owns page discovery, creation, rename,
+deletion, and the embedded editor. Pages remain in the team folder under
+`.system/teams/pages`; existing page URLs and saved ordering remain supported.
+PHP owns discovery and declarative actions. The optional `text-teams.mjs` module
+only mounts the editor, rechecks file access, and returns cleanup (browser API v2).
+Upgrade Circles and Text together: the Teams host no longer supplies a legacy
+Text integration. Focused frontend coverage: `npm test -- src/tests/teams-view.spec.ts`.
+PHP discovery/action coverage lives in `tests/unit/Teams/TeamsProviderTest.php`.
+
 ### Markdown based content editor
 
 ```js

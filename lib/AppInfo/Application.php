@@ -53,6 +53,9 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function register(IRegistrationContext $context): void {
+		if (interface_exists(\OCP\Teams\ITeamAppProvider::class)) {
+			$context->registerTeamAppProvider(\OCA\Text\Teams\TeamsProvider::class);
+		}
 		$context->registerConfigLexicon(\OCA\Text\ConfigLexicon::class);
 
 		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);

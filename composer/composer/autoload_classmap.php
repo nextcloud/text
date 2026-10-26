@@ -97,6 +97,7 @@ return array(
     'OCA\\Text\\Service\\NotificationService' => $baseDir . '/../lib/Service/NotificationService.php',
     'OCA\\Text\\Service\\SessionService' => $baseDir . '/../lib/Service/SessionService.php',
     'OCA\\Text\\Service\\WorkspaceService' => $baseDir . '/../lib/Service/WorkspaceService.php',
+    'OCA\\Text\\Teams\\TeamsProvider' => $baseDir . '/../lib/Teams/TeamsProvider.php',
     'OCA\\Text\\TextFile' => $baseDir . '/../lib/TextFile.php',
     'OCA\\Text\\YjsMessage' => $baseDir . '/../lib/YjsMessage.php',
 );

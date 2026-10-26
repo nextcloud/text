@@ -37,6 +37,7 @@ const config = createAppConfig(
 		viewer: path.join(__dirname, 'src', 'viewer.js'),
 		editor: path.join(__dirname, 'src', 'editor.js'),
 		init: path.join(__dirname, 'src', 'init.js'),
+		teams: path.join(__dirname, 'src', 'teams.ts'),
 	},
 	{
 		createEmptyCSSEntryPoints: true,
@@ -62,6 +63,7 @@ const config = createAppConfig(
 			build: {
 				cssCodeSplit: true,
 				rollupOptions: {
+					preserveEntrySignatures: 'exports-only',
 					output: {
 						manualChunks: (id) => {
 							// Make the emoji related dependencies a custom chunk to reduce the size of the RichText chunk
