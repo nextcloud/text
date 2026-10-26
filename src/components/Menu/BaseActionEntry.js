@@ -86,11 +86,7 @@ const BaseActionEntry = {
 			this.$emit('disabled', this.state.disabled)
 		},
 		setTabIndexOnButton() {
-			/** @type {HTMLButtonElement} */
-			const button
-				= this.$el.tagName.toLowerCase() === 'button'
-					? this.$el
-					: this.$el.querySelector('button')
+			const button = this.getButton()
 
 			if (this.canBeFocussed === null) {
 				button.removeAttribute('tabindex')
@@ -102,12 +98,21 @@ const BaseActionEntry = {
 		 * Focus the inner button of this action
 		 */
 		focusButton() {
-			/** @type {HTMLButtonElement} */
-			const button
-				= this.$el.tagName.toLowerCase() === 'button'
-					? this.$el
-					: this.$el.querySelector('button')
-			button.focus()
+			this.getButton().focus()
+		},
+		/**
+		 * Open the menu of this action, e.g. when triggered from the remaining actions
+		 */
+		openMenu() {
+			this.getButton().click()
+		},
+		/**
+		 * @return {HTMLButtonElement} The inner button of this action
+		 */
+		getButton() {
+			return this.$el.tagName.toLowerCase() === 'button'
+				? this.$el
+				: this.$el.querySelector('button')
 		},
 	},
 }
