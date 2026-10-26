@@ -521,10 +521,7 @@ export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 			component: ActionAttachmentUpload,
 			priority: 5,
 		},
-	]
-
-	if (!isMobileDevice) {
-		menuEntries.push({
+		{
 			key: 'emoji-picker',
 			label: t('text', 'Insert emoji'),
 			icon: Emoticon,
