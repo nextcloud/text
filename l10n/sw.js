@@ -67,6 +67,8 @@ OC.L10N.register(
     "Copy code block" : "Copy code block",
     "Source code" : "Msimbo wa chanzo",
     "Both" : "Both",
+    "Sort ascending" : "Panga kwa kupanda",
+    "Sort descending" : "Panga kwa kushuka",
     "No changes" : "Hakuna mabadiliko",
     "Hide outline" : "Hide outline",
     "Show outline" : "Show outline",

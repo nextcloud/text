@@ -41,8 +41,8 @@
 		// NcModal uses fixed, which will be cropped when printed
 		position: absolute !important;
 
-		.modal-header {
-			// Hide modal header (close button)
+		.modal-header, .viewer__settings {
+			// Hide modal header (close button) and viewer settings button
 			display: none !important;
 		}
 		.modal-wrapper {
