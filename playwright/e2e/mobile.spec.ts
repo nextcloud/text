@@ -27,7 +27,7 @@ test('Formatting help', async ({ editor }) => {
 test.describe('Actions with their own menu in remaining actions', () => {
 	test.beforeEach(async ({ page }) => {
 		// Narrow enough to move link, attachment and emoji into the remaining actions
-		await page.setViewportSize({ width: 280, height: 640 })
+		await page.setViewportSize({ width: 240, height: 640 })
 	})
 
 	test('Insert emoji', async ({ editor }) => {
@@ -36,7 +36,9 @@ test.describe('Actions with their own menu in remaining actions', () => {
 		await expect(picker).toBeVisible()
 		const search = picker.getByRole('textbox', { name: 'Search' })
 		await search.fill('cat')
-		await expect(picker.getByLabel('🐱, cat')).toHaveClass(/emoji-mart-emoji-selected/)
+		await expect(picker.getByLabel('🐱, cat')).toHaveClass(
+			/emoji-mart-emoji-selected/,
+		)
 		await search.press('Enter')
 		await expect(editor.content).toContainText('🐱')
 		await expect(editor.content).not.toContainText('undefined')
@@ -49,7 +51,13 @@ test.describe('Actions with their own menu in remaining actions', () => {
 	})
 
 	test('Insert link', async ({ editor }) => {
-		await editor.clickMenu('Remain', 'Insert link')
+		await editor.getMenu('Remain').click()
+		// Insert link toggles with the link mark, so depending on the version of
+		// @nextcloud/vue it is rendered as a checkbox
+		await editor
+			.getMenuItem('Insert link')
+			.or(editor.el.getByRole('menuitemcheckbox', { name: 'Insert link' }))
+			.click()
 		await expect(editor.getMenuItem('Link to website')).toBeVisible()
 	})
 })

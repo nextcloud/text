@@ -22,7 +22,7 @@
 		<template v-for="child in children">
 			<NcActionSeparator
 				v-if="child.isSeparator"
-				:key="`child-${child.key}`" />
+				:key="`separator-${child.key}`" />
 			<ActionListItem
 				v-else
 				:key="`child-${child.key}`"
