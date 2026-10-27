@@ -157,6 +157,8 @@ OC.L10N.register(
     "Left align column" : "Venstrejuster kolonne",
     "Center align column" : "Midtstill kolonne",
     "Right align column" : "Høyrejuster kolonne",
+    "Sort ascending" : "Sorter stigende",
+    "Sort descending" : "Sorter synkende",
     "Add column before" : "Legg til kolonne før",
     "Add column after" : "Legg til kolonne etter",
     "Delete this column" : "Slett denne kolonnen",

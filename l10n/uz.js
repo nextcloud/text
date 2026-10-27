@@ -40,6 +40,8 @@ OC.L10N.register(
     "Upload" : "Yuklash",
     "Source code" : "Manba kodi",
     "Delete this attachment" : "Ushbu biriktirmani oʻchirib tashlang",
+    "Sort ascending" : "O'sish tartibida saralash",
+    "Sort descending" : "Kamayish tartibida saralash",
     "Done" : "Bajarildi",
     "Lists" : "Ro'yxatlar",
     "Details" : "Details",

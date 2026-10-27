@@ -155,6 +155,8 @@ OC.L10N.register(
     "Left align column" : "Jafna dálk til vinstri",
     "Center align column" : "Jafna dálk á miðju",
     "Right align column" : "Jafna dálk til hægri",
+    "Sort ascending" : "Raða í hækkandi röð",
+    "Sort descending" : "Raða í lækkandi röð",
     "Add column before" : "Bæta við dálki á undan",
     "Add column after" : "Bæta við dálki á eftir",
     "Delete this column" : "Eyða þessum dálki",
