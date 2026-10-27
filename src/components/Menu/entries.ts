@@ -48,7 +48,6 @@ import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
 import { type AnyCommands, type Editor } from '@tiptap/core'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { MODIFIERS } from './keys.js'
 
 type ClickContext = {
@@ -531,8 +530,8 @@ export const getMenuEntries = (isRichWorkspace: boolean): MenuEntry[] => {
 				return command.emoji(emojiObject)
 			},
 			priority: 6,
-		})
-	}
+		},
+	]
 
 	return menuEntries
 }

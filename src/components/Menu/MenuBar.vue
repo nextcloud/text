@@ -147,6 +147,7 @@ export default {
 					? [...this.menuEntries]
 					: [...this.menuEntries, ...this.assistantMenuEntries]
 			).filter((entry) => !!entry),
+			forcedEntryKey: null,
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
@@ -181,9 +182,14 @@ export default {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
 				// Entries rendered by their own component cannot run inside the list,
 				// so they are moved into the menu bar and opened there.
-				const children = entry.children ?? [entry.component
-					? { ...entry, click: () => this.openRemainingEntry(entry.key) }
-					: entry]
+				const children = entry.children ?? [
+					entry.component
+						? {
+								...entry,
+								click: () => this.openRemainingEntry(entry.key),
+							}
+						: entry,
+				]
 				// If this block has menu entries, it should be separated for better visibility and a11y (menu item radio grouping)
 				if (children.length > 1) {
 					const hasPreviousItem = acc.length && !acc.at(-1).isSeparator
@@ -198,7 +204,12 @@ export default {
 
 					const hasNextItem = index !== remainingEntries.length - 1
 					const separatorAfter = hasNextItem
-						? [{ key: `separator-after-${entry.key}`, isSeparator: true }]
+						? [
+								{
+									key: `separator-after-${entry.key}`,
+									isSeparator: true,
+								},
+							]
 						: []
 
 					return [
@@ -246,6 +257,22 @@ export default {
 		hideHelp() {
 			this.displayHelp = false
 		},
+
+		/**
+		 * Show an entry from the remaining actions in the menu bar and open it
+		 *
+		 * @param {string} key The key of the menu entry
+		 */
+		async openRemainingEntry(key) {
+			this.forcedEntryKey = key
+			await this.$nextTick()
+			// The ref is in no order, so look up the entry by its key
+			const entry = this.$refs.menuEntries?.find(
+				(component) => component.actionEntry.key === key,
+			)
+			entry?.openMenu()
+		},
+
 		t,
 	},
 }
