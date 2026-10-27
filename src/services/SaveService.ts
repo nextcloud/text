@@ -135,9 +135,13 @@ class SaveService {
 			if (!this.pendingAutosave) {
 				const wait = nextSaveAttempt - now
 				logger.debug(
-					`Just saved, will try again in ${Math.ceil(wait)} seconds.`,
+					`Just saved, will try again in ${Math.ceil(wait / 1000)} seconds.`,
 				)
-				this.pendingAutosave = window.setTimeout(this.autosave, wait)
+				this.pendingAutosave = window.setTimeout(() => {
+					// Reset so a failing save can schedule the next attempt
+					this.pendingAutosave = 0
+					this.autosave()
+				}, wait)
 			}
 			return
 		}
