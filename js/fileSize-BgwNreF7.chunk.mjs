@@ -1,0 +1,2 @@
+import{g as l}from"./translation-DoG5ZELJ-BCjOawXw.chunk.mjs";const n=["B","KB","MB","GB","TB","PB"],r=["B","KiB","MiB","GiB","TiB","PiB"];function g(o,B=!1,e=!1,i=!1){e=e&&!i,typeof o=="string"&&(o=Number(o));let t=o>0?Math.floor(Math.log(o)/Math.log(i?1e3:1024)):0;t=Math.min((e?r.length:n.length)-1,t);const h=e?r[t]:n[t];let a=(o/Math.pow(i?1e3:1024,t)).toFixed(1);return B===!0&&t===0?(a!=="0.0"?"< 1 ":"0 ")+(e?r[1]:n[1]):(t<2?a=parseFloat(a).toFixed(0):a=parseFloat(a).toLocaleString(l()),a+" "+h)}export{g as f};
+//# sourceMappingURL=fileSize-BgwNreF7.chunk.mjs.map
