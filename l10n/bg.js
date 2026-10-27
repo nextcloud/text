@@ -125,6 +125,8 @@ OC.L10N.register(
     "Left align column" : "Подравняване на колоната наляво",
     "Center align column" : "Подравняване на колоната в средата",
     "Right align column" : "Подравняване на колоната на дясно",
+    "Sort ascending" : "Сортиране във възходящ ред",
+    "Sort descending" : "Сортиране в низходящ ред",
     "Add column before" : "Добавяне на колона преди",
     "Add column after" : "Добавяне на колона след",
     "Delete this column" : "Изтриване на тази колона",
