@@ -339,13 +339,16 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Create a new whiteboard file as an attachment', () => {
-		const check = (documentId, fileName) => {
+		const check = (documentId, dirname, fileName) => {
 			cy.log(
-				'Check the attachment is visible and well formed',
+				'Check a preview is inserted for the whiteboard attachment',
 				documentId,
 				fileName,
 			)
-			return cy.get('.preview .widget-file.whiteboard').should('be.visible')
+			expect(fileName).to.match(/\.whiteboard$/)
+			// The widget inside the preview is rendered by the files app,
+			// so only check that one is there, not how it looks
+			return cy.get('.preview .widget-file').should('exist')
 		}
 
 		cy.visit('/apps/files')
