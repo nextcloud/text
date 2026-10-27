@@ -32,15 +32,19 @@ export class Node {
 	}
 
 	async move(newName: string) {
-		await this.page.request.fetch(
-			`/remote.php/webdav/${this.name}`,
-			{
-				headers: {
-					Destination: `/remote.php/webdav/${newName}`,
+		// retry while the file is locked, e.g. by preview generation after saving
+		await expect(async () => {
+			const response = await this.page.request.fetch(
+				`/remote.php/webdav/${this.name}`,
+				{
+					headers: {
+						Destination: `/remote.php/webdav/${newName}`,
+					},
+					method: 'MOVE',
 				},
-				method: 'MOVE',
-			},
-		)
+			)
+			expect(response.status()).toBe(201)
+		}).toPass({ timeout: 10_000 })
 		return new Node({ ...this, page: this.page, name: newName })
 	}
 
