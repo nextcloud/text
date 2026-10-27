@@ -178,6 +178,8 @@ OC.L10N.register(
     "Left align column" : "Poravnaj stupac lijevo",
     "Center align column" : "Poravnaj stupac po sredini",
     "Right align column" : "Poravnaj stupac desno",
+    "Sort ascending" : "Razvrstaj uzlazno",
+    "Sort descending" : "Razvrstaj silazno",
     "Add column before" : "Dodaj stupac prije",
     "Add column after" : "Dodaj stupac poslije",
     "Delete this column" : "Izbriši ovaj stupac",

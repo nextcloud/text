@@ -162,6 +162,8 @@
     "Left align column" : "محاذاة يسار العمود",
     "Center align column" : "محاذاة وسط العمود",
     "Right align column" : "محاذاة يمين العمود",
+    "Sort ascending" : "ترتيب تصاعدي",
+    "Sort descending" : "ترتيب تنازلي",
     "Add column before" : "أضِف عموداً قبلَ",
     "Add column after" : "أضِف عموداُ بعدَ",
     "Delete this column" : "إحذف هذا العمود",

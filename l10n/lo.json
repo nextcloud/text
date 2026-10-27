@@ -172,6 +172,8 @@
     "Left align column" : "ຈັດຖັນຊິດຊ້າຍ",
     "Center align column" : "ຈັດຖັນຢູ່ກາງ",
     "Right align column" : "ຈັດຖັນຊິດຂວາ",
+    "Sort ascending" : "ຈັດຮຽງຈາກນ້ອຍຫາຫຼາຍ",
+    "Sort descending" : "ຈັດຮຽງຈາກຫຼາຍຫານ້ອຍ",
     "Add column before" : "ເພີ່ມຖັນກ່ອນໜ້າ",
     "Add column after" : "ເພີ່ມຖັນຕາມຫຼັງ",
     "Delete this column" : "ລຶບຖັນນີ້",
