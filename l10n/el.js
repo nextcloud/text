@@ -174,6 +174,8 @@ OC.L10N.register(
     "Left align column" : "Στοίχιση στήλης αριστερά",
     "Center align column" : "Ευθυγράμμιση στήλης στο κέντρο",
     "Right align column" : "Στοίχιση στήλης δεξιά",
+    "Sort ascending" : "Αύξουσα ταξινόμηση",
+    "Sort descending" : "Φθίνουσα ταξινόμηση",
     "Add column before" : "Προσθήκη στήλης πριν",
     "Add column after" : "Προσθήκη στήλης μετά",
     "Delete this column" : "Διαγράψτε αυτή τη στήλη",

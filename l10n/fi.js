@@ -150,6 +150,8 @@ OC.L10N.register(
     "Delete this attachment" : "Poista tämä liite",
     "Open image {name}" : "Avaa kuva {name}",
     "Delete this image" : "Poista tämä kuva",
+    "Sort ascending" : "Lajittele nousevasti",
+    "Sort descending" : "Lajittele laskevasti",
     "Add column before" : "Lisää sarake ennen",
     "Add column after" : "Lisää sarake jälkeen",
     "Delete this column" : "Poista tämä sarake",

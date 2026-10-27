@@ -155,6 +155,7 @@ export default {
 					: [...this.menuEntries, ...this.assistantMenuEntries]
 			).filter((entry) => !!entry),
 
+			forcedEntryKey: null,
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
@@ -166,10 +167,15 @@ export default {
 	computed: {
 		visibleEntryKeys() {
 			// if entry has no priority, we assume it always will be visible (priority: 0)
-			return this.entries
+			const keys = this.entries
 				.toSorted((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
 				.map((e) => e.key)
 				.slice(0, this.iconsLimit)
+			if (this.forcedEntryKey && !keys.includes(this.forcedEntryKey)) {
+				// Make room for the entry that was opened from the remaining actions
+				keys.splice(-1, 1, this.forcedEntryKey)
+			}
+			return keys
 		},
 
 		visibleEntries() {
@@ -186,14 +192,18 @@ export default {
 			})
 			const entries = remainingEntries.reduce((acc, entry, index) => {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
-				const children = entry.children ?? [entry]
+				// Entries rendered by their own component cannot run inside the list,
+				// so they are moved into the menu bar and opened there.
+				const children = entry.children ?? [entry.component
+					? { ...entry, click: () => this.openRemainingEntry(entry.key) }
+					: entry]
 				// If this block has menu entries, it should be separated for better visibility and a11y (menu item radio grouping)
 				if (children.length > 1) {
 					const hasPreviousItem = acc.length && !acc.at(-1).isSeparator
 					const separatorBefore = hasPreviousItem
 						? [
 								{
-									key: `separator-before-${entry.id}`,
+									key: `separator-before-${entry.key}`,
 									isSeparator: true,
 								},
 							]
@@ -201,7 +211,7 @@ export default {
 
 					const hasNextItem = index !== remainingEntries.length - 1
 					const separatorAfter = hasNextItem
-						? [{ key: `separator-after-${entry.id}`, isSeparator: true }]
+						? [{ key: `separator-after-${entry.key}`, isSeparator: true }]
 						: []
 
 					return [
@@ -256,6 +266,18 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+
+		/**
+		 * Show an entry from the remaining actions in the menu bar and open it
+		 *
+		 * @param {string} key The key of the menu entry
+		 */
+		async openRemainingEntry(key) {
+			this.forcedEntryKey = key
+			await this.$nextTick()
+			const index = this.visibleEntries.findIndex((entry) => entry.key === key)
+			this.menuEntryRefs[index]?.openMenu()
 		},
 
 		collectMenuEntryRef(el, index) {
