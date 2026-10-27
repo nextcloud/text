@@ -34,8 +34,11 @@ class Version080000Date20260331132113 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('text_steps');
 		if (!$table->hasIndex('text_steps_doc_id_id_index')) {
+			// Oracle stores a DESC key as a hidden virtual column, which breaks the schema
+			// comparison of every later migration, and it scans an ascending index backwards anyway
 			if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_MARIADB
-				|| $this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_MYSQL) {
+				|| $this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_MYSQL
+				|| $this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_ORACLE) {
 				$table->addIndex(['document_id', 'id'], 'text_steps_doc_id_id_index');
 			} else {
 				$this->addIndexLater = true;
@@ -55,8 +58,6 @@ class Version080000Date20260331132113 extends SimpleMigrationStep {
 			// See https://github.com/doctrine/orm/issues/8128
 			if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_POSTGRES) {
 				$stm = $this->connection->prepare('CREATE INDEX CONCURRENTLY text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
-			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_ORACLE) {
-				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON `*PREFIX*text_steps` (`document_id`, `id` DESC) ONLINE');
 			} elseif ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_SQLITE) {
 				$stm = $this->connection->prepare('CREATE INDEX text_steps_doc_id_id_index ON *PREFIX*text_steps (document_id, id DESC);');
 			} else {

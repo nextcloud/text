@@ -172,6 +172,8 @@ OC.L10N.register(
     "Left align column" : "Alinear columna hacia la izquierda",
     "Center align column" : "Alinear columna al centro",
     "Right align column" : "Alinear columna a la derecha",
+    "Sort ascending" : "Orden ascendente",
+    "Sort descending" : "Orden descendente",
     "Add column before" : "Añadir columna antes",
     "Add column after" : "Añadir columna después",
     "Delete this column" : "Eliminar esta columna",

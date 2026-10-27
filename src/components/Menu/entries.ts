@@ -13,7 +13,6 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 import AssistantAction from './AssistantAction.vue'
 import EmojiPickerAction from './EmojiPickerAction.vue'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import {
 	Asterisk,
 	CodeBrackets,
@@ -614,10 +613,7 @@ export function getMenuEntries(isRichWorkspace: boolean, annotationsHidden?: Ref
 			component: markRaw(ActionAttachmentUpload),
 			priority: 6,
 		},
-	]
-
-	if (!isMobileDevice) {
-		menuEntries.push({
+		{
 			key: 'emoji-picker',
 			label: t('text', 'Insert emoji'),
 			icon: Emoticon,
@@ -627,8 +623,8 @@ export function getMenuEntries(isRichWorkspace: boolean, annotationsHidden?: Ref
 				return command.emoji(emojiObject)
 			},
 			priority: 7,
-		})
-	}
+		},
+	]
 
 	return menuEntries
 }
