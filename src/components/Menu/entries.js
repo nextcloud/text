@@ -44,7 +44,6 @@ import EmojiPickerAction from './EmojiPickerAction.vue'
 
 import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { MODIFIERS } from './keys.js'
 
 export const OutlineEntries = [
@@ -424,10 +423,7 @@ export const MenuEntries = [
 		component: ActionAttachmentUpload,
 		priority: 5,
 	},
-]
-
-if (!isMobileDevice) {
-	MenuEntries.push({
+	{
 		key: 'emoji-picker',
 		label: t('text', 'Insert emoji'),
 		icon: Emoticon,
@@ -436,8 +432,8 @@ if (!isMobileDevice) {
 			return command.emoji(emojiObject)
 		},
 		priority: 6,
-	})
-}
+	},
+]
 
 const hasAssistantTaskTypes = loadState('text', 'taskprocessing', []).length > 0
 
