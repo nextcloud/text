@@ -144,6 +144,8 @@
     "Left align column" : "Oszlop balra igazítása",
     "Center align column" : "Oszlop középre igazítása",
     "Right align column" : "Oszlop jobbra igazítása",
+    "Sort ascending" : "Rendezés növekvő sorrendben",
+    "Sort descending" : "Rendezés csökkenő sorrendben",
     "Add column before" : "Oszlop hozzáadása elé",
     "Add column after" : "Oszlop hozzáadása utána",
     "Delete this column" : "Oszlop törlése",

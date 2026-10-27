@@ -155,6 +155,8 @@
     "Left align column" : "Columna alineada a l'esquerra",
     "Center align column" : "Columna alineada al centre",
     "Right align column" : "Columna alineada a la dreta",
+    "Sort ascending" : "Ordena de manera ascendent",
+    "Sort descending" : "Ordena de manera descendent",
     "Add column before" : "Afegeix una columna abans",
     "Add column after" : "Afegeix una columna després",
     "Delete this column" : "Suprimeix aquesta columna",
