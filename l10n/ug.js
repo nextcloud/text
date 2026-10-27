@@ -179,6 +179,8 @@ OC.L10N.register(
     "Left align column" : "سولغا توغرىلاش ئىستونى",
     "Center align column" : "مەركىزى توغرىلاش ئىستونى",
     "Right align column" : "ئوڭ تەرەپتىكى ئىستون",
+    "Sort ascending" : "ئۆسۈش تەرتىپىدە تىزىش",
+    "Sort descending" : "كېمىيىش تەرتىپىدە تىزىش",
     "Add column before" : "ئىلگىرى ئىستون قوشۇڭ",
     "Add column after" : "ئۇنىڭدىن كېيىن ئىستون قوشۇڭ",
     "Delete this column" : "بۇ ئىستوننى ئۆچۈرۈڭ",

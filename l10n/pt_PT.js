@@ -176,6 +176,7 @@ OC.L10N.register(
     "Left align column" : "Alinhar a coluna à esquerda",
     "Center align column" : "Alinhar coluna ao centro",
     "Right align column" : "Alinhar a coluna à direita",
+    "Sort ascending" : "Ordenar por ordem ascendente",
     "Sort descending" : "Ordenar por ordem decrescente",
     "Add column before" : "Adicionar coluna antes",
     "Add column after" : "Adicionar coluna após",

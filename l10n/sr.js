@@ -173,6 +173,8 @@ OC.L10N.register(
     "Left align column" : "Лево поравната колона",
     "Center align column" : "Колона поравната по средини",
     "Right align column" : "Десно поравната колона",
+    "Sort ascending" : "Сортирај растуће",
+    "Sort descending" : "Сортирај опадајуће",
     "Add column before" : "Додај колону испред",
     "Add column after" : "Додај колону иза",
     "Delete this column" : "Обриши ову колону",
