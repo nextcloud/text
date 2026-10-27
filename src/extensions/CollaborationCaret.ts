@@ -47,6 +47,9 @@ function render(user: AwarenessUser, clientId?: number): HTMLElement {
 
 	cursor.classList.add('collaboration-carets__caret')
 	cursor.setAttribute('style', `border-color: ${user.color}`)
+	// The caret sits inside the document text. Hide it from screen readers
+	// so they don't read the user name in the middle of the text.
+	cursor.setAttribute('aria-hidden', 'true')
 
 	const label = document.createElement('div')
 	label.id = `collaboration-carets__label__${clientId}`
