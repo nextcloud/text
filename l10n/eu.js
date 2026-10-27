@@ -178,6 +178,8 @@ OC.L10N.register(
     "Left align column" : "Lerrokatu zutabea ezkerrean",
     "Center align column" : "Lerrokatu zutabea erdian",
     "Right align column" : "Lerrokatu zutabea eskuinean",
+    "Sort ascending" : "Ordenatu goranzko ordenan",
+    "Sort descending" : "Ordenatu beheranzko ordenan",
     "Add column before" : "Gehitu zutabea aurrerago",
     "Add column after" : "Gehitu zutabea ostean",
     "Delete this column" : "Ezabatu zutabe hau",
