@@ -21,6 +21,7 @@ return array(
     'OCA\\Text\\Context\\UnauthorizedFileContext' => $baseDir . '/../lib/Context/UnauthorizedFileContext.php',
     'OCA\\Text\\Controller\\AiController' => $baseDir . '/../lib/Controller/AiController.php',
     'OCA\\Text\\Controller\\AttachmentController' => $baseDir . '/../lib/Controller/AttachmentController.php',
+    'OCA\\Text\\Controller\\DirectEditingController' => $baseDir . '/../lib/Controller/DirectEditingController.php',
     'OCA\\Text\\Controller\\ISessionAwareController' => $baseDir . '/../lib/Controller/ISessionAwareController.php',
     'OCA\\Text\\Controller\\NavigationController' => $baseDir . '/../lib/Controller/NavigationController.php',
     'OCA\\Text\\Controller\\PublicSessionController' => $baseDir . '/../lib/Controller/PublicSessionController.php',
