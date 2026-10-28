@@ -22,5 +22,7 @@ class AddMissingIndicesListener implements IEventListener {
 		}
 
 		$event->addMissingIndex('text_steps', 'textstep_session', ['session_id']);
+		// Fresh PostgreSQL and SQLite installs skip the migration's postSchemaChange, which creates it there
+		$event->addMissingIndex('text_steps', 'text_steps_doc_id_id_index', ['document_id', 'id']);
 	}
 }
