@@ -26,6 +26,7 @@ OC.L10N.register(
     "Delete" : "Delete",
     "Save" : "Сними",
     "Cancel" : "Откажи",
+    "Reply" : "Одговор",
     "Previous" : "Предходна",
     "Next" : "Следна",
     "Reconnect" : "Повторно поврзување",
