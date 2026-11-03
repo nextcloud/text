@@ -3,11 +3,13 @@
 namespace OCA\Text\Tests;
 
 use OCA\Text\Db\DocumentMapper;
+use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Service\DocumentService;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
@@ -17,6 +19,7 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Share\IManager;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
@@ -103,5 +106,31 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$userFolder->method('getById')->willReturn([$file]);
 		$this->expectException(NotPermittedException::class);
 		$actual = $this->documentService->getFileById(1234);
+	}
+
+	public function testGetFileForSessionFromShare() {
+		$file = $this->createMock(File::class);
+		$file->method('getId')->willReturn(1234);
+		$share = $this->createMock(IShare::class);
+		$share->method('getNode')->willReturn($file);
+		$this->shareManager->method('getShareByToken')->willReturn($share);
+
+		$session = new Session();
+		$session->setDocumentId(1234);
+		$actual = $this->documentService->getFileForSession($session, 'shareToken');
+		self::assertEquals($file, $actual);
+	}
+
+	public function testGetFileForSessionFromShareOfOtherFile() {
+		$file = $this->createMock(\OCP\Files\File::class);
+		$file->method('getId')->willReturn(5678);
+		$share = $this->createMock(IShare::class);
+		$share->method('getNode')->willReturn($file);
+		$this->shareManager->method('getShareByToken')->willReturn($share);
+
+		$session = new Session();
+		$session->setDocumentId(1234);
+		$this->expectException(\InvalidArgumentException::class);
+		$this->documentService->getFileForSession($session, 'shareToken');
 	}
 }
