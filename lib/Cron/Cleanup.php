@@ -15,6 +15,7 @@ use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use OCP\Files\ISetupManager;
+use OCP\Files\NotPermittedException;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
@@ -41,7 +42,12 @@ class Cleanup extends TimedJob {
 				continue;
 			}
 			$this->setupManager->tearDown();
-			$this->attachmentService->cleanupAttachments($document->getContextId());
+			try {
+				$this->attachmentService->cleanupAttachments($document->getContextId());
+			} catch (NotPermittedException $e) {
+				// Retrying will not help until the document is saved again, so mark it as cleaned up anyway
+				$this->logger->warning('Could not clean up attachments of file ' . $document->getContextId() . ', deleting is not permitted', ['exception' => $e]);
+			}
 			$this->documentService->markAttachmentCleanup($document);
 		}
 

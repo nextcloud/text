@@ -19,6 +19,7 @@ use OCP\Files\IMimeTypeDetector;
 use OCP\Files\IRootFolder;
 use OCP\Files\ISetupManager;
 use OCP\Files\Node;
+use OCP\Files\NotPermittedException;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
 use OCP\ISession;
@@ -34,6 +35,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 	private SessionService $sessionService;
 	private IRootFolder $rootFolder;
 	private ISetupManager $setupManager;
+	private LoggerInterface $logger;
 
 	public function setUp(): void {
 		$this->document = Document::fromRow([
@@ -57,13 +59,14 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		);
 		$this->sessionService = $this->createMock(SessionService::class);
 		$this->setupManager = $this->createMock(ISetupManager::class);
+		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->documentService->expects(self::never())->method('resetDocument');
 		$this->documentService->expects(self::once())
 			->method('getAllPendingAttachmentCleanup')
 			->willReturn((function (): \Generator {
 				yield $this->document;
 			})());
-		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->createMock(LoggerInterface::class), $this->setupManager, ) extends Cleanup {
+		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, ) extends Cleanup {
 			public function run($argument): void {
 				parent::run($argument);
 			}
@@ -112,6 +115,21 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->expects(self::never())->method('markAttachmentCleanup');
 		$this->expectException(\RuntimeException::class);
 		$this->expectExceptionMessage('Cleanup failed');
+
+		$this->cleanup->run([]);
+	}
+
+	public function testNotPermittedCleanupIsMarkedAndJobContinues(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(false);
+		$this->rootFolder->expects(self::once())
+			->method('getFirstNodeById')->with(123)
+			->willThrowException(new NotPermittedException());
+		$this->logger->expects(self::once())->method('warning');
+		$this->documentService->expects(self::once())->method('markAttachmentCleanup')->with($this->document);
+		$this->sessionService->expects(self::once())->method('removeInactiveSessionsWithoutSteps');
+		$this->sessionService->expects(self::once())->method('removeOldSessions');
+		$this->sessionService->expects(self::once())->method('removeOrphanedSteps');
+		$this->documentService->expects(self::once())->method('cleanupOldDocumentsFolders');
 
 		$this->cleanup->run([]);
 	}
