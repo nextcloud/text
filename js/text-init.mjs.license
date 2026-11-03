@@ -11,7 +11,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.4.47
 	- license: Apache-2.0
 - @nextcloud/files
-	- version: 4.0.0
+	- version: 4.1.1
 	- license: AGPL-3.0-or-later
 - text
 	- version: 7.0.0-dev.1
