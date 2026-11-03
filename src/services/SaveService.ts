@@ -87,10 +87,17 @@ class SaveService {
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 			const response = (
-				e as { response?: { status?: number, data?: { error?: string } } }
+				e as { response?: { status?: number, data?: { error?: string, outsideChange?: string } } }
 			).response
 			if (response?.status === 403) {
 				// Document is now read-only; permissionChange from sync will update the UI
+				return
+			}
+			if (response?.status === 409) {
+				this.bus.emit('error', {
+					type: ERROR_TYPE.SAVE_COLLISION,
+					data: { outsideChange: response.data?.outsideChange },
+				})
 				return
 			}
 			if (response?.status === 412) {
