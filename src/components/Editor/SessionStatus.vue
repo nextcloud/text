@@ -144,7 +144,7 @@ export default {
 	methods: {
 		onClickSave() {
 			if (this.dirtyStateIndicator) {
-				this.saveService.forceSave()
+				this.saveService.save()
 			}
 		},
 
