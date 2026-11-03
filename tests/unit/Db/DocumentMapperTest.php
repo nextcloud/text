@@ -22,8 +22,7 @@ class DocumentMapperTest extends \Test\TestCase {
 		$this->documentMapper = Server::get(DocumentMapper::class);
 		$this->sessionMapper = Server::get(SessionMapper::class);
 		$this->document = $this->documentMapper->insert(Document::fromParams([
-			'contextType' => 'file',
-			'contextId' => 900001,
+			'id' => 900001,
 			'lastSavedVersionTime' => 1000,
 			'lastSavedVersionEtag' => 'saved-etag',
 			'baseVersionEtag' => 'base-etag',
@@ -38,7 +37,7 @@ class DocumentMapperTest extends \Test\TestCase {
 
 	private function pendingDocumentIds(): array {
 		return array_map(
-			static fn (Document $document): string => $document->getId(),
+			static fn (Document $document): int => $document->getId(),
 			iterator_to_array($this->documentMapper->findAllPendingAttachmentCleanup()),
 		);
 	}

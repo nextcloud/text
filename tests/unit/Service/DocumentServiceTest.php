@@ -2,6 +2,7 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
@@ -71,6 +72,63 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->userMountCache,
 			$config,
 		);
+	}
+
+	private function createDocument(): Document {
+		return Document::fromRow([
+			'id' => 1,
+			'last_saved_version' => 3,
+			'last_saved_version_time' => 1000,
+		]);
+	}
+
+	public function testGetAllPendingAttachmentCleanup(): void {
+		$document = $this->createDocument();
+		$documents = (static function () use ($document): \Generator {
+			yield $document;
+		})();
+		$this->documentMapper->expects(self::once())
+			->method('findAllPendingAttachmentCleanup')->willReturn($documents);
+
+		self::assertSame($documents, $this->documentService->getAllPendingAttachmentCleanup());
+	}
+
+	public function testMarksOnlyTheProcessedSavedTimestamp(): void {
+		$document = $this->createDocument();
+		$document->resetUpdatedFields();
+		$this->documentMapper->expects(self::once())
+			->method('update')->with($document)->willReturn($document);
+
+		$this->documentService->markAttachmentCleanup($document);
+
+		self::assertSame(1000, $document->getLastAttachmentCleanup());
+		self::assertSame(1000, $document->getLastSavedVersionTime());
+		self::assertSame(['lastAttachmentCleanup' => true], $document->getUpdatedFields());
+	}
+
+	public function testDetectsUnsavedChanges(): void {
+		$document = $this->createDocument();
+		$this->setpMapper->expects(self::once())
+			->method('getLatestVersion')->with(1)->willReturn(4);
+
+		self::assertTrue($this->documentService->hasUnsavedChanges($document));
+	}
+
+	public function testSavedStepsHaveNoUnsavedChanges(): void {
+		$document = $this->createDocument();
+		$this->setpMapper->expects(self::once())
+			->method('getLatestVersion')->with(1)->willReturn(3);
+
+		self::assertFalse($this->documentService->hasUnsavedChanges($document));
+	}
+
+	public function testDocumentWithoutStepsHasNoUnsavedChanges(): void {
+		$document = $this->createDocument();
+		$document->setLastSavedVersion(0);
+		$this->setpMapper->expects(self::once())
+			->method('getLatestVersion')->with(1)->willReturn(null);
+
+		self::assertFalse($this->documentService->hasUnsavedChanges($document));
 	}
 
 	public function testGetFileById() {

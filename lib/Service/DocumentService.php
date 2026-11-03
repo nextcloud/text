@@ -496,13 +496,6 @@ class DocumentService {
 		$this->documentMapper->update($document);
 	}
 
-	public function hasUnsavedChanges(Document $document): bool {
-		if ($document->id === null) {
-			throw new RuntimeException('Document needs an id to check unsaved changes');
-		}
-		return ($this->stepMapper->getLatestVersion($document->id) ?? 0) !== $document->getLastSavedVersion();
-	}
-
 	/**
 	 * @throws NotPermittedException
 	 * @throws NotFoundException

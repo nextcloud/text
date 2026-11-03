@@ -11,7 +11,6 @@ use OCA\Text\Cron\Cleanup;
 use OCA\Text\Db\Document;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\FileService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\IFilenameValidator;
@@ -37,9 +36,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 
 	public function setUp(): void {
 		$this->document = Document::fromRow([
-			'id' => '123456789012345678',
-			'context_type' => 'file',
-			'context_id' => 123,
+			'id' => 123,
 			'last_saved_version_time' => 1000,
 		]);
 		$this->documentService = $this->createMock(DocumentService::class);
@@ -53,7 +50,6 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 			$this->createMock(IFilenameValidator::class),
 			$this->createMock(IFilesMetadataManager::class),
 			$this->createMock(ISession::class),
-			$this->createMock(FileService::class),
 		);
 		$this->sessionService = $this->createMock(SessionService::class);
 		$this->setupManager = $this->createMock(ISetupManager::class);

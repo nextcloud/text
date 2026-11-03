@@ -42,6 +42,7 @@ class Document extends Entity implements \JsonSerializable {
 		$this->addType('currentVersion', 'integer');
 		$this->addType('lastSavedVersion', 'integer');
 		$this->addType('lastSavedVersionTime', 'integer');
+		$this->addType('lastAttachmentCleanup', 'integer');
 		$this->addType('initialVersion', 'integer');
 		$this->addType('checksum', 'string');
 	}
