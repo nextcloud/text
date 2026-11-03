@@ -116,10 +116,20 @@ class DocumentService {
 	 * @throws Exception
 	 */
 	public function getOrCreateDocument(File $file): Document {
+		$checksum = self::computeCheckSum($file->getContent());
 		$document = $this->getDocument($file->getId());
 		if ($document !== null) {
-			$this->logger->info('Keep previous document of ' . $file->getId());
-			return $document;
+			if ($document->getChecksum() === $checksum || $this->hasUnsavedChanges($document)) {
+				$this->logger->info('Keep previous document of ' . $file->getId());
+				return $document;
+			}
+			// The file was changed without passing through Nextcloud, e.g. directly on external storage.
+			$this->logger->info('Reset outdated document of ' . $file->getId());
+			try {
+				$this->resetDocument($file->getId());
+			} catch (DocumentHasUnsavedChangesException) {
+				return $document;
+			}
 		}
 
 		if (!$this->ensureDocumentsFolder()) {
@@ -133,7 +143,7 @@ class DocumentService {
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setBaseVersionEtag(uniqid());
-		$document->setChecksum(self::computeCheckSum($file->getContent()));
+		$document->setChecksum($checksum);
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
