@@ -563,9 +563,11 @@ export default defineComponent({
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.serialize()
+			const serialize = this.serialize
 			this.emit('update:content', {
-				markdown: proseMirrorMarkdown,
+				get markdown() {
+					return serialize()
+				},
 			})
 		},
 
