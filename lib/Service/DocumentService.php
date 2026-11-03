@@ -509,7 +509,7 @@ class DocumentService {
 		if ($node instanceof Folder) {
 			$node = $node->getFirstNodeById($session->getDocumentId());
 		}
-		if ($node instanceof File) {
+		if ($node instanceof File && $node->getId() === $session->getDocumentId()) {
 			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
