@@ -616,6 +616,10 @@ class VersionSummaryService {
 		}, true, $evenIfBusy);
 	}
 
+	public function startedLastHour(): int {
+		return $this->mapper->countStartsSince($this->now() - self::HOUR)['count'];
+	}
+
 	public function hasSummaries(): bool {
 		return $this->mapper->hasAny();
 	}
