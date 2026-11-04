@@ -55,3 +55,8 @@ global.IntersectionObserver = class IntersectionObserver {
 	unobserve() {}
 	disconnect() {}
 }
+
+// p-queue >= 10 passes itself (a jsdom EventTarget) to Node's events.setMaxListeners,
+// which only accepts targets carrying Node's EventTarget brand.
+// Can be removed once https://github.com/sindresorhus/p-queue/issues/257 got fixed.
+globalThis.EventTarget[Symbol.for('nodejs.event_target')] = true
