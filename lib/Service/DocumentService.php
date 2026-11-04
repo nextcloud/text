@@ -341,27 +341,34 @@ class DocumentService {
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
-	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
+	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
 
-		if ($lastMTime <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
-			return;
+		if ($document->getLastSavedVersionTime() <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
+			return $document;
 		}
 
 		$fileChecksum = self::computeCheckSum($file->getContent());
 		if ($document->getChecksum() !== $fileChecksum) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			// Another save by Text may have finished after this request loaded the document.
+			$stored = $this->getDocument($documentId);
+			if ($stored === null) {
+				throw new NotFoundException('Document was reset in the meantime');
+			}
+			if ($stored->getChecksum() !== $fileChecksum) {
+				throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			}
+			$document = $stored;
 		}
 
 		$fileMtime = $file->getMtime();
 		$fileEtag = $file->getEtag();
-		if ($lastEtag !== $fileEtag || $lastMTime !== $fileMtime) {
+		if ($document->getLastSavedVersionEtag() !== $fileEtag || $document->getLastSavedVersionTime() !== $fileMtime) {
 			$document->setLastSavedVersionTime($fileMtime);
 			$document->setLastSavedVersionEtag($fileEtag);
 			$this->documentMapper->update($document);
 		}
+		return $document;
 	}
 
 	/**
@@ -387,7 +394,13 @@ class DocumentService {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
-		$this->assertNoOutsideConflict($document, $file, $force);
+		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
+		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+			return $document;
+		}
+
+		$document = $this->assertNoOutsideConflict($document, $file, $force);
 
 		// Abort autosave if already saving.
 		if ($this->cache->get('document-save-lock-' . $documentId) && $manualSave === false) {
@@ -401,12 +414,6 @@ class DocumentService {
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
-			return $document;
-		}
-
-		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		$lastMTime = $document->getLastSavedVersionTime();
-		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 
@@ -442,15 +449,17 @@ class DocumentService {
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoSaveDocument, $documentState) {
+			), function () use ($document, $file, $autoSaveDocument, $documentState) {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
+				// Store the new checksum first so a failure below cannot leave it outdated.
+				$document->setLastSavedVersionTime($file->getMTime());
+				$document->setLastSavedVersionEtag($file->getEtag());
+				$document->setChecksum(self::computeCheckSum($autoSaveDocument));
+				$this->documentMapper->update($document);
 				$this->writeDocumentState($file->getId(), $documentState);
 			});
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
-			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
