@@ -6,7 +6,7 @@
 <template>
 	<label v-if="session.formattingCount" class="text-comparison__filter">
 		<input v-model="hideFormatting" type="checkbox">
-		{{ t('text', 'Hide formatting-only changes') }}
+		<span class="text-comparison__filter-text">{{ t('text', 'Hide formatting-only changes') }}</span>
 	</label>
 </template>
 
@@ -27,9 +27,25 @@ const hideFormatting = props.session.hideFormatting
 	gap: var(--default-grid-baseline);
 	color: var(--color-text-maxcontrast);
 
+	flex-shrink: 0;
+	min-inline-size: 0;
+
 	// The global margin of inputs would make this header taller than the other pane's
 	input {
 		margin: 0;
+	}
+
+	// One line, so a narrow pane's header keeps the other pane's height
+	&-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+@container (max-width: 480px) {
+	.text-comparison__filter {
+		flex-shrink: 1;
 	}
 }
 </style>

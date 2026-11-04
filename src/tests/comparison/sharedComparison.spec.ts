@@ -19,6 +19,15 @@ vi.mock('../../comparison/session.ts', () => ({
 const base = { source: 'https://cloud.example/v/1', encodedSource: 'https://cloud.example/v/1', path: '/plan.md' } as unknown as IFile
 const file = { source: 'https://cloud.example/f/plan.md', encodedSource: 'https://cloud.example/f/plan.md', path: '/plan.md' } as unknown as IFile
 
+// A response whose content the test gives later
+function deferred() {
+	let settle!: (text: string) => void
+	const promise = new Promise((resolve) => {
+		settle = (text) => resolve({ data: text, headers: {} })
+	})
+	return { promise, settle }
+}
+
 // Let a load that just started fetch both files and compare them
 async function settle() {
 	await new Promise((resolve) => setTimeout(resolve))
@@ -30,8 +39,35 @@ afterEach(() => {
 })
 
 describe('useSharedComparison', () => {
+	it('shows only the latest of overlapping reloads', async () => {
+		const get = vi.spyOn(axios, 'get')
+		get.mockResolvedValueOnce({ data: 'old', headers: {} })
+		get.mockResolvedValueOnce({ data: 'first', headers: {} })
+		const scope = effectScope()
+		const comparison = scope.run(() => useSharedComparison(base, file))!
+		await settle()
+
+		const late = deferred()
+		get.mockReturnValueOnce(late.promise as never)
+		get.mockReturnValueOnce(Promise.resolve({ data: 'new', headers: {} }) as never)
+		comparison.reload()
+		await settle()
+		get.mockResolvedValueOnce({ data: 'old', headers: {} })
+		get.mockResolvedValueOnce({ data: 'newest', headers: {} })
+		comparison.reload()
+		await settle()
+		late.settle('stale')
+		await flushPromises()
+
+		expect(comparison.texts.value?.after.text).toBe('newest')
+		// Files come without caching rules: a stale copy would not match the server
+		expect(get).toHaveBeenCalledWith(file.encodedSource, expect.objectContaining({ headers: { 'Cache-Control': 'no-cache' } }))
+		expect(comparison.error.value).toBe(false)
+		scope.stop()
+	})
+
 	it('loads the newer file once the editor it replaces has saved it', async () => {
-		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'saved' })
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'saved', headers: {} })
 		const edited = { ...file, source: 'https://cloud.example/f/edited.md', encodedSource: 'https://cloud.example/f/edited.md', fileid: 7 } as unknown as IFile
 		let saved!: () => void
 		const scope = effectScope()
@@ -45,9 +81,8 @@ describe('useSharedComparison', () => {
 
 		saved()
 		await flushPromises()
-		// Files come without caching rules: a stale copy would not show the save
-		expect(get).toHaveBeenCalledWith(edited.encodedSource, expect.objectContaining({ headers: { 'Cache-Control': 'no-cache' } }))
-		expect(comparison.session.value).toMatchObject({ after: 'saved' })
+		expect(get).toHaveBeenCalledWith(edited.encodedSource, expect.anything())
+		expect(comparison.texts.value?.after.text).toBe('saved')
 		scope.stop()
 	})
 

@@ -8,11 +8,19 @@
 		<p>{{ t('text', 'Complete Markdown source is shown because a detailed comparison is unavailable.') }}</p>
 		<div class="text-source-fallback__documents" :class="{ 'text-source-fallback__documents--single': side }">
 			<article v-if="side !== 'after'">
-				<h2>{{ t('text', 'Before') }}</h2>
+				<h2>
+					<slot name="titleBefore">
+						{{ t('text', 'Before') }}
+					</slot>
+				</h2>
 				<pre tabindex="0"><code>{{ beforeContent }}</code></pre>
 			</article>
 			<article v-if="side !== 'before'">
-				<h2>{{ t('text', 'After') }}</h2>
+				<h2>
+					<slot name="titleAfter">
+						{{ t('text', 'After') }}
+					</slot>
+				</h2>
 				<pre tabindex="0"><code>{{ afterContent }}</code></pre>
 			</article>
 		</div>
