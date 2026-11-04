@@ -487,8 +487,13 @@ class DocumentService {
 		return $this->documentMapper->findAll();
 	}
 
-	public function getAllWithNoActiveSession(): \Generator {
-		return $this->documentMapper->findAllWithNoActiveSessions();
+	public function getAllPendingAttachmentCleanup(): \Generator {
+		return $this->documentMapper->findAllPendingAttachmentCleanup();
+	}
+
+	public function markAttachmentCleanup(Document $document): void {
+		$document->setLastAttachmentCleanup($document->getLastSavedVersionTime());
+		$this->documentMapper->update($document);
 	}
 
 	/**
