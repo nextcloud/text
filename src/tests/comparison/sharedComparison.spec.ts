@@ -23,7 +23,7 @@ const file = { source: 'https://cloud.example/f/plan.md', encodedSource: 'https:
 function deferred() {
 	let settle!: (text: string) => void
 	const promise = new Promise((resolve) => {
-		settle = (text) => resolve({ data: text, headers: {} })
+		settle = (text) => resolve({ data: new TextEncoder().encode(text).buffer, headers: {} })
 	})
 	return { promise, settle }
 }
@@ -41,19 +41,19 @@ afterEach(() => {
 describe('useSharedComparison', () => {
 	it('shows only the latest of overlapping reloads', async () => {
 		const get = vi.spyOn(axios, 'get')
-		get.mockResolvedValueOnce({ data: 'old', headers: {} })
-		get.mockResolvedValueOnce({ data: 'first', headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('old').buffer, headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('first').buffer, headers: {} })
 		const scope = effectScope()
 		const comparison = scope.run(() => useSharedComparison(base, file))!
 		await settle()
 
 		const late = deferred()
 		get.mockReturnValueOnce(late.promise as never)
-		get.mockReturnValueOnce(Promise.resolve({ data: 'new', headers: {} }) as never)
+		get.mockReturnValueOnce(Promise.resolve({ data: new TextEncoder().encode('new').buffer, headers: {} }) as never)
 		comparison.reload()
 		await settle()
-		get.mockResolvedValueOnce({ data: 'old', headers: {} })
-		get.mockResolvedValueOnce({ data: 'newest', headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('old').buffer, headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('newest').buffer, headers: {} })
 		comparison.reload()
 		await settle()
 		late.settle('stale')
@@ -67,7 +67,7 @@ describe('useSharedComparison', () => {
 	})
 
 	it('loads the newer file once the editor it replaces has saved it', async () => {
-		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'saved', headers: {} })
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: new TextEncoder().encode('saved').buffer, headers: {} })
 		const edited = { ...file, source: 'https://cloud.example/f/edited.md', encodedSource: 'https://cloud.example/f/edited.md', fileid: 7 } as unknown as IFile
 		let saved!: () => void
 		const scope = effectScope()

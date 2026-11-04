@@ -41,7 +41,7 @@
 		<template v-else>
 			<!-- One header across the panes: the filter on the left, the navigation on the right.
 			     The list of changes names the versions compared here; the documents in their titles. -->
-			<header v-if="!session.failed || (ends && part === 'changes')" class="text-comparison__header">
+			<header v-if="!session.failed || summaryTexts || (ends && part === 'changes')" class="text-comparison__header">
 				<template v-if="ends && part === 'changes'">
 					<ComparisonVersionPicker
 						end="from"
@@ -70,6 +70,23 @@
 				aria-atomic="true">
 				{{ announcement }}
 			</p>
+			<!-- One summary per comparison: above the list of changes, or above the
+			     older document with room of its height above the newer one, so both start level -->
+			<div
+				v-if="summaryTexts && part === 'after'"
+				class="text-comparison__summary-room"
+				:style="{ blockSize: `${summaryHeight}px` }"
+				aria-hidden="true" />
+			<div
+				v-if="summaryTexts && part !== 'after'"
+				ref="summaryArea"
+				class="text-comparison__summary">
+				<VersionSummary
+					:key="`${summaryTexts.fromHash}:${summaryTexts.toHash}`"
+					:ends="ends!"
+					:texts="summaryTexts"
+					:reload="reloadComparison" />
+			</div>
 			<MarkdownSourceFallback
 				v-if="session.failed"
 				:beforeContent="session.beforeContent"
@@ -124,8 +141,10 @@
 import type { IFile } from '@nextcloud/files'
 import type { ComparisonSide } from '../comparison/decorations.ts'
 
+import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { computed, ref, watch } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
+import { computed, defineAsyncComponent, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
@@ -155,12 +174,28 @@ const emit = defineEmits<{
 	select: [id: string]
 }>()
 
+// Whether summaries are on for this user, known without a request
+const summariesAvailable = loadState('text', 'version_summaries', false)
+
 useComparisonAttachments({ fileId: props.file.fileid, filePath: props.file.path })
 
-const { session, texts, error, reload } = useSharedComparison(props.base, props.file)
+const { session, texts, error, summaryHeight, reload } = useSharedComparison(props.base, props.file)
 
 // Two versions of one file, whose ends can be changed
 const ends = computed(() => comparedEnds(props.base, props.file))
+
+// Loaded only for a comparison that can show a summary
+const VersionSummary = defineAsyncComponent(() => import('./VersionSummary.vue'))
+const summaryArea = useTemplateRef<HTMLElement>('summaryArea')
+
+if (props.part === 'before') {
+	useResizeObserver(summaryArea, ([entry]) => {
+		summaryHeight.value = entry?.borderBoxSize[0]?.blockSize ?? 0
+	})
+	onBeforeUnmount(() => {
+		summaryHeight.value = 0
+	})
+}
 
 /** Load both files again, and their versions, after the file changed */
 function reloadComparison() {
@@ -169,6 +204,15 @@ function reloadComparison() {
 	}
 	reload()
 }
+
+const summaryTexts = computed(() => {
+	if (!summariesAvailable || !ends.value || !texts.value || !session.value) {
+		return undefined
+	}
+	const { before, after } = texts.value
+	const looksSame = !session.value.failed && session.value.changeCount === 0
+	return { fromHash: before.sha256, toHash: after.sha256, utf8: before.utf8 && after.utf8, looksSame }
+})
 
 // Said once the new pair is on screen, after a picker changed it. Set a
 // moment after the live region appears, or screen readers miss it.
@@ -220,7 +264,7 @@ function selectChange(id: string) {
 		min-block-size: calc(var(--default-clickable-area) + 2 * var(--default-grid-baseline));
 	}
 
-	// Side by side, on one line
+	// Side by side, on one line; the summary's note moves below when it does not fit
 	&--before .text-comparison__header,
 	&--after .text-comparison__header {
 		flex-wrap: nowrap;
@@ -244,6 +288,10 @@ function selectChange(id: string) {
 		justify-content: center;
 		align-items: center;
 		gap: calc(2 * var(--default-grid-baseline));
+	}
+
+	.text-comparison__summary-room {
+		flex-shrink: 0;
 	}
 }
 </style>
