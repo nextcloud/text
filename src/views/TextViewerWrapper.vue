@@ -7,9 +7,10 @@
 import type { IFile } from '@nextcloud/files'
 import type { ViewerBeforeDownloadDetail } from '@nextcloud/viewer'
 
-import { computed, onMounted, useHost, useTemplateRef } from 'vue'
+import { computed, onMounted, provide, useHost, useTemplateRef } from 'vue'
 import ViewerComponent from '../components/ViewerComponent.vue'
 import ViewerVersionComparison from '../components/ViewerVersionComparison.vue'
+import { HOOK_FILE_WRITTEN } from '../components/Editor.provider.ts'
 import { openMimetypesMarkdown } from '../helpers/mime.js'
 
 // Of what the viewer gives a handler's element (`ViewerProps` in
@@ -24,6 +25,7 @@ const props = defineProps<{
 const emit = defineEmits<{
 	loaded: []
 	'update:canSwipe': [canSwipe: boolean]
+	'update:file': [file: IFile]
 	// 'update:comparison': [comparison: 'side-by-side' | 'differences']
 }>()
 
@@ -57,6 +59,10 @@ function showChange() {
 	// Once the viewer takes the view from its element:
 	// emit('update:comparison', 'side-by-side')
 }
+
+// The viewer keeps the editor for a file the editor wrote itself, rather
+// than mounting a new one for what it takes as another version
+provide(HOOK_FILE_WRITTEN, (file: IFile) => emit('update:file', file))
 
 // Swiping to select text would otherwise step to the next file
 onMounted(() => emit('update:canSwipe', false))
