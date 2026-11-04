@@ -13,10 +13,13 @@ use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\StepMapper;
+use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\Service\DocumentService;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\DirectEditing\IManager;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IConfig;
@@ -172,5 +175,55 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$built = $this->createBuiltDocument('changed outside');
 		self::assertSame($built, $this->documentService->getOrCreateDocument($built));
+	}
+
+	public function testNoConflictIfTextSavedInTheMeantime(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->setLastSavedVersion(3);
+		$document->resetUpdatedFields();
+		$stored = $this->createDocument('etag2', 1010, 'saved by text');
+		$stored->setLastSavedVersion(5);
+		$context = $this->createMock(FileContext::class);
+		$context->method('updateDocument')->willReturnCallback(
+			static fn (Document $document) => $document->setChecksum(DocumentService::computeCheckSum('saved by text'))
+		);
+		$this->documentMapper->method('find')->with($document->id)->willReturn($stored);
+		$this->stepMapper->method('getLatestVersion')->willReturn(5);
+		$context->expects(self::never())->method('save');
+
+		$result = $this->documentService->autosave($document, $context, 4, 'new content', 'doc state');
+		self::assertSame($stored, $result);
+	}
+
+	public function testConflictIfFileChangedOutside(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->resetUpdatedFields();
+		$stored = $this->createDocument('etag1', 1000, 'old content');
+		$context = $this->createMock(FileContext::class);
+		$context->method('updateDocument')->willReturnCallback(
+			static fn (Document $document) => $document->setChecksum(DocumentService::computeCheckSum('outside content'))
+		);
+		$context->method('loadContent')->willReturn('outside content');
+		$this->documentMapper->method('find')->with($document->id)->willReturn($stored);
+		$context->expects(self::never())->method('save');
+
+		$this->expectException(DocumentSaveConflictException::class);
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state');
+	}
+
+	public function testNotFoundIfDocumentWasResetInTheMeantime(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->resetUpdatedFields();
+		$context = $this->createMock(FileContext::class);
+		$context->method('updateDocument')->willReturnCallback(
+			static fn (Document $document) => $document->setChecksum(DocumentService::computeCheckSum('outside content'))
+		);
+		$this->documentMapper->method('find')->with($document->id)
+			->willThrowException(new DoesNotExistException('Document was reset'));
+		$context->expects(self::never())->method('loadContent');
+		$context->expects(self::never())->method('save');
+
+		$this->expectException(NotFoundException::class);
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state');
 	}
 }

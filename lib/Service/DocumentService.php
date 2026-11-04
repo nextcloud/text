@@ -371,9 +371,13 @@ class DocumentService {
 		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
 			try {
 				$context->updateDocument($document);
-				if (!empty($document->getUpdatedFields())) {
-					// Content was overwritten in the meantime and content changed.
-					if (isset($document->getUpdatedFields()['checksum'])) {
+				if (isset($document->getUpdatedFields()['checksum'])) {
+					// Another save by Text may have finished after this request loaded the document.
+					$stored = $this->getDocument($document->id);
+					if ($stored === null) {
+						throw new NotFoundException('Document was reset in the meantime');
+					}
+					if ($stored->getChecksum() !== $document->getChecksum()) {
 						$content = $context->loadContent();
 						if ($content === null) {
 							// Keep the stored checksum so the next save detects the outside change again.
@@ -382,9 +386,11 @@ class DocumentService {
 						}
 						throw new DocumentSaveConflictException($content);
 					}
-					$lastMTime = $document->getLastSavedVersionTime();
+					$document = $stored;
+				} elseif (!empty($document->getUpdatedFields())) {
 					$this->documentMapper->update($document);
 				}
+				$lastMTime = $document->getLastSavedVersionTime();
 			} catch (LockedException) {
 				// The file is being written right now, check again with the next save.
 				return $document;
