@@ -71,5 +71,9 @@ return [
 		['name' => 'Workspace#direct', 'url' => '/workspace/direct', 'verb' => 'POST'],
 		/** @see Controller\VersionsController::index() */
 		['name' => 'Versions#index', 'url' => '/versions/{fileId}', 'verb' => 'GET'],
+		/** @see Controller\VersionSummaryController::lookup() */
+		['name' => 'VersionSummary#lookup', 'url' => '/version-summaries/{fileId}', 'verb' => 'GET'],
+		/** @see Controller\VersionSummaryController::generate() */
+		['name' => 'VersionSummary#generate', 'url' => '/version-summaries/{fileId}', 'verb' => 'POST'],
 	]
 ];

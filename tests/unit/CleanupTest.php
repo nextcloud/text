@@ -13,6 +13,7 @@ use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\SessionService;
+use OCA\Text\Service\VersionSummaryService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\IFilenameValidator;
 use OCP\Files\IMimeTypeDetector;
@@ -36,6 +37,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 	private IRootFolder $rootFolder;
 	private ISetupManager $setupManager;
 	private LoggerInterface $logger;
+	private VersionSummaryService $summaries;
 
 	public function setUp(): void {
 		$this->document = Document::fromRow([
@@ -60,13 +62,14 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService = $this->createMock(SessionService::class);
 		$this->setupManager = $this->createMock(ISetupManager::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
+		$this->summaries = $this->createMock(VersionSummaryService::class);
 		$this->documentService->expects(self::never())->method('resetDocument');
 		$this->documentService->expects(self::once())
 			->method('getAllPendingAttachmentCleanup')
 			->willReturn((function (): \Generator {
 				yield $this->document;
 			})());
-		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, ) extends Cleanup {
+		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, $this->summaries) extends Cleanup {
 			public function run($argument): void {
 				parent::run($argument);
 			}
@@ -130,6 +133,30 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService->expects(self::once())->method('removeOldSessions');
 		$this->sessionService->expects(self::once())->method('removeOrphanedSteps');
 		$this->documentService->expects(self::once())->method('cleanupOldDocumentsFolders');
+
+		$this->cleanup->run([]);
+	}
+
+	public function testCleansUpTheSummariesOfChanges(): void {
+		$this->summaries->expects(self::once())->method('cleanup');
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+
+		$this->cleanup->run([]);
+	}
+
+	public static function dataSummaryFailures(): array {
+		return [[new \RuntimeException('Deadlock')], [new \TypeError('Bad value')]];
+	}
+
+	/**
+	 * @dataProvider dataSummaryFailures
+	 */
+	public function testCleansUpDocumentsWhenTheSummariesCannotBe(\Throwable $failure): void {
+		$this->summaries->method('cleanup')->willThrowException($failure);
+		$this->logger->expects(self::once())->method('error')->with('Could not clean up summaries of changes');
+		// The document cleanup still runs
+		$this->documentService->expects(self::once())->method('hasUnsavedChanges')->willReturn(true);
+		$this->documentService->expects(self::once())->method('markAttachmentCleanup');
 
 		$this->cleanup->run([]);
 	}
