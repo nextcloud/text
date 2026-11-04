@@ -40,13 +40,19 @@ function mountPart(part: 'before' | 'after' | 'changes') {
 	return mount(ViewerVersionComparison, { props: { base, file, part }, attachTo: document.body })
 }
 
+// Mounted parts load both files after a moment, waiting for an editor the comparison replaces
+async function loaded() {
+	await new Promise((resolve) => setTimeout(resolve))
+	await flushPromises()
+}
+
 // The comparison editors are heavy to import; load them once so no test pays for it.
 beforeAll(() => import('../../comparison/session.ts'), 30_000)
 
 let get: MockInstance<typeof axios.get>
 
 beforeEach(() => {
-	get = vi.spyOn(axios, 'get').mockImplementation(async (url: string) => ({ data: contents[url] }))
+	get = vi.spyOn(axios, 'get').mockImplementation(async (url: string) => ({ data: contents[url], headers: {} }))
 })
 
 afterEach(async () => {
@@ -59,7 +65,7 @@ describe('ViewerVersionComparison', () => {
 	it('loads both files once for both documents side by side', async () => {
 		const before = mountPart('before')
 		const after = mountPart('after')
-		await flushPromises()
+		await loaded()
 
 		expect(get.mock.calls.map(([url]) => url)).toEqual([baseSource, fileSource])
 		expect(before.find('.text-comparison__document--before').text()).toContain('Old title')
@@ -74,7 +80,7 @@ describe('ViewerVersionComparison', () => {
 	it('splits the header: the filter on the left, the navigation on the right', async () => {
 		const before = mountPart('before')
 		const after = mountPart('after')
-		await flushPromises()
+		await loaded()
 
 		expect(before.find('.text-comparison__filter').exists()).toBe(true)
 		expect(before.find('.text-comparison__navigation').exists()).toBe(false)
@@ -87,7 +93,7 @@ describe('ViewerVersionComparison', () => {
 
 	it('lists the changes with the filter, and makes a picked one current', async () => {
 		const changes = mountPart('changes')
-		await flushPromises()
+		await loaded()
 
 		expect(changes.find('.text-comparison__filter').exists()).toBe(true)
 		const rows = changes.findAll('[data-comparison-select]')
@@ -102,13 +108,13 @@ describe('ViewerVersionComparison', () => {
 
 	it('keeps the current change when the view changes', async () => {
 		const changes = mountPart('changes')
-		await flushPromises()
+		await loaded()
 		await changes.findAll('[data-comparison-select]')[1]!.trigger('click')
 
 		// The viewer mounts the next view before it lets go of the previous one
 		const after = mountPart('after')
 		changes.unmount()
-		await flushPromises()
+		await loaded()
 
 		expect(get).toHaveBeenCalledTimes(2)
 		expect(after.find('.text-comparison__navigation').text()).toContain('Change 2 of 2')
@@ -118,11 +124,11 @@ describe('ViewerVersionComparison', () => {
 
 	it('loads the files again once every part is gone', async () => {
 		mountPart('changes').unmount()
-		await flushPromises()
+		await loaded()
 		await new Promise((resolve) => setTimeout(resolve))
 
 		const again = mountPart('changes')
-		await flushPromises()
+		await loaded()
 
 		expect(get).toHaveBeenCalledTimes(4)
 		again.unmount()
@@ -132,7 +138,7 @@ describe('ViewerVersionComparison', () => {
 		const error = vi.spyOn(logger, 'error').mockImplementation(() => {})
 		get.mockRejectedValue(new Error('offline'))
 		const before = mountPart('before')
-		await flushPromises()
+		await loaded()
 
 		expect(error).toHaveBeenCalledWith('Failed to load versions for comparison', expect.anything())
 		expect(before.emitted('loaded')).toHaveLength(1)

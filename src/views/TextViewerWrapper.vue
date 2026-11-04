@@ -24,6 +24,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
 	loaded: []
+	errored: [error: Error]
 	'update:canSwipe': [canSwipe: boolean]
 	'update:file': [file: IFile]
 	// 'update:comparison': [comparison: 'side-by-side' | 'differences']
@@ -36,6 +37,9 @@ const isEncrypted = computed(() => Boolean(props.file.attributes?.['e2ee-is-encr
 const isVersion = computed(() => props.file.root?.startsWith('/versions/') ?? false)
 // Side by side, the current file is only read too, like the version next to it
 const forceSource = computed(() => isVersion.value || props.comparison === 'side-by-side')
+// No editor saves an older version shown alone; side by side it waits with the
+// current file, so both show a failed save, which the viewer clears once either loads
+const skipClosingSave = computed(() => isVersion.value && props.comparison === undefined)
 
 const isMarkdown = (file: IFile) => openMimetypesMarkdown.includes(file.mime ?? '')
 
@@ -92,8 +96,10 @@ useHost()?.addEventListener('before-download', (event) => {
 		:mime="file.mime"
 		:source="file.encodedSource"
 		:e2EeIsEncrypted="isEncrypted"
+		:skipClosingSave
 		active
-		:onLoadedHandler="() => emit('loaded')" />
+		:onLoadedHandler="() => emit('loaded')"
+		@errored="(error: Error) => emit('errored', error)" />
 </template>
 
 <style lang="scss">
