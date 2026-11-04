@@ -13,7 +13,8 @@ permissions:
 jobs:
   playwright:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    # Playwright < 1.62 does not support Ubuntu 26.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         shardIndex: [1, 2, 3]
