@@ -8,15 +8,37 @@ import type { Ref, ShallowRef } from 'vue'
 import type { ComparisonSession } from './session.ts'
 
 import axios from '@nextcloud/axios'
-import { onScopeDispose, ref, shallowRef } from 'vue'
+import { nextTick, onScopeDispose, ref, shallowRef } from 'vue'
 import { closingSaveOf } from '../helpers/closingSaves.ts'
 import { logger } from '../helpers/logger.ts'
 import { createComparisonSession } from './session.ts'
+import { comparedEnds, endOf, isCurrent } from './versionEnds.ts'
+import { useFileVersions } from './versions.ts'
+
+/** A file as it was loaded */
+interface LoadedText {
+	text: string
+	/** When the server last changed it, in seconds, if it said */
+	modified?: number
+}
+
+/** Both texts compared, as they were loaded */
+export interface ComparedTexts {
+	before: LoadedText
+	after: LoadedText
+}
 
 interface SharedComparison {
 	users: number
+	/** Counts loads: only the latest one fills in the comparison */
+	loads: number
 	session: ShallowRef<ComparisonSession | undefined>
+	texts: ShallowRef<ComparedTexts | undefined>
+	/** Path of the file, which links and images in it are relative to */
+	path: Ref<string | undefined>
 	error: Ref<boolean>
+	/** Whether the error is that the editor it replaces could not save */
+	unsaved: Ref<boolean>
 	/** Etag of the newer file as loaded */
 	etag?: string
 }
@@ -48,7 +70,7 @@ export function useSharedComparison(base: IFile, file: IFile) {
 		comparison = undefined
 	}
 	if (!comparison) {
-		comparison = { users: 0, session: shallowRef(), error: ref(false) }
+		comparison = { users: 0, loads: 0, session: shallowRef(), texts: shallowRef(), path: ref(), error: ref(false), unsaved: ref(false) }
 		comparisons.set(key, comparison)
 		load(key, comparison, base, file)
 	}
@@ -69,7 +91,21 @@ export function useSharedComparison(base: IFile, file: IFile) {
 		})
 	})
 
-	return { session: shared.session, error: shared.error }
+	/**
+	 * Load both files again, as they are now, in place of what is shown.
+	 */
+	function reload() {
+		const previous = shared.session.value
+		shared.session.value = undefined
+		shared.texts.value = undefined
+		shared.error.value = false
+		shared.unsaved.value = false
+		// Once the views showing it are gone
+		nextTick(() => previous?.destroy())
+		load(key, shared, base, file)
+	}
+
+	return { session: shared.session, texts: shared.texts, path: shared.path, error: shared.error, unsaved: shared.unsaved, reload }
 }
 
 /**
@@ -81,25 +117,37 @@ export function useSharedComparison(base: IFile, file: IFile) {
  * @param file The newer file.
  */
 async function load(key: string, comparison: SharedComparison, base: IFile, file: IFile) {
-	// Nobody waits for it anymore
-	const stale = () => comparisons.get(key) !== comparison
+	const thisLoad = ++comparison.loads
+	// Nobody waits for it anymore, or a newer load replaced it
+	const stale = () => comparisons.get(key) !== comparison || comparison.loads !== thisLoad
 	try {
-		// The editor this comparison replaces may still be saving the newer file
-		await closingSaveOf(file.fileid)
+		// The editor this comparison replaces may still be saving the newer file,
+		// unless that is an old version
+		const newer = endOf(file)
+		if (!newer || isCurrent(newer.id)) {
+			await closingSaveOf(file.fileid).catch((error) => {
+				comparison.unsaved.value = true
+				throw error
+			})
+		}
 		if (stale()) {
 			return
 		}
 		// Files are served without caching rules, so browsers may reuse an old copy
 		const options = { responseType: 'text', headers: { 'Cache-Control': 'no-cache' }, timeout: 120_000 } as const
-		const [before, after] = await Promise.all([
+		const [before, after, path] = await Promise.all([
 			axios.get<string>(base.encodedSource, options),
 			axios.get<string>(file.encodedSource, options),
+			documentPath(base, file),
 		])
 		if (stale()) {
 			return
 		}
+		const texts = { before: loaded(before), after: loaded(after) }
+		comparison.path.value = path
+		comparison.texts.value = texts
 		comparison.etag = etagOf(after.headers.etag)
-		comparison.session.value = createComparisonSession(before.data, after.data, { filePath: file.path })
+		comparison.session.value = createComparisonSession(texts.before.text, texts.after.text, { filePath: path })
 	} catch (exception) {
 		if (stale()) {
 			return
@@ -107,4 +155,32 @@ async function load(key: string, comparison: SharedComparison, base: IFile, file
 		logger.error('Failed to load versions for comparison', { exception })
 		comparison.error.value = true
 	}
+}
+
+function loaded(response: { data: string, headers: Record<string, unknown> }): LoadedText {
+	const modified = Date.parse(String(response.headers['last-modified'] ?? ''))
+	return { text: response.data, modified: Number.isNaN(modified) ? undefined : modified / 1000 }
+}
+
+/**
+ * Path of the file compared, as the current file has it: the node of an old
+ * version has only its revision for a path.
+ *
+ * @param base The older file.
+ * @param file The newer file.
+ */
+async function documentPath(base: IFile, file: IFile): Promise<string> {
+	const current = [file, base].find((node) => isCurrent(endOf(node)?.id))
+	if (current) {
+		return current.path
+	}
+	const ends = comparedEnds(base, file)
+	if (ends) {
+		const versions = useFileVersions(ends.fileId)
+		await versions.load()
+		if (versions.path.value) {
+			return versions.path.value
+		}
+	}
+	return file.path
 }
