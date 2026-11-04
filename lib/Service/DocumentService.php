@@ -394,6 +394,12 @@ class DocumentService {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
+		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
+		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+			return $document;
+		}
+
 		$document = $this->assertNoOutsideConflict($document, $file, $force);
 
 		// Abort autosave if already saving.
@@ -408,12 +414,6 @@ class DocumentService {
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
-			return $document;
-		}
-
-		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		$lastMTime = $document->getLastSavedVersionTime();
-		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 

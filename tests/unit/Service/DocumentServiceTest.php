@@ -313,4 +313,29 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->autosave($document, $file, 4, 'new content', 'doc state');
 		self::assertSame(DocumentService::computeCheckSum('new content'), $document->getChecksum());
 	}
+
+	public function testThrottledAutosaveSkipsConflictCheck(): void {
+		$document = $this->createDocumentWithContent('content');
+		$document->setLastSavedVersionTime(time());
+		$document->resetUpdatedFields();
+		$file = $this->createFile('outside content');
+		$file->expects(self::never())->method('getContent');
+		$file->expects(self::never())->method('putContent');
+
+		$result = $this->documentService->autosave($document, $file, 3, 'new content', 'doc state');
+		self::assertSame($document, $result);
+	}
+
+	public function testManualSaveChecksForConflictsWithinAutosaveDelay(): void {
+		$document = $this->createDocumentWithContent('old content');
+		$document->setLastSavedVersionTime(time());
+		$document->resetUpdatedFields();
+		$stored = $this->createDocumentWithContent('old content');
+		$file = $this->createFile('outside content');
+		$this->documentMapper->method('find')->with(42)->willReturn($stored);
+		$file->expects(self::never())->method('putContent');
+
+		$this->expectException(DocumentSaveConflictException::class);
+		$this->documentService->autosave($document, $file, 3, 'new content', 'doc state', false, true);
+	}
 }
