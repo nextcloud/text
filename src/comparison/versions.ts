@@ -17,6 +17,8 @@ export interface FileVersions {
 	versions: Ref<VersionEntry[] | undefined>
 	/** Path of the file in the user's files */
 	path: Ref<string | undefined>
+	/** Whether this Nextcloud keeps versions at all */
+	available: Ref<boolean>
 	failed: Ref<boolean>
 	/** Fetch them, unless they are here; resolves once they are, or the fetch failed */
 	load: () => Promise<void>
@@ -67,6 +69,7 @@ export function invalidateFileVersions(fileId: number) {
 function createFileVersions(fileId: number): CachedVersions {
 	const versions = ref<VersionEntry[]>()
 	const path = ref<string>()
+	const available = ref(true)
 	const failed = ref(false)
 	/** Counts invalidations: a fetch started before one is stale */
 	let generation = 0
@@ -89,6 +92,7 @@ function createFileVersions(fileId: number): CachedVersions {
 			if (started === generation) {
 				versions.value = data.ocs.data.versions
 				path.value = data.ocs.data.path
+				available.value = data.ocs.data.versionsAvailable
 			}
 		} catch (exception) {
 			if (started === generation) {
@@ -114,5 +118,5 @@ function createFileVersions(fileId: number): CachedVersions {
 		return load()
 	}
 
-	return { versions, path, failed, load, refresh, invalidate }
+	return { versions, path, available, failed, load, refresh, invalidate }
 }

@@ -15,6 +15,8 @@ import { logger } from '../../helpers/logger.ts'
 
 const viewer = vi.hoisted(() => new EventTarget())
 vi.mock('@nextcloud/viewer', () => ({ getViewer: () => viewer }))
+const summaries = vi.hoisted(() => ({ on: false }))
+vi.mock('@nextcloud/initial-state', () => ({ loadState: (app: string, key: string, fallback: unknown) => key === 'version_summaries' ? summaries.on : fallback }))
 
 const baseSource = 'https://cloud.example/remote.php/dav/versions/alice/versions/7/1691420501'
 const fileSource = 'https://cloud.example/remote.php/dav/files/alice/notes.md'
@@ -23,8 +25,9 @@ const contents: Record<string, string> = {
 	[fileSource]: '# New title\n\n**Plain** text',
 }
 
+// The bytes of a file, as DAV serves Markdown
 function response(text: string) {
-	return { data: text, headers: {} }
+	return { data: new TextEncoder().encode(text).buffer, headers: { 'content-type': 'text/markdown;charset=UTF-8' } }
 }
 
 /**
@@ -66,6 +69,9 @@ beforeEach(() => {
 afterEach(async () => {
 	viewer.dispatchEvent(new CustomEvent('close'))
 	vi.restoreAllMocks()
+	// Also when a test failed before undoing them
+	vi.unstubAllGlobals()
+	summaries.on = false
 	// Let unmounted parts release their comparison
 	await new Promise((resolve) => setTimeout(resolve))
 })
@@ -95,6 +101,40 @@ describe('ViewerVersionComparison', () => {
 		expect(before.find('.text-comparison__navigation').exists()).toBe(false)
 		expect(after.find('.text-comparison__filter').exists()).toBe(false)
 		expect(after.find('.text-comparison__navigation').text()).toContain('Change 1 of 2')
+
+		before.unmount()
+		after.unmount()
+	})
+
+	it('offers a summary on the row of the navigation, and spans it over both documents', async () => {
+		summaries.on = true
+		// Every pane is 500 pixels wide, side by side with a gap of 8
+		vi.stubGlobal('ResizeObserver', class {
+			constructor(private callback: ResizeObserverCallback) {}
+			observe(target: Element) {
+				this.callback([{ target, borderBoxSize: [{ blockSize: 120, inlineSize: 500 }] } as unknown as ResizeObserverEntry], this as unknown as ResizeObserver)
+			}
+
+			unobserve() {}
+			disconnect() {}
+		})
+		vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function(this: HTMLElement) {
+			const left = this.classList.contains('text-version-comparison--after') ? 508 : 0
+			return { left, right: left + 500, x: left, y: 0, top: 0, bottom: 0, width: 500, height: 0 } as DOMRect
+		})
+		const end = { mtime: 1000, size: 10, label: '', author: null }
+		get.mockImplementation(async (url: string) => url.includes('/version-summaries/')
+			? { data: { ocs: { data: { state: 'absent', summary: null, error: null, queuePosition: null, progress: null, ends: { from: { ...end, id: '1691420501' }, to: { ...end, id: 'current' } }, fileName: 'notes.md', generation: { available: true, reason: null, retryAfter: null } } } } }
+			: response(contents[url]!))
+
+		const before = mountPart('before')
+		const after = mountPart('after')
+		await loaded()
+
+		await vi.waitFor(() => expect(before.find('.text-comparison__header').text()).toContain('Summarize changes'))
+		expect(after.find('.text-comparison__header').text()).toContain('Change 1 of 2')
+		expect(before.classes()).toContain('text-version-comparison--spanning')
+		expect(before.find('.text-comparison__summary').attributes('style')).toContain('inline-size: 1008px')
 
 		before.unmount()
 		after.unmount()
@@ -190,6 +230,34 @@ describe('ViewerVersionComparison', () => {
 		expect(after.text()).not.toContain('A version may no longer exist')
 
 		after.unmount()
+	})
+
+	it('gives the keyboard back to the comparison after trying again', async () => {
+		vi.spyOn(logger, 'error').mockImplementation(() => {})
+		get.mockRejectedValue(new Error('gone'))
+		const after = mountPart('after')
+		await loaded()
+		const tryAgain = after.findAll('button').find((button) => button.text() === 'Try again')!
+		;(tryAgain.element as HTMLElement).focus()
+
+		get.mockImplementation(async (url: string) => response(contents[url]!))
+		await tryAgain.trigger('click')
+		await loaded()
+
+		expect(after.element.contains(document.activeElement)).toBe(true)
+		after.unmount()
+	})
+
+	it('offers no summary of a pair whose older end is the current file', async () => {
+		summaries.on = true
+		// Collectives orders by time, and a restore sets the current file back to an older one's
+		const changes = mount(ViewerVersionComparison, { props: { base: file, file: base, part: 'changes' }, attachTo: document.body })
+		await loaded()
+		await new Promise((resolve) => setTimeout(resolve, 20))
+
+		expect(changes.text()).not.toContain('Summarize changes')
+		expect(get.mock.calls.some(([url]) => String(url).includes('/version-summaries/'))).toBe(false)
+		changes.unmount()
 	})
 
 	it('names the versions in the complete source too', async () => {

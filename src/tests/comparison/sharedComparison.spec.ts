@@ -27,7 +27,7 @@ const file = { source: 'https://cloud.example/f/plan.md', encodedSource: 'https:
 function deferred() {
 	let settle!: (text: string) => void
 	const promise = new Promise((resolve) => {
-		settle = (text) => resolve({ data: text, headers: {} })
+		settle = (text) => resolve({ data: new TextEncoder().encode(text).buffer, headers: {} })
 	})
 	return { promise, settle }
 }
@@ -47,19 +47,19 @@ afterEach(() => {
 describe('useSharedComparison', () => {
 	it('shows only the latest of overlapping reloads', async () => {
 		const get = vi.spyOn(axios, 'get')
-		get.mockResolvedValueOnce({ data: 'old', headers: {} })
-		get.mockResolvedValueOnce({ data: 'first', headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('old').buffer, headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('first').buffer, headers: {} })
 		const scope = effectScope()
 		const comparison = scope.run(() => useSharedComparison(base, file))!
 		await settle()
 
 		const late = deferred()
 		get.mockReturnValueOnce(late.promise as never)
-		get.mockReturnValueOnce(Promise.resolve({ data: 'new', headers: {} }) as never)
+		get.mockReturnValueOnce(Promise.resolve({ data: new TextEncoder().encode('new').buffer, headers: {} }) as never)
 		comparison.reload()
 		await settle()
-		get.mockResolvedValueOnce({ data: 'old', headers: {} })
-		get.mockResolvedValueOnce({ data: 'newest', headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('old').buffer, headers: {} })
+		get.mockResolvedValueOnce({ data: new TextEncoder().encode('newest').buffer, headers: {} })
 		comparison.reload()
 		await settle()
 		late.settle('stale')
@@ -80,7 +80,7 @@ describe('useSharedComparison', () => {
 		}
 		vi.spyOn(axios, 'get').mockImplementation(async (url: string) => url.includes('/ocs/v2.php/apps/text/versions/7')
 			? { data: { ocs: { data: { path: '/Notes/plan.md', versions: [], versionsAvailable: true } } } }
-			: { data: url.endsWith('/100') ? 'older' : 'newer', headers: {} })
+			: { data: new TextEncoder().encode(url.endsWith('/100') ? 'older' : 'newer').buffer, headers: {} })
 		const scope = effectScope()
 		const comparison = scope.run(() => useSharedComparison(version(100), version(200)))!
 		await settle()
@@ -91,7 +91,7 @@ describe('useSharedComparison', () => {
 	})
 
 	it('takes the folder from the current file without asking for the versions', async () => {
-		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'text', headers: {} })
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: new TextEncoder().encode('text').buffer, headers: {} })
 		const source = 'https://cloud.example/remote.php/dav/files/alice/Notes/plan.md'
 		const current = { source, encodedSource: source, path: '/Notes/plan.md', fileid: 7 } as unknown as IFile
 		const scope = effectScope()
@@ -142,7 +142,7 @@ describe('useSharedComparison', () => {
 	})
 
 	it('loads the newer file once the editor it replaces has saved it', async () => {
-		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'saved', headers: {} })
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: new TextEncoder().encode('saved').buffer, headers: {} })
 		const edited = { ...file, source: 'https://cloud.example/f/edited.md', encodedSource: 'https://cloud.example/f/edited.md', fileid: 7 } as unknown as IFile
 		let saved!: () => void
 		const scope = effectScope()
@@ -210,7 +210,7 @@ describe('useSharedComparison', () => {
 	})
 
 	it('loads the file as the server has it once it showed that the closing save failed', async () => {
-		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'server', headers: {} })
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: new TextEncoder().encode('server').buffer, headers: {} })
 		const edited = { ...file, source: 'https://cloud.example/f/again.md', encodedSource: 'https://cloud.example/f/again.md', fileid: 11 } as unknown as IFile
 		trackClosingSave(11, Promise.resolve(false))
 		const scope = effectScope()
@@ -237,7 +237,7 @@ describe('useSharedComparison', () => {
 		trackClosingSave(12, new Promise<boolean>(() => {}))
 		vi.spyOn(axios, 'get').mockImplementation(async (url: string) => url.includes('/ocs/')
 			? { data: { ocs: { data: { path: '/plan.md', versions: [], versionsAvailable: true } } } }
-			: { data: 'old', headers: {} })
+			: { data: new TextEncoder().encode('old').buffer, headers: {} })
 		const scope = effectScope()
 		const comparison = scope.run(() => useSharedComparison(version(100), version(200)))!
 		await settle()
