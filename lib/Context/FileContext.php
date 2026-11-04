@@ -99,7 +99,7 @@ class FileContext implements IContext {
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
-		$document->setChecksum($this->computeChecksum());
+		$document->setChecksum($this->computeCheckSum());
 		// This is a new document - so it needs a fresh base version etag.
 		$document->setBaseVersionEtag(uniqid());
 		return $document;
