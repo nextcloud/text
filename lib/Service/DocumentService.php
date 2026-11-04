@@ -102,8 +102,17 @@ class DocumentService {
 	public function getOrCreateDocument(Document $document): Document {
 		$loaded = $this->documentMapper->load($document->getContextType(), $document->getContextId());
 		if ($loaded !== null) {
-			$this->logger->info('Keep previous document of ' . $document->toString());
-			return $loaded;
+			if ($loaded->getChecksum() === $document->getChecksum() || $this->hasUnsavedChanges($loaded)) {
+				$this->logger->info('Keep previous document of ' . $document->toString());
+				return $loaded;
+			}
+			// The file was changed without passing through Nextcloud, e.g. directly on external storage.
+			$this->logger->info('Reset outdated document of ' . $document->toString());
+			try {
+				$this->resetDocument($document->getContextType(), $document->getContextId());
+			} catch (DocumentHasUnsavedChangesException) {
+				return $loaded;
+			}
 		}
 
 		if (!$this->ensureDocumentsFolder()) {

@@ -122,6 +122,14 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->hasUnsavedChanges(new Document());
 	}
 
+	private function createBuiltDocument(string $content): Document {
+		$document = new Document();
+		$document->setContextType('file');
+		$document->setContextId(42);
+		$document->setChecksum(DocumentService::computeCheckSum($content));
+		return $document;
+	}
+
 	public function testNoAutosavingWhileSaveIsUnderWay(): void {
 		$document = $this->createDocument('etag1', 1000, 'new content');
 		$context = $this->createMock(FileContext::class);
@@ -134,4 +142,35 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertSame($result, $document);
 	}
 
+	public function testKeepsDocumentWhenFileIsUnchanged(): void {
+		$loaded = $this->createDocument('etag1', 1000, 'content');
+		$this->documentMapper->method('load')->willReturn($loaded);
+		$this->documentMapper->expects(self::never())->method('delete');
+		$this->documentMapper->expects(self::never())->method('insert');
+
+		self::assertSame($loaded, $this->documentService->getOrCreateDocument($this->createBuiltDocument('content')));
+	}
+
+	public function testKeepsDocumentWithUnsavedChangesWhenFileChangedOutside(): void {
+		$loaded = $this->createDocument('etag1', 1000, 'content');
+		$loaded->setLastSavedVersion(3);
+		$this->documentMapper->method('load')->willReturn($loaded);
+		$this->stepMapper->method('getLatestVersion')->willReturn(4);
+		$this->documentMapper->expects(self::never())->method('delete');
+		$this->documentMapper->expects(self::never())->method('insert');
+
+		self::assertSame($loaded, $this->documentService->getOrCreateDocument($this->createBuiltDocument('changed outside')));
+	}
+
+	public function testResetsDocumentWhenFileChangedOutside(): void {
+		$loaded = $this->createDocument('etag1', 1000, 'content');
+		$loaded->setLastSavedVersion(3);
+		$this->documentMapper->method('load')->willReturn($loaded);
+		$this->stepMapper->method('getLatestVersion')->willReturn(3);
+		$this->documentMapper->expects(self::once())->method('delete')->with($loaded);
+		$this->documentMapper->expects(self::once())->method('insert')->willReturnArgument(0);
+
+		$built = $this->createBuiltDocument('changed outside');
+		self::assertSame($built, $this->documentService->getOrCreateDocument($built));
+	}
 }
