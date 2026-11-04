@@ -449,15 +449,17 @@ class DocumentService {
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoSaveDocument, $documentState) {
+			), function () use ($document, $file, $autoSaveDocument, $documentState) {
 				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
+				// Store the new checksum first so a failure below cannot leave it outdated.
+				$document->setLastSavedVersionTime($file->getMTime());
+				$document->setLastSavedVersionEtag($file->getEtag());
+				$document->setChecksum(self::computeCheckSum($autoSaveDocument));
+				$this->documentMapper->update($document);
 				$this->writeDocumentState($file->getId(), $documentState);
 			});
 			$document->setLastSavedVersion($version);
-			$document->setLastSavedVersionTime($file->getMTime());
-			$document->setLastSavedVersionEtag($file->getEtag());
-			$document->setChecksum(self::computeCheckSum($autoSaveDocument));
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
