@@ -367,7 +367,12 @@ class DocumentService {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
+		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+			return $document;
+		}
+
 		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
 			try {
 				$context->updateDocument($document);
@@ -390,7 +395,6 @@ class DocumentService {
 				} elseif (!empty($document->getUpdatedFields())) {
 					$this->documentMapper->update($document);
 				}
-				$lastMTime = $document->getLastSavedVersionTime();
 			} catch (LockedException) {
 				// The file is being written right now, check again with the next save.
 				return $document;
@@ -409,11 +413,6 @@ class DocumentService {
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
-			return $document;
-		}
-
-		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 

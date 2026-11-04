@@ -252,4 +252,31 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertSame([false, true], $updatedWhileSaving);
 		self::assertSame(1, $document->getLastSavedVersion());
 	}
+
+	public function testThrottledAutosaveSkipsConflictCheck(): void {
+		$document = $this->createDocument('etag1', time(), 'content');
+		$document->resetUpdatedFields();
+		$context = $this->createMock(FileContext::class);
+		$context->expects(self::never())->method('updateDocument');
+		$context->expects(self::never())->method('save');
+
+		$result = $this->documentService->autosave($document, $context, 1, 'new content', 'doc state');
+		self::assertSame($document, $result);
+	}
+
+	public function testManualSaveChecksForConflictsWithinAutosaveDelay(): void {
+		$document = $this->createDocument('etag1', time(), 'old content');
+		$document->resetUpdatedFields();
+		$stored = $this->createDocument('etag1', time(), 'old content');
+		$context = $this->createMock(FileContext::class);
+		$context->method('updateDocument')->willReturnCallback(
+			static fn (Document $document) => $document->setChecksum(DocumentService::computeCheckSum('outside content'))
+		);
+		$context->method('loadContent')->willReturn('outside content');
+		$this->documentMapper->method('find')->with($document->id)->willReturn($stored);
+		$context->expects(self::never())->method('save');
+
+		$this->expectException(DocumentSaveConflictException::class);
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state', false, true);
+	}
 }
