@@ -1,0 +1,13 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)
+
+This file is generated from multiple sources. Included packages:
+- hast-util-to-text
+	- version: 4.0.2
+	- license: MIT
+- rehype-highlight
+	- version: 7.0.2
+	- license: MIT
+- unist-util-find-after
+	- version: 5.0.0
+	- license: MIT
