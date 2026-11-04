@@ -367,13 +367,22 @@ class DocumentService {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
+		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		$lastMTime = $document->getLastSavedVersionTime();
+		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+			return $document;
+		}
+
 		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
 			try {
 				$context->updateDocument($document);
-				if (!empty($document->getUpdatedFields())) {
-					// Content was overwritten in the meantime and content changed.
-					if (isset($document->getUpdatedFields()['checksum'])) {
+				if (isset($document->getUpdatedFields()['checksum'])) {
+					// Another save by Text may have finished after this request loaded the document.
+					$stored = $this->getDocument($document->id);
+					if ($stored === null) {
+						throw new NotFoundException('Document was reset in the meantime');
+					}
+					if ($stored->getChecksum() !== $document->getChecksum()) {
 						$content = $context->loadContent();
 						if ($content === null) {
 							// Keep the stored checksum so the next save detects the outside change again.
@@ -382,7 +391,8 @@ class DocumentService {
 						}
 						throw new DocumentSaveConflictException($content);
 					}
-					$lastMTime = $document->getLastSavedVersionTime();
+					$document = $stored;
+				} elseif (!empty($document->getUpdatedFields())) {
 					$this->documentMapper->update($document);
 				}
 			} catch (LockedException) {
@@ -403,11 +413,6 @@ class DocumentService {
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
-			return $document;
-		}
-
-		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
-		if ($lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
 
@@ -441,10 +446,12 @@ class DocumentService {
 		$this->cache->set('document-save-lock-' . $document->id, true, 60);
 		$this->saveFromText = true;
 		try {
-			$context->save($autoSaveDocument, function () use ($document, $documentState): void {
+			$context->save($autoSaveDocument, function () use ($context, $document, $documentState): void {
+				// Store the new checksum first so a failure below cannot leave it outdated.
+				$context->updateDocument($document);
+				$this->documentMapper->update($document);
 				$this->writeDocumentState($document->id, $documentState);
 			});
-			$context->updateDocument($document);
 			$document->setLastSavedVersion($version);
 			$this->documentMapper->update($document);
 		} catch (LockedException) {
