@@ -350,24 +350,18 @@ class DocumentService {
 			return;
 		}
 
-		$fileMtime = $file->getMtime();
-		$fileEtag = $file->getEtag();
-
-		if ($lastEtag === $fileEtag && $lastMTime === $fileMtime) {
-			return;
-		}
-
-		$storedChecksum = $document->getChecksum();
-		$fileContent = $file->getContent();
-		$fileChecksum = self::computeCheckSum($fileContent);
-
-		if ($storedChecksum !== $fileChecksum) {
+		$fileChecksum = self::computeCheckSum($file->getContent());
+		if ($document->getChecksum() !== $fileChecksum) {
 			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
 
-		$document->setLastSavedVersionTime($fileMtime);
-		$document->setLastSavedVersionEtag($fileEtag);
-		$this->documentMapper->update($document);
+		$fileMtime = $file->getMtime();
+		$fileEtag = $file->getEtag();
+		if ($lastEtag !== $fileEtag || $lastMTime !== $fileMtime) {
+			$document->setLastSavedVersionTime($fileMtime);
+			$document->setLastSavedVersionEtag($fileEtag);
+			$this->documentMapper->update($document);
+		}
 	}
 
 	/**
