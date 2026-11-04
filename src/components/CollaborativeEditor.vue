@@ -112,6 +112,7 @@ import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import Autofocus from '../extensions/Autofocus.ts'
 import { CollaborationCaret } from '../extensions/index.js'
+import { trackClosingSave } from '../helpers/closingSaves.ts'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
 import { logger } from '../helpers/logger.ts'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
@@ -546,8 +547,12 @@ export default defineComponent({
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
-		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-		await Promise.any([timeout, this.saveWhenDirty()])
+		const save = this.saveWhenDirty()
+		// A comparison opened instead waits for the save itself, the editor closes after at most 2 seconds
+		if (this.context.type === 'file') {
+			trackClosingSave(this.context.id, save)
+		}
+		await Promise.any([new Promise((resolve) => setTimeout(resolve, 2000)), save])
 		await this.close()
 		removeFromDebugging(this)
 	},
