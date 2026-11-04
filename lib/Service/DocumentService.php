@@ -341,27 +341,34 @@ class DocumentService {
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
-	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
+	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
-		$lastMTime = $document->getLastSavedVersionTime();
-		$lastEtag = $document->getLastSavedVersionEtag();
 
-		if ($lastMTime <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
-			return;
+		if ($document->getLastSavedVersionTime() <= 0 || $force || $this->isReadOnly($file, $shareToken) || $this->cache->get('document-save-lock-' . $documentId)) {
+			return $document;
 		}
 
 		$fileChecksum = self::computeCheckSum($file->getContent());
 		if ($document->getChecksum() !== $fileChecksum) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			// Another save by Text may have finished after this request loaded the document.
+			$stored = $this->getDocument($documentId);
+			if ($stored === null) {
+				throw new NotFoundException('Document was reset in the meantime');
+			}
+			if ($stored->getChecksum() !== $fileChecksum) {
+				throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			}
+			$document = $stored;
 		}
 
 		$fileMtime = $file->getMtime();
 		$fileEtag = $file->getEtag();
-		if ($lastEtag !== $fileEtag || $lastMTime !== $fileMtime) {
+		if ($document->getLastSavedVersionEtag() !== $fileEtag || $document->getLastSavedVersionTime() !== $fileMtime) {
 			$document->setLastSavedVersionTime($fileMtime);
 			$document->setLastSavedVersionEtag($fileEtag);
 			$this->documentMapper->update($document);
 		}
+		return $document;
 	}
 
 	/**
@@ -387,7 +394,7 @@ class DocumentService {
 			throw new NotPermittedException('Read-only permission cannot save document changes. Please reload the page.');
 		}
 
-		$this->assertNoOutsideConflict($document, $file, $force);
+		$document = $this->assertNoOutsideConflict($document, $file, $force);
 
 		// Abort autosave if already saving.
 		if ($this->cache->get('document-save-lock-' . $documentId) && $manualSave === false) {
