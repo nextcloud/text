@@ -37,6 +37,7 @@ const config = createAppConfig(
 		viewer: path.join(__dirname, 'src', 'viewer.js'),
 		editor: path.join(__dirname, 'src', 'editor.js'),
 		init: path.join(__dirname, 'src', 'init.js'),
+		settings: path.join(__dirname, 'src', 'settings.ts'),
 	},
 	{
 		createEmptyCSSEntryPoints: true,

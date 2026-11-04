@@ -110,6 +110,7 @@ return array(
     'OCA\\Text\\Service\\VersionAccessService' => $baseDir . '/../lib/Service/VersionAccessService.php',
     'OCA\\Text\\Service\\VersionSummaryService' => $baseDir . '/../lib/Service/VersionSummaryService.php',
     'OCA\\Text\\Service\\WorkspaceService' => $baseDir . '/../lib/Service/WorkspaceService.php',
+    'OCA\\Text\\Settings\\VersionSummariesSettings' => $baseDir . '/../lib/Settings/VersionSummariesSettings.php',
     'OCA\\Text\\TextFile' => $baseDir . '/../lib/TextFile.php',
     'OCA\\Text\\YjsMessage' => $baseDir . '/../lib/YjsMessage.php',
 );
