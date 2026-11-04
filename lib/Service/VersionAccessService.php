@@ -13,6 +13,7 @@ use OCA\Files_Versions\Versions\BackendNotFoundException;
 use OCA\Files_Versions\Versions\IMetadataVersion;
 use OCA\Files_Versions\Versions\IVersion;
 use OCA\Files_Versions\Versions\IVersionManager;
+use OCA\Text\Exception\VersionNotFoundException;
 use OCA\Text\Model\VersionEnd;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -31,6 +32,7 @@ class VersionAccessService {
 		private readonly IRootFolder $rootFolder,
 		private readonly ContainerInterface $container,
 		private readonly IUserManager $userManager,
+		private readonly FileService $fileService,
 	) {
 	}
 
@@ -49,6 +51,20 @@ class VersionAccessService {
 			|| $file->getMimetype() !== 'text/markdown'
 			|| $this->isEndToEndEncrypted($file, $userFolder)) {
 			throw new NotFoundException('No comparable file ' . $fileId);
+		}
+		return $file;
+	}
+
+	/**
+	 * The file, if its content may also leave the server: a summary sends it
+	 * to the AI provider, which a share without downloads does not allow.
+	 *
+	 * @throws NotFoundException
+	 */
+	public function resolveSendableFile(IUser $user, int $fileId): File {
+		$file = $this->resolveFile($user, $fileId);
+		if ($this->fileService->isDownloadDisabled($file)) {
+			throw new NotFoundException('Downloads of file ' . $fileId . ' are disabled');
 		}
 		return $file;
 	}
@@ -76,15 +92,60 @@ class VersionAccessService {
 				$currentVersion = $version;
 				continue;
 			}
-			$ends[] = $this->end((string)$version->getRevisionId(), $version->getTimestamp(), $version->getSize(), $version);
+			$ends[] = $this->end((string)$version->getRevisionId(), $version->getTimestamp(), $version->getSize(), $version, $version);
 		}
 		usort($ends, static fn (VersionEnd $a, VersionEnd $b) => $b->mtime <=> $a->mtime);
 
-		$current = $this->end(VersionEnd::CURRENT, $file->getMTime(), $file->getSize(), $currentVersion);
+		$current = $this->end(VersionEnd::CURRENT, $file->getMTime(), $file->getSize(), $currentVersion, null);
 		return [$current, ...$ends];
 	}
 
-	private function end(string $id, int $mtime, int|float $size, ?IVersion $metadata): VersionEnd {
+	/**
+	 * One end of a comparison of the file. A revision with the current file's
+	 * timestamp is the current file.
+	 *
+	 * @param list<VersionEnd> $versions The file's versions, from listVersions()
+	 * @throws VersionNotFoundException
+	 */
+	public function resolveEnd(File $file, array $versions, string $id): VersionEnd {
+		if ($id === (string)$file->getMTime()) {
+			$id = VersionEnd::CURRENT;
+		}
+		foreach ($versions as $end) {
+			if ($end->id === $id) {
+				return $end;
+			}
+		}
+		throw new VersionNotFoundException('No version ' . $id . ' of file ' . $file->getId());
+	}
+
+	/**
+	 * The bytes of an end, or null when there are more than allowed.
+	 *
+	 * @throws VersionNotFoundException
+	 */
+	public function read(File $file, VersionEnd $end, int $maxBytes): ?string {
+		try {
+			$stream = $end->version === null ? $file->fopen('r') : $this->versionManager()?->read($end->version);
+		} catch (NotFoundException) {
+			// Expired since it was listed
+			$stream = false;
+		}
+		if (!is_resource($stream)) {
+			throw new VersionNotFoundException('Cannot read version ' . $end->id . ' of file ' . $file->getId());
+		}
+		try {
+			$bytes = stream_get_contents($stream, $maxBytes + 1);
+		} finally {
+			fclose($stream);
+		}
+		if ($bytes === false) {
+			throw new VersionNotFoundException('Cannot read version ' . $end->id . ' of file ' . $file->getId());
+		}
+		return strlen($bytes) > $maxBytes ? null : $bytes;
+	}
+
+	private function end(string $id, int $mtime, int|float $size, ?IVersion $metadata, ?IVersion $version): VersionEnd {
 		$label = '';
 		$authorId = null;
 		if ($metadata instanceof IMetadataVersion) {
@@ -93,7 +154,7 @@ class VersionAccessService {
 			$authorId = $author === null || $author === '' ? null : $author;
 		}
 		$authorName = $authorId === null ? null : $this->userManager->getDisplayName($authorId);
-		return new VersionEnd($id, $mtime, $size, $label, $authorId, $authorName);
+		return new VersionEnd($id, $mtime, $size, $label, $authorId, $authorName, $version);
 	}
 
 	/**

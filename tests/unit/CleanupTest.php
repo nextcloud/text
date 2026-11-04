@@ -13,6 +13,7 @@ use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\SessionService;
+use OCA\Text\Service\VersionSummaryService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\IFilenameValidator;
 use OCP\Files\IMimeTypeDetector;
@@ -66,7 +67,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 			->willReturn((function (): \Generator {
 				yield $this->document;
 			})());
-		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, ) extends Cleanup {
+		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, $this->createMock(VersionSummaryService::class)) extends Cleanup {
 			public function run($argument): void {
 				parent::run($argument);
 			}
