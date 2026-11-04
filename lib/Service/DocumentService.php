@@ -447,10 +447,12 @@ class DocumentService {
 		$this->cache->set('document-save-lock-' . $document->id, true, 60);
 		$this->saveFromText = true;
 		try {
-			$context->save($autoSaveDocument, function () use ($document, $documentState): void {
+			$context->save($autoSaveDocument, function () use ($context, $document, $documentState): void {
+				// Store the new checksum first so a failure below cannot leave it outdated.
+				$context->updateDocument($document);
+				$this->documentMapper->update($document);
 				$this->writeDocumentState($document->id, $documentState);
 			});
-			$context->updateDocument($document);
 			$document->setLastSavedVersion($version);
 			$this->documentMapper->update($document);
 		} catch (LockedException) {

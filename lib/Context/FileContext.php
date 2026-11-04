@@ -24,6 +24,8 @@ use Override;
 use Psr\Log\LoggerInterface;
 
 class FileContext implements IContext {
+	/** Content written by save(), so updating the document afterwards does not read the file again */
+	private ?string $savedContent = null;
 
 	public function __construct(
 		private readonly FileService $fileService,
@@ -132,7 +134,7 @@ class FileContext implements IContext {
 		}
 
 		$file = $this->getFile();
-		$fileChecksum = $this->computeCheckSum();
+		$fileChecksum = $this->computeCheckSum($this->savedContent);
 		$this->logger->debug('computed checksum', ['checksum' => $fileChecksum]);
 
 		$document->setChecksum($fileChecksum);
@@ -147,6 +149,7 @@ class FileContext implements IContext {
 	public function save(string $content, callable $afterSave): void {
 		$this->lockService->runInScope($this->getFile(), function () use ($content, $afterSave): void {
 			$this->getFile()->putContent($content);
+			$this->savedContent = $content;
 			$afterSave();
 		});
 	}

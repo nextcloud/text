@@ -226,4 +226,30 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->expectException(NotFoundException::class);
 		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state');
 	}
+
+	public function testUpdatesDocumentRightAfterWritingTheFile(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->resetUpdatedFields();
+		$context = $this->createMock(FileContext::class);
+		$saving = false;
+		$updatedWhileSaving = [];
+		$context->method('updateDocument')->willReturnCallback(
+			static function () use (&$saving, &$updatedWhileSaving): void {
+				$updatedWhileSaving[] = $saving;
+			}
+		);
+		$context->method('loadContent')->willReturn('old content');
+		$context->method('save')->willReturnCallback(
+			static function (string $content, callable $afterSave) use (&$saving): void {
+				$saving = true;
+				$afterSave();
+				$saving = false;
+			}
+		);
+		$this->stepMapper->method('getLatestVersion')->willReturn(1);
+
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state');
+		self::assertSame([false, true], $updatedWhileSaving);
+		self::assertSame(1, $document->getLastSavedVersion());
+	}
 }
