@@ -131,6 +131,7 @@ import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import {
 	ATTACHMENT_RESOLVER,
 	EDITOR_UPLOAD,
+	HOOK_FILE_WRITTEN,
 	HOOK_MENTION_SEARCH,
 	IS_MOBILE,
 } from './Editor.provider.ts'
@@ -171,6 +172,7 @@ export default defineComponent({
 
 	inject: {
 		isEmbedded: { default: false },
+		fileWritten: { from: HOOK_FILE_WRITTEN, default: null },
 	},
 
 	props: {
@@ -772,6 +774,7 @@ export default defineComponent({
 				// Cheap file update for Files app while the editor is still open
 				this.fileNode.mtime = new Date()
 				this.fileNode.size = new Blob([this.serialize()]).size
+				this.fileWritten?.(this.fileNode)
 				emit('files:node:updated', this.fileNode)
 			}
 			this.$nextTick(() => {
