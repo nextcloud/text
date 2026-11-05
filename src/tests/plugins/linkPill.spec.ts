@@ -24,6 +24,14 @@ describe('linkPill plugin', () => {
 		editor.destroy()
 	})
 
+	it('handles purely numeric hrefs', () => {
+		const editor = createCustomEditor('<p><a href="12345678901234">Test</a></p>', [Link])
+		const spans = findLinkSpans(editor.state.doc)
+		expect(spans).toHaveLength(1)
+		expect(spans[0].mark.attrs.href).toBe('12345678901234')
+		editor.destroy()
+	})
+
 	it('skips anchor links', () => {
 		const editor = createCustomEditor('<p><a href="#heading">Test</a></p>', [Link])
 		expect(findLinkSpans(editor.state.doc)).toHaveLength(0)
