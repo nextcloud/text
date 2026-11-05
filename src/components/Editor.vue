@@ -642,9 +642,11 @@ export default defineComponent({
 			if (window.OCA.Text.logEditorUpdates) {
 				this.debugContent(editor)
 			}
-			const proseMirrorMarkdown = this.serialize()
+			const serialize = this.serialize
 			this.emit('update:content', {
-				markdown: proseMirrorMarkdown,
+				get markdown() {
+					return serialize()
+				},
 			})
 		},
 
