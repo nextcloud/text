@@ -145,6 +145,9 @@ export default {
 <style scoped lang="scss">
 .table-wrapper {
 	position: relative;
+	// Leaves a clickable gap before the table for the gap cursor when it
+	// follows another table or node view. Collapses with paragraph margins.
+	margin-top: 1em;
 
 	&.focused,
 	&:hover {

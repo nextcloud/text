@@ -46,26 +46,10 @@ li.ProseMirror-selectednode {
 	}
 }
 
-.ProseMirror-gapcursor {
-	display: none;
-	pointer-events: none;
-	position: absolute;
-
-	&:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: -2px;
-		width: 20px;
-		border-top: 1px solid var(--color-main-text);
-		animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
-	}
-}
-
-@keyframes ProseMirror-cursor-blink {
-	to {
-		visibility: hidden;
-	}
+// Tiptap injects its own gap cursor stylesheet (black cursor) after ours,
+// so the theme colour needs a more specific selector to win.
+.ProseMirror .ProseMirror-gapcursor:after {
+	border-top-color: var(--color-main-text);
 }
 
 .animation-rotate {
