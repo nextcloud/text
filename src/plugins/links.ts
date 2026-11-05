@@ -123,12 +123,26 @@ export function linkBubble(options: { editor: Editor }) {
 		key: linkBubbleKey,
 		state: {
 			init: () => ({ active: null, focusInput: false }),
-			apply: (tr, cur) => {
+			apply: (tr, cur, oldState, newState) => {
 				const meta = tr.getMeta(linkBubbleKey)
+				// Explicit updates of the bubble state take precedence
 				if (meta) {
 					return { active: meta.active, focusInput: !!meta.focusInput }
 				}
-				return cur
+
+				// Don't open bubble at editor initialisation
+				if (oldState.doc.content.size === 2) {
+					return cur
+				}
+
+				// Don't open bubble if neither selection nor doc changed
+				const sameSelection = oldState.selection.eq(newState.selection)
+				// Don't open bubble on changes by other session members
+				const noHistory = tr.getMeta('addToHistory') === false
+				if (sameSelection && (noHistory || !tr.docChanged)) {
+					return cur
+				}
+				return { active: activeLinkFromSelection(newState), focusInput: false }
 			},
 		},
 
@@ -137,29 +151,6 @@ export function linkBubble(options: { editor: Editor }) {
 			options,
 			plugin: linkBubblePlugin,
 		}),
-
-		appendTransaction: (transactions, oldState, state) => {
-			// Don't open bubble at editor initialisation
-			if (oldState?.doc.content.size === 2) {
-				return
-			}
-
-			// Explicit updates of the bubble state take precedence
-			if (transactions.some((tr) => tr.getMeta(linkBubbleKey))) {
-				return
-			}
-
-			// Don't open bubble if neither selection nor doc changed
-			const sameSelection = oldState?.selection.eq(state.selection)
-			const sameDoc = oldState?.doc.eq(state.doc)
-			// Don't open bubble on changes by other session members
-			const noHistory = transactions.every((tr) => tr.getMeta('addToHistory') === false)
-			if (sameSelection && (noHistory || sameDoc)) {
-				return
-			}
-			const active = activeLinkFromSelection(state)
-			return state.tr.setMeta(linkBubbleKey, { active })
-		},
 
 		props: {
 			handleDOMEvents: {
