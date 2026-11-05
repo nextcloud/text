@@ -86,8 +86,14 @@ div.ProseMirror {
 		}
 	}
 
-	> *:first-child {
+	// Widgets such as the gap cursor don't take space, so make sure the top margin
+	// goes into the first real node.
+	> *:nth-child(1 of :not(:where(.ProseMirror-widget))) {
 		margin-top: 10px;
+	}
+
+	> .ProseMirror-gapcursor:first-child::after {
+		top: 8px;
 	}
 
 	> h1,
