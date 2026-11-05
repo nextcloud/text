@@ -58,17 +58,13 @@ function collapseWhiteSpace(textNode: Text) {
 	const COLLAPSING_WHITE_SPACE_VALUES = ['normal', 'nowrap']
 	let ancestor = textNode.parentElement
 	while (ancestor) {
-		// Chrome does not support getComputedStyle on detached dom
-		// https://lists.w3.org/Archives/Public/www-style/2018May/0031.html
-		// Therefore the following logic only works on Firefox
-		const style = getComputedStyle(ancestor)
-		const whiteSpace = style?.getPropertyValue('white-space')
+		// Only inline styles are considered, as Chrome does not compute
+		// styles for detached documents.
+		const whiteSpace = ancestor.style.getPropertyValue('white-space')
 		if (whiteSpace) {
-			// Returns false if white-space has a value not listed in COLLAPSING_WHITE_SPACE_VALUES
 			return COLLAPSING_WHITE_SPACE_VALUES.includes(whiteSpace)
 		}
 
-		// Check for `tagName` as fallback on Chrome
 		if (ancestor.tagName === 'PRE') {
 			return false
 		}
