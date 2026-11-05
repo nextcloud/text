@@ -64,3 +64,12 @@ test('updates headings', async () => {
 	expect(injected.headings).toEqual(headingsForContent)
 	editor.destroy()
 })
+
+test('updates heading level', async () => {
+	const editor = createCustomEditor(content, [Heading])
+	const wrapper = createWrapper(editor)
+	editor.chain().setTextSelection(1).setHeading({ level: 3 }).run()
+	await nextTick()
+	expect(wrapper.vm.headings.map((h) => h.level)).toEqual([3, 2])
+	editor.destroy()
+})
