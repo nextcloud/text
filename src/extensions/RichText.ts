@@ -91,6 +91,10 @@ export default Extension.create<RichTextOptions>({
 			Markdown,
 			Document.extend({
 				content: 'block+ comments? footnotes?',
+				// The trailing `comments`/`footnotes` make `footnotes` the default
+				// type after the first block, so without this override the gap
+				// cursor's textblock check rejects every position but the start.
+				allowGapCursor: true,
 			}),
 			Text,
 			Paragraph,
