@@ -8,13 +8,29 @@ import type { Heading } from '../composables/useEditorHeadings.ts'
 
 import { slugify } from './slug.js'
 
+const cache = new WeakMap<Node, Heading[]>()
+
+/**
+ * Headings of the doc, cached per doc node.
+ *
+ * @param doc - the prosemirror doc
+ */
+export function getHeadings(doc: Node): Heading[] {
+	let headings = cache.get(doc)
+	if (!headings) {
+		headings = extractHeadings(doc)
+		cache.set(doc, headings)
+	}
+	return headings
+}
+
 /**
  * Extract heading data structure from doc
  *
  * @param doc - the prosemirror doc
  * @return headings found in the doc
  */
-export default function extractHeadings(doc: Node) {
+export function extractHeadings(doc: Node) {
 	const counter = new Map()
 	const headings: Heading[] = []
 

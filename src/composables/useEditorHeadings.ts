@@ -8,7 +8,7 @@ import type { InjectionKey, Ref, ShallowRef } from 'vue'
 
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { inject, onUnmounted, provide, ref, shallowRef } from 'vue'
-import { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
+import { getHeadings } from '../plugins/extractHeadings.js'
 
 export type Heading = {
 	id: string
@@ -32,8 +32,7 @@ export function provideEditorHeadings(editor: Editor) {
 	const displayToc = ref<boolean>(false)
 
 	const updateHeadings = () => {
-		headings.value
-			= headingAnchorPluginKey.getState(editor.state)?.headings ?? []
+		headings.value = getHeadings(editor.state.doc)
 	}
 	updateHeadings() // Initial sync on setup
 	editor.on('update', ({ transaction }) => {
