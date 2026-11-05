@@ -60,4 +60,12 @@ describe('transformPastedHTML', () => {
 	it('preserve newlines in deep nested code blocks', () => {
 		expect(tr('<pre><code><em>this\nis code</em>\nplease preserve\n  whitespace!\nThanks</code></pre>')).toBe('<pre><code><em>this\nis code</em>\nplease preserve\n  whitespace!\nThanks</code></pre>')
 	})
+
+	it('preserve newlines in children of tags with white-space: pre', () => {
+		expect(tr('<div style="white-space: pre;"><span>a\nb</span></div>')).toBe('<div style="white-space: pre;"><span>a\nb</span></div>')
+	})
+
+	it('strips newlines in tags with white-space: normal nested in pre', () => {
+		expect(tr('<pre><span style="white-space: normal;">a\nb</span></pre>')).toBe('<pre><span style="white-space: normal;">a b</span></pre>')
+	})
 })
