@@ -6,7 +6,7 @@
 import { Blockquote } from '@tiptap/extension-blockquote'
 import Details from '../../nodes/Details.js'
 import Heading from '../../nodes/Heading.js'
-import extractHeadings from '../../plugins/extractHeadings.ts'
+import { extractHeadings, getHeadings } from '../../plugins/extractHeadings.ts'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractHeadings', () => {
@@ -72,6 +72,23 @@ describe('extractHeadings', () => {
 		const doc = prepareDoc(content)
 		const headings = extractHeadings(doc)
 		expect(headings[1].id).toEqual('h-level-1-heading--1')
+	})
+})
+
+describe('getHeadings', () => {
+	it('returns the cached headings for the same doc', () => {
+		const doc = prepareDoc('<h1>Heading</h1>')
+		expect(getHeadings(doc)).toBe(getHeadings(doc))
+	})
+
+	it('extracts headings again for a changed doc', () => {
+		const editor = createCustomEditor('<h1>Heading</h1>', [Heading])
+		const before = getHeadings(editor.state.doc)
+		editor.commands.insertContentAt(1, 'New ')
+		const after = getHeadings(editor.state.doc)
+		editor.destroy()
+		expect(after).not.toBe(before)
+		expect(after[0].id).toBe('h-new-heading')
 	})
 })
 
