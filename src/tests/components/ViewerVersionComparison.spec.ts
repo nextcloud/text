@@ -14,6 +14,8 @@ import { logger } from '../../helpers/logger.ts'
 
 const viewer = vi.hoisted(() => new EventTarget())
 vi.mock('@nextcloud/viewer', () => ({ getViewer: () => viewer }))
+const summaries = vi.hoisted(() => ({ on: false }))
+vi.mock('@nextcloud/initial-state', () => ({ loadState: (app: string, key: string, fallback: unknown) => key === 'version_summaries' ? summaries.on : fallback }))
 
 const baseSource = 'https://cloud.example/remote.php/dav/versions/alice/versions/7/1691420501'
 const fileSource = 'https://cloud.example/remote.php/dav/files/alice/notes.md'
@@ -22,8 +24,9 @@ const contents: Record<string, string> = {
 	[fileSource]: '# New title\n\n**Plain** text',
 }
 
+// The bytes of a file, as DAV serves Markdown
 function response(text: string) {
-	return { data: text, headers: {} }
+	return { data: new TextEncoder().encode(text).buffer, headers: { 'content-type': 'text/markdown;charset=UTF-8' } }
 }
 
 /**

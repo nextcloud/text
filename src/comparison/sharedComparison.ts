@@ -5,20 +5,15 @@
 
 import type { IFile } from '@nextcloud/files'
 import type { Ref, ShallowRef } from 'vue'
+import type { LoadedText } from './decode.ts'
 import type { ComparisonSession } from './session.ts'
 
 import axios from '@nextcloud/axios'
 import { nextTick, onScopeDispose, ref, shallowRef } from 'vue'
 import { closingSaveOf } from '../helpers/closingSaves.ts'
 import { logger } from '../helpers/logger.ts'
+import { loadText } from './decode.ts'
 import { createComparisonSession } from './session.ts'
-
-/** A file as it was loaded */
-interface LoadedText {
-	text: string
-	/** When the server last changed it, in seconds, if it said */
-	modified?: number
-}
 
 /** Both texts compared, as they were loaded */
 export interface ComparedTexts {
@@ -33,6 +28,8 @@ interface SharedComparison {
 	session: ShallowRef<ComparisonSession | undefined>
 	texts: ShallowRef<ComparedTexts | undefined>
 	error: Ref<boolean>
+	/** Height of the summary in one pane, which the other pane leaves free so both documents start level */
+	summaryHeight: Ref<number>
 }
 
 const comparisons = new Map<string, SharedComparison>()
@@ -50,7 +47,7 @@ export function useSharedComparison(base: IFile, file: IFile) {
 	const key = `${base.source}\n${file.source}`
 	let comparison = comparisons.get(key)
 	if (!comparison) {
-		comparison = { users: 0, loads: 0, session: shallowRef(), texts: shallowRef(), error: ref(false) }
+		comparison = { users: 0, loads: 0, session: shallowRef(), texts: shallowRef(), error: ref(false), summaryHeight: ref(0) }
 		comparisons.set(key, comparison)
 		load(key, comparison, base, file)
 	}
@@ -82,7 +79,7 @@ export function useSharedComparison(base: IFile, file: IFile) {
 		load(key, shared, base, file)
 	}
 
-	return { session: shared.session, texts: shared.texts, error: shared.error, reload }
+	return { session: shared.session, texts: shared.texts, error: shared.error, summaryHeight: shared.summaryHeight, reload }
 }
 
 /**
@@ -104,15 +101,18 @@ async function load(key: string, comparison: SharedComparison, base: IFile, file
 			return
 		}
 		// Files are served without caching rules, so browsers may reuse an old copy
-		const options = { responseType: 'text', headers: { 'Cache-Control': 'no-cache' }, timeout: 30_000 } as const
+		const options = { responseType: 'arraybuffer', headers: { 'Cache-Control': 'no-cache' }, timeout: 30_000 } as const
 		const [before, after] = await Promise.all([
-			axios.get<string>(base.encodedSource, options),
-			axios.get<string>(file.encodedSource, options),
+			axios.get<ArrayBuffer>(base.encodedSource, options),
+			axios.get<ArrayBuffer>(file.encodedSource, options),
 		])
 		if (stale()) {
 			return
 		}
-		const texts = { before: loaded(before), after: loaded(after) }
+		const texts = {
+			before: loadText(before.data, before.headers),
+			after: loadText(after.data, after.headers),
+		}
 		comparison.texts.value = texts
 		comparison.session.value = createComparisonSession(texts.before.text, texts.after.text, { filePath: file.path })
 	} catch (exception) {
@@ -122,9 +122,4 @@ async function load(key: string, comparison: SharedComparison, base: IFile, file
 		logger.error('Failed to load versions for comparison', { exception })
 		comparison.error.value = true
 	}
-}
-
-function loaded(response: { data: string, headers: Record<string, unknown> }): LoadedText {
-	const modified = Date.parse(String(response.headers['last-modified'] ?? ''))
-	return { text: response.data, modified: Number.isNaN(modified) ? undefined : modified / 1000 }
 }
