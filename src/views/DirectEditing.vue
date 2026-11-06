@@ -11,7 +11,7 @@
 			:context
 			active
 			autofocus
-			:mime="initial.mimetype"
+			:mime="mimetype"
 			isDirectEditing
 			@ready="loaded"
 			@push:forbidden="onPushForbidden">
@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { reactive } from 'vue'
 import EditorReloader from '../components/EditorReloader.vue'
+import { openDirectEditing } from '../apis/connect.ts'
 import { logger } from '../helpers/logger.ts'
 
 const log = reactive({
@@ -84,12 +86,20 @@ window.addEventListener('message', function(message) {
 	logger.debug('postMessage', { message })
 })
 
+window.OCA.Text.openDirectEditing = async (url) => {
+	logger.debug('opening direct editing url', { url })
+	const directEditing = await openDirectEditing({ url })
+	emit('text:directEditing:open', directEditing)
+}
+
 export default {
 	name: 'DirectEditing',
 	components: { EditorReloader },
 	data() {
 		return {
-			initial: OCP.InitialState.loadState('text', 'file'),
+			mimetype: undefined,
+			fileId: undefined,
+			initialSession: undefined,
 			messages: log.messages,
 			log,
 			saving: false,
@@ -97,9 +107,6 @@ export default {
 	},
 
 	computed: {
-		initialSession() {
-			return JSON.parse(this.initial.session) || null
-		},
 
 		isMobile() {
 			return (
@@ -112,17 +119,24 @@ export default {
 
 		context() {
 			return {
-				id: this.initial.fileId,
+				id: this.fileId,
 				type: 'file',
 			}
 		},
 	},
 
 	beforeMount() {
-		callMobileMessage('loading')
+		const initialState = OCP.InitialState.loadState('text', 'file')
+		if (initialState) {
+			callMobileMessage('loading')
+			this.initialSession = JSON.parse(initialState.session) || null
+			this.mimetype = initialState.mimetype
+			this.fileId = initialState.fileId
+		}
 	},
 
 	mounted() {
+		subscribe('text:directEditing:open', this.updateDirectEditing)
 		document
 			.querySelector('meta[name="viewport"]')
 			.setAttribute(
@@ -131,7 +145,18 @@ export default {
 			)
 	},
 
+	unmounted() {
+		unsubscribe('text:directEditing:open', this.updateDirectEditing)
+	},
+
 	methods: {
+		updateDirectEditing(value) {
+			logger.debug('updating direct editing', value)
+			this.initialSession = value.session
+			this.mimetype = value.mimetype
+			this.fileId = value.fileId
+		},
+
 		async close() {
 			this.saving = true
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))

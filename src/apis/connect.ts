@@ -5,10 +5,10 @@
 
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
-import type { GuestSession, Session } from '../types/Session.ts'
+import type { GuestSession, Session, UserSession } from '../types/Session.ts'
 
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateOcsUrl, generateUrl } from '@nextcloud/router'
 
 export interface OpenContextParams {
 	type: string
@@ -73,6 +73,28 @@ export async function openShare(params: OpenShareParams): Promise<{ connection: 
 		shareToken: params.token,
 	}
 	return { connection, data: response.data }
+}
+
+interface DirectEditingState {
+	session: UserSession
+	fileId: number
+	mimeType: string
+}
+
+/**
+ * Open a direct editing url to start editing the file in question
+ *
+ * Opens the direct editing token without loading a new html page.
+ * The response can be used to load the file in the current page.
+ *
+ * @param params send with the request.
+ * @param params.url the direct editing url as provided by the server.
+ */
+export async function openDirectEditing(params: { url: string }): Promise<DirectEditingState> {
+	const url = generateOcsUrl('/apps/text/directEditing/edit')
+	const token = params.url.split('/').at(-1)
+	const response = await axios.post(url, { ...params, token })
+	return response.data.ocs.data
 }
 
 /**

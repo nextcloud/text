@@ -78,6 +78,23 @@ export class Node {
 		return { token, id }
 	}
 
+	async createDirectEditingLink(): Promise<{ url: string }> {
+		const path = `/${this.name}`
+		const response = await this.page.request.post(
+			'/ocs/v2.php/apps/files/api/v1/directEditing/open?format=json',
+			{
+				data: { path },
+				headers: ocsHeaders,
+				/*
+					'OCS-ApiRequest': 'true',
+					'Content-Type': 'application/x-www-form-urlencoded',
+				*/
+			},
+		)
+		const { ocs } = await response.json() as { ocs: { data: { url: string } } }
+		return ocs.data
+	}
+
 	async getContent() {
 		const response = await this.page.request.get(`/remote.php/webdav/${this.name}`)
 		return response.text()

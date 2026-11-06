@@ -26,6 +26,8 @@ import type { ComponentInstance, ShallowRef } from 'vue'
 
 import { nextTick, ref, useTemplateRef, watch } from 'vue'
 import CollaborativeEditor from './CollaborativeEditor.vue'
+import { logger } from '../helpers/logger.ts'
+
 const props = defineProps(CollaborativeEditor.props)
 defineEmits(['focus', 'push:forbidden'])
 const reloading = ref(false)
@@ -36,6 +38,14 @@ watch(reloading, (val) => {
 		})
 	}
 })
+
+watch(
+	() => props.initialSession,
+	(cur, old) => {
+		logger.debug('initialSession changed', { old, cur })
+		reloading.value = true
+	},
+)
 
 const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof CollaborativeEditor | null>>>
 defineExpose({

@@ -36,6 +36,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Context\\UnauthorizedFileContext' => __DIR__ . '/..' . '/../lib/Context/UnauthorizedFileContext.php',
         'OCA\\Text\\Controller\\AiController' => __DIR__ . '/..' . '/../lib/Controller/AiController.php',
         'OCA\\Text\\Controller\\AttachmentController' => __DIR__ . '/..' . '/../lib/Controller/AttachmentController.php',
+        'OCA\\Text\\Controller\\DirectEditingController' => __DIR__ . '/..' . '/../lib/Controller/DirectEditingController.php',
         'OCA\\Text\\Controller\\ISessionAwareController' => __DIR__ . '/..' . '/../lib/Controller/ISessionAwareController.php',
         'OCA\\Text\\Controller\\NavigationController' => __DIR__ . '/..' . '/../lib/Controller/NavigationController.php',
         'OCA\\Text\\Controller\\PublicSessionController' => __DIR__ . '/..' . '/../lib/Controller/PublicSessionController.php',
