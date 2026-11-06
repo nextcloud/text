@@ -12,6 +12,7 @@ use OCA\Text\Controller;
 
 return [
 	'routes' => [
+		['name' => 'Embedding#get', 'url' => '/embedding', 'verb' => 'GET'],
 		/** @see Controller\AttachmentController::getAttachmentList() */
 		['name' => 'Attachment#getAttachmentList', 'url' => '/attachments', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::insertAttachmentFile() */

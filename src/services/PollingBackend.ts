@@ -11,7 +11,6 @@ import type { Step } from '../types/Step.ts'
 import type { EventTypes } from './NotifyService.ts'
 import type { SyncService } from './SyncService.js'
 
-import { sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { ERROR_TYPE } from '../types/ErrorType.ts'
 import getNotifyBus from './NotifyService.ts'
@@ -135,7 +134,7 @@ class PollingBackend {
 		logger.debug('[PollingBackend] Fetching steps', {
 			version: this.#syncService.version,
 		})
-		await sync(this.#connection, {
+		await this.#syncService.transport.sync(this.#connection, {
 			version: this.#syncService.version,
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this.#lastPoll = Date.now()
