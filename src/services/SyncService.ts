@@ -10,16 +10,16 @@ import type { Document } from '../types/Document.ts'
 import type { ErrorType } from '../types/ErrorType.ts'
 import type { GuestSession, Session, UserSession } from '../types/Session.ts'
 import type { Step } from '../types/Step.ts'
+import type { SessionTransport } from './SessionTransport.ts'
 
 import mitt from 'mitt'
-import { close } from '../apis/connect.ts'
-import { push } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps.ts'
 import { documentStateToStep } from '../helpers/yjs.ts'
 import { ERROR_TYPE } from '../types/ErrorType.ts'
 import Outbox from './Outbox.ts'
 import PollingBackend from './PollingBackend.ts'
+import { browserSessionTransport } from './SessionTransport.ts'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -96,14 +96,18 @@ class SyncService {
 	#openConnection: () => Promise<OpenData>
 	#lastStepPush = Date.now()
 	#pushing?: Promise<void>
+	readonly transport: SessionTransport
 
 	constructor({
 		connection,
 		openConnection,
+		transport = browserSessionTransport,
 	}: {
 		connection: ShallowRef<Connection | undefined>
 		openConnection: () => Promise<OpenData>
+		transport?: SessionTransport
 	}) {
+		this.transport = transport
 		this.connection = connection
 		this.#openConnection = openConnection
 	}
@@ -196,6 +200,21 @@ class SyncService {
 		return this.#pushing
 	}
 
+	async drain() {
+		clearInterval(this.#sendIntervalId)
+		this.#sendIntervalId = undefined
+		for (let pass = 0; pass < 32; pass++) {
+			if (!this.hasActiveConnection()) {
+				throw new Error('No active Text session')
+			}
+			if (!this.#pushing && !this.#outbox.hasPending) {
+				return this.version
+			}
+			await (this.#pushing ?? this.sendStepsNow())
+		}
+		throw new Error('Text updates did not drain')
+	}
+
 	async #push() {
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
@@ -204,7 +223,7 @@ class SyncService {
 			return
 		}
 		const sendable = this.#outbox.getDataToSend()
-		return push(this.connection, {
+		return this.transport.push(this.connection, {
 			version: this.version,
 			...sendable,
 		})
@@ -316,7 +335,7 @@ class SyncService {
 		this.bus.emit('close')
 
 		if (activeConnection) {
-			await close(activeConnection)
+			await this.transport.close(activeConnection)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })

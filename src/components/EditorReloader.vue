@@ -39,6 +39,8 @@ watch(reloading, (val) => {
 
 const editorComponent = useTemplateRef('editor-component') as Readonly<ShallowRef<ComponentInstance<typeof CollaborativeEditor | null>>>
 defineExpose({
+	get exportState() { return editorComponent.value?.exportState },
+	get drain() { return editorComponent.value?.drain },
 	get editor() {
 		return editorComponent.value?.editor
 	},

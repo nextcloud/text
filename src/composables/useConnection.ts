@@ -12,6 +12,7 @@ import type { Session } from '../types/Session.ts'
 
 import { inject, provide, shallowRef } from 'vue'
 import * as api from '../apis/connect.ts'
+import { browserSessionTransport, sessionTransportKey } from '../services/SessionTransport.ts'
 
 export interface InitialData {
 	document: Document
@@ -52,6 +53,7 @@ export function provideConnection(
 	getBaseVersionEtag: () => Promise<string | undefined>,
 	setBaseVersionEtag: (val: string) => Promise<string | undefined>,
 ) {
+	const transport = (inject(sessionTransportKey, browserSessionTransport) ?? browserSessionTransport)
 	const connection = shallowRef<Connection | undefined>(undefined)
 	const openData = shallowRef<OpenData | undefined>(undefined)
 	const openConnection = async () => {
@@ -60,7 +62,7 @@ export function provideConnection(
 		const { connection: opened, data }
 			= openInitialSession(props, baseVersionEtag)
 				|| await openShare(props, baseVersionEtag, guestName)
-				|| await openContext(props, baseVersionEtag)
+				|| await transport.openContext({ ...props.context, filePath: props.relativePath, baseVersionEtag })
 		await setBaseVersionEtag(data.document.baseVersionEtag)
 		connection.value = opened
 		openData.value = data
@@ -152,26 +154,4 @@ async function openShare(
 			baseVersionEtag,
 		})
 	}
-}
-
-/**
- * Get the connection and additional data from the initial session if available.
- *
- * @param props Props of the editor component
- * @param props.context of the document (i.e. type 'file' and id of the file)
- * @param props.relativePath Relative path to the file.
- * @param baseVersionEtag Etag from the last editing session.
- */
-async function openContext(
-	props: {
-		context: Context
-		relativePath: string
-	},
-	baseVersionEtag: string | undefined,
-) {
-	return api.openContext({
-		...props.context,
-		filePath: props.relativePath,
-		baseVersionEtag,
-	})
 }

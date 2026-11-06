@@ -45,3 +45,36 @@ The paired native WebKit smoke suite exercises the authenticated endpoint,
 matching and incompatible session operations, collaboration, reconnect and save
 confirmation against a real server. Transport injection and a durable editor
 drain/save/close contract remain separate follow-up work.
+
+## Small public editor seam
+
+`createCollaborativeEditor({ el, context, sessionTransport })` accepts a per-editor
+transport with the existing `openContext`, `sync`, `push`, `save` and `close`
+shapes. The default browser transport is unchanged. Injected transports use
+in-memory state instead of IndexedDB; the host owns account/file binding,
+credentials, storage, request limits and timeouts. Public shares are not supported
+by the injected transport yet. Browser sendBeacon never bypasses it.
+
+Two wrapper methods expose the required editor state without component accessors:
+
+```ts
+const editor = await createCollaborativeEditor({ el, context, sessionTransport })
+const checkpoint = editor.exportState()
+const drained = await editor.drain()
+```
+
+The snapshot contains a full base64 Yjs update, state vector, Markdown, version,
+context and collaboration base ETag, without session credentials. `drain()`
+freezes user input, waits for queued/in-flight provider updates, and returns a
+snapshot; failures reject. It does not persist, save, or close the session.
+
+The host must persist recovery state, control file-save requests, verify the saved
+version, close through its own transport, and fetch canonical DAV Markdown/ETag
+before releasing ownership and destroying the editor. Automatic save requests
+still go through the injected transport and can be deferred by the host.
+
+`playwright/e2e/embedding.spec.ts` uses the existing Text fixtures to test two
+embedded clients, Unicode convergence, valid Yjs export and drain acknowledgements.
+The larger demo and checkpoint/save/close coordinator live in the
+[native app repository](https://github.com/juliusknorr/collectives-swiftui/tree/feat/text-collaboration/dev/text-collaboration/embedding).
+Per-edit durability and cold-restart recovery remain host-side follow-up work.

@@ -7,13 +7,15 @@ import type { ShallowRef } from 'vue'
 import type { SaveData } from '../apis/save.ts'
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
+import type { SessionTransport } from './SessionTransport.ts'
 
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 import mitt from 'mitt'
-import { save, saveViaSendBeacon } from '../apis/save.ts'
+import { saveViaSendBeacon } from '../apis/save.ts'
 import { logger } from '../helpers/logger.js'
 import { ERROR_TYPE } from '../types/ErrorType.ts'
+import { browserSessionTransport } from './SessionTransport.ts'
 
 // Time constants in seconds:
 // Only autosave after 1 second typing breaks
@@ -40,16 +42,20 @@ class SaveService {
 	pushChanges
 	autosave
 	clear
+	readonly transport: SessionTransport
 
 	constructor({
 		connection,
 		getSaveData,
 		pushChanges = async () => {},
+		transport = browserSessionTransport,
 	}: {
 		connection: ShallowRef<Connection | undefined>
 		getSaveData: () => SaveData
 		pushChanges?: () => Promise<void>
+		transport?: SessionTransport
 	}) {
+		this.transport = transport
 		this.connection = connection
 		this.getSaveData = getSaveData
 		this.pushChanges = pushChanges
@@ -77,7 +83,7 @@ class SaveService {
 		const data = this.getSaveData()
 		try {
 			this.lastSaveAttempt = Date.now()
-			const response = await save(this.connection.value, {
+			const response = await this.transport.save(this.connection.value, {
 				...data,
 				force,
 				manualSave,
@@ -125,6 +131,9 @@ class SaveService {
 	}
 
 	saveViaSendBeacon() {
+		if (this.transport !== browserSessionTransport) {
+			return false
+		}
 		if (!this.connection.value) {
 			return
 		}
