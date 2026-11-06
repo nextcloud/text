@@ -6,9 +6,10 @@
 import type { Doc } from 'yjs'
 import type { Context } from '../types/Context.ts'
 
-import { readonly, ref } from 'vue'
+import { inject, readonly, ref } from 'vue'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import { logger } from '../helpers/logger.js'
+import { sessionTransportKey } from '../services/SessionTransport.ts'
 
 /**
  * Initialize a indexed db provider for the given ydoc
@@ -23,6 +24,25 @@ export function useIndexedDbProvider(
 	},
 	ydoc: Doc,
 ) {
+	if (inject(sessionTransportKey, undefined)) {
+		// Host transports own account-scoped persistence and recovery.
+		const dirty = ref(false)
+		let base: string | undefined
+		return {
+			dirty: readonly(dirty),
+			whenSynced: Promise.resolve(),
+			getBaseVersionEtag: async () => base,
+			setBaseVersionEtag: async (value: string) => {
+				base = value
+				return base
+			},
+			setDirty: async (value: boolean) => { dirty.value = value },
+			clearIndexedDb: async () => {
+				base = undefined
+				dirty.value = false
+			},
+		}
+	}
 	const name = `text-${props.context.type}-${props.context.id}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
@@ -71,7 +91,7 @@ export function useIndexedDbProvider(
 			logger.debug('IndexedDB already destroyed, skipping setBaseVersionEtag')
 			return Promise.resolve(undefined)
 		}
-		return indexedDbProvider.set('baseVersionEtag', val)
+		return indexedDbProvider.set('baseVersionEtag', val).then(() => val)
 	}
 
 	/**

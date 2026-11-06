@@ -15,6 +15,7 @@ import type { Document } from '../types/Document.ts'
 import { computed, inject, onUnmounted, provide, ref, watch } from 'vue'
 import { getDocumentState } from '../helpers/yjs.ts'
 import { SaveService } from '../services/SaveService.ts'
+import { browserSessionTransport, sessionTransportKey } from '../services/SessionTransport.ts'
 
 const saveServiceKey = Symbol('text:save') as InjectionKey<SaveService>
 
@@ -51,6 +52,7 @@ export function provideSaveService(
 	const saveService = new SaveService({
 		connection,
 		getSaveData,
+		transport: inject(sessionTransportKey, browserSessionTransport) ?? browserSessionTransport,
 	})
 
 	const autosaveOnUpdate = ({ transaction }: { transaction: Transaction }) => {
