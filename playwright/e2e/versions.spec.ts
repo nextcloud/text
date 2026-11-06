@@ -80,6 +80,25 @@ test.describe('Versions with distant timestamps', () => {
 		await expect(change.locator('ins')).toHaveText('3')
 		await expect(before).toHaveCount(0)
 	})
+
+	test('Compare what was typed just before', async ({ editor, open, page, viewer }) => {
+		await open()
+		await editor.content.getByRole('heading', { name: 'V3' }).click()
+		await editor.press('End')
+		await editor.type(' draft')
+		// The save on closing lands only after the comparison started
+		await page.route('**/apps/text/session/*/save', async (route) => {
+			await new Promise((resolve) => setTimeout(resolve, 1500))
+			await route.continue()
+		})
+		const versions = await viewer.openSidebarTab('Versions')
+		await versions.getByRole('button').nth(2).click()
+		await page
+			.getByRole('menuitem', { name: 'Compare to current version' })
+			.click()
+
+		await expect(page.getByRole('article', { name: 'After' }).getByRole('heading', { name: 'V3 draft' })).toBeVisible()
+	})
 })
 
 /**

@@ -9,6 +9,7 @@ import type { ComparisonSession } from './session.ts'
 
 import axios from '@nextcloud/axios'
 import { onScopeDispose, ref, shallowRef } from 'vue'
+import { closingSaveOf } from '../helpers/closingSaves.ts'
 import { logger } from '../helpers/logger.ts'
 import { createComparisonSession } from './session.ts'
 
@@ -64,17 +65,28 @@ export function useSharedComparison(base: IFile, file: IFile) {
  * @param file The newer file.
  */
 async function load(key: string, comparison: SharedComparison, base: IFile, file: IFile) {
+	// Nobody waits for it anymore
+	const stale = () => comparisons.get(key) !== comparison
 	try {
+		// The editor this comparison replaces may still be saving the newer file
+		await closingSaveOf(file.fileid)
+		if (stale()) {
+			return
+		}
+		// Files are served without caching rules, so browsers may reuse an old copy
+		const options = { responseType: 'text', headers: { 'Cache-Control': 'no-cache' }, timeout: 30_000 } as const
 		const [before, after] = await Promise.all([
-			axios.get<string>(base.encodedSource, { responseType: 'text' }),
-			axios.get<string>(file.encodedSource, { responseType: 'text' }),
+			axios.get<string>(base.encodedSource, options),
+			axios.get<string>(file.encodedSource, options),
 		])
-		// Nobody waits for it anymore
-		if (comparisons.get(key) !== comparison) {
+		if (stale()) {
 			return
 		}
 		comparison.session.value = createComparisonSession(before.data, after.data, { filePath: file.path })
 	} catch (exception) {
+		if (stale()) {
+			return
+		}
 		logger.error('Failed to load versions for comparison', { exception })
 		comparison.error.value = true
 	}
