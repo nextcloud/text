@@ -32,6 +32,7 @@ class VersionAccessServiceTest extends TestCase {
 	private IRootFolder&MockObject $rootFolder;
 	private IVersionManager&MockObject $versionManager;
 	private IUserManager&MockObject $userManager;
+	private FileService&MockObject $fileService;
 	private IUserFolder&MockObject $userFolder;
 	private IUser&MockObject $user;
 	private ContainerInterface&MockObject $container;
@@ -42,6 +43,7 @@ class VersionAccessServiceTest extends TestCase {
 		$this->rootFolder = $this->createMock(IRootFolder::class);
 		$this->versionManager = $this->createMock(IVersionManager::class);
 		$this->userManager = $this->createMock(IUserManager::class);
+		$this->fileService = $this->createMock(FileService::class);
 		$this->userFolder = $this->createMock(IUserFolder::class);
 		$this->user = $this->createMock(IUser::class);
 
@@ -59,6 +61,7 @@ class VersionAccessServiceTest extends TestCase {
 			$this->rootFolder,
 			$this->container,
 			$this->userManager,
+			$this->fileService,
 		);
 	}
 
@@ -130,6 +133,18 @@ class VersionAccessServiceTest extends TestCase {
 		$this->service->resolveFile($this->user, 42);
 	}
 
+	public function testSendsNothingOfAShareWithoutDownloads(): void {
+		$file = $this->file();
+		$this->userFolder->method('getFirstNodeById')->willReturn($file);
+		$this->fileService->method('isDownloadDisabled')->with($file)->willReturnOnConsecutiveCalls(false, true);
+
+		$this->assertSame($file, $this->service->resolveSendableFile($this->user, 42));
+		// Its versions are still listed, as in the Versions tab
+		$this->assertSame($file, $this->service->resolveFile($this->user, 42));
+		$this->expectException(NotFoundException::class);
+		$this->service->resolveSendableFile($this->user, 42);
+	}
+
 	public function testRefusesAFileTheUserCannotReach(): void {
 		// An unrelated user, or a member removed from a collective
 		$this->userFolder->method('getFirstNodeById')->with(42)->willReturn(null);
@@ -164,6 +179,7 @@ class VersionAccessServiceTest extends TestCase {
 			'label' => '',
 			'author' => ['id' => 'bob', 'displayName' => 'Bob'],
 		], $ends[0]->jsonSerialize());
+		$this->assertNull($ends[0]->version);
 		$this->assertNull($ends[1]->jsonSerialize()['author']);
 		$this->assertSame(['id' => 'alice', 'displayName' => 'Alice'], $ends[2]->jsonSerialize()['author']);
 		$this->assertSame('First draft', $ends[2]->label);
@@ -172,7 +188,7 @@ class VersionAccessServiceTest extends TestCase {
 	public function testListsOnlyTheCurrentFileWithFilesVersionsDisabled(): void {
 		$container = $this->createMock(ContainerInterface::class);
 		$container->method('get')->willThrowException(new \OCP\AppFramework\QueryException('IVersionManager'));
-		$service = new VersionAccessService($this->rootFolder, $container, $this->userManager);
+		$service = new VersionAccessService($this->rootFolder, $container, $this->userManager, $this->fileService);
 
 		$ends = $service->listVersions($this->user, $this->file());
 
@@ -182,7 +198,7 @@ class VersionAccessServiceTest extends TestCase {
 	public function testSaysWhetherFilesVersionsIsThere(): void {
 		$container = $this->createMock(ContainerInterface::class);
 		$container->method('get')->willThrowException(new \OCP\AppFramework\QueryException('IVersionManager'));
-		$without = new VersionAccessService($this->rootFolder, $container, $this->userManager);
+		$without = new VersionAccessService($this->rootFolder, $container, $this->userManager, $this->fileService);
 
 		$this->assertTrue($this->service->hasVersions());
 		$this->assertFalse($without->hasVersions());
@@ -204,5 +220,53 @@ class VersionAccessServiceTest extends TestCase {
 
 		$this->expectException(\RuntimeException::class);
 		$this->service->listVersions($this->user, $this->file());
+	}
+
+	public function testResolvesTheCurrentFileByItsRevisionToo(): void {
+		$file = $this->file();
+		$versions = [new VersionEnd('current', 3000, 300, '', null, null, null), new VersionEnd('1000', 1000, 100, '', null, null, null)];
+
+		$this->assertSame('current', $this->service->resolveEnd($file, $versions, '3000')->id);
+		$this->assertSame('1000', $this->service->resolveEnd($file, $versions, '1000')->id);
+		$this->expectException(\OCA\Text\Exception\VersionNotFoundException::class);
+		$this->service->resolveEnd($file, $versions, '999');
+	}
+
+	public function testReadsAnEndUpToALimit(): void {
+		$file = $this->file();
+		$file->method('fopen')->willReturnCallback(fn () => $this->stream('# Current'));
+		$version = $this->version(1000, 100);
+		// Collectives reads its current page as a version backed by the live file too
+		$this->versionManager->method('read')->with($version)->willReturnCallback(fn () => $this->stream('# Old'));
+
+		$this->assertSame('# Current', $this->service->read($file, new VersionEnd('current', 3000, 9, '', null, null, null), 9));
+		$this->assertNull($this->service->read($file, new VersionEnd('current', 3000, 9, '', null, null, null), 8));
+		$this->assertSame('# Old', $this->service->read($file, new VersionEnd('1000', 1000, 5, '', null, null, $version), 100));
+	}
+
+	public function testRefusesAVersionItCannotRead(): void {
+		$version = $this->version(1000, 100);
+		$this->versionManager->method('read')->willReturn(false);
+
+		$this->expectException(\OCA\Text\Exception\VersionNotFoundException::class);
+		$this->service->read($this->file(), new VersionEnd('1000', 1000, 5, '', null, null, $version), 100);
+	}
+
+	public function testRefusesAVersionThatExpiredSinceItWasListed(): void {
+		$version = $this->version(1000, 100);
+		$this->versionManager->method('read')->willThrowException(new NotFoundException('expired'));
+
+		$this->expectException(\OCA\Text\Exception\VersionNotFoundException::class);
+		$this->service->read($this->file(), new VersionEnd('1000', 1000, 5, '', null, null, $version), 100);
+	}
+
+	/**
+	 * @return resource
+	 */
+	private function stream(string $content) {
+		$stream = fopen('php://memory', 'r+');
+		fwrite($stream, $content);
+		rewind($stream);
+		return $stream;
 	}
 }

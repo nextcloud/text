@@ -12,6 +12,7 @@ namespace OCA\Text\Cron;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
+use OCA\Text\Service\VersionSummaryService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use OCP\Files\ISetupManager;
@@ -26,6 +27,7 @@ class Cleanup extends TimedJob {
 		private readonly AttachmentService $attachmentService,
 		private readonly LoggerInterface $logger,
 		private readonly ISetupManager $setupManager,
+		private readonly VersionSummaryService $versionSummaryService,
 	) {
 		parent::__construct($time);
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
@@ -35,6 +37,13 @@ class Cleanup extends TimedJob {
 	 * @param array $argument
 	 */
 	protected function run($argument): void {
+		$this->logger->debug('Run cleanup job for summaries of changes');
+		try {
+			$this->versionSummaryService->cleanup();
+		} catch (\Exception $e) {
+			$this->logger->error('Could not clean up summaries of changes', ['exception' => $e]);
+		}
+
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllPendingAttachmentCleanup() as $document) {
 			if ($this->documentService->hasUnsavedChanges($document)) {

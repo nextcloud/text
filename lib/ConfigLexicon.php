@@ -63,6 +63,34 @@ class ConfigLexicon implements ILexicon {
 				definition: 'Delay before editor switches to read-onl when offline (in seconds)',
 				lazy: false,
 			),
+			new Entry(
+				key: 'version_summaries_enabled',
+				type: ValueType::BOOL,
+				defaultRaw: false,
+				definition: 'Whether people can summarize the changes between two versions of a Markdown file with the configured AI provider',
+				lazy: false,
+			),
+			new Entry(
+				key: 'version_summaries_hourly_limit',
+				type: ValueType::INT,
+				defaultRaw: 60,
+				definition: 'How many summaries of changes the whole instance may start per hour',
+				lazy: true,
+			),
+			new Entry(
+				key: 'version_summaries_user_hourly_limit',
+				type: ValueType::INT,
+				defaultRaw: 10,
+				definition: 'How many summaries of changes one person may start per hour',
+				lazy: true,
+			),
+			new Entry(
+				key: 'version_summaries_max_input_bytes',
+				type: ValueType::INT,
+				defaultRaw: 240_000,
+				definition: 'Largest input in bytes, both versions and the instructions, sent to the AI provider for a summary of changes (at most 480000)',
+				lazy: true,
+			),
 		];
 	}
 
