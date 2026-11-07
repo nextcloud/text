@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d8e0b925d4cdb9d6338b85fd1f6b31a",
+    "content-hash": "fa827c0e32f1f33b7104574d2ec623e9",
     "packages": [],
     "packages-dev": [
         {
@@ -343,8 +343,7 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/master"
             },
-            "time": "2026-10-29T20:04:32+00:00",
-            "published-time": "2026-10-29T20:04:39+00:00"
+            "time": "2026-10-29T20:04:32+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1006,16 +1005,16 @@
         },
         {
             "name": "psalm/phar",
-            "version": "6.20.1",
+            "version": "7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "0cff3b1ecec60f3d963fff2ecb46c371cd2a60bb"
+                "reference": "1017ee6d6c028ac61f9e060dbf86d5d8b6fb315b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/0cff3b1ecec60f3d963fff2ecb46c371cd2a60bb",
-                "reference": "0cff3b1ecec60f3d963fff2ecb46c371cd2a60bb",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/1017ee6d6c028ac61f9e060dbf86d5d8b6fb315b",
+                "reference": "1017ee6d6c028ac61f9e060dbf86d5d8b6fb315b",
                 "shasum": ""
             },
             "require": {
@@ -1035,9 +1034,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/6.20.1"
+                "source": "https://github.com/psalm/phar/tree/7.0.0"
             },
-            "time": "2026-10-20T12:37:30+00:00"
+            "time": "2026-11-02T17:01:23+00:00"
         },
         {
             "name": "psr/clock",
@@ -3856,5 +3855,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
