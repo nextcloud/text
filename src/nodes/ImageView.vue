@@ -427,7 +427,9 @@ export default {
 			}
 
 			// Download file
-			window.location.assign(this.attachment.fullUrl)
+			if (this.attachment.fullUrl) {
+				window.location.assign(this.attachment.fullUrl)
+			}
 		},
 		async handleImageClick() {
 			await this.updateEmbeddedImageList()

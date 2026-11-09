@@ -176,8 +176,7 @@ class SessionMiddleware extends Middleware {
 				throw new InvalidSessionException();
 			}
 
-			$attributes = $share->getAttributes();
-			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
+			if (!$share->canSeeContent()) {
 				throw new InvalidSessionException();
 			}
 

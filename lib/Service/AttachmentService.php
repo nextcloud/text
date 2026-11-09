@@ -57,6 +57,7 @@ readonly class AttachmentService {
 	 */
 	public function getImageFile(int $documentId, string $imageFileName, string $userId, bool $preferRawImage): File|ISimpleFile|null {
 		$textFile = $this->getTextFile($documentId, $userId);
+		$preferRawImage = $preferRawImage && !$this->isDownloadDisabled($textFile);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
@@ -70,6 +71,7 @@ readonly class AttachmentService {
 	 */
 	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken, bool $preferRawImage): File|ISimpleFile|null {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		$preferRawImage = $preferRawImage && $this->canDownloadPublic($shareToken);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
@@ -110,6 +112,9 @@ readonly class AttachmentService {
 	 */
 	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): ?File {
 		$textFile = $this->getTextFile($documentId, $userId);
+		if ($this->isDownloadDisabled($textFile)) {
+			return null;
+		}
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
 
@@ -123,6 +128,9 @@ readonly class AttachmentService {
 	 */
 	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken): ?File {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		if (!$this->canDownloadPublic($shareToken)) {
+			return null;
+		}
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
 
@@ -135,7 +143,7 @@ readonly class AttachmentService {
 	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File) {
 			return $mediaFile;
 		}
 		return null;
@@ -174,7 +182,7 @@ readonly class AttachmentService {
 	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File) {
 			if ($this->previewManager->isMimeSupported($mediaFile->getMimeType())) {
 				try {
 					return [
@@ -223,6 +231,9 @@ readonly class AttachmentService {
 			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
+		$canDownload = $shareToken !== null
+			? $this->canDownloadPublic($shareToken)
+			: !$this->isDownloadDisabled($textFile);
 
 		// Folder davPath need to be relative to.
 		$davFolder = $userId !== null
@@ -256,9 +267,11 @@ readonly class AttachmentService {
 				'isImage' => $isImage,
 				'davPath' => $davFolder?->getRelativePath($node->getPath()),
 				'metadata' => $metadata,
-				'fullUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
+				'fullUrl' => match (true) {
+					$isImage => $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . ($canDownload ? '&preferRawImage=1' : ''),
+					$canDownload => $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
+					default => null,
+				},
 				'previewUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name)
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
@@ -512,6 +525,23 @@ readonly class AttachmentService {
 		return false;
 	}
 
+	private function canSeeContent(File $file): bool {
+		$storage = $file->getStorage();
+		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+			return true;
+		}
+		/** @var SharedStorage $storage */
+		return $storage->getShare()->canSeeContent();
+	}
+
+	private function canDownloadPublic(string $shareToken): bool {
+		try {
+			return $this->shareManager->getShareByToken($shareToken)->canDownload();
+		} catch (ShareNotFound) {
+			return false;
+		}
+	}
+
 	/**
 	 * Get a user file from file ID
 	 *
@@ -522,7 +552,7 @@ readonly class AttachmentService {
 	private function getTextFile(int $documentId, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		$file = $userFolder->getFirstNodeById($documentId);
-		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+		if ($file instanceof File && $this->canSeeContent($file)) {
 			return $file;
 		}
 		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
@@ -542,7 +572,7 @@ readonly class AttachmentService {
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
 					if ($textFile instanceof File
-						&& !$this->isDownloadDisabled($textFile)
+						&& $this->canSeeContent($textFile)
 						&& $textFile->getId() === $documentId
 					) {
 						return $textFile;
@@ -551,7 +581,7 @@ readonly class AttachmentService {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
 						$textFile = $folder->getFirstNodeById($documentId);
-						if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
+						if ($textFile instanceof File && $this->canSeeContent($textFile)) {
 							return $textFile;
 						}
 					}

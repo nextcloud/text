@@ -76,12 +76,11 @@ class ApiService {
 
 			$storage = $file->getStorage();
 
-			// Block using text for disabled download internal shares
+			// Block using text when the share does not allow viewing the content
 			if ($storage->instanceOfStorage(SharedStorage::class)) {
 				/** @var IShare $share */
 				$share = $storage->getShare();
-				$shareAttribtues = $share->getAttributes();
-				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
+				if (!$share->canSeeContent()) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 				}
 			}
