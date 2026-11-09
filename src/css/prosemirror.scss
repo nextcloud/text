@@ -490,6 +490,11 @@ div.ProseMirror {
 		}
 	}
 
+	a.footnote-ref::after, .footnote-label::before {
+		counter-reset: footnote-ordinal var(--footnote-ordinal);
+		content: counter(footnote-ordinal);
+	}
+
 	section[data-type="footnotes"] {
 		display: flex;
 		flex-direction: column;
