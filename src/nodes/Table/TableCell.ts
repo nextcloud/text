@@ -7,7 +7,7 @@ import type { Node as PMNode, Schema } from '@tiptap/pm/model'
 
 import { showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
-import { mergeAttributes } from '@tiptap/core'
+import { getChangedRanges, mergeAttributes } from '@tiptap/core'
 import { TableCell } from '@tiptap/extension-table'
 import { Fragment, Slice } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
@@ -66,19 +66,26 @@ export default TableCell.extend({
 						return true
 					}
 
+					// Only changed ranges can contain a new nested table
+					const { doc } = transaction
 					let hasNestedTable = false
-					transaction.doc.descendants((node, pos) => {
-						if (node.type.name.startsWith('table')) {
-							const $pos = transaction.doc.resolve(pos)
-							for (let depth = $pos.depth; depth >= 0; depth--) {
-								const ancestor = $pos.node(depth)
-								if (ancestor.type.name === 'tableCell') {
-									// eslint-disable-next-line no-console
-									console.warn('Detected nested table, filtering out transaction')
-									hasNestedTable = true
+					getChangedRanges(transaction).forEach(({ newRange }) => {
+						doc.nodesBetween(newRange.from, newRange.to, (node, pos) => {
+							if (hasNestedTable || node.isTextblock) {
+								return false
+							}
+							if (node.type.name === 'table') {
+								const $pos = doc.resolve(pos)
+								for (let depth = $pos.depth; depth >= 0; depth--) {
+									if ($pos.node(depth).type.name === 'tableCell') {
+										// eslint-disable-next-line no-console
+										console.warn('Detected nested table, filtering out transaction')
+										hasNestedTable = true
+										return false
+									}
 								}
 							}
-						}
+						})
 					})
 
 					return !hasNestedTable
