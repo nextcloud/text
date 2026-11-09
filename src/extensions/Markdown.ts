@@ -24,7 +24,7 @@
  */
 
 import type { ParentConfig } from '@tiptap/core'
-import type { Mark, MarkType, Node, NodeType, Schema, Slice } from '@tiptap/pm/model'
+import type { Mark, MarkType, NodeType, Node as PMNode, Schema, Slice } from '@tiptap/pm/model'
 import type { MarkdownSerializerState } from 'prosemirror-markdown'
 
 import { Extension, getExtensionField } from '@tiptap/core'
@@ -40,10 +40,10 @@ type MarkSerializerSpec = {
 	/// The string that should appear before a piece of content marked
 	/// by this mark, either directly or as a function that returns an
 	/// appropriate string.
-	open: string | ((state: MarkdownSerializerState, mark: Mark, parent: Node, index: number) => string)
+	open: string | ((state: MarkdownSerializerState, mark: Mark, parent: PMNode, index: number) => string)
 	/// The string that should appear after a piece of content marked by
 	/// this mark.
-	close: string | ((state: MarkdownSerializerState, mark: Mark, parent: Node, index: number) => string)
+	close: string | ((state: MarkdownSerializerState, mark: Mark, parent: PMNode, index: number) => string)
 	/// When `true`, this indicates that the order in which the mark's
 	/// opening and closing syntax appears relative to other mixable
 	/// marks can be varied. (For example, you can say `**a *b***` and
@@ -74,8 +74,8 @@ declare module '@tiptap/core' {
 				parent: ParentConfig<NodeConfig<Options>>['toMarkdown']
 			},
 			state: MarkdownSerializerState,
-			node: Node,
-			parent: Node,
+			node: PMNode,
+			parent: PMNode,
 			index: number,
 		) => void
 	}
@@ -146,7 +146,7 @@ const Markdown = Extension.create({
 						})
 					},
 					clipboardTextSerializer: (slice) => {
-						const traverseNodes = (slice: Slice | Node) => {
+						const traverseNodes = (slice: Slice | PMNode) => {
 							if (
 								slice.content.childCount > 1
 								|| (slice.content.firstChild?.childCount ?? 0) > 1
@@ -191,13 +191,13 @@ function createMarkdownSerializer(schema: {
 			extractNodesToMarkdown(schema.nodes),
 			extractMarksToMarkdown(schema.marks),
 		),
-		serialize(content: Node) {
+		serialize(content: PMNode) {
 			const body = this.serializer.serialize(content, {
 				tightLists: true,
 			} as { tightLists: boolean })
 
 			const referenceDefinitions = new Map()
-			content.descendants((node: Node) => {
+			content.descendants((node: PMNode) => {
 				const link = node.marks.find((m: Mark) => m.type.name === Link.name)
 				if (!link) {
 					return
@@ -246,7 +246,7 @@ function clipboardSerializer(schema: Schema) {
 			extractNodesToMarkdown(schema.nodes),
 			extractToPlaintext(schema.marks),
 		),
-		serialize(content: Node) {
+		serialize(content: PMNode) {
 			return this.serializer.serialize(content, {
 				tightLists: true,
 			})
