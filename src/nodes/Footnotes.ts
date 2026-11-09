@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Node as PMNode } from '@tiptap/pm/model'
+
 import { mergeAttributes, Node } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import Footnote from './Footnote.ts'
 import FootnoteReference from './FootnoteReference.ts'
 
@@ -39,40 +42,14 @@ const Footnotes = Node.create({
 		return [
 			new Plugin({
 				key: new PluginKey('footnoteOrdinals'),
-				appendTransaction(transactions, _oldState, newState) {
-					if (!transactions.some((tr) => tr.docChanged)) {
-						return null
-					}
-
-					// Compute ordinals
-					const ordinals = new Map<string, number>()
-					newState.doc.descendants((node) => {
-						if (node.type.name === 'footnoteReference') {
-							const id = node.attrs.referenceId
-							if (id && !ordinals.has(id)) {
-								ordinals.set(id, ordinals.size + 1)
-							}
-						}
-					})
-
-					const tr = newState.tr
-					let hasChange = false
-					newState.doc.descendants((node, pos) => {
-						if (node.type.name !== 'footnoteReference' && node.type.name !== 'footnote') {
-							return
-						}
-
-						const targetOrdinal = ordinals.get(node.attrs.referenceId) ?? 0
-						if (node.attrs.ordinal !== targetOrdinal) {
-							tr.setNodeAttribute(pos, 'ordinal', targetOrdinal)
-							hasChange = true
-						}
-					})
-
-					if (!hasChange) {
-						return null
-					}
-					return tr
+				state: {
+					init: (_, { doc }) => footnoteOrdinals(doc),
+					apply: (tr, value) => (tr.docChanged ? footnoteOrdinals(tr.doc) : value),
+				},
+				props: {
+					decorations(state) {
+						return this.getState(state)
+					},
 				},
 			}),
 			new Plugin({
@@ -143,5 +120,39 @@ const Footnotes = Node.create({
 		]
 	},
 })
+
+/**
+ * Number footnotes by first reference and expose the number as a CSS variable
+ *
+ * @param doc the document node
+ */
+function footnoteOrdinals(doc: PMNode): DecorationSet {
+	const ordinals = new Map<string, number>()
+	const nodes: { node: PMNode, pos: number }[] = []
+	doc.descendants((node, pos) => {
+		if (node.type.name === 'footnoteReference') {
+			const id = node.attrs.referenceId
+			if (id && !ordinals.has(id)) {
+				ordinals.set(id, ordinals.size + 1)
+			}
+			nodes.push({ node, pos })
+		} else if (node.type.name === 'footnote') {
+			nodes.push({ node, pos })
+		}
+	})
+
+	const decorations = []
+	for (const { node, pos } of nodes) {
+		const ordinal = ordinals.get(node.attrs.referenceId)
+		if (!ordinal) {
+			continue
+		}
+		const style = node.type.name === 'footnote'
+			? `order: ${ordinal}; --footnote-ordinal: ${ordinal}`
+			: `--footnote-ordinal: ${ordinal}`
+		decorations.push(Decoration.node(pos, pos + node.nodeSize, { style }))
+	}
+	return DecorationSet.create(doc, decorations)
+}
 
 export default Footnotes
