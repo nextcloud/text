@@ -12,6 +12,7 @@ use Exception;
 use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
+use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
@@ -103,7 +104,7 @@ class WorkspacePlugin extends ServerPlugin {
 		}
 		$workspaceContentCallback = function () use ($file) {
 			$cachedContent = '';
-			if ($file instanceof File) {
+			if ($file instanceof File && $this->canSeeContent($file)) {
 				$cache = $this->cacheFactory->createDistributed('text_workspace');
 				$cacheKey = $file->getFileInfo()->getId() . '_' . $file->getFileInfo()->getEtag();
 				if (($cachedContent = $cache->get($cacheKey)) !== null) {
@@ -138,5 +139,14 @@ class WorkspacePlugin extends ServerPlugin {
 		$propFind->handle(self::WORKSPACE_PROPERTY_FLAT, $workspaceContentCallback);
 		$propFind->handle(self::WORKSPACE_FILE_PROPERTY, $workspaceFileCallback);
 		$propFind->handle(self::WORKSPACE_FILE_PROPERTY_FLAT, $workspaceFileCallback);
+	}
+
+	private function canSeeContent(File $file): bool {
+		$storage = $file->getStorage();
+		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+			return true;
+		}
+		/** @var SharedStorage $storage */
+		return $storage->getShare()->canSeeContent();
 	}
 }
