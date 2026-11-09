@@ -215,7 +215,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		try {
 			$auth = $this->getAuth($shareToken, false);
 			$context = $this->getContext($auth, $fileId);
-			$imageFile = $this->attachmentService->getImageFile($context, $imageFileName, $preferRawImage === 1);
+			$imageFile = $this->attachmentService->getImageFile($context, $imageFileName, $preferRawImage === 1, $auth);
 			if ($imageFile !== null) {
 				$response = new DataDownloadResponse(
 					$imageFile->getContent(),
@@ -252,7 +252,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		try {
 			$auth = $this->getAuth($shareToken, false);
 			$context = $this->getContext($auth, $fileId);
-			$mediaFile = $this->attachmentService->getMediaFile($context, $mediaFileName);
+			$mediaFile = $this->attachmentService->getMediaFile($context, $mediaFileName, $auth);
 			return $mediaFile !== null
 				? new DataDownloadResponse(
 					$mediaFile->getContent(),

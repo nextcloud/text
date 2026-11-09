@@ -132,6 +132,14 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
+	public function testValidTokenContentHidden(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$share = $this->createShare('plain-share', canSeeContent: false);
+
+		$this->invokeCheckFileAccessFromShare(123, $share);
+	}
+
 	private function invokeCheckFileAccessFromShare(int $fileId, IShare $share): void {
 		$this->shareManager->expects($this->once())->method('getShareByToken')->willReturn($share);
 
@@ -142,13 +150,14 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->fileService->checkFileAccessFromShare($fileId, 'token');
 	}
 
-	private function createShare(string $id, ?string $password = null): IShare {
+	private function createShare(string $id, ?string $password = null, bool $canSeeContent = true): IShare {
 		$share = $this->createMock(IShare::class);
 		$share->method('getId')->willReturn($id);
 		$share->method('getPassword')->willReturn($password);
 		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$share->method('getShareOwner')->willReturn('owner');
 		$share->method('getAttributes')->willReturn(null);
+		$share->method('canSeeContent')->willReturn($canSeeContent);
 		return $share;
 	}
 
@@ -176,10 +185,30 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->assertTrue($this->fileService->isDownloadDisabled($file));
 	}
 
-	private function createSharedFile(?bool $download): File {
+	public function testCanSeeContentNotShared(): void {
+		$storage = $this->createMock(IStorage::class);
+		$storage->method('instanceOfStorage')->willReturn(false);
+		$file = $this->createMock(File::class);
+		$file->method('getStorage')->willReturn($storage);
+
+		$this->assertTrue($this->fileService->canSeeContent($file));
+	}
+
+	public function testCanSeeContentSharedDownloadDisabled(): void {
+		$file = $this->createSharedFile(false);
+		$this->assertTrue($this->fileService->canSeeContent($file));
+	}
+
+	public function testCanSeeContentSharedContentHidden(): void {
+		$file = $this->createSharedFile(false, false);
+		$this->assertFalse($this->fileService->canSeeContent($file));
+	}
+
+	private function createSharedFile(?bool $download, bool $canSeeContent = true): File {
 		$share = $this->createMock(IShare::class);
 		$share->method('getAttributes')
 			->willReturn($download === null ? null : $this->createAttributes($download));
+		$share->method('canSeeContent')->willReturn($canSeeContent);
 		$storage = $this->createMock(SharedStorage::class);
 		$storage->method('instanceOfStorage')->willReturn(true);
 		$storage->method('getShare')->willReturn($share);

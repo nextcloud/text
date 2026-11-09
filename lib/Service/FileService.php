@@ -136,6 +136,15 @@ class FileService {
 		return $this->isShareDownloadDisabled($storage->getShare());
 	}
 
+	public function canSeeContent(File $file): bool {
+		$storage = $file->getStorage();
+		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+			return true;
+		}
+		/** @var SharedStorage $storage */
+		return $storage->getShare()->canSeeContent();
+	}
+
 	public function isShareDownloadDisabled(IShare $share): bool {
 		$attributes = $share->getAttributes();
 		return $attributes !== null
@@ -193,7 +202,7 @@ class FileService {
 			throw new InvalidSessionException();
 		}
 
-		if ($this->isShareDownloadDisabled($share)) {
+		if (!$share->canSeeContent()) {
 			throw new InvalidSessionException();
 		}
 	}
