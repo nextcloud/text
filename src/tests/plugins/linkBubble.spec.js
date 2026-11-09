@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { EditorState, Plugin } from '@tiptap/pm/state'
+import { EditorState, Plugin, TextSelection } from '@tiptap/pm/state'
 import { schema } from 'prosemirror-schema-basic'
-import { hideLinkBubble, linkBubble, setActiveLink } from '../../plugins/links.ts'
+import { hideLinkBubble, linkBubble, linkBubbleKey, setActiveLink } from '../../plugins/links.ts'
 
 describe('linkBubble prosemirror plugin', () => {
 	test('signature', () => {
@@ -63,6 +63,66 @@ describe('linkBubble prosemirror plugin', () => {
 		setActiveLink(resolved)(flow.state, flow.dispatch)
 		hideLinkBubble(flow.state, flow.dispatch)
 		expect(plugin.getState(flow.state).active).toEqual(null)
+	})
+})
+
+describe('linkBubble state derived from selection', () => {
+	const linkMark = schema.marks.link.create({ href: 'https://example.org' })
+	const doc = schema.node('doc', null, [
+		schema.node('paragraph', null, [
+			schema.text('foo '),
+			schema.text('link', [linkMark]),
+		]),
+	])
+
+	const createLinkState = () => createState({ doc, plugins: [linkBubble()] })
+	const select = (state, pos) => state.apply(state.tr.setSelection(TextSelection.create(state.doc, pos)))
+	const active = (state) => linkBubbleKey.getState(state).active
+
+	test('sets active link when selection moves into a link', () => {
+		const state = select(createLinkState(), 7)
+		expect(active(state)).toEqual({ mark: linkMark, nodeStart: 5 })
+	})
+
+	test('clears active link when selection moves out of a link', () => {
+		const state = select(select(createLinkState(), 7), 2)
+		expect(active(state)).toBe(null)
+	})
+
+	test('keeps explicit state if selection and doc are unchanged', () => {
+		const state = select(createLinkState(), 7)
+		const hidden = state.apply(state.tr.setMeta(linkBubbleKey, { active: null }))
+		const after = hidden.apply(hidden.tr.setMeta('foo', 'bar'))
+		expect(active(after)).toBe(null)
+	})
+
+	test('keeps explicit state on remote changes', () => {
+		const state = select(createLinkState(), 7)
+		const hidden = state.apply(state.tr.setMeta(linkBubbleKey, { active: null }))
+		const remote = hidden.tr.insertText('!', hidden.doc.content.size - 1)
+			.setMeta('addToHistory', false)
+		expect(active(hidden.apply(remote))).toBe(null)
+	})
+
+	test('updates active link on local changes', () => {
+		const state = select(createLinkState(), 7)
+		const hidden = state.apply(state.tr.setMeta(linkBubbleKey, { active: null }))
+		const after = hidden.apply(hidden.tr.insertText('x', 7))
+		expect(active(after)?.mark.eq(linkMark)).toBe(true)
+	})
+
+	test('explicit state takes precedence over selection', () => {
+		const state = createLinkState()
+		const tr = state.tr.setSelection(TextSelection.create(state.doc, 7))
+			.setMeta(linkBubbleKey, { active: null, focusInput: true })
+		expect(linkBubbleKey.getState(state.apply(tr))).toEqual({ active: null, focusInput: true })
+	})
+
+	test('does not open bubble on editor initialisation', () => {
+		const state = createState({ plugins: [linkBubble()] })
+		const tr = state.tr.replaceWith(0, state.doc.content.size, doc.content)
+		tr.setSelection(TextSelection.create(tr.doc, 7))
+		expect(active(state.apply(tr))).toBe(null)
 	})
 })
 
