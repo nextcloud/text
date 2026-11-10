@@ -21,13 +21,13 @@ test.use({
 })
 
 test.describe('Public link share', () => {
-	test('opens a read only file share', async ({ editor, file, page, viewer }) => {
+	test('opens a read only file share', async ({ editor, file, page }) => {
 		const { token } = await file.shareLink()
 		await page.goto(`s/${token}`)
 		await expect(editor.getHeading({ name: 'Hello world' })).toBeVisible()
 		await expect(editor.menubar).not.toBeVisible()
 
-		await viewer.el.getByRole('button', { name: 'Show outline' }).click()
+		await page.getByRole('dialog').getByRole('button', { name: 'Show outline' }).click()
 		await expect(editor.el.locator('[data-text-el="editor-table-of-contents"]'))
 			.toBeVisible()
 	})
@@ -49,9 +49,9 @@ test.describe('Public link share', () => {
 		await expect(editor.getMenu('Bold')).toBeVisible()
 	})
 
-	test('sets a guest name', async ({ open, page, viewer }) => {
+	test('sets a guest name', async ({ open, page }) => {
 		await open()
-		await viewer.el.getByRole('button', { name: 'Active people' }).click()
+		await page.getByRole('dialog').getByRole('button', { name: 'Active people' }).click()
 		await page.getByRole('button', { name: 'edit' }).click()
 		const nameInput = page.getByRole('textbox', { name: 'Enter your name' })
 		await nameInput.fill('someone')
