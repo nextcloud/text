@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace OCA\Text\Tests\DAV;
 
-use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\Text\DAV\WorkspacePlugin;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\WorkspaceService;
-use OCP\Files\FileInfo;
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\ICache;
 use OCP\ICacheFactory;
@@ -31,11 +30,9 @@ class WorkspacePluginTest extends TestCase {
 	private WorkspacePlugin $plugin;
 
 	protected function setUp(): void {
-		$fileInfo = $this->createMock(FileInfo::class);
-		$fileInfo->method('getId')->willReturn(42);
-		$fileInfo->method('getEtag')->willReturn('etag');
 		$file = $this->createMock(File::class);
-		$file->method('getFileInfo')->willReturn($fileInfo);
+		$file->method('getId')->willReturn(42);
+		$file->method('getEtag')->willReturn('etag');
 		$file->method('getContent')->willReturn('## Readme');
 
 		$workspaceService = $this->createMock(WorkspaceService::class);
