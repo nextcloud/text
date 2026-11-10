@@ -146,31 +146,52 @@ test.describe('Text PROPFIND extension', () => {
 		sharedFileTest.beforeEach(async ({ owner, recipient }) => {
 			await setTextSetting(recipient, 'workspace_enabled', 1)
 			const folder = await createFolder({ name: 'shared', owner })
-			await owner.uploadFile({ name: 'shared/Readme.md', content: '## Hello world\n' })
+			await owner.uploadFile({
+				name: 'shared/Readme.md',
+				content: '## Hello world\n',
+			})
 			await folder.shareWithUser(recipient.account.userId, {
-				attributes: [{ scope: 'permissions', key: 'download', value: false }],
+				attributes: [
+					{ scope: 'permissions', key: 'download', value: false },
+				],
 			})
 		})
 
-		sharedFileTest('returns the rich workspace content', async ({ recipient }) => {
-			const [folder] = await propfindFolder(recipient, '/shared', 0)
-			expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '## Hello world\n')
-		})
+		sharedFileTest(
+			'returns the rich workspace content',
+			async ({ recipient }) => {
+				const [folder] = await propfindFolder(recipient, '/shared', 0)
+				expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '## Hello world\n')
+			},
+		)
 
 		sharedFileTest.describe('with viewing without download disallowed', () => {
 			sharedFileTest.beforeEach(async ({ request }) => {
-				await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', 'no')
+				await setAppConfig(
+					request,
+					'core',
+					'shareapi_allow_view_without_download',
+					'no',
+				)
 			})
 
 			sharedFileTest.afterEach(async ({ request }) => {
-				await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', null)
+				await setAppConfig(
+					request,
+					'core',
+					'shareapi_allow_view_without_download',
+					null,
+				)
 			})
 
-			sharedFileTest('does not return the rich workspace content', async ({ recipient }) => {
-				const [folder] = await propfindFolder(recipient, '/shared', 0)
-				expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '')
-				expect(folder[PROPERTY_WORKSPACE_FILE]).not.toBe('')
-			})
+			sharedFileTest(
+				'does not return the rich workspace content',
+				async ({ recipient }) => {
+					const [folder] = await propfindFolder(recipient, '/shared', 0)
+					expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '')
+					expect(folder[PROPERTY_WORKSPACE_FILE]).not.toBe('')
+				},
+			)
 		})
 	})
 })
