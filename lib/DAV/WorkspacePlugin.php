@@ -12,11 +12,11 @@ use Exception;
 use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
 use OCP\Files\NotPermittedException;
+use OCP\Files\Storage\ISharedStorage;
 use OCP\ICacheFactory;
 use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
@@ -143,10 +143,10 @@ class WorkspacePlugin extends ServerPlugin {
 
 	private function canSeeContent(File $file): bool {
 		$storage = $file->getStorage();
-		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+		if (!$storage->instanceOfStorage(ISharedStorage::class)) {
 			return true;
 		}
-		/** @var SharedStorage $storage */
+		/** @var ISharedStorage $storage */
 		return $storage->getShare()->canSeeContent();
 	}
 }

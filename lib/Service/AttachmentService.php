@@ -11,7 +11,6 @@ namespace OCA\Text\Service;
 
 use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Controller\AttachmentController;
 use OCA\Text\Db\Session;
 use OCP\Constants;
@@ -24,6 +23,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\Files\Storage\ISharedStorage;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
 use OCP\ISession;
@@ -513,8 +513,8 @@ readonly class AttachmentService {
 	 */
 	private function isDownloadDisabled(File $file): bool {
 		$storage = $file->getStorage();
-		if ($storage->instanceOfStorage(SharedStorage::class)) {
-			/** @var SharedStorage $storage */
+		if ($storage->instanceOfStorage(ISharedStorage::class)) {
+			/** @var ISharedStorage $storage */
 			$share = $storage->getShare();
 			$attributes = $share->getAttributes();
 			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
@@ -527,10 +527,10 @@ readonly class AttachmentService {
 
 	private function canSeeContent(File $file): bool {
 		$storage = $file->getStorage();
-		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+		if (!$storage->instanceOfStorage(ISharedStorage::class)) {
 			return true;
 		}
-		/** @var SharedStorage $storage */
+		/** @var ISharedStorage $storage */
 		return $storage->getShare()->canSeeContent();
 	}
 

@@ -671,6 +671,22 @@ class DocumentService {
 		}
 	}
 
+	/**
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
+	public function checkShareCanSeeContent(string $shareToken): void {
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+		} catch (ShareNotFound $e) {
+			throw new NotFoundException();
+		}
+
+		if (!$share->canSeeContent()) {
+			throw new NotPermittedException();
+		}
+	}
+
 	public function hasUnsavedChanges(Document $document): bool {
 		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId()) ?: 0;
 		$docVersion = $document->getLastSavedVersion();

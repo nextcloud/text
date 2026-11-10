@@ -40,7 +40,8 @@ class WorkspacePluginTest extends TestCase {
 		$file->method('getContent')->willReturn('## Readme');
 		$this->share = $this->createMock(IShare::class);
 		$storage = $this->createMock(ISharedStorage::class);
-		$storage->method('instanceOfStorage')->willReturn(true);
+		$storage->method('instanceOfStorage')
+			->willReturnCallback(fn (string $class): bool => $class === ISharedStorage::class);
 		$storage->method('getShare')->willReturn($this->share);
 		$file->method('getStorage')->willReturn($storage);
 
