@@ -13,6 +13,7 @@ use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\Text\DAV\WorkspacePlugin;
 use OCA\Text\Service\ConfigService;
+use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\FileInfo;
@@ -29,6 +30,7 @@ class WorkspacePluginTest extends TestCase {
 	private FileService&MockObject $fileService;
 	private ICache&MockObject $cache;
 	private WorkspacePlugin $plugin;
+	private string $content = '## Readme';
 
 	protected function setUp(): void {
 		$fileInfo = $this->createMock(FileInfo::class);
@@ -36,7 +38,7 @@ class WorkspacePluginTest extends TestCase {
 		$fileInfo->method('getEtag')->willReturn('etag');
 		$file = $this->createMock(File::class);
 		$file->method('getFileInfo')->willReturn($fileInfo);
-		$file->method('getContent')->willReturn('## Readme');
+		$file->method('getContent')->willReturnCallback(fn () => $this->content);
 
 		$workspaceService = $this->createMock(WorkspaceService::class);
 		$workspaceService->method('getFile')->willReturn($file);
@@ -56,6 +58,7 @@ class WorkspacePluginTest extends TestCase {
 			$this->fileService,
 			$cacheFactory,
 			$configService,
+			new EncodingService(),
 			$this->createMock(LoggerInterface::class),
 			'user',
 		);
@@ -81,6 +84,26 @@ class WorkspacePluginTest extends TestCase {
 
 		$this->assertSame('', $propFind->get(WorkspacePlugin::WORKSPACE_PROPERTY));
 		$this->assertSame(42, $propFind->get(WorkspacePlugin::WORKSPACE_FILE_PROPERTY));
+	}
+
+	public static function dataXmlInvalidContent(): array {
+		return [
+			'control characters' => ["a\x00b\x10c\x16d\x1ce\x0Bf", "a\u{FFFD}b\u{FFFD}c\u{FFFD}d\u{FFFD}e\u{FFFD}f"],
+			'noncharacters' => ["a\u{FFFE}b\u{FFFF}c", "a\u{FFFD}b\u{FFFD}c"],
+			'allowed whitespace and multibyte characters' => ["# Grüße 😀\t<&>\r\n", "# Grüße 😀\t<&>\r\n"],
+			'UTF-16 with BOM' => ["\xff\xfe#\x00 \x00\xfc\x00", "\u{FEFF}# ü"],
+		];
+	}
+
+	/**
+	 * @dataProvider dataXmlInvalidContent
+	 */
+	public function testWorkspaceContentXmlInvalid(string $content, string $expected): void {
+		$this->fileService->method('canSeeContent')->willReturn(true);
+		$this->content = $content;
+		$this->cache->expects($this->once())->method('set')->with('42_etag', $expected);
+
+		$this->assertSame($expected, $this->propFind()->get(WorkspacePlugin::WORKSPACE_PROPERTY));
 	}
 
 	private function propFind(): PropFind {
