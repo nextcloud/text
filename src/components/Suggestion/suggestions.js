@@ -55,17 +55,22 @@ export default ({
 			},
 
 			onKeyDown(props) {
-				if (!popup) {
-					return
-				}
-
 				if (props.event.key === 'Escape') {
-					popup[0].hide()
-					popup[0].destroy()
-					component.destroy()
-					popup = null
+					// Prevent Viewer from closing as well
+					props.event.stopPropagation()
+
+					if (popup) {
+						popup[0].hide()
+						popup[0].destroy()
+						component.destroy()
+						popup = null
+					}
 
 					return true
+				}
+
+				if (!popup) {
+					return
 				}
 
 				return component.ref?.onKeyDown?.(props)
