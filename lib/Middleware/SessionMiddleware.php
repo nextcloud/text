@@ -7,7 +7,6 @@
 
 namespace OCA\Text\Middleware;
 
-use OC\User\NoUserException;
 use OCA\Text\Controller\ISessionAwareController;
 use OCA\Text\Db\Document;
 use OCA\Text\Exception\AccountDisabledException;
@@ -30,6 +29,7 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
+use OCP\User\Exceptions\UserNotFoundException;
 use ReflectionException;
 
 class SessionMiddleware extends Middleware {
@@ -134,7 +134,7 @@ class SessionMiddleware extends Middleware {
 	 * Fallback for loading attachments without a session.
 	 *
 	 * @throws NotPermittedException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws InvalidSessionException
 	 */
 	private function assertUserOrShareToken(ISessionAwareController $controller): void {

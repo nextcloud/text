@@ -21,6 +21,7 @@ use OCP\IUser;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
+use OCP\User\Exceptions\UserNotFoundException;
 use Psr\Log\LoggerInterface;
 
 class FileService {
@@ -57,8 +58,7 @@ class FileService {
 
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($userId);
-		} catch (\OC\User\NoUserException) {
-			// It is a bit hacky to depend on internal exceptions here. But it is the best we can do for now
+		} catch (UserNotFoundException) {
 			throw new NotFoundException();
 		}
 

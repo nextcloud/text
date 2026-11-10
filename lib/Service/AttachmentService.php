@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use OC\User\NoUserException;
 use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Text\Context\IContext;
 use OCA\Text\Controller\AttachmentController;
@@ -32,6 +31,7 @@ use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
+use OCP\User\Exceptions\UserNotFoundException;
 use OCP\Util;
 
 readonly class AttachmentService {
@@ -52,7 +52,7 @@ readonly class AttachmentService {
 	 * Get image content or preview from file name
 	 *
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
@@ -64,7 +64,7 @@ readonly class AttachmentService {
 
 	/**
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
@@ -95,7 +95,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function getMediaFile(IContext $context, string $mediaFileName, IShare|IUser $auth): ?File {
 		$textFile = $this->getTextFile($context);
@@ -116,7 +116,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
@@ -131,7 +131,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function getMediaFilePreview(IContext $context, string $mediaFileName): ?array {
 		$textFile = $this->getTextFile($context);
@@ -144,7 +144,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
@@ -171,7 +171,7 @@ readonly class AttachmentService {
 
 	/**
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
@@ -247,7 +247,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function uploadAttachment(IContext $context, string $newFileName, $newFileResource, IShare|IUser $auth): array {
 		if ($auth instanceof IShare && $auth->getPassword() !== null) {
@@ -293,7 +293,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function insertAttachmentFile(IContext $context, string $path, IUser $user): array {
 		$textFile = $this->getTextFile($context);
@@ -319,7 +319,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function createAttachmentFile(IContext $context, string $newFileName, IUser $user): array {
 		$textFile = $this->getTextFile($context);
@@ -364,7 +364,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): Folder {
 		$owner = $textFile->getOwner();
@@ -394,7 +394,7 @@ readonly class AttachmentService {
 	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	private function getFileFromPath(string $filePath, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
@@ -410,7 +410,7 @@ readonly class AttachmentService {
 	/**
 	 * Get a user file from file ID
 	 *
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
@@ -459,7 +459,7 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
 	 * @throws LockedException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function cleanupAttachments(int $fileId): int {
 		$textFile = $this->rootFolder->getFirstNodeById($fileId);
@@ -526,7 +526,7 @@ readonly class AttachmentService {
 
 	/**
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws LockedException
@@ -625,7 +625,7 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
-	 * @throws NoUserException
+	 * @throws UserNotFoundException
 	 */
 	public function deleteAttachments(File $source): void {
 		// if there is an attachment dir for this file

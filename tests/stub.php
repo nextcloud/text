@@ -41,11 +41,6 @@ namespace OCA\Files_Sharing\Event {
 	}
 }
 
-namespace OC\User {
-	class NoUserException extends \Exception {
-	}
-}
-
 namespace OCA\Files_Sharing {
 	abstract class SharedStorage implements \OCP\Files\Storage\IStorage {
 		abstract public function getShare(): \OCP\Share\IShare;

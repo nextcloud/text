@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Notification;
 
-use OC\User\NoUserException;
 use OCA\Text\Event\MentionEvent;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\File;
@@ -22,6 +21,7 @@ use OCP\Notification\AlreadyProcessedException;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
 use OCP\Notification\UnknownNotificationException;
+use OCP\User\Exceptions\UserNotFoundException;
 
 class Notifier implements INotifier {
 	public const string TYPE_MENTIONED = 'mentioned';
@@ -86,7 +86,7 @@ class Notifier implements INotifier {
 
 				try {
 					$userFolder = $this->rootFolder->getUserFolder($targetUser);
-				} catch (NotPermittedException|NoUserException) {
+				} catch (NotPermittedException|UserNotFoundException) {
 					throw new UnknownNotificationException();
 				}
 				$node = $userFolder->getFirstNodeById($fileId);

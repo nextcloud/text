@@ -9,12 +9,12 @@ declare(strict_types=1);
 namespace OCA\Text\DAV;
 
 use Exception;
-use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\WorkspaceService;
+use OCP\Files\File;
 use OCP\Files\GenericFileException;
 use OCP\Files\NotPermittedException;
 use OCP\ICacheFactory;
@@ -106,7 +106,7 @@ class WorkspacePlugin extends ServerPlugin {
 			$cachedContent = '';
 			if ($file instanceof File && $this->fileService->canSeeContent($file)) {
 				$cache = $this->cacheFactory->createDistributed('text_workspace');
-				$cacheKey = $file->getFileInfo()->getId() . '_' . $file->getFileInfo()->getEtag();
+				$cacheKey = $file->getId() . '_' . $file->getEtag();
 				if (($cachedContent = $cache->get($cacheKey)) !== null) {
 					return $cachedContent;
 				}
@@ -130,7 +130,7 @@ class WorkspacePlugin extends ServerPlugin {
 
 		$workspaceFileCallback = function () use ($file) {
 			if ($file instanceof File) {
-				return $file->getFileInfo()->getId();
+				return $file->getId();
 			}
 			return '';
 		};
