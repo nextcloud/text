@@ -7,7 +7,6 @@
 
 namespace OCA\Text\Service;
 
-use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\Constants;
 use OCP\Files\File;
@@ -16,6 +15,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\Files\Storage\ISharedStorage;
 use OCP\ISession;
 use OCP\IUser;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -129,19 +129,19 @@ class FileService {
 
 	public function isDownloadDisabled(File $file): bool {
 		$storage = $file->getStorage();
-		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+		if (!$storage->instanceOfStorage(ISharedStorage::class)) {
 			return false;
 		}
-		/** @var SharedStorage $storage */
+		/** @var ISharedStorage $storage */
 		return $this->isShareDownloadDisabled($storage->getShare());
 	}
 
 	public function canSeeContent(File $file): bool {
 		$storage = $file->getStorage();
-		if (!$storage->instanceOfStorage(SharedStorage::class)) {
+		if (!$storage->instanceOfStorage(ISharedStorage::class)) {
 			return true;
 		}
-		/** @var SharedStorage $storage */
+		/** @var ISharedStorage $storage */
 		return $storage->getShare()->canSeeContent();
 	}
 
