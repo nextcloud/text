@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Browser } from '@playwright/test'
+
 import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
 import { expect } from '@playwright/test'
 import { test as base } from './upload-file.ts'
@@ -10,7 +12,31 @@ import { User } from './User.ts'
 
 export interface SharedFileFixture {
 	owner: User
+	recipient: User
 	share: { token: string }
+}
+
+/**
+ * Create a random user and log in on a new page.
+ *
+ * @param browser Browser to open the page in
+ * @param baseURL Base URL of the page
+ */
+async function createLoggedInUser(browser: Browser, baseURL: string | undefined): Promise<User> {
+	const account = await createRandomUser()
+	// Important: make sure we authenticate in a clean environment by unsetting storage state.
+	const page = await browser.newPage({
+		storageState: undefined,
+		baseURL,
+	})
+
+	await login(page.request, account)
+	const tokenResponse = await page.request.get('./csrftoken', {
+		failOnStatusCode: true,
+	})
+	const { token } = (await tokenResponse.json()) as { token: string }
+	page.context().setExtraHTTPHeaders({ requesttoken: token })
+	return new User(account, page)
 }
 
 /**
@@ -19,21 +45,11 @@ export interface SharedFileFixture {
 export const test = base.extend<SharedFileFixture>({
 
 	owner: async ({ browser, baseURL }, use) => {
-		const account = await createRandomUser()
-		// Important: make sure we authenticate in a clean environment by unsetting storage state.
-		const page = await browser.newPage({
-			storageState: undefined,
-			baseURL,
-		})
+		await use(await createLoggedInUser(browser, baseURL))
+	},
 
-		await login(page.request, account)
-		const tokenResponse = await page.request.get('./csrftoken', {
-			failOnStatusCode: true,
-		})
-		const { token } = (await tokenResponse.json()) as { token: string }
-		page.context().setExtraHTTPHeaders({ requesttoken: token })
-		const user = new User(account, page)
-		await use(user)
+	recipient: async ({ browser, baseURL }, use) => {
+		await use(await createLoggedInUser(browser, baseURL))
 	},
 
 	file: async ({ fileContent, fileName, owner }, use) => {
