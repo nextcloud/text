@@ -7,7 +7,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.1.1
 	- license: AGPL-3.0-or-later
 - @nextcloud/viewer
-	- version: 2.0.0-beta.20
+	- version: 2.0.0-beta.21
 	- license: AGPL-3.0-or-later
 - text
 	- version: 10.0.0-dev.0
