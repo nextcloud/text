@@ -12,6 +12,7 @@ use Exception;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
 use OCA\Text\Service\ConfigService;
+use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\File;
@@ -38,6 +39,7 @@ class WorkspacePlugin extends ServerPlugin {
 		private readonly FileService $fileService,
 		private readonly ICacheFactory $cacheFactory,
 		private readonly ConfigService $configService,
+		private readonly EncodingService $encodingService,
 		private readonly LoggerInterface $logger,
 		private readonly ?string $userId,
 	) {
@@ -112,7 +114,7 @@ class WorkspacePlugin extends ServerPlugin {
 				}
 
 				try {
-					$cachedContent = $file->getContent();
+					$cachedContent = $this->encodingService->encodeToXmlSafeUtf8($file->getContent());
 					$cache->set($cacheKey, $cachedContent, 3600);
 				} catch (GenericFileException|NotPermittedException|LockedException $e) {
 					// Ignore but log when debugging
