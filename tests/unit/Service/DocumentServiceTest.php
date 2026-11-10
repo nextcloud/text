@@ -20,6 +20,8 @@ use OCP\DirectEditing\IManager;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\Files\SimpleFS\ISimpleFolder;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IConfig;
@@ -31,11 +33,13 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 	private DocumentMapper $documentMapper;
 	private StepMapper $stepMapper;
+	private IAppData $appData;
 	private ICache $cache;
 
 	public function setUp(): void {
 		$this->documentMapper = $this->createMock(DocumentMapper::class);
 		$this->stepMapper = $this->createMock(StepMapper::class);
+		$this->appData = $this->createMock(IAppData::class);
 		$this->cache = $this->createMock(ICache::class);
 		$cacheFactory = $this->createMock(ICacheFactory::class);
 		$cacheFactory->method('createDistributed')->willReturn($this->cache);
@@ -47,7 +51,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->documentMapper,
 			$this->stepMapper,
 			$this->createMock(SessionMapper::class),
-			$this->createMock(IAppData::class),
+			$this->appData,
 			'admin',
 			$this->createMock(IRootFolder::class),
 			$cacheFactory,
@@ -97,6 +101,58 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertSame(1000, $document->getLastAttachmentCleanup());
 		self::assertSame(1000, $document->getLastSavedVersionTime());
 		self::assertSame(['lastAttachmentCleanup' => true], $document->getUpdatedFields());
+	}
+
+	public function testRemoveSavedStepsKeepsStepsBeforeSavedVersion(): void {
+		$folder = $this->createMock(ISimpleFolder::class);
+		$folder->method('getFile')->willReturnMap([
+			['111.yjs', $this->createMock(ISimpleFile::class)],
+			['222.yjs', $this->createMock(ISimpleFile::class)],
+		]);
+		$this->appData->method('getFolder')->with('documents')->willReturn($folder);
+
+		$olderThan = null;
+		$this->stepMapper->expects(self::once())
+			->method('findDocumentsWithSavedSteps')
+			->willReturnCallback(function (int $time, int $keep) use (&$olderThan): array {
+				$olderThan = $time;
+				self::assertSame(DocumentService::STEPS_BEFORE_SAVED_VERSION, $keep);
+				return [
+					['documentId' => '111', 'lastSavedVersion' => 500],
+					['documentId' => '222', 'lastSavedVersion' => 900],
+				];
+			});
+		$this->stepMapper->expects(self::exactly(2))
+			->method('getBeforeVersion')
+			->willReturnMap([
+				['111', 500, DocumentService::STEPS_BEFORE_SAVED_VERSION, 300],
+				['222', 900, DocumentService::STEPS_BEFORE_SAVED_VERSION, 700],
+			]);
+		$deleted = [];
+		$this->stepMapper->expects(self::exactly(2))
+			->method('deleteBeforeVersion')
+			->willReturnCallback(function (string $documentId, int $version, int $time) use (&$deleted, &$olderThan): int {
+				self::assertSame($olderThan, $time);
+				$deleted[$documentId] = $version;
+				return $version === 300 ? 40 : 2;
+			});
+
+		self::assertSame(42, $this->documentService->removeSavedSteps(3600));
+		self::assertEqualsWithDelta(time() - 3600, $olderThan, 5);
+		self::assertSame(['111' => 300, '222' => 700], $deleted);
+	}
+
+	public function testRemoveSavedStepsSkipsDocumentsWithoutState(): void {
+		$folder = $this->createMock(ISimpleFolder::class);
+		$folder->method('getFile')->with('111.yjs')->willThrowException(new NotFoundException());
+		$this->appData->method('getFolder')->with('documents')->willReturn($folder);
+		$this->stepMapper->method('findDocumentsWithSavedSteps')->willReturn([
+			['documentId' => '111', 'lastSavedVersion' => 500],
+		]);
+		$this->stepMapper->expects(self::never())->method('getBeforeVersion');
+		$this->stepMapper->expects(self::never())->method('deleteBeforeVersion');
+
+		self::assertSame(0, $this->documentService->removeSavedSteps());
 	}
 
 	public function testDetectsUnsavedChangesWithStringDocumentId(): void {
