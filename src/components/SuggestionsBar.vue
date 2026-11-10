@@ -134,7 +134,7 @@ export default {
 		 * Triggered by the "Smart Picker" button
 		 */
 		linkPicker() {
-			this.editor.chain().focus().insertContent('/').run()
+			this.editor.chain().focus().openLinkPicker().run()
 		},
 
 		/**

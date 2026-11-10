@@ -229,7 +229,7 @@ export default {
 
 		linkPicker() {
 			this.menuOpen = false
-			this.editor?.chain().focus().insertContent('/').run()
+			this.editor?.chain().focus().openLinkPicker().run()
 		},
 
 		linkCustomAction() {
