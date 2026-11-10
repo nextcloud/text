@@ -115,3 +115,53 @@ test.describe('User share with download disabled', () => {
 		})
 	})
 })
+
+test.describe('Link share of a share with download disabled', () => {
+	test('opens the file', async ({ file, page, recipient }) => {
+		await file.shareWithUser(recipient.account.userId, { attributes: downloadDisabled })
+		const { token } = await new Node({ ...file, page: recipient.page }).shareLink()
+		await page.goto(`s/${token}`)
+		await expect(new EditorSection(page).getHeading({ name: 'Hello world' })).toBeVisible()
+	})
+
+	test('shows the folder description', async ({ owner, page, recipient }) => {
+		const folder = await createFolder({ name: 'folder', owner })
+		await owner.uploadFile({ name: 'folder/Readme.md', content: '## Folder description' })
+		await folder.shareWithUser(recipient.account.userId, { attributes: downloadDisabled })
+		const { token } = await new Node({ ...folder, page: recipient.page }).shareLink()
+		await page.goto(`s/${token}`)
+		await expect(new EditorSection(page).getHeading({ name: 'Folder description' })).toBeVisible()
+	})
+
+	test.describe('with viewing without download disallowed', () => {
+		test.beforeEach(async ({ request }) => {
+			await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', 'no')
+		})
+
+		test.afterEach(async ({ request }) => {
+			await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', null)
+		})
+
+		test('shows an error', async ({ file, page, recipient }) => {
+			await file.shareWithUser(recipient.account.userId, { attributes: downloadDisabled })
+			const { token } = await new Node({ ...file, page: recipient.page }).shareLink()
+			const createResponse = page.waitForResponse(/\/apps\/text\/public\/session\/\d+\/create$/)
+			await page.goto(`s/${token}`)
+			expect((await createResponse).status()).toBe(403)
+			await expect(page.getByText('This file cannot be displayed as download is disabled by the share'))
+				.toBeVisible()
+			await expect(new EditorSection(page).content).not.toBeVisible()
+		})
+
+		test('does not show the folder description', async ({ owner, page, recipient }) => {
+			const folder = await createFolder({ name: 'folder', owner })
+			await owner.uploadFile({ name: 'folder/Readme.md', content: '## Folder description' })
+			await folder.shareWithUser(recipient.account.userId, { attributes: downloadDisabled })
+			const { token } = await new Node({ ...folder, page: recipient.page }).shareLink()
+			const createResponse = page.waitForResponse(/\/apps\/text\/public\/session\/\d+\/create$/)
+			await page.goto(`s/${token}`)
+			expect((await createResponse).status()).toBe(403)
+			await expect(new EditorSection(page).getHeading({ name: 'Folder description' })).not.toBeVisible()
+		})
+	})
+})

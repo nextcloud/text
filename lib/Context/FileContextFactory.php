@@ -12,6 +12,7 @@ use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IUser;
 use OCP\Share\IShare;
@@ -39,6 +40,11 @@ class FileContextFactory implements IContextFactory {
 			* If not then well 404 it is.
 			*/
 			$this->fileService->checkSharePermissions($auth);
+			if (!$auth->canSeeContent()) {
+				throw new NotPermittedException(
+					$this->l10n->t('This file cannot be displayed as download is disabled by the share')
+				);
+			}
 		}
 		return new FileContext(
 			$this->fileService,
