@@ -83,6 +83,7 @@ import { File } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
+import { ySyncPluginKey } from '@tiptap/y-tiptap'
 import { useElementSize } from '@vueuse/core'
 import { defineAsyncComponent, defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
@@ -285,7 +286,7 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(
+		const { connection, openConnection, openData } = provideConnection(
 			props,
 			getBaseVersionEtag,
 			setBaseVersionEtag,
@@ -349,6 +350,7 @@ export default defineComponent({
 			awareness,
 			clearIndexedDb,
 			connection,
+			openData,
 			dirty,
 			document,
 			editor,
@@ -689,15 +691,17 @@ export default defineComponent({
 			})
 		},
 
-		onUpdate({ editor }) {
+		onUpdate({ editor, transaction }) {
 			if (window.OCA.Text.logEditorUpdates) {
 				this.debugContent(editor)
 			}
 			const serialize = this.serialize
+			const origin = transaction.getMeta(ySyncPluginKey)
 			this.$emit('update:content', {
 				get markdown() {
 					return serialize()
 				},
+				local: transaction.docChanged && (!origin?.isChangeOrigin || !!origin?.isUndoRedoOperation),
 			})
 		},
 
@@ -821,11 +825,11 @@ export default defineComponent({
 
 		/** @return {import('../types/EmbeddingState.ts').EmbeddingState} */
 		exportState() {
-			if (!this.contentLoaded || !this.connection) {
+			if (!this.contentLoaded || !this.openData) {
 				throw new Error('Text session is not ready')
 			}
 			const data = this.saveService.getSaveData()
-			return { format: 1, context: { type: this.context.type, id: this.context.id }, baseVersionEtag: this.connection.baseVersionEtag, version: data.version, markdown: data.autosaveContent, documentState: data.documentState, stateVector: encodeArrayBuffer(encodeStateVector(this.ydoc)) }
+			return { format: 1, context: { type: this.context.type, id: this.context.id }, baseVersionEtag: this.openData.document.baseVersionEtag, version: data.version, markdown: data.autosaveContent, documentState: data.documentState, stateVector: encodeArrayBuffer(encodeStateVector(this.ydoc)) }
 		},
 
 		async drain() {

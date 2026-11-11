@@ -46,7 +46,7 @@ interface CollaborativeEditorOptions {
 	menubarLinkCustomAction?: () => void
 	onCreate?: ({ markdown }: { markdown: string }) => void
 	onLoaded?: () => void
-	onUpdate?: ({ markdown }: { markdown: string }) => void
+	onUpdate?: ({ markdown, local }: { markdown: string, local?: boolean }) => void
 	onTocToggle?: EventHandler<boolean>
 	onOutlineToggle?: EventHandler<boolean> // deprecated, use `onTocToggle`
 	onTocPin?: EventHandler<{ fileId: number, keep: boolean }>

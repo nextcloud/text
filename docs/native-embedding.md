@@ -67,6 +67,12 @@ The snapshot contains a full base64 Yjs update, state vector, Markdown, version,
 context and collaboration base ETag, without session credentials. `drain()`
 freezes user input, waits for queued/in-flight provider updates, and returns a
 snapshot; failures reject. It does not persist, save, or close the session.
+After session rejection, `exportState()` still returns recovery state with the
+original base ETag; it does not require an active connection.
+
+The existing `onUpdate({ markdown, local })` callback reports document changes,
+including toolbar and programmatic edits. `local` distinguishes local edits
+(including undo/redo) from remote updates and initial Yjs content.
 
 The host must persist recovery state, control file-save requests, verify the saved
 version, close through its own transport, and fetch canonical DAV Markdown/ETag
