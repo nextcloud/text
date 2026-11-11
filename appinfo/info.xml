@@ -39,6 +39,9 @@
 	<commands>
 		<command>OCA\Text\Command\ResetDocument</command>
 	</commands>
+	<settings>
+		<admin>OCA\Text\Settings\VersionSummariesSettings</admin>
+	</settings>
 	<sabre>
 		<plugins>
 			<plugin>OCA\Text\DAV\WorkspacePlugin</plugin>
