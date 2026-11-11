@@ -9,15 +9,28 @@ import axios from '@nextcloud/axios'
 import { flushPromises } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { effectScope } from 'vue'
+import { createComparisonSession } from '../../comparison/session.ts'
 import { useSharedComparison } from '../../comparison/sharedComparison.ts'
 import { trackClosingSave } from '../../helpers/closingSaves.ts'
 
 vi.mock('../../comparison/session.ts', () => ({
 	createComparisonSession: vi.fn((before: string, after: string) => ({ before, after, destroy: vi.fn() })),
 }))
+vi.mock('@nextcloud/viewer', () => ({ getViewer: () => new EventTarget() }))
+vi.mock('@nextcloud/auth', async (importOriginal) => ({ ...await importOriginal<object>(), getCurrentUser: () => ({ uid: 'alice' }) }))
+vi.mock('@nextcloud/sharing/public', () => ({ isPublicShare: () => false }))
 
 const base = { source: 'https://cloud.example/v/1', encodedSource: 'https://cloud.example/v/1', path: '/plan.md' } as unknown as IFile
 const file = { source: 'https://cloud.example/f/plan.md', encodedSource: 'https://cloud.example/f/plan.md', path: '/plan.md' } as unknown as IFile
+
+// A response whose content the test gives later
+function deferred() {
+	let settle!: (text: string) => void
+	const promise = new Promise((resolve) => {
+		settle = (text) => resolve({ data: text, headers: {} })
+	})
+	return { promise, settle }
+}
 
 // Let a load that just started fetch both files and compare them
 async function settle() {
@@ -32,6 +45,64 @@ afterEach(() => {
 })
 
 describe('useSharedComparison', () => {
+	it('shows only the latest of overlapping reloads', async () => {
+		const get = vi.spyOn(axios, 'get')
+		get.mockResolvedValueOnce({ data: 'old', headers: {} })
+		get.mockResolvedValueOnce({ data: 'first', headers: {} })
+		const scope = effectScope()
+		const comparison = scope.run(() => useSharedComparison(base, file))!
+		await settle()
+
+		const late = deferred()
+		get.mockReturnValueOnce(late.promise as never)
+		get.mockReturnValueOnce(Promise.resolve({ data: 'new', headers: {} }) as never)
+		comparison.reload()
+		await settle()
+		get.mockResolvedValueOnce({ data: 'old', headers: {} })
+		get.mockResolvedValueOnce({ data: 'newest', headers: {} })
+		comparison.reload()
+		await settle()
+		late.settle('stale')
+		await flushPromises()
+
+		expect(comparison.texts.value?.after.text).toBe('newest')
+		// Files come without caching rules: a stale copy would not match the server
+		expect(get).toHaveBeenCalledWith(file.encodedSource, expect.objectContaining({ headers: { 'Cache-Control': 'no-cache' } }))
+		expect(comparison.error.value).toBe(false)
+		scope.stop()
+	})
+
+	it('resolves links and images from the folder of the file, also between two old versions', async () => {
+		const version = (revision: number) => {
+			const source = `https://cloud.example/remote.php/dav/versions/alice/versions/7/${revision}`
+			// An old version's node only knows its revision
+			return { source, encodedSource: source, path: `/${revision}`, fileid: 7 } as unknown as IFile
+		}
+		vi.spyOn(axios, 'get').mockImplementation(async (url: string) => url.includes('/ocs/v2.php/apps/text/versions/7')
+			? { data: { ocs: { data: { path: '/Notes/plan.md', versions: [], versionsAvailable: true } } } }
+			: { data: url.endsWith('/100') ? 'older' : 'newer', headers: {} })
+		const scope = effectScope()
+		const comparison = scope.run(() => useSharedComparison(version(100), version(200)))!
+		await settle()
+
+		expect(comparison.path.value).toBe('/Notes/plan.md')
+		expect(createComparisonSession).toHaveBeenLastCalledWith('older', 'newer', { filePath: '/Notes/plan.md' })
+		scope.stop()
+	})
+
+	it('takes the folder from the current file without asking for the versions', async () => {
+		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: 'text', headers: {} })
+		const source = 'https://cloud.example/remote.php/dav/files/alice/Notes/plan.md'
+		const current = { source, encodedSource: source, path: '/Notes/plan.md', fileid: 7 } as unknown as IFile
+		const scope = effectScope()
+		const comparison = scope.run(() => useSharedComparison(base, current))!
+		await settle()
+
+		expect(comparison.path.value).toBe('/Notes/plan.md')
+		expect(get).toHaveBeenCalledTimes(2)
+		scope.stop()
+	})
+
 	it('loads a file again once the viewer shows a newer state of it', async () => {
 		const get = vi.spyOn(axios, 'get').mockResolvedValue({ data: new TextEncoder().encode('text').buffer, headers: { etag: '"before-restore"' } })
 		const current = (etag: string) => ({ ...file, fileid: 13, attributes: { etag } }) as unknown as IFile
@@ -85,9 +156,8 @@ describe('useSharedComparison', () => {
 
 		saved()
 		await flushPromises()
-		// Files come without caching rules: a stale copy would not show the save
-		expect(get).toHaveBeenCalledWith(edited.encodedSource, expect.objectContaining({ headers: { 'Cache-Control': 'no-cache' } }))
-		expect(comparison.session.value).toMatchObject({ after: 'saved' })
+		expect(get).toHaveBeenCalledWith(edited.encodedSource, expect.anything())
+		expect(comparison.texts.value?.after.text).toBe('saved')
 		scope.stop()
 	})
 
@@ -155,6 +225,25 @@ describe('useSharedComparison', () => {
 
 		expect(again.error.value).toBe(false)
 		expect(get).toHaveBeenCalledTimes(2)
+		scope.stop()
+	})
+
+	it('compares two old versions without waiting for a save of the current file', async () => {
+		const version = (revision: number) => {
+			const source = `https://cloud.example/remote.php/dav/versions/alice/versions/12/${revision}`
+			return { source, encodedSource: source, path: `/${revision}`, fileid: 12 } as unknown as IFile
+		}
+		// The editor of the current file is still saving, and never ends
+		trackClosingSave(12, new Promise<boolean>(() => {}))
+		vi.spyOn(axios, 'get').mockImplementation(async (url: string) => url.includes('/ocs/')
+			? { data: { ocs: { data: { path: '/plan.md', versions: [], versionsAvailable: true } } } }
+			: { data: 'old', headers: {} })
+		const scope = effectScope()
+		const comparison = scope.run(() => useSharedComparison(version(100), version(200)))!
+		await settle()
+
+		expect(comparison.error.value).toBe(false)
+		expect(comparison.texts.value?.after.text).toBe('old')
 		scope.stop()
 	})
 

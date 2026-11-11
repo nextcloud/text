@@ -69,5 +69,7 @@ return [
 		['name' => 'Workspace#publicFolder', 'url' => '/public/workspace', 'verb' => 'GET'],
 		/** @see Controller\WorkspaceController::direct() */
 		['name' => 'Workspace#direct', 'url' => '/workspace/direct', 'verb' => 'POST'],
+		/** @see Controller\VersionsController::index() */
+		['name' => 'Versions#index', 'url' => '/versions/{fileId}', 'verb' => 'GET'],
 	]
 ];

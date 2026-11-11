@@ -3,14 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { MaybeRefOrGetter } from 'vue'
+
 import { getCurrentUser } from '@nextcloud/auth'
-import { provide, shallowRef } from 'vue'
+import { computed, provide, toValue } from 'vue'
 import { ATTACHMENT_RESOLVER, EDITOR_UPLOAD } from '../components/Editor.provider.ts'
 import AttachmentResolver from '../services/AttachmentResolver.js'
 
 interface ComparisonAttachmentOptions {
 	fileId?: number
-	filePath?: string
+	/** Path of the file, once known */
+	filePath?: MaybeRefOrGetter<string | undefined>
 	shareToken?: string
 }
 
@@ -21,9 +24,9 @@ interface ComparisonAttachmentOptions {
  * @param options The file the documents belong to, if known.
  */
 export function useComparisonAttachments(options: ComparisonAttachmentOptions) {
-	provide(ATTACHMENT_RESOLVER, shallowRef(options.fileId
+	provide(ATTACHMENT_RESOLVER, computed(() => options.fileId
 		? new AttachmentResolver({
-				currentDirectory: options.filePath?.split('/').slice(0, -1).join('/') ?? '/',
+				currentDirectory: toValue(options.filePath)?.split('/').slice(0, -1).join('/') ?? '/',
 				fileId: options.fileId,
 				session: undefined,
 				shareToken: options.shareToken,

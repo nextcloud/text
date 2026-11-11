@@ -78,6 +78,24 @@ namespace OCA\Files_Versions\Events {
 namespace OCA\Files_Versions\Versions {
 	abstract class IVersion {
 		abstract public function getSourceFile(): \OCP\Files\File;
+		/** @return int|string */
+		abstract public function getRevisionId();
+		abstract public function getTimestamp(): int;
+		abstract public function getSize(): int|float;
+	}
+
+	interface IMetadataVersion {
+		public function getMetadataValue(string $key): ?string;
+	}
+
+	interface IVersionManager {
+		/** @return IVersion[] */
+		public function getVersionsForFile(\OCP\IUser $user, \OCP\Files\FileInfo $file): array;
+		/** @return resource|false */
+		public function read(IVersion $version);
+	}
+
+	class BackendNotFoundException extends \Exception {
 	}
 }
 
