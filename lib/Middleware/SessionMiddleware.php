@@ -57,6 +57,12 @@ class SessionMiddleware extends Middleware {
 			return;
 		}
 
+		$runtimeDigest = $this->request->getParam('runtimeDigest');
+		if ($runtimeDigest !== null && $methodName !== 'close'
+			&& (!is_string($runtimeDigest) || !(new \OCA\Text\Service\RuntimeManifest())->matches($runtimeDigest))) {
+			throw new InvalidDocumentBaseVersionEtagException();
+		}
+
 		$reflectionMethod = new \ReflectionMethod($controller, $methodName);
 
 		if (!empty($reflectionMethod->getAttributes(RequireDocumentSessionOrUserOrShareToken::class))) {

@@ -5,6 +5,7 @@
 
 import type { EventHandler } from '@nextcloud/event-bus'
 import type { App } from 'vue'
+import type { SessionTransport } from './services/SessionTransport.ts'
 import type { TextEditorEmbed } from './TextEditorEmbed.ts'
 import type { Context } from './types/Context.ts'
 
@@ -19,6 +20,7 @@ import {
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 import { OPEN_LINK_HANDLER } from './composables/useOpenLinkHandler.ts'
 import { openLink } from './helpers/links.js'
+import { sessionTransportKey } from './services/SessionTransport.ts'
 import { TextEditorEmbedBuilder } from './TextEditorEmbed.ts'
 
 interface ReadonlyBar {
@@ -27,6 +29,8 @@ interface ReadonlyBar {
 }
 
 interface CollaborativeEditorOptions {
+	/** Host transport; persistence is in memory when supplied. */
+	sessionTransport?: SessionTransport
 	/**
 	 * Element to render the editor to
 	 */
@@ -119,6 +123,9 @@ export async function createEditor(options: EditorOptions) {
  * @param options for the editor
  */
 export async function createCollaborativeEditor(options: CollaborativeEditorOptions) {
+	if (options.sessionTransport && options.shareToken) {
+		throw new Error('Host transports currently support authenticated contexts only')
+	}
 	const { default: CollaborativeEditorApp } = await import('./views/CollaborativeEditorApp.vue')
 	const data = reactiveData(options)
 	const app = createApp(
@@ -138,6 +145,9 @@ export async function createCollaborativeEditor(options: CollaborativeEditorOpti
 			'onUpdate:content': options.onUpdate ?? (() => { }),
 		},
 	)
+	if (options.sessionTransport) {
+		app.provide(sessionTransportKey, options.sessionTransport)
+	}
 	app.provide(EDITOR_UPLOAD, true)
 	provideHooks(app, options)
 	return createTextEditorEmbed(app, data, options)

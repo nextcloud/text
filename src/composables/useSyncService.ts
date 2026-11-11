@@ -8,6 +8,7 @@ import type { Connection } from '../types/Connection.ts'
 import type { InitialData } from './useConnection.ts'
 
 import { inject, provide } from 'vue'
+import { browserSessionTransport, sessionTransportKey } from '../services/SessionTransport.ts'
 import { SyncService } from '../services/SyncService.ts'
 
 const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
@@ -25,6 +26,7 @@ export function provideSyncService(
 	const syncService = new SyncService({
 		connection,
 		openConnection,
+		transport: (inject(sessionTransportKey, browserSessionTransport) ?? browserSessionTransport),
 	})
 	provide(syncServiceKey, syncService)
 
