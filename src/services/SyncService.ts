@@ -63,6 +63,9 @@ export declare type EventTypes = {
 	/* local yjs changes have been pushed to the server */
 	changesPushed: { version: number }
 
+	/* local yjs changes are waiting to be pushed to the server */
+	pendingChanges: { pending: boolean }
+
 	/* error */
 	error: { type: ErrorType, data?: object }
 
@@ -85,7 +88,10 @@ class SyncService {
 	pushError = 0
 	backend?: PollingBackend
 	#sendIntervalId?: NodeJS.Timeout
-	#outbox = new Outbox()
+	#outbox = new Outbox({
+		onChange: (hasUpdate) => this.bus.emit('pendingChanges', { pending: hasUpdate }),
+	})
+
 	bus = mitt<EventTypes>()
 	#openConnection: () => Promise<OpenData>
 	#lastStepPush = Date.now()
