@@ -17,6 +17,15 @@ export default class Outbox {
 	#syncQuery = ''
 	#recoveryAttemptCounter = 0
 	#isRecoveringSync = false
+	#onChange
+
+	/**
+	 * @param options options
+	 * @param options.onChange called when `hasUpdate` changes
+	 */
+	constructor({ onChange = () => { } }: { onChange?: (hasUpdate: boolean) => void } = {}) {
+		this.#onChange = onChange
+	}
 
 	storeStep(step: Uint8Array<ArrayBufferLike>) {
 		const encoded = encodeArrayBuffer(step)
@@ -29,7 +38,7 @@ export default class Outbox {
 			return
 		}
 		if (encoded < 'AQ') {
-			this.#syncUpdate = encoded
+			this.#setSyncUpdate(encoded)
 			return
 		}
 		this.#awarenessUpdate = encoded
@@ -58,6 +67,14 @@ export default class Outbox {
 		return !!this.#syncUpdate
 	}
 
+	#setSyncUpdate(update: string) {
+		const hadUpdate = this.hasUpdate
+		this.#syncUpdate = update
+		if (this.hasUpdate !== hadUpdate) {
+			this.#onChange(this.hasUpdate)
+		}
+	}
+
 	/*
 	 * Clear data that has just been sent.
 	 *
@@ -66,7 +83,7 @@ export default class Outbox {
 	 */
 	clearSentData({ steps, awareness }: Sendable) {
 		if (steps.includes(this.#syncUpdate)) {
-			this.#syncUpdate = ''
+			this.#setSyncUpdate('')
 		}
 		if (steps.includes(this.#syncQuery)) {
 			this.#syncQuery = ''
