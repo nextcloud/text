@@ -417,6 +417,38 @@ describe('Table extension', () => {
 			expect(serializeMarkdown()).toBe('| H1     | H2   |\n|--------|------|\n| a1     | a2   |\n| b1     | H1b2 | \\\n|        |      | \\\n| - item |      |\n')
 		})
 	})
+
+	describe('nested tables', () => {
+		const html = '<table><tr><th>H1</th></tr><tr><td><p>a1</p><ul><li><p>item</p></li></ul></td></tr></table><p>after</p>'
+
+		test('transaction inserting a table into a cell is filtered out', ({ editor }) => {
+			editor.commands.setContent(html)
+			const doc = editor.state.doc
+			editor.view.dispatch(editor.state.tr.insert(findText(editor, 'a1') + 3, doc.firstChild))
+			expect(editor.state.doc.eq(doc)).toBe(true)
+		})
+
+		test('transaction inserting a table into a list in a cell is filtered out', ({ editor }) => {
+			editor.commands.setContent(html)
+			const doc = editor.state.doc
+			editor.view.dispatch(editor.state.tr.insert(findText(editor, 'item') + 5, doc.firstChild))
+			expect(editor.state.doc.eq(doc)).toBe(true)
+		})
+
+		test('transaction inserting a table outside of tables is applied', ({ editor }) => {
+			editor.commands.setContent(html)
+			const doc = editor.state.doc
+			editor.view.dispatch(editor.state.tr.insert(doc.content.size, doc.firstChild))
+			const tables = editor.state.doc.children.filter((node) => node.type.name === 'table')
+			expect(tables).toHaveLength(2)
+		})
+
+		test('typing in a cell is applied', ({ editor, serializeMarkdown }) => {
+			editor.commands.setContent(html)
+			editor.view.dispatch(editor.state.tr.insertText('x', findText(editor, 'a1')))
+			expect(serializeMarkdown()).toContain('xa1')
+		})
+	})
 })
 
 function getHeaderCell(editor, targetIndex = 0) {
