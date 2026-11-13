@@ -570,6 +570,13 @@ div.ProseMirror {
 	}
 }
 
+// Query of an open suggestion menu, styled like an inline input without shifting the text
+.suggestion-query {
+	border-radius: var(--border-radius-small);
+	background-color: var(--color-primary-element-light);
+	padding-block: 2px;
+}
+
 .footnote-highlight {
 	animation: highlight-animation 5s 1;
 	border-radius: var(--border-radius-small);
