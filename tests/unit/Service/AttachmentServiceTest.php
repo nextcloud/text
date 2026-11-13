@@ -2,7 +2,7 @@
 
 namespace OCA\Text\Tests;
 
-use OCA\Text\AppInfo\Application;
+use OCA\Text\Context\IContext;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\FileService;
 use OCP\Files\File;
@@ -10,11 +10,15 @@ use OCP\Files\Folder;
 use OCP\Files\IFilenameValidator;
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
+use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
 use OCP\ISession;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\Share\IManager as ShareManager;
+use OCP\Share\IShare;
 use PHPUnit\Framework\TestCase;
 
 class AttachmentServiceTest extends TestCase {
@@ -32,9 +36,24 @@ class AttachmentServiceTest extends TestCase {
 		'a`a`.png',
 	];
 
-	public function testDummy(): void {
-		$app = new Application();
-		$this->assertEquals('text', $app::APP_NAME);
+	private function createService(?IRootFolder $rootFolder = null, ?FileService $fileService = null, ?IPreview $previewManager = null): AttachmentService {
+		return new AttachmentService(
+			$rootFolder ?? $this->createMock(IRootFolder::class),
+			$this->createMock(ShareManager::class),
+			$previewManager ?? $this->createMock(IPreview::class),
+			$this->createMock(IMimeTypeDetector::class),
+			$this->createMock(IURLGenerator::class),
+			$this->createMock(IFilenameValidator::class),
+			$this->createMock(IFilesMetadataManager::class),
+			$this->createMock(ISession::class),
+			$fileService ?? $this->createMock(FileService::class),
+		);
+	}
+
+	private function createContext(File $file): IContext {
+		$context = $this->createMock(IContext::class);
+		$context->method('getFile')->willReturn($file);
+		return $context;
 	}
 
 	public function testGetAttachmentNamesFromContent(): void {
@@ -276,17 +295,7 @@ class AttachmentServiceTest extends TestCase {
 	}
 
 	public function testCopyAttachmentsInFolderRewritesFolderAndFileIds(): void {
-		$service = new AttachmentService(
-			$this->createMock(IRootFolder::class),
-			$this->createMock(ShareManager::class),
-			$this->createMock(IPreview::class),
-			$this->createMock(IMimeTypeDetector::class),
-			$this->createMock(IURLGenerator::class),
-			$this->createMock(IFilenameValidator::class),
-			$this->createMock(IFilesMetadataManager::class),
-			$this->createMock(ISession::class),
-			$this->createMock(FileService::class),
-		);
+		$service = $this->createService();
 
 		$sourceMd = $this->createMock(File::class);
 		$sourceMd->method('getId')->willReturn(1);
@@ -332,5 +341,94 @@ class AttachmentServiceTest extends TestCase {
 		$service->copyAttachmentsInFolder($sourceFolder, $targetFolder);
 
 		$this->assertEquals("![a.png](.attachments.2/a.png)\n\n[board](https://localhost/f/20 (preview))\n", $content);
+	}
+
+	public function testGetMediaFileWithDownloadDisabled(): void {
+		$fileService = $this->createMock(FileService::class);
+		$fileService->method('canSeeContent')->willReturn(true);
+		$fileService->method('isDownloadDisabled')->willReturn(true);
+		$service = $this->createService(fileService: $fileService);
+		$textFile = $this->createMock(File::class);
+		$textFile->expects($this->never())->method('getOwner');
+
+		$this->assertNull($service->getMediaFile($this->createContext($textFile), 'media.zip', $this->createMock(IUser::class)));
+	}
+
+	public function testGetMediaFileWithLinkShareDownloadDisabled(): void {
+		$fileService = $this->createMock(FileService::class);
+		$fileService->method('canSeeContent')->willReturn(true);
+		$service = $this->createService(fileService: $fileService);
+		$share = $this->createMock(IShare::class);
+		$share->method('canDownload')->willReturn(false);
+		$textFile = $this->createMock(File::class);
+		$textFile->expects($this->never())->method('getOwner');
+
+		$this->assertNull($service->getMediaFile($this->createContext($textFile), 'media.zip', $share));
+	}
+
+	public function testInsertAttachmentFileWithDownloadDisabled(): void {
+		$textFile = $this->createMock(File::class);
+		$textFile->method('isUpdateable')->willReturn(true);
+		$textFile->expects($this->never())->method('getOwner');
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('nodeExists')->with('/shared.png')->willReturn(true);
+		$userFolder->method('get')->with('/shared.png')->willReturn($this->createMock(File::class));
+		$rootFolder = $this->createMock(IRootFolder::class);
+		$rootFolder->method('getUserFolder')->with('user')->willReturn($userFolder);
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('user');
+
+		$fileService = $this->createMock(FileService::class);
+		$fileService->method('isDownloadDisabled')->willReturn(true);
+		$fileService->method('canSeeContent')->willReturn(true);
+		$service = $this->createService($rootFolder, $fileService);
+
+		$this->expectException(NotFoundException::class);
+		$service->insertAttachmentFile($this->createContext($textFile), '/shared.png', $user);
+	}
+
+	public static function dataGetImageFilePreferRawImage(): array {
+		return [
+			'download allowed' => [false, true],
+			'download disabled' => [true, false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetImageFilePreferRawImage
+	 */
+	public function testGetImageFilePreferRawImage(bool $downloadDisabled, bool $expectRaw): void {
+		$imageFile = $this->createMock(File::class);
+		$imageFile->method('getMimeType')->willReturn('image/jpeg');
+		$attachmentFolder = $this->createMock(Folder::class);
+		$attachmentFolder->method('get')->with('photo.jpg')->willReturn($imageFile);
+		$parentFolder = $this->createMock(Folder::class);
+		$parentFolder->method('nodeExists')->with('.attachments.1')->willReturn(true);
+		$parentFolder->method('get')->with('.attachments.1')->willReturn($attachmentFolder);
+		$ownerTextFile = $this->createMock(File::class);
+		$ownerTextFile->method('getParent')->willReturn($parentFolder);
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('getFirstNodeById')->with(1)->willReturn($ownerTextFile);
+		$rootFolder = $this->createMock(IRootFolder::class);
+		$rootFolder->method('getUserFolder')->with('owner')->willReturn($userFolder);
+
+		$owner = $this->createMock(IUser::class);
+		$owner->method('getUID')->willReturn('owner');
+		$textFile = $this->createMock(File::class);
+		$textFile->method('getId')->willReturn(1);
+		$textFile->method('getOwner')->willReturn($owner);
+
+		$preview = $this->createMock(ISimpleFile::class);
+		$previewManager = $this->createMock(IPreview::class);
+		$previewManager->method('isMimeSupported')->with('image/jpeg')->willReturn(true);
+		$previewManager->method('getPreview')->with($imageFile, 1024, 1024)->willReturn($preview);
+
+		$fileService = $this->createMock(FileService::class);
+		$fileService->method('canSeeContent')->willReturn(true);
+		$fileService->method('isDownloadDisabled')->willReturn($downloadDisabled);
+		$service = $this->createService($rootFolder, $fileService, $previewManager);
+
+		$result = $service->getImageFile($this->createContext($textFile), 'photo.jpg', true, $this->createMock(IUser::class));
+		$this->assertSame($expectRaw ? $imageFile : $preview, $result);
 	}
 }
