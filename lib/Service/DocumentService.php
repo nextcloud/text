@@ -51,6 +51,12 @@ class DocumentService {
 	 */
 	public const int AUTOSAVE_MINIMUM_DELAY = 10;
 
+	/**
+	 * Steps before the last saved version that recovering clients receive
+	 * along with the document state, see #7692
+	 */
+	public const int STEPS_BEFORE_SAVED_VERSION = 200;
+
 	private bool $saveFromText = false;
 	private readonly ICache $cache;
 
@@ -275,7 +281,7 @@ class DocumentService {
 				$this->logger->debug('Existing document, state file loaded ' . $documentId);
 				// If there were any queries in the steps, send all steps starting 200 steps before last save.
 				// Adding 200 previous steps to workaround race conditions where state with missing step got persisted in the document state. See #7692
-				$getStepsSinceVersion = $this->stepMapper->getBeforeVersion($documentId, $document->getLastSavedVersion(), 200);
+				$getStepsSinceVersion = $this->stepMapper->getBeforeVersion($documentId, $document->getLastSavedVersion(), self::STEPS_BEFORE_SAVED_VERSION);
 			} catch (NotFoundException) {
 				$this->logger->debug('Existing document, but no state file found for ' . $documentId);
 				// If there is no state file, include all the steps.
@@ -507,6 +513,27 @@ class DocumentService {
 	public function markAttachmentCleanup(Document $document): void {
 		$document->setLastAttachmentCleanup($document->getLastSavedVersionTime());
 		$this->documentMapper->update($document);
+	}
+
+	/**
+	 * Remove old steps that are included in the saved document state.
+	 *
+	 * Clients that still miss them recover from the document state, see addStep().
+	 */
+	public function removeSavedSteps(int $ageInSeconds = 604800): int {
+		$olderThan = time() - $ageInSeconds;
+		$removed = 0;
+		foreach ($this->stepMapper->findDocumentsWithSavedSteps($olderThan, self::STEPS_BEFORE_SAVED_VERSION) as $document) {
+			try {
+				$this->getStateFile($document['documentId']);
+			} catch (NotFoundException) {
+				// Without a document state recovering clients need all steps
+				continue;
+			}
+			$version = $this->stepMapper->getBeforeVersion($document['documentId'], $document['lastSavedVersion'], self::STEPS_BEFORE_SAVED_VERSION);
+			$removed += $this->stepMapper->deleteBeforeVersion($document['documentId'], $version, $olderThan);
+		}
+		return $removed;
 	}
 
 	public function hasUnsavedChanges(Document $document): bool {
