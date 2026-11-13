@@ -172,6 +172,50 @@ describe('insertFootnote command', () => {
 	})
 })
 
+describe('Footnote ordinals', () => {
+	function ordinals(editor: Editor, selector: string): string[] {
+		return [...editor.view.dom.querySelectorAll<HTMLElement>(selector)]
+			.map((el) => el.style.getPropertyValue('--footnote-ordinal'))
+	}
+
+	test('numbers footnotes by first reference and reuses the number for repeated references', ({ editor }) => {
+		editor.commands.setContent('<p>A<sup data-type="footnote-reference" data-reference-id="b"></sup>'
+			+ ' B<sup data-type="footnote-reference" data-reference-id="a"></sup>'
+			+ ' C<sup data-type="footnote-reference" data-reference-id="b"></sup></p>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="a"><p>a</p></div>'
+			+ '<div data-type="footnote" data-reference-id="b"><p>b</p></div>'
+			+ '</section>')
+
+		expect(ordinals(editor, 'sup[data-type="footnote-reference"]')).toEqual(['1', '2', '1'])
+		expect(ordinals(editor, 'div[data-type="footnote"]')).toEqual(['2', '1'])
+		expect(editor.view.dom.querySelector<HTMLElement>('div[data-type="footnote"]')!.style.order).toBe('2')
+	})
+
+	test('renumbers when a reference is inserted before existing ones', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+		editor.commands.setTextSelection(1)
+		editor.commands.insertFootnote()
+
+		expect(ordinals(editor, 'sup[data-type="footnote-reference"]')).toEqual(['1', '2'])
+		expect(ordinals(editor, 'div[data-type="footnote"]')).toEqual(['2', '1'])
+	})
+
+	test('does not store ordinals in the document', ({ editor }) => {
+		editor.commands.setContent('<p>Foo<sup data-type="footnote-reference" data-reference-id="1"></sup></p>'
+			+ '<section data-type="footnotes">'
+			+ '<div data-type="footnote" data-reference-id="1"><p>x</p></div>'
+			+ '</section>')
+
+		editor.state.doc.descendants((node) => {
+			expect(node.attrs).not.toHaveProperty('ordinal')
+		})
+	})
+})
+
 describe('Footnotes cleanup', () => {
 	function deleteFirstReference(editor: Editor) {
 		// Delete reference node

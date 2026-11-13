@@ -17,7 +17,7 @@ test.describe('renders footnotes', () => {
 	test('shows reference and footnote from Markdown', async ({ editor, open }) => {
 		await open()
 		await expect(editor.getFootnoteReference('bar')).toBeVisible()
-		await expect(editor.getFootnoteReference('bar').locator('a')).toHaveText('1')
+		await expect(editor.getFootnoteReference('bar').locator('a')).toHaveCSS('--footnote-ordinal', '1')
 		await expect(editor.getFootnote('bar')).toContainText('footnote')
 	})
 })
