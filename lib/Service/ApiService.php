@@ -11,7 +11,6 @@ namespace OCA\Text\Service;
 
 use Exception;
 use InvalidArgumentException;
-use OCA\Files_Sharing\SharedStorage;
 use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
@@ -25,6 +24,7 @@ use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\Files\Storage\ISharedStorage;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
@@ -56,10 +56,11 @@ class ApiService {
 				 */
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
+					$this->documentService->checkShareCanSeeContent($token);
 				} catch (NotFoundException $e) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				} catch (NotPermittedException $e) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
+					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 				}
 			} elseif ($fileId !== null) {
 				try {
@@ -76,12 +77,11 @@ class ApiService {
 
 			$storage = $file->getStorage();
 
-			// Block using text for disabled download internal shares
-			if ($storage->instanceOfStorage(SharedStorage::class)) {
+			// Block using text when the share does not allow viewing the content
+			if ($storage->instanceOfStorage(ISharedStorage::class)) {
 				/** @var IShare $share */
 				$share = $storage->getShare();
-				$shareAttribtues = $share->getAttributes();
-				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
+				if (!$share->canSeeContent()) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 				}
 			}

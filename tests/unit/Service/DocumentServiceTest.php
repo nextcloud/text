@@ -338,4 +338,22 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->expectException(DocumentSaveConflictException::class);
 		$this->documentService->autosave($document, $file, 3, 'new content', 'doc state', false, true);
 	}
+
+	public function testCheckShareCanSeeContent(): void {
+		$share = $this->createMock(IShare::class);
+		$share->method('canSeeContent')->willReturn(true);
+		$this->shareManager->method('getShareByToken')->with('token')->willReturn($share);
+
+		$this->documentService->checkShareCanSeeContent('token');
+		$this->addToAssertionCount(1);
+	}
+
+	public function testCheckShareCanSeeContentHidden(): void {
+		$share = $this->createMock(IShare::class);
+		$share->method('canSeeContent')->willReturn(false);
+		$this->shareManager->method('getShareByToken')->with('token')->willReturn($share);
+
+		$this->expectException(NotPermittedException::class);
+		$this->documentService->checkShareCanSeeContent('token');
+	}
 }

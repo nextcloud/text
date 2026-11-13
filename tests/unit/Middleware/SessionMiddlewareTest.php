@@ -106,6 +106,15 @@ class SessionMiddlewareTest extends TestCase {
 		$this->invokeMiddleware($share);
 	}
 
+	public function testValidTokenContentHidden(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$share = $this->createPasswordProtectedShare('42', canSeeContent: false);
+		$this->session->method('get')->with('public_link_authenticated')->willReturn('42');
+
+		$this->invokeMiddleware($share);
+	}
+
 	public function testLoggedInUserWithInvalidToken(): void {
 		$this->expectException(InvalidSessionException::class);
 
@@ -128,6 +137,7 @@ class SessionMiddlewareTest extends TestCase {
 		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$share->method('getShareOwner')->willReturn('user2');
 		$share->method('getAttributes')->willReturn(null);
+		$share->method('canSeeContent')->willReturn(true);
 
 		$this->shareManager->method('getShareByToken')->willReturn($share);
 
@@ -235,13 +245,14 @@ class SessionMiddlewareTest extends TestCase {
 		self::invokePrivate($this->middleware, 'assertDocumentSession', [$controller]);
 	}
 
-	private function createPasswordProtectedShare(string $id): IShare {
+	private function createPasswordProtectedShare(string $id, bool $canSeeContent = true): IShare {
 		$share = $this->createMock(IShare::class);
 		$share->method('getId')->willReturn($id);
 		$share->method('getPassword')->willReturn('password');
 		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$share->method('getShareOwner')->willReturn('owner');
 		$share->method('getAttributes')->willReturn(null);
+		$share->method('canSeeContent')->willReturn($canSeeContent);
 		return $share;
 	}
 

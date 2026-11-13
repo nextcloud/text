@@ -9,6 +9,8 @@ use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\SessionService;
+use OCP\AppFramework\Http;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
 use Psr\Log\LoggerInterface;
@@ -69,6 +71,18 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->method('getFileById')->willReturn($file);
 		$actual = $this->apiService->create(1234);
 		self::assertFalse($actual->getData()['hasOwner']);
+	}
+
+	public function testCreateWithShareContentHidden() {
+		$file = $this->mockFile(1234, 'admin');
+		$this->documentService->method('getFileByShareToken')->willReturn($file);
+		$this->documentService->method('checkShareCanSeeContent')
+			->with('token')
+			->willThrowException(new NotPermittedException());
+		$this->sessionService->expects($this->never())->method('initSession');
+
+		$actual = $this->apiService->create(null, null, null, 'token');
+		self::assertEquals(Http::STATUS_FORBIDDEN, $actual->getStatus());
 	}
 
 	public function testSaveWithNotPermittedException() {

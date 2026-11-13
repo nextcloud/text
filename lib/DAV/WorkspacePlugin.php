@@ -16,6 +16,7 @@ use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
 use OCP\Files\NotPermittedException;
+use OCP\Files\Storage\ISharedStorage;
 use OCP\ICacheFactory;
 use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
@@ -103,7 +104,7 @@ class WorkspacePlugin extends ServerPlugin {
 		}
 		$workspaceContentCallback = function () use ($file) {
 			$cachedContent = '';
-			if ($file instanceof File) {
+			if ($file instanceof File && $this->canSeeContent($file)) {
 				$cache = $this->cacheFactory->createDistributed('text_workspace');
 				$cacheKey = $file->getFileInfo()->getId() . '_' . $file->getFileInfo()->getEtag();
 				if (($cachedContent = $cache->get($cacheKey)) !== null) {
@@ -138,5 +139,14 @@ class WorkspacePlugin extends ServerPlugin {
 		$propFind->handle(self::WORKSPACE_PROPERTY_FLAT, $workspaceContentCallback);
 		$propFind->handle(self::WORKSPACE_FILE_PROPERTY, $workspaceFileCallback);
 		$propFind->handle(self::WORKSPACE_FILE_PROPERTY_FLAT, $workspaceFileCallback);
+	}
+
+	private function canSeeContent(File $file): bool {
+		$storage = $file->getStorage();
+		if (!$storage->instanceOfStorage(ISharedStorage::class)) {
+			return true;
+		}
+		/** @var ISharedStorage $storage */
+		return $storage->getShare()->canSeeContent();
 	}
 }
