@@ -71,6 +71,7 @@ OC.L10N.register(
     "Command" : "Comanda",
     "Suggestions" : "Suggestions",
     "Choose" : "Causir",
+    "Choose {file}" : "Causir {file}",
     "text document" : "document tèxt",
     "Insert an attachment" : "Inserir una pèça junta",
     "Saving …" : "Enregistrament...",
