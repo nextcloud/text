@@ -99,9 +99,12 @@ describe('Markdown though editor', () => {
 		// Issue #4900
 		expect(markdownThroughEditor('[`code`](foo)')).toBe('[`code`](foo)')
 		expect(markdownThroughEditor('[text with `code` inside](foo)')).toBe('[text with `code` inside](foo)')
+		// Purely numeric targets must stay strings (issue #9519)
+		expect(markdownThroughEditor('[test](12345678901234)')).toBe('[test](12345678901234)')
 		// Wiki-style links (issue #4795)
 		expect(markdownThroughEditor('[[WikiLink]]')).toBe('[[WikiLink]]')
 		expect(markdownThroughEditor('text [[wikiLink]] more')).toBe('text [[wikiLink]] more')
+		expect(markdownThroughEditor('[[12345678901234|test]]')).toBe('[[12345678901234|test]]')
 		// Reference-style links (issue #5820)
 		const referenceShortcutTest
 			= 'Test with [Case-Sensitive Reference] in it.\n\n[Case-Sensitive Reference]: https://example.org/\n'
