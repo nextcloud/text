@@ -94,7 +94,13 @@ class ApiService {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
-		if (count($activeSessions) === 0) {
+		// "No session left" is not the same as "nobody is editing": a reload of the editor leaves
+		// rows behind that are still inside SESSION_VALID_TIME (5 min), and a close whose row cannot
+		// be matched leaves its own row too. Either way the lock was never released and the file
+		// stayed unwritable for everybody else. The lock protects other people, so ask about them.
+		$closer = $auth instanceof IUser ? $auth->getUID() : null;
+		$othersEditing = $this->sessionService->hasRecentSessionsOfOtherUsers($documentId, $closer);
+		if (count($activeSessions) === 0 || !$othersEditing) {
 			$document = $this->documentService->getDocument($documentId);
 			if ($document !== null) {
 				$type = $document->getContextType();
