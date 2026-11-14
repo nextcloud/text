@@ -44,4 +44,23 @@ describe('SaveService', () => {
 			data: { outsideChange: 'outside content' },
 		})
 	})
+
+	it('pushes changes before saving', async () => {
+		vi.mocked(saveApi.save).mockResolvedValue({
+			data: { document: { lastSavedVersion: 2 } },
+		} as Awaited<ReturnType<typeof saveApi.save>>)
+		let version = 1
+		const pushChanges = vi.fn(async () => {
+			version = 2
+		})
+		const saveService = new SaveService({
+			connection,
+			getSaveData: () => ({ ...getSaveData(), version }),
+			pushChanges,
+		})
+
+		expect(await saveService.save()).toBe(true)
+		expect(pushChanges).toHaveBeenCalledOnce()
+		expect(saveApi.save).toHaveBeenCalledWith(connection.value, expect.objectContaining({ version: 2 }))
+	})
 })

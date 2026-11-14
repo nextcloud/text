@@ -37,18 +37,22 @@ class SaveService {
 	lastSaveAttempt = 0
 	pendingAutosave = 0
 	getSaveData
+	pushChanges
 	autosave
 	clear
 
 	constructor({
 		connection,
 		getSaveData,
+		pushChanges = async () => {},
 	}: {
 		connection: ShallowRef<Connection | undefined>
 		getSaveData: () => SaveData
+		pushChanges?: () => Promise<void>
 	}) {
 		this.connection = connection
 		this.getSaveData = getSaveData
+		this.pushChanges = pushChanges
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_DEBOUNCE * 1000)
 		this.clear = this.clearAutosave.bind(this)
 	}
@@ -67,6 +71,8 @@ class SaveService {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
+		// Save the version that includes the local changes
+		await this.pushChanges()
 		const data = this.getSaveData()
 		try {
 			this.lastSaveAttempt = Date.now()
