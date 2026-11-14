@@ -162,6 +162,29 @@ class SessionService {
 		return $this->session;
 	}
 
+	/**
+	 * Is another user still working on this document?
+	 *
+	 * The file lock exists to warn other people, so that is the question that decides whether it may
+	 * be released. Leftover rows of the same user — one per reload of the editor, plus any row whose
+	 * close could not be matched — must not keep a file locked.
+	 *
+	 * A live editor pushes every few seconds, so a short window separates "somebody is typing" from
+	 * "these rows are leftovers".
+	 */
+	public function hasRecentSessionsOfOtherUsers(string $documentId, ?string $userId, int $graceSeconds = 60): bool {
+		$threshold = $this->timeFactory->now()->getTimestamp() - $graceSeconds;
+		foreach ($this->sessionMapper->findAll($documentId) as $session) {
+			if ($session->getLastContact() < $threshold || $session->isGuest()) {
+				continue;
+			}
+			if ($userId === null || $session->getUserId() !== $userId) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function getValidSession(string $documentId, int $sessionId, string $token): ?Session {
 		$session = $this->getSession($documentId, $sessionId, $token);
 		if ($session === null) {
