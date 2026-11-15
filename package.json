@@ -136,7 +136,7 @@
     "vite": "^7.3.8",
     "vite-plugin-commonjs": "^0.10.4",
     "vitest": "^4.1.12",
-    "vue-tsc": "^3.3.13"
+    "vue-tsc": "^3.3.14"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.62.4"
