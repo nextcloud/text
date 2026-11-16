@@ -20,6 +20,14 @@ class EncodingService {
 		'UTF-8' => "\xef\xbb\xbf"
 	];
 
+	/**
+	 * Matches characters outside the XML 1.0 Char production, which cannot be
+	 * part of an XML document, not even escaped.
+	 *
+	 * @see https://www.w3.org/TR/xml/#charsets
+	 */
+	private const string XML_INVALID_CHARS = '/[^\x{9}\x{A}\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u';
+
 	public function encodeToUtf8(string $string): ?string {
 		$encoding = $this->detectEncoding($string);
 		if ($encoding === null) {
@@ -28,6 +36,18 @@ class EncodingService {
 
 		$encoded = mb_convert_encoding($string, 'UTF-8', $encoding);
 		return is_string($encoded) ? $encoded : null;
+	}
+
+	/**
+	 * Encode to UTF-8 and replace characters that are not allowed in XML with U+FFFD
+	 */
+	public function encodeToXmlSafeUtf8(string $string): ?string {
+		$encoded = $this->encodeToUtf8($string);
+		if ($encoded === null) {
+			return null;
+		}
+
+		return preg_replace(self::XML_INVALID_CHARS, "\u{FFFD}", $encoded);
 	}
 
 	public function detectEncoding(string $string): ?string {

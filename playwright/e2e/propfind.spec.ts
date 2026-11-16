@@ -6,7 +6,8 @@
 import { expect } from '@playwright/test'
 import { createFolder, uploadFile } from '../support/fixtures/Node.ts'
 import { test } from '../support/fixtures/random-user.ts'
-import { setTextSetting } from '../support/fixtures/settings.ts'
+import { setAppConfig, setTextSetting } from '../support/fixtures/settings.ts'
+import { test as sharedFileTest } from '../support/fixtures/shared-file.ts'
 import {
 	deleteWebDAVResource,
 	PROPERTY_WORKSPACE,
@@ -98,6 +99,38 @@ test.describe('Text PROPFIND extension', () => {
 			const results3 = await propfindFolder(user, '/', 1)
 			const folder = results3.find((r) => r['d:href']?.endsWith('/without-workspace/'))
 			expect(folder).not.toHaveProperty(PROPERTY_WORKSPACE)
+		})
+	})
+
+	sharedFileTest.describe('in a folder shared with download disabled', () => {
+		sharedFileTest.beforeEach(async ({ owner, recipient }) => {
+			await setTextSetting(recipient, 'workspace_enabled', 1)
+			const folder = await createFolder({ name: 'shared', owner })
+			await owner.uploadFile({ name: 'shared/Readme.md', content: '## Hello world\n' })
+			await folder.shareWithUser(recipient.account.userId, {
+				attributes: [{ scope: 'permissions', key: 'download', value: false }],
+			})
+		})
+
+		sharedFileTest('returns the rich workspace content', async ({ recipient }) => {
+			const [folder] = await propfindFolder(recipient, '/shared', 0)
+			expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '## Hello world\n')
+		})
+
+		sharedFileTest.describe('with viewing without download disallowed', () => {
+			sharedFileTest.beforeEach(async ({ request }) => {
+				await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', 'no')
+			})
+
+			sharedFileTest.afterEach(async ({ request }) => {
+				await setAppConfig(request, 'core', 'shareapi_allow_view_without_download', null)
+			})
+
+			sharedFileTest('does not return the rich workspace content', async ({ recipient }) => {
+				const [folder] = await propfindFolder(recipient, '/shared', 0)
+				expect(folder).toHaveProperty(PROPERTY_WORKSPACE, '')
+				expect(folder[PROPERTY_WORKSPACE_FILE]).not.toBe('')
+			})
 		})
 	})
 })

@@ -56,8 +56,9 @@ readonly class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getImageFile(IContext $context, string $imageFileName, bool $preferRawImage): File|ISimpleFile|null {
+	public function getImageFile(IContext $context, string $imageFileName, bool $preferRawImage, IShare|IUser $auth): File|ISimpleFile|null {
 		$textFile = $this->getTextFile($context);
+		$preferRawImage = $preferRawImage && $this->canDownload($textFile, $auth);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
@@ -96,9 +97,19 @@ readonly class AttachmentService {
 	 * @throws NotPermittedException
 	 * @throws NoUserException
 	 */
-	public function getMediaFile(IContext $context, string $mediaFileName): ?File {
+	public function getMediaFile(IContext $context, string $mediaFileName, IShare|IUser $auth): ?File {
 		$textFile = $this->getTextFile($context);
+		if (!$this->canDownload($textFile, $auth)) {
+			return null;
+		}
 		return $this->getMediaFullFile($mediaFileName, $textFile);
+	}
+
+	private function canDownload(File $textFile, IShare|IUser $auth): bool {
+		if ($auth instanceof IShare) {
+			return $auth->canDownload();
+		}
+		return !$this->fileService->isDownloadDisabled($textFile);
 	}
 
 	/**
@@ -110,7 +121,7 @@ readonly class AttachmentService {
 	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->fileService->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File) {
 			return $mediaFile;
 		}
 		return null;
@@ -138,7 +149,7 @@ readonly class AttachmentService {
 	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File && !$this->fileService->isDownloadDisabled($mediaFile)) {
+		if ($mediaFile instanceof File) {
 			if ($this->previewManager->isMimeSupported($mediaFile->getMimeType())) {
 				try {
 					return [
@@ -167,7 +178,6 @@ readonly class AttachmentService {
 	public function getAttachmentList(IContext $context, IShare|IUser $auth, ?Session $session = null): array {
 		$textFile = $this->getTextFile($context);
 		try {
-
 			$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
 		} catch (NotFoundException) {
 			return [];
@@ -181,6 +191,7 @@ readonly class AttachmentService {
 			: '?fileId=' . $context->getId() . $shareTokenUrlString;
 
 		$attachments = [];
+		$canDownload = $this->canDownload($textFile, $auth);
 
 		// Folder davPath need to be relative to.
 		$davFolder = ($auth instanceof IUser)
@@ -214,9 +225,11 @@ readonly class AttachmentService {
 				'isImage' => $isImage,
 				'davPath' => $davFolder?->getRelativePath($node->getPath()),
 				'metadata' => $metadata,
-				'fullUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
+				'fullUrl' => match (true) {
+					$isImage => $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . ($canDownload ? '&preferRawImage=1' : ''),
+					$canDownload => $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
+					default => null,
+				},
 				'previewUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name)
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
@@ -403,7 +416,7 @@ readonly class AttachmentService {
 	 */
 	private function getTextFile(IContext $context): File {
 		$file = $context->getFile();
-		if ($file instanceof File && !$this->fileService->isDownloadDisabled($file)) {
+		if ($file instanceof File && $this->fileService->canSeeContent($file)) {
 			return $file;
 		}
 		throw new NotFoundException('Text file for '

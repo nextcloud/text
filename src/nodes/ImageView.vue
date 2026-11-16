@@ -27,6 +27,7 @@
 							<button
 								type="button"
 								class="media-wrapper media-wrapper__attachment"
+								:disabled="!attachment?.fullUrl && !canOpenInViewer"
 								:aria-label="t('text', 'Open attachment {name}', { name: alt || attachment?.name || src })"
 								@click="handleAttachmentClick">
 								<img
@@ -154,6 +155,22 @@ import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { TrashCan as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
 import { logger } from '../helpers/logger.ts'
 
+/**
+ * Whether the viewer can open an attachment
+ *
+ * @param {object} attachment the attachment to open
+ */
+function canOpenInViewer(attachment) {
+	const viewer = window.OCA?.Viewer
+	return Boolean(viewer
+		// Viewer is not in use
+		&& !viewer.file
+		// Viewer supports mimetype
+		&& viewer.mimetypes.includes(attachment?.mimetype)
+		// Attachment is accessible via DAV, i.e. not in a single file share
+		&& attachment?.davPath)
+}
+
 class LoadImageError extends Error {
 	constructor(reason, imageUrl) {
 		super(reason?.message || t('text', 'Failed to load'))
@@ -221,6 +238,10 @@ export default {
 
 		isMediaAttachment() {
 			return this.attachmentType === 'media'
+		},
+
+		canOpenInViewer() {
+			return canOpenInViewer(this.attachment)
 		},
 
 		showDeleteIcon() {
@@ -454,24 +475,15 @@ export default {
 		},
 
 		handleAttachmentClick() {
-			// Open in viewer if possible
-			if (
-				OCA.Viewer
-				// Viewer is not in use
-				&& !OCA.Viewer.file
-				// Viewer supports mimetype
-				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
-				// Attachment has davPath, i.e. is native attachment and not in public share
-				//  (in public share we probably don't have DAV access)
-				&& this.attachment.davPath
-			) {
-				// Viewer exists, is not in use and supports mimetype
+			if (canOpenInViewer(this.attachment)) {
 				OCA.Viewer.open({ path: this.attachment.davPath })
 				return
 			}
 
 			// Download file
-			window.location.assign(this.attachment.fullUrl)
+			if (this.attachment.fullUrl) {
+				window.location.assign(this.attachment.fullUrl)
+			}
 		},
 
 		async handleImageClick() {
@@ -614,6 +626,9 @@ export default {
 		background: transparent;
 		font: inherit;
 		cursor: pointer;
+		&:disabled {
+			cursor: default;
+		}
 		text-decoration: none;
 		color: var(--color-main-text);
 

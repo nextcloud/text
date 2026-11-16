@@ -57,9 +57,31 @@ export class Node {
 			{
 				data: { shareType, path },
 				headers: ocsHeaders,
+				failOnStatusCode: true,
 			},
 		)
 		const { ocs } = await response.json() as { ocs: { data: { token: string, id: number } } }
+		return ocs.data
+	}
+
+	async shareWithUser(shareWith: string, { attributes }: { attributes?: object[] } = {}) {
+		// 0 = user share
+		const shareType = 0
+		const path = `/${this.name}`
+		const response = await this.page.request.post(
+			'/ocs/v2.php/apps/files_sharing/api/v1/shares',
+			{
+				data: {
+					shareType,
+					path,
+					shareWith,
+					...(attributes && { attributes: JSON.stringify(attributes) }),
+				},
+				headers: ocsHeaders,
+				failOnStatusCode: true,
+			},
+		)
+		const { ocs } = await response.json() as { ocs: { data: { id: number } } }
 		return ocs.data
 	}
 
