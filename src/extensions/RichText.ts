@@ -13,6 +13,8 @@ import { ListItem } from '@tiptap/extension-list'
 import Placeholder from '@tiptap/extension-placeholder'
 import Text from '@tiptap/extension-text'
 import { CharacterCount, Dropcursor, Gapcursor } from '@tiptap/extensions'
+import { GapCursor } from '@tiptap/pm/gapcursor'
+import { Plugin, PluginKey, Selection } from '@tiptap/pm/state'
 import { common, createLowlight } from 'lowlight'
 import EmojiSuggestion from '../components/Suggestion/Emoji/suggestions.js'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
@@ -95,6 +97,31 @@ export default Extension.create<RichTextOptions>({
 				// type after the first block, so without this override the gap
 				// cursor's textblock check rejects every position but the start.
 				allowGapCursor: true,
+
+				addProseMirrorPlugins() {
+					return [
+						new Plugin({
+							key: new PluginKey('gapCursorBeforeAnnotations'),
+							appendTransaction(_transactions, oldState, newState) {
+								const { selection, doc, schema } = newState
+								if (!(selection instanceof GapCursor) || selection.$head.depth > 0) {
+									return null
+								}
+								// A gap cursor marks where a paragraph can be inserted. With the
+								// override above it is also offered after `comments` and
+								// `footnotes`, where no paragraph is allowed.
+								const index = selection.$head.index()
+								if (doc.canReplaceWith(index, index, schema.nodes.paragraph)) {
+									return null
+								}
+								// Move into the neighbouring comments or footnotes, preferring
+								// the direction the cursor was moving in.
+								const dir = selection.head < oldState.selection.head ? -1 : 1
+								return newState.tr.setSelection(Selection.near(selection.$head, dir))
+							},
+						}),
+					]
+				},
 			}),
 			Text,
 			Paragraph,
