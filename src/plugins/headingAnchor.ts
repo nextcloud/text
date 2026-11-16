@@ -4,21 +4,14 @@
  */
 
 import type { Node } from '@tiptap/pm/model'
-import type { Transaction } from '@tiptap/pm/state'
-import type { EditorView } from '@tiptap/pm/view'
 import type { Heading } from '../composables/useEditorHeadings.ts'
 
 import { t } from '@nextcloud/l10n'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import extractHeadings from './extractHeadings.ts'
+import { getHeadings } from './extractHeadings.ts'
 
-export const headingAnchorPluginKey = new PluginKey('headingAnchor')
-
-interface HeadingAnchorState {
-	headings: Heading[]
-	decorations: DecorationSet
-}
+const headingAnchorPluginKey = new PluginKey('headingAnchor')
 
 /**
  * Heading anchor decorations ProseMirror plugin
@@ -29,98 +22,49 @@ interface HeadingAnchorState {
 export default function headingAnchor() {
 	return new Plugin({
 		key: headingAnchorPluginKey,
-
 		state: {
-			init(_, { doc }) {
-				const headings = extractHeadings(doc)
-				return {
-					headings,
-					decorations: anchorDecorations(doc, headings),
-				}
-			},
-			apply(tr, value, _oldState, newState) {
+			init: (_, { doc }) => anchorDecorations(doc),
+			apply(tr, decorations, oldState, newState) {
 				if (!tr.docChanged) {
-					return value
+					return decorations
 				}
-				const headings = extractHeadings(newState.doc)
-				const decorations
-					= mapDecorations(value, tr, headings)
-						|| anchorDecorations(newState.doc, headings)
-				return { headings, decorations }
+				if (!sameIds(getHeadings(oldState.doc), getHeadings(newState.doc))) {
+					return anchorDecorations(newState.doc)
+				}
+				let removed = false
+				const mapped = decorations.map(tr.mapping, tr.doc, {
+					onRemove: () => {
+						removed = true
+					},
+				})
+				return removed ? anchorDecorations(newState.doc) : mapped
 			},
 		},
-
 		props: {
 			decorations(state) {
-				return this.getState(state)!.decorations
+				return this.getState(state)
 			},
 		},
 	})
 }
 
 /**
- * Map the previous decorations to current document state.
+ * Check if both heading lists have the same ids in the same order.
  *
- * Return false if headings changed or decorations would get removed.
- * The latter prevents lost decorations in case of replacements.
- *
- * @param value - previous plugin state
- * @param tr - current transaction
- * @param headings - array of headings
- *
- * @return
+ * @param a - headings
+ * @param b - headings to compare against
  */
-function mapDecorations(
-	value: HeadingAnchorState,
-	tr: Transaction,
-	headings: Heading[],
-) {
-	if (headingsChanged(headings, value.headings)) {
-		return false
-	}
-	let removedDecorations = false
-	const decorations = value.decorations.map(tr.mapping, tr.doc, {
-		onRemove: () => {
-			removedDecorations = true
-		},
-	})
-	return removedDecorations ? false : decorations
+function sameIds(a: Heading[], b: Heading[]) {
+	return a.length === b.length && a.every((heading, i) => heading.id === b[i].id)
 }
 
 /**
- * Check if the headings provided are equivalent.
- *
- * @param current - array of headings
- * @param prev - headings to compare against
- */
-function headingsChanged(current: Heading[], prev: Heading[]) {
-	return current.length !== prev.length || current.some(isDifferentFrom(prev))
-}
-
-/**
- * Check if headings are different - i.e. have different id or level
- *
- * @param other - headings to compare against
- *
- * Returns a function to be used in a call to Array#some.
- * The returned function takes a heading and an index (as provided by iterators)
- * and compares the id and level of the heading to the one in `other` with the same index.
- */
-function isDifferentFrom(other: Heading[]) {
-	return (heading: Heading, i: number) => {
-		return heading.id !== other[i].id || heading.level !== other[i].level
-	}
-}
-
-/**
- * Create anchor decorations for the given headings
+ * Create anchor decorations for all headings in the doc
  *
  * @param doc - prosemirror doc
- * @param headings - headings structure in the doc
  */
-function anchorDecorations(doc: Node, headings: Heading[]) {
-	const decorations = headings.map(decorationForHeading)
-	return DecorationSet.create(doc, decorations)
+function anchorDecorations(doc: Node) {
+	return DecorationSet.create(doc, getHeadings(doc).map(decorationForHeading))
 }
 
 /**
@@ -131,6 +75,7 @@ function anchorDecorations(doc: Node, headings: Heading[]) {
 function decorationForHeading(heading: Heading) {
 	return Decoration.widget(heading.offset + 1, headingToDom(heading), {
 		side: -1,
+		key: heading.id,
 	})
 }
 
@@ -140,11 +85,7 @@ function decorationForHeading(heading: Heading) {
  * @param heading to generate anchor for
  */
 function headingToDom(heading: Heading) {
-	return (view: EditorView) => {
-		const existing = view.dom.querySelector(`#${heading.id}`)
-		if (existing) {
-			return existing
-		}
+	return () => {
 		const el = document.createElement('a')
 		const symbol = document.createTextNode('#')
 		el.appendChild(symbol)
