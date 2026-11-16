@@ -99,6 +99,7 @@ const Link = TipTapLink.extend<RelativePathLinkOptions>({
 		return {
 			href: {
 				default: null,
+				parseHTML: (element: HTMLElement) => parseHref(element),
 			},
 			title: {
 				default: null,
