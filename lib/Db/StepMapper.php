@@ -88,12 +88,40 @@ class StepMapper extends QBMapper {
 			->executeStatement();
 	}
 
-	// not in use right now
-	public function deleteBeforeVersion(string $documentId, int $version): int {
+	/**
+	 * Find documents with more than $keep steps that are older than $olderThan
+	 * and included in the last saved version.
+	 *
+	 * @return list<array{documentId: string, lastSavedVersion: int}>
+	 */
+	public function findDocumentsWithSavedSteps(int $olderThan, int $keep): array {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('st.document_id', 'd.last_saved_version')
+			->from($this->getTableName(), 'st')
+			->innerJoin('st', 'text_documents', 'd', $qb->expr()->eq('st.document_id', 'd.id'))
+			->where($qb->expr()->lt('st.id', 'd.last_saved_version'))
+			->andWhere($qb->expr()->lt('st.timestamp', $qb->createNamedParameter($olderThan, IQueryBuilder::PARAM_INT)))
+			->groupBy('st.document_id', 'd.last_saved_version')
+			->having($qb->expr()->gt($qb->func()->count('st.id'), $qb->createNamedParameter($keep, IQueryBuilder::PARAM_INT)))
+			->executeQuery();
+
+		$documents = [];
+		while ($row = $result->fetchAssociative()) {
+			$documents[] = [
+				'documentId' => (string)$row['document_id'],
+				'lastSavedVersion' => (int)$row['last_saved_version'],
+			];
+		}
+		$result->closeCursor();
+		return $documents;
+	}
+
+	public function deleteBeforeVersion(string $documentId, int $version, int $olderThan): int {
 		$qb = $this->db->getQueryBuilder();
 		return $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->lte('id', $qb->createNamedParameter($version)))
+			->andWhere($qb->expr()->lt('timestamp', $qb->createNamedParameter($olderThan, IQueryBuilder::PARAM_INT)))
 			->executeStatement();
 	}
 

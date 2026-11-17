@@ -63,6 +63,10 @@ class Cleanup extends TimedJob {
 		$removedSteps = $this->sessionService->removeOrphanedSteps();
 		$this->logger->debug('Removed ' . $removedSteps . ' orphaned steps');
 
+		$this->logger->debug('Run cleanup job for saved steps');
+		$removedSavedSteps = $this->documentService->removeSavedSteps();
+		$this->logger->debug('Removed ' . $removedSavedSteps . ' saved steps');
+
 		$this->logger->debug('Run cleanup job for obsolete documents folders');
 		$this->documentService->cleanupOldDocumentsFolders();
 	}
