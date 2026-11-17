@@ -651,8 +651,13 @@ export default defineComponent({
 						content,
 						isRichEditor: this.isRichEditor,
 					})
+					// Every client generates the same initial state from the file content.
+					// Mark it as received from the server so it is neither pushed nor saved.
+					// The first local change pushes it along, as the provider sends
+					// everything the server does not have yet.
 					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
+						origin: this.syncProvider,
 					})
 				}
 			})
