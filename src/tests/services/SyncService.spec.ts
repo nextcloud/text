@@ -4,11 +4,14 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
+import { shallowRef } from 'vue'
 import * as connect from '../../apis/connect.ts'
+import * as sync from '../../apis/sync.ts'
 import { provideConnection } from '../../composables/useConnection.js'
 import { SyncService } from '../../services/SyncService.js'
 
 vi.mock('../../apis/connect')
+vi.mock('../../apis/sync')
 
 const connection = {
 	documentId: '123',
@@ -63,5 +66,31 @@ describe('Sync service', () => {
 		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
 		expect(openHandler).toHaveBeenCalledWith(expect.objectContaining({ session: initialData.session }))
 		expect(openData.value?.canAttachFiles).toBe(true)
+	})
+
+	describe('pending changes', () => {
+		// sync message with an empty yjs update
+		const update = new Uint8Array([0, 2, 2, 0, 0])
+
+		it('are pending until pushed', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			const onPendingChanges = vi.fn()
+			service.bus.on('pendingChanges', onPendingChanges)
+			vi.mocked(sync.push).mockResolvedValue({ data: { steps: [], documentState: '', version: 1 } })
+			service.sendStep(update)
+			expect(onPendingChanges).toHaveBeenCalledExactlyOnceWith({ pending: true })
+			await service.sendStepsNow()
+			expect(onPendingChanges).toHaveBeenLastCalledWith({ pending: false })
+		})
+
+		it('remain pending if the push fails', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			const onPendingChanges = vi.fn()
+			service.bus.on('pendingChanges', onPendingChanges)
+			vi.mocked(sync.push).mockRejectedValue({ code: 'ECONNABORTED' })
+			service.sendStep(update)
+			await expect(service.sendStepsNow()).rejects.toThrow()
+			expect(onPendingChanges).toHaveBeenCalledExactlyOnceWith({ pending: true })
+		})
 	})
 })

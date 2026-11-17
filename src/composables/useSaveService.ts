@@ -42,7 +42,8 @@ export function provideSaveService(
 	 */
 	function getSaveData(): SaveData {
 		return {
-			version: syncService.version,
+			// No steps were received yet on a document without stored state
+			version: Math.max(syncService.version, 0),
 			autosaveContent: serialize(),
 			documentState: getDocumentState(ydoc),
 		}
@@ -51,6 +52,7 @@ export function provideSaveService(
 	const saveService = new SaveService({
 		connection,
 		getSaveData,
+		pushChanges: () => syncService.sendRemainingSteps(),
 	})
 
 	const autosaveOnUpdate = ({ transaction }: { transaction: Transaction }) => {
@@ -99,13 +101,28 @@ export function provideSaveService(
 	 */
 	function updateVersionWithChanges(event: { version: number }) {
 		versionWithChanges.value = Math.max(event.version, versionWithChanges.value)
+		// Retried pushes are not preceded by an editor update that triggers the autosave
+		if ((document.value?.lastSavedVersion ?? 0) < event.version && !saveService.autosave.isPending) {
+			saveService.autosave()
+		}
 	}
 	syncService.bus.on('changesPushed', updateVersionWithChanges)
 	onUnmounted(() => {
 		syncService.bus.off('changesPushed', updateVersionWithChanges)
 	})
 
-	const dirty = computed(() => (document.value?.lastSavedVersion ?? 0) < versionWithChanges.value)
+	const hasPendingChanges = ref(false)
+	// Track if local changes are waiting to be pushed
+	function updatePendingChanges(event: { pending: boolean }) {
+		hasPendingChanges.value = event.pending
+	}
+	syncService.bus.on('pendingChanges', updatePendingChanges)
+	onUnmounted(() => {
+		syncService.bus.off('pendingChanges', updatePendingChanges)
+	})
+
+	const dirty = computed(() => hasPendingChanges.value
+		|| (document.value?.lastSavedVersion ?? 0) < versionWithChanges.value)
 	watch(dirty, setDirty)
 
 	provide(saveServiceKey, saveService)
