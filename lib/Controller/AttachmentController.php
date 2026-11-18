@@ -17,6 +17,7 @@ use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Middleware\Attribute\RequireDocumentSessionOrUserOrShareToken;
 use OCA\Text\Service\AttachmentService;
+use OCA\Text\Service\FileService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -77,6 +78,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		private ShareManager $shareManager,
 		private DocumentMapper $documentMapper,
 		private ContextManager $contextManager,
+		private FileService $fileService,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -212,8 +214,8 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		int $preferRawImage = 0,
 		int $fileId = 0,
 	): DataResponse|DataDownloadResponse {
+		$auth = $this->getAuth($shareToken, false);
 		try {
-			$auth = $this->getAuth($shareToken, false);
 			$context = $this->getContext($auth, $fileId);
 			$imageFile = $this->attachmentService->getImageFile($context, $imageFileName, $preferRawImage === 1, $auth);
 			if ($imageFile !== null) {
@@ -249,8 +251,8 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		string $shareToken = '',
 		int $fileId = 0,
 	): DataResponse|DataDownloadResponse {
+		$auth = $this->getAuth($shareToken, false);
 		try {
-			$auth = $this->getAuth($shareToken, false);
 			$context = $this->getContext($auth, $fileId);
 			$mediaFile = $this->attachmentService->getMediaFile($context, $mediaFileName, $auth);
 			return $mediaFile !== null
@@ -275,8 +277,8 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFilePreview(string $mediaFileName, string $shareToken = '', int $fileId = 0) {
+		$auth = $this->getAuth($shareToken, false);
 		try {
-			$auth = $this->getAuth($shareToken, false);
 			$context = $this->getContext($auth, $fileId);
 			$preview = $this->attachmentService->getMediaFilePreview($context, $mediaFileName);
 			if ($preview === null) {
@@ -320,6 +322,9 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		if ($shareToken !== '') {
 			try {
 				$share = $this->shareManager->getShareByToken($shareToken);
+				if ($share->getPassword() !== null && !$this->fileService->isShareAuthenticated($share)) {
+					throw new InvalidSessionException();
+				}
 				if ($updatePermissionRequired && !$this->hasUpdatePermissions($share)) {
 					throw new NotPermittedException('No write permissions');
 				}

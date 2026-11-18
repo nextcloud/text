@@ -15,7 +15,6 @@ use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
-use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IManager as ShareManager;
@@ -46,7 +45,6 @@ class AttachmentServiceTest extends TestCase {
 			$this->createMock(IURLGenerator::class),
 			$this->createMock(IFilenameValidator::class),
 			$this->createMock(IFilesMetadataManager::class),
-			$this->createMock(ISession::class),
 			$fileService ?? $this->createMock(FileService::class),
 		);
 	}

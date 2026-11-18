@@ -7,6 +7,7 @@
 
 namespace OCA\Text\Service;
 
+use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Text\Exception\InvalidSessionException;
 use OCP\Constants;
 use OCP\Files\File;
@@ -173,6 +174,10 @@ class FileService {
 			throw new InvalidSessionException();
 		}
 
+		if ($share->getPassword() !== null && !$this->isShareAuthenticated($share)) {
+			throw new InvalidSessionException();
+		}
+
 		$node = $this->rootFolder->getUserFolder($share->getShareOwner())->getFirstNodeById($fileId);
 		if ($node === null) {
 			throw new InvalidSessionException();
@@ -189,15 +194,6 @@ class FileService {
 			}
 		}
 
-		if ($share->getPassword() !== null) {
-			$shareIds = $this->session->get('public_link_authenticated');
-			$shareIds = is_array($shareIds) ? $shareIds : [$shareIds];
-
-			if (!in_array($share->getId(), $shareIds, true)) {
-				throw new InvalidSessionException();
-			}
-		}
-
 		if (($share->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
 			throw new InvalidSessionException();
 		}
@@ -205,6 +201,13 @@ class FileService {
 		if (!$share->canSeeContent()) {
 			throw new InvalidSessionException();
 		}
+	}
+
+	/**
+	 * Whether the password of the share was verified in the current session
+	 */
+	public function isShareAuthenticated(IShare $share): bool {
+		return PublicAuth::isShareInSession($this->session, $share);
 	}
 
 	public function checkFileAccessForUser(int $fileId, string $userId): void {

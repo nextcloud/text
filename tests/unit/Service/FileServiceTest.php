@@ -2,10 +2,12 @@
 
 namespace OCA\Text\Tests;
 
+use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Service\EncodingService;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
+use OCP\AppFramework\PublicShareController;
 use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\IRootFolder;
@@ -91,53 +93,44 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->invokeCheckFileAccessFromShare(123, $share);
 	}
 
-	public function testValidTokenMissingPassword(): void {
-		$this->expectException(InvalidSessionException::class);
-
-		$share = $this->createShare('protected-share', 'password');
-		$this->session->method('get')->with('public_link_authenticated')->willReturn(null);
-
-		$this->invokeCheckFileAccessFromShare(123, $share);
-	}
-
-	public function testValidTokenWithPasswordArray(): void {
-		$share = $this->createShare('42', 'password');
-		$this->session->method('get')->with('public_link_authenticated')->willReturn(['1', '42']);
-
-		$this->invokeCheckFileAccessFromShare(123, $share);
-	}
-
-	public function testValidTokenWithSinglePassword(): void {
-		$share = $this->createShare('42', 'password');
-		$this->session->method('get')->with('public_link_authenticated')->willReturn('42');
-
-		$this->invokeCheckFileAccessFromShare(123, $share);
-	}
-
-	public function testValidTokenWithOtherPassword(): void {
-		$this->expectException(InvalidSessionException::class);
-
-		$share = $this->createShare('42', 'password');
-		$this->session->method('get')->with('public_link_authenticated')->willReturn('10');
-
-		$this->invokeCheckFileAccessFromShare(123, $share);
-	}
-
-	public function testValidTokenWithOtherPasswords(): void {
-		$this->expectException(InvalidSessionException::class);
-
-		$share = $this->createShare('42', 'password');
-		$this->session->method('get')->with('public_link_authenticated')->willReturn(['10', '20', '30']);
-
-		$this->invokeCheckFileAccessFromShare(123, $share);
-	}
-
 	public function testValidTokenContentHidden(): void {
 		$this->expectException(InvalidSessionException::class);
 
 		$share = $this->createShare('plain-share', canSeeContent: false);
 
 		$this->invokeCheckFileAccessFromShare(123, $share);
+	}
+
+	public function testPasswordShareWithCurrentPasswordHashInSession(): void {
+		$share = $this->createShare('42', 'current-hash');
+		$this->mockAuthenticatedSession(['42'], ['token' => 'current-hash']);
+
+		$this->invokeCheckFileAccessFromShare(123, $share);
+	}
+
+	public function testPasswordShareWithPreviousPasswordHashInSession(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$share = $this->createShare('42', 'current-hash');
+		$this->mockAuthenticatedSession(['42'], ['token' => 'previous-hash']);
+
+		$this->invokeCheckFileAccessFromShare(123, $share);
+	}
+
+	public function testPasswordShareWithoutAuthenticatedSession(): void {
+		$this->expectException(InvalidSessionException::class);
+
+		$share = $this->createShare('42', 'current-hash');
+		$this->mockAuthenticatedSession(null, null);
+
+		$this->invokeCheckFileAccessFromShare(123, $share);
+	}
+
+	private function mockAuthenticatedSession(?array $shareIds, ?array $tokenHashes): void {
+		$this->session->method('get')->willReturnMap([
+			[PublicAuth::DAV_AUTHENTICATED, $shareIds],
+			[PublicShareController::DAV_AUTHENTICATED_FRONTEND, $tokenHashes === null ? null : json_encode($tokenHashes)],
+		]);
 	}
 
 	private function invokeCheckFileAccessFromShare(int $fileId, IShare $share): void {
@@ -153,6 +146,7 @@ class FileServiceTest extends \PHPUnit\Framework\TestCase {
 	private function createShare(string $id, ?string $password = null, bool $canSeeContent = true): IShare {
 		$share = $this->createMock(IShare::class);
 		$share->method('getId')->willReturn($id);
+		$share->method('getToken')->willReturn('token');
 		$share->method('getPassword')->willReturn($password);
 		$share->method('getPermissions')->willReturn(Constants::PERMISSION_READ);
 		$share->method('getShareOwner')->willReturn('owner');
