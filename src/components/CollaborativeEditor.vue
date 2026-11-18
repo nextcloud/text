@@ -549,6 +549,8 @@ export default defineComponent({
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
+		// The dirty watcher that removes it no longer runs after unmounting
+		window.removeEventListener('beforeunload', this.saveBeforeUnload)
 		removeFromDebugging(this)
 	},
 

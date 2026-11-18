@@ -102,6 +102,17 @@ describe('Sync service', () => {
 			expect(sync.push).toHaveBeenCalledOnce()
 		})
 
+		it('stop the send interval once the connection is closed', async () => {
+			vi.useFakeTimers()
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			vi.mocked(connect.close).mockResolvedValue({} as Awaited<ReturnType<typeof connect.close>>)
+			await service.close()
+			service.sendStep(update)
+			await vi.advanceTimersByTimeAsync(200)
+			expect(vi.getTimerCount()).toBe(0)
+			vi.useRealTimers()
+		})
+
 		it('are pushed again if they remain after a push in flight', async () => {
 			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
 			vi.mocked(sync.push).mockClear()
