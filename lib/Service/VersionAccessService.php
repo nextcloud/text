@@ -13,13 +13,16 @@ use OCA\Files_Versions\Versions\BackendNotFoundException;
 use OCA\Files_Versions\Versions\IMetadataVersion;
 use OCA\Files_Versions\Versions\IVersion;
 use OCA\Files_Versions\Versions\IVersionManager;
+use OCA\Text\Exception\VersionNotFoundException;
 use OCA\Text\Model\VersionEnd;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IUser;
 use OCP\IUserManager;
+use OCP\Lock\LockedException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
@@ -27,10 +30,13 @@ use Psr\Container\ContainerInterface;
  * Which Markdown file a user may compare, and its versions.
  */
 class VersionAccessService {
+	public const array MARKDOWN_MIMETYPES = ['text/markdown', 'text/x-web-markdown'];
+
 	public function __construct(
 		private readonly IRootFolder $rootFolder,
 		private readonly ContainerInterface $container,
 		private readonly IUserManager $userManager,
+		private readonly FileService $fileService,
 	) {
 	}
 
@@ -42,15 +48,53 @@ class VersionAccessService {
 	 * @throws NotFoundException
 	 */
 	public function resolveFile(IUser $user, int $fileId): File {
+		return $this->findFile($user, $fileId, fn (File $file): bool => true);
+	}
+
+	/**
+	 * The file, if its content may also leave the server: a summary sends it
+	 * to the AI provider, which a share without downloads does not allow.
+	 *
+	 * @throws NotFoundException
+	 */
+	public function resolveSendableFile(IUser $user, int $fileId): File {
+		return $this->findFile($user, $fileId, fn (File $file): bool => !$this->fileService->isDownloadDisabled($file));
+	}
+
+	/**
+	 * The file with this id where the user may compare it and `$allowed` says
+	 * yes: the same file can be in the user's files more than once, through
+	 * shares with other permissions
+	 *
+	 * @param callable(File): bool $allowed
+	 * @throws NotFoundException
+	 */
+	private function findFile(IUser $user, int $fileId, callable $allowed): File {
 		$userFolder = $this->rootFolder->getUserFolder($user->getUID());
-		$file = $userFolder->getFirstNodeById($fileId);
-		if (!$file instanceof File
-			|| !$file->isReadable()
-			|| $file->getMimetype() !== 'text/markdown'
-			|| $this->isEndToEndEncrypted($file, $userFolder)) {
-			throw new NotFoundException('No comparable file ' . $fileId);
+		foreach ($this->nodesById($userFolder, $fileId) as $node) {
+			if ($node instanceof File
+				&& $node->isReadable()
+				&& in_array($node->getMimetype(), self::MARKDOWN_MIMETYPES, true)
+				&& !$this->isEndToEndEncrypted($node, $userFolder)
+				&& $allowed($node)) {
+				return $node;
+			}
 		}
-		return $file;
+		throw new NotFoundException('No comparable file ' . $fileId);
+	}
+
+	/**
+	 * The first node with this id, then every node with it, looked up only if needed
+	 *
+	 * @return \Generator<Node>
+	 */
+	private function nodesById(Folder $userFolder, int $fileId): \Generator {
+		$first = $userFolder->getFirstNodeById($fileId);
+		if ($first === null) {
+			return;
+		}
+		yield $first;
+		yield from $userFolder->getById($fileId);
 	}
 
 	/**
@@ -77,15 +121,61 @@ class VersionAccessService {
 				$currentVersion = $version;
 				continue;
 			}
-			$ends[] = $this->end((string)$version->getRevisionId(), $version->getTimestamp(), $version->getSize(), $version);
+			$ends[] = $this->end((string)$version->getRevisionId(), $version->getTimestamp(), $version->getSize(), $version, $version);
 		}
 		usort($ends, static fn (VersionEnd $a, VersionEnd $b) => $b->mtime <=> $a->mtime);
 
-		$current = $this->end(VersionEnd::CURRENT, $file->getMTime(), $file->getSize(), $currentVersion);
+		$current = $this->end(VersionEnd::CURRENT, $file->getMTime(), $file->getSize(), $currentVersion, null);
 		return [$current, ...$ends];
 	}
 
-	private function end(string $id, int $mtime, int|float $size, ?IVersion $metadata): VersionEnd {
+	/**
+	 * One end of a comparison of the file. A revision with the current file's
+	 * timestamp is the current file.
+	 *
+	 * @param list<VersionEnd> $versions The file's versions, from listVersions()
+	 * @throws VersionNotFoundException
+	 */
+	public function resolveEnd(File $file, array $versions, string $id): VersionEnd {
+		if ($id === (string)$file->getMTime()) {
+			$id = VersionEnd::CURRENT;
+		}
+		foreach ($versions as $end) {
+			if ($end->id === $id) {
+				return $end;
+			}
+		}
+		throw new VersionNotFoundException('No version ' . $id . ' of file ' . $file->getId());
+	}
+
+	/**
+	 * The bytes of an end, or null when there are more than allowed.
+	 *
+	 * @throws VersionNotFoundException
+	 * @throws LockedException When a save holds the current file
+	 */
+	public function read(File $file, VersionEnd $end, int $maxBytes): ?string {
+		try {
+			$stream = $end->version === null ? $file->fopen('r') : $this->versionManager()?->read($end->version);
+		} catch (NotFoundException) {
+			// Expired since it was listed
+			$stream = false;
+		}
+		if (!is_resource($stream)) {
+			throw new VersionNotFoundException('Cannot read version ' . $end->id . ' of file ' . $file->getId());
+		}
+		try {
+			$bytes = stream_get_contents($stream, $maxBytes + 1);
+		} finally {
+			fclose($stream);
+		}
+		if ($bytes === false) {
+			throw new VersionNotFoundException('Cannot read version ' . $end->id . ' of file ' . $file->getId());
+		}
+		return strlen($bytes) > $maxBytes ? null : $bytes;
+	}
+
+	private function end(string $id, int $mtime, int|float $size, ?IVersion $metadata, ?IVersion $version): VersionEnd {
 		$label = '';
 		$authorId = null;
 		if ($metadata instanceof IMetadataVersion) {
@@ -94,7 +184,7 @@ class VersionAccessService {
 			$authorId = $author === null || $author === '' ? null : $author;
 		}
 		$authorName = $authorId === null ? null : $this->userManager->getDisplayName($authorId);
-		return new VersionEnd($id, $mtime, $size, $label, $authorId, $authorName);
+		return new VersionEnd($id, $mtime, $size, $label, $authorId, $authorName, $version);
 	}
 
 	/**
