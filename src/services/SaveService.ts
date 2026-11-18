@@ -67,12 +67,13 @@ class SaveService {
 	 */
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
+		// Save the version that includes the local changes
+		await this.pushChanges()
+		// Pushing may have invalidated the session
 		if (!this.connection.value) {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
-		// Save the version that includes the local changes
-		await this.pushChanges()
 		const data = this.getSaveData()
 		try {
 			this.lastSaveAttempt = Date.now()
