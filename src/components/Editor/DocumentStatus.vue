@@ -5,7 +5,7 @@
 
 <template>
 	<div class="document-status" :class="{ mobile: isMobile }">
-		<div class="status-wrapper">
+		<div class="status-wrapper" role="status">
 			<SyncStatus
 				:idle="idle"
 				:syncError="syncError"

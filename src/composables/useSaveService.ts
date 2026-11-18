@@ -93,6 +93,17 @@ export function provideSaveService(
 	})
 
 	const versionWithChanges = ref<number>(0)
+
+	/**
+	 * Schedule an autosave unless all pushed changes are saved.
+	 * Retried pushes and pushes during a save are not followed by an editor update that triggers it.
+	 */
+	function autosaveUnsavedChanges() {
+		if ((document.value?.lastSavedVersion ?? 0) < versionWithChanges.value && !saveService.autosave.isPending) {
+			saveService.autosave()
+		}
+	}
+
 	/**
 	 * Update the tracked version based on the one in the event
 	 *
@@ -101,14 +112,13 @@ export function provideSaveService(
 	 */
 	function updateVersionWithChanges(event: { version: number }) {
 		versionWithChanges.value = Math.max(event.version, versionWithChanges.value)
-		// Retried pushes are not preceded by an editor update that triggers the autosave
-		if ((document.value?.lastSavedVersion ?? 0) < event.version && !saveService.autosave.isPending) {
-			saveService.autosave()
-		}
+		autosaveUnsavedChanges()
 	}
 	syncService.bus.on('changesPushed', updateVersionWithChanges)
+	saveService.bus.on('save', autosaveUnsavedChanges)
 	onUnmounted(() => {
 		syncService.bus.off('changesPushed', updateVersionWithChanges)
+		saveService.bus.off('save', autosaveUnsavedChanges)
 	})
 
 	const hasPendingChanges = ref(false)
