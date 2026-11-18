@@ -9,7 +9,11 @@
 		:class="`text-comparison__document--${side}`"
 		:aria-label="session.labels[side]">
 		<header class="text-comparison__document-header">
-			<h2>{{ session.labels[side] }}</h2>
+			<h2>
+				<slot name="title">
+					{{ session.labels[side] }}
+				</slot>
+			</h2>
 			<span>{{ session.legends[side] }}</span>
 		</header>
 		<div ref="scroller" class="text-comparison__document-scroller">
@@ -53,16 +57,19 @@ onBeforeUnmount(() => props.session.attachScroller(props.side, null))
 
 	&-header {
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 		padding: calc(2 * $g) calc(4 * $g);
 		border-block-end: 1px solid var(--color-border);
 
 		h2 {
+			min-inline-size: 0;
 			margin: 0;
 			font-size: var(--default-font-size);
 		}
 
 		span {
+			flex-shrink: 0;
 			color: var(--color-text-maxcontrast);
 		}
 	}
