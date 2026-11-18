@@ -75,5 +75,7 @@ return [
 		['name' => 'VersionSummary#lookup', 'url' => '/version-summaries/{fileId}', 'verb' => 'GET'],
 		/** @see Controller\VersionSummaryController::generate() */
 		['name' => 'VersionSummary#generate', 'url' => '/version-summaries/{fileId}', 'verb' => 'POST'],
+		/** @see Controller\VersionSummaryController::updateSettings() */
+		['name' => 'VersionSummary#updateSettings', 'url' => '/settings/version-summaries', 'verb' => 'PUT'],
 	]
 ];

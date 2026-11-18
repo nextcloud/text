@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Exception\VersionSummaryException;
+use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\VersionSummaryService;
 use OCP\AppFramework\Http;
 use OCP\IRequest;
@@ -20,14 +21,16 @@ use Test\TestCase;
 
 class VersionSummaryControllerTest extends TestCase {
 	private VersionSummaryService&MockObject $service;
+	private ConfigService&MockObject $config;
 	private IUserSession&MockObject $session;
 	private VersionSummaryController $controller;
 
 	protected function setUp(): void {
 		parent::setUp();
 		$this->service = $this->createMock(VersionSummaryService::class);
+		$this->config = $this->createMock(ConfigService::class);
 		$this->session = $this->createMock(IUserSession::class);
-		$this->controller = new VersionSummaryController('text', $this->createMock(IRequest::class), $this->service, $this->session);
+		$this->controller = new VersionSummaryController('text', $this->createMock(IRequest::class), $this->service, $this->config, $this->session);
 	}
 
 	public function testAnswersARefusalWithItsReason(): void {
@@ -44,5 +47,32 @@ class VersionSummaryControllerTest extends TestCase {
 		$this->service->expects($this->never())->method('lookup');
 
 		$this->assertSame(Http::STATUS_NOT_FOUND, $this->controller->lookup(42, '1000', 'current', 'a', 'b')->getStatus());
+	}
+
+	public function testTurnsOffAndSaysWhetherAllIsGone(): void {
+		$this->config->method('getVersionSummariesHourlyLimit')->willReturn(60);
+		$this->config->method('getVersionSummariesUserHourlyLimit')->willReturn(10);
+		$this->service->expects($this->once())->method('turnOff')->willReturn(false);
+
+		$this->assertSame(
+			['enabled' => false, 'hourlyLimit' => 60, 'userHourlyLimit' => 10, 'removed' => false],
+			$this->controller->updateSettings(false)->getData(),
+		);
+	}
+
+	public function testKeepsEverythingWhenTurnedOn(): void {
+		$this->config->expects($this->once())->method('setVersionSummariesEnabled')->with(true);
+		$this->service->expects($this->never())->method('turnOff');
+
+		$this->assertNull($this->controller->updateSettings(true)->getData()['removed']);
+	}
+
+	public function testSetsOnlyTheLimitsGiven(): void {
+		$this->config->expects($this->never())->method('setVersionSummariesEnabled');
+		$this->config->expects($this->never())->method('setVersionSummariesHourlyLimit');
+		$this->config->expects($this->once())->method('setVersionSummariesUserHourlyLimit')->with(3);
+		$this->service->expects($this->never())->method('turnOff');
+
+		$this->controller->updateSettings(null, null, 3);
 	}
 }

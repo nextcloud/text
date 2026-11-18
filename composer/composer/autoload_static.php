@@ -126,6 +126,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Service\\VersionSummaryPrompt' => __DIR__ . '/..' . '/../lib/Service/VersionSummaryPrompt.php',
         'OCA\\Text\\Service\\VersionSummaryService' => __DIR__ . '/..' . '/../lib/Service/VersionSummaryService.php',
         'OCA\\Text\\Service\\WorkspaceService' => __DIR__ . '/..' . '/../lib/Service/WorkspaceService.php',
+        'OCA\\Text\\Settings\\VersionSummariesSettings' => __DIR__ . '/..' . '/../lib/Settings/VersionSummariesSettings.php',
         'OCA\\Text\\TextFile' => __DIR__ . '/..' . '/../lib/TextFile.php',
         'OCA\\Text\\YjsMessage' => __DIR__ . '/..' . '/../lib/YjsMessage.php',
     );
