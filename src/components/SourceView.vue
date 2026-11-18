@@ -35,6 +35,8 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import PlainTextReader from './PlainTextReader.vue'
+import { closingSaveOf } from '../helpers/closingSaves.ts'
+import { logger } from '../helpers/logger.ts'
 
 export default defineComponent({
 	name: 'SourceView',
@@ -71,9 +73,15 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+
+		/** Shows the file without waiting for an editor this view replaces to save it */
+		skipClosingSave: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
-	emits: ['edit', 'loaded'],
+	emits: ['edit', 'loaded', 'errored'],
 
 	data() {
 		return {
@@ -109,7 +117,18 @@ export default defineComponent({
 				this.content = await this.fetchDecryptedContent()
 				this.contentLoaded = true
 			} else {
-				const response = await axios.get(this.source)
+				// The editor this view replaces may still be saving the file
+				try {
+					if (!this.skipClosingSave) {
+						await closingSaveOf(this.fileid)
+					}
+				} catch (error) {
+					logger.warn('The closing editor did not save', { error })
+					this.$emit('errored', new Error(t('text', 'The latest edits could not be saved before comparing. Try again to compare the file as it is stored.')))
+					return
+				}
+				// Files are served without caching rules, so browsers may reuse an old copy
+				const response = await axios.get(this.source, { responseType: 'text', headers: { 'Cache-Control': 'no-cache' } })
 				this.content = response.data
 				this.contentLoaded = true
 			}

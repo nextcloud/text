@@ -15,7 +15,7 @@ const saveWhenDirty = vi.hoisted(() => vi.fn(async () => {}))
 vi.mock('../../components/ViewerComponent.vue', () => ({
 	default: defineComponent({
 		name: 'ViewerComponent',
-		props: ['filename', 'fileid', 'forceSource', 'mime', 'source', 'e2EeIsEncrypted', 'active', 'onLoadedHandler'],
+		props: ['filename', 'fileid', 'forceSource', 'mime', 'source', 'e2EeIsEncrypted', 'skipClosingSave', 'active', 'onLoadedHandler'],
 		methods: { saveWhenDirty },
 		template: '<div />',
 	}),
@@ -72,6 +72,8 @@ describe('the text viewer wrapper', () => {
 		expect(editor.props('forceSource')).toBe(true)
 		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(version.encodedSource)
+		// Alone, it does not wait for an editor saving the file
+		expect(editor.props('skipClosingSave')).toBe(true)
 	})
 
 	// A download from the viewer would otherwise get the last saved version
@@ -133,6 +135,15 @@ describe('the text viewer wrapper', () => {
 		expect(wrapper.emitted('loaded')).toHaveLength(1)
 	})
 
+	it('reports an error of the file it shows to the viewer', () => {
+		const wrapper = mount(TextViewerWrapper, { props: { file: makeFile(undefined, undefined, 'text/plain'), comparison: 'side-by-side' } })
+		const error = new Error('The latest edits could not be saved')
+
+		wrapper.findComponent({ name: 'ViewerComponent' }).vm.$emit('errored', error)
+
+		expect(wrapper.emitted('errored')).toEqual([[error]])
+	})
+
 	it('shows plain text side by side, only read', () => {
 		const version = makeVersion('text/plain')
 		const file = makeFile(undefined, undefined, 'text/plain')
@@ -143,5 +154,14 @@ describe('the text viewer wrapper', () => {
 		expect(editor.props('forceSource')).toBe(true)
 		expect(editor.props('fileid')).toBe(42)
 		expect(editor.props('source')).toBe(currentSource)
+	})
+
+	it('lets an older version side by side wait for the editor saving the file, as the other side does', () => {
+		const version = makeVersion('text/plain')
+		const file = makeFile(undefined, undefined, 'text/plain')
+		const editor = mount(TextViewerWrapper, { props: { file: version, files: [version, file], comparison: 'side-by-side' } }).findComponent({ name: 'ViewerComponent' })
+
+		// Both sides then show a failed save, which the viewer would otherwise clear once the other side loaded
+		expect(editor.props('skipClosingSave')).toBe(false)
 	})
 })
