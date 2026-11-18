@@ -95,7 +95,7 @@ class SyncService {
 	bus = mitt<EventTypes>()
 	#openConnection: () => Promise<OpenData>
 	#lastStepPush = Date.now()
-	#sending = false
+	#pushing?: Promise<void>
 
 	constructor({
 		connection,
@@ -173,19 +173,28 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.connection.value && !this.#sending) {
+			if (this.connection.value && !this.#pushing) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
 	}
 
-	async sendStepsNow() {
-		this.#sending = true
+	/**
+	 * Push the outbox to the server.
+	 * Joins a push that is still in flight, as it would otherwise send the same steps twice.
+	 */
+	sendStepsNow(): Promise<void> {
+		this.#pushing ??= this.#push().finally(() => {
+			this.#pushing = undefined
+		})
+		return this.#pushing
+	}
+
+	async #push() {
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = undefined
 		const hadUpdate = this.#outbox.hasUpdate
 		if (!this.hasActiveConnection()) {
-			this.#sending = false
 			return
 		}
 		const sendable = this.#outbox.getDataToSend()
@@ -204,7 +213,6 @@ class SyncService {
 					this.#emitDocumentStateStep(documentState, version)
 				}
 				this.pushError = 0
-				this.#sending = false
 				if (steps?.length > 0) {
 					this.receiveSteps({ steps })
 					if (hadUpdate) {
@@ -216,7 +224,6 @@ class SyncService {
 			})
 			.catch((err) => {
 				const { response, code } = err
-				this.#sending = false
 				this.pushError++
 				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {
@@ -279,6 +286,8 @@ class SyncService {
 	}
 
 	async sendRemainingSteps() {
+		// A push in flight may fail or miss steps added since it started
+		await this.#pushing?.catch(() => {})
 		if (!this.#outbox.hasUpdate) {
 			return
 		}
