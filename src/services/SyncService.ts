@@ -173,7 +173,13 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.connection.value && !this.#pushing) {
+			if (!this.connection.value) {
+				// Closed or rejected: the next step after reconnecting starts a new interval
+				clearInterval(this.#sendIntervalId)
+				this.#sendIntervalId = undefined
+				return
+			}
+			if (!this.#pushing) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
