@@ -75,6 +75,14 @@ export default {
 					),
 				}
 			}
+			if (this.idle) {
+				return {
+					type: 'info',
+					message: t('text', "You've been disconnected from the server."),
+					action: this.reconnect,
+					actionLabel: t('text', 'Reconnect'),
+				}
+			}
 			if (this.hasConnectionIssue) {
 				return {
 					message: t(
@@ -82,14 +90,6 @@ export default {
 						'The document could not be loaded. Please check your internet connection.',
 					),
 
-					action: this.reconnect,
-					actionLabel: t('text', 'Reconnect'),
-				}
-			}
-			if (this.idle) {
-				return {
-					type: 'info',
-					message: t('text', "You've been disconnected from the server."),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}

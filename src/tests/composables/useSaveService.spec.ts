@@ -90,6 +90,18 @@ describe('provideSaveService', () => {
 		expect(saveApi.save).toHaveBeenCalledWith(connection.value, expect.objectContaining({ version: 2 }))
 	})
 
+	it('autosaves changes pushed while saving', async () => {
+		const { syncService, saveService } = setup()
+		vi.mocked(saveApi.save).mockImplementationOnce(async () => {
+			syncService.version = 3
+			syncService.bus.emit('changesPushed', { version: 3 })
+			return { data: { document: { lastSavedVersion: 2, lastSavedVersionTime: 0 } } } as Awaited<ReturnType<typeof saveApi.save>>
+		})
+		await saveService.save()
+		await vi.advanceTimersByTimeAsync(11_000)
+		expect(saveApi.save).toHaveBeenLastCalledWith(connection.value, expect.objectContaining({ version: 3 }))
+	})
+
 	it('does not autosave pushed changes that are already saved', async () => {
 		const { syncService } = setup()
 		syncService.bus.emit('changesPushed', { version: 1 })
