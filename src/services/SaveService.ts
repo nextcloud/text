@@ -81,14 +81,18 @@ class SaveService {
 				force,
 				manualSave,
 			})
+			const saved = response.data.document.lastSavedVersion >= data.version
+			// Before emitting, so listeners can schedule an autosave for newer changes
+			if (saved) {
+				this.clearAutosave()
+			}
 			// update the document - even if the save was throttled
 			this.bus.emit('save', response.data)
-			if (response.data.document.lastSavedVersion < data.version) {
+			if (!saved) {
 				logger.debug('[SaveService] Server throttled save request.', { response })
 				return false
 			}
 			logger.debug('[SaveService] saved', { response })
-			this.clearAutosave()
 			return true
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
