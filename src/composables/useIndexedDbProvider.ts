@@ -27,12 +27,19 @@ export function useIndexedDbProvider(
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
 	let isDestroyed = false
+	// The provider closes its database when the ydoc is destroyed
+	ydoc.on('destroy', () => {
+		isDestroyed = true
+	})
 	const whenSynced: Promise<void> = indexedDbProvider.whenSynced.then(async () => {
+		if (isDestroyed) {
+			return
+		}
 		const val = await indexedDbProvider.get('dirty')
 		dirty.value = Boolean(val)
 		logger.info('synced from indexeddb', {
 			dirty: val,
-			baseVersionEtag: await indexedDbProvider.get('baseVersionEtag'),
+			baseVersionEtag: await getBaseVersionEtag(),
 		})
 	})
 
