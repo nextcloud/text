@@ -278,6 +278,7 @@ export function createComparisonSession(beforeContent: string, afterContent: str
 		editors,
 		labels,
 		legends,
+		changeCount: changes.length,
 		formattingCount: changes.filter(({ category }) => category === 'formatting').length,
 		...state,
 		select,

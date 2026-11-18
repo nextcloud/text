@@ -8,14 +8,24 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
+use OCA\Text\Service\ConfigService;
 use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\IUserSession;
 use OCP\Util;
 
 /** @implements IEventListener<BeforeTemplateRenderedEvent> */
 class LoadViewerListener implements IEventListener {
+	public function __construct(
+		private readonly IInitialState $initialState,
+		private readonly IUserSession $userSession,
+		private readonly ConfigService $configService,
+	) {
+	}
+
 	public function handle(Event $event): void {
 		if (!($event instanceof BeforeTemplateRenderedEvent)) {
 			return;
@@ -27,5 +37,10 @@ class LoadViewerListener implements IEventListener {
 
 		// Only registers the handler: the editor loads when a text file opens
 		Util::addInitScript('text', 'text-viewer');
+		// Whether comparisons offer summaries, known without a request
+		$this->initialState->provideLazyInitialState(
+			'version_summaries',
+			fn () => $this->configService->isVersionSummariesAvailableFor($this->userSession->getUser()),
+		);
 	}
 }
