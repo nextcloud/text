@@ -26,15 +26,10 @@ export function useIndexedDbProvider(
 	const name = `text-${props.context.type}-${props.context.id}`
 	const indexedDbProvider = new IndexeddbPersistence(name, ydoc)
 	const dirty = ref(false)
-	let isDestroyed = false
-	// The provider closes its database when the ydoc is destroyed
-	ydoc.on('destroy', () => {
-		isDestroyed = true
-	})
+	let isCleared = false
+	// The provider also closes its database when the ydoc is destroyed
+	const isClosed = () => isCleared || ydoc.isDestroyed
 	const whenSynced: Promise<void> = indexedDbProvider.whenSynced.then(async () => {
-		if (isDestroyed) {
-			return
-		}
 		const val = await indexedDbProvider.get('dirty')
 		dirty.value = Boolean(val)
 		logger.info('synced from indexeddb', {
@@ -50,7 +45,7 @@ export function useIndexedDbProvider(
 	 */
 	function setDirty(val: boolean) {
 		dirty.value = Boolean(val)
-		if (isDestroyed) {
+		if (isClosed()) {
 			logger.debug('IndexedDB already destroyed, skipping setDirty')
 			return Promise.resolve()
 		}
@@ -61,7 +56,7 @@ export function useIndexedDbProvider(
 	 * Get the base version etag the document had when it was edited last.
 	 */
 	function getBaseVersionEtag(): Promise<string | undefined> {
-		if (isDestroyed) {
+		if (isClosed()) {
 			logger.debug('IndexedDB already destroyed, skipping getBaseVersionEtag')
 			return Promise.resolve(undefined)
 		}
@@ -74,7 +69,7 @@ export function useIndexedDbProvider(
 	 * @param val the base version etag as returned by open.
 	 */
 	function setBaseVersionEtag(val: string) {
-		if (isDestroyed) {
+		if (isClosed()) {
 			logger.debug('IndexedDB already destroyed, skipping setBaseVersionEtag')
 			return Promise.resolve(undefined)
 		}
@@ -87,7 +82,7 @@ export function useIndexedDbProvider(
 	 */
 	function clearIndexedDb() {
 		logger.info('clearing indexeddb')
-		isDestroyed = true
+		isCleared = true
 		return indexedDbProvider.clearData()
 	}
 
