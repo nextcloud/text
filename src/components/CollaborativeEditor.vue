@@ -475,7 +475,7 @@ export default defineComponent({
 			if (val) {
 				this.$emit('syncService:error')
 			}
-			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
+			this.setEditable(!val && this.editMode) // TODO: can we remove this now with indexed DB?
 		},
 
 		async hasOutdatedDocument(val) {
@@ -739,7 +739,7 @@ export default defineComponent({
 				// Server rejected the session. Behave like an idle disconnect:
 				// read-only editor with a permanent status card offering to reconnect.
 				this.idle = true
-				this.hasConnectionIssues = false
+				this.hasConnectionIssue = false
 				this.readOnly = true
 				this.editMode = false
 				this.setEditable(this.editMode)
