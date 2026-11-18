@@ -847,6 +847,8 @@ export default defineComponent({
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
+			// Also close the IndexedDB connection and stop the awareness interval
+			this.ydoc.destroy()
 
 			// Update the file in Files with the latest size, mtime, the lock state
 			if (this.fileNode) {
