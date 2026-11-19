@@ -7,6 +7,7 @@ import type { EventHandler } from '@nextcloud/event-bus'
 import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 import type { App, ComponentInstance, h, Reactive } from 'vue'
+import type { EmbeddingState } from './types/EmbeddingState.ts'
 import type CollaborativeEditorApp from './views/CollaborativeEditorApp.vue'
 import type MarkdownContentEditorApp from './views/MarkdownContentEditorApp.vue'
 
@@ -17,6 +18,8 @@ interface EditorComponent {
 	editor: Editor
 	setContent: (content: string, options?: { addToHistory: boolean | undefined }) => void
 	save?: () => void
+	exportState?: () => EmbeddingState
+	drain?: () => Promise<EmbeddingState>
 }
 
 type DataType = Reactive<{
@@ -48,6 +51,20 @@ export class TextEditorEmbed {
 
 	destroy() {
 		this.#app.unmount()
+	}
+
+	exportState(): EmbeddingState {
+		if (!this.#editorComponent.exportState) {
+			throw new Error('A collaborative editor is required')
+		}
+		return this.#editorComponent.exportState()
+	}
+
+	drain(): Promise<EmbeddingState> {
+		if (!this.#editorComponent.drain) {
+			throw new Error('A collaborative editor is required')
+		}
+		return this.#editorComponent.drain()
 	}
 
 	setContent(content: string) {

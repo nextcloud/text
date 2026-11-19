@@ -15,7 +15,7 @@
 		:autofocus
 		@ready="emit('ready')"
 		@create:content="(c: { markdown: string }) => emit('create:content', c)"
-		@update:content="(c: { markdown: string }) => emit('update:content', c)">
+		@update:content="(c: { markdown: string, local: boolean }) => emit('update:content', c)">
 		<template v-if="readonlyBarComponent" #readonlyBar>
 			<component :is="readonlyBarComponent" v-bind="readonlyBarProps || {}" />
 		</template>
@@ -42,7 +42,7 @@ defineProps<{
 const emit = defineEmits<{
 	(e: 'ready'): void
 	(e: 'create:content', content: { markdown: string }): void
-	(e: 'update:content', content: { markdown: string }): void
+	(e: 'update:content', content: { markdown: string, local: boolean }): void
 }>()
 
 const editorContainer = useTemplateRef('editor-container') as Readonly<ShallowRef<ComponentInstance<typeof EditorReloader>>>

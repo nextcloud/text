@@ -63,6 +63,10 @@ export default class Outbox {
 			: {}
 	}
 
+	get hasPending(): boolean {
+		return !!(this.#syncUpdate || this.#syncQuery || this.#awarenessUpdate)
+	}
+
 	get hasUpdate(): boolean {
 		return !!this.#syncUpdate
 	}

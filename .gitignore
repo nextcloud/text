@@ -13,6 +13,7 @@ dist/
 /vendor/
 /vendor-bin/*/vendor
 webpack-stats.json
+__pycache__/
 
 # js folder, to be updated wth --force
 /js

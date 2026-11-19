@@ -83,10 +83,11 @@ import { File } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Collaboration } from '@tiptap/extension-collaboration'
+import { ySyncPluginKey } from '@tiptap/y-tiptap'
 import { useElementSize } from '@vueuse/core'
 import { defineAsyncComponent, defineComponent, inject, provide, ref, shallowRef, watch } from 'vue'
 import { Awareness } from 'y-protocols/awareness.js'
-import { Doc, logUpdate } from 'yjs'
+import { Doc, encodeStateVector, logUpdate } from 'yjs'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import DocumentStatus from './Editor/DocumentStatus.vue'
@@ -112,6 +113,7 @@ import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import Autofocus from '../extensions/Autofocus.ts'
 import { CollaborationCaret } from '../extensions/index.js'
+import { encodeArrayBuffer } from '../helpers/base64.ts'
 import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.ts'
 import { logger } from '../helpers/logger.ts'
 import { setInitialYjsState } from '../helpers/setInitialYjsState.ts'
@@ -257,6 +259,7 @@ export default defineComponent({
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
 		const ydoc = new Doc()
+		const embeddingDrained = ref(false)
 		const awareness = new Awareness(ydoc)
 		const {
 			clearIndexedDb,
@@ -283,7 +286,7 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection } = provideConnection(
+		const { connection, openConnection, openData } = provideConnection(
 			props,
 			getBaseVersionEtag,
 			setBaseVersionEtag,
@@ -314,7 +317,8 @@ export default defineComponent({
 
 		provideEditorHeadings(editor)
 
-		const { setEditable, updateUser } = useEditorMethods(editor)
+		const { setEditable: applyEditable, updateUser } = useEditorMethods(editor)
+		const setEditable = (value) => applyEditable(value && !embeddingDrained.value)
 
 		const serialize = isRichEditor
 			? () => createMarkdownSerializer(editor.schema).serialize(editor.state.doc)
@@ -346,10 +350,12 @@ export default defineComponent({
 			awareness,
 			clearIndexedDb,
 			connection,
+			openData,
 			dirty,
 			document,
 			editor,
 			editorReady,
+			embeddingDrained,
 			el,
 			getBaseVersionEtag,
 			hasConnectionIssue,
@@ -685,15 +691,17 @@ export default defineComponent({
 			})
 		},
 
-		onUpdate({ editor }) {
+		onUpdate({ editor, transaction }) {
 			if (window.OCA.Text.logEditorUpdates) {
 				this.debugContent(editor)
 			}
 			const serialize = this.serialize
+			const origin = transaction.getMeta(ySyncPluginKey)
 			this.$emit('update:content', {
 				get markdown() {
 					return serialize()
 				},
+				local: transaction.docChanged && (!origin?.isChangeOrigin || !!origin?.isUndoRedoOperation),
 			})
 		},
 
@@ -813,6 +821,23 @@ export default defineComponent({
 
 		onKeyboardSave() {
 			this.saveService.save()
+		},
+
+		/** @return {import('../types/EmbeddingState.ts').EmbeddingState} */
+		exportState() {
+			if (!this.contentLoaded || !this.openData) {
+				throw new Error('Text session is not ready')
+			}
+			const data = this.saveService.getSaveData()
+			return { format: 1, context: { type: this.context.type, id: this.context.id }, baseVersionEtag: this.openData.document.baseVersionEtag, version: data.version, markdown: data.autosaveContent, documentState: data.documentState, stateVector: encodeArrayBuffer(encodeStateVector(this.ydoc)) }
+		},
+
+		async drain() {
+			this.embeddingDrained = true
+			this.setEditable(false)
+			this.saveService.clearAutosave()
+			await this.syncService.drain()
+			return this.exportState()
 		},
 
 		async save() {
