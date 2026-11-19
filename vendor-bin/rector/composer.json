@@ -1,7 +1,6 @@
 {
     "require-dev": {
-        "rector/rector": "2.8.1",
-		"phpstan/phpstan": "2.3.3",
+        "rector/rector": "^2.6",
         "nextcloud/rector": "^0.5.2"
     }
 }
