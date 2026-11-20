@@ -84,5 +84,8 @@ namespace OCA\Files_Versions\Versions {
 namespace OCA\DAV\Connector\Sabre {
 	class PublicAuth {
 		public const DAV_AUTHENTICATED = '';
+
+		public static function isShareInSession(\OCP\ISession $session, \OCP\Share\IShare $share): bool {
+		}
 	}
 }

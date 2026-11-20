@@ -12,6 +12,7 @@ namespace OCA\Text\Controller;
 use Exception;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\DirectEditing\TextDocumentCreator;
+use OCA\Text\Service\FileService;
 use OCA\Text\Service\WorkspaceService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
@@ -27,7 +28,6 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IRequest;
-use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
@@ -44,7 +44,7 @@ class WorkspaceController extends OCSController {
 		private readonly WorkspaceService $workspaceService,
 		private readonly IEventDispatcher $eventDispatcher,
 		private readonly LoggerInterface $logger,
-		private readonly ISession $session,
+		private readonly FileService $fileService,
 		private readonly ?string $userId,
 	) {
 		parent::__construct($appName, $request);
@@ -114,13 +114,8 @@ class WorkspaceController extends OCSController {
 				throw new ShareNotFound();
 			}
 			/** @psalm-suppress RedundantConditionGivenDocblockType */
-			if ($share->getPassword() !== null) {
-				$shareIds = $this->session->get('public_link_authenticated');
-				$shareIds = is_array($shareIds) ? $shareIds : [$shareIds];
-
-				if (!in_array($share->getId(), $shareIds, true)) {
-					throw new ShareNotFound();
-				}
+			if ($share->getPassword() !== null && !$this->fileService->isShareAuthenticated($share)) {
+				throw new ShareNotFound();
 			}
 
 			$shareNode = $share->getNode();
