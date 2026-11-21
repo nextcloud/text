@@ -18,10 +18,14 @@ For new e2e tests, always generate Playwright tests. Where appropriate, suggest 
 
 - Conventional Commits with a scope (e.g. `fix(versions): ...`).
 - AI-assisted commits get an `Assisted-by: <Tool>:<model>` trailer.
+- Commit message bodies explain why the change was made, not how; the diff already shows what changed.
 - Changed or added code needs unit tests: Vitest in `src/tests/`, PHPUnit in `tests/unit/`.
 - New files need SPDX headers (REUSE CI enforces this).
 - Comments describe the code, not the change that produced it.
 - Keep PRs to one concern. Disclose AI use in the PR description (the template has a section for it).
+- Issues, PR descriptions and comments may be drafted with AI and posted on the contributor's behalf when they ask for it. Write them for human readers: lead with what changed and why, keep the repository's issue or PR template intact, end AI-drafted issues and comments with an `Assisted by <Tool>:<model>` footer, and put agent-only details in a collapsed `<details>` block. For a bug report, also state whether the bug was validated and reproduced on a live Nextcloud instance.
+- Validate every change to runtime behavior on a live Nextcloud instance where you can, and give the contributor concrete steps to test it there themselves; your testing supports theirs, it does not replace it.
+- Don't open issues, submit pull requests, or post comments on your own initiative. Instead, post only what the contributor asked for, on their behalf, and tell them what you posted.
 
 ## Commands
 
