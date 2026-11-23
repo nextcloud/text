@@ -98,6 +98,29 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	/**
+	 * Get the documents whose most recent session contact is older than the session validity
+	 * but not older than the given timestamp.
+	 *
+	 * @return list<string>
+	 */
+	public function findDocumentIdsInactiveSince(int $since): array {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('document_id')
+			->from($this->getTableName())
+			->where($qb->expr()->gte('last_contact', $qb->createNamedParameter($since, IQueryBuilder::PARAM_INT)))
+			->groupBy('document_id')
+			->having($qb->expr()->lt(
+				$qb->func()->max('last_contact'),
+				$qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME, IQueryBuilder::PARAM_INT),
+			));
+
+		$result = $qb->executeQuery();
+		$documentIds = array_map(fn ($row) => (string)$row['document_id'], $result->fetchAllAssociative());
+		$result->closeCursor();
+		return $documentIds;
+	}
+
 	public function deleteInactiveWithoutSteps(?string $documentId = null): int {
 		$lastContact = time() - SessionService::SESSION_VALID_TIME;
 
