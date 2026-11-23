@@ -44,14 +44,8 @@ test('becomes editable as soon as the failed push was retried', async ({
 			PUSH.test(request.url()) && !request.postDataJSON()?.steps?.length,
 		timeout: 30_000,
 	})
-	const delay = await page.evaluate(
-		() =>
-			window.OCP.InitialState.loadState(
-				'text',
-				'offline_readonly_delay',
-			) as number,
-	)
-	await page.clock.fastForward(delay * 1000 + 1000)
+	// useDelayedFlag switches to read-only after 5 seconds.
+	await page.clock.fastForward(6_000)
 	await expect(editor.offlineState).toBeVisible()
 	await expect(content).toHaveAttribute('contenteditable', 'false')
 
