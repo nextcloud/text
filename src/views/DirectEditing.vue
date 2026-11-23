@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { markRaw, reactive } from 'vue'
 import EditorReloader from '../components/EditorReloader.vue'
 import { logger } from '../helpers/logger.ts'
 
@@ -93,6 +93,7 @@ export default {
 			messages: log.messages,
 			log,
 			saving: false,
+			closing: null,
 		}
 	},
 
@@ -119,6 +120,14 @@ export default {
 	},
 
 	beforeMount() {
+		// API for the mobile apps, available once they received the loading message
+		window.OCA = window.OCA ?? {}
+		window.OCA.Text = {
+			...window.OCA.Text,
+			DirectEditing: {
+				close: () => this.close(),
+			},
+		}
 		callMobileMessage('loading')
 	},
 
@@ -132,12 +141,27 @@ export default {
 	},
 
 	methods: {
-		async close() {
+		/**
+		 * Save, close the editing session and tell the mobile app to close the view
+		 *
+		 * @return {Promise<void>} resolves once the app was told to close, also if saving or closing failed
+		 */
+		close() {
+			this.closing ??= markRaw(this.closeEditor())
+			return this.closing
+		},
+
+		async closeEditor() {
 			this.saving = true
-			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.$refs.editor.saveWhenDirty?.()])
-			await this.$refs.editor.close?.()
-			callMobileMessage('close')
+			try {
+				const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+				await Promise.any([timeout, this.$refs.editor?.saveWhenDirty?.()])
+				await this.$refs.editor?.close?.()
+			} catch (error) {
+				logger.error('Failed to close the editor', { error })
+			} finally {
+				callMobileMessage('close')
+			}
 		},
 
 		share() {
