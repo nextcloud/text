@@ -45,6 +45,22 @@ describe('SaveService', () => {
 		})
 	})
 
+	it('does not save if pushing the changes invalidated the session', async () => {
+		vi.mocked(saveApi.save).mockClear()
+		const sessionConnection = shallowRef(connection.value)
+		const saveService = new SaveService({
+			connection: sessionConnection,
+			getSaveData,
+			pushChanges: async () => {
+				sessionConnection.value = undefined
+			},
+		})
+
+		await expect(saveService.save()).resolves.toBeUndefined()
+
+		expect(saveApi.save).not.toHaveBeenCalled()
+	})
+
 	it('pushes changes before saving', async () => {
 		vi.mocked(saveApi.save).mockResolvedValue({
 			data: { document: { lastSavedVersion: 2 } },

@@ -473,7 +473,7 @@ export default defineComponent({
 			if (val) {
 				this.$emit('syncService:error')
 			}
-			this.setEditable(!val) // TODO: can we remove this now with indexed DB?
+			this.setEditable(!val && this.editMode) // TODO: can we remove this now with indexed DB?
 		},
 
 		async hasOutdatedDocument(val) {
@@ -549,6 +549,8 @@ export default defineComponent({
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
+		// The dirty watcher that removes it no longer runs after unmounting
+		window.removeEventListener('beforeunload', this.saveBeforeUnload)
 		removeFromDebugging(this)
 	},
 
@@ -737,7 +739,7 @@ export default defineComponent({
 				// Server rejected the session. Behave like an idle disconnect:
 				// read-only editor with a permanent status card offering to reconnect.
 				this.idle = true
-				this.hasConnectionIssues = false
+				this.hasConnectionIssue = false
 				this.readOnly = true
 				this.editMode = false
 				this.setEditable(this.editMode)
@@ -844,6 +846,8 @@ export default defineComponent({
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
+			// Also close the IndexedDB connection and stop the awareness interval
+			this.ydoc.destroy()
 
 			// Update the file in Files with the latest size, mtime, the lock state
 			if (this.fileNode) {

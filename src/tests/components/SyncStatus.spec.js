@@ -33,6 +33,13 @@ FLAGS.forEach((flag) => {
 	})
 })
 
+test('shows the disconnected state despite a connection issue', () => {
+	const wrapper = shallowMount(SyncStatus, {
+		propsData: { idle: true, hasConnectionIssue: true },
+	})
+	expect(wrapper.text()).toContain("You've been disconnected from the server.")
+})
+
 Object.values(ERROR_TYPE).forEach((type) => {
 	test(`renders sync error ${type}`, () => {
 		const data = {
