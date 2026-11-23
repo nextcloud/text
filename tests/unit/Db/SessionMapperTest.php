@@ -201,4 +201,33 @@ class SessionMapperTest extends \Test\TestCase {
 		$deletedCount = $this->sessionMapper->deleteOrphanedSteps($sevenDays);
 		self::assertEquals(2, $deletedCount);
 	}
+
+	public function testFindDocumentIdsInactiveSince(): void {
+		$now = time();
+		$lastContacts = [
+			101 => [$now - 400],
+			102 => [$now - 400, $now],
+			103 => [$now - 2000],
+			104 => [$now - 2000, $now - 400],
+		];
+		foreach ($lastContacts as $documentId => $contacts) {
+			$this->sessionMapper->deleteByDocumentId($documentId);
+			foreach ($contacts as $lastContact) {
+				$this->sessionMapper->insert(Session::fromParams([
+					'userId' => 'admin',
+					'documentId' => $documentId,
+					'lastContact' => $lastContact,
+					'token' => uniqid(),
+					'color' => '00ff00',
+				]));
+			}
+		}
+
+		$documentIds = array_intersect(
+			$this->sessionMapper->findDocumentIdsInactiveSince($now - 1000),
+			['101', '102', '103', '104'],
+		);
+
+		self::assertEqualsCanonicalizing(['101', '104'], $documentIds);
+	}
 }

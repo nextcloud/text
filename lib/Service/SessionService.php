@@ -122,6 +122,15 @@ class SessionService {
 		return $this->sessionMapper->findAllInactive();
 	}
 
+	/**
+	 * Get the documents without active sessions whose last session contact is not older than the given timestamp.
+	 *
+	 * @return list<string>
+	 */
+	public function getDocumentIdsInactiveSince(int $since): array {
+		return $this->sessionMapper->findDocumentIdsInactiveSince($since);
+	}
+
 	public function removeInactiveSessionsWithoutSteps(?string $documentId = null): int {
 		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
