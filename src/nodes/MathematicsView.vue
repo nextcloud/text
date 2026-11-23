@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import { NodeViewWrapper } from '@tiptap/vue-3'
-import katex from 'katex'
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import ShowMathModal from '../components/Math/ShowMathModal.vue'
 
 import '../css/katex.scss'
@@ -30,27 +29,7 @@ import '../css/katex.scss'
 export default {
 	name: 'MathematicsView',
 	components: { NodeViewWrapper, ShowMathModal },
-	props: {
-		node: {
-			type: Object,
-			required: true,
-		},
-
-		editor: {
-			type: Object,
-			required: true,
-		},
-
-		updateAttributes: {
-			type: Function,
-			required: true,
-		},
-
-		deleteNode: {
-			type: Function,
-			required: true,
-		},
-	},
+	props: nodeViewProps,
 
 	data() {
 		return {
@@ -81,7 +60,8 @@ export default {
 	},
 
 	methods: {
-		renderMath() {
+		async renderMath() {
+			const { default: katex } = await import('katex')
 			if (this.$refs.mathEl) {
 				katex.render(this.node.attrs.latex, this.$refs.mathEl, {
 					displayMode: this.isBlock,

@@ -65,7 +65,6 @@
     "@tiptap/extension-italic": "3.34.0",
     "@tiptap/extension-link": "3.34.0",
     "@tiptap/extension-list": "3.34.0",
-    "@tiptap/extension-mathematics": "3.34.0",
     "@tiptap/extension-mention": "3.34.0",
     "@tiptap/extension-paragraph": "3.34.0",
     "@tiptap/extension-placeholder": "3.34.0",

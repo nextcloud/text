@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
+
 import { getExtensionField } from '@tiptap/core'
 import { describe, expect } from 'vitest'
 import markdownit from '../../markdownit/index.ts'
-import { MathBlock, MathInline } from '../../nodes/Mathematics.js'
+import { MathBlock, MathInline } from '../../nodes/Mathematics.ts'
 import testEditor from '../testHelpers/testEditor.ts'
 
 const test = testEditor.override('extensions', [MathBlock, MathInline])
@@ -123,6 +125,43 @@ describe('Mathematics nodes', () => {
 			const node = editor.state.doc.firstChild!
 			expect(node.type.name).toBe('blockMath')
 			expect(node.attrs.latex).toBe('E=mc^2')
+		})
+	})
+
+	describe('Input rules', () => {
+		/**
+		 * Type text at the cursor the way ProseMirror input rules see it.
+		 *
+		 * @param editor the editor to type into
+		 * @param text text to type
+		 */
+		function type(editor: Editor, text: string) {
+			for (const char of text) {
+				const { from, to } = editor.state.selection
+				const insert = () => editor.state.tr.insertText(char, from, to)
+				const handled = editor.view.someProp('handleTextInput', (f) => f(editor.view, from, to, char, insert))
+				if (!handled) {
+					editor.view.dispatch(insert())
+				}
+			}
+		}
+
+		test('$$...$$ inside text becomes inline math', ({ editor }) => {
+			editor.commands.setContent('<p>a </p>')
+			editor.commands.setTextSelection(3)
+			type(editor, '$$x_1$$')
+			const paragraph = editor.state.doc.firstChild!
+			expect(paragraph.lastChild!.type.name).toBe('inlineMath')
+			expect(paragraph.lastChild!.attrs.latex).toBe('x_1')
+			expect(paragraph.textContent).toBe('a ')
+		})
+
+		test('$$$...$$$ on its own line becomes block math', ({ editor }) => {
+			editor.commands.setContent('<p></p>')
+			type(editor, '$$$y^2$$$')
+			const node = editor.state.doc.firstChild!
+			expect(node.type.name).toBe('blockMath')
+			expect(node.attrs.latex).toBe('y^2')
 		})
 	})
 
