@@ -16,6 +16,9 @@ type MobileAppWindow = Window & {
 	directEditingClosed?: boolean
 }
 
+/** API of the direct editing page for mobile apps */
+type DirectEditingApi = { close: () => Promise<void> }
+
 const ocsHeaders = {
 	'OCS-APIRequest': 'true',
 	Accept: 'application/json',
@@ -58,6 +61,19 @@ class DirectEditingPage {
 	async close() {
 		await this.page.locator('button.icon-close').click()
 		await this.page.waitForFunction(() => (window as MobileAppWindow).directEditingClosed)
+	}
+
+	/**
+	 * Close the editor like a mobile app does from its own close button.
+	 *
+	 * @return whether the editor told the mobile app it is done by the time the call resolved
+	 */
+	async closeThroughApi() {
+		return this.page.evaluate(async () => {
+			const api = window.OCA.Text.DirectEditing as DirectEditingApi
+			await api.close()
+			return (window as MobileAppWindow).directEditingClosed === true
+		})
 	}
 }
 
@@ -140,6 +156,15 @@ test.describe('Direct editing', () => {
 		const file = new Node({ id: 0, name: 'newfile.md', page })
 		await expect.poll(() => file.getContent())
 			.toBe('# This is a headline\n\nSome text')
+	})
+
+	test('Close through the API for mobile apps', async ({ user, file, openDirectEditing }) => {
+		const url = await createDirectEditingLink(user, file.name)
+		const directEditing = await openDirectEditing(url)
+		await directEditing.editor.type('Some text')
+
+		expect(await directEditing.closeThroughApi()).toBe(true)
+		await expect.poll(() => file.getContent()).toBe('Some text')
 	})
 
 	test.describe('plain text', () => {
