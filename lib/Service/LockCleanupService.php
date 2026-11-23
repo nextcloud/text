@@ -32,7 +32,7 @@ class LockCleanupService {
 	public function release(Document $document): void {
 		if ($document->getContextType() !== 'file'
 			|| !$this->lockService->hasLock($document->getContextId())
-			|| $this->sessionService->getActiveSessions((string)$document->getId()) !== []) {
+			|| $this->sessionService->hasRecentlyActiveSessions((string)$document->getId())) {
 			return;
 		}
 

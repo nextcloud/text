@@ -24,6 +24,12 @@ use OCP\Security\ISecureRandom;
 
 class SessionService {
 	public const int SESSION_VALID_TIME = 5 * 60;
+	/**
+	 * Sessions keep the file locked while they had contact within this time.
+	 * Open editors update their last contact at least every 90 seconds:
+	 * it is written at most every 30 seconds and browsers poll hidden tabs about once a minute.
+	 */
+	public const int LOCK_VALID_TIME = 2 * 60;
 	private readonly ICache $cache;
 
 	/** @var ?Session cache current session in the request */
@@ -102,6 +108,13 @@ class SessionService {
 			}
 			return $result;
 		}, $sessions);
+	}
+
+	/**
+	 * Whether a session of the document had contact recently enough to keep its file locked
+	 */
+	public function hasRecentlyActiveSessions(string $documentId): bool {
+		return $this->sessionMapper->hasContactSince($documentId, $this->timeFactory->now()->getTimestamp() - self::LOCK_VALID_TIME);
 	}
 
 	public function getNameForSession(Session $session): ?string {
