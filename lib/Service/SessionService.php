@@ -92,10 +92,6 @@ class SessionService {
 		}, $sessions);
 	}
 
-	public function countAllSessions(string $documentId): int {
-		return $this->sessionMapper->countAll($documentId);
-	}
-
 	public function getActiveSessions(string $documentId): array {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
