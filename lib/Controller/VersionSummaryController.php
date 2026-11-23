@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Exception\VersionSummaryException;
+use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\VersionSummaryService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
@@ -24,6 +25,7 @@ class VersionSummaryController extends OCSController {
 		string $appName,
 		IRequest $request,
 		private readonly VersionSummaryService $versionSummaryService,
+		private readonly ConfigService $configService,
 		private readonly IUserSession $userSession,
 	) {
 		parent::__construct($appName, $request);
@@ -58,6 +60,35 @@ class VersionSummaryController extends OCSController {
 	#[UserRateLimit(limit: 5, period: 120)]
 	public function generate(int $fileId, string $from, string $to, string $fromHash, string $toHash): DataResponse {
 		return $this->respond(fn ($user) => $this->versionSummaryService->generate($user, $fileId, $from, $to, $fromHash, $toHash));
+	}
+
+	/**
+	 * Turn summaries on or off and set their hourly limits. Off removes every
+	 * summary and pending task, and says whether all are gone.
+	 *
+	 * @param bool|null $enabled Whether summaries are on
+	 * @param int|null $hourlyLimit Summaries the instance may start per hour
+	 * @param int|null $userHourlyLimit Summaries one person may start per hour
+	 */
+	public function updateSettings(?bool $enabled = null, ?int $hourlyLimit = null, ?int $userHourlyLimit = null): DataResponse {
+		$removed = null;
+		if ($hourlyLimit !== null) {
+			$this->configService->setVersionSummariesHourlyLimit($hourlyLimit);
+		}
+		if ($userHourlyLimit !== null) {
+			$this->configService->setVersionSummariesUserHourlyLimit($userHourlyLimit);
+		}
+		if ($enabled === true) {
+			$this->configService->setVersionSummariesEnabled(true);
+		} elseif ($enabled === false) {
+			$removed = $this->versionSummaryService->turnOff();
+		}
+		return new DataResponse([
+			'enabled' => $this->configService->isVersionSummariesEnabled(),
+			'hourlyLimit' => $this->configService->getVersionSummariesHourlyLimit(),
+			'userHourlyLimit' => $this->configService->getVersionSummariesUserHourlyLimit(),
+			'removed' => $removed,
+		]);
 	}
 
 	/**
