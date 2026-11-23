@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 
 class LockCleanupService {
 	public function __construct(
-		private readonly SessionService $sessionService,
+		private readonly DocumentService $documentService,
 		private readonly LockService $lockService,
 		private readonly IRootFolder $rootFolder,
 		private readonly ISetupManager $setupManager,
@@ -26,13 +26,13 @@ class LockCleanupService {
 	}
 
 	/**
-	 * Release the file lock of a document without active sessions,
-	 * e.g. after closing the browser tab or a crash.
+	 * Release the file lock of a document nobody changed for a while,
+	 * e.g. a forgotten browser tab, a closed tab or a crash.
 	 */
 	public function release(Document $document): void {
 		if ($document->getContextType() !== 'file'
 			|| !$this->lockService->hasLock($document->getContextId())
-			|| $this->sessionService->hasRecentlyActiveSessions((string)$document->getId())) {
+			|| $this->documentService->hasRecentChanges((string)$document->getId())) {
 			return;
 		}
 

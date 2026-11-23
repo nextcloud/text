@@ -31,6 +31,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Context\\FileContextFactory' => __DIR__ . '/..' . '/../lib/Context/FileContextFactory.php',
         'OCA\\Text\\Context\\IContext' => __DIR__ . '/..' . '/../lib/Context/IContext.php',
         'OCA\\Text\\Context\\IContextFactory' => __DIR__ . '/..' . '/../lib/Context/IContextFactory.php',
+        'OCA\\Text\\Context\\ILockingContext' => __DIR__ . '/..' . '/../lib/Context/ILockingContext.php',
         'OCA\\Text\\Context\\NewSessionData' => __DIR__ . '/..' . '/../lib/Context/NewSessionData.php',
         'OCA\\Text\\Context\\SessionInfo' => __DIR__ . '/..' . '/../lib/Context/SessionInfo.php',
         'OCA\\Text\\Context\\UnauthorizedFileContext' => __DIR__ . '/..' . '/../lib/Context/UnauthorizedFileContext.php',

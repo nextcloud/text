@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
+use OCA\Text\Context\ILockingContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
@@ -50,6 +51,8 @@ class DocumentService {
 	 * Delay to wait for between autosave versions
 	 */
 	public const int AUTOSAVE_MINIMUM_DELAY = 10;
+	/** Seconds after the last change until Text releases the lock of the document */
+	public const int EDIT_LOCK_TIME = 5 * 60;
 
 	private bool $saveFromText = false;
 	private readonly ICache $cache;
@@ -86,6 +89,14 @@ class DocumentService {
 	 */
 	public function getDocumentsAfter(string $id, int $limit): array {
 		return $this->documentMapper->findAfter($id, $limit);
+	}
+
+	/**
+	 * Whether the document was changed recently enough to keep it locked
+	 */
+	public function hasRecentChanges(string $documentId): bool {
+		$timestamp = $this->stepMapper->getLatestTimestamp($documentId);
+		return $timestamp !== null && $timestamp >= time() - self::EDIT_LOCK_TIME;
 	}
 
 	public function getDocument(string $id): ?Document {
@@ -262,7 +273,9 @@ class DocumentService {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
 			$context = $this->contextManager->getContext($type, $id, $auth);
-			if (!$context->isReadOnly()) {
+			// Skip changes the context does not accept, the next sync tells clients it is read-only
+			if (!$context->isReadOnly()
+				&& (!$context instanceof ILockingContext || $context->lockForEditing())) {
 				$this->insertSteps($documentId, $session, $stepsToInsert);
 			}
 		}

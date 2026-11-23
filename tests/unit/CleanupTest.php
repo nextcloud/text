@@ -137,11 +137,11 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->cleanup->run([]);
 	}
 
-	public function testReleasesLocksOfInactiveDocumentsBeforeRemovingTheirSessions(): void {
+	public function testReleasesLocksOfRecentlyOpenedDocumentsBeforeRemovingTheirSessions(): void {
 		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
 		$this->cleanup->setLastRun(10000);
 		$this->sessionService->expects(self::once())
-			->method('getDocumentIdsInactiveSince')->with(10000 - 2 * SessionService::SESSION_VALID_TIME)
+			->method('getDocumentIdsWithContactSince')->with(10000 - SessionService::SESSION_VALID_TIME - DocumentService::EDIT_LOCK_TIME)
 			->willReturn(['111']);
 		$document = Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]);
 		$this->documentService->method('getDocument')->with('111')->willReturn($document);
@@ -163,7 +163,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 
 	public function testSkipsMissingDocuments(): void {
 		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
-		$this->sessionService->method('getDocumentIdsInactiveSince')->willReturn(['111']);
+		$this->sessionService->method('getDocumentIdsWithContactSince')->willReturn(['111']);
 		$this->documentService->method('getDocument')->with('111')->willReturn(null);
 		$this->lockCleanupService->expects(self::never())->method('release');
 
