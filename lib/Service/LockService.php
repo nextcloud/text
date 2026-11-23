@@ -50,6 +50,23 @@ class LockService {
 		return $lockInfo;
 	}
 
+	/**
+	 * Whether Text holds a lock on the file
+	 */
+	public function hasLock(int $fileId): bool {
+		try {
+			$locks = $this->lockManager->getLocks($fileId);
+		} catch (NoLockProviderException|PreConditionNotMetException) {
+			return false;
+		}
+		foreach ($locks as $lock) {
+			if ($lock->getType() === ILock::TYPE_APP && $lock->getOwner() === Application::APP_NAME) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function lock(File $file): bool {
 		try {
 			$this->lockManager->lock(new LockContext(

@@ -41,6 +41,19 @@ class DocumentMapper extends QBMapper {
 		return Document::fromRow($data);
 	}
 
+	/**
+	 * @return list<Document> ordered by id
+	 */
+	public function findAfter(string $documentId, int $limit): array {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from($this->getTableName())
+			->where($qb->expr()->gt('id', $qb->createNamedParameter($documentId, IQueryBuilder::PARAM_INT)))
+			->orderBy('id', 'ASC')
+			->setMaxResults($limit);
+		return $this->findEntities($qb);
+	}
+
 	public function load(string $type, int $id): ?Document {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();

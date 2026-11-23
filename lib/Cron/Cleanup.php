@@ -9,15 +9,12 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
-use OCA\Text\Context\FileContext;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\LockService;
+use OCA\Text\Service\LockCleanupService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
-use OCP\Files\File;
-use OCP\Files\IRootFolder;
 use OCP\Files\ISetupManager;
 use OCP\Files\NotPermittedException;
 use Psr\Log\LoggerInterface;
@@ -30,8 +27,7 @@ class Cleanup extends TimedJob {
 		private readonly AttachmentService $attachmentService,
 		private readonly LoggerInterface $logger,
 		private readonly ISetupManager $setupManager,
-		private readonly IRootFolder $rootFolder,
-		private readonly LockService $lockService,
+		private readonly LockCleanupService $lockCleanupService,
 	) {
 		parent::__construct($time);
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
@@ -78,29 +74,15 @@ class Cleanup extends TimedJob {
 	}
 
 	/**
-	 * Release the file locks of documents whose sessions ended without closing them,
-	 * e.g. after closing the browser tab or a crash.
+	 * Release the file locks of documents whose last session became inactive since the previous run
 	 */
 	private function unlockInactiveDocuments(): void {
 		// Overlap with the previous run, the job does not run at exact intervals
 		$since = $this->lastRun - 2 * SessionService::SESSION_VALID_TIME;
 		foreach ($this->sessionService->getDocumentIdsInactiveSince($since) as $documentId) {
 			$document = $this->documentService->getDocument($documentId);
-			if ($document === null || $document->getContextType() !== 'file') {
-				continue;
-			}
-			// A session may have been opened in the meantime
-			if ($this->sessionService->getActiveSessions($documentId) !== []) {
-				continue;
-			}
-			$this->setupManager->tearDown();
-			try {
-				$file = $this->rootFolder->getFirstNodeById($document->getContextId());
-				if ($file instanceof File) {
-					$this->lockService->unlock($file);
-				}
-			} catch (\Throwable $e) {
-				$this->logger->warning('Could not release the lock of inactive document ' . $documentId, ['exception' => $e]);
+			if ($document !== null) {
+				$this->lockCleanupService->release($document);
 			}
 		}
 	}

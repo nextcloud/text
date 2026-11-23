@@ -81,6 +81,13 @@ class DocumentService {
 		}
 	}
 
+	/**
+	 * @return list<Document> ordered by id
+	 */
+	public function getDocumentsAfter(string $id, int $limit): array {
+		return $this->documentMapper->findAfter($id, $limit);
+	}
+
 	public function getDocument(string $id): ?Document {
 		try {
 			return $this->documentMapper->find($id);
