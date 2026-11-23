@@ -9,8 +9,10 @@ namespace OCA\Text\Tests;
 
 use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\FileContext;
+use OCA\Text\Context\ILockingContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
+use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -29,11 +31,13 @@ use Psr\Log\LoggerInterface;
 class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 	private DocumentService $documentService;
 
+	private ContextManager $contextManager;
 	private DocumentMapper $documentMapper;
 	private StepMapper $stepMapper;
 	private ICache $cache;
 
 	public function setUp(): void {
+		$this->contextManager = $this->createMock(ContextManager::class);
 		$this->documentMapper = $this->createMock(DocumentMapper::class);
 		$this->stepMapper = $this->createMock(StepMapper::class);
 		$this->cache = $this->createMock(ICache::class);
@@ -43,7 +47,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$request->method('getParam')->willReturn(null);
 
 		$this->documentService = new DocumentService(
-			$this->createMock(ContextManager::class),
+			$this->contextManager,
 			$this->documentMapper,
 			$this->stepMapper,
 			$this->createMock(SessionMapper::class),
@@ -278,5 +282,57 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$this->expectException(DocumentSaveConflictException::class);
 		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state', false, true);
+	}
+
+	/** A Yjs update, i.e. a change of the document content */
+	private const string UPDATE_STEP = 'AAISAQHD+t3RB2CEwvXQjwpHAWEA';
+	/** A Yjs sync step 1, i.e. a query for missing steps */
+	private const string QUERY_STEP = 'AAABAA==';
+
+	/**
+	 * @param list<string> $steps
+	 */
+	private function addSteps(array $steps): void {
+		$document = Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]);
+		$session = Session::fromParams(['id' => 1, 'documentId' => '111', 'userId' => 'admin']);
+		$this->documentService->addStep($document, $session, $steps, 0, null, $this->createMock(\OCP\IUser::class));
+	}
+
+	private function lockingContext(bool $locks): ILockingContext {
+		$context = $this->createMock(ILockingContext::class);
+		$context->method('isReadOnly')->willReturn(false);
+		$context->expects(self::once())->method('lockForEditing')->willReturn($locks);
+		$this->contextManager->method('getContext')->with('file', 456)->willReturn($context);
+		return $context;
+	}
+
+	public function testAddStepLocksBeforeStoringChanges(): void {
+		$this->lockingContext(true);
+		$this->stepMapper->expects(self::once())->method('insert')->willReturnArgument(0);
+
+		$this->addSteps([self::UPDATE_STEP]);
+	}
+
+	public function testAddStepSkipsChangesIfLockedByOthers(): void {
+		$this->lockingContext(false);
+		$this->stepMapper->expects(self::never())->method('insert');
+
+		$this->addSteps([self::UPDATE_STEP]);
+	}
+
+	public function testAddStepWithoutChangesDoesNotLock(): void {
+		$this->contextManager->expects(self::never())->method('getContext');
+		$this->stepMapper->expects(self::never())->method('insert');
+
+		$this->addSteps([self::QUERY_STEP]);
+	}
+
+	public function testHasRecentChanges(): void {
+		$this->stepMapper->method('getLatestTimestamp')->with('111')
+			->willReturnOnConsecutiveCalls(time() - 10, time() - DocumentService::EDIT_LOCK_TIME - 1, null);
+
+		self::assertTrue($this->documentService->hasRecentChanges('111'));
+		self::assertFalse($this->documentService->hasRecentChanges('111'));
+		self::assertFalse($this->documentService->hasRecentChanges('111'));
 	}
 }

@@ -7,6 +7,7 @@
 
 import {
 	configureNextcloud,
+	runOcc,
 	startNextcloud,
 	stopNextcloud,
 	waitOnNextcloud,
@@ -65,7 +66,9 @@ if (await isServerRunning()) {
 } else {
 	const ip = await start()
 	await waitOnNextcloud(ip)
-	await configureNextcloud(['text', 'viewer'])
+	await configureNextcloud(['text', 'viewer', 'files_lock'])
+	// Only enabled by the specs that test file locking
+	await runOcc(['app:disable', 'files_lock'])
 }
 
 // Idle to wait for shutdown

@@ -16,6 +16,7 @@ return array(
     'OCA\\Text\\Context\\FileContextFactory' => $baseDir . '/../lib/Context/FileContextFactory.php',
     'OCA\\Text\\Context\\IContext' => $baseDir . '/../lib/Context/IContext.php',
     'OCA\\Text\\Context\\IContextFactory' => $baseDir . '/../lib/Context/IContextFactory.php',
+    'OCA\\Text\\Context\\ILockingContext' => $baseDir . '/../lib/Context/ILockingContext.php',
     'OCA\\Text\\Context\\NewSessionData' => $baseDir . '/../lib/Context/NewSessionData.php',
     'OCA\\Text\\Context\\SessionInfo' => $baseDir . '/../lib/Context/SessionInfo.php',
     'OCA\\Text\\Context\\UnauthorizedFileContext' => $baseDir . '/../lib/Context/UnauthorizedFileContext.php',

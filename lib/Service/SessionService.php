@@ -132,12 +132,12 @@ class SessionService {
 	}
 
 	/**
-	 * Get the documents without active sessions whose last session contact is not older than the given timestamp.
+	 * Get the documents with session contact since the given timestamp
 	 *
 	 * @return list<string>
 	 */
-	public function getDocumentIdsInactiveSince(int $since): array {
-		return $this->sessionMapper->findDocumentIdsInactiveSince($since);
+	public function getDocumentIdsWithContactSince(int $since): array {
+		return $this->sessionMapper->findDocumentIdsWithContactSince($since);
 	}
 
 	public function removeInactiveSessionsWithoutSteps(?string $documentId = null): int {

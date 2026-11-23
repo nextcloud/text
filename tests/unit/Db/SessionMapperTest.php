@@ -202,7 +202,7 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertEquals(2, $deletedCount);
 	}
 
-	public function testFindDocumentIdsInactiveSince(): void {
+	public function testFindDocumentIdsWithContactSince(): void {
 		$now = time();
 		$lastContacts = [
 			101 => [$now - 400],
@@ -224,11 +224,11 @@ class SessionMapperTest extends \Test\TestCase {
 		}
 
 		$documentIds = array_intersect(
-			$this->sessionMapper->findDocumentIdsInactiveSince($now - 1000),
+			$this->sessionMapper->findDocumentIdsWithContactSince($now - 1000),
 			['101', '102', '103', '104'],
 		);
 
-		self::assertEqualsCanonicalizing(['101', '104'], $documentIds);
+		self::assertEqualsCanonicalizing(['101', '102', '104'], $documentIds);
 	}
 
 	public function testHasContactSince(): void {
@@ -244,5 +244,22 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertTrue($this->sessionMapper->hasContactSince('105', 1000));
 		self::assertFalse($this->sessionMapper->hasContactSince('105', 1001));
 		self::assertFalse($this->sessionMapper->hasContactSince('106', 0));
+	}
+
+	public function testGetLatestStepTimestamp(): void {
+		$this->stepMapper->deleteAll('107');
+		self::assertNull($this->stepMapper->getLatestTimestamp('107'));
+		foreach ([2000, 1000] as $timestamp) {
+			$this->stepMapper->insert(Step::fromParams([
+				'sessionId' => 1,
+				'documentId' => '107',
+				'data' => 'YJSDATA',
+				'version' => Step::VERSION_STORED_IN_ID,
+				'timestamp' => $timestamp,
+			]));
+		}
+
+		self::assertSame(1000, $this->stepMapper->getLatestTimestamp('107'));
+		$this->stepMapper->deleteAll('107');
 	}
 }
