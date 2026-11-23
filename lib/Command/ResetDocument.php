@@ -10,6 +10,7 @@ namespace OCA\Text\Command;
 use OCA\Text\Db\Document;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
+use OCP\Files\NotPermittedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,12 +62,6 @@ class ResetDocument extends Command {
 			return 1;
 		}
 
-		if ($all && $fullReset) {
-			// Truncate tables and clear document directory
-			$this->documentService->clearAll();
-			return 0;
-		}
-
 		if ($all) {
 			$fileIds = [];
 			foreach ($this->documentService->getAll() as $document) {
@@ -74,6 +69,19 @@ class ResetDocument extends Command {
 			}
 		} else {
 			$fileIds = [$fileId];
+		}
+
+		if ($all && $fullReset) {
+			// Truncate tables and clear document directory
+			$this->documentService->clearAll();
+			foreach ($fileIds as $id) {
+				try {
+					$this->documentService->unlock($id);
+				} catch (NotPermittedException) {
+					// Continue with the cleanup even if the file is not accessible.
+				}
+			}
+			return 0;
 		}
 
 		$rc = 0;
