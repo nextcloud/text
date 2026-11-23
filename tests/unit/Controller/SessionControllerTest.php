@@ -8,6 +8,7 @@
 namespace OCA\Text\Controller;
 
 use OCA\Text\Context\ContextManager;
+use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\FileService;
@@ -72,5 +73,66 @@ class SessionControllerTest extends \PHPUnit\Framework\TestCase {
 			->willReturn($response);
 
 		self::assertSame($response, $this->controller->close('111', 1, 'token'));
+	}
+
+	private function setUpSessionUser(): IUser&MockObject {
+		$user = $this->createMock(IUser::class);
+		$session = new Session();
+		$session->setUserId('alice');
+		$this->controller->setSession($session);
+		$this->controller->setDocument(new Document());
+		$this->controller->setUser($user);
+
+		$this->userManager->method('get')->with('alice')->willReturn($user);
+		$this->apiService->method('push')->willReturn(new DataResponse([]));
+		$this->apiService->method('sync')->willReturn(new DataResponse([]));
+		$this->apiService->method('save')->willReturn(new DataResponse([]));
+		return $user;
+	}
+
+	public static function dataRequests(): array {
+		return [
+			'push' => ['push', [0, [], '']],
+			'sync' => ['sync', [0]],
+			'save' => ['save', [0, 'content', '']],
+		];
+	}
+
+	/**
+	 * Without a logged-in user (e.g. direct editing), the session user must only be
+	 * active for the current request and never be written to the PHP session, so
+	 * that concurrent requests sharing that PHP session are not invalidated.
+	 *
+	 * @dataProvider dataRequests
+	 */
+	public function testSessionUserIsRequestScopedWhenNotLoggedIn(string $method, array $args): void {
+		$user = $this->setUpSessionUser();
+		$this->userSession->method('isLoggedIn')->willReturn(false);
+		$this->userSession->method('getUser')->willReturn(null);
+
+		$this->userSession->expects(self::never())->method('setUser');
+		$volatileUsers = [];
+		$this->userSession->expects(self::exactly(2))
+			->method('setVolatileActiveUser')
+			->willReturnCallback(function (?IUser $user) use (&$volatileUsers): void {
+				$volatileUsers[] = $user;
+			});
+
+		$this->controller->$method(...$args);
+
+		self::assertSame([$user, null], $volatileUsers);
+	}
+
+	/**
+	 * @dataProvider dataRequests
+	 */
+	public function testSessionUserIsNotChangedWhenLoggedIn(string $method, array $args): void {
+		$this->setUpSessionUser();
+		$this->userSession->method('isLoggedIn')->willReturn(true);
+
+		$this->userSession->expects(self::never())->method('setUser');
+		$this->userSession->expects(self::never())->method('setVolatileActiveUser');
+
+		$this->controller->$method(...$args);
 	}
 }
