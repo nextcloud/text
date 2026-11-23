@@ -530,10 +530,6 @@ class DocumentService {
 		return true;
 	}
 
-	public function countAll(): int {
-		return $this->documentMapper->countAll();
-	}
-
 	private function getFullAppFolder(): Folder {
 		$appFolder = $this->rootFolder->get('appdata_' . $this->config->getSystemValueString('instanceid', '') . '/text');
 		if (!$appFolder instanceof Folder) {

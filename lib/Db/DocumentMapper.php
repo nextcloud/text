@@ -90,16 +90,6 @@ class DocumentMapper extends QBMapper {
 		}
 	}
 
-	public function countAll(): int {
-		$qb = $this->db->getQueryBuilder();
-		$qb->select($qb->func()->count('id'))
-			->from($this->getTableName());
-		$result = $qb->executeQuery();
-		$count = (int)$result->fetchOne();
-		$result->closeCursor();
-		return $count;
-	}
-
 	public function clearAll(): void {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
