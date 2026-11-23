@@ -10,13 +10,21 @@ import axios from '@nextcloud/axios'
 import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import ViewerVersionComparison from '../../components/ViewerVersionComparison.vue'
+import { trackClosingSave } from '../../helpers/closingSaves.ts'
 import { logger } from '../../helpers/logger.ts'
+
+const viewer = vi.hoisted(() => new EventTarget())
+vi.mock('@nextcloud/viewer', () => ({ getViewer: () => viewer }))
 
 const baseSource = 'https://cloud.example/remote.php/dav/versions/alice/versions/7/1691420501'
 const fileSource = 'https://cloud.example/remote.php/dav/files/alice/notes.md'
 const contents: Record<string, string> = {
 	[baseSource]: '# Old title\n\nPlain text',
 	[fileSource]: '# New title\n\n**Plain** text',
+}
+
+function response(text: string) {
+	return { data: text, headers: {} }
 }
 
 /**
@@ -52,10 +60,11 @@ beforeAll(() => import('../../comparison/session.ts'), 30_000)
 let get: MockInstance<typeof axios.get>
 
 beforeEach(() => {
-	get = vi.spyOn(axios, 'get').mockImplementation(async (url: string) => ({ data: contents[url], headers: {} }))
+	get = vi.spyOn(axios, 'get').mockImplementation(async (url: string) => response(contents[url]!))
 })
 
 afterEach(async () => {
+	viewer.dispatchEvent(new CustomEvent('close'))
 	vi.restoreAllMocks()
 	// Let unmounted parts release their comparison
 	await new Promise((resolve) => setTimeout(resolve))
@@ -145,5 +154,66 @@ describe('ViewerVersionComparison', () => {
 		expect(before.text()).toContain('Could not load the versions to compare')
 
 		before.unmount()
+	})
+
+	it('keeps the version pickers and tries again after a failed load', async () => {
+		vi.spyOn(logger, 'error').mockImplementation(() => {})
+		get.mockRejectedValue(new Error('gone'))
+		const before = mountPart('before')
+		const after = mountPart('after')
+		await loaded()
+
+		expect(before.find('[data-comparison-picker="from"]').exists()).toBe(true)
+		expect(before.findAll('button').some((button) => button.text() === 'Try again')).toBe(false)
+		expect(after.find('[data-comparison-picker="to"]').exists()).toBe(true)
+		expect(after.text()).toContain('A version may no longer exist. Choose other versions or try again.')
+
+		get.mockImplementation(async (url: string) => response(contents[url]!))
+		await after.findAll('button').find((button) => button.text() === 'Try again')!.trigger('click')
+		await loaded()
+
+		expect(get).toHaveBeenCalledTimes(4)
+		expect(after.text()).not.toContain('Could not load the versions to compare')
+		expect(get).toHaveBeenLastCalledWith(expect.any(String), expect.objectContaining({ timeout: 120_000 }))
+
+		before.unmount()
+		after.unmount()
+	})
+
+	it('says when the edits of the editor it replaces could not be saved', async () => {
+		vi.spyOn(logger, 'error').mockImplementation(() => {})
+		const after = mountPart('after')
+		trackClosingSave(7, Promise.resolve(false))
+		await loaded()
+
+		expect(after.text()).toContain('The latest edits could not be saved before comparing. Try again to compare the file as it is stored.')
+		expect(after.text()).not.toContain('A version may no longer exist')
+
+		after.unmount()
+	})
+
+	it('names the versions in the complete source too', async () => {
+		get.mockImplementation(async (url: string) => response(contents[url] + 'x'.repeat(600_000)))
+		const before = mountPart('before')
+		const changes = mountPart('changes')
+		await loaded()
+
+		expect(before.find('[data-comparison-source-fallback] h2 [data-comparison-picker="from"]').exists()).toBe(true)
+		expect(changes.findAll('.text-comparison__header [data-comparison-picker]')).toHaveLength(2)
+		expect(changes.findAll('[data-comparison-source-fallback] [data-comparison-picker]')).toHaveLength(0)
+
+		before.unmount()
+		changes.unmount()
+	})
+
+	it('offers no other versions for files that are not versions of one file', async () => {
+		const other = makeFile('https://cloud.example/remote.php/dav/files/alice/other.md')
+		const changes = mount(ViewerVersionComparison, { props: { base: { ...other, fileid: 8 } as IFile, file, part: 'changes' }, attachTo: document.body })
+		await loaded()
+
+		expect(changes.find('[data-comparison-picker]').exists()).toBe(false)
+		expect(changes.find('[aria-live]').exists()).toBe(false)
+
+		changes.unmount()
 	})
 })
