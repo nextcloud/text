@@ -695,14 +695,20 @@ export default defineComponent({
 			})
 		},
 
-		onSync() {
+		updateConnectionIssue() {
 			this.hasConnectionIssue
-				= this.syncService.backend.fetcher === 0
+				= this.syncService.backend?.fetcher === 0
 					|| !this.syncProvider?.wsconnected
 					|| this.syncService.pushError > 0
+		},
+
+		onSync() {
+			this.updateConnectionIssue()
 			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.syncService.sendStepsNow()
+					.then(() => this.updateConnectionIssue())
+					.catch((err) => logger.error(err))
 			}
 			this.$nextTick(() => {
 				this.$emit('syncService:sync')
