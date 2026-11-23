@@ -13,6 +13,7 @@ namespace OCA\Text\Cron;
 
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockCleanupService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
@@ -28,6 +29,7 @@ class Cleanup extends TimedJob {
 		private readonly AttachmentService $attachmentService,
 		private readonly LoggerInterface $logger,
 		private readonly ISetupManager $setupManager,
+		private readonly LockCleanupService $lockCleanupService,
 	) {
 		parent::__construct($time);
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
@@ -74,25 +76,15 @@ class Cleanup extends TimedJob {
 	}
 
 	/**
-	 * Release the file locks of documents whose sessions ended without closing them,
-	 * e.g. after closing the browser tab or a crash.
+	 * Release the file locks of documents whose last session became inactive since the previous run
 	 */
 	private function unlockInactiveDocuments(): void {
 		// Overlap with the previous run, the job does not run at exact intervals
 		$since = $this->lastRun - 2 * SessionService::SESSION_VALID_TIME;
 		foreach ($this->sessionService->getDocumentIdsInactiveSince($since) as $documentId) {
-			if ($this->documentService->getDocument($documentId) === null) {
-				continue;
-			}
-			// A session may have been opened in the meantime
-			if ($this->sessionService->getActiveSessions($documentId) !== []) {
-				continue;
-			}
-			$this->setupManager->tearDown();
-			try {
-				$this->documentService->unlock($documentId);
-			} catch (\Throwable $e) {
-				$this->logger->warning('Could not release the lock of inactive document ' . $documentId, ['exception' => $e]);
+			$document = $this->documentService->getDocument($documentId);
+			if ($document !== null) {
+				$this->lockCleanupService->release($document);
 			}
 		}
 	}

@@ -16,6 +16,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
+use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
 use OCP\Files\Lock\LockContext;
 use OCP\Files\NotFoundException;
@@ -26,6 +27,7 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
+use OCP\PreConditionNotMetException;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
@@ -355,5 +357,30 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 
 		$this->expectException(NotPermittedException::class);
 		$this->documentService->checkShareCanSeeContent('token');
+	}
+
+	private function lock(int $type, string $owner): ILock {
+		$lock = $this->createMock(ILock::class);
+		$lock->method('getType')->willReturn($type);
+		$lock->method('getOwner')->willReturn($owner);
+		return $lock;
+	}
+
+	public function testHasLockOfText(): void {
+		$this->lockManager->method('getLocks')->with(456)->willReturn([$this->lock(ILock::TYPE_APP, 'text')]);
+		self::assertTrue($this->documentService->hasLock(456));
+	}
+
+	public function testHasNoLockOfOthers(): void {
+		$this->lockManager->method('getLocks')->willReturn([
+			$this->lock(ILock::TYPE_APP, 'richdocuments'),
+			$this->lock(ILock::TYPE_USER, 'text'),
+		]);
+		self::assertFalse($this->documentService->hasLock(456));
+	}
+
+	public function testHasNoLockWithoutLockProvider(): void {
+		$this->lockManager->method('getLocks')->willThrowException(new PreConditionNotMetException());
+		self::assertFalse($this->documentService->hasLock(456));
 	}
 }
