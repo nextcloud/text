@@ -7,6 +7,7 @@ import { registerFileListHeader } from '@nextcloud/files'
 import { registerDavProperty } from '@nextcloud/files/dav'
 import { loadState } from '@nextcloud/initial-state'
 import { addMenuRichWorkspace, FilesWorkspaceHeader } from './helpers/files.js'
+import { registerSummarizeRecentChanges } from './versionSummary/sidebarEntry.ts'
 
 import 'vite/modulepreload-polyfill'
 
@@ -19,3 +20,5 @@ if (workspaceAvailable) {
 	addMenuRichWorkspace()
 	registerFileListHeader(FilesWorkspaceHeader)
 }
+
+registerSummarizeRecentChanges()
