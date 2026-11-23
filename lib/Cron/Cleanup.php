@@ -37,6 +37,10 @@ class Cleanup extends TimedJob {
 	 * @param array $argument
 	 */
 	protected function run($argument): void {
+		// Before removing inactive sessions, as they identify the documents to unlock
+		$this->logger->debug('Run cleanup job for locks of inactive documents');
+		$this->unlockInactiveDocuments();
+
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllPendingAttachmentCleanup() as $document) {
 			if ($this->documentService->hasUnsavedChanges($document)) {
@@ -67,5 +71,29 @@ class Cleanup extends TimedJob {
 
 		$this->logger->debug('Run cleanup job for obsolete documents folders');
 		$this->documentService->cleanupOldDocumentsFolders();
+	}
+
+	/**
+	 * Release the file locks of documents whose sessions ended without closing them,
+	 * e.g. after closing the browser tab or a crash.
+	 */
+	private function unlockInactiveDocuments(): void {
+		// Overlap with the previous run, the job does not run at exact intervals
+		$since = $this->lastRun - 2 * SessionService::SESSION_VALID_TIME;
+		foreach ($this->sessionService->getDocumentIdsInactiveSince($since) as $documentId) {
+			if ($this->documentService->getDocument($documentId) === null) {
+				continue;
+			}
+			// A session may have been opened in the meantime
+			if ($this->sessionService->getActiveSessions($documentId) !== []) {
+				continue;
+			}
+			$this->setupManager->tearDown();
+			try {
+				$this->documentService->unlock($documentId);
+			} catch (\Throwable $e) {
+				$this->logger->warning('Could not release the lock of inactive document ' . $documentId, ['exception' => $e]);
+			}
+		}
 	}
 }

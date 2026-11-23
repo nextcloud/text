@@ -129,4 +129,71 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 
 		$this->cleanup->run([]);
 	}
+
+	public function testUnlocksInactiveDocumentsBeforeRemovingTheirSessions(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->cleanup->setLastRun(10000);
+		$this->sessionService->expects(self::once())
+			->method('getDocumentIdsInactiveSince')->with(10000 - 2 * SessionService::SESSION_VALID_TIME)
+			->willReturn([111]);
+		$this->documentService->method('getDocument')->with(111)
+			->willReturn(Document::fromRow(['id' => 111]));
+		$this->sessionService->method('getActiveSessions')->with(111)->willReturn([]);
+		$unlocked = false;
+		$this->documentService->expects(self::once())
+			->method('unlock')->with(111)
+			->willReturnCallback(function () use (&$unlocked): void {
+				$unlocked = true;
+			});
+		$this->sessionService->expects(self::once())
+			->method('removeInactiveSessionsWithoutSteps')
+			->willReturnCallback(function () use (&$unlocked): int {
+				self::assertTrue($unlocked);
+				return 0;
+			});
+
+		$this->cleanup->run([]);
+	}
+
+	public function testKeepsLocksOfDocumentsWithActiveSessions(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->sessionService->method('getDocumentIdsInactiveSince')->willReturn([111]);
+		$this->documentService->method('getDocument')->willReturn(Document::fromRow(['id' => 111]));
+		$this->sessionService->method('getActiveSessions')->with(111)->willReturn([['id' => 1]]);
+		$this->documentService->expects(self::never())->method('unlock');
+
+		$this->cleanup->run([]);
+	}
+
+	public function testSkipsMissingDocuments(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->sessionService->method('getDocumentIdsInactiveSince')->willReturn([111]);
+		$this->documentService->method('getDocument')->with(111)->willReturn(null);
+		$this->documentService->expects(self::never())->method('unlock');
+
+		$this->cleanup->run([]);
+	}
+
+	public function testContinuesAfterFailingUnlock(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->sessionService->method('getDocumentIdsInactiveSince')->willReturn([111, 222]);
+		$this->documentService->method('getDocument')->willReturnCallback(
+			fn (int $id) => Document::fromRow(['id' => $id]),
+		);
+		$this->sessionService->method('getActiveSessions')->willReturn([]);
+		$unlocked = [];
+		$this->documentService->expects(self::exactly(2))->method('unlock')->willReturnCallback(
+			function (int $id) use (&$unlocked): void {
+				if ($id === 111) {
+					throw new \Error('No owner');
+				}
+				$unlocked[] = $id;
+			},
+		);
+		$this->logger->expects(self::once())->method('warning');
+		$this->sessionService->expects(self::once())->method('removeInactiveSessionsWithoutSteps');
+
+		$this->cleanup->run([]);
+		self::assertSame([222], $unlocked);
+	}
 }
