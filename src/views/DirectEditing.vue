@@ -169,6 +169,8 @@ body {
 #content[class='app-public'] {
 	margin: 0;
 	margin-top: 0;
+	height: 100%;
+	border-radius: 0;
 }
 </style>
 
