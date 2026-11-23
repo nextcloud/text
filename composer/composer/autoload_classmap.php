@@ -47,6 +47,7 @@ return array(
     'OCA\\Text\\Event\\RegisterContextEvent' => $baseDir . '/../lib/Event/RegisterContextEvent.php',
     'OCA\\Text\\Exception\\AccountDisabledException' => $baseDir . '/../lib/Exception/AccountDisabledException.php',
     'OCA\\Text\\Exception\\DocumentHasUnsavedChangesException' => $baseDir . '/../lib/Exception/DocumentHasUnsavedChangesException.php',
+    'OCA\\Text\\Exception\\DocumentLockedException' => $baseDir . '/../lib/Exception/DocumentLockedException.php',
     'OCA\\Text\\Exception\\DocumentSaveConflictException' => $baseDir . '/../lib/Exception/DocumentSaveConflictException.php',
     'OCA\\Text\\Exception\\InvalidDocumentBaseVersionEtagException' => $baseDir . '/../lib/Exception/InvalidDocumentBaseVersionEtagException.php',
     'OCA\\Text\\Exception\\InvalidSessionException' => $baseDir . '/../lib/Exception/InvalidSessionException.php',

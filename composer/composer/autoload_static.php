@@ -62,6 +62,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Event\\RegisterContextEvent' => __DIR__ . '/..' . '/../lib/Event/RegisterContextEvent.php',
         'OCA\\Text\\Exception\\AccountDisabledException' => __DIR__ . '/..' . '/../lib/Exception/AccountDisabledException.php',
         'OCA\\Text\\Exception\\DocumentHasUnsavedChangesException' => __DIR__ . '/..' . '/../lib/Exception/DocumentHasUnsavedChangesException.php',
+        'OCA\\Text\\Exception\\DocumentLockedException' => __DIR__ . '/..' . '/../lib/Exception/DocumentLockedException.php',
         'OCA\\Text\\Exception\\DocumentSaveConflictException' => __DIR__ . '/..' . '/../lib/Exception/DocumentSaveConflictException.php',
         'OCA\\Text\\Exception\\InvalidDocumentBaseVersionEtagException' => __DIR__ . '/..' . '/../lib/Exception/InvalidDocumentBaseVersionEtagException.php',
         'OCA\\Text\\Exception\\InvalidSessionException' => __DIR__ . '/..' . '/../lib/Exception/InvalidSessionException.php',

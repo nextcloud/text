@@ -5,14 +5,18 @@ namespace OCA\Text\Tests;
 use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
+use OCA\Text\Context\ILockingContext;
 use OCA\Text\Context\SessionInfo;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
+use OCA\Text\Exception\DocumentLockedException;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\ConfigService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\LockService;
 use OCA\Text\Service\SessionService;
+use OCP\AppFramework\Http;
+use OCP\Files\Lock\ILock;
 use OCP\IL10N;
 use OCP\IUser;
 use Psr\Log\LoggerInterface;
@@ -133,5 +137,53 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		$context->expects(self::never())->method('cleanup');
 
 		$apiService->close('111', 1, 'token', $this->createStub(IUser::class));
+	}
+
+	public function testPushToLockedFileAnswersLocked(): void {
+		$lock = $this->createMock(ILock::class);
+		$sessionService = $this->createStub(SessionService::class);
+		$session = Session::fromParams(['id' => 1, 'documentId' => '111', 'userId' => 'admin']);
+		$sessionService->method('updateSessionAwareness')->willReturn($session);
+		$documentService = $this->createStub(DocumentService::class);
+		$documentService->method('addStep')->willThrowException(new DocumentLockedException($lock));
+		$apiService = new ApiService(
+			$this->configService,
+			$this->contextManager,
+			$sessionService,
+			$documentService,
+			$this->loggerInterface,
+			$this->l10n,
+			null,
+		);
+		$document = Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]);
+
+		$response = $apiService->push($session, $document, 0, ['step'], '', null, $this->createStub(IUser::class));
+
+		self::assertSame(Http::STATUS_LOCKED, $response->getStatus());
+		self::assertSame($lock, $response->getData()['lock']);
+	}
+
+	public function testSyncReportsLockOfOthers(): void {
+		$lock = $this->createMock(ILock::class);
+		$context = $this->createStub(ILockingContext::class);
+		$context->method('isReadOnly')->willReturn(true);
+		$context->method('getLock')->willReturn($lock);
+		$contextManager = $this->createStub(ContextManager::class);
+		$contextManager->method('getContext')->willReturn($context);
+		$apiService = new ApiService(
+			$this->configService,
+			$contextManager,
+			$this->sessionService,
+			$this->documentService,
+			$this->loggerInterface,
+			$this->l10n,
+			null,
+		);
+		$document = Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]);
+
+		$data = $apiService->sync($document, $this->createStub(IUser::class))->getData();
+
+		self::assertTrue($data['readOnly']);
+		self::assertSame($lock, $data['lock']);
 	}
 }

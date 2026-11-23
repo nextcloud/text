@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\Text\Context;
 
+use OCP\Files\Lock\ILock;
+
 /**
  * A context that is locked while it is being edited
  *
@@ -24,4 +26,9 @@ interface ILockingContext extends IContext {
 	 * @return bool false if someone else holds a lock on the context
 	 */
 	public function lockForEditing(): bool;
+
+	/**
+	 * Get the lock someone else holds on the context
+	 */
+	public function getLock(): ?ILock;
 }
