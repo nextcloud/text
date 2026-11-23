@@ -28,7 +28,7 @@ class LockCleanupService {
 	 */
 	public function release(Document $document): void {
 		if (!$this->documentService->hasLock($document->getId())
-			|| $this->sessionService->getActiveSessions($document->getId()) !== []) {
+			|| $this->sessionService->hasRecentlyActiveSessions($document->getId())) {
 			return;
 		}
 

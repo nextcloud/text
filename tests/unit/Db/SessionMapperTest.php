@@ -227,4 +227,19 @@ class SessionMapperTest extends \Test\TestCase {
 
 		self::assertEqualsCanonicalizing([101, 104], $documentIds);
 	}
+
+	public function testHasContactSince(): void {
+		$this->sessionMapper->deleteByDocumentId(105);
+		$this->sessionMapper->insert(Session::fromParams([
+			'userId' => 'admin',
+			'documentId' => 105,
+			'lastContact' => 1000,
+			'token' => uniqid(),
+			'color' => '00ff00',
+		]));
+
+		self::assertTrue($this->sessionMapper->hasContactSince(105, 1000));
+		self::assertFalse($this->sessionMapper->hasContactSince(105, 1001));
+		self::assertFalse($this->sessionMapper->hasContactSince(106, 0));
+	}
 }

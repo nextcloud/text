@@ -39,7 +39,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testReleasesLockOfDocumentWithoutActiveSessions(): void {
 		$this->documentService->method('hasLock')->with(111)->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->with(111)->willReturn([]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->with(111)->willReturn(false);
 		$this->setupManager->expects(self::once())->method('tearDown');
 		$this->documentService->expects(self::once())->method('unlock')->with(111);
 
@@ -48,7 +48,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testSkipsFilesWithoutLock(): void {
 		$this->documentService->method('hasLock')->with(111)->willReturn(false);
-		$this->sessionService->expects(self::never())->method('getActiveSessions');
+		$this->sessionService->expects(self::never())->method('hasRecentlyActiveSessions');
 		$this->setupManager->expects(self::never())->method('tearDown');
 		$this->documentService->expects(self::never())->method('unlock');
 
@@ -57,7 +57,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testKeepsLockOfDocumentWithActiveSessions(): void {
 		$this->documentService->method('hasLock')->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->with(111)->willReturn([['id' => 1]]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->with(111)->willReturn(true);
 		$this->documentService->expects(self::never())->method('unlock');
 
 		$this->service->release($this->document);
@@ -65,7 +65,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testLogsFailingUnlock(): void {
 		$this->documentService->method('hasLock')->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->willReturn([]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->willReturn(false);
 		$this->documentService->method('unlock')->willThrowException(new \Error('No owner'));
 		$this->logger->expects(self::once())->method('warning');
 
