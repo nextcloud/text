@@ -31,17 +31,6 @@ Cypress.Commands.overwrite('login', (login, user) => {
 	cy.wrap(user, silent).as('currentUser')
 })
 
-Cypress.Commands.add('openDirectEditingToken', (token) => {
-	const visitHooks = {
-		onBeforeLoad(win) {
-			win.DirectEditingMobileInterface = {
-				close() {},
-			}
-		},
-	}
-	cy.visit(token, visitHooks)
-})
-
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	return cy
 		.fixture(fileName, 'binary')
@@ -231,12 +220,6 @@ Cypress.Commands.add('copyFile', (path, destinationPath) => {
 		.then((response) => response.body)
 })
 
-Cypress.Commands.add('getFileContent', (path) => {
-	return axios
-		.get(`${url}/remote.php/webdav/${path}`)
-		.then((response) => response.data)
-})
-
 Cypress.Commands.add('reloadFileList', () => {
 	cy.get('[title="Reload current directory"] button').click()
 	return cy.get('button').contains('Reload content').click()
@@ -420,46 +403,6 @@ Cypress.Commands.add('setCssMedia', (media) => {
 			media,
 		},
 	})
-})
-
-Cypress.Commands.add('createDirectEditingLink', (path) => {
-	return axios
-		.request({
-			method: 'POST',
-			url: `${url}/ocs/v2.php/apps/files/api/v1/directEditing/open?format=json`,
-			data: { path },
-			headers: {
-				'OCS-ApiRequest': 'true',
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		})
-		.then((response) => {
-			const token = response.data?.ocs?.data?.url
-			Cypress.log({ message: token })
-			return token
-		})
-})
-
-Cypress.Commands.add('createDirectEditingLinkForNewFile', (path) => {
-	return axios
-		.request({
-			method: 'POST',
-			url: `${url}/ocs/v2.php/apps/files/api/v1/directEditing/create?format=json`,
-			data: {
-				path,
-				editorId: 'text',
-				creatorId: 'textdocument',
-			},
-			headers: {
-				'OCS-ApiRequest': 'true',
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		})
-		.then((response) => {
-			const token = response.data?.ocs?.data?.url
-			Cypress.log({ message: token })
-			return token
-		})
 })
 
 Cypress.on(
