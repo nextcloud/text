@@ -25,7 +25,7 @@ import { NodeViewWrapper } from '@tiptap/vue-3'
 import katex from 'katex'
 import ShowMathModal from '../components/Math/ShowMathModal.vue'
 
-import 'katex/dist/katex.min.css'
+import '../css/katex.scss'
 
 export default {
 	name: 'MathematicsView',
