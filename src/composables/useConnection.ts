@@ -8,6 +8,7 @@ import type { OpenData } from '../apis/connect.ts'
 import type { Connection } from '../types/Connection.ts'
 import type { Context } from '../types/Context.ts'
 import type { Document } from '../types/Document.ts'
+import type { Lock } from '../types/Lock.ts'
 import type { Session } from '../types/Session.ts'
 
 import { inject, provide, shallowRef } from 'vue'
@@ -19,7 +20,7 @@ export interface InitialData {
 	readOnly: boolean
 	content: string
 	documentState?: string
-	lock?: object
+	lock?: Lock | null
 	canAttachFiles: boolean
 }
 

@@ -67,7 +67,7 @@
 		</EditorWrapper>
 		<DocumentStatus
 			:idle="idle"
-			:lock="document?.lock"
+			:lock="lock"
 			:syncError="syncError"
 			:hasConnectionIssue="displayConnectionIssue"
 			:hasIndexedDbConflict="!!indexedDbConflictContent"
@@ -379,6 +379,7 @@ export default defineComponent({
 			contentLoaded: false,
 			syncError: null,
 			readOnly: true,
+			lock: null,
 			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
 			editMode: true,
 			menubarLoaded: false,
@@ -591,6 +592,7 @@ export default defineComponent({
 			bus.on('stateChange', this.onStateChange)
 			bus.on('idle', this.onIdle)
 			bus.on('permissionChange', this.onPermissionChange)
+			bus.on('lock', this.onLock)
 			this.saveService.bus.on('error', this.onError)
 			this.saveService.bus.on('save', this.onSave)
 		},
@@ -604,6 +606,7 @@ export default defineComponent({
 			bus.off('stateChange', this.onStateChange)
 			bus.off('idle', this.onIdle)
 			bus.off('permissionChange', this.onPermissionChange)
+			bus.off('lock', this.onLock)
 			this.saveService.bus.off('error', this.onError)
 			this.saveService.bus.off('save', this.onSave)
 		},
@@ -617,8 +620,9 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		onOpened({ session, content, documentState, readOnly }) {
+		onOpened({ session, content, documentState, readOnly, lock }) {
 			this.readOnly = readOnly
+			this.lock = lock ?? null
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
 
@@ -792,10 +796,20 @@ export default defineComponent({
 			})
 		},
 
-		onPermissionChange({ readOnly }) {
+		onPermissionChange({ readOnly, lock }) {
+			// A lock by someone else is shown in the document status instead
+			const causedByLock = lock !== null || this.lock !== null
+			this.lock = lock
 			this.readOnly = readOnly
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.setEditable(this.editMode)
+			if (!readOnly) {
+				// Changes rejected while the file was locked are still waiting to be pushed
+				this.syncService.sendRemainingSteps()
+			}
+			if (causedByLock) {
+				return
+			}
 			if (readOnly) {
 				showWarning(t(
 					'text',
@@ -804,6 +818,10 @@ export default defineComponent({
 			} else {
 				showWarning(t('text', 'You now have edit permissions for this document.'))
 			}
+		},
+
+		onLock({ lock }) {
+			this.lock = lock
 		},
 
 		onFocus() {

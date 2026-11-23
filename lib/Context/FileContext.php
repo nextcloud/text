@@ -112,7 +112,7 @@ class FileContext implements ILockingContext {
 		return new SessionInfo(
 			readOnly: $this->isReadOnly(),
 			canAttachFiles: $this->getOwner() !== null,
-			lock: $this->getLockInfo(),
+			lock: $this->getLock(),
 		);
 	}
 
@@ -169,7 +169,8 @@ class FileContext implements ILockingContext {
 		return hash('crc32', $content);
 	}
 
-	private function getLockInfo(): ?ILock {
+	#[Override]
+	public function getLock(): ?ILock {
 		return $this->lockService->getLockByOthers($this->getFile());
 	}
 

@@ -11,6 +11,7 @@ use OCA\Text\Context\FileContext;
 use OCA\Text\Service\FileService;
 use OCA\Text\Service\LockService;
 use OCP\Files\File;
+use OCP\Files\Lock\ILock;
 use OCP\IL10N;
 use OCP\IUser;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -63,5 +64,12 @@ class FileContextTest extends \PHPUnit\Framework\TestCase {
 		$this->lockService->expects(self::never())->method('lock');
 
 		self::assertTrue($this->context('Readme.md')->lockForEditing());
+	}
+
+	public function testGetLockOfOthers(): void {
+		$lock = $this->createMock(ILock::class);
+		$this->lockService->method('getLockByOthers')->willReturn($lock);
+
+		self::assertSame($lock, $this->context('notes.md')->getLock());
 	}
 }

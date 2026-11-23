@@ -48,19 +48,28 @@ test('editing locks the file until the editor is closed', async ({ user, file, o
 	await expect.poll(() => lockEditor(user, file.name)).toBe('')
 })
 
-test('editing a file locked by someone else turns the editor read-only', async ({ user, file, open, editor, page }) => {
+test('changes to a file locked by someone else are kept until it is unlocked', async ({ user, file, open, editor, page, close }) => {
+	test.slow()
+	const lockUrl = `/ocs/v2.php/apps/files_lock/lock/${file.id}`
+	const headers = { 'OCS-APIRequest': 'true' }
+	const editable = page.locator('.ProseMirror[contenteditable="true"]')
+	const syncResponse = (readOnly: boolean) => page.waitForResponse(async (response) => /\/session\/[^/]+\/sync$/.test(response.url())
+		&& (await response.json()).readOnly === readOnly, { timeout: 40_000 })
 	await open()
 	await expect(editor.content).toBeVisible()
-	await user.request.put(`/ocs/v2.php/apps/files_lock/lock/${file.id}`, {
-		headers: { 'OCS-APIRequest': 'true' },
-		failOnStatusCode: true,
-	})
+	await user.request.put(lockUrl, { headers, failOnStatusCode: true })
 
-	const readOnlySync = page.waitForResponse(async (response) => /\/session\/[^/]+\/sync$/.test(response.url())
-		&& (await response.json()).readOnly === true)
 	await editor.type('Hello world')
-	await readOnlySync
 
-	await expect(page.locator('.ProseMirror[contenteditable="true"]')).toHaveCount(0)
+	await expect(page.getByText(/currently locked by/)).toBeVisible()
+	await expect(editable).toHaveCount(0)
 	expect(await file.getContent()).toBe('')
+
+	const writable = syncResponse(false)
+	await user.request.delete(lockUrl, { headers, failOnStatusCode: true })
+	await writable
+	await expect(page.getByText(/currently locked by/)).not.toBeVisible()
+	await expect(editable).toHaveCount(1)
+	await close()
+	await expect.poll(() => file.getContent()).toContain('Hello world')
 })

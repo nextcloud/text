@@ -21,6 +21,7 @@ use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
+use OCA\Text\Exception\DocumentLockedException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -250,6 +251,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws DoesNotExistException
+	 * @throws DocumentLockedException if someone else locked the context of changes
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, IShare|IUser $auth): array {
 		$documentId = $session->getDocumentId();
@@ -273,9 +275,13 @@ class DocumentService {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
 			$context = $this->contextManager->getContext($type, $id, $auth);
-			// Skip changes the context does not accept, the next sync tells clients it is read-only
-			if (!$context->isReadOnly()
-				&& (!$context instanceof ILockingContext || $context->lockForEditing())) {
+			$readOnly = $context->isReadOnly();
+			if ($context instanceof ILockingContext
+				&& ($context->getLock() !== null || (!$readOnly && !$context->lockForEditing()))) {
+				throw new DocumentLockedException($context->getLock());
+			}
+			// Skip changes of read-only sessions, the next sync tells clients they are read-only
+			if (!$readOnly) {
 				$this->insertSteps($documentId, $session, $stepsToInsert);
 			}
 		}

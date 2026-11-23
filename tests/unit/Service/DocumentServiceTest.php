@@ -15,17 +15,20 @@ use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\StepMapper;
+use OCA\Text\Exception\DocumentLockedException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\Service\DocumentService;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\DirectEditing\IManager;
 use OCP\Files\IAppData;
 use OCP\Files\IRootFolder;
+use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
 class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
@@ -298,24 +301,41 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->addStep($document, $session, $steps, 0, null, $this->createMock(\OCP\IUser::class));
 	}
 
-	private function lockingContext(bool $locks): ILockingContext {
+	private function lockingContext(?ILock $lock = null, bool $locks = true): ILockingContext&MockObject {
 		$context = $this->createMock(ILockingContext::class);
-		$context->method('isReadOnly')->willReturn(false);
-		$context->expects(self::once())->method('lockForEditing')->willReturn($locks);
+		$context->method('isReadOnly')->willReturn($lock !== null);
+		$context->method('getLock')->willReturn($lock);
+		$context->method('lockForEditing')->willReturn($locks);
 		$this->contextManager->method('getContext')->with('file', 456)->willReturn($context);
 		return $context;
 	}
 
 	public function testAddStepLocksBeforeStoringChanges(): void {
-		$this->lockingContext(true);
+		$context = $this->lockingContext();
+		$context->expects(self::once())->method('lockForEditing');
 		$this->stepMapper->expects(self::once())->method('insert')->willReturnArgument(0);
 
 		$this->addSteps([self::UPDATE_STEP]);
 	}
 
-	public function testAddStepSkipsChangesIfLockedByOthers(): void {
-		$this->lockingContext(false);
+	public function testAddStepRejectsChangesToFileLockedByOthers(): void {
+		$lock = $this->createMock(ILock::class);
+		$context = $this->lockingContext($lock);
+		$context->expects(self::never())->method('lockForEditing');
 		$this->stepMapper->expects(self::never())->method('insert');
+
+		try {
+			$this->addSteps([self::UPDATE_STEP]);
+			self::fail('Changes to a locked file were accepted');
+		} catch (DocumentLockedException $e) {
+			self::assertSame($lock, $e->getLock());
+		}
+	}
+
+	public function testAddStepRejectsChangesIfLockingFails(): void {
+		$this->lockingContext(null, false);
+		$this->stepMapper->expects(self::never())->method('insert');
+		$this->expectException(DocumentLockedException::class);
 
 		$this->addSteps([self::UPDATE_STEP]);
 	}
