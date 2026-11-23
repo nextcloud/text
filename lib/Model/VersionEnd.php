@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\Text\Model;
 
 use JsonSerializable;
+use OCA\Files_Versions\Versions\IVersion;
 
 /**
  * One end of a comparison: the current file or one of its retained versions.
@@ -24,6 +25,8 @@ class VersionEnd implements JsonSerializable {
 		public readonly string $label,
 		public readonly ?string $authorId,
 		public readonly ?string $authorName,
+		/** The stored version, or null for the current file */
+		public readonly ?IVersion $version,
 	) {
 	}
 

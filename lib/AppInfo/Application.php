@@ -28,6 +28,7 @@ use OCA\Text\Listeners\NodeWrittenResetDocumentListener;
 use OCA\Text\Listeners\RegisterContextEventListener;
 use OCA\Text\Listeners\RegisterDirectEditorEventListener;
 use OCA\Text\Listeners\RegisterTemplateCreatorListener;
+use OCA\Text\Listeners\TaskFinishedListener;
 use OCA\Text\Listeners\VersionRestoredListener;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
@@ -44,6 +45,8 @@ use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\Template\RegisterTemplateCreatorEvent;
+use OCP\TaskProcessing\Events\TaskFailedEvent;
+use OCP\TaskProcessing\Events\TaskSuccessfulEvent;
 
 class Application extends App implements IBootstrap {
 	public const string APP_NAME = 'text';
@@ -73,6 +76,8 @@ class Application extends App implements IBootstrap {
 
 		$context->registerEventListener(RegisterContextEvent::class, RegisterContextEventListener::class);
 		$context->registerEventListener(DocumentContentUpdated::class, DocumentContentUpdatedListener::class);
+		$context->registerEventListener(TaskSuccessfulEvent::class, TaskFinishedListener::class);
+		$context->registerEventListener(TaskFailedEvent::class, TaskFinishedListener::class);
 
 		$context->registerNotifierService(Notifier::class);
 		$context->registerMiddleware(SessionMiddleware::class);
