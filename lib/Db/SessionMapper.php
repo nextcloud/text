@@ -69,17 +69,6 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function countAll(string $documentId): int {
-		$qb = $this->db->getQueryBuilder();
-		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
-			->from($this->getTableName())
-			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
-		$result = $qb->executeQuery();
-		$count = (int)$result->fetchOne();
-		$result->closeCursor();
-		return $count;
-	}
-
 	/**
 	 * @return Session[]
 	 *
