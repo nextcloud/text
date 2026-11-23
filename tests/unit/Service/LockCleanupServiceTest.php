@@ -44,7 +44,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testReleasesLockOfDocumentWithoutActiveSessions(): void {
 		$this->lockService->method('hasLock')->with(456)->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->with('111')->willReturn([]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->with('111')->willReturn(false);
 		$this->setupManager->expects(self::once())->method('tearDown');
 		$file = $this->createMock(File::class);
 		$this->rootFolder->expects(self::once())->method('getFirstNodeById')->with(456)->willReturn($file);
@@ -55,7 +55,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testSkipsFilesWithoutLock(): void {
 		$this->lockService->method('hasLock')->with(456)->willReturn(false);
-		$this->sessionService->expects(self::never())->method('getActiveSessions');
+		$this->sessionService->expects(self::never())->method('hasRecentlyActiveSessions');
 		$this->setupManager->expects(self::never())->method('tearDown');
 		$this->rootFolder->expects(self::never())->method('getFirstNodeById');
 		$this->lockService->expects(self::never())->method('unlock');
@@ -65,7 +65,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testKeepsLockOfDocumentWithActiveSessions(): void {
 		$this->lockService->method('hasLock')->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->with('111')->willReturn([['id' => 1]]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->with('111')->willReturn(true);
 		$this->rootFolder->expects(self::never())->method('getFirstNodeById');
 		$this->lockService->expects(self::never())->method('unlock');
 
@@ -82,7 +82,7 @@ class LockCleanupServiceTest extends \PHPUnit\Framework\TestCase {
 
 	public function testLogsFailingUnlock(): void {
 		$this->lockService->method('hasLock')->willReturn(true);
-		$this->sessionService->method('getActiveSessions')->willReturn([]);
+		$this->sessionService->method('hasRecentlyActiveSessions')->willReturn(false);
 		$this->rootFolder->method('getFirstNodeById')->willThrowException(new \Error('No owner'));
 		$this->logger->expects(self::once())->method('warning');
 

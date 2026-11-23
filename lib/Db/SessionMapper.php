@@ -109,6 +109,20 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	public function hasContactSince(string $documentId, int $since): bool {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('id')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->andWhere($qb->expr()->gte('last_contact', $qb->createNamedParameter($since, IQueryBuilder::PARAM_INT)))
+			->setMaxResults(1);
+
+		$result = $qb->executeQuery();
+		$found = $result->fetchOne() !== false;
+		$result->closeCursor();
+		return $found;
+	}
+
 	/**
 	 * Get the documents whose most recent session contact is older than the session validity
 	 * but not older than the given timestamp.
