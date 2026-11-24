@@ -8,6 +8,7 @@ import type { OpenData } from '../apis/connect.ts'
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
 import type { ErrorType } from '../types/ErrorType.ts'
+import type { Lock } from '../types/Lock.ts'
 import type { GuestSession, Session, UserSession } from '../types/Session.ts'
 import type { Step } from '../types/Step.ts'
 
@@ -79,7 +80,10 @@ export declare type EventTypes = {
 	close: void
 
 	/* Emitted if the read only state of the document has changed */
-	permissionChange: { readOnly: boolean }
+	permissionChange: { readOnly: boolean, lock: Lock | null }
+
+	/* Emitted if someone else locked or unlocked the file while the read only state stayed the same */
+	lock: { lock: Lock | null }
 }
 
 class SyncService {
@@ -230,6 +234,13 @@ class SyncService {
 			})
 			.catch((err) => {
 				const { response, code } = err
+				if (response?.status === 423) {
+					// Someone else locked the file. Keep the changes until it is unlocked,
+					// the next sync makes the editor read-only.
+					logger.warn('Failed to push the steps to the server, the file is locked')
+					this.backend?.pollNow()
+					throw new Error('Failed to apply steps, the file is locked.', { cause: err })
+				}
 				this.pushError++
 				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {

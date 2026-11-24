@@ -74,12 +74,12 @@ class Cleanup extends TimedJob {
 	}
 
 	/**
-	 * Release the file locks of documents whose last session became inactive since the previous run
+	 * Release the file locks of documents that were open since the previous run but not changed for a while
 	 */
 	private function unlockInactiveDocuments(): void {
 		// Overlap with the previous run, the job does not run at exact intervals
-		$since = $this->lastRun - 2 * SessionService::SESSION_VALID_TIME;
-		foreach ($this->sessionService->getDocumentIdsInactiveSince($since) as $documentId) {
+		$since = $this->lastRun - SessionService::SESSION_VALID_TIME - DocumentService::EDIT_LOCK_TIME;
+		foreach ($this->sessionService->getDocumentIdsWithContactSince($since) as $documentId) {
 			$document = $this->documentService->getDocument($documentId);
 			if ($document !== null) {
 				$this->lockCleanupService->release($document);

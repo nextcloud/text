@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\DocumentData;
 use OCA\Text\Context\IContext;
+use OCA\Text\Context\ILockingContext;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Session;
@@ -20,6 +21,7 @@ use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
+use OCA\Text\Exception\DocumentLockedException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -50,6 +52,8 @@ class DocumentService {
 	 * Delay to wait for between autosave versions
 	 */
 	public const int AUTOSAVE_MINIMUM_DELAY = 10;
+	/** Seconds after the last change until Text releases the lock of the document */
+	public const int EDIT_LOCK_TIME = 5 * 60;
 
 	private bool $saveFromText = false;
 	private readonly ICache $cache;
@@ -86,6 +90,14 @@ class DocumentService {
 	 */
 	public function getDocumentsAfter(string $id, int $limit): array {
 		return $this->documentMapper->findAfter($id, $limit);
+	}
+
+	/**
+	 * Whether the document was changed recently enough to keep it locked
+	 */
+	public function hasRecentChanges(string $documentId): bool {
+		$timestamp = $this->stepMapper->getLatestTimestamp($documentId);
+		return $timestamp !== null && $timestamp >= time() - self::EDIT_LOCK_TIME;
 	}
 
 	public function getDocument(string $id): ?Document {
@@ -239,6 +251,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws DoesNotExistException
+	 * @throws DocumentLockedException if someone else locked the context of changes
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?int $recoveryAttempt, IShare|IUser $auth): array {
 		$documentId = $session->getDocumentId();
@@ -262,7 +275,13 @@ class DocumentService {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
 			$context = $this->contextManager->getContext($type, $id, $auth);
-			if (!$context->isReadOnly()) {
+			$readOnly = $context->isReadOnly();
+			if ($context instanceof ILockingContext
+				&& ($context->getLock() !== null || (!$readOnly && !$context->lockForEditing()))) {
+				throw new DocumentLockedException($context->getLock());
+			}
+			// Skip changes of read-only sessions, the next sync tells clients they are read-only
+			if (!$readOnly) {
 				$this->insertSteps($documentId, $session, $stepsToInsert);
 			}
 		}

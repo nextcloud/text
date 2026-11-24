@@ -23,7 +23,7 @@ use OCP\Share\IShare;
 use Override;
 use Psr\Log\LoggerInterface;
 
-class FileContext implements IContext {
+class FileContext implements ILockingContext {
 	/** Content written by save(), so updating the document afterwards does not read the file again */
 	private ?string $savedContent = null;
 
@@ -110,14 +110,19 @@ class FileContext implements IContext {
 	#[Override]
 	public function prepareSession(): SessionInfo {
 		return new SessionInfo(
-			readOnly: $this->isReadOnly() || !$this->lock(),
+			readOnly: $this->isReadOnly(),
 			canAttachFiles: $this->getOwner() !== null,
-			lock: $this->getLockInfo(),
+			lock: $this->getLock(),
 		);
 	}
 
 	public function isReadOnly(): bool {
 		return $this->fileService->isReadOnly($this->getFile(), $this->auth);
+	}
+
+	#[Override]
+	public function lockForEditing(): bool {
+		return $this->lock();
 	}
 
 	/**
@@ -164,7 +169,8 @@ class FileContext implements IContext {
 		return hash('crc32', $content);
 	}
 
-	private function getLockInfo(): ?ILock {
+	#[Override]
+	public function getLock(): ?ILock {
 		return $this->lockService->getLockByOthers($this->getFile());
 	}
 
