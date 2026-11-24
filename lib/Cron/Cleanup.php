@@ -11,6 +11,7 @@ namespace OCA\Text\Cron;
 
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockCleanupService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
@@ -26,6 +27,7 @@ class Cleanup extends TimedJob {
 		private readonly AttachmentService $attachmentService,
 		private readonly LoggerInterface $logger,
 		private readonly ISetupManager $setupManager,
+		private readonly LockCleanupService $lockCleanupService,
 	) {
 		parent::__construct($time);
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
@@ -35,6 +37,10 @@ class Cleanup extends TimedJob {
 	 * @param array $argument
 	 */
 	protected function run($argument): void {
+		// Before removing inactive sessions, as they identify the documents to unlock
+		$this->logger->debug('Run cleanup job for locks of inactive documents');
+		$this->unlockInactiveDocuments();
+
 		$this->logger->debug('Run cleanup job for text documents');
 		foreach ($this->documentService->getAllPendingAttachmentCleanup() as $document) {
 			if ($this->documentService->hasUnsavedChanges($document)) {
@@ -65,5 +71,19 @@ class Cleanup extends TimedJob {
 
 		$this->logger->debug('Run cleanup job for obsolete documents folders');
 		$this->documentService->cleanupOldDocumentsFolders();
+	}
+
+	/**
+	 * Release the file locks of documents whose last session became inactive since the previous run
+	 */
+	private function unlockInactiveDocuments(): void {
+		// Overlap with the previous run, the job does not run at exact intervals
+		$since = $this->lastRun - 2 * SessionService::SESSION_VALID_TIME;
+		foreach ($this->sessionService->getDocumentIdsInactiveSince($since) as $documentId) {
+			$document = $this->documentService->getDocument($documentId);
+			if ($document !== null) {
+				$this->lockCleanupService->release($document);
+			}
+		}
 	}
 }

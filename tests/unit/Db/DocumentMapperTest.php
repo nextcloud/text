@@ -76,4 +76,22 @@ class DocumentMapperTest extends \Test\TestCase {
 
 		self::assertNotContains($this->document->getId(), $this->pendingDocumentIds());
 	}
+
+	public function testFindAfter(): void {
+		$second = $this->documentMapper->insert(Document::fromParams([
+			'contextType' => 'file',
+			'contextId' => 900002,
+			'lastSavedVersionTime' => 1000,
+			'lastSavedVersionEtag' => 'saved-etag',
+			'baseVersionEtag' => 'base-etag',
+		]));
+		try {
+			$ids = fn (array $documents) => array_map(fn (Document $document) => $document->getId(), $documents);
+			self::assertSame([$second->getId()], $ids($this->documentMapper->findAfter($this->document->getId(), 1)));
+			self::assertNotContains($this->document->getId(), $ids($this->documentMapper->findAfter($this->document->getId(), 10)));
+			self::assertSame([], $this->documentMapper->findAfter($second->getId(), 10));
+		} finally {
+			$this->documentMapper->delete($second);
+		}
+	}
 }

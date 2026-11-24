@@ -95,4 +95,43 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+	/**
+	 * @return array{ApiService, IContext&\PHPUnit\Framework\MockObject\MockObject}
+	 */
+	private function apiServiceForClose(bool $recentlyActive): array {
+		$sessionService = $this->createMock(SessionService::class);
+		$sessionService->expects(self::once())->method('closeSession')->with('111', 1, 'token');
+		$sessionService->method('hasRecentlyActiveSessions')->with('111')->willReturn($recentlyActive);
+		$documentService = $this->createStub(DocumentService::class);
+		$documentService->method('getDocument')->willReturn(
+			Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]),
+		);
+		$context = $this->createMock(IContext::class);
+		$contextManager = $this->createStub(ContextManager::class);
+		$contextManager->method('getContext')->willReturn($context);
+		$apiService = new ApiService(
+			$this->configService,
+			$contextManager,
+			$sessionService,
+			$documentService,
+			$this->loggerInterface,
+			$this->l10n,
+			null,
+		);
+		return [$apiService, $context];
+	}
+
+	public function testCloseReleasesLockWithoutRecentlyActiveSessions(): void {
+		[$apiService, $context] = $this->apiServiceForClose(false);
+		$context->expects(self::once())->method('cleanup');
+
+		$apiService->close('111', 1, 'token', $this->createStub(IUser::class));
+	}
+
+	public function testCloseKeepsLockForRecentlyActiveSessions(): void {
+		[$apiService, $context] = $this->apiServiceForClose(true);
+		$context->expects(self::never())->method('cleanup');
+
+		$apiService->close('111', 1, 'token', $this->createStub(IUser::class));
+	}
 }

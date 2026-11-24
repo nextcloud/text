@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Context\ContextManager;
-use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
@@ -79,7 +78,8 @@ class SessionController extends ApiController implements ISessionAwareController
 		// So we cannot rely on RequireDocumentSession to retrieve the user.
 		$user = $this->userSession->getUser() ?? $this->getSessionUser($documentId, $sessionId, $sessionToken);
 		if ($user === null) {
-			throw new InvalidSessionException();
+			// Keep a remaining session, the cleanup job releases the lock once it is inactive
+			return new DataResponse([]);
 		}
 		return $this->apiService->close($documentId, $sessionId, $sessionToken, $user);
 	}

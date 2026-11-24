@@ -93,8 +93,7 @@ class ApiService {
 	public function close(string $documentId, int $sessionId, string $sessionToken, IShare|IUser $auth): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
-		$activeSessions = $this->sessionService->getActiveSessions($documentId);
-		if (count($activeSessions) === 0) {
+		if (!$this->sessionService->hasRecentlyActiveSessions($documentId)) {
 			$document = $this->documentService->getDocument($documentId);
 			if ($document !== null) {
 				$type = $document->getContextType();
