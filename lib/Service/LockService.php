@@ -14,13 +14,21 @@ use OCP\Files\Lock\ILockManager;
 use OCP\Files\Lock\LockContext;
 use OCP\Files\Lock\NoLockProviderException;
 use OCP\Files\Lock\OwnerLockedException;
+use OCP\ICache;
+use OCP\ICacheFactory;
 use OCP\PreConditionNotMetException;
 
 class LockService {
+	/** Seconds during which Text relies on its cached lock instead of asking the lock provider again */
+	private const int LOCK_CACHE_TTL = 60;
+
+	private readonly ICache $lockedFiles;
 
 	public function __construct(
 		private readonly ILockManager $lockManager,
+		ICacheFactory $cacheFactory,
 	) {
+		$this->lockedFiles = $cacheFactory->createDistributed('text_locked_files');
 	}
 
 	/**
@@ -68,6 +76,10 @@ class LockService {
 	}
 
 	public function lock(File $file): bool {
+		$key = (string)$file->getId();
+		if ($this->lockedFiles->get($key) !== null) {
+			return true;
+		}
 		try {
 			$this->lockManager->lock(new LockContext(
 				$file,
@@ -78,10 +90,12 @@ class LockService {
 		} catch (OwnerLockedException) {
 			return false;
 		}
+		$this->lockedFiles->set($key, true, self::LOCK_CACHE_TTL);
 		return true;
 	}
 
 	public function unlock(File $file): void {
+		$this->lockedFiles->remove((string)$file->getId());
 		try {
 			$this->lockManager->unlock(new LockContext(
 				$file,

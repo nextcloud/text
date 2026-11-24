@@ -30,7 +30,7 @@ interface IContext {
 	/**
 	 * Prepare a new session.
 	 *
-	 * Lock the context here when using locks.
+	 * Contexts that lock while being edited implement ILockingContext.
 	 */
 	public function prepareSession(): SessionInfo;
 	/**

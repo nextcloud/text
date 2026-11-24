@@ -6,6 +6,7 @@ import type { Emitter } from 'mitt'
 import type { OpenData } from '../apis/connect.ts'
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
+import type { Lock } from '../types/Lock.ts'
 import type { Session } from '../types/Session.ts'
 import type { Step } from '../types/Step.ts'
 import type { EventTypes } from './NotifyService.ts'
@@ -61,6 +62,8 @@ interface PollData {
 	sessions: Session[]
 	steps: Step[]
 	readOnly?: boolean
+	/* Only sent for contexts that can be locked */
+	lock?: Lock | null
 }
 
 interface ConflictData extends PollData {
@@ -71,6 +74,7 @@ class PollingBackend {
 	#syncService: SyncService
 	#connection: Connection
 	#readOnly: boolean
+	#lock: Lock | null
 
 	#lastPoll
 	#fetchInterval: number
@@ -90,7 +94,7 @@ class PollingBackend {
 	constructor(
 		syncService: SyncService,
 		connection: Connection,
-		{ readOnly }: OpenData,
+		{ readOnly, lock }: OpenData,
 	) {
 		this.#syncService = syncService
 		this.#connection = connection
@@ -98,6 +102,7 @@ class PollingBackend {
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
 		this.#readOnly = readOnly
+		this.#lock = lock ?? null
 	}
 
 	connect() {
@@ -146,14 +151,20 @@ class PollingBackend {
 		const { document, readOnly, sessions, steps } = data
 		this.#fetchRetryCounter = 0
 
+		const lock = data.lock === undefined ? this.#lock : data.lock
+		const lockChanged = lock?.token !== this.#lock?.token
+		this.#lock = lock
 		if (readOnly !== undefined && readOnly !== this.#readOnly) {
 			this.#readOnly = readOnly
 			this.#syncService.bus.emit('permissionChange', {
 				readOnly: this.#readOnly,
+				lock: this.#lock,
 			})
 			if (readOnly) {
 				this.maximumReadOnlyTimer()
 			}
+		} else if (lockChanged) {
+			this.#syncService.bus.emit('lock', { lock: this.#lock })
 		}
 
 		this.#syncService.bus.emit('change', { document, sessions })
@@ -244,6 +255,13 @@ class PollingBackend {
 		clearInterval(this.fetcher)
 		this.fetcher = undefined
 		document.removeEventListener('visibilitychange', this.visibilitychange)
+	}
+
+	/**
+	 * Fetch steps right away instead of waiting for the next interval
+	 */
+	pollNow() {
+		this.#lastPoll = 0
 	}
 
 	resetRefetchTimer() {

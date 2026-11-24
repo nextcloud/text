@@ -5,6 +5,7 @@
 
 import type { Connection } from '../types/Connection.ts'
 import type { Document } from '../types/Document.ts'
+import type { Lock } from '../types/Lock.ts'
 import type { GuestSession, Session } from '../types/Session.ts'
 
 import axios from '@nextcloud/axios'
@@ -31,7 +32,7 @@ export interface OpenData {
 	readOnly: boolean
 	content: string
 	documentState?: string
-	lock?: object
+	lock?: Lock | null
 	canAttachFiles: boolean
 }
 

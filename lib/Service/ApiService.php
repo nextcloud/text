@@ -14,9 +14,11 @@ use InvalidArgumentException;
 use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\Context\ContextManager;
 use OCA\Text\Context\IContext;
+use OCA\Text\Context\ILockingContext;
 use OCA\Text\Context\NewSessionData;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
+use OCA\Text\Exception\DocumentLockedException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -132,6 +134,11 @@ class ApiService {
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		} catch (NotPermittedException) {
 			return new DataResponse(['error' => $this->l10n->t('This document is read-only.')], Http::STATUS_FORBIDDEN);
+		} catch (DocumentLockedException $e) {
+			return new DataResponse([
+				'error' => $this->l10n->t('This file is currently locked.'),
+				'lock' => $e->getLock(),
+			], Http::STATUS_LOCKED);
 		}
 		return new DataResponse($result);
 	}
@@ -174,6 +181,9 @@ class ApiService {
 			$id = $document->getContextId();
 			$context = $this->contextManager->getContext($type, $id, $auth);
 			$result['readOnly'] = $context->isReadOnly();
+			if ($context instanceof ILockingContext) {
+				$result['lock'] = $context->getLock();
+			}
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([

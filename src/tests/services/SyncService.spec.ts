@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type PollingBackend from '../../services/PollingBackend.ts'
+
 import { describe, expect, it, vi } from 'vitest'
 import { shallowRef } from 'vue'
 import * as connect from '../../apis/connect.ts'
@@ -91,6 +93,23 @@ describe('Sync service', () => {
 			service.sendStep(update)
 			await expect(service.sendStepsNow()).rejects.toThrow()
 			expect(onPendingChanges).toHaveBeenCalledExactlyOnceWith({ pending: true })
+		})
+
+		it('remain pending without a push error if the file is locked', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			const pollNow = vi.fn()
+			service.backend = { pollNow } as unknown as PollingBackend
+			const onPendingChanges = vi.fn()
+			const onError = vi.fn()
+			service.bus.on('pendingChanges', onPendingChanges)
+			service.bus.on('error', onError)
+			vi.mocked(sync.push).mockRejectedValue({ response: { status: 423, data: { lock: { displayName: 'Jane', token: 'token' } } } })
+			service.sendStep(update)
+			await expect(service.sendStepsNow()).rejects.toThrow()
+			expect(onPendingChanges).toHaveBeenCalledExactlyOnceWith({ pending: true })
+			expect(service.pushError).toBe(0)
+			expect(onError).not.toHaveBeenCalled()
+			expect(pollNow).toHaveBeenCalledOnce()
 		})
 
 		it('are pushed once while a push is in flight', async () => {

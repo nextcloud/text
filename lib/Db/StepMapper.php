@@ -36,6 +36,23 @@ class StepMapper extends QBMapper {
 	}
 
 	/**
+	 * Get the time the latest step of the document was added
+	 */
+	public function getLatestTimestamp(string $documentId): ?int {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('timestamp')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->setMaxResults(1)
+			->orderBy('id', 'DESC')
+			->executeQuery();
+
+		$timestamp = $result->fetchOne();
+		$result->closeCursor();
+		return $timestamp === false ? null : (int)$timestamp;
+	}
+
+	/**
 	 * @psalm-return ?positive-int
 	 */
 	public function getLatestVersion(string $documentId): ?int {
