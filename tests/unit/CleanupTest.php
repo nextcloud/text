@@ -11,6 +11,7 @@ use OCA\Text\Cron\Cleanup;
 use OCA\Text\Db\Document;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\LockCleanupService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\IFilenameValidator;
@@ -35,6 +36,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 	private IRootFolder $rootFolder;
 	private ISetupManager $setupManager;
 	private LoggerInterface $logger;
+	private LockCleanupService $lockCleanupService;
 
 	public function setUp(): void {
 		$this->document = Document::fromRow([
@@ -56,13 +58,14 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService = $this->createMock(SessionService::class);
 		$this->setupManager = $this->createMock(ISetupManager::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
+		$this->lockCleanupService = $this->createMock(LockCleanupService::class);
 		$this->documentService->expects(self::never())->method('resetDocument');
 		$this->documentService->expects(self::once())
 			->method('getAllPendingAttachmentCleanup')
 			->willReturn((function (): \Generator {
 				yield $this->document;
 			})());
-		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, ) extends Cleanup {
+		$this->cleanup = new class($this->createMock(ITimeFactory::class), $this->sessionService, $this->documentService, $this->attachmentService, $this->logger, $this->setupManager, $this->lockCleanupService) extends Cleanup {
 			public function run($argument): void {
 				parent::run($argument);
 			}
@@ -126,6 +129,39 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService->expects(self::once())->method('removeOldSessions');
 		$this->sessionService->expects(self::once())->method('removeOrphanedSteps');
 		$this->documentService->expects(self::once())->method('cleanupOldDocumentsFolders');
+
+		$this->cleanup->run([]);
+	}
+
+	public function testReleasesLocksOfInactiveDocumentsBeforeRemovingTheirSessions(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->cleanup->setLastRun(10000);
+		$this->sessionService->expects(self::once())
+			->method('getDocumentIdsInactiveSince')->with(10000 - 2 * SessionService::SESSION_VALID_TIME)
+			->willReturn([111]);
+		$document = Document::fromRow(['id' => 111]);
+		$this->documentService->method('getDocument')->with(111)->willReturn($document);
+		$released = false;
+		$this->lockCleanupService->expects(self::once())
+			->method('release')->with($document)
+			->willReturnCallback(function () use (&$released): void {
+				$released = true;
+			});
+		$this->sessionService->expects(self::once())
+			->method('removeInactiveSessionsWithoutSteps')
+			->willReturnCallback(function () use (&$released): int {
+				self::assertTrue($released);
+				return 0;
+			});
+
+		$this->cleanup->run([]);
+	}
+
+	public function testSkipsMissingDocuments(): void {
+		$this->documentService->method('hasUnsavedChanges')->willReturn(true);
+		$this->sessionService->method('getDocumentIdsInactiveSince')->willReturn([111]);
+		$this->documentService->method('getDocument')->with(111)->willReturn(null);
+		$this->lockCleanupService->expects(self::never())->method('release');
 
 		$this->cleanup->run([]);
 	}

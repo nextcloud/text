@@ -108,6 +108,25 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		);
 	}
 
+	private function expectClose(bool $recentlyActive): void {
+		$this->sessionService->expects(self::once())->method('closeSession')->with(111, 1, 'token');
+		$this->sessionService->method('hasRecentlyActiveSessions')->with(111)->willReturn($recentlyActive);
+	}
+
+	public function testCloseReleasesLockWithoutRecentlyActiveSessions(): void {
+		$this->expectClose(false);
+		$this->documentService->expects(self::once())->method('unlock')->with(111);
+
+		$this->apiService->close(111, 1, 'token');
+	}
+
+	public function testCloseKeepsLockForRecentlyActiveSessions(): void {
+		$this->expectClose(true);
+		$this->documentService->expects(self::never())->method('unlock');
+
+		$this->apiService->close(111, 1, 'token');
+	}
+
 	private function mockFile(int $id, ?string $owner) {
 		$file = $this->createMock(\OCP\Files\File::class);
 		$storage = $this->createMock(\OCP\Files\Storage\IStorage::class);

@@ -97,6 +97,13 @@ class DocumentService {
 		}
 	}
 
+	/**
+	 * @return list<Document> ordered by id
+	 */
+	public function getDocumentsAfter(int $id, int $limit): array {
+		return $this->documentMapper->findAfter($id, $limit);
+	}
+
 	public function getDocument(int $id): ?Document {
 		try {
 			return $this->documentMapper->find($id);
@@ -648,6 +655,23 @@ class DocumentService {
 			return null;
 		}
 		return array_shift($locks);
+	}
+
+	/**
+	 * Whether Text holds a lock on the file
+	 */
+	public function hasLock(int $fileId): bool {
+		try {
+			$locks = $this->lockManager->getLocks($fileId);
+		} catch (NoLockProviderException|PreConditionNotMetException) {
+			return false;
+		}
+		foreach ($locks as $lock) {
+			if ($lock->getType() === ILock::TYPE_APP && $lock->getOwner() === Application::APP_NAME) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
