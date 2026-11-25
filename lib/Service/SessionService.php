@@ -112,9 +112,11 @@ class SessionService {
 
 	/**
 	 * Whether a session of the document had contact recently enough to keep its file locked
+	 *
+	 * @param ?string $exceptUserId ignore the sessions of this user, guest sessions always count
 	 */
-	public function hasRecentlyActiveSessions(string $documentId): bool {
-		return $this->sessionMapper->hasContactSince($documentId, $this->timeFactory->now()->getTimestamp() - self::LOCK_VALID_TIME);
+	public function hasRecentlyActiveSessions(string $documentId, ?string $exceptUserId = null): bool {
+		return $this->sessionMapper->hasContactSince($documentId, $this->timeFactory->now()->getTimestamp() - self::LOCK_VALID_TIME, $exceptUserId);
 	}
 
 	public function getNameForSession(Session $session): ?string {

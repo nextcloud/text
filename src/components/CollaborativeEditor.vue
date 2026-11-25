@@ -374,6 +374,7 @@ export default defineComponent({
 			IDLE_TIMEOUT,
 
 			fileNode: null,
+			fileDeletedCheck: null,
 
 			idle: false,
 			contentLoaded: false,
@@ -512,6 +513,7 @@ export default defineComponent({
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
 		subscribe('text:keyboard:save', this.onKeyboardSave)
+		subscribe('files:node:deleted', this.onFileDeleted)
 		this.$emit('update:loaded', true)
 		exposeForDebugging(this)
 
@@ -547,6 +549,8 @@ export default defineComponent({
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
+		unsubscribe('files:node:deleted', this.onFileDeleted)
+		await this.fileDeletedCheck
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
@@ -830,6 +834,13 @@ export default defineComponent({
 
 		onBlur({ event }) {
 			this.$emit('blur', event)
+		},
+
+		onFileDeleted(node) {
+			// Files also emits this for moved files, so ask the server whether the session went with the file
+			if (this.context.type === 'file' && Number(node?.fileid) === Number(this.context.id)) {
+				this.fileDeletedCheck = this.syncService.invalidateSessionIfRemoved()
+			}
 		},
 
 		onKeyboardSave() {

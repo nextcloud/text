@@ -14,7 +14,7 @@ import type { Step } from '../types/Step.ts'
 
 import mitt from 'mitt'
 import { close } from '../apis/connect.ts'
-import { push } from '../apis/sync.ts'
+import { push, sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps.ts'
 import { documentStateToStep } from '../helpers/yjs.ts'
@@ -319,6 +319,25 @@ class SyncService {
 	invalidateSession() {
 		this.backend?.disconnect()
 		this.connection.value = undefined
+	}
+
+	/**
+	 * Drop the session without further requests if the server removed it, for example along with the deleted file
+	 */
+	async invalidateSessionIfRemoved() {
+		const connection = this.connection.value
+		if (!connection) {
+			return
+		}
+		try {
+			await sync(connection, { version: this.version })
+		} catch (err) {
+			const status = (err as { response?: { status?: number } }).response?.status
+			if (status && [403, 404, 412].includes(status) && this.connection.value === connection) {
+				logger.debug('Session was removed on the server', { status })
+				this.invalidateSession()
+			}
+		}
 	}
 
 	async close() {
