@@ -57,14 +57,16 @@ export function save(
 }
 
 /**
- * Save document via `navigator.sendBeacon()`
+ * Save document via `navigator.sendBeacon()`, which still works while the page unloads
  *
  * @param connection the active connection
  * @param data data to save
+ * @param close the session once the changes are saved
  */
 export function saveViaSendBeacon(
 	connection: Connection,
 	data: SaveData,
+	close = false,
 ): boolean {
 	const con = unref(connection)
 	const pub = con.shareToken ? '/public' : ''
@@ -84,6 +86,7 @@ export function saveViaSendBeacon(
 				documentState: data.documentState,
 				force: false,
 				manualSave: true,
+				close,
 				requesttoken: getRequestToken() ?? '',
 			}),
 		],
