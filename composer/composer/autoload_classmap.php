@@ -32,6 +32,7 @@ return array(
     'OCA\\Text\\Controller\\WorkspaceController' => $baseDir . '/../lib/Controller/WorkspaceController.php',
     'OCA\\Text\\Cron\\Cleanup' => $baseDir . '/../lib/Cron/Cleanup.php',
     'OCA\\Text\\Cron\\ReleaseAbandonedLocks' => $baseDir . '/../lib/Cron/ReleaseAbandonedLocks.php',
+    'OCA\\Text\\DAV\\EditingLockPlugin' => $baseDir . '/../lib/DAV/EditingLockPlugin.php',
     'OCA\\Text\\DAV\\WorkspacePlugin' => $baseDir . '/../lib/DAV/WorkspacePlugin.php',
     'OCA\\Text\\Db\\Document' => $baseDir . '/../lib/Db/Document.php',
     'OCA\\Text\\Db\\DocumentMapper' => $baseDir . '/../lib/Db/DocumentMapper.php',

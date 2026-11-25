@@ -41,6 +41,8 @@ class BeforeNodeRenamedListener implements IEventListener {
 			return;
 		}
 
+		$this->lockService->unlockIfPermitted($source);
+
 		$sourceIsMarkdown = $source->getMimeType() === 'text/markdown';
 		$targetIsMarkdown = pathinfo($target->getPath(), PATHINFO_EXTENSION) === 'md'; // NonExistingFile has no `getMimetype()`
 

@@ -47,6 +47,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Controller\\WorkspaceController' => __DIR__ . '/..' . '/../lib/Controller/WorkspaceController.php',
         'OCA\\Text\\Cron\\Cleanup' => __DIR__ . '/..' . '/../lib/Cron/Cleanup.php',
         'OCA\\Text\\Cron\\ReleaseAbandonedLocks' => __DIR__ . '/..' . '/../lib/Cron/ReleaseAbandonedLocks.php',
+        'OCA\\Text\\DAV\\EditingLockPlugin' => __DIR__ . '/..' . '/../lib/DAV/EditingLockPlugin.php',
         'OCA\\Text\\DAV\\WorkspacePlugin' => __DIR__ . '/..' . '/../lib/DAV/WorkspacePlugin.php',
         'OCA\\Text\\Db\\Document' => __DIR__ . '/..' . '/../lib/Db/Document.php',
         'OCA\\Text\\Db\\DocumentMapper' => __DIR__ . '/..' . '/../lib/Db/DocumentMapper.php',

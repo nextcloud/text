@@ -98,13 +98,22 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function hasContactSince(string $documentId, int $since): bool {
+	/**
+	 * @param ?string $exceptUserId ignore the sessions of this user, guest sessions always count
+	 */
+	public function hasContactSince(string $documentId, int $since, ?string $exceptUserId = null): bool {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gte('last_contact', $qb->createNamedParameter($since, IQueryBuilder::PARAM_INT)))
 			->setMaxResults(1);
+		if ($exceptUserId !== null) {
+			$qb->andWhere($qb->expr()->orX(
+				$qb->expr()->isNull('user_id'),
+				$qb->expr()->neq('user_id', $qb->createNamedParameter($exceptUserId)),
+			));
+		}
 
 		$result = $qb->executeQuery();
 		$found = $result->fetchOne() !== false;
