@@ -186,4 +186,56 @@ class ApiServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertTrue($data['readOnly']);
 		self::assertSame($lock, $data['lock']);
 	}
+
+	/**
+	 * Prepare saving version 5 with closing the session, where autosave stores the given version
+	 *
+	 * @return array{SessionService&\PHPUnit\Framework\MockObject\MockObject, \Closure(): \OCP\AppFramework\Http\DataResponse}
+	 */
+	private function saveAndClose(?int $savedVersion, bool $conflict = false): array {
+		$document = Document::fromRow(['id' => '111', 'context_type' => 'file', 'context_id' => 456]);
+		$documentService = $this->createStub(DocumentService::class);
+		if ($conflict) {
+			$documentService->method('autosave')->willThrowException(new \OCA\Text\Exception\DocumentSaveConflictException('outside'));
+		} else {
+			$saved = Document::fromRow(['id' => '111', 'last_saved_version' => $savedVersion]);
+			$documentService->method('autosave')->willReturn($saved);
+		}
+		$documentService->method('getDocument')->willReturn($document);
+		$sessionService = $this->createMock(SessionService::class);
+		$sessionService->method('hasRecentlyActiveSessions')->willReturn(false);
+		$apiService = new ApiService(
+			$this->configService,
+			$this->contextManager,
+			$sessionService,
+			$documentService,
+			$this->loggerInterface,
+			$this->l10n,
+			null,
+		);
+		$session = Session::fromParams(['id' => 1, 'documentId' => '111', 'userId' => 'admin', 'token' => 'token']);
+		$save = fn () => $apiService->save($document, $this->createStub(IUser::class), 5, 'content', 'state', false, true, $session);
+		return [$sessionService, $save];
+	}
+
+	public function testSaveClosesTheSessionOnceSaved(): void {
+		[$sessionService, $save] = $this->saveAndClose(5);
+		$sessionService->expects(self::once())->method('closeSession')->with('111', 1, 'token');
+
+		self::assertSame(\OCP\AppFramework\Http::STATUS_OK, $save()->getStatus());
+	}
+
+	public function testSaveKeepsTheSessionIfNotSaved(): void {
+		[$sessionService, $save] = $this->saveAndClose(4);
+		$sessionService->expects(self::never())->method('closeSession');
+
+		$save();
+	}
+
+	public function testSaveKeepsTheSessionOnConflict(): void {
+		[$sessionService, $save] = $this->saveAndClose(null, true);
+		$sessionService->expects(self::never())->method('closeSession');
+
+		self::assertSame(\OCP\AppFramework\Http::STATUS_CONFLICT, $save()->getStatus());
+	}
 }

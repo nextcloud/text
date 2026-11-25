@@ -114,10 +114,10 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
+	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, bool $close = false): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->save($this->getDocument(), $this->getUser(), $version, $autosaveContent, $documentState, $force, $manualSave);
+			return $this->apiService->save($this->getDocument(), $this->getUser(), $version, $autosaveContent, $documentState, $force, $manualSave, $close ? $this->getSession() : null);
 		} finally {
 			$this->restoreSessionUser();
 		}

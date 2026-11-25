@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Browser, Page } from '@playwright/test'
 import type { User } from '../support/fixtures/User.ts'
 
 import { runOcc } from '@nextcloud/e2e-test-server/docker'
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor.ts'
+import { Node } from '../support/fixtures/Node.ts'
 import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 import { propfindFolder } from '../support/fixtures/webdav.ts'
+import { EditorSection } from '../support/sections/EditorSection.ts'
 
 const test = mergeTests(editorTest, uploadFileTest)
 
