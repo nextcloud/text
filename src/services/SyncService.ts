@@ -132,6 +132,7 @@ class SyncService {
 			logger.error('Opened the connection but now it is undefined')
 			return
 		}
+		this.#lastStepPush = Date.now()
 		this.backend = new PollingBackend(this, this.connection.value, data)
 		// Make sure to only emit this once the backend is in place.
 		this.bus.emit('opened', data)
@@ -289,7 +290,10 @@ class SyncService {
 			// Otherwise the WebsocketPolyfill would have increased the version counter.
 			logger.warn(`Failed to process steps leading up to version ${versionAfter}.`)
 		}
-		this.#lastStepPush = Date.now()
+		// Polling also delivers awareness without any steps, which does not count as activity
+		if (steps.length > 0) {
+			this.#lastStepPush = Date.now()
+		}
 	}
 
 	checkIdle() {
