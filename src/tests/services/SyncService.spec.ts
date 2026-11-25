@@ -10,7 +10,7 @@ import { shallowRef } from 'vue'
 import * as connect from '../../apis/connect.ts'
 import * as sync from '../../apis/sync.ts'
 import { provideConnection } from '../../composables/useConnection.js'
-import { SyncService } from '../../services/SyncService.js'
+import { IDLE_TIMEOUT, SyncService } from '../../services/SyncService.js'
 
 vi.mock('../../apis/connect')
 vi.mock('../../apis/sync')
@@ -68,6 +68,62 @@ describe('Sync service', () => {
 		expect(setBaseVersionEtag).toHaveBeenCalledWith('etag')
 		expect(openHandler).toHaveBeenCalledWith(expect.objectContaining({ session: initialData.session }))
 		expect(openData.value?.canAttachFiles).toBe(true)
+	})
+
+	describe('idle', () => {
+		const minutes = (count: number) => count * 60 * 1000
+		const awarenessOnly = { steps: [], sessions: [initialData.session] }
+		const withChanges = { steps: [{ version: 1, data: [], sessionId: 345 }] }
+
+		it('becomes idle after polling without changes for the idle timeout', () => {
+			vi.useFakeTimers()
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			const onIdle = vi.fn()
+			service.bus.on('idle', onIdle)
+
+			for (let elapsed = 0; elapsed <= IDLE_TIMEOUT; elapsed += 60) {
+				service.receiveSteps(awarenessOnly)
+				vi.advanceTimersByTime(minutes(60))
+			}
+
+			expect(service.checkIdle()).toBe(true)
+			expect(onIdle).toHaveBeenCalledOnce()
+			vi.useRealTimers()
+		})
+
+		it('is active again after reconnecting', async () => {
+			vi.useFakeTimers()
+			const { connection: con, openConnection } = provideConnection(
+				{ context: { type: 'file', id: 123 }, relativePath: './' },
+				vi.fn(),
+				vi.fn(),
+			)
+			vi.mocked(connect.openContext).mockResolvedValue(openResult)
+			const service = new SyncService({ connection: con, openConnection })
+			await service.open()
+			vi.advanceTimersByTime(minutes(IDLE_TIMEOUT + 1))
+			expect(service.checkIdle()).toBe(true)
+
+			vi.mocked(connect.close).mockResolvedValue({} as Awaited<ReturnType<typeof connect.close>>)
+			await service.close()
+			await service.open()
+			service.receiveSteps(awarenessOnly)
+
+			expect(service.checkIdle()).toBe(false)
+			vi.useRealTimers()
+		})
+
+		it('stays active while changes arrive', () => {
+			vi.useFakeTimers()
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+
+			vi.advanceTimersByTime(minutes(IDLE_TIMEOUT - 1))
+			service.receiveSteps(withChanges)
+			vi.advanceTimersByTime(minutes(IDLE_TIMEOUT - 1))
+
+			expect(service.checkIdle()).toBe(false)
+			vi.useRealTimers()
+		})
 	})
 
 	describe('pending changes', () => {
