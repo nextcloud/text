@@ -14,6 +14,11 @@ import markdownit from '../markdownit/index.js'
 import { commentBubbleKey } from '../plugins/commentBubble.ts'
 import { generateReferenceId, isEmptyComment, isInsideCommentOrFootnote, removeCommentDraft } from '../plugins/referenceHelpers.ts'
 
+export type CommentReferenceStorage = {
+	/** Account comments are attributed to, `null` for guests */
+	currentUser: { uid: string, displayName: string | null } | null
+}
+
 declare module '@tiptap/core' {
 	interface Commands<ReturnType> {
 		commentReference: {
@@ -22,13 +27,21 @@ declare module '@tiptap/core' {
 			deleteCommentReply: (comment: ProseMirrorNode, itemIndex: number) => ReturnType
 		}
 	}
+	interface Storage {
+		commentReference: CommentReferenceStorage
+	}
 }
 
-function createEmptyComment(schema: Schema, referenceId: string): ProseMirrorNode {
-	const currentUser = getCurrentUser()
-	const commentItem = schema.nodes.commentItem.create({
+function getAuthorAttrs({ currentUser }: CommentReferenceStorage) {
+	return {
 		author: currentUser?.uid ?? '',
 		authorLabel: currentUser?.displayName ?? localStorage.getItem('nick') ?? '',
+	}
+}
+
+function createEmptyComment(schema: Schema, referenceId: string, storage: CommentReferenceStorage): ProseMirrorNode {
+	const commentItem = schema.nodes.commentItem.create({
+		...getAuthorAttrs(storage),
 		timestamp: new Date().toISOString(),
 	}, schema.nodes.paragraph.create())
 	return schema.nodes.comment.create({ referenceId }, commentItem)
@@ -59,6 +72,13 @@ const CommentReference = Node.create({
 	group: 'inline',
 	inline: true,
 	atom: true,
+
+	addStorage(): CommentReferenceStorage {
+		const user = getCurrentUser()
+		return {
+			currentUser: user ? { uid: user.uid, displayName: user.displayName } : null,
+		}
+	},
 
 	addAttributes() {
 		return {
@@ -135,7 +155,7 @@ const CommentReference = Node.create({
 					return true
 				}
 
-				const newComment = createEmptyComment(state.schema, referenceId)
+				const newComment = createEmptyComment(state.schema, referenceId, this.storage)
 
 				let c = chain()
 					.insertContentAt(state.selection.to, { type: 'commentReference', attrs: { referenceId } })
@@ -190,9 +210,7 @@ const CommentReference = Node.create({
 					return false
 				}
 
-				const currentUser = getCurrentUser()
-				const author = currentUser?.uid ?? ''
-				const authorLabel = currentUser?.displayName ?? localStorage.getItem('nick') ?? ''
+				const { author, authorLabel } = getAuthorAttrs(this.storage)
 				const timestamp = new Date().toISOString()
 
 				let commentPos = -1
