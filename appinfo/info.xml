@@ -42,6 +42,7 @@
 	<sabre>
 		<plugins>
 			<plugin>OCA\Text\DAV\WorkspacePlugin</plugin>
+			<plugin>OCA\Text\DAV\EditingLockPlugin</plugin>
 		</plugins>
 	</sabre>
 	<repair-steps>

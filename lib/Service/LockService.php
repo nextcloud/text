@@ -24,6 +24,9 @@ class LockService {
 
 	private readonly ICache $lockedFiles;
 
+	/** @var array<int, true> */
+	private array $unlockPermitted = [];
+
 	public function __construct(
 		private readonly ILockManager $lockManager,
 		ICacheFactory $cacheFactory,
@@ -62,17 +65,38 @@ class LockService {
 	 * Whether Text holds a lock on the file
 	 */
 	public function hasLock(int $fileId): bool {
+		return $this->getOwnLock($fileId) !== null;
+	}
+
+	/**
+	 * The lock Text holds on the file
+	 */
+	public function getOwnLock(int $fileId): ?ILock {
 		try {
 			$locks = $this->lockManager->getLocks($fileId);
 		} catch (NoLockProviderException|PreConditionNotMetException) {
-			return false;
+			return null;
 		}
 		foreach ($locks as $lock) {
 			if ($lock->getType() === ILock::TYPE_APP && $lock->getOwner() === Application::APP_NAME) {
-				return true;
+				return $lock;
 			}
 		}
-		return false;
+		return null;
+	}
+
+	/**
+	 * Allow the current request to release Text's lock on the file once it renames the file
+	 */
+	public function permitUnlock(int $fileId): void {
+		$this->unlockPermitted[$fileId] = true;
+	}
+
+	public function unlockIfPermitted(File $file): void {
+		if (isset($this->unlockPermitted[$file->getId()])) {
+			unset($this->unlockPermitted[$file->getId()]);
+			$this->unlock($file);
+		}
 	}
 
 	public function lock(File $file): bool {

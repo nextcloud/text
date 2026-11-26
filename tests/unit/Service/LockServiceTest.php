@@ -66,6 +66,22 @@ class LockServiceTest extends \PHPUnit\Framework\TestCase {
 		self::assertFalse($this->lockService->hasLock(456));
 	}
 
+	public function testGetsOwnLock(): void {
+		$lock = $this->lock(ILock::TYPE_APP, 'text');
+		$this->lockManager->method('getLocks')->with(456)->willReturn([$this->lock(ILock::TYPE_USER, 'text'), $lock]);
+		self::assertSame($lock, $this->lockService->getOwnLock(456));
+	}
+
+	public function testUnlocksOnlyIfPermitted(): void {
+		$file = $this->file();
+		$this->lockManager->expects(self::once())->method('unlock');
+
+		$this->lockService->unlockIfPermitted($file);
+		$this->lockService->permitUnlock(456);
+		$this->lockService->unlockIfPermitted($file);
+		$this->lockService->unlockIfPermitted($file);
+	}
+
 	public function testHasNoLockWithoutLockProvider(): void {
 		$this->lockManager->method('getLocks')->willThrowException(new PreConditionNotMetException());
 		self::assertFalse($this->lockService->hasLock(456));

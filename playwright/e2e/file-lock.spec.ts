@@ -73,3 +73,58 @@ test('changes to a file locked by someone else are kept until it is unlocked', a
 	await close()
 	await expect.poll(() => file.getContent()).toContain('Hello world')
 })
+
+test('the only editor can delete the file from the viewer', async ({ user, file, open, editor, viewer, page }) => {
+	// Pushes still in flight while the file is deleted may fail, saving to the removed session must not
+	const failedSaves: string[] = []
+	page.on('response', (response) => {
+		if (/\/session\/[^/]+\/save$/.test(response.url()) && response.status() >= 400) {
+			failedSaves.push(`${response.status()} ${response.url()}`)
+		}
+	})
+	await open()
+	await editor.type('Hello world')
+	await expect.poll(() => lockEditor(user, file.name)).toBe('text')
+
+	const deleted = page.waitForResponse((response) => response.request().method() === 'DELETE')
+	await viewer.clickAction('Delete')
+
+	expect((await deleted).status()).toBe(204)
+	await expect(viewer.el).not.toBeVisible()
+	await page.waitForLoadState('networkidle')
+	expect(failedSaves).toEqual([])
+	await expect(page.getByText('Editing session has expired')).not.toBeVisible()
+})
+
+test('the only editor can rename the file while editing it', async ({ user, file, open, editor, close }) => {
+	await open()
+	await editor.type('Hello')
+	await expect.poll(() => lockEditor(user, file.name)).toBe('text')
+
+	const moved = await user.request.fetch(`/remote.php/webdav/${file.name}`, {
+		method: 'MOVE',
+		headers: { Destination: '/remote.php/webdav/renamed.md' },
+	})
+
+	expect(moved.status()).toBe(201)
+	await editor.type(' world')
+	await expect.poll(() => lockEditor(user, 'renamed.md')).toBe('text')
+	await close()
+	const renamed = await user.request.get('/remote.php/webdav/renamed.md')
+	expect(await renamed.text()).toBe('Hello world')
+})
+
+test('a move that fails keeps the file locked', async ({ user, file, open, editor }) => {
+	await open()
+	await editor.type('Hello')
+	await expect.poll(() => lockEditor(user, file.name)).toBe('text')
+	await user.request.put('/remote.php/webdav/existing.md', { data: 'Existing' })
+
+	const moved = await user.request.fetch(`/remote.php/webdav/${file.name}`, {
+		method: 'MOVE',
+		headers: { Destination: '/remote.php/webdav/existing.md', Overwrite: 'F' },
+	})
+
+	expect(moved.status()).toBe(412)
+	expect(await lockEditor(user, file.name)).toBe('text')
+})
