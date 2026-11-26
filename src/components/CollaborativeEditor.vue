@@ -465,14 +465,6 @@ export default defineComponent({
 			})
 		},
 
-		dirty(val) {
-			if (val) {
-				window.addEventListener('beforeunload', this.saveBeforeUnload)
-			} else {
-				window.removeEventListener('beforeunload', this.saveBeforeUnload)
-			}
-		},
-
 		displayConnectionIssue(val) {
 			if (val) {
 				this.$emit('syncService:error')
@@ -516,6 +508,7 @@ export default defineComponent({
 		}
 		subscribe('text:keyboard:save', this.onKeyboardSave)
 		subscribe('files:node:deleted', this.onFileDeleted)
+		window.addEventListener('pagehide', this.onPageHide)
 		this.$emit('update:loaded', true)
 		exposeForDebugging(this)
 
@@ -552,12 +545,11 @@ export default defineComponent({
 		}
 		unsubscribe('text:keyboard:save', this.onKeyboardSave)
 		unsubscribe('files:node:deleted', this.onFileDeleted)
+		window.removeEventListener('pagehide', this.onPageHide)
 		await this.fileDeletedCheck
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.saveWhenDirty()])
 		await this.close()
-		// The dirty watcher that removes it no longer runs after unmounting
-		window.removeEventListener('beforeunload', this.saveBeforeUnload)
 		removeFromDebugging(this)
 	},
 
@@ -959,8 +951,18 @@ export default defineComponent({
 			this.editor.commands.command(fn)
 		},
 
-		saveBeforeUnload() {
-			this.saveService.saveViaSendBeacon()
+		/**
+		 * Save unsaved changes and close the session when the page goes away, e.g. the browser tab is closed.
+		 * Saving and closing are one request, so they cannot race.
+		 * Pages kept in the back-forward cache may be restored, so their session stays open.
+		 *
+		 * @param {PageTransitionEvent} event of the page going away
+		 */
+		onPageHide(event) {
+			const sent = this.dirty && this.saveService.saveViaSendBeacon({ close: !event.persisted })
+			if (!sent && !event.persisted) {
+				this.syncService.closeViaSendBeacon()
+			}
 		},
 
 		checkIndexedDbConflict() {

@@ -124,14 +124,22 @@ class SaveService {
 		}
 	}
 
-	saveViaSendBeacon() {
+	/**
+	 * Save while the page unloads
+	 *
+	 * @param options for saving
+	 * @param options.close the session once the changes are saved
+	 * @return whether the browser queued the request
+	 */
+	saveViaSendBeacon({ close = false } = {}): boolean {
 		if (!this.connection.value) {
-			return
+			return false
 		}
-		const success = saveViaSendBeacon(this.connection.value, this.getSaveData())
+		const success = saveViaSendBeacon(this.connection.value, this.getSaveData(), close)
 		if (success) {
 			logger.debug('[SaveService] saved using sendBeacon')
 		}
+		return success
 	}
 
 	forceSave() {

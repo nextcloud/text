@@ -126,6 +126,23 @@ describe('Sync service', () => {
 		})
 	})
 
+	describe('closing while the page unloads', () => {
+		it('drops the session once the beacon is queued', () => {
+			vi.mocked(connect.closeViaSendBeacon).mockReturnValue(true)
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			service.closeViaSendBeacon()
+			expect(connect.closeViaSendBeacon).toHaveBeenCalledWith(connection)
+			expect(service.connection.value).toBeUndefined()
+		})
+
+		it('keeps the session if the browser does not send the beacon', () => {
+			vi.mocked(connect.closeViaSendBeacon).mockReturnValue(false)
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			service.closeViaSendBeacon()
+			expect(service.connection.value).toEqual(connection)
+		})
+	})
+
 	describe('pending changes', () => {
 		// sync message with an empty yjs update
 		const update = new Uint8Array([0, 2, 2, 0, 0])

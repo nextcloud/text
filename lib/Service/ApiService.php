@@ -199,7 +199,10 @@ class ApiService {
 		return new DataResponse($result, Http::STATUS_OK);
 	}
 
-	public function save(Document $document, IShare|IUser $auth, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
+	/**
+	 * @param ?Session $closeAfterSave session to close once the changes are saved, e.g. when the page unloads
+	 */
+	public function save(Document $document, IShare|IUser $auth, int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, ?Session $closeAfterSave = null): DataResponse {
 		try {
 			$type = $document->getContextType();
 			$id = $document->getContextId();
@@ -211,11 +214,10 @@ class ApiService {
 			], Http::STATUS_NOT_FOUND);
 		}
 
-		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave);
+			$saved = $this->documentService->autosave($document, $context, $version, $autosaveContent, $documentState, $force, $manualSave);
 		} catch (DocumentSaveConflictException $e) {
-			$result['outsideChange'] = $e->getContent();
+			return new DataResponse(['outsideChange' => $e->getContent()], Http::STATUS_CONFLICT);
 		} catch (NotPermittedException) {
 			return new DataResponse([
 				'error' => $this->l10n->t('Read-only permission cannot save document changes. Please reload the page.')
@@ -229,7 +231,11 @@ class ApiService {
 			], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
-		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
+		// Keep the session if the changes were not saved, so they are not lost with it
+		if ($closeAfterSave !== null && $saved->getLastSavedVersion() >= $version) {
+			$this->close((string)$document->id, $closeAfterSave->getId(), $closeAfterSave->getToken(), $auth);
+		}
+		return new DataResponse(['document' => $saved]);
 	}
 
 	public function updateSession(Session $session, string $guestName): DataResponse {

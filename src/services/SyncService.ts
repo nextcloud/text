@@ -13,7 +13,7 @@ import type { GuestSession, Session, UserSession } from '../types/Session.ts'
 import type { Step } from '../types/Step.ts'
 
 import mitt from 'mitt'
-import { close } from '../apis/connect.ts'
+import { close, closeViaSendBeacon } from '../apis/connect.ts'
 import { push, sync } from '../apis/sync.ts'
 import { logger } from '../helpers/logger.js'
 import { awarenessSteps } from '../helpers/steps.ts'
@@ -337,6 +337,15 @@ class SyncService {
 				logger.debug('Session was removed on the server', { status })
 				this.invalidateSession()
 			}
+		}
+	}
+
+	/**
+	 * Close the session while the page unloads
+	 */
+	closeViaSendBeacon() {
+		if (this.connection.value && closeViaSendBeacon(this.connection.value)) {
+			this.invalidateSession()
 		}
 	}
 

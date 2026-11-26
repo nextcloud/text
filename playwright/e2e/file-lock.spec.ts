@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Browser, Page } from '@playwright/test'
 import type { User } from '../support/fixtures/User.ts'
 
 import { runOcc } from '@nextcloud/e2e-test-server/docker'
 import { expect, mergeTests } from '@playwright/test'
 import { test as editorTest } from '../support/fixtures/editor.ts'
+import { Node } from '../support/fixtures/Node.ts'
 import { test as uploadFileTest } from '../support/fixtures/upload-file.ts'
 import { propfindFolder } from '../support/fixtures/webdav.ts'
+import { EditorSection } from '../support/sections/EditorSection.ts'
 
 const test = mergeTests(editorTest, uploadFileTest)
 
@@ -147,4 +150,46 @@ test('moving the file from the viewer keeps the changes', async ({ user, file, o
 	expect((await closed).status()).toBe(200)
 	const content = await user.request.get(`/remote.php/webdav/folder/${file.name}`)
 	expect(await content.text()).toBe('Hello world')
+})
+
+/**
+ * Open the file in a browser tab of the same user that can be closed on its own.
+ * Its browser context stays open like a browser does when a tab is closed, so requests sent while unloading go out.
+ *
+ * @param page of the logged in user
+ * @param browser to open the tab in
+ * @param file to open
+ * @param baseURL of the server
+ */
+async function openInOwnTab(page: Page, browser: Browser, file: Node, baseURL?: string) {
+	const context = await browser.newContext({ storageState: await page.context().storageState(), baseURL })
+	const tab = await context.newPage()
+	await new Node({ id: file.id, name: file.name, page: tab }).open()
+	return { context, tab, editor: new EditorSection(tab) }
+}
+
+test('closing the browser tab releases the lock right away', async ({ user, file, page, browser, baseURL }) => {
+	const { context, tab, editor } = await openInOwnTab(page, browser, file, baseURL)
+	await editor.type('Hello world')
+	const saved = tab.waitForResponse((response) => /\/session\/[^/]+\/save$/.test(response.url()))
+	await editor.press('Control+s')
+	await saved
+	await expect.poll(() => lockEditor(user, file.name)).toBe('text')
+
+	await tab.close({ runBeforeUnload: true })
+
+	await expect.poll(() => lockEditor(user, file.name)).toBe('')
+	await context.close()
+})
+
+test('closing the browser tab with unsaved changes saves them and releases the lock', async ({ user, file, page, browser, baseURL }) => {
+	const { context, tab, editor } = await openInOwnTab(page, browser, file, baseURL)
+	await editor.type('Hello world')
+	await expect.poll(() => lockEditor(user, file.name)).toBe('text')
+
+	await tab.close({ runBeforeUnload: true })
+
+	await expect.poll(() => file.getContent()).toBe('Hello world')
+	await expect.poll(() => lockEditor(user, file.name)).toBe('')
+	await context.close()
 })
