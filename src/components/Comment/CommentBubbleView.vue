@@ -160,7 +160,6 @@
 import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 
-import { getCurrentUser } from '@nextcloud/auth'
 import { t } from '@nextcloud/l10n'
 import { DOMSerializer } from '@tiptap/pm/model'
 import { computed, nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
@@ -239,7 +238,7 @@ const items = computed(() => {
 
 const isFirstComment = computed(() => items.value.length === 0 || (items.value.length === 1 && !items.value[0].markdownBody))
 
-const isGuest = !getCurrentUser()
+const isGuest = !props.editor.storage.commentReference.currentUser
 const guestName = ref(localStorage.getItem('nick') ?? '')
 const guestNameInput = ref('')
 

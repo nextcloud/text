@@ -392,6 +392,74 @@ describe('hideCommentBubble command', () => {
 		expect(hasNode(editor, 'commentReference')).toBe(true)
 		expect(hasNode(editor, 'comment')).toBe(true)
 	})
+
+	test.for([
+		['removes', 'alice', false],
+		['keeps', 'bob', true],
+	] as const)('%s an empty comment by %s when the user in storage is alice', ([, author, kept], { editor }) => {
+		editor.storage.commentReference.currentUser = { uid: 'alice', displayName: 'Alice' }
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ `<div data-type="comment-item" data-author="${author}" data-author-label="${author}" data-timestamp="2026-07-15T11:11Z"><p></p></div>`
+			+ '</div>'
+			+ '</section>')
+		editor.commands.openCommentBubble('comment-1')
+
+		editor.commands.hideCommentBubble()
+
+		expect(hasNode(editor, 'commentReference')).toBe(kept)
+		expect(hasNode(editor, 'comment')).toBe(kept)
+	})
+})
+
+describe('comment authorship', () => {
+	test('defaults to the current user of the page', ({ editor }) => {
+		expect(editor.storage.commentReference.currentUser).toEqual({ uid: 'user1', displayName: 'User 1' })
+	})
+
+	test('attributes a new comment to the user in storage', ({ editor }) => {
+		editor.storage.commentReference.currentUser = { uid: 'alice', displayName: 'Alice' }
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+
+		editor.commands.insertComment()
+
+		const item = editor.state.doc.lastChild!.firstChild!.firstChild!
+		expect(item.attrs.author).toBe('alice')
+		expect(item.attrs.authorLabel).toBe('Alice')
+	})
+
+	test('attributes a reply to the user in storage', ({ editor }) => {
+		editor.storage.commentReference.currentUser = { uid: 'alice', displayName: 'Alice' }
+		editor.commands.setContent('<p>Foo<sup data-type="comment-reference" data-reference-id="comment-1"></sup></p>'
+			+ '<section data-type="comments">'
+			+ '<div data-type="comment" data-reference-id="comment-1">'
+			+ '<div data-type="comment-item" data-author="jane" data-author-label="jane" data-timestamp="2026-07-15T11:11Z"><p>x</p></div>'
+			+ '</div>'
+			+ '</section>')
+
+		editor.commands.addOrUpdateCommentReply(editor.state.doc.lastChild!.firstChild!, 'Reply')
+
+		const reply = editor.state.doc.lastChild!.firstChild!.lastChild!
+		expect(reply.attrs.author).toBe('alice')
+		expect(reply.attrs.authorLabel).toBe('Alice')
+		expect(reply.textContent).toBe('Reply')
+	})
+
+	test('attributes a new comment to the guest name without a user in storage', ({ editor }) => {
+		editor.storage.commentReference.currentUser = null
+		localStorage.setItem('nick', 'Guest nick')
+		editor.commands.setContent('<p>Foo</p>')
+		editor.commands.focus('end')
+
+		editor.commands.insertComment()
+		localStorage.removeItem('nick')
+
+		const item = editor.state.doc.lastChild!.firstChild!.firstChild!
+		expect(item.attrs.author).toBe('')
+		expect(item.attrs.authorLabel).toBe('Guest nick')
+	})
 })
 
 describe('Comments Markdown roundtrip', () => {
