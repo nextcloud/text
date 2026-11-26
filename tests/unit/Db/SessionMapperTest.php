@@ -262,4 +262,24 @@ class SessionMapperTest extends \Test\TestCase {
 		self::assertSame(1000, $this->stepMapper->getLatestTimestamp('107'));
 		$this->stepMapper->deleteAll('107');
 	}
+
+	public function testHasContactSinceExceptUser(): void {
+		$this->sessionMapper->deleteByDocumentId('108');
+		foreach (['alice', null] as $userId) {
+			$this->sessionMapper->insert(Session::fromParams([
+				'userId' => $userId,
+				'guestName' => $userId === null ? 'Guest' : null,
+				'documentId' => '108',
+				'lastContact' => $userId === null ? 1000 : 2000,
+				'token' => uniqid(),
+				'color' => '00ff00',
+			]));
+		}
+
+		self::assertTrue($this->sessionMapper->hasContactSince('108', 1500));
+		self::assertFalse($this->sessionMapper->hasContactSince('108', 1500, 'alice'));
+		self::assertTrue($this->sessionMapper->hasContactSince('108', 900, 'alice'), 'guests count as others');
+		self::assertTrue($this->sessionMapper->hasContactSince('108', 1500, 'bob'));
+		$this->sessionMapper->deleteByDocumentId('108');
+	}
 }

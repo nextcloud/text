@@ -100,6 +100,10 @@ class DocumentService {
 		return $timestamp !== null && $timestamp >= time() - self::EDIT_LOCK_TIME;
 	}
 
+	public function getDocumentForFile(int $fileId): ?Document {
+		return $this->documentMapper->load('file', $fileId);
+	}
+
 	public function getDocument(string $id): ?Document {
 		try {
 			return $this->documentMapper->find($id);

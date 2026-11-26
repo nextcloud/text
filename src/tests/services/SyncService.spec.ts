@@ -201,4 +201,27 @@ describe('Sync service', () => {
 			expect(sync.push).toHaveBeenCalledTimes(2)
 		})
 	})
+
+	describe('check whether the session was removed', () => {
+		it('drops the session the server removed along with the file', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			vi.mocked(sync.sync).mockRejectedValueOnce({ response: { status: 412 } })
+			await service.invalidateSessionIfRemoved()
+			expect(service.connection.value).toBeUndefined()
+		})
+
+		it('keeps the session of a moved file', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			vi.mocked(sync.sync).mockResolvedValueOnce({} as Awaited<ReturnType<typeof sync.sync>>)
+			await service.invalidateSessionIfRemoved()
+			expect(service.connection.value).toEqual(connection)
+		})
+
+		it('keeps the session on connection errors', async () => {
+			const service = new SyncService({ connection: shallowRef(connection), openConnection: vi.fn() })
+			vi.mocked(sync.sync).mockRejectedValueOnce({ code: 'ECONNABORTED' })
+			await service.invalidateSessionIfRemoved()
+			expect(service.connection.value).toEqual(connection)
+		})
+	})
 })
