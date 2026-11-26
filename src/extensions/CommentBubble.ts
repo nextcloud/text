@@ -5,7 +5,6 @@
 
 import type { CommandProps } from '@tiptap/core'
 
-import { getCurrentUser } from '@nextcloud/auth'
 import { Extension } from '@tiptap/core'
 import { commentBubble, commentBubbleKey, hideCommentBubble, navigateCommentBubble, openCommentBubble } from '../plugins/commentBubble.ts'
 import { findComment, getCommentDraft, isEmptyComment } from '../plugins/referenceHelpers.ts'
@@ -30,7 +29,7 @@ const CommentBubble = Extension.create({
 					return openCommentBubble(referenceId)(state, dispatch)
 				}
 			},
-			hideCommentBubble: (options?: { refocus?: boolean }) => ({ state, dispatch, chain, commands }) => {
+			hideCommentBubble: (options?: { refocus?: boolean }) => ({ state, dispatch, chain, commands, editor }) => {
 				const pluginState = commentBubbleKey.getState(state)
 				const active = pluginState?.active
 				const result = hideCommentBubble(state, dispatch)
@@ -43,7 +42,7 @@ const CommentBubble = Extension.create({
 
 				// Discard a comment that was created but never submitted
 				const comment = findComment(state.doc, active.referenceId)
-				const currentUserId = getCurrentUser()?.uid ?? ''
+				const currentUserId = editor.storage.commentReference?.currentUser?.uid ?? ''
 				const hasDraft = !!getCommentDraft(active.referenceId)
 				if (comment && isEmptyComment(comment) && comment.firstChild!.attrs.author === currentUserId && !hasDraft) {
 					commands.deleteCommentReply(comment, 0)
