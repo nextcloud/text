@@ -48,6 +48,11 @@ export function useEditorMethods(editor: Editor) {
 			color: session?.color,
 		}
 		editor.commands.updateUser(user)
+		if (editor.storage.commentReference) {
+			editor.storage.commentReference.currentUser = isUser(session)
+				? { uid: session.userId, displayName: session.displayName }
+				: null
+		}
 	}
 
 	return { setContent, setEditable, updateUser }
