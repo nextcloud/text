@@ -40,6 +40,7 @@ use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IUser;
+use OCP\Lock\ILockingProvider;
 use OCP\Lock\LockedException;
 use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
@@ -52,6 +53,8 @@ class DocumentService {
 	 * Delay to wait for between autosave versions
 	 */
 	public const int AUTOSAVE_MINIMUM_DELAY = 10;
+	/** Seconds a manual save waits for another save of the same document to finish */
+	private const int SAVE_LOCK_WAIT = 3;
 	/** Seconds after the last change until Text releases the lock of the document */
 	public const int EDIT_LOCK_TIME = 5 * 60;
 
@@ -71,6 +74,7 @@ class DocumentService {
 		IRequest $request,
 		IManager $directManager,
 		private readonly IConfig $config,
+		private readonly ILockingProvider $lockingProvider,
 	) {
 		$this->cache = $cacheFactory->createDistributed('text');
 		$token = $request->getParam('token');
@@ -403,12 +407,52 @@ class DocumentService {
 			return $document;
 		}
 
-		if ($lastMTime > 0 && !$force && !$this->cache->get('document-save-lock-' . $document->id)) {
+		// Concurrent writes of the file fail for all of them, so saves of a document run one after another
+		$documentId = $document->id;
+		$saveLock = 'text/save/' . $documentId;
+		if (!$this->acquireSaveLock($saveLock, $manualSave)) {
+			return $document;
+		}
+		try {
+			return $this->saveWithLock($documentId, $document, $context, $version, $autoSaveDocument, $documentState, $force);
+		} finally {
+			$this->lockingProvider->releaseLock($saveLock, ILockingProvider::LOCK_EXCLUSIVE);
+		}
+	}
+
+	/**
+	 * Wait for a running save of the same document, unless it is an autosave that is retried anyway
+	 */
+	private function acquireSaveLock(string $saveLock, bool $wait): bool {
+		$deadline = microtime(true) + (float)self::SAVE_LOCK_WAIT;
+		while (true) {
+			try {
+				$this->lockingProvider->acquireLock($saveLock, ILockingProvider::LOCK_EXCLUSIVE, 'Text document save');
+				return true;
+			} catch (LockedException) {
+				if (!$wait || microtime(true) >= $deadline) {
+					return false;
+				}
+				usleep(100_000);
+			}
+		}
+	}
+
+	/**
+	 * @throws DocumentSaveConflictException
+	 * @throws DoesNotExistException
+	 * @throws InvalidPathException
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws Exception
+	 */
+	private function saveWithLock(string $documentId, Document $document, IContext $context, int $version, string $autoSaveDocument, string $documentState, bool $force): Document {
+		if ($document->getLastSavedVersionTime() > 0 && !$force) {
 			try {
 				$context->updateDocument($document);
 				if (isset($document->getUpdatedFields()['checksum'])) {
 					// Another save by Text may have finished after this request loaded the document.
-					$stored = $this->getDocument($document->id);
+					$stored = $this->getDocument($documentId);
 					if ($stored === null) {
 						throw new NotFoundException('Document was reset in the meantime');
 					}
@@ -431,15 +475,10 @@ class DocumentService {
 			}
 		}
 
-		// Abort autosave if already saving.
-		if ($this->cache->get('document-save-lock-' . $document->id) && $manualSave === false) {
-			return $document;
-		}
-
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
-		$stepsVersion = $this->stepMapper->getLatestVersion($document->id) ?? 0;
+		$stepsVersion = $this->stepMapper->getLatestVersion($documentId) ?? 0;
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
@@ -454,8 +493,8 @@ class DocumentService {
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
 				'fileSizeBeforeSave' => $file ? $file->getSize() : $context->getType() . ' is not stored in a file',
-				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($document->id, 0)),
-				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($document->id))
+				'steps' => array_map(static fn (Step $step) => $step->jsonSerialize(), $this->stepMapper->find($documentId, 0)),
+				'sessions' => array_map(static fn (Session $session) => $session->jsonSerialize(), $this->sessionMapper->findAll($documentId))
 			]);
 		}
 
@@ -467,28 +506,25 @@ class DocumentService {
 			return $document;
 		}
 		if ($autoSaveDocument === $currentContent) {
-			$this->writeDocumentState($document->id, $documentState);
+			$this->writeDocumentState($documentId, $documentState);
 			$document->setLastSavedVersion($version);
 			$this->documentMapper->update($document);
 			return $document;
 		}
 
-		$this->cache->set('document-save-lock-' . $document->id, true, 60);
 		$this->saveFromText = true;
 		try {
-			$context->save($autoSaveDocument, function () use ($context, $document, $documentState): void {
+			$context->save($autoSaveDocument, function () use ($context, $document, $documentId, $documentState): void {
 				// Store the new checksum first so a failure below cannot leave it outdated.
 				$context->updateDocument($document);
 				$this->documentMapper->update($document);
-				$this->writeDocumentState($document->id, $documentState);
+				$this->writeDocumentState($documentId, $documentState);
 			});
 			$document->setLastSavedVersion($version);
 			$this->documentMapper->update($document);
 		} catch (LockedException) {
-			// Ignore lock since it might occur when multiple people save at the same time
+			// The file is being read or written outside of Text, try again with the next save.
 			return $document;
-		} finally {
-			$this->cache->remove('document-save-lock-' . $document->id);
 		}
 		return $document;
 	}

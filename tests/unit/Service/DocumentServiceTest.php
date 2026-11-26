@@ -28,6 +28,8 @@ use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\Lock\ILockingProvider;
+use OCP\Lock\LockedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
@@ -38,12 +40,14 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 	private DocumentMapper $documentMapper;
 	private StepMapper $stepMapper;
 	private ICache $cache;
+	private ILockingProvider&MockObject $lockingProvider;
 
 	public function setUp(): void {
 		$this->contextManager = $this->createMock(ContextManager::class);
 		$this->documentMapper = $this->createMock(DocumentMapper::class);
 		$this->stepMapper = $this->createMock(StepMapper::class);
 		$this->cache = $this->createMock(ICache::class);
+		$this->lockingProvider = $this->createMock(ILockingProvider::class);
 		$cacheFactory = $this->createMock(ICacheFactory::class);
 		$cacheFactory->method('createDistributed')->willReturn($this->cache);
 		$request = $this->createMock(IRequest::class);
@@ -62,6 +66,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 			$request,
 			$this->createMock(IManager::class),
 			$this->createMock(IConfig::class),
+			$this->lockingProvider,
 		);
 	}
 
@@ -140,16 +145,50 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->documentService->hasUnsavedChanges(new Document());
 	}
 
-	public function testNoAutosavingWhileSaveIsUnderWay(): void {
+	public function testAutosaveDoesNotWaitForSaveUnderWay(): void {
 		$document = $this->createDocument('etag1', 1000, 'new content');
 		$context = $this->createMock(FileContext::class);
-		$this->cache->method('get')
-			->with('document-save-lock-' . $document->id)
-			->willReturn(true);
+		$this->lockingProvider->expects(self::once())->method('acquireLock')
+			->with('text/save/' . $document->id, ILockingProvider::LOCK_EXCLUSIVE)
+			->willThrowException(new LockedException('text/save/' . $document->id));
+		$this->lockingProvider->expects(self::never())->method('releaseLock');
+		$context->expects(self::never())->method('loadContent');
 		$this->documentMapper->expects(self::never())->method('update');
 
 		$result = $this->documentService->autosave($document, $context, 1234, 'new content', 'doc state');
 		self::assertSame($result, $document);
+	}
+
+	public function testManualSaveWaitsForSaveUnderWay(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->resetUpdatedFields();
+		$context = $this->createMock(FileContext::class);
+		$context->method('loadContent')->willReturn('old content');
+		$context->expects(self::once())->method('save');
+		$this->stepMapper->method('getLatestVersion')->willReturn(1);
+		$this->lockingProvider->expects(self::exactly(2))->method('acquireLock')
+			->willReturnOnConsecutiveCalls(
+				self::throwException(new LockedException('text/save/' . $document->id)),
+				null,
+			);
+		$this->lockingProvider->expects(self::once())->method('releaseLock')
+			->with('text/save/' . $document->id, ILockingProvider::LOCK_EXCLUSIVE);
+
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state', false, true);
+		self::assertSame(1, $document->getLastSavedVersion());
+	}
+
+	public function testReleasesSaveLockIfSavingFails(): void {
+		$document = $this->createDocument('etag1', 1000, 'old content');
+		$document->resetUpdatedFields();
+		$context = $this->createMock(FileContext::class);
+		$context->method('loadContent')->willReturn('old content');
+		$context->method('save')->willThrowException(new \RuntimeException('Disk full'));
+		$this->stepMapper->method('getLatestVersion')->willReturn(1);
+		$this->lockingProvider->expects(self::once())->method('releaseLock');
+		$this->expectExceptionMessage('Disk full');
+
+		$this->documentService->autosave($document, $context, 1, 'new content', 'doc state', false, true);
 	}
 
 	public function testKeepsDocumentWhenFileIsUnchanged(): void {

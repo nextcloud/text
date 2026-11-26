@@ -59,8 +59,35 @@ class DirectEditingPage {
 	 * Close the editor and wait until it told the mobile app it is done.
 	 */
 	async close() {
+		await this.clickClose()
+		await this.waitUntilClosed()
+	}
+
+	/**
+	 * Click the close button and wait until the editor started saving.
+	 */
+	async clickClose() {
 		await this.page.locator('button.icon-close').click()
+		await expect(this.page.locator('#direct-editor.icon-loading')).toBeVisible()
+	}
+
+	async waitUntilClosed() {
 		await this.page.waitForFunction(() => (window as MobileAppWindow).directEditingClosed)
+	}
+
+	/**
+	 * Hold back push requests until the returned function is called.
+	 */
+	async holdPushes() {
+		let release = () => {}
+		const released = new Promise<void>((resolve) => {
+			release = resolve
+		})
+		await this.page.route(/\/session\/[^/]+\/push$/, async (route) => {
+			await released
+			await route.continue()
+		})
+		return release
 	}
 
 	/**
@@ -156,6 +183,21 @@ test.describe('Direct editing', () => {
 		const file = new Node({ id: 0, name: 'newfile.md', page })
 		await expect.poll(() => file.getContent())
 			.toBe('# This is a headline\n\nSome text')
+	})
+
+	test('Save with Ctrl+S and close right away', async ({ user, file, openDirectEditing }) => {
+		const url = await createDirectEditingLink(user, file.name)
+		const directEditing = await openDirectEditing(url)
+		const { editor } = directEditing
+		// Keep the changes pending, so the Ctrl+S save is still waiting for its push when closing
+		const releasePushes = await directEditing.holdPushes()
+		await editor.type('Some text')
+		await editor.press('Control+s')
+		await directEditing.clickClose()
+		releasePushes()
+		await directEditing.waitUntilClosed()
+
+		await expect.poll(() => file.getContent()).toBe('Some text')
 	})
 
 	test('Close through the API for mobile apps', async ({ user, file, openDirectEditing }) => {
