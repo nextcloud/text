@@ -20,6 +20,7 @@ OC.L10N.register(
     "A guest" : "En gæst",
     "{user} has mentioned you in the text document {node}" : "{user} har omtalt dig i tekstdokumentet {node}",
     "This document is read-only." : "Dette dokument er skrivebeskyttet.",
+    "This file is currently locked." : "Denne fil er låst i øjeblikket.",
     "Read-only permission cannot save document changes. Please reload the page." : "Med læserettighed kan ændringer i dokumentet ikke gemmes. Genindlæs siden.",
     "Readme" : "Læs mig",
     "Text" : "Tekst",

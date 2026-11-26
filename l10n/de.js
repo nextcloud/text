@@ -20,6 +20,7 @@ OC.L10N.register(
     "A guest" : "Ein Gast",
     "{user} has mentioned you in the text document {node}" : "{user} hat dich in dem Textdokument {node} erwähnt.",
     "This document is read-only." : "Dieses Dokument ist schreibgeschützt",
+    "This file is currently locked." : "Diese Datei ist derzeit gesperrt.",
     "Read-only permission cannot save document changes. Please reload the page." : "Mit der Berechtigung \"Nur Lesen\" können keine Änderungen am Dokument gespeichert werden. Bitte diese Seite erneut laden.",
     "Readme" : "Anleitung",
     "Text" : "Text",
