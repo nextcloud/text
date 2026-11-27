@@ -87,6 +87,24 @@ const TaskItem = TipTapTaskItem.extend({
 		]
 	},
 
+	addKeyboardShortcuts() {
+		return {
+			...this.parent?.(),
+			Enter: () => {
+				const { $from, empty } = this.editor.state.selection
+				// Splitting at the very start of the item inserts a new empty item
+				// above, which would otherwise inherit the `checked` attribute and
+				// turn the added line into a checked checkbox. Keep it unchecked so
+				// the checked states of the existing items are preserved.
+				const atStartOfItem = empty
+					&& $from.parentOffset === 0
+					&& $from.index(-1) === 0
+					&& $from.node(-1).type === this.type
+				return this.editor.commands.splitListItem(this.name, atStartOfItem ? { checked: false } : undefined)
+			},
+		}
+	},
+
 	addProseMirrorPlugins() {
 		return [
 			new Plugin({
