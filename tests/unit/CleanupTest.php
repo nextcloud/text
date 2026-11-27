@@ -95,6 +95,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService->expects(self::once())->method('removeInactiveSessionsWithoutSteps');
 		$this->sessionService->expects(self::once())->method('removeOldSessions');
 		$this->sessionService->expects(self::once())->method('removeOrphanedSteps');
+		$this->documentService->expects(self::once())->method('removeSavedSteps');
 		$this->documentService->expects(self::once())->method('cleanupOldDocumentsFolders');
 
 		$this->cleanup->run([]);
@@ -132,6 +133,7 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 		$this->sessionService->expects(self::once())->method('removeInactiveSessionsWithoutSteps');
 		$this->sessionService->expects(self::once())->method('removeOldSessions');
 		$this->sessionService->expects(self::once())->method('removeOrphanedSteps');
+		$this->documentService->expects(self::once())->method('removeSavedSteps');
 		$this->documentService->expects(self::once())->method('cleanupOldDocumentsFolders');
 
 		$this->cleanup->run([]);
