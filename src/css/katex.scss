@@ -1,0 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+// All supported browsers handle woff2, so skip shipping the woff and ttf fallbacks.
+@use 'katex/src/styles/katex.scss' with (
+	$font-folder: '../../node_modules/katex/dist/fonts',
+	$use-woff: false,
+	$use-ttf: false,
+);
