@@ -13,6 +13,7 @@ export default ({
 }) => ({
 	items,
 	command,
+	decorationClass: 'suggestion-query',
 	render: () => {
 		let component
 		let popup
