@@ -8,6 +8,7 @@ import type { Document } from '../types/Document.ts'
 import type { Lock } from '../types/Lock.ts'
 import type { GuestSession, Session } from '../types/Session.ts'
 
+import { getRequestToken } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
@@ -102,20 +103,47 @@ export async function update(
 }
 
 /**
- * Close the connection
- *
- * @param connection connection to close
+ * @param connection to close
  */
-export async function close(connection: Connection) {
+function closeUrl(connection: Connection) {
 	const id = connection.documentId
-	const url = connection.shareToken
+	return connection.shareToken
 		? generateUrl(`/apps/text/public/session/${id}/close`)
 		: generateUrl(`/apps/text/session/${id}/close`)
-	const response = await axios.post(url, {
+}
+
+/**
+ * @param connection to close
+ */
+function closeData(connection: Connection) {
+	return {
 		documentId: connection.documentId,
 		sessionId: connection.sessionId,
 		sessionToken: connection.sessionToken,
 		token: connection.shareToken,
-	})
+	}
+}
+
+/**
+ * Close the session
+ *
+ * @param connection to close
+ */
+export async function close(connection: Connection) {
+	const response = await axios.post(closeUrl(connection), closeData(connection))
 	return response.data
+}
+
+/**
+ * Close the session via `navigator.sendBeacon()`, which still works while the page unloads
+ *
+ * @param connection to close
+ * @return whether the browser queued the request
+ */
+export function closeViaSendBeacon(connection: Connection): boolean {
+	const blob = new Blob(
+		[JSON.stringify({ ...closeData(connection), requesttoken: getRequestToken() ?? '' })],
+		{ type: 'application/json' },
+	)
+	return navigator.sendBeacon(closeUrl(connection), blob)
 }

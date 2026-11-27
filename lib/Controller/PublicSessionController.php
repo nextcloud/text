@@ -111,8 +111,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[PublicPage]
 	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
-	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false): DataResponse {
-		return $this->apiService->save($this->getDocument(), $this->getShare(), $version, $autosaveContent, $documentState, $force, $manualSave);
+	public function save(int $version, string $autosaveContent, string $documentState, bool $force = false, bool $manualSave = false, bool $close = false): DataResponse {
+		return $this->apiService->save($this->getDocument(), $this->getShare(), $version, $autosaveContent, $documentState, $force, $manualSave, $close ? $this->getSession() : null);
 	}
 
 	#[NoAdminRequired]

@@ -61,6 +61,30 @@ describe('SaveService', () => {
 		expect(saveApi.save).not.toHaveBeenCalled()
 	})
 
+	it('asks the save beacon to close the session', () => {
+		vi.mocked(saveApi.saveViaSendBeacon).mockReturnValue(true)
+		const saveService = new SaveService({ connection, getSaveData })
+
+		expect(saveService.saveViaSendBeacon({ close: true })).toBe(true)
+
+		expect(saveApi.saveViaSendBeacon).toHaveBeenCalledWith(connection.value, getSaveData(), true)
+	})
+
+	it('reports a save beacon the browser did not queue', () => {
+		vi.mocked(saveApi.saveViaSendBeacon).mockReturnValue(false)
+		const saveService = new SaveService({ connection, getSaveData })
+
+		expect(saveService.saveViaSendBeacon()).toBe(false)
+	})
+
+	it('does not send a save beacon without a connection', () => {
+		vi.mocked(saveApi.saveViaSendBeacon).mockClear()
+		const saveService = new SaveService({ connection: shallowRef(undefined), getSaveData })
+
+		expect(saveService.saveViaSendBeacon()).toBe(false)
+		expect(saveApi.saveViaSendBeacon).not.toHaveBeenCalled()
+	})
+
 	it('pushes changes before saving', async () => {
 		vi.mocked(saveApi.save).mockResolvedValue({
 			data: { document: { lastSavedVersion: 2 } },
