@@ -153,14 +153,14 @@ class SessionController extends ApiController implements ISessionAwareController
 			if ($user !== null) {
 				$this->restoreUser = true;
 				$this->userToRestore = $this->userSession->getUser();
-				$this->userSession->setUser($user);
+				$this->userSession->setVolatileActiveUser($user);
 			}
 		}
 	}
 
 	private function restoreSessionUser(): void {
 		if ($this->restoreUser) {
-			$this->userSession->setUser($this->userToRestore);
+			$this->userSession->setVolatileActiveUser($this->userToRestore);
 		}
 	}
 
