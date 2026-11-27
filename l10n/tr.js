@@ -20,6 +20,7 @@ OC.L10N.register(
     "A guest" : "Bir konuk",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} yazı belgesinde sizi andı",
     "This document is read-only." : "Bu belge salt okunur.",
+    "This file is currently locked." : "Bu dosya şu anda kilitli.",
     "Read-only permission cannot save document changes. Please reload the page." : "Salt okunur izniyle belge değişiklikleri kaydedilemez. Lütfen sayfayı yeniden yükleyin.",
     "Readme" : "Benioku",
     "Text" : "Yazı",
