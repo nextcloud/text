@@ -23,7 +23,6 @@ use OCP\Files\Node;
 use OCP\Files\NotPermittedException;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
-use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\Share\IManager;
 use Psr\Log\LoggerInterface;
@@ -56,7 +55,6 @@ class CleanupTest extends \PHPUnit\Framework\TestCase {
 			$this->createMock(IURLGenerator::class),
 			$this->createMock(IFilenameValidator::class),
 			$this->createMock(IFilesMetadataManager::class),
-			$this->createMock(ISession::class),
 			$this->createMock(FileService::class),
 		);
 		$this->sessionService = $this->createMock(SessionService::class);

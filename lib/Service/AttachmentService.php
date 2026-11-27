@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use OCA\DAV\Connector\Sabre\PublicAuth;
 use OCA\Text\Context\IContext;
 use OCA\Text\Controller\AttachmentController;
 use OCA\Text\Db\Session;
@@ -24,7 +23,6 @@ use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
-use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Lock\LockedException;
@@ -43,7 +41,6 @@ readonly class AttachmentService {
 		private IURLGenerator $urlGenerator,
 		private IFilenameValidator $filenameValidator,
 		private IFilesMetadataManager $filesMetadataManager,
-		private ISession $session,
 		private FileService $fileService,
 	) {
 	}
@@ -250,23 +247,6 @@ readonly class AttachmentService {
 	 * @throws UserNotFoundException
 	 */
 	public function uploadAttachment(IContext $context, string $newFileName, $newFileResource, IShare|IUser $auth): array {
-		if ($auth instanceof IShare && $auth->getPassword() !== null) {
-			$key = PublicAuth::DAV_AUTHENTICATED;
-
-			if (!$this->session->exists($key)) {
-				throw new NotPermittedException('Share not authenticated');
-			}
-
-			$allowedShareIds = $this->session->get($key);
-			if (!is_array($allowedShareIds)) {
-				throw new NotPermittedException('Share not authenticated');
-			}
-
-			if (!in_array($auth->getId(), $allowedShareIds, true)) {
-				throw new NotPermittedException('Share not authenticated');
-			}
-		}
-
 		$textFile = $this->getTextFile($context);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
