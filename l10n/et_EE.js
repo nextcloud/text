@@ -20,6 +20,7 @@ OC.L10N.register(
     "A guest" : "Külaline",
     "{user} has mentioned you in the text document {node}" : "„{user}“ mainis sind tekstidokumendis „{node}“",
     "This document is read-only." : "See dokument on vaid loetav",
+    "This file is currently locked." : "See fail on parasjagu lukustatud.",
     "Read-only permission cannot save document changes. Please reload the page." : "Vaid loetavasse dokumenti ei saa muudatusi salvestada. Palun laadi leht uuesti.",
     "Readme" : "Loemind",
     "Text" : "Tekst",
